@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, Upload, Search, Filter, SlidersHorizontal } from "lucide-react";
+import { PlusCircle, Upload, Search, SlidersHorizontal } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,7 +14,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
 
 interface Product {
   id: string;
@@ -58,7 +58,7 @@ const SAMPLE_PRODUCTS: Product[] = [
 const CATEGORIES = ["All", "Fine Art", "Collectibles", "Antiques"];
 const CONDITIONS = ["All", "Excellent", "Very Good", "Good", "Fair"];
 
-export default function Products() {
+const Products: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedCondition, setSelectedCondition] = useState("All");
@@ -245,4 +245,6 @@ export default function Products() {
       </div>
     </DashboardLayout>
   );
-}
+};
+
+export default Products;
