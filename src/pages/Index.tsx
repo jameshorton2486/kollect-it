@@ -1,5 +1,6 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import {
   BarChart3,
   Package,
