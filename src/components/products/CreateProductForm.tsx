@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { Tables } from "@/integrations/supabase/types";
 import { DialogFooter } from "@/components/ui/dialog";
+import { ProductImageUpload } from "./ProductImageUpload";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -36,6 +38,8 @@ interface CreateProductFormProps {
 }
 
 export function CreateProductForm({ onSubmit, categories }: CreateProductFormProps) {
+  const [createdProductId, setCreatedProductId] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,9 +52,16 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
     },
   });
 
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const result = await onSubmit(values);
+    if (result?.id) {
+      setCreatedProductId(result.id);
+    }
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="name"
@@ -131,19 +142,19 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="image_url"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Product image URL" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
+        {createdProductId && (
+          <div className="space-y-2">
+            <FormLabel>Product Images</FormLabel>
+            <ProductImageUpload
+              productId={createdProductId}
+              onImagesUploaded={() => {
+                // Handle successful upload
+              }}
+            />
+          </div>
+        )}
+
         <DialogFooter>
           <Button type="submit">Create Product</Button>
         </DialogFooter>
