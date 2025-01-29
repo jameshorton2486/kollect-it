@@ -1,13 +1,12 @@
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Upload } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import * as z from "zod";
@@ -37,30 +36,56 @@ export default function Categories() {
     },
   });
 
-  const { data: categories, refetch } = useQuery({
+  const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
+      console.log("Fetching categories...");
       const { data, error } = await supabase
         .from("categories")
         .select("*")
         .order("name");
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching categories:", error);
+        throw error;
+      }
+      
+      console.log("Categories fetched successfully:", data);
       return data as Category[];
     },
   });
 
   const onSubmit = async (values: FormValues) => {
+    console.log("Attempting to create category with values:", values);
+    
     try {
-      const { error } = await supabase.from("categories").insert([
+      const { data, error } = await supabase.from("categories").insert([
         {
           name: values.name,
           description: values.description || null,
         },
-      ]);
+      ]).select();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase error creating category:", error);
+        let errorMessage = "There was an error creating the category.";
+        
+        // More specific error messages based on error type
+        if (error.code === "23505") {
+          errorMessage = "A category with this name already exists.";
+        } else if (error.code === "42501") {
+          errorMessage = "You don't have permission to create categories.";
+        }
+        
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+        return;
+      }
 
+      console.log("Category created successfully:", data);
       toast({
         title: "Category created",
         description: "The category has been created successfully.",
@@ -69,13 +94,29 @@ export default function Categories() {
       form.reset();
       refetch();
     } catch (error) {
+      console.error("Unexpected error creating category:", error);
       toast({
         title: "Error",
-        description: "There was an error creating the category.",
+        description: "An unexpected error occurred while creating the category.",
         variant: "destructive",
       });
     }
   };
+
+  // Handle fetch error
+  if (fetchError) {
+    console.error("Error in categories query:", fetchError);
+    return (
+      <DashboardLayout>
+        <div className="max-w-7xl mx-auto p-6">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <h2 className="text-red-800 font-semibold">Error Loading Categories</h2>
+            <p className="text-red-600">There was an error loading the categories. Please try again later.</p>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
