@@ -28,11 +28,11 @@ export default function Products() {
         .select("*")
         .order("name");
       if (error) throw error;
-      return data as Tables<"categories">[];
+      return data;
     },
   });
 
-  const { data: products } = useQuery({
+  const { data: products, isLoading } = useQuery({
     queryKey: ["products", selectedCategory],
     queryFn: async () => {
       let query = supabase.from("products").select("*");
@@ -43,7 +43,7 @@ export default function Products() {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Tables<"products">[];
+      return data;
     },
   });
 
@@ -98,10 +98,10 @@ export default function Products() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <ProductHeader onOpenCreateDialog={() => setIsCreateDialogOpen(true)} />
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
           <aside className="space-y-6 md:col-span-1">
             <ProductFilters
               searchQuery={searchQuery}
@@ -119,7 +119,7 @@ export default function Products() {
           <main className="md:col-span-3">
             <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
               <h2 className="text-lg font-semibold text-shop-800 mb-2">
-                {filteredProducts.length} Products Found
+                {isLoading ? "Loading..." : `${filteredProducts.length} Products Found`}
               </h2>
               <p className="text-shop-500">
                 Browse our curated collection of fine art and collectibles

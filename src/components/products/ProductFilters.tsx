@@ -9,6 +9,7 @@ import {
 import { Tables } from "@/integrations/supabase/types";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Search } from "lucide-react";
 
 interface ProductFiltersProps {
   searchQuery: string;
@@ -37,12 +38,16 @@ export function ProductFilters({
     <div className="bg-white p-6 rounded-lg shadow-sm space-y-6">
       <div className="space-y-4">
         <h3 className="font-semibold text-shop-800">Search</h3>
-        <Input
-          type="search"
-          placeholder="Search products..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            type="search"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
 
       <Separator />
