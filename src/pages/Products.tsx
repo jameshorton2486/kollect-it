@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Product {
   id: string;
@@ -19,7 +20,7 @@ interface Product {
   condition: string;
   category: { id: string; name: string };
   category_id: string;
-  imageUrl: string;
+  image_url: string; // Updated to match Supabase column name
 }
 
 interface Category {
@@ -29,11 +30,22 @@ interface Category {
 }
 
 const Products: React.FC = () => {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedCondition, setSelectedCondition] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [showFilters, setShowFilters] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Form state
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    description: "",
+    price: "",
+    condition: "",
+    category_id: "",
+  });
 
   // Fetch categories
   const { data: categories = [] } = useQuery({
@@ -48,7 +60,7 @@ const Products: React.FC = () => {
   });
 
   // Fetch products with category information
-  const { data: products = [] } = useQuery({
+  const { data: products = [], refetch: refetchProducts } = useQuery({
     queryKey: ["products", selectedCategory],
     queryFn: async () => {
       let query = supabase
@@ -64,15 +76,55 @@ const Products: React.FC = () => {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Product[];
+      return data as unknown as Product[]; // Type assertion to handle the mismatch
     },
   });
+
+  const handleCreateProduct = async () => {
+    try {
+      const { error } = await supabase.from("products").insert([
+        {
+          name: newProduct.name,
+          description: newProduct.description,
+          price: parseFloat(newProduct.price),
+          condition: newProduct.condition,
+          category_id: newProduct.category_id,
+          user_id: (await supabase.auth.getUser()).data.user?.id,
+        },
+      ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Product created successfully",
+      });
+
+      setIsDialogOpen(false);
+      setNewProduct({
+        name: "",
+        description: "",
+        price: "",
+        condition: "",
+        category_id: "",
+      });
+      refetchProducts();
+    } catch (error) {
+      console.error("Error creating product:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create product",
+        variant: "destructive",
+      });
+    }
+  };
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          product.description?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCondition = selectedCondition === "All" || product.condition === selectedCondition;
-    const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+    const matchesPrice = parseFloat(product.price.toString()) >= priceRange[0] && 
+                        parseFloat(product.price.toString()) <= priceRange[1];
 
     return matchesSearch && matchesCondition && matchesPrice;
   });
@@ -89,7 +141,7 @@ const Products: React.FC = () => {
               Manage your collectibles and fine art
             </p>
           </div>
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-gradient-to-r from-shop-600 to-shop-700 hover:from-shop-700 hover:to-shop-800 text-white shadow-lg transition-all duration-300 hover:shadow-xl">
                 <PlusCircle className="mr-2 h-5 w-5" />
@@ -106,25 +158,72 @@ const Products: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="name" className="text-shop-700">Name</Label>
-                    <Input id="name" placeholder="Product name" className="border-shop-200 focus:border-shop-400" />
+                    <Input 
+                      id="name" 
+                      value={newProduct.name}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, name: e.target.value }))}
+                      placeholder="Product name" 
+                      className="border-shop-200 focus:border-shop-400" 
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="price" className="text-shop-700">Price ($)</Label>
-                    <Input id="price" type="number" placeholder="0.00" className="border-shop-200 focus:border-shop-400" />
+                    <Input 
+                      id="price" 
+                      type="number"
+                      value={newProduct.price}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, price: e.target.value }))}
+                      placeholder="0.00" 
+                      className="border-shop-200 focus:border-shop-400" 
+                    />
                   </div>
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="description" className="text-shop-700">Description</Label>
-                  <Input id="description" placeholder="Product description" className="border-shop-200 focus:border-shop-400" />
+                  <Input 
+                    id="description"
+                    value={newProduct.description}
+                    onChange={(e) => setNewProduct(prev => ({ ...prev, description: e.target.value }))}
+                    placeholder="Product description" 
+                    className="border-shop-200 focus:border-shop-400" 
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="condition" className="text-shop-700">Condition</Label>
-                    <Input id="condition" placeholder="e.g., Excellent, Good" className="border-shop-200 focus:border-shop-400" />
+                    <Select
+                      value={newProduct.condition}
+                      onValueChange={(value) => setNewProduct(prev => ({ ...prev, condition: value }))}
+                    >
+                      <SelectTrigger className="border-shop-200">
+                        <SelectValue placeholder="Select condition" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["Excellent", "Very Good", "Good", "Fair"].map((condition) => (
+                          <SelectItem key={condition} value={condition}>
+                            {condition}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="category" className="text-shop-700">Category</Label>
-                    <Input id="category" placeholder="e.g., Fine Art, Collectibles" className="border-shop-200 focus:border-shop-400" />
+                    <Select
+                      value={newProduct.category_id}
+                      onValueChange={(value) => setNewProduct(prev => ({ ...prev, category_id: value }))}
+                    >
+                      <SelectTrigger className="border-shop-200">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="grid gap-2">
@@ -146,6 +245,12 @@ const Products: React.FC = () => {
                     </Button>
                   </div>
                 </div>
+                <Button
+                  onClick={handleCreateProduct}
+                  className="w-full bg-gradient-to-r from-shop-600 to-shop-700 hover:from-shop-700 hover:to-shop-800 text-white"
+                >
+                  Create Product
+                </Button>
               </div>
             </DialogContent>
           </Dialog>
