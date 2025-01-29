@@ -1,27 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tables } from "@/integrations/supabase/types";
 import { DialogFooter } from "@/components/ui/dialog";
 import { ProductImageUpload } from "./ProductImageUpload";
 import { useState } from "react";
+import { ProductBasicInfo } from "./form/ProductBasicInfo";
+import { ProductCategorySelect } from "./form/ProductCategorySelect";
+import { ProductConditionInput } from "./form/ProductConditionInput";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -62,90 +50,12 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Product name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Product description" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Product price"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="category_id"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {categories?.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="condition"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Condition</FormLabel>
-              <FormControl>
-                <Input placeholder="Product condition" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <ProductBasicInfo form={form} />
+        <ProductCategorySelect form={form} categories={categories} />
+        <ProductConditionInput form={form} />
 
         {createdProductId && (
           <div className="space-y-2">
-            <FormLabel>Product Images</FormLabel>
             <ProductImageUpload
               productId={createdProductId}
               onImagesUploaded={() => {
