@@ -6,14 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { PlusCircle, Upload, Search, SlidersHorizontal } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Product {
   id: string;
@@ -21,58 +17,64 @@ interface Product {
   description: string;
   price: number;
   condition: string;
-  category: string;
+  category: { id: string; name: string };
+  category_id: string;
   imageUrl: string;
 }
 
-const SAMPLE_PRODUCTS: Product[] = [
-  {
-    id: "1",
-    name: "Vintage Oil Painting",
-    description: "Beautiful landscape from the 1950s",
-    price: 1200,
-    condition: "Good",
-    category: "Fine Art",
-    imageUrl: "/placeholder.svg"
-  },
-  {
-    id: "2",
-    name: "Antique Pocket Watch",
-    description: "18k gold pocket watch from 1890",
-    price: 3500,
-    condition: "Excellent",
-    category: "Collectibles",
-    imageUrl: "/placeholder.svg"
-  },
-  {
-    id: "3",
-    name: "Art Deco Vase",
-    description: "Rare ceramic vase from the 1920s",
-    price: 850,
-    condition: "Very Good",
-    category: "Antiques",
-    imageUrl: "/placeholder.svg"
-  }
-];
-
-const CATEGORIES = ["All", "Fine Art", "Collectibles", "Antiques"];
-const CONDITIONS = ["All", "Excellent", "Very Good", "Good", "Fair"];
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+}
 
 const Products: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedCondition, setSelectedCondition] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [showFilters, setShowFilters] = useState(false);
 
-  const filteredProducts = SAMPLE_PRODUCTS.filter(product => {
+  // Fetch categories
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*");
+      if (error) throw error;
+      return data as Category[];
+    },
+  });
+
+  // Fetch products with category information
+  const { data: products = [] } = useQuery({
+    queryKey: ["products", selectedCategory],
+    queryFn: async () => {
+      let query = supabase
+        .from("products")
+        .select(`
+          *,
+          category:categories(id, name)
+        `);
+
+      if (selectedCategory !== "all") {
+        query = query.eq("category_id", selectedCategory);
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+      return data as Product[];
+    },
+  });
+
+  const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
+                         product.description?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCondition = selectedCondition === "All" || product.condition === selectedCondition;
     const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
 
-    return matchesSearch && matchesCategory && matchesCondition && matchesPrice;
+    return matchesSearch && matchesCondition && matchesPrice;
   });
 
   return (
@@ -162,6 +164,19 @@ const Products: React.FC = () => {
                 />
               </div>
             </div>
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-[180px] bg-white border-shop-200">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Button
               variant="outline"
               className="flex items-center gap-2 border-shop-200 hover:bg-shop-50 text-shop-600"
@@ -175,29 +190,13 @@ const Products: React.FC = () => {
           {showFilters && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6 bg-gradient-to-r from-shop-50 to-shop-100 rounded-xl shadow-sm animate-fadeIn">
               <div className="space-y-2">
-                <Label className="text-shop-700">Category</Label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="border-shop-200 bg-white">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
                 <Label className="text-shop-700">Condition</Label>
                 <Select value={selectedCondition} onValueChange={setSelectedCondition}>
                   <SelectTrigger className="border-shop-200 bg-white">
                     <SelectValue placeholder="Select condition" />
                   </SelectTrigger>
                   <SelectContent>
-                    {CONDITIONS.map((condition) => (
+                    {["All", "Excellent", "Very Good", "Good", "Fair"].map((condition) => (
                       <SelectItem key={condition} value={condition}>
                         {condition}
                       </SelectItem>
@@ -229,7 +228,7 @@ const Products: React.FC = () => {
             >
               <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-shop-50 to-shop-100">
                 <img
-                  src={product.imageUrl}
+                  src={product.imageUrl || "/placeholder.svg"}
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
@@ -249,7 +248,7 @@ const Products: React.FC = () => {
                     {product.condition}
                   </span>
                   <span className="px-2 py-1 rounded-full bg-shop-100 text-shop-600">
-                    {product.category}
+                    {product.category?.name || "Uncategorized"}
                   </span>
                 </div>
               </CardContent>
