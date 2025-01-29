@@ -48,19 +48,23 @@ export default function Products() {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   ) || [];
 
-  const handleCreateProduct = async (values: any) => {
+  const handleCreateProduct = async (values: any): Promise<{ id: string } | undefined> => {
     try {
-      const { error } = await supabase.from("products").insert([
-        {
-          name: values.name,
-          description: values.description,
-          price: parseFloat(values.price),
-          category_id: values.category_id,
-          condition: values.condition,
-          image_url: values.image_url,
-          user_id: (await supabase.auth.getUser()).data.user?.id,
-        },
-      ]);
+      const { data, error } = await supabase
+        .from("products")
+        .insert([
+          {
+            name: values.name,
+            description: values.description,
+            price: parseFloat(values.price),
+            category_id: values.category_id,
+            condition: values.condition,
+            image_url: values.image_url,
+            user_id: (await supabase.auth.getUser()).data.user?.id,
+          },
+        ])
+        .select()
+        .single();
 
       if (error) throw error;
 
@@ -71,12 +75,15 @@ export default function Products() {
 
       setIsCreateDialogOpen(false);
       queryClient.invalidateQueries({ queryKey: ["products"] });
+
+      return { id: data.id };
     } catch (error) {
       toast({
         title: "Error",
         description: "There was an error creating the product.",
         variant: "destructive",
       });
+      return undefined;
     }
   };
 
