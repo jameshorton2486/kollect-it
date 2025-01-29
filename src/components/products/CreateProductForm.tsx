@@ -33,7 +33,7 @@ const formSchema = z.object({
 });
 
 interface CreateProductFormProps {
-  onSubmit: (values: z.infer<typeof formSchema>) => void;
+  onSubmit: (values: z.infer<typeof formSchema>) => Promise<{ id: string } | undefined>;
   categories: Tables<"categories">[] | undefined;
 }
 
