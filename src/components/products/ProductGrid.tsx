@@ -12,6 +12,15 @@ export function ProductGrid({ products, categories }: ProductGridProps) {
     return categories?.find((c) => c.id === categoryId)?.name;
   };
 
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <h3 className="text-lg font-semibold text-shop-800">No products found</h3>
+        <p className="text-shop-500 mt-2">Try adjusting your filters</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (

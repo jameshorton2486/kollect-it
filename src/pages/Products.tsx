@@ -3,17 +3,20 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Tables } from "@/integrations/supabase/types";
 import { ProductHeader } from "@/components/products/ProductHeader";
 import { ProductFilters } from "@/components/products/ProductFilters";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { CreateProductForm } from "@/components/products/CreateProductForm";
+import { Separator } from "@/components/ui/separator";
 
 export default function Products() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
+  const [selectedCondition, setSelectedCondition] = useState("all");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -44,9 +47,15 @@ export default function Products() {
     },
   });
 
-  const filteredProducts = products?.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredProducts = products?.filter((product) => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCondition = selectedCondition === "all" || product.condition === selectedCondition;
+    const matchesPriceRange =
+      (!priceRange.min || product.price >= Number(priceRange.min)) &&
+      (!priceRange.max || product.price <= Number(priceRange.max));
+
+    return matchesSearch && matchesCondition && matchesPriceRange;
+  }) || [];
 
   const handleCreateProduct = async (values: any): Promise<{ id: string } | undefined> => {
     try {
@@ -92,15 +101,33 @@ export default function Products() {
       <div className="max-w-7xl mx-auto">
         <ProductHeader onOpenCreateDialog={() => setIsCreateDialogOpen(true)} />
         
-        <ProductFilters
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          categories={categories}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <aside className="space-y-6 md:col-span-1">
+            <ProductFilters
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              categories={categories}
+              priceRange={priceRange}
+              onPriceRangeChange={setPriceRange}
+              selectedCondition={selectedCondition}
+              onConditionChange={setSelectedCondition}
+            />
+          </aside>
 
-        <ProductGrid products={filteredProducts} categories={categories} />
+          <main className="md:col-span-3">
+            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+              <h2 className="text-lg font-semibold text-shop-800 mb-2">
+                {filteredProducts.length} Products Found
+              </h2>
+              <p className="text-shop-500">
+                Browse our curated collection of fine art and collectibles
+              </p>
+            </div>
+            <ProductGrid products={filteredProducts} categories={categories} />
+          </main>
+        </div>
 
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogContent className="sm:max-w-[425px]">
