@@ -6,6 +6,8 @@ import {
   Settings,
   BarChart3,
   Tags,
+  User,
+  Store,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +15,8 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: Package, label: "Products", path: "/products" },
   { icon: Tags, label: "Categories", path: "/categories" },
+  { icon: User, label: "Buyer Dashboard", path: "/dashboard/buyer" },
+  { icon: Store, label: "Seller Dashboard", path: "/dashboard/seller" },
   { icon: ShoppingCart, label: "Orders", path: "/orders" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
   { icon: Settings, label: "Settings", path: "/settings" },
