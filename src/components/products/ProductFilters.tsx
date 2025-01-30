@@ -1,15 +1,9 @@
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tables } from "@/integrations/supabase/types";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Search } from "lucide-react";
+import { SearchFilter } from "./filters/SearchFilter";
+import { CategoryFilter } from "./filters/CategoryFilter";
+import { PriceRangeFilter } from "./filters/PriceRangeFilter";
+import { ConditionFilter } from "./filters/ConditionFilter";
 
 interface ProductFiltersProps {
   searchQuery: string;
@@ -36,89 +30,29 @@ export function ProductFilters({
 }: ProductFiltersProps) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm space-y-6">
-      <div className="space-y-4">
-        <h3 className="font-semibold text-shop-800">Search</h3>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <Input
-            type="search"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-      </div>
-
+      <SearchFilter searchQuery={searchQuery} onSearchChange={onSearchChange} />
+      
       <Separator />
-
-      <div className="space-y-4">
-        <h3 className="font-semibold text-shop-800">Category</h3>
-        <Select value={selectedCategory} onValueChange={onCategoryChange}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            {categories?.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
+      
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        onCategoryChange={onCategoryChange}
+        categories={categories}
+      />
+      
       <Separator />
-
-      <div className="space-y-4">
-        <h3 className="font-semibold text-shop-800">Price Range</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="min-price">Min Price</Label>
-            <Input
-              id="min-price"
-              type="number"
-              placeholder="Min"
-              value={priceRange.min}
-              onChange={(e) =>
-                onPriceRangeChange({ ...priceRange, min: e.target.value })
-              }
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="max-price">Max Price</Label>
-            <Input
-              id="max-price"
-              type="number"
-              placeholder="Max"
-              value={priceRange.max}
-              onChange={(e) =>
-                onPriceRangeChange({ ...priceRange, max: e.target.value })
-              }
-            />
-          </div>
-        </div>
-      </div>
-
+      
+      <PriceRangeFilter
+        priceRange={priceRange}
+        onPriceRangeChange={onPriceRangeChange}
+      />
+      
       <Separator />
-
-      <div className="space-y-4">
-        <h3 className="font-semibold text-shop-800">Condition</h3>
-        <Select value={selectedCondition} onValueChange={onConditionChange}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select Condition" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Conditions</SelectItem>
-            <SelectItem value="new">New</SelectItem>
-            <SelectItem value="like-new">Like New</SelectItem>
-            <SelectItem value="excellent">Excellent</SelectItem>
-            <SelectItem value="good">Good</SelectItem>
-            <SelectItem value="fair">Fair</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      
+      <ConditionFilter
+        selectedCondition={selectedCondition}
+        onConditionChange={onConditionChange}
+      />
     </div>
   );
 }
