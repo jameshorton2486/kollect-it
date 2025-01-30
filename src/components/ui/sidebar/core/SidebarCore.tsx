@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { SidebarContext } from "../context/SidebarContext"
+import { SidebarContext, useSidebar } from "../context/SidebarContext"
 
 export const SidebarProvider = React.forwardRef<
   HTMLDivElement,
@@ -213,3 +213,4 @@ export const SidebarTrigger = React.forwardRef<
     </Button>
   )
 })
+SidebarTrigger.displayName = "SidebarTrigger"
