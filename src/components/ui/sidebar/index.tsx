@@ -1,3 +1,5 @@
-export * from "./SidebarParts"
-export { sidebarMenuButtonVariants } from "./variants"
-export { SidebarProvider, useSidebar } from "./SidebarContext"
+export * from "./core/SidebarCore"
+export * from "./menu/SidebarMenu"
+export * from "./group/SidebarGroup"
+export * from "./context/SidebarContext"
+export * from "./variants"
