@@ -1,3 +1,7 @@
 import { sidebarMenuButtonVariants } from "./variants"
-export * from "./SidebarParts"
+
+// Re-export all components from their respective files
+export * from "./core/SidebarCore"
+export * from "./menu/SidebarMenu"
+export * from "./group/SidebarGroup"
 export { sidebarMenuButtonVariants }

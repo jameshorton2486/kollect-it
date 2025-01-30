@@ -5,8 +5,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { SidebarContext, useSidebar } from "../context/SidebarContext"
-import { sidebarMenuButtonVariants } from "../variants"
+import { SidebarContext } from "../context/SidebarContext"
 
 export const SidebarProvider = React.forwardRef<
   HTMLDivElement,
@@ -50,7 +49,7 @@ export const SidebarProvider = React.forwardRef<
         : setOpen((open) => !open)
     }, [isMobile, setOpen])
 
-    const state = open ? "expanded" : "collapsed"
+    const state = open ? ("expanded" as const) : ("collapsed" as const)
     const contextValue = React.useMemo(
       () => ({
         state,
@@ -214,4 +213,3 @@ export const SidebarTrigger = React.forwardRef<
     </Button>
   )
 })
-SidebarTrigger.displayName = "SidebarTrigger"
