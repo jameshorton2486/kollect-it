@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, ShieldCheck, ArrowLeft } from "lucide-react";
+import { Mail, ShieldCheck, ArrowLeft, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function PasswordRecovery() {
@@ -18,7 +18,6 @@ export function PasswordRecovery() {
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Prevent multiple submissions within 60 seconds
     const now = Date.now();
     if (now - lastSubmitTime < 60000) {
       toast.error("Please wait 60 seconds before requesting another reset email");
@@ -65,16 +64,30 @@ export function PasswordRecovery() {
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">Reset Your Password</h2>
           <p className="text-muted-foreground">
-            Enter your email address and we'll send you instructions to reset your
-            password.
+            Don't worry! It happens to the best of us. Follow these simple steps to reset your password and regain access to your account.
           </p>
         </div>
 
         {!isSubmitted ? (
           <>
+            <div className="mb-8 space-y-4 border rounded-lg p-4 bg-muted/50">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
+                <div>
+                  <h3 className="font-medium mb-1">Password Reset Steps</h3>
+                  <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
+                    <li>Enter your email address below</li>
+                    <li>Check your inbox for reset instructions</li>
+                    <li>Click the reset link in the email</li>
+                    <li>Create a new secure password</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
             <form onSubmit={handlePasswordReset} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">Email Address</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -99,12 +112,13 @@ export function PasswordRecovery() {
               <div className="flex items-start gap-3">
                 <ShieldCheck className="h-5 w-5 text-primary mt-0.5" />
                 <div>
-                  <h3 className="font-medium mb-1">Security Tips</h3>
+                  <h3 className="font-medium mb-1">Creating a Strong Password</h3>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Create a strong password with at least 8 characters</li>
-                    <li>• Include uppercase, lowercase, numbers, and symbols</li>
-                    <li>• Avoid using personal information in your password</li>
-                    <li>• Use a unique password not used on other sites</li>
+                    <li>• Use at least 8 characters</li>
+                    <li>• Include uppercase and lowercase letters</li>
+                    <li>• Add numbers and special characters</li>
+                    <li>• Avoid using personal information</li>
+                    <li>• Use a unique password not used elsewhere</li>
                   </ul>
                 </div>
               </div>
@@ -120,6 +134,9 @@ export function PasswordRecovery() {
               <p className="text-muted-foreground text-sm">
                 We've sent password reset instructions to <strong>{email}</strong>. 
                 Please check your inbox and spam folder.
+              </p>
+              <p className="text-sm text-muted-foreground mt-4">
+                Didn't receive the email? Check your spam folder or request another reset email in 60 seconds.
               </p>
             </div>
             <div className="pt-4">

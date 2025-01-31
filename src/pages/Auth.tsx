@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, ShieldCheck, Sparkles, Package, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Auth() {
@@ -51,25 +51,43 @@ export function Auth() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navbar */}
       <nav className="border-b">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <h1 className="text-2xl font-bold">Kollect-It</h1>
         </div>
       </nav>
 
-      {/* Header Section */}
       <div className="max-w-md mx-auto mt-12 px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4">Welcome to Kollect-It</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-3xl font-bold mb-4">
+            {isLogin ? "Welcome Back to Kollect-It" : "Join the Kollect-It Community"}
+          </h2>
+          <p className="text-muted-foreground mb-6">
             {isLogin
-              ? "Sign in to access your account and start collecting"
-              : "Create an account to start your collecting journey"}
+              ? "Sign in to access your collection and continue your journey"
+              : "Create an account to start your collecting adventure"}
           </p>
+
+          {!isLogin && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
+              <div className="flex items-start gap-3 p-4 rounded-lg border bg-card">
+                <Package className="h-5 w-5 text-primary mt-1" />
+                <div>
+                  <h3 className="font-medium">Manage Collections</h3>
+                  <p className="text-sm text-muted-foreground">Track and showcase your items</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-lg border bg-card">
+                <Star className="h-5 w-5 text-primary mt-1" />
+                <div>
+                  <h3 className="font-medium">Exclusive Access</h3>
+                  <p className="text-sm text-muted-foreground">Early access to new listings</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Auth Form */}
         <form onSubmit={handleAuth} className="space-y-6">
           {!isLogin && (
             <div className="space-y-2">
@@ -122,11 +140,31 @@ export function Auth() {
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
+            {isLoading ? "Loading..." : isLogin ? "Sign In" : "Create Account"}
           </Button>
+
+          {isLogin && (
+            <div className="flex items-center justify-between text-sm">
+              <Link
+                to="/password-recovery"
+                className="text-primary hover:underline"
+              >
+                Forgot password?
+              </Link>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="remember"
+                  className="rounded border-gray-300"
+                />
+                <label htmlFor="remember" className="text-muted-foreground">
+                  Remember me
+                </label>
+              </div>
+            </div>
+          )}
         </form>
 
-        {/* Toggle Auth Mode */}
         <div className="mt-6 text-center">
           <button
             type="button"
@@ -134,25 +172,29 @@ export function Auth() {
             className="text-sm text-primary hover:underline"
           >
             {isLogin
-              ? "Don't have an account? Sign up"
+              ? "New to Kollect-It? Create an account"
               : "Already have an account? Sign in"}
           </button>
         </div>
 
-        {/* Password Recovery CTA */}
-        {isLogin && (
-          <div className="mt-4 text-center">
-            <Link
-              to="/password-recovery"
-              className="text-sm text-muted-foreground hover:underline"
-            >
-              Forgot your password?
-            </Link>
+        {!isLogin && (
+          <div className="mt-8 space-y-4 border rounded-lg p-4 bg-muted/50">
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="h-5 w-5 text-primary mt-0.5" />
+              <div>
+                <h3 className="font-medium mb-1">Why Join Kollect-It?</h3>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• Secure marketplace for fine art and collectibles</li>
+                  <li>• Connect with fellow collectors and enthusiasts</li>
+                  <li>• Track your collection's value and history</li>
+                  <li>• Access exclusive deals and early listings</li>
+                </ul>
+              </div>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Footer */}
       <footer className="border-t mt-16">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Kollect-It. All rights reserved.</p>
