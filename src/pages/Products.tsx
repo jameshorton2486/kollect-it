@@ -4,12 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Tables } from "@/integrations/supabase/types";
 import { ProductHeader } from "@/components/products/ProductHeader";
 import { ProductFilters } from "@/components/products/ProductFilters";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { CreateProductForm } from "@/components/products/CreateProductForm";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { PlusCircle, Search } from "lucide-react";
 
 export default function Products() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -57,7 +58,7 @@ export default function Products() {
     return matchesSearch && matchesCondition && matchesPriceRange;
   }) || [];
 
-  const handleCreateProduct = async (values: any): Promise<{ id: string } | undefined> => {
+  const handleCreateProduct = async (values: any) => {
     try {
       const { data, error } = await supabase
         .from("products")
@@ -99,32 +100,69 @@ export default function Products() {
   return (
     <DashboardLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <ProductHeader onOpenCreateDialog={() => setIsCreateDialogOpen(true)} />
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-3xl font-bold">
+              Welcome to Kollect-It – Explore & Manage Your Collectibles
+            </CardTitle>
+            <p className="mt-2 text-muted-foreground">
+              Find, browse, and manage your unique collectibles with ease. Whether you're looking to add a rare find
+              to your collection or manage your store inventory, Kollect-It provides a seamless shopping and selling experience.
+            </p>
+          </CardHeader>
+          <CardContent className="flex gap-4">
+            <Button 
+              onClick={() => setIsCreateDialogOpen(true)}
+              className="bg-shop-700 hover:bg-shop-800"
+            >
+              <PlusCircle className="mr-2 h-4 w-4" />
+              List a Product
+            </Button>
+            <Button variant="outline">
+              <Search className="mr-2 h-4 w-4" />
+              Browse Collectibles
+            </Button>
+          </CardContent>
+        </Card>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <aside className="space-y-6 md:col-span-1">
-            <ProductFilters
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-              categories={categories}
-              priceRange={priceRange}
-              onPriceRangeChange={setPriceRange}
-              selectedCondition={selectedCondition}
-              onConditionChange={setSelectedCondition}
-            />
+            <Card>
+              <CardHeader>
+                <CardTitle>Search & Browse</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Use our intuitive filters to discover collectibles that match your interests
+                </p>
+              </CardHeader>
+              <CardContent>
+                <ProductFilters
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  selectedCategory={selectedCategory}
+                  onCategoryChange={setSelectedCategory}
+                  categories={categories}
+                  priceRange={priceRange}
+                  onPriceRangeChange={setPriceRange}
+                  selectedCondition={selectedCondition}
+                  onConditionChange={setSelectedCondition}
+                />
+              </CardContent>
+            </Card>
           </aside>
 
           <main className="md:col-span-3">
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h2 className="text-lg font-semibold text-shop-800 mb-2">
-                {isLoading ? "Loading..." : `${filteredProducts.length} Products Found`}
-              </h2>
-              <p className="text-shop-500">
-                Browse our curated collection of fine art and collectibles
-              </p>
-            </div>
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>
+                  {isLoading ? "Loading..." : `${filteredProducts.length} Products Found`}
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  {filteredProducts.length === 0 
+                    ? "Try adjusting your filters or exploring new categories. Our curated collection is always growing with unique and rare finds."
+                    : "Browse our curated collection of fine art and collectibles"}
+                </p>
+              </CardHeader>
+            </Card>
             <ProductGrid products={filteredProducts} categories={categories} />
           </main>
         </div>
