@@ -1,6 +1,7 @@
 import React from "react"
 import { cn } from "@/lib/utils"
-import { SidebarContext, useSidebar } from "../context/SidebarContext"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { SidebarContext } from "../context/SidebarContext"
 
 export interface SidebarProviderProps extends React.ComponentProps<"div"> {
   defaultOpen?: boolean
