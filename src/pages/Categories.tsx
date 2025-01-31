@@ -1,23 +1,13 @@
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  description: z.string().optional(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { CategoryForm } from "@/components/categories/CategoryForm";
+import { CategoryCard } from "@/components/categories/CategoryCard";
 
 interface Category {
   id: string;
@@ -28,13 +18,6 @@ interface Category {
 
 export default function Categories() {
   const { toast } = useToast();
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      description: "",
-    },
-  });
 
   const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories"],
@@ -55,27 +38,25 @@ export default function Categories() {
     },
   });
 
-  const onSubmit = async (values: FormValues) => {
+  const handleSubmit = async (values: { name: string; description?: string }) => {
     console.log("Attempting to create category with values:", values);
     
     try {
-      const { data, error } = await supabase.from("categories").insert([
-        {
+      const { data, error } = await supabase
+        .from("categories")
+        .insert([{
           name: values.name,
           description: values.description || null,
-        },
-      ]).select();
+        }])
+        .select();
 
       if (error) {
         console.error("Supabase error creating category:", error);
-        let errorMessage = "There was an error creating the category.";
-        
-        // More specific error messages based on error type
-        if (error.code === "23505") {
-          errorMessage = "A category with this name already exists.";
-        } else if (error.code === "42501") {
-          errorMessage = "You don't have permission to create categories.";
-        }
+        const errorMessage = error.code === "23505" 
+          ? "A category with this name already exists."
+          : error.code === "42501"
+          ? "You don't have permission to create categories."
+          : "There was an error creating the category.";
         
         toast({
           title: "Error",
@@ -91,7 +72,6 @@ export default function Categories() {
         description: "The category has been created successfully.",
       });
 
-      form.reset();
       refetch();
     } catch (error) {
       console.error("Unexpected error creating category:", error);
@@ -103,15 +83,15 @@ export default function Categories() {
     }
   };
 
-  // Handle fetch error
   if (fetchError) {
-    console.error("Error in categories query:", fetchError);
     return (
       <DashboardLayout>
         <div className="max-w-7xl mx-auto p-6">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <h2 className="text-red-800 font-semibold">Error Loading Categories</h2>
-            <p className="text-red-600">There was an error loading the categories. Please try again later.</p>
+            <p className="text-red-600">
+              There was an error loading the categories. Please try again later.
+            </p>
           </div>
         </div>
       </DashboardLayout>
@@ -135,54 +115,18 @@ export default function Categories() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-semibold text-shop-800">Add New Category</DialogTitle>
+                <DialogTitle className="text-2xl font-semibold text-shop-800">
+                  Add New Category
+                </DialogTitle>
               </DialogHeader>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Category name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Category description" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" className="w-full">Create Category</Button>
-                </form>
-              </Form>
+              <CategoryForm onSubmit={handleSubmit} />
             </DialogContent>
           </Dialog>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories?.map((category) => (
-            <div
-              key={category.id}
-              className="bg-white rounded-lg shadow-sm border border-shop-200 overflow-hidden hover:shadow-md transition-all duration-300"
-            >
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-shop-800 mb-2">{category.name}</h3>
-                <p className="text-shop-600">{category.description}</p>
-              </div>
-            </div>
+            <CategoryCard key={category.id} {...category} />
           ))}
         </div>
       </div>
