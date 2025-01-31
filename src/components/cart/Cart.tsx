@@ -1,13 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Heart, Truck, Shield } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { CartItem } from "./CartItem";
 import { formatPrice } from "@/lib/utils";
+import { ProductRecommendations } from "./ProductRecommendations";
+import { ShippingEstimate } from "./ShippingEstimate";
+import { useNavigate } from "react-router-dom";
 
 export function Cart() {
   const { items, isLoading, total } = useCart();
+  const navigate = useNavigate();
 
   return (
     <Sheet>
@@ -49,14 +53,47 @@ export function Cart() {
                   <CartItem key={item.id} item={item} />
                 ))}
               </div>
+
+              <div className="mt-6 space-y-4">
+                <ShippingEstimate total={total} />
+                
+                <div className="flex items-center justify-center space-x-2 text-sm text-shop-600 dark:text-shop-400">
+                  <Shield className="h-4 w-4" />
+                  <span>Secure Checkout</span>
+                  <Truck className="h-4 w-4 ml-2" />
+                  <span>Fast Delivery</span>
+                </div>
+              </div>
+
+              {items.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="text-lg font-semibold mb-4">You Might Also Like</h3>
+                  <ProductRecommendations />
+                </div>
+              )}
             </ScrollArea>
+
             <div className="border-t border-shop-200 dark:border-shop-700 pt-4 mt-4">
               <div className="flex justify-between mb-4">
                 <span className="font-semibold text-shop-800 dark:text-shop-200">Total</span>
                 <span className="font-semibold text-shop-800 dark:text-shop-200">{formatPrice(total)}</span>
               </div>
-              <Button className="w-full btn-primary">
+              <Button 
+                className="w-full btn-primary mb-2"
+                onClick={() => {
+                  navigate("/checkout");
+                }}
+              >
                 Proceed to Checkout
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => {
+                  navigate("/products");
+                }}
+              >
+                Continue Shopping
               </Button>
             </div>
           </div>
