@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Mail, Lock, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Auth() {
   const navigate = useNavigate();
@@ -45,20 +46,6 @@ export function Auth() {
       toast.error(error.message);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handlePasswordReset = async () => {
-    if (!email) {
-      toast.error("Please enter your email address");
-      return;
-    }
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
-      if (error) throw error;
-      toast.success("Password reset instructions sent to your email!");
-    } catch (error: any) {
-      toast.error(error.message);
     }
   };
 
@@ -155,13 +142,12 @@ export function Auth() {
         {/* Password Recovery CTA */}
         {isLogin && (
           <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={handlePasswordReset}
+            <Link
+              to="/password-recovery"
               className="text-sm text-muted-foreground hover:underline"
             >
               Forgot your password?
-            </button>
+            </Link>
           </div>
         )}
       </div>
