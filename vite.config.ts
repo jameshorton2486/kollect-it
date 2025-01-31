@@ -9,10 +9,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    react({
-      // Enable Fast Refresh
-      fastRefresh: true,
-    }),
+    react(),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
@@ -21,11 +18,8 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Enable minification
     minify: true,
-    // Enable source maps for production debugging
     sourcemap: true,
-    // Split chunks for better caching
     rollupOptions: {
       output: {
         manualChunks: {
@@ -36,7 +30,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    // Include dependencies that should be pre-bundled
     include: ['react', 'react-dom', '@tanstack/react-query'],
   },
 }));
