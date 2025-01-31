@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -29,10 +29,10 @@ export function PricingSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-shop-900 mb-4">
-            Start Selling Your Collectibles
+            List Your Items & Grow Your Collection
           </h2>
           <p className="text-lg text-shop-600 max-w-2xl mx-auto">
-            Choose the perfect plan for your collection. Start small and grow with us.
+            Choose the perfect plan for your collection. No hidden fees—just an easy way to share your treasures with the world.
           </p>
         </div>
         
@@ -62,28 +62,6 @@ export function PricingSection() {
               </Button>
             </Card>
           ))}
-        </div>
-
-        <div className="mt-12 p-6 bg-shop-50 rounded-lg">
-          <h3 className="text-xl font-semibold text-shop-800 mb-4 text-center">
-            Our Commitment to Quality
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex items-start gap-2">
-              <Check className="w-5 h-5 text-green-500 mt-1" />
-              <div>
-                <p className="font-semibold text-shop-800">First Violation</p>
-                <p className="text-shop-600">Warning and listing removal</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <X className="w-5 h-5 text-red-500 mt-1" />
-              <div>
-                <p className="font-semibold text-shop-800">Second Violation</p>
-                <p className="text-shop-600">Permanent account suspension</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
