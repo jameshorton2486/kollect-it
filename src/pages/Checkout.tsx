@@ -5,13 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CreditCard, Package, Truck } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { CheckoutProgress } from "@/components/checkout/CheckoutProgress";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
   const { items, total } = useCart();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle checkout submission
+    toast({
+      title: "Order placed successfully!",
+      description: "You will receive a confirmation email shortly.",
+    });
+    navigate("/order-confirmation");
   };
 
   return (
@@ -21,6 +30,10 @@ export default function Checkout() {
           <h1 className="text-2xl font-bold">Checkout</h1>
         </div>
       </header>
+
+      <div className="container mx-auto px-4 py-8">
+        <CheckoutProgress currentStep="payment" />
+      </div>
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-8">
@@ -103,6 +116,21 @@ export default function Checkout() {
                     <span>Total</span>
                     <span>{formatPrice(total)}</span>
                   </div>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Package className="h-4 w-4" />
+                  <span>Free shipping on orders over $100</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Truck className="h-4 w-4" />
+                  <span>Estimated delivery: 3-5 business days</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CreditCard className="h-4 w-4" />
+                  <span>Secure payment processing</span>
                 </div>
               </div>
             </div>

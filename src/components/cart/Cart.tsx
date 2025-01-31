@@ -8,10 +8,19 @@ import { formatPrice } from "@/lib/utils";
 import { ProductRecommendations } from "./ProductRecommendations";
 import { ShippingEstimate } from "./ShippingEstimate";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export function Cart() {
   const { items, isLoading, total } = useCart();
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    toast({
+      title: "Item added to cart",
+      description: "Your item has been added to the cart successfully.",
+    });
+  };
 
   return (
     <Sheet>
