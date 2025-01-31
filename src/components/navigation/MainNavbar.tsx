@@ -1,25 +1,40 @@
 import { Link } from "react-router-dom";
-import { Menu, ShoppingCart, User, Search } from "lucide-react";
+import { Menu, ShoppingCart, User, Search, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Input } from "@/components/ui/input";
 
-const navigationItems = [
+const mainNavigationItems = [
   { label: "Home", path: "/" },
+  { label: "New Arrivals", path: "/new-arrivals" },
+];
+
+const shopNavigationItems = [
   { label: "Products", path: "/products" },
   { label: "Categories", path: "/categories" },
-  { label: "Blog", path: "/blog" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+];
+
+const helpNavigationItems = [
   { label: "FAQ", path: "/faq" },
+  { label: "Contact", path: "/contact" },
+  { label: "About", path: "/about" },
 ];
 
 const userNavigationItems = [
   { label: "Dashboard", path: "/buyer-dashboard" },
   { label: "Purchase History", path: "/purchase-history" },
   { label: "Personal Collection", path: "/personal-collection" },
+  { label: "Settings", path: "/settings" },
 ];
 
 export function MainNavbar() {
@@ -29,7 +44,6 @@ export function MainNavbar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implement search functionality here
     console.log("Search query:", searchQuery);
   };
 
@@ -47,7 +61,8 @@ export function MainNavbar() {
           {!isMobile && (
             <>
               <div className="hidden md:flex items-center space-x-8">
-                {navigationItems.map((item) => (
+                {/* Main Navigation */}
+                {mainNavigationItems.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
@@ -56,8 +71,50 @@ export function MainNavbar() {
                     {item.label}
                   </Link>
                 ))}
+
+                {/* Shop Navigation */}
+                <div className="relative group">
+                  <button className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                    Shop
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="py-1">
+                      {shopNavigationItems.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          className="block px-4 py-2 text-sm text-shop-600 hover:bg-shop-50"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Help Navigation */}
+                <div className="relative group">
+                  <button className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                    Help
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="py-1">
+                      {helpNavigationItems.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          className="block px-4 py-2 text-sm text-shop-600 hover:bg-shop-50"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-              
+
               {/* Search Bar */}
               <div className="hidden md:flex items-center flex-1 max-w-xs mx-4">
                 <form onSubmit={handleSearch} className="w-full">
@@ -83,12 +140,34 @@ export function MainNavbar() {
                 {/* Add cart items count badge here if needed */}
               </Button>
             </Link>
-            <Link to="/auth">
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-              </Button>
-            </Link>
 
+            {/* User Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <User className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {userNavigationItems.map((item) => (
+                  <DropdownMenuItem key={item.path} asChild>
+                    <Link to={item.path} className="w-full">
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link to="/auth" className="w-full">
+                    Sign Out
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Mobile Menu Button */}
             {isMobile && (
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
@@ -115,27 +194,68 @@ export function MainNavbar() {
                   
                   {/* Mobile Navigation */}
                   <nav className="flex flex-col gap-4">
-                    {navigationItems.map((item) => (
+                    <div>
+                      <h3 className="font-semibold mb-2">Main</h3>
+                      {mainNavigationItems.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setIsOpen(false)}
+                          className="block py-2 text-shop-600 hover:text-shop-900"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold mb-2">Shop</h3>
+                      {shopNavigationItems.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setIsOpen(false)}
+                          className="block py-2 text-shop-600 hover:text-shop-900"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold mb-2">Help</h3>
+                      {helpNavigationItems.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setIsOpen(false)}
+                          className="block py-2 text-shop-600 hover:text-shop-900"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold mb-2">Account</h3>
+                      {userNavigationItems.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setIsOpen(false)}
+                          className="block py-2 text-shop-600 hover:text-shop-900"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
                       <Link
-                        key={item.path}
-                        to={item.path}
+                        to="/auth"
                         onClick={() => setIsOpen(false)}
-                        className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                        className="block py-2 text-shop-600 hover:text-shop-900"
                       >
-                        {item.label}
+                        Sign Out
                       </Link>
-                    ))}
-                    <div className="border-t border-gray-200 my-2" />
-                    {userNavigationItems.map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        onClick={() => setIsOpen(false)}
-                        className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                    </div>
                   </nav>
                 </SheetContent>
               </Sheet>
