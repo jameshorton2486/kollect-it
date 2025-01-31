@@ -1,3 +1,4 @@
+// Re-export all UI components
 export * from "./accordion";
 export * from "./alert-dialog";
 export * from "./alert";
