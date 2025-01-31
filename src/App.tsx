@@ -22,32 +22,33 @@ import OrderConfirmation from "@/pages/OrderConfirmation";
 import PurchaseHistory from "@/pages/PurchaseHistory";
 import PersonalCollection from "@/pages/PersonalCollection";
 import { Toaster } from "@/components/ui/sonner";
+import { PageLayout } from "@/components/layout/PageLayout";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product-listing" element={<ProductListing />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
-        <Route path="/seller-dashboard" element={<SellerDashboard />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/password-recovery" element={<PasswordRecovery />} />
-        <Route path="/email-verification" element={<EmailVerification />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/shipping-returns" element={<ShippingReturns />} />
-        <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
-        <Route path="/purchase-history" element={<PurchaseHistory />} />
-        <Route path="/personal-collection" element={<PersonalCollection />} />
+        <Route path="/" element={<PageLayout><Home /></PageLayout>} />
+        <Route path="/products" element={<PageLayout><Products /></PageLayout>} />
+        <Route path="/product-listing" element={<PageLayout showBackButton><ProductListing /></PageLayout>} />
+        <Route path="/categories" element={<PageLayout><Categories /></PageLayout>} />
+        <Route path="/buyer-dashboard" element={<PageLayout><BuyerDashboard /></PageLayout>} />
+        <Route path="/seller-dashboard" element={<PageLayout><SellerDashboard /></PageLayout>} />
+        <Route path="/auth" element={<PageLayout><Auth /></PageLayout>} />
+        <Route path="/password-recovery" element={<PageLayout><PasswordRecovery /></PageLayout>} />
+        <Route path="/email-verification" element={<PageLayout><EmailVerification /></PageLayout>} />
+        <Route path="/blog" element={<PageLayout><Blog /></PageLayout>} />
+        <Route path="/about" element={<PageLayout><AboutUs /></PageLayout>} />
+        <Route path="/faq" element={<PageLayout><FAQ /></PageLayout>} />
+        <Route path="/contact" element={<PageLayout><Contact /></PageLayout>} />
+        <Route path="/terms-of-service" element={<PageLayout><TermsOfService /></PageLayout>} />
+        <Route path="/privacy-policy" element={<PageLayout><PrivacyPolicy /></PageLayout>} />
+        <Route path="/shipping-returns" element={<PageLayout><ShippingReturns /></PageLayout>} />
+        <Route path="/cart" element={<PageLayout showBackButton><ShoppingCart /></PageLayout>} />
+        <Route path="/checkout" element={<PageLayout showBackButton><Checkout /></PageLayout>} />
+        <Route path="/order-confirmation" element={<PageLayout><OrderConfirmation /></PageLayout>} />
+        <Route path="/purchase-history" element={<PageLayout><PurchaseHistory /></PageLayout>} />
+        <Route path="/personal-collection" element={<PageLayout><PersonalCollection /></PageLayout>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
