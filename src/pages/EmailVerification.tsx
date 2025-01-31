@@ -75,19 +75,17 @@ export function EmailVerification() {
 
         <div className="text-center mb-8">
           <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h2 className="text-3xl font-bold mb-4">Verify Your Email</h2>
+          <h2 className="text-3xl font-bold mb-4">One Step Away from Your Collection</h2>
           <p className="text-muted-foreground">
-            Welcome to Kollect-It! To ensure the security of your account and access all features,
-            please verify your email address.
+            Verify your email to unlock exclusive features and start your collecting journey!
           </p>
         </div>
 
         <Alert className="mb-6">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Important</AlertTitle>
+          <AlertTitle>Almost There!</AlertTitle>
           <AlertDescription>
-            Check your email inbox for the verification link. If you don't see it,
-            check your spam folder or request a new verification email below.
+            Check your email for the verification link to activate your account and start exploring.
           </AlertDescription>
         </Alert>
 

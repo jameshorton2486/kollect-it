@@ -27,7 +27,7 @@ export function Auth() {
           password,
         });
         if (error) throw error;
-        toast.success("Successfully logged in!");
+        toast.success("Welcome back to Kollect-It!");
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
@@ -40,7 +40,7 @@ export function Auth() {
           },
         });
         if (error) throw error;
-        toast.success("Registration successful! Please check your email.");
+        toast.success("Welcome to Kollect-It! Please check your email to get started.");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -60,12 +60,14 @@ export function Auth() {
       <div className="max-w-md mx-auto mt-12 px-4">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">
-            {isLogin ? "Welcome Back to Kollect-It" : "Join the Kollect-It Community"}
+            {isLogin 
+              ? "Welcome Back, Collector!" 
+              : "Join the World of Collecting"}
           </h2>
           <p className="text-muted-foreground mb-6">
             {isLogin
-              ? "Sign in to access your collection and continue your journey"
-              : "Create an account to start your collecting adventure"}
+              ? "Sign in to continue your collecting journey"
+              : "Start your collecting adventure today"}
           </p>
 
           {!isLogin && (
@@ -73,15 +75,15 @@ export function Auth() {
               <div className="flex items-start gap-3 p-4 rounded-lg border bg-card">
                 <Package className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-medium">Manage Collections</h3>
-                  <p className="text-sm text-muted-foreground">Track and showcase your items</p>
+                  <h3 className="font-medium">Curate Your Collection</h3>
+                  <p className="text-sm text-muted-foreground">Build and showcase your unique treasures</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 rounded-lg border bg-card">
                 <Star className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-medium">Exclusive Access</h3>
-                  <p className="text-sm text-muted-foreground">Early access to new listings</p>
+                  <h3 className="font-medium">VIP Access</h3>
+                  <p className="text-sm text-muted-foreground">Get first dibs on rare finds</p>
                 </div>
               </div>
             </div>
@@ -140,7 +142,9 @@ export function Auth() {
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Loading..." : isLogin ? "Sign In" : "Create Account"}
+            {isLoading ? "Loading..." : isLogin 
+              ? "Start Exploring Your Collection" 
+              : "Begin Your Collecting Journey"}
           </Button>
 
           {isLogin && (
@@ -172,8 +176,8 @@ export function Auth() {
             className="text-sm text-primary hover:underline"
           >
             {isLogin
-              ? "New to Kollect-It? Create an account"
-              : "Already have an account? Sign in"}
+              ? "Ready to start collecting? Join now!"
+              : "Already a collector? Sign in"}
           </button>
         </div>
 
@@ -182,12 +186,12 @@ export function Auth() {
             <div className="flex items-start gap-3">
               <ShieldCheck className="h-5 w-5 text-primary mt-0.5" />
               <div>
-                <h3 className="font-medium mb-1">Why Join Kollect-It?</h3>
+                <h3 className="font-medium mb-1">Why Join Our Community?</h3>
                 <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• Secure marketplace for fine art and collectibles</li>
-                  <li>• Connect with fellow collectors and enthusiasts</li>
-                  <li>• Track your collection's value and history</li>
-                  <li>• Access exclusive deals and early listings</li>
+                  <li>• Trusted marketplace for authentic collectibles</li>
+                  <li>• Connect with passionate collectors</li>
+                  <li>• Track your collection's growth</li>
+                  <li>• Exclusive deals and early access</li>
                 </ul>
               </div>
             </div>

@@ -57,14 +57,14 @@ export function PasswordRecovery() {
         >
           <Link to="/auth">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Login
+            Return to Sign In
           </Link>
         </Button>
 
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4">Reset Your Password</h2>
+          <h2 className="text-3xl font-bold mb-4">Regain Access to Your Collection</h2>
           <p className="text-muted-foreground">
-            Don't worry! It happens to the best of us. Follow these simple steps to reset your password and regain access to your account.
+            Don't worry! We'll help you get back to your treasured items quickly and securely.
           </p>
         </div>
 
@@ -74,12 +74,12 @@ export function PasswordRecovery() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                 <div>
-                  <h3 className="font-medium mb-1">Password Reset Steps</h3>
+                  <h3 className="font-medium mb-1">Quick Recovery Steps</h3>
                   <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
-                    <li>Enter your email address below</li>
+                    <li>Enter your collector account email</li>
                     <li>Check your inbox for reset instructions</li>
-                    <li>Click the reset link in the email</li>
-                    <li>Create a new secure password</li>
+                    <li>Click the secure reset link</li>
+                    <li>Create your new password</li>
                   </ol>
                 </div>
               </div>
@@ -104,7 +104,7 @@ export function PasswordRecovery() {
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Sending..." : "Send Reset Instructions"}
+                {isLoading ? "Sending..." : "Restore Account Access"}
               </Button>
             </form>
 
@@ -132,16 +132,16 @@ export function PasswordRecovery() {
             <div className="space-y-2">
               <h3 className="font-medium">Check Your Email</h3>
               <p className="text-muted-foreground text-sm">
-                We've sent password reset instructions to <strong>{email}</strong>. 
-                Please check your inbox and spam folder.
+                Recovery instructions sent to <strong>{email}</strong>. 
+                Check your inbox to regain access to your collection.
               </p>
               <p className="text-sm text-muted-foreground mt-4">
-                Didn't receive the email? Check your spam folder or request another reset email in 60 seconds.
+                No email? Check your spam folder or request another reset link in 60 seconds.
               </p>
             </div>
             <div className="pt-4">
               <Button asChild>
-                <Link to="/auth">Return to Login</Link>
+                <Link to="/auth">Back to Sign In</Link>
               </Button>
             </div>
           </div>
@@ -155,4 +155,3 @@ export function PasswordRecovery() {
       </footer>
     </div>
   );
-}
