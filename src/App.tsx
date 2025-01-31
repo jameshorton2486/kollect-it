@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { CartProvider } from "@/contexts/CartContext";
+import Home from "@/pages/Home";
 import Products from "@/pages/Products";
 import Categories from "@/pages/Categories";
 import BuyerDashboard from "@/pages/BuyerDashboard";
@@ -17,7 +18,7 @@ function App() {
       <CartProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<Products />} />
+            <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/dashboard/buyer" element={<BuyerDashboard />} />
