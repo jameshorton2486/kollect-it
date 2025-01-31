@@ -11,6 +11,9 @@ import Blog from "@/pages/Blog";
 import AboutUs from "@/pages/AboutUs";
 import FAQ from "@/pages/FAQ";
 import Contact from "@/pages/Contact";
+import TermsOfService from "@/pages/TermsOfService";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import ShippingReturns from "@/pages/ShippingReturns";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
@@ -28,6 +31,9 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/shipping-returns" element={<ShippingReturns />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
