@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { FilterContent } from "./filters/FilterContent";
 
 export function ProductListingFilters() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,77 +38,51 @@ export function ProductListingFilters() {
     setPriceRange({ min: "", max: "" });
   };
 
-  const FilterContent = () => (
-    <div className="space-y-6">
-      <SearchFilter
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        categories={categories}
-      />
-      <ConditionFilter
-        selectedCondition={selectedCondition}
-        onConditionChange={setSelectedCondition}
-      />
-      <PriceRangeFilter
-        priceRange={priceRange}
-        onPriceRangeChange={setPriceRange}
-      />
-      <Button 
-        variant="outline" 
-        className="w-full mt-4"
-        onClick={resetFilters}
-      >
-        <X className="h-4 w-4 mr-2" />
-        Reset Filters
-      </Button>
-    </div>
-  );
-
-  // Desktop view
-  const DesktopFilters = () => (
-    <Card className="hidden md:block">
-      <CardHeader>
-        <CardTitle className="text-xl font-semibold flex items-center">
-          <Filter className="h-5 w-5 mr-2" />
-          Filters
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <FilterContent />
-      </CardContent>
-    </Card>
-  );
-
-  // Mobile view
-  const MobileFilters = () => (
-    <div className="md:hidden">
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <Button variant="outline" className="w-full">
-            <Filter className="h-4 w-4 mr-2" />
-            Filters
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-full sm:max-w-lg">
-          <SheetHeader>
-            <SheetTitle>Filters</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6">
-            <FilterContent />
-          </div>
-        </SheetContent>
-      </Sheet>
-    </div>
-  );
+  const filterProps = {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    selectedCondition,
+    setSelectedCondition,
+    priceRange,
+    setPriceRange,
+    categories,
+    resetFilters,
+  };
 
   return (
     <>
-      <DesktopFilters />
-      <MobileFilters />
+      <Card className="hidden md:block">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold flex items-center">
+            <Filter className="h-5 w-5 mr-2" />
+            Filters
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <FilterContent {...filterProps} />
+        </CardContent>
+      </Card>
+
+      <div className="md:hidden">
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline" className="w-full">
+              <Filter className="h-4 w-4 mr-2" />
+              Filters
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-full sm:max-w-lg">
+            <SheetHeader>
+              <SheetTitle>Filters</SheetTitle>
+            </SheetHeader>
+            <div className="mt-6">
+              <FilterContent {...filterProps} />
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </>
   );
 }
