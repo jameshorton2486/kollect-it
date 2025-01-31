@@ -5,6 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ProductGallery } from "./detail/ProductGallery";
 import { ProductInfo } from "./detail/ProductInfo";
 import { ProductActions } from "./detail/ProductActions";
+import { RelatedProducts } from "./detail/RelatedProducts";
 
 interface ProductDetailProps {
   product: Tables<"products">;
@@ -49,6 +50,9 @@ export function ProductDetail({ product, isOpen, onClose, categoryName }: Produc
             <ProductInfo product={product} categoryName={categoryName} />
             <ProductActions product={product} />
           </div>
+        </div>
+        <div className="p-6 border-t border-gray-200">
+          <RelatedProducts currentProductId={product.id} categoryId={product.category_id} />
         </div>
       </DialogContent>
     </Dialog>

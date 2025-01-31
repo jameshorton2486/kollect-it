@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface ProductImage {
   id: string;
@@ -16,6 +17,7 @@ interface ProductGalleryProps {
 export function ProductGallery({ images, defaultImage }: ProductGalleryProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const allImages = [...images, { id: 'main', image_url: defaultImage, display_order: -1 }];
 
@@ -31,13 +33,28 @@ export function ProductGallery({ images, defaultImage }: ProductGalleryProps) {
 
   return (
     <div className="relative">
-      <div className="aspect-square">
+      <div 
+        className="aspect-square cursor-zoom-in"
+        onClick={() => setIsZoomed(true)}
+      >
         <img
           src={selectedImage || defaultImage}
           alt="Product"
           className="w-full h-full object-cover"
         />
+        <Button
+          size="icon"
+          variant="ghost"
+          className="absolute right-2 top-2 bg-white/80 hover:bg-white"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsZoomed(true);
+          }}
+        >
+          <ZoomIn className="h-4 w-4" />
+        </Button>
       </div>
+
       {allImages.length > 1 && (
         <>
           <Button
@@ -58,6 +75,7 @@ export function ProductGallery({ images, defaultImage }: ProductGalleryProps) {
           </Button>
         </>
       )}
+
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
         {allImages.map((_, index) => (
           <div
@@ -68,6 +86,7 @@ export function ProductGallery({ images, defaultImage }: ProductGalleryProps) {
           />
         ))}
       </div>
+
       <div className="flex gap-2 overflow-x-auto pb-2 mt-4">
         {allImages.map((image, index) => (
           <button
@@ -87,6 +106,26 @@ export function ProductGallery({ images, defaultImage }: ProductGalleryProps) {
           </button>
         ))}
       </div>
+
+      <Dialog open={isZoomed} onOpenChange={setIsZoomed}>
+        <DialogContent className="max-w-4xl p-0">
+          <div className="relative">
+            <img
+              src={selectedImage || defaultImage}
+              alt="Product zoomed"
+              className="w-full h-full object-contain max-h-[80vh]"
+            />
+            <Button
+              size="icon"
+              variant="ghost"
+              className="absolute right-2 top-2 bg-white/80 hover:bg-white"
+              onClick={() => setIsZoomed(false)}
+            >
+              <ZoomOut className="h-4 w-4" />
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
