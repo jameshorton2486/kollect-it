@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, ArrowLeft, AlertCircle, CheckCircle2, Clock, HelpCircle } from "lucide-react";
+import { Mail, ArrowLeft, AlertCircle, CheckCircle2, Clock, HelpCircle, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
@@ -75,9 +75,9 @@ export function EmailVerification() {
 
         <div className="text-center mb-8">
           <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h2 className="text-3xl font-bold mb-4">One Step Away from Your Collection</h2>
+          <h2 className="text-3xl font-bold mb-4">Verify Your Email to Start Collecting</h2>
           <p className="text-muted-foreground">
-            Verify your email to unlock exclusive features and start your collecting journey!
+            Complete your registration to access exclusive features and start your collecting journey!
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export function EmailVerification() {
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Almost There!</AlertTitle>
           <AlertDescription>
-            Check your email for the verification link to activate your account and start exploring.
+            Check your email for the verification link. Click it to activate your account and start exploring.
           </AlertDescription>
         </Alert>
 
@@ -93,7 +93,7 @@ export function EmailVerification() {
           <div className="bg-muted/50 p-4 rounded-lg border">
             <h3 className="font-medium mb-2 flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              Verification Steps
+              Email Verification Steps
             </h3>
             <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
               <li>Open the verification email from Kollect-It</li>
@@ -144,6 +144,13 @@ export function EmailVerification() {
               Frequently Asked Questions
             </h3>
             <div className="space-y-6">
+              <div>
+                <h4 className="font-medium">Haven't received the verification email?</h4>
+                <p className="text-sm text-muted-foreground">
+                  First, check your spam folder. If you still can't find it, use the resend button above.
+                  Make sure to add noreply@kollect-it.com to your safe senders list.
+                </p>
+              </div>
               <div>
                 <h4 className="font-medium">How long does verification take?</h4>
                 <p className="text-sm text-muted-foreground">

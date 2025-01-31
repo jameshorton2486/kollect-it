@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, ShieldCheck, ArrowLeft, AlertCircle } from "lucide-react";
+import { Mail, ShieldCheck, ArrowLeft, AlertCircle, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function PasswordRecovery() {
@@ -62,9 +62,9 @@ export function PasswordRecovery() {
         </Button>
 
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4">Regain Access to Your Collection</h2>
+          <h2 className="text-3xl font-bold mb-4">Secure Account Recovery</h2>
           <p className="text-muted-foreground">
-            Don't worry! We'll help you get back to your treasured items quickly and securely.
+            We'll help you regain access to your collection safely and quickly.
           </p>
         </div>
 
@@ -74,12 +74,12 @@ export function PasswordRecovery() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                 <div>
-                  <h3 className="font-medium mb-1">Quick Recovery Steps</h3>
+                  <h3 className="font-medium mb-1">Account Recovery Steps</h3>
                   <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
-                    <li>Enter your collector account email</li>
+                    <li>Enter your registered email below</li>
                     <li>Check your inbox for reset instructions</li>
-                    <li>Click the secure reset link</li>
-                    <li>Create your new password</li>
+                    <li>Click the secure reset link in the email</li>
+                    <li>Create a strong new password</li>
                   </ol>
                 </div>
               </div>
@@ -104,22 +104,29 @@ export function PasswordRecovery() {
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Sending..." : "Restore Account Access"}
+                {isLoading ? "Sending Recovery Email..." : "Send Recovery Instructions"}
               </Button>
             </form>
 
             <div className="mt-8 space-y-4 border rounded-lg p-4 bg-muted/50">
               <div className="flex items-start gap-3">
-                <ShieldCheck className="h-5 w-5 text-primary mt-0.5" />
+                <HelpCircle className="h-5 w-5 text-primary mt-0.5" />
                 <div>
-                  <h3 className="font-medium mb-1">Creating a Strong Password</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Use at least 8 characters</li>
-                    <li>• Include uppercase and lowercase letters</li>
-                    <li>• Add numbers and special characters</li>
-                    <li>• Avoid using personal information</li>
-                    <li>• Use a unique password not used elsewhere</li>
-                  </ul>
+                  <h3 className="font-medium mb-2">Frequently Asked Questions</h3>
+                  <div className="space-y-4 text-sm text-muted-foreground">
+                    <div>
+                      <h4 className="font-medium">What if I don't receive the reset email?</h4>
+                      <p>Check your spam folder first. If you still don't see it, wait 60 seconds and try again. Make sure to use the email address associated with your account.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">How long is the reset link valid?</h4>
+                      <p>Reset links expire after 24 hours for security. Request a new one if needed.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">Still having trouble?</h4>
+                      <p>Contact our support team at support@kollect-it.com for assistance.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +140,7 @@ export function PasswordRecovery() {
               <h3 className="font-medium">Check Your Email</h3>
               <p className="text-muted-foreground text-sm">
                 Recovery instructions sent to <strong>{email}</strong>. 
-                Check your inbox to regain access to your collection.
+                Please check your inbox to reset your password.
               </p>
               <p className="text-sm text-muted-foreground mt-4">
                 No email? Check your spam folder or request another reset link in 60 seconds.
@@ -141,7 +148,7 @@ export function PasswordRecovery() {
             </div>
             <div className="pt-4">
               <Button asChild>
-                <Link to="/auth">Back to Sign In</Link>
+                <Link to="/auth">Return to Sign In</Link>
               </Button>
             </div>
           </div>
@@ -155,3 +162,4 @@ export function PasswordRecovery() {
       </footer>
     </div>
   );
+}

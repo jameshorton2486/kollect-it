@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, Lock, User, ShieldCheck, Sparkles, Package, Star } from "lucide-react";
+import { Mail, Lock, User, ShieldCheck, Sparkles, Package, Star, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Auth() {
@@ -62,7 +62,7 @@ export function Auth() {
           <h2 className="text-3xl font-bold mb-4">
             {isLogin 
               ? "Welcome Back, Collector!" 
-              : "Join the World of Collecting"}
+              : "Join Our Collecting Community"}
           </h2>
           <p className="text-muted-foreground mb-6">
             {isLogin
@@ -142,9 +142,9 @@ export function Auth() {
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Loading..." : isLogin 
-              ? "Start Exploring Your Collection" 
-              : "Begin Your Collecting Journey"}
+            {isLoading ? "Please wait..." : isLogin 
+              ? "Sign In to Your Collection" 
+              : "Start Your Collecting Journey"}
           </Button>
 
           {isLogin && (
@@ -176,27 +176,33 @@ export function Auth() {
             className="text-sm text-primary hover:underline"
           >
             {isLogin
-              ? "Ready to start collecting? Join now!"
+              ? "New to collecting? Join our community!"
               : "Already a collector? Sign in"}
           </button>
         </div>
 
-        {!isLogin && (
-          <div className="mt-8 space-y-4 border rounded-lg p-4 bg-muted/50">
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="h-5 w-5 text-primary mt-0.5" />
-              <div>
-                <h3 className="font-medium mb-1">Why Join Our Community?</h3>
-                <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• Trusted marketplace for authentic collectibles</li>
-                  <li>• Connect with passionate collectors</li>
-                  <li>• Track your collection's growth</li>
-                  <li>• Exclusive deals and early access</li>
-                </ul>
+        <div className="mt-8 space-y-4 border rounded-lg p-4 bg-muted/50">
+          <div className="flex items-start gap-3">
+            <HelpCircle className="h-5 w-5 text-primary mt-0.5" />
+            <div>
+              <h3 className="font-medium mb-2">Frequently Asked Questions</h3>
+              <div className="space-y-4 text-sm text-muted-foreground">
+                <div>
+                  <h4 className="font-medium">How do I create an account?</h4>
+                  <p>Click "New to collecting? Join our community!" and fill in your details. You'll need to verify your email to get started.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium">What if I forget my password?</h4>
+                  <p>Click "Forgot password?" to reset it. We'll send instructions to your registered email.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium">Is my information secure?</h4>
+                  <p>Yes! We use industry-standard encryption to protect your data and never share your information with third parties.</p>
+                </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       <footer className="border-t mt-16">
