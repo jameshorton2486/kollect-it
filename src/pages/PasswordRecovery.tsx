@@ -62,9 +62,10 @@ export function PasswordRecovery() {
         </Button>
 
         <div className="text-center mb-8">
+          <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl font-bold mb-4">Secure Account Recovery</h2>
           <p className="text-muted-foreground">
-            We'll help you regain access to your collection safely and quickly.
+            Don't worry! We'll help you regain access to your collection safely and quickly.
           </p>
         </div>
 
@@ -74,7 +75,7 @@ export function PasswordRecovery() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                 <div>
-                  <h3 className="font-medium mb-1">Account Recovery Steps</h3>
+                  <h3 className="font-medium mb-1">Simple Recovery Steps</h3>
                   <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
                     <li>Enter your registered email below</li>
                     <li>Check your inbox for reset instructions</li>
@@ -112,19 +113,19 @@ export function PasswordRecovery() {
               <div className="flex items-start gap-3">
                 <HelpCircle className="h-5 w-5 text-primary mt-0.5" />
                 <div>
-                  <h3 className="font-medium mb-2">Frequently Asked Questions</h3>
+                  <h3 className="font-medium mb-2">Need Help?</h3>
                   <div className="space-y-4 text-sm text-muted-foreground">
                     <div>
-                      <h4 className="font-medium">What if I don't receive the reset email?</h4>
-                      <p>Check your spam folder first. If you still don't see it, wait 60 seconds and try again. Make sure to use the email address associated with your account.</p>
+                      <h4 className="font-medium">No reset email received?</h4>
+                      <p>First check your spam folder. If you still don't see it, try requesting another reset link. Make sure to use the email address associated with your account.</p>
                     </div>
                     <div>
-                      <h4 className="font-medium">How long is the reset link valid?</h4>
-                      <p>Reset links expire after 24 hours for security. Request a new one if needed.</p>
+                      <h4 className="font-medium">Creating a Strong Password</h4>
+                      <p>Choose a password that's at least 8 characters long, combining uppercase and lowercase letters, numbers, and symbols. Avoid using personal information or common words.</p>
                     </div>
                     <div>
-                      <h4 className="font-medium">Still having trouble?</h4>
-                      <p>Contact our support team at support@kollect-it.com for assistance.</p>
+                      <h4 className="font-medium">Still Need Assistance?</h4>
+                      <p>Our support team is here to help! Contact us at support@kollect-it.com for personalized assistance with your account recovery.</p>
                     </div>
                   </div>
                 </div>
