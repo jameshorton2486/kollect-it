@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "@/pages/Home";
-import { Products } from "@/pages/Products";
-import { Categories } from "@/pages/Categories";
-import { BuyerDashboard } from "@/pages/BuyerDashboard";
-import { SellerDashboard } from "@/pages/SellerDashboard";
-import { NotFound } from "@/pages/NotFound";
+import Home from "@/pages/Home";
+import Products from "@/pages/Products";
+import Categories from "@/pages/Categories";
+import BuyerDashboard from "@/pages/BuyerDashboard";
+import SellerDashboard from "@/pages/SellerDashboard";
+import NotFound from "@/pages/NotFound";
 import { Auth } from "@/pages/Auth";
 import { Toaster } from "@/components/ui/sonner";
 
