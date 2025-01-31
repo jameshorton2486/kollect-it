@@ -13,7 +13,9 @@ import {
   BarChart3,
   Settings,
   HelpCircle,
-  Info
+  Info,
+  BookOpen,
+  Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -60,7 +62,7 @@ export default function SellerDashboard() {
       title: "Total Revenue",
       value: "$12,345",
       icon: DollarSign,
-      description: "Total earnings this month",
+      description: "Track your earnings and revenue growth over time",
       trend: "+12.5%",
       trendDirection: "up",
     },
@@ -68,7 +70,7 @@ export default function SellerDashboard() {
       title: "Active Listings",
       value: "45",
       icon: Package,
-      description: "Products currently listed",
+      description: "Monitor your active product listings and inventory levels",
       trend: "+5",
       trendDirection: "up",
     },
@@ -76,7 +78,7 @@ export default function SellerDashboard() {
       title: "Orders",
       value: "28",
       icon: ShoppingCart,
-      description: "Orders this month",
+      description: "Keep track of new and pending orders this month",
       trend: "-2",
       trendDirection: "down",
     },
@@ -84,17 +86,42 @@ export default function SellerDashboard() {
       title: "Sales Growth",
       value: "+12.5%",
       icon: TrendingUp,
-      description: "Compared to last month",
+      description: "Analyze your month-over-month sales performance",
       trend: "+2.3%",
       trendDirection: "up",
     },
   ];
 
   const quickActions = [
-    { title: "Add New Product", icon: Plus, action: () => navigate("/products/new") },
-    { title: "Manage Inventory", icon: List, action: () => navigate("/products") },
-    { title: "View Analytics", icon: BarChart3, action: () => navigate("/sales-analytics") },
-    { title: "Settings", icon: Settings, action: () => navigate("/settings") },
+    { 
+      title: "Add New Product", 
+      icon: Plus, 
+      description: "Create new product listings with our streamlined tools",
+      action: () => navigate("/products/new") 
+    },
+    { 
+      title: "Manage Inventory", 
+      icon: List, 
+      description: "Update and organize your product inventory efficiently",
+      action: () => navigate("/products") 
+    },
+    { 
+      title: "View Analytics", 
+      icon: BarChart3, 
+      description: "Gain insights from detailed performance metrics",
+      action: () => navigate("/sales-analytics") 
+    },
+    { 
+      title: "Settings", 
+      icon: Settings, 
+      description: "Customize your seller profile and preferences",
+      action: () => navigate("/settings") 
+    },
+  ];
+
+  const resources = [
+    { title: "Seller Tutorials", icon: BookOpen, action: () => navigate("/tutorials") },
+    { title: "Community Forum", icon: Users, action: () => navigate("/forum") },
   ];
 
   return (
@@ -112,7 +139,11 @@ export default function SellerDashboard() {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-shop-800 mb-2">Seller Dashboard</h1>
-            <p className="text-shop-600">Overview of your sales and performance metrics</p>
+            <p className="text-shop-600 max-w-2xl">
+              Welcome to your Seller Dashboard, where you can track all your sales metrics at a glance. 
+              Monitor your performance, analyze revenue, and gain actionable insights to maximize your 
+              sales potential.
+            </p>
           </div>
           <Button 
             onClick={() => toast({
@@ -161,24 +192,41 @@ export default function SellerDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {quickActions.map((action) => (
-            <Button
-              key={action.title}
-              onClick={action.action}
-              variant="outline"
-              className="h-24 flex-col gap-2 hover:bg-shop-50 transition-all duration-200 group"
-            >
-              <action.icon className="h-6 w-6 group-hover:scale-110 transition-transform" />
-              <span>{action.title}</span>
-            </Button>
-          ))}
+        <div>
+          <h2 className="text-2xl font-semibold text-shop-800 mb-4">
+            Stay ahead of your competition
+          </h2>
+          <p className="text-shop-600 mb-6">
+            Monitor key metrics like sales trends, revenue streams, and product performance. 
+            Your dashboard provides you with tools to analyze your growth and take informed 
+            decisions to drive your business forward.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {quickActions.map((action) => (
+              <Button
+                key={action.title}
+                onClick={action.action}
+                variant="outline"
+                className="h-24 flex-col gap-2 hover:bg-shop-50 transition-all duration-200 group"
+              >
+                <action.icon className="h-6 w-6 group-hover:scale-110 transition-transform" />
+                <span>{action.title}</span>
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* Sales Chart */}
         <Card className="hover:shadow-lg transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Monthly Sales Performance</CardTitle>
+            <div>
+              <CardTitle>Monthly Sales Performance</CardTitle>
+              <p className="text-sm text-shop-600 mt-1">
+                Get a comprehensive overview of your monthly sales trends with easy-to-digest metrics 
+                and graphs. Use this data to identify your best-selling products, slow movers, and 
+                areas of improvement.
+              </p>
+            </div>
             <Info className="h-4 w-4 text-shop-600 cursor-help" />
           </CardHeader>
           <CardContent>
@@ -208,11 +256,16 @@ export default function SellerDashboard() {
           </CardContent>
         </Card>
 
-        {/* Recent Activity and Inventory */}
+        {/* Resources Section */}
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle>Recent Orders</CardTitle>
+              <p className="text-sm text-shop-600">
+                Manage your product listings effortlessly with advanced tools for creating, 
+                editing, and organizing inventory. Navigate your order management system to 
+                ensure smooth order tracking.
+              </p>
             </CardHeader>
             <CardContent>
               <p className="text-shop-600">No recent orders to display.</p>
@@ -222,6 +275,10 @@ export default function SellerDashboard() {
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle>Low Stock Items</CardTitle>
+              <p className="text-sm text-shop-600">
+                Stay on top of your inventory levels and get notified when products are 
+                running low. Maintain optimal stock levels to meet customer demand.
+              </p>
             </CardHeader>
             <CardContent>
               <p className="text-shop-600">No low stock items to display.</p>
@@ -229,22 +286,29 @@ export default function SellerDashboard() {
           </Card>
         </div>
 
-        {/* Call to Action */}
+        {/* Additional Resources */}
         <Card className="bg-shop-50 hover:shadow-lg transition-shadow">
           <CardContent className="p-6">
             <h3 className="text-xl font-semibold text-shop-800 mb-2">
-              Optimize Your Listings
+              Explore Additional Resources
             </h3>
             <p className="text-shop-600 mb-4">
-              Complete your product descriptions and add high-quality images to increase your sales.
+              Access tutorials, FAQs, and community forums for tips on maximizing your 
+              success as a seller. Connect with other sellers and learn best practices.
             </p>
-            <Button 
-              onClick={() => navigate("/products")}
-              className="group"
-            >
-              <span>Manage Products</span>
-              <Package className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <div className="flex gap-4">
+              {resources.map((resource) => (
+                <Button 
+                  key={resource.title}
+                  onClick={resource.action}
+                  className="group"
+                  variant="outline"
+                >
+                  <resource.icon className="mr-2 h-4 w-4" />
+                  <span>{resource.title}</span>
+                </Button>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
