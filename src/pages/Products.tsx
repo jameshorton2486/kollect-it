@@ -10,7 +10,7 @@ import { ProductGrid } from "@/components/products/ProductGrid";
 import { CreateProductForm } from "@/components/products/CreateProductForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Search } from "lucide-react";
+import { PlusCircle, Search, ShoppingBag, Tag, Filter } from "lucide-react";
 
 export default function Products() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -119,7 +119,7 @@ export default function Products() {
               List a Product
             </Button>
             <Button variant="outline">
-              <Search className="mr-2 h-4 w-4" />
+              <ShoppingBag className="mr-2 h-4 w-4" />
               Browse Collectibles
             </Button>
           </CardContent>
@@ -129,7 +129,10 @@ export default function Products() {
           <aside className="space-y-6 md:col-span-1">
             <Card>
               <CardHeader>
-                <CardTitle>Search & Browse</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Filter className="h-5 w-5" />
+                  Search & Browse
+                </CardTitle>
                 <p className="text-sm text-muted-foreground">
                   Use our intuitive filters to discover collectibles that match your interests
                 </p>
@@ -153,13 +156,14 @@ export default function Products() {
           <main className="md:col-span-3">
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Tag className="h-5 w-5" />
                   {isLoading ? "Loading..." : `${filteredProducts.length} Products Found`}
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
                   {filteredProducts.length === 0 
                     ? "Try adjusting your filters or exploring new categories. Our curated collection is always growing with unique and rare finds."
-                    : "Browse our curated collection of fine art and collectibles"}
+                    : "Browse our curated collection of fine art and collectibles, with prices ranging from $100 to $1,000+"}
                 </p>
               </CardHeader>
             </Card>
@@ -173,6 +177,10 @@ export default function Products() {
               <DialogTitle className="text-2xl font-semibold text-shop-800">
                 Add New Product
               </DialogTitle>
+              <p className="text-sm text-muted-foreground mt-2">
+                List your collectible with accurate details. Remember our commitment to quality:
+                first violation receives a warning, repeated offenses result in a permanent ban.
+              </p>
             </DialogHeader>
             <CreateProductForm
               onSubmit={handleCreateProduct}
