@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Footer } from "@/components/home/Footer";
 import { Mail, Phone, MapPin } from "lucide-react";
 
@@ -8,17 +8,12 @@ export default function Contact() {
       {/* Navbar placeholder */}
       <nav className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Contact</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <Breadcrumbs 
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Contact", href: "/contact" }
+            ]} 
+          />
         </div>
       </nav>
 

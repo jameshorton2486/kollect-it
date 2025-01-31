@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Footer } from "@/components/home/Footer";
 import { Building, Users, Award, Heart } from "lucide-react";
 
@@ -8,17 +8,12 @@ export default function AboutUs() {
       {/* Navbar placeholder */}
       <nav className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>About Us</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <Breadcrumbs 
+            items={[
+              { label: "Home", href: "/" },
+              { label: "About Us", href: "/about" }
+            ]} 
+          />
         </div>
       </nav>
 

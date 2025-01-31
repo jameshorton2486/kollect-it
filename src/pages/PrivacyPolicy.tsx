@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Footer } from "@/components/home/Footer";
 
 export default function PrivacyPolicy() {
@@ -6,17 +6,12 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen flex flex-col">
       <nav className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Privacy Policy</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <Breadcrumbs 
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Privacy Policy", href: "/privacy-policy" }
+            ]} 
+          />
         </div>
       </nav>
 
