@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, Lock, User, ShieldCheck, Sparkles, Package, Star, HelpCircle, KeyRound, UserPlus } from "lucide-react";
+import { Mail, Lock, User, ShieldCheck, Package, Star, HelpCircle, KeyRound } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Auth() {
@@ -27,7 +27,7 @@ export function Auth() {
           password,
         });
         if (error) throw error;
-        toast.success("Welcome back to your collection!");
+        toast.success("Welcome back to your collection journey!");
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
@@ -62,13 +62,13 @@ export function Auth() {
           <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl font-bold mb-4">
             {isLogin 
-              ? "Welcome Back, Collector!" 
-              : "Join Our Thriving Community"}
+              ? "Welcome Back to Your Collection!" 
+              : "Begin Your Collecting Journey"}
           </h2>
           <p className="text-muted-foreground mb-6">
             {isLogin
               ? "Secure access to your collection, watchlist, and exclusive features awaits."
-              : "Start your collecting journey today and connect with fellow enthusiasts."}
+              : "Join our thriving community of collectors and unlock a world of unique treasures."}
           </p>
 
           {!isLogin && (
@@ -178,192 +178,6 @@ export function Auth() {
           <button
             type="button"
             onClick={() => setIsLogin(!isLogin)}
-            className="text-sm text-primary hover:underline inlineI'll help enhance the text content across the authentication pages to make them more engaging and informative. Let's start with updating the Auth page, which will require some refactoring later due to its length.
-
-<lov-code>
-Let's update the Auth page first:
-
-<lov-write file_path="src/pages/Auth.tsx">
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { Mail, Lock, User, ShieldCheck, Sparkles, Package, Star, HelpCircle, CheckCircle2 } from "lucide-react";
-import { Link } from "react-router-dom";
-
-export function Auth() {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
-        toast.success("Welcome back to your collection journey!");
-        navigate("/");
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: name,
-            },
-          },
-        });
-        if (error) throw error;
-        toast.success("Welcome to Kollect-It! Please check your email to begin your collecting journey.");
-        navigate("/email-verification");
-      }
-    } catch (error: any) {
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-background">
-      <nav className="border-b">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold">Kollect-It</h1>
-        </div>
-      </nav>
-
-      <div className="max-w-md mx-auto mt-12 px-4">
-        <div className="text-center mb-8">
-          <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h2 className="text-3xl font-bold mb-4">
-            {isLogin 
-              ? "Welcome Back, Collector!" 
-              : "Join Our Thriving Collection Community"}
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            {isLogin
-              ? "Secure access to your collection, watchlist, and exclusive features awaits."
-              : "Start your collecting journey today and connect with fellow enthusiasts."}
-          </p>
-
-          {!isLogin && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
-              <div className="flex items-start gap-3 p-4 rounded-lg border bg-card">
-                <Package className="h-5 w-5 text-primary mt-1" />
-                <div>
-                  <h3 className="font-medium">Personalized Collection</h3>
-                  <p className="text-sm text-muted-foreground">Track, showcase, and manage your unique treasures</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 p-4 rounded-lg border bg-card">
-                <Star className="h-5 w-5 text-primary mt-1" />
-                <div>
-                  <h3 className="font-medium">Exclusive Access</h3>
-                  <p className="text-sm text-muted-foreground">Be first to discover rare finds and special offers</p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <form onSubmit={handleAuth} className="space-y-6">
-          {!isLogin && (
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <div className="relative">
-                <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="pl-10"
-                  required={!isLogin}
-                />
-              </div>
-            </div>
-          )}
-
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="pl-10"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pl-10"
-                required
-              />
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Use 8+ characters with a mix of letters, numbers & symbols
-            </p>
-          </div>
-
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Please wait..." : isLogin 
-              ? "Start Exploring Your Collection" 
-              : "Begin Your Collecting Journey"}
-          </Button>
-
-          {isLogin && (
-            <div className="flex items-center justify-between text-sm">
-              <Link
-                to="/password-recovery"
-                className="text-primary hover:underline"
-              >
-                Forgot password?
-              </Link>
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  className="rounded border-gray-300"
-                />
-                <label htmlFor="remember" className="text-muted-foreground">
-                  Remember me
-                </label>
-              </div>
-            </div>
-          )}
-        </form>
-
-        <div className="mt-6 text-center">
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
             className="text-sm text-primary hover:underline"
           >
             {isLogin
@@ -380,15 +194,15 @@ export function Auth() {
               <div className="space-y-4 text-sm text-muted-foreground">
                 <div>
                   <h4 className="font-medium">How do I get started?</h4>
-                  <p>Create an account, verify your email, and start exploring our vast collection of unique items. Our community guidelines ensure a safe and enjoyable experience for all collectors.</p>
+                  <p>Create an account, verify your email, and start exploring our vast collection of unique items.</p>
                 </div>
                 <div>
                   <h4 className="font-medium">Is my information secure?</h4>
-                  <p>Absolutely! We use industry-standard encryption and security measures to protect your data and transactions. Your privacy and security are our top priorities.</p>
+                  <p>Absolutely! We use industry-standard encryption and security measures to protect your data.</p>
                 </div>
                 <div>
                   <h4 className="font-medium">What features do I get access to?</h4>
-                  <p>Members enjoy exclusive features like watchlists, price alerts, detailed item history, and direct communication with sellers. Plus, get early access to special collections and events!</p>
+                  <p>Members enjoy exclusive features like watchlists, price alerts, and early access to special collections!</p>
                 </div>
               </div>
             </div>
