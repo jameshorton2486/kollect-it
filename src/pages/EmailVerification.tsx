@@ -138,38 +138,39 @@ export function EmailVerification() {
             </Button>
           </form>
 
-        <div className="mt-12 space-y-6">
-          <h3 className="font-semibold text-lg flex items-center gap-2">
-            <HelpCircle className="h-5 w-5" />
-            Common Questions
-          </h3>
-          <div className="space-y-6">
-            <div>
-              <h4 className="font-medium">Missing Verification Email?</h4>
-              <p className="text-sm text-muted-foreground">
-                Check your spam folder first. Still can't find it? Use the resend button above.
-                Add noreply@kollect-it.com to your safe senders list to ensure you receive our emails.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-medium">Why Verify Your Email?</h4>
-              <p className="text-sm text-muted-foreground">
-                Email verification unlocks these exclusive features:
-              </p>
-              <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                <li>• Create and manage your collection listings</li>
-                <li>• Communicate with sellers and buyers</li>
-                <li>• Access to watchlists and price alerts</li>
-                <li>• Participate in exclusive collector events</li>
-                <li>• Receive personalized recommendations</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium">Need Help?</h4>
-              <p className="text-sm text-muted-foreground">
-                Our support team is ready to assist! Contact us at support@kollect-it.com
-                or visit our help center for immediate assistance.
-              </p>
+          <div className="mt-12 space-y-6">
+            <h3 className="font-semibold text-lg flex items-center gap-2">
+              <HelpCircle className="h-5 w-5" />
+              Common Questions
+            </h3>
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-medium">Missing Verification Email?</h4>
+                <p className="text-sm text-muted-foreground">
+                  Check your spam folder first. Still can't find it? Use the resend button above.
+                  Add noreply@kollect-it.com to your safe senders list to ensure you receive our emails.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">Why Verify Your Email?</h4>
+                <p className="text-sm text-muted-foreground">
+                  Email verification unlocks these exclusive features:
+                </p>
+                <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                  <li>• Create and manage your collection listings</li>
+                  <li>• Communicate with sellers and buyers</li>
+                  <li>• Access to watchlists and price alerts</li>
+                  <li>• Participate in exclusive collector events</li>
+                  <li>• Receive personalized recommendations</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium">Need Help?</h4>
+                <p className="text-sm text-muted-foreground">
+                  Our support team is ready to assist! Contact us at support@kollect-it.com
+                  or visit our help center for immediate assistance.
+                </p>
+              </div>
             </div>
           </div>
         </div>
