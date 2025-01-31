@@ -19,6 +19,8 @@ import ShippingReturns from "@/pages/ShippingReturns";
 import ShoppingCart from "@/pages/ShoppingCart";
 import Checkout from "@/pages/Checkout";
 import OrderConfirmation from "@/pages/OrderConfirmation";
+import PurchaseHistory from "@/pages/PurchaseHistory";
+import PersonalCollection from "@/pages/PersonalCollection";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
@@ -44,6 +46,8 @@ function App() {
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/purchase-history" element={<PurchaseHistory />} />
+        <Route path="/personal-collection" element={<PersonalCollection />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
