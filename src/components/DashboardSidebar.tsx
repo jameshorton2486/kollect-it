@@ -8,6 +8,8 @@ import {
   Tags,
   User,
   Store,
+  Shield,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,16 +22,42 @@ const menuItems = [
   { icon: ShoppingCart, label: "Orders", path: "/orders" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
   { icon: Settings, label: "Settings", path: "/settings" },
+  // Admin section
+  { 
+    icon: Shield, 
+    label: "Admin Dashboard", 
+    path: "/admin",
+    isAdmin: true,
+  },
+  { 
+    icon: Tags, 
+    label: "Category Management", 
+    path: "/admin/categories",
+    isAdmin: true,
+  },
+  { 
+    icon: Users, 
+    label: "User Management", 
+    path: "/admin/users",
+    isAdmin: true,
+  },
 ];
 
 export function DashboardSidebar() {
+  // TODO: Implement proper admin check
+  const isAdmin = true;
+
+  const filteredMenuItems = menuItems.filter(
+    (item) => !item.isAdmin || (item.isAdmin && isAdmin)
+  );
+
   return (
     <div className="h-screen w-64 bg-white border-r border-gray-200 fixed left-0 top-0 overflow-y-auto animate-slideIn">
       <div className="p-6">
         <h1 className="text-2xl font-semibold text-shop-800">Store Name</h1>
       </div>
       <nav className="px-4 py-2">
-        {menuItems.map((item) => (
+        {filteredMenuItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
