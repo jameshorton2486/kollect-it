@@ -1,7 +1,7 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { ProductListingHeader } from "@/components/product-listing/ProductListingHeader";
-import { ProductListingFilters } from "@/components/product-listing/ProductListingFilters";
 import { ProductListingGrid } from "@/components/product-listing/ProductListingGrid";
+import { ProductListingFilters } from "@/components/product-listing/ProductListingFilters";
 import { NewArrivals } from "@/components/product-listing/NewArrivals";
 import { CuratedCollections } from "@/components/product-listing/CuratedCollections";
 import { ProductListingPagination } from "@/components/product-listing/ProductListingPagination";
@@ -18,13 +18,13 @@ export default function ProductListing() {
           <aside className="md:col-span-1">
             <ProductListingFilters />
           </aside>
-          <main className="md:col-span-3 space-y-8">
+          <main className="md:col-span-3">
             <ProductListingGrid />
-            <NewArrivals />
-            <CuratedCollections />
             <ProductListingPagination />
           </main>
         </div>
+        <NewArrivals />
+        <CuratedCollections />
       </div>
     </DashboardLayout>
   );
