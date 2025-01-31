@@ -26,7 +26,7 @@ export function ProductRecommendations() {
   if (isLoading) return null;
 
   return (
-    <ScrollArea className="w-full" orientation="horizontal">
+    <ScrollArea className="w-full">
       <div className="flex space-x-4 pb-4">
         {recommendations?.map((product) => (
           <Card key={product.id} className="flex-shrink-0 w-48">

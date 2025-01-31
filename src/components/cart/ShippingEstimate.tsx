@@ -1,4 +1,5 @@
 import { Truck } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 
 interface ShippingEstimateProps {
   total: number;
