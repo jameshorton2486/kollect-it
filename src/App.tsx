@@ -14,6 +14,9 @@ import Contact from "@/pages/Contact";
 import TermsOfService from "@/pages/TermsOfService";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import ShippingReturns from "@/pages/ShippingReturns";
+import ShoppingCart from "@/pages/ShoppingCart";
+import Checkout from "@/pages/Checkout";
+import OrderConfirmation from "@/pages/OrderConfirmation";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
@@ -34,6 +37,9 @@ function App() {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/shipping-returns" element={<ShippingReturns />} />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
