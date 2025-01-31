@@ -140,9 +140,9 @@ export default function SellerDashboard() {
           <div>
             <h1 className="text-4xl font-bold text-shop-800 mb-2">Seller Dashboard</h1>
             <p className="text-shop-600 max-w-2xl">
-              Welcome to your Seller Dashboard, where you can track all your sales metrics at a glance. 
-              Monitor your performance, analyze revenue, and gain actionable insights to maximize your 
-              sales potential.
+              Take control of your sales and listings with a suite of tools designed for efficiency. 
+              From tracking performance metrics to managing product inventories, you'll have everything 
+              you need to grow your business.
             </p>
           </div>
           <Button 
@@ -194,12 +194,12 @@ export default function SellerDashboard() {
         {/* Quick Actions */}
         <div>
           <h2 className="text-2xl font-semibold text-shop-800 mb-4">
-            Stay ahead of your competition
+            Discover deep insights into your sales data
           </h2>
           <p className="text-shop-600 mb-6">
-            Monitor key metrics like sales trends, revenue streams, and product performance. 
-            Your dashboard provides you with tools to analyze your growth and take informed 
-            decisions to drive your business forward.
+            Understand customer buying patterns, monitor sales progress, and uncover new opportunities 
+            for growth with detailed metrics. Visualize your performance and make data-driven decisions 
+            to optimize your business strategy.
           </p>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {quickActions.map((action) => (
@@ -220,11 +220,11 @@ export default function SellerDashboard() {
         <Card className="hover:shadow-lg transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Monthly Sales Performance</CardTitle>
+              <CardTitle>Sales Performance Overview</CardTitle>
               <p className="text-sm text-shop-600 mt-1">
-                Get a comprehensive overview of your monthly sales trends with easy-to-digest metrics 
-                and graphs. Use this data to identify your best-selling products, slow movers, and 
-                areas of improvement.
+                Visualize your sales data in real-time with charts and reports that highlight your 
+                top-performing products, revenue streams, and sales channels. Track trends and identify 
+                opportunities for growth.
               </p>
             </div>
             <Info className="h-4 w-4 text-shop-600 cursor-help" />
@@ -262,9 +262,9 @@ export default function SellerDashboard() {
             <CardHeader>
               <CardTitle>Recent Orders</CardTitle>
               <p className="text-sm text-shop-600">
-                Manage your product listings effortlessly with advanced tools for creating, 
-                editing, and organizing inventory. Navigate your order management system to 
-                ensure smooth order tracking.
+                Keep your order process running smoothly with real-time updates on order status, 
+                customer details, and return management. Provide a seamless buying experience to 
+                your customers.
               </p>
             </CardHeader>
             <CardContent>
@@ -276,8 +276,9 @@ export default function SellerDashboard() {
             <CardHeader>
               <CardTitle>Low Stock Items</CardTitle>
               <p className="text-sm text-shop-600">
-                Stay on top of your inventory levels and get notified when products are 
-                running low. Maintain optimal stock levels to meet customer demand.
+                Simplify your product management with tools for creating detailed listings, managing 
+                inventory levels, and updating product information seamlessly. Stay on top of your 
+                inventory to never miss a sale.
               </p>
             </CardHeader>
             <CardContent>
@@ -293,8 +294,9 @@ export default function SellerDashboard() {
               Explore Additional Resources
             </h3>
             <p className="text-shop-600 mb-4">
-              Access tutorials, FAQs, and community forums for tips on maximizing your 
-              success as a seller. Connect with other sellers and learn best practices.
+              Access tutorials, FAQs, and community forums for tips on maximizing your success as a 
+              seller. Connect with other sellers and learn best practices to enhance your selling 
+              strategy.
             </p>
             <div className="flex gap-4">
               {resources.map((resource) => (
