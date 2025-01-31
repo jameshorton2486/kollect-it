@@ -1,44 +1,23 @@
 import { Breadcrumbs } from "@/components/navigation/Breadcrumbs";
-import { Button } from "@/components/ui/button";
-import { Grid, List } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 interface ProductListingHeaderProps {
-  viewMode: 'grid' | 'list';
-  onViewModeChange: (mode: 'grid' | 'list') => void;
+  title: string;
+  description?: string;
 }
 
-export function ProductListingHeader({ viewMode, onViewModeChange }: ProductListingHeaderProps) {
+export function ProductListingHeader({ title, description }: ProductListingHeaderProps) {
   return (
-    <div className="space-y-4">
+    <div className="mb-8">
       <Breadcrumbs 
         items={[
-          { label: "Home", href: "/" },
-          { label: "Products" }
+          { label: 'Home', href: '/' },
+          { label: 'Products', href: '/products' },
+          { label: title }
         ]} 
       />
-      
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-shop-800">
-          Explore Our Collection
-        </h1>
-        
-        <div className="flex items-center gap-2">
-          <Button
-            variant={viewMode === 'grid' ? 'default' : 'outline'}
-            size="icon"
-            onClick={() => onViewModeChange('grid')}
-          >
-            <Grid className="h-4 w-4" />
-          </Button>
-          <Button
-            variant={viewMode === 'list' ? 'default' : 'outline'}
-            size="icon"
-            onClick={() => onViewModeChange('list')}
-          >
-            <List className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+      <h1 className="text-4xl font-bold mt-4">{title}</h1>
+      {description && <p className="text-gray-600 mt-2">{description}</p>}
     </div>
   );
 }
