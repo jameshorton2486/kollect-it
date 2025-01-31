@@ -63,7 +63,59 @@ export default {
           700: "#334155",
           800: "#1e293b",
           900: "#0f172a",
+          accent1: "#8B5CF6", // New vivid purple for primary CTAs
+          accent2: "#F97316", // New bright orange for secondary CTAs
+          accent3: "#0EA5E9", // New ocean blue for highlights
+          muted1: "#E5DEFF", // New soft purple for subtle accents
+          muted2: "#FDE1D3", // New soft peach for subtle accents
         },
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '65ch',
+            color: 'var(--tw-prose-body)',
+            lineHeight: '1.75',
+            '> *': {
+              marginTop: '1.25em',
+              marginBottom: '1.25em',
+            },
+            p: {
+              marginTop: '1.25em',
+              marginBottom: '1.25em',
+              lineHeight: '1.75',
+            },
+            h1: {
+              color: 'var(--tw-prose-headings)',
+              fontWeight: '700',
+              fontSize: '2.25em',
+              marginTop: '0',
+              marginBottom: '0.8em',
+              lineHeight: '1.1111111',
+            },
+            h2: {
+              color: 'var(--tw-prose-headings)',
+              fontWeight: '600',
+              fontSize: '1.5em',
+              marginTop: '2em',
+              marginBottom: '1em',
+              lineHeight: '1.3333333',
+            },
+            h3: {
+              color: 'var(--tw-prose-headings)',
+              fontWeight: '600',
+              fontSize: '1.25em',
+              marginTop: '1.6em',
+              marginBottom: '0.6em',
+              lineHeight: '1.6',
+            },
+          },
+        },
+      },
+      spacing: {
+        '18': '4.5rem',
+        '112': '28rem',
+        '128': '32rem',
       },
       keyframes: {
         "accordion-down": {
