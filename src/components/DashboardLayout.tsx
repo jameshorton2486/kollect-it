@@ -1,19 +1,37 @@
 import { DashboardSidebar } from "./DashboardSidebar";
 import { Cart } from "./cart/Cart";
 import { Input } from "./ui/input";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, ArrowLeft } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  showBackButton?: boolean;
+  pageTitle?: string;
 }
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout({ 
+  children, 
+  showBackButton = false,
+  pageTitle
+}: DashboardLayoutProps) {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSearch = (searchTerm: string) => {
+    // Implement search functionality
+    toast({
+      title: "Search",
+      description: `Searching for: ${searchTerm}`,
+    });
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -22,18 +40,35 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
           <div className="container mx-auto">
             <div className="flex items-center justify-between gap-4">
-              {isMobile && (
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <Menu className="h-5 w-5" />
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent side="left" className="p-0">
-                    <DashboardSidebar />
-                  </SheetContent>
-                </Sheet>
-              )}
+              <div className="flex items-center gap-4">
+                {isMobile && (
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <Menu className="h-5 w-5" />
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent side="left" className="p-0">
+                      <DashboardSidebar />
+                    </SheetContent>
+                  </Sheet>
+                )}
+                
+                {showBackButton && (
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => navigate(-1)}
+                    className="mr-2"
+                  >
+                    <ArrowLeft className="h-5 w-5" />
+                  </Button>
+                )}
+
+                {pageTitle && (
+                  <h1 className="text-xl font-semibold text-shop-800">{pageTitle}</h1>
+                )}
+              </div>
               
               <div className={`relative flex-1 max-w-2xl transition-all duration-200 ${
                 isSearchFocused ? 'scale-105' : ''
@@ -46,6 +81,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     className="w-full pl-10 pr-4 py-2 border-2 focus:border-shop-accent1 transition-colors"
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
+                    onChange={(e) => handleSearch(e.target.value)}
                   />
                 </div>
                 {isSearchFocused && (
