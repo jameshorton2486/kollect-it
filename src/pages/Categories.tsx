@@ -23,7 +23,7 @@ export default function Categories() {
   const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories-with-subcategories"],
     queryFn: async () => {
-      // Fetch categories
+      // First fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
         .select("*")
@@ -31,7 +31,7 @@ export default function Categories() {
 
       if (categoriesError) throw categoriesError;
 
-      // Fetch subcategories separately
+      // Then fetch subcategories
       const { data: subcategoriesData, error: subcategoriesError } = await supabase
         .from("subcategories")
         .select("*");
