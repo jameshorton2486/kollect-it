@@ -6,7 +6,13 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   server: {
     port: 8080,
-    host: "::"
+    host: true, // Listen on all local IPs
+    strictPort: false, // Allow fallback to another port if 8080 is in use
+    open: true, // Open browser on server start
+    cors: true, // Enable CORS
+    hmr: {
+      overlay: true, // Show errors as overlay
+    },
   },
   plugins: [
     react(),
