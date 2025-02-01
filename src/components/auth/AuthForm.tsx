@@ -4,6 +4,7 @@ import { Mail, Lock, User, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -28,8 +29,26 @@ export function AuthForm({
   setName,
   handleAuth,
 }: AuthFormProps) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      await handleAuth(e);
+    } catch (error: any) {
+      console.error("Auth error:", error);
+      toast.error(error.message || "Authentication failed. Please try again.");
+    }
+  };
+
   return (
-    <form onSubmit={handleAuth} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {!isLogin && (
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
@@ -70,13 +89,20 @@ export function AuthForm({
           <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="pl-10"
             required
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
         </div>
         <p className="text-xs text-muted-foreground">
           {isLogin ? "" : "Use 8+ characters with a mix of letters, numbers & symbols"}
@@ -85,8 +111,8 @@ export function AuthForm({
 
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Please wait..." : isLogin 
-          ? "Start Exploring Your Collection" 
-          : "Begin Your Collecting Journey"}
+          ? "Sign In" 
+          : "Create Account"}
       </Button>
 
       {isLogin && (

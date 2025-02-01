@@ -22,26 +22,31 @@ export function Auth() {
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
+          email: email.trim(),
+          password: password.trim(),
         });
+        
         if (error) throw error;
-        toast.success("Welcome back to your collection journey!");
+        
+        toast.success("Welcome back!");
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
-          email,
-          password,
+          email: email.trim(),
+          password: password.trim(),
           options: {
             data: {
               full_name: name,
             },
           },
         });
+        
         if (error) throw error;
-        toast.success("Welcome to Kollect-It! Please check your email to begin your collecting journey.");
+        
+        toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
       }
     } catch (error: any) {
+      console.error("Auth error:", error);
       toast.error(error.message);
     } finally {
       setIsLoading(false);
