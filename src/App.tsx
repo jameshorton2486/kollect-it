@@ -23,32 +23,44 @@ import PurchaseHistory from "@/pages/PurchaseHistory";
 import PersonalCollection from "@/pages/PersonalCollection";
 import { Toaster } from "@/components/ui/sonner";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { PublicLayout } from "@/components/layout/PublicLayout";
+import { DashboardLayout } from "@/components/DashboardLayout";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<PageLayout><Home /></PageLayout>} />
-        <Route path="/products" element={<PageLayout><Products /></PageLayout>} />
-        <Route path="/product-listing" element={<PageLayout showBackButton><ProductListing /></PageLayout>} />
-        <Route path="/categories" element={<PageLayout><Categories /></PageLayout>} />
-        <Route path="/buyer-dashboard" element={<PageLayout><BuyerDashboard /></PageLayout>} />
-        <Route path="/seller-dashboard" element={<PageLayout><SellerDashboard /></PageLayout>} />
-        <Route path="/auth" element={<PageLayout><Auth /></PageLayout>} />
-        <Route path="/password-recovery" element={<PageLayout><PasswordRecovery /></PageLayout>} />
-        <Route path="/email-verification" element={<PageLayout><EmailVerification /></PageLayout>} />
-        <Route path="/blog" element={<PageLayout><Blog /></PageLayout>} />
-        <Route path="/about" element={<PageLayout><AboutUs /></PageLayout>} />
-        <Route path="/faq" element={<PageLayout><FAQ /></PageLayout>} />
-        <Route path="/contact" element={<PageLayout><Contact /></PageLayout>} />
+        {/* Public pages with PublicLayout */}
+        <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+        <Route path="/products" element={<PublicLayout><Products /></PublicLayout>} />
+        <Route path="/product-listing" element={<PublicLayout><ProductListing /></PublicLayout>} />
+        <Route path="/categories" element={<PublicLayout><Categories /></PublicLayout>} />
+        <Route path="/blog" element={<PublicLayout><Blog /></PublicLayout>} />
+        <Route path="/about" element={<PublicLayout><AboutUs /></PublicLayout>} />
+        <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
+        <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+        
+        {/* Legal pages with PageLayout */}
         <Route path="/terms-of-service" element={<PageLayout><TermsOfService /></PageLayout>} />
         <Route path="/privacy-policy" element={<PageLayout><PrivacyPolicy /></PageLayout>} />
         <Route path="/shipping-returns" element={<PageLayout><ShippingReturns /></PageLayout>} />
+        
+        {/* Auth pages with PageLayout */}
+        <Route path="/auth" element={<PageLayout><Auth /></PageLayout>} />
+        <Route path="/password-recovery" element={<PageLayout><PasswordRecovery /></PageLayout>} />
+        <Route path="/email-verification" element={<PageLayout><EmailVerification /></PageLayout>} />
+        
+        {/* Shopping pages with PageLayout */}
         <Route path="/cart" element={<PageLayout showBackButton><ShoppingCart /></PageLayout>} />
         <Route path="/checkout" element={<PageLayout showBackButton><Checkout /></PageLayout>} />
         <Route path="/order-confirmation" element={<PageLayout><OrderConfirmation /></PageLayout>} />
-        <Route path="/purchase-history" element={<PageLayout><PurchaseHistory /></PageLayout>} />
-        <Route path="/personal-collection" element={<PageLayout><PersonalCollection /></PageLayout>} />
+        
+        {/* Dashboard pages with DashboardLayout */}
+        <Route path="/buyer-dashboard" element={<DashboardLayout><BuyerDashboard /></DashboardLayout>} />
+        <Route path="/seller-dashboard" element={<DashboardLayout><SellerDashboard /></DashboardLayout>} />
+        <Route path="/purchase-history" element={<DashboardLayout><PurchaseHistory /></DashboardLayout>} />
+        <Route path="/personal-collection" element={<DashboardLayout><PersonalCollection /></DashboardLayout>} />
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
