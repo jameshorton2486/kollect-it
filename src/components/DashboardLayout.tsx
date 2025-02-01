@@ -33,16 +33,17 @@ export function DashboardLayout({
   };
 
   return (
-    <div className="flex min-h-screen w-full">
-      {/* Sidebar - always visible on desktop, sheet on mobile */}
-      {!isMobile ? (
-        <div className="w-64 flex-shrink-0">
-          <DashboardSidebar />
-        </div>
-      ) : (
+    <div className="flex min-h-screen w-full bg-background">
+      {/* Desktop Sidebar */}
+      <div className="hidden md:block w-64 flex-shrink-0">
+        <DashboardSidebar />
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div className="md:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="lg:hidden">
+            <Button variant="ghost" size="icon" className="fixed top-4 left-4 z-50">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
@@ -50,10 +51,10 @@ export function DashboardLayout({
             <DashboardSidebar />
           </SheetContent>
         </Sheet>
-      )}
+      </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-h-screen">
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
           <div className="container mx-auto">
             <div className="flex items-center justify-between gap-4">
