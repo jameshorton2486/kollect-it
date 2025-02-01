@@ -11,11 +11,7 @@ import { CategoryCard } from "@/components/categories/CategoryCard";
 import { Tables } from "@/integrations/supabase/types";
 
 type Category = Tables<"categories">;
-type Subcategory = {
-  id: string;
-  name: string;
-  category_id: string;
-};
+type Subcategory = Tables<"subcategories">;
 
 interface CategoryWithSubcategories extends Category {
   subcategories: Subcategory[];
@@ -25,9 +21,9 @@ export default function Categories() {
   const { toast } = useToast();
 
   const { data: categories, refetch, error: fetchError } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["categories-with-subcategories"],
     queryFn: async () => {
-      // First fetch categories
+      // Fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
         .select("*")
@@ -35,19 +31,19 @@ export default function Categories() {
 
       if (categoriesError) throw categoriesError;
 
-      // Then fetch all subcategories
-      const { data: allSubcategories, error: subsError } = await supabase
+      // Fetch all subcategories
+      const { data: subcategoriesData, error: subcategoriesError } = await supabase
         .from("subcategories")
         .select("*");
 
-      if (subsError) throw subsError;
+      if (subcategoriesError) throw subcategoriesError;
 
       // Map subcategories to their respective categories
       const categoriesWithSubs = categoriesData.map((category) => ({
         ...category,
-        subcategories: allSubcategories?.filter(
+        subcategories: subcategoriesData.filter(
           (sub) => sub.category_id === category.id
-        ) || [],
+        ),
       }));
 
       return categoriesWithSubs as CategoryWithSubcategories[];
