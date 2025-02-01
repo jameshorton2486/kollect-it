@@ -20,34 +20,63 @@ export function Auth() {
     setIsLoading(true);
 
     try {
+      // Trim whitespace from credentials
+      const trimmedEmail = email.trim();
+      const trimmedPassword = password.trim();
+
+      // Basic validation
+      if (!trimmedEmail || !trimmedPassword) {
+        toast.error("Please fill in all required fields");
+        return;
+      }
+
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password: password.trim(),
+        console.log("Attempting login with:", { email: trimmedEmail }); // Log email for debugging
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: trimmedEmail,
+          password: trimmedPassword,
         });
         
-        if (error) throw error;
-        
-        toast.success("Welcome back!");
-        navigate("/");
+        if (error) {
+          console.error("Login error:", error); // Log full error for debugging
+          throw error;
+        }
+
+        if (data?.user) {
+          console.log("Login successful:", data.user.id); // Log success for debugging
+          toast.success("Welcome back!");
+          navigate("/");
+        }
       } else {
-        const { error } = await supabase.auth.signUp({
-          email: email.trim(),
-          password: password.trim(),
+        if (!name.trim()) {
+          toast.error("Please enter your name");
+          return;
+        }
+
+        console.log("Attempting signup with:", { email: trimmedEmail }); // Log email for debugging
+        const { data, error } = await supabase.auth.signUp({
+          email: trimmedEmail,
+          password: trimmedPassword,
           options: {
             data: {
-              full_name: name,
+              full_name: name.trim(),
             },
           },
         });
         
-        if (error) throw error;
-        
-        toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
+        if (error) {
+          console.error("Signup error:", error); // Log full error for debugging
+          throw error;
+        }
+
+        if (data?.user) {
+          console.log("Signup successful:", data.user.id); // Log success for debugging
+          toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
+        }
       }
     } catch (error: any) {
       console.error("Auth error:", error);
-      toast.error(error.message);
+      toast.error(error.message || "Authentication failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
