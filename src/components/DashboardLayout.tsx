@@ -26,7 +26,6 @@ export function DashboardLayout({
   const { toast } = useToast();
 
   const handleSearch = (searchTerm: string) => {
-    // Implement search functionality
     toast({
       title: "Search",
       description: `Searching for: ${searchTerm}`,
@@ -34,26 +33,31 @@ export function DashboardLayout({
   };
 
   return (
-    <div className="flex min-h-screen">
-      {!isMobile && <DashboardSidebar />}
-      <div className="flex-1">
+    <div className="flex min-h-screen w-full">
+      {/* Sidebar - always visible on desktop, sheet on mobile */}
+      {!isMobile ? (
+        <div className="w-64 flex-shrink-0">
+          <DashboardSidebar />
+        </div>
+      ) : (
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="lg:hidden">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-64">
+            <DashboardSidebar />
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col">
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
           <div className="container mx-auto">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                {isMobile && (
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <Menu className="h-5 w-5" />
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent side="left" className="p-0">
-                      <DashboardSidebar />
-                    </SheetContent>
-                  </Sheet>
-                )}
-                
                 {showBackButton && (
                   <Button 
                     variant="ghost" 
@@ -99,7 +103,7 @@ export function DashboardLayout({
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 py-8">
+        <div className="flex-1 container mx-auto px-4 py-8">
           {children}
         </div>
       </div>
