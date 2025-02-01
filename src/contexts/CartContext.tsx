@@ -3,7 +3,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 
-interface CartItem extends Tables<"cart_items"> {
+interface CartItem {
+  id: string;
+  product_id: string;
+  quantity: number;
   product: Tables<"products">;
 }
 

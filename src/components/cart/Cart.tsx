@@ -15,13 +15,6 @@ export function Cart() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleAddToCart = () => {
-    toast({
-      title: "Item added to cart",
-      description: "Your item has been added to the cart successfully.",
-    });
-  };
-
   return (
     <Sheet>
       <SheetTrigger asChild>

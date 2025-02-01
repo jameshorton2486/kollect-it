@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Tables } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
@@ -7,8 +6,16 @@ import { useCart } from "@/contexts/CartContext";
 import { formatPrice } from "@/lib/utils";
 
 interface CartItemProps {
-  item: Tables<"cart_items"> & {
-    product: Tables<"products">;
+  item: {
+    id: string;
+    product_id: string;
+    quantity: number;
+    product: {
+      id: string;
+      name: string;
+      price: number;
+      image_url: string | null;
+    };
   };
 }
 
