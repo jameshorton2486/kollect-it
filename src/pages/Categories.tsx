@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Tag } from "lucide-react";
@@ -8,17 +8,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { CategoryForm } from "@/components/categories/CategoryForm";
 import { CategoryCard } from "@/components/categories/CategoryCard";
+import { Tables } from "@/integrations/supabase/types";
 
-interface Subcategory {
+type Category = Tables<"categories">;
+type Subcategory = {
   id: string;
   name: string;
   category_id: string;
-}
+};
 
-interface Category {
-  id: string;
-  name: string;
-  created_at: string;
+interface CategoryWithSubcategories extends Category {
   subcategories: Subcategory[];
 }
 
@@ -31,28 +30,27 @@ export default function Categories() {
       // First fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
-        .select("*");
+        .select("*")
+        .order("name");
 
       if (categoriesError) throw categoriesError;
 
-      // Then fetch subcategories for each category
-      const categoriesWithSubs = await Promise.all(
-        categoriesData.map(async (category) => {
-          const { data: subcategories, error: subsError } = await supabase
-            .from("subcategories")
-            .select("*")
-            .eq("category_id", category.id);
+      // Then fetch all subcategories
+      const { data: allSubcategories, error: subsError } = await supabase
+        .from("subcategories")
+        .select("*");
 
-          if (subsError) throw subsError;
+      if (subsError) throw subsError;
 
-          return {
-            ...category,
-            subcategories: subcategories || [],
-          };
-        })
-      );
+      // Map subcategories to their respective categories
+      const categoriesWithSubs = categoriesData.map((category) => ({
+        ...category,
+        subcategories: allSubcategories?.filter(
+          (sub) => sub.category_id === category.id
+        ) || [],
+      }));
 
-      return categoriesWithSubs as Category[];
+      return categoriesWithSubs as CategoryWithSubcategories[];
     },
   });
 
