@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Tag } from "lucide-react";
@@ -9,14 +9,17 @@ import { useToast } from "@/hooks/use-toast";
 import { CategoryForm } from "@/components/categories/CategoryForm";
 import { CategoryCard } from "@/components/categories/CategoryCard";
 
+interface Subcategory {
+  id: string;
+  name: string;
+  category_id: string;
+}
+
 interface Category {
   id: string;
   name: string;
-  subcategories: {
-    id: string;
-    name: string;
-  }[];
   created_at: string;
+  subcategories: Subcategory[];
 }
 
 export default function Categories() {
@@ -25,19 +28,31 @@ export default function Categories() {
   const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
+      // First fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
-        .select(`
-          *,
-          subcategories (
-            id,
-            name
-          )
-        `)
-        .order("name");
+        .select("*");
 
       if (categoriesError) throw categoriesError;
-      return categoriesData as Category[];
+
+      // Then fetch subcategories for each category
+      const categoriesWithSubs = await Promise.all(
+        categoriesData.map(async (category) => {
+          const { data: subcategories, error: subsError } = await supabase
+            .from("subcategories")
+            .select("*")
+            .eq("category_id", category.id);
+
+          if (subsError) throw subsError;
+
+          return {
+            ...category,
+            subcategories: subcategories || [],
+          };
+        })
+      );
+
+      return categoriesWithSubs as Category[];
     },
   });
 
