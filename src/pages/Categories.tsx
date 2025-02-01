@@ -12,7 +12,10 @@ import { CategoryCard } from "@/components/categories/CategoryCard";
 interface Category {
   id: string;
   name: string;
-  description: string | null;
+  subcategories: {
+    id: string;
+    name: string;
+  }[];
   created_at: string;
 }
 
@@ -22,37 +25,46 @@ export default function Categories() {
   const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
-        .select("*")
+        .select(`
+          *,
+          subcategories (
+            id,
+            name
+          )
+        `)
         .order("name");
 
-      if (error) throw error;
-      return data as Category[];
+      if (categoriesError) throw categoriesError;
+      return categoriesData as Category[];
     },
   });
 
-  const handleSubmit = async (values: { name: string; description?: string }) => {
+  const handleSubmit = async (values: { name: string; subcategories: string[] }) => {
     try {
-      const { error } = await supabase
+      // Insert the category
+      const { data: categoryData, error: categoryError } = await supabase
         .from("categories")
         .insert([{
           name: values.name,
-          description: values.description || null,
-        }]);
+        }])
+        .select()
+        .single();
 
-      if (error) {
-        const errorMessage = error.code === "23505" 
-          ? "A category with this name already exists."
-          : "There was an error creating the category.";
-        
-        toast({
-          title: "Error",
-          description: errorMessage,
-          variant: "destructive",
-        });
-        return;
-      }
+      if (categoryError) throw categoryError;
+
+      // Insert subcategories
+      const subcategoryPromises = values.subcategories.map(subcategoryName =>
+        supabase
+          .from("subcategories")
+          .insert([{
+            name: subcategoryName,
+            category_id: categoryData.id,
+          }])
+      );
+
+      await Promise.all(subcategoryPromises);
 
       toast({
         title: "Success",
@@ -91,7 +103,7 @@ export default function Categories() {
               <Tag className="h-6 w-6" />
               <h1 className="text-3xl font-bold">Categories</h1>
             </div>
-            <p className="text-shop-600 mt-2">Organize your collectibles into categories</p>
+            <p className="text-shop-600 mt-2">Organize your collectibles into categories and subcategories</p>
           </div>
           <Dialog>
             <DialogTrigger asChild>

@@ -2,13 +2,12 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
-  description: z.string().optional(),
+  subcategories: z.array(z.string()).min(1, "At least one subcategory is required"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -22,9 +21,22 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      description: "",
+      subcategories: [""],
     },
   });
+
+  const addSubcategory = () => {
+    const currentSubcategories = form.getValues("subcategories");
+    form.setValue("subcategories", [...currentSubcategories, ""]);
+  };
+
+  const removeSubcategory = (index: number) => {
+    const currentSubcategories = form.getValues("subcategories");
+    form.setValue(
+      "subcategories",
+      currentSubcategories.filter((_, i) => i !== index)
+    );
+  };
 
   return (
     <Form {...form}>
@@ -34,7 +46,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Category Name</FormLabel>
               <FormControl>
                 <Input placeholder="Enter category name" {...field} />
               </FormControl>
@@ -42,23 +54,49 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea 
-                  placeholder="Enter category description" 
-                  className="resize-none" 
-                  {...field} 
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <FormLabel>Subcategories</FormLabel>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={addSubcategory}
+            >
+              Add Subcategory
+            </Button>
+          </div>
+
+          {form.watch("subcategories").map((_, index) => (
+            <FormField
+              key={index}
+              control={form.control}
+              name={`subcategories.${index}`}
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Input placeholder="Enter subcategory name" {...field} />
+                    </FormControl>
+                    {index > 0 && (
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => removeSubcategory(index)}
+                      >
+                        ×
+                      </Button>
+                    )}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+        </div>
+
         <Button type="submit" className="w-full bg-shop-accent1 hover:bg-shop-accent1/90">
           Create Category
         </Button>
