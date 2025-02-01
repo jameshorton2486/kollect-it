@@ -39,7 +39,7 @@ export function DashboardLayout({
         .select("role")
         .eq("user_id", session.user.id);
 
-      return roles?.some(r => r.role === "admin") || false;
+      return roles?.some(r => r.role === 'admin') || false;
     }
   });
 
