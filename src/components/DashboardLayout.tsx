@@ -40,18 +40,20 @@ export function DashboardLayout({
       </div>
 
       {/* Mobile Sidebar */}
-      <div className="md:hidden">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="fixed top-4 left-4 z-50">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="p-0 w-64">
-            <DashboardSidebar />
-          </SheetContent>
-        </Sheet>
-      </div>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="fixed top-4 left-4 z-50 md:hidden"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="p-0 w-64">
+          <DashboardSidebar />
+        </SheetContent>
+      </Sheet>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-h-screen">
