@@ -44,7 +44,7 @@ export default function Categories() {
         subcategories: subcategoriesData.filter(
           (sub) => sub.category_id === category.id
         ),
-      }));
+      })) satisfies CategoryWithSubcategories[];
 
       return categoriesWithSubs;
     },
