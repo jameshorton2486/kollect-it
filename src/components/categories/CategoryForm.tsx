@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -35,7 +36,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Category name" {...field} />
+                <Input placeholder="Enter category name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -48,13 +49,19 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Category description" {...field} />
+                <Textarea 
+                  placeholder="Enter category description" 
+                  className="resize-none" 
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Create Category</Button>
+        <Button type="submit" className="w-full bg-shop-accent1 hover:bg-shop-accent1/90">
+          Create Category
+        </Button>
       </form>
     </Form>
   );

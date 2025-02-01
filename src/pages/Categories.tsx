@@ -1,7 +1,7 @@
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Tag } from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,40 +22,28 @@ export default function Categories() {
   const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      console.log("Fetching categories...");
       const { data, error } = await supabase
         .from("categories")
         .select("*")
         .order("name");
 
-      if (error) {
-        console.error("Error fetching categories:", error);
-        throw error;
-      }
-      
-      console.log("Categories fetched successfully:", data);
+      if (error) throw error;
       return data as Category[];
     },
   });
 
   const handleSubmit = async (values: { name: string; description?: string }) => {
-    console.log("Attempting to create category with values:", values);
-    
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("categories")
         .insert([{
           name: values.name,
           description: values.description || null,
-        }])
-        .select();
+        }]);
 
       if (error) {
-        console.error("Supabase error creating category:", error);
         const errorMessage = error.code === "23505" 
           ? "A category with this name already exists."
-          : error.code === "42501"
-          ? "You don't have permission to create categories."
           : "There was an error creating the category.";
         
         toast({
@@ -66,18 +54,16 @@ export default function Categories() {
         return;
       }
 
-      console.log("Category created successfully:", data);
       toast({
-        title: "Category created",
-        description: "The category has been created successfully.",
+        title: "Success",
+        description: "Category created successfully",
       });
 
       refetch();
     } catch (error) {
-      console.error("Unexpected error creating category:", error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred while creating the category.",
+        description: "An unexpected error occurred",
         variant: "destructive",
       });
     }
@@ -89,9 +75,7 @@ export default function Categories() {
         <div className="max-w-7xl mx-auto p-6">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <h2 className="text-red-800 font-semibold">Error Loading Categories</h2>
-            <p className="text-red-600">
-              There was an error loading the categories. Please try again later.
-            </p>
+            <p className="text-red-600">Please try again later.</p>
           </div>
         </div>
       </DashboardLayout>
@@ -100,15 +84,18 @@ export default function Categories() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8 bg-white p-6 rounded-lg shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-8 bg-white p-6 rounded-lg shadow-sm animate-fadeIn">
           <div>
-            <h1 className="text-3xl font-bold text-shop-800">Categories</h1>
-            <p className="text-shop-500 mt-1">Manage your store categories</p>
+            <div className="flex items-center gap-2 text-shop-800">
+              <Tag className="h-6 w-6" />
+              <h1 className="text-3xl font-bold">Categories</h1>
+            </div>
+            <p className="text-shop-600 mt-2">Organize your collectibles into categories</p>
           </div>
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="bg-shop-700 hover:bg-shop-800 text-white">
+              <Button className="bg-shop-accent1 hover:bg-shop-accent1/90 text-white">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Add Category
               </Button>
@@ -125,10 +112,24 @@ export default function Categories() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories?.map((category) => (
-            <CategoryCard key={category.id} {...category} />
+          {categories?.map((category, index) => (
+            <div
+              key={category.id}
+              className="animate-fadeIn"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <CategoryCard {...category} />
+            </div>
           ))}
         </div>
+
+        {categories?.length === 0 && (
+          <div className="text-center py-12 bg-white rounded-lg shadow-sm animate-fadeIn">
+            <Tag className="h-12 w-12 mx-auto text-shop-400 mb-4" />
+            <h3 className="text-xl font-semibold text-shop-800 mb-2">No Categories Yet</h3>
+            <p className="text-shop-600">Create your first category to start organizing your collectibles</p>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );
