@@ -6,8 +6,6 @@ import {
   Settings,
   BarChart3,
   Tags,
-  User,
-  Store,
   Shield,
   Users,
 } from "lucide-react";
@@ -22,22 +20,11 @@ interface MenuItem {
   roles?: string[];
 }
 
+// Admin-only menu items
 const menuItems: MenuItem[] = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: Package, label: "Products", path: "/products" },
   { icon: Tags, label: "Categories", path: "/categories" },
-  { 
-    icon: User, 
-    label: "Buyer Dashboard", 
-    path: "/dashboard/buyer",
-    roles: ["buyer", "admin"]
-  },
-  { 
-    icon: Store, 
-    label: "Seller Dashboard", 
-    path: "/dashboard/seller",
-    roles: ["seller", "admin"]
-  },
   { icon: ShoppingCart, label: "Orders", path: "/orders" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
   { icon: Settings, label: "Settings", path: "/settings" },
@@ -85,7 +72,7 @@ export function DashboardSidebar() {
   return (
     <div className="h-screen w-64 bg-white border-r border-gray-200 fixed left-0 top-0 overflow-y-auto animate-slideIn">
       <div className="p-6">
-        <h1 className="text-2xl font-semibold text-shop-800">Kollect-It</h1>
+        <h1 className="text-2xl font-semibold text-shop-800">Admin Panel</h1>
       </div>
       <nav className="px-4 py-2">
         {filteredMenuItems.map((item) => (
