@@ -31,14 +31,14 @@ export default function Categories() {
 
       if (categoriesError) throw categoriesError;
 
-      // Fetch all subcategories
+      // Fetch subcategories separately
       const { data: subcategoriesData, error: subcategoriesError } = await supabase
         .from("subcategories")
         .select("*");
 
       if (subcategoriesError) throw subcategoriesError;
 
-      // Map subcategories to their respective categories
+      // Combine the data
       const categoriesWithSubs = categoriesData.map((category) => ({
         ...category,
         subcategories: subcategoriesData.filter(
@@ -46,7 +46,7 @@ export default function Categories() {
         ),
       }));
 
-      return categoriesWithSubs as CategoryWithSubcategories[];
+      return categoriesWithSubs;
     },
   });
 
