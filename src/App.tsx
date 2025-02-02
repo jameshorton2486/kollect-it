@@ -21,6 +21,8 @@ import Checkout from "@/pages/Checkout";
 import OrderConfirmation from "@/pages/OrderConfirmation";
 import PurchaseHistory from "@/pages/PurchaseHistory";
 import PersonalCollection from "@/pages/PersonalCollection";
+import AdminDashboard from "@/pages/AdminDashboard";
+import CategoryManagement from "@/pages/CategoryManagement";
 import { Toaster } from "@/components/ui/sonner";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PublicLayout } from "@/components/layout/PublicLayout";
@@ -60,6 +62,8 @@ function App() {
         <Route path="/seller-dashboard" element={<DashboardLayout><SellerDashboard /></DashboardLayout>} />
         <Route path="/purchase-history" element={<DashboardLayout><PurchaseHistory /></DashboardLayout>} />
         <Route path="/personal-collection" element={<DashboardLayout><PersonalCollection /></DashboardLayout>} />
+        <Route path="/admin-dashboard" element={<DashboardLayout><AdminDashboard /></DashboardLayout>} />
+        <Route path="/category-management" element={<DashboardLayout><CategoryManagement /></DashboardLayout>} />
         
         <Route path="*" element={<NotFound />} />
       </Routes>

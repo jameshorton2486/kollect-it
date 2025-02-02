@@ -8,6 +8,7 @@ import {
   Tags,
   Shield,
   Users,
+  Store,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -20,30 +21,29 @@ interface MenuItem {
   roles?: string[];
 }
 
-// Admin-only menu items
 const menuItems: MenuItem[] = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: LayoutDashboard, label: "Overview", path: "/buyer-dashboard" },
   { icon: Package, label: "Products", path: "/products" },
-  { icon: Tags, label: "Categories", path: "/categories" },
-  { icon: ShoppingCart, label: "Orders", path: "/orders" },
+  { icon: Store, label: "Sellers", path: "/seller-dashboard" },
+  { icon: ShoppingCart, label: "Orders", path: "/purchase-history" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
   { icon: Settings, label: "Settings", path: "/settings" },
   { 
     icon: Shield, 
-    label: "Admin Dashboard", 
-    path: "/admin",
+    label: "Admin Panel", 
+    path: "/admin-dashboard",
     roles: ["admin"]
   },
   { 
     icon: Tags, 
     label: "Category Management", 
-    path: "/admin/categories",
+    path: "/category-management",
     roles: ["admin"]
   },
   { 
     icon: Users, 
     label: "User Management", 
-    path: "/admin/users",
+    path: "/user-management",
     roles: ["admin"]
   },
 ];
@@ -70,9 +70,9 @@ export function DashboardSidebar() {
   });
 
   return (
-    <div className="h-screen w-64 bg-white border-r border-gray-200 fixed left-0 top-0 overflow-y-auto animate-slideIn">
+    <div className="h-screen w-64 bg-white border-r border-gray-200 fixed left-0 top-0 overflow-y-auto">
       <div className="p-6">
-        <h1 className="text-2xl font-semibold text-shop-800">Admin Panel</h1>
+        <h1 className="text-2xl font-semibold text-shop-800">Kollect-It</h1>
       </div>
       <nav className="px-4 py-2">
         {filteredMenuItems.map((item) => (
