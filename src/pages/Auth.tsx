@@ -43,7 +43,7 @@ export function Auth() {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("Attempting authentication...");
+    console.log(`Attempting ${isLogin ? 'login' : 'signup'} with email:`, email);
 
     try {
       const trimmedEmail = email.trim();
@@ -54,14 +54,19 @@ export function Auth() {
       }
 
       if (isLogin) {
-        console.log("Attempting login with email:", trimmedEmail);
+        // Add detailed logging for login attempt
+        console.log("Starting login process...");
         const { data, error } = await supabase.auth.signInWithPassword({
           email: trimmedEmail,
           password: trimmedPassword,
         });
         
         if (error) {
-          console.error("Login error:", error);
+          console.error("Login error details:", {
+            message: error.message,
+            status: error.status,
+            name: error.name
+          });
           throw error;
         }
 
@@ -75,7 +80,7 @@ export function Auth() {
           throw new Error("Please enter your name");
         }
 
-        console.log("Attempting signup with email:", trimmedEmail);
+        console.log("Starting signup process...");
         const { data, error } = await supabase.auth.signUp({
           email: trimmedEmail,
           password: trimmedPassword,
@@ -87,7 +92,11 @@ export function Auth() {
         });
         
         if (error) {
-          console.error("Signup error:", error);
+          console.error("Signup error details:", {
+            message: error.message,
+            status: error.status,
+            name: error.name
+          });
           throw error;
         }
 
@@ -97,7 +106,12 @@ export function Auth() {
         }
       }
     } catch (error: any) {
-      console.error("Auth error:", error);
+      console.error("Auth error details:", {
+        message: error.message,
+        status: error.status,
+        name: error.name,
+        stack: error.stack
+      });
       toast.error(error.message || "Authentication failed. Please try again.");
     } finally {
       setIsLoading(false);
