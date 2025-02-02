@@ -33,7 +33,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<FormValues>({
     control: form.control,
     name: "subcategories",
   });
