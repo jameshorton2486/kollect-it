@@ -12,7 +12,9 @@ import { Plus, Minus } from "lucide-react";
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   description: z.string().optional(),
-  subcategories: z.array(z.string().min(2, "Subcategory must be at least 2 characters")).optional(),
+  subcategories: z.array(
+    z.string().min(2, "Subcategory must be at least 2 characters")
+  ).default([]),
 });
 
 type FormValues = z.infer<typeof formSchema>;
