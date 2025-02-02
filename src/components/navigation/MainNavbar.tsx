@@ -50,9 +50,10 @@ export function MainNavbar() {
   return (
     <nav className="bg-shop-900 border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo Section - Now properly centered vertically */}
+          <div className="flex-shrink-0 flex items-center h-full">
+            <Link to="/" className="flex items-center">
               <h1 className="text-2xl font-bold text-white">Kollect-It</h1>
             </Link>
           </div>
@@ -136,6 +137,7 @@ export function MainNavbar() {
             </>
           )}
 
+          {/* Right Section - Cart and User */}
           <div className="flex items-center space-x-4">
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="text-white hover:text-gray-200">
