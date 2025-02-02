@@ -1,4 +1,4 @@
-import { MessageCircle, TrendingUp, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FeatureCard } from "./FeatureCard";
 
@@ -12,21 +12,11 @@ export function CommunitySection() {
         <p className="text-lg text-shop-600 text-center mb-12 max-w-3xl mx-auto">
           Connect, trade, and discuss your prized finds with fellow collectors who share your passion.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <FeatureCard
-            icon={<MessageCircle className="w-8 h-8" />}
-            title="Engage in Forums"
-            description="Exchange knowledge and expertise with fellow collectors"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-md mx-auto">
           <FeatureCard
             icon={<Users className="w-8 h-8" />}
             title="Showcase Collection"
             description="Display and share your most treasured items"
-          />
-          <FeatureCard
-            icon={<TrendingUp className="w-8 h-8" />}
-            title="Exclusive Events"
-            description="Join webinars, auctions, and collector meetups"
           />
         </div>
         <div className="text-center mt-12">
