@@ -16,7 +16,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const mainNavigationItems = [
   { label: "Home", path: "/" },
-  { label: "New Arrivals", path: "/new-arrivals" },
+  { label: "Articles", path: "/articles" },
 ];
 
 const shopNavigationItems = [
