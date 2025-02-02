@@ -15,7 +15,7 @@ interface PublicLayoutProps {
 const navigationItems = [
   { label: "All Products", path: "/products" },
   { label: "Categories", path: "/categories" },
-  { label: "Articles", path: "/articles" },
+  { label: "Blog", path: "/blog" },  // Changed from "Articles" to "Blog" and path from "/articles" to "/blog"
   { label: "Featured", path: "/featured" },
   { label: "Popular", path: "/popular" },
 ];
