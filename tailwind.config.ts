@@ -63,10 +63,10 @@ export default {
           700: "#334155",
           800: "#1e293b",
           900: "#0f172a",
-          accent1: "#8B5CF6",
+          accent1: "#1A1F2C", // Changed from purple to dark blue
           accent2: "#F97316",
-          accent3: "#0EA5E9",
-          muted1: "#E5DEFF",
+          accent3: "#0FA0CE",
+          muted1: "#E5F6FF", // Changed to match blue theme
           muted2: "#FDE1D3",
         },
       },
