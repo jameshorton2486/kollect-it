@@ -51,9 +51,9 @@ export function MainNavbar() {
     <nav className="bg-shop-900 border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo Section - Now properly centered vertically */}
+          {/* Logo Section - Added pt-3 for 3/16 inch downward shift */}
           <div className="flex-shrink-0 flex items-center h-full">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center pt-3">
               <h1 className="text-2xl font-bold text-white">Kollect-It</h1>
             </Link>
           </div>
