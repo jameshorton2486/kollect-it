@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -15,45 +15,67 @@ export function Auth() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
+  // Check if user is already authenticated
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        console.log("User already authenticated, redirecting to home");
+        navigate("/");
+      }
+    };
+    
+    checkSession();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        console.log("Auth state changed: User authenticated");
+        navigate("/");
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    console.log("Attempting authentication...");
 
     try {
-      // Trim whitespace from credentials
       const trimmedEmail = email.trim();
       const trimmedPassword = password.trim();
 
-      // Basic validation
       if (!trimmedEmail || !trimmedPassword) {
-        toast.error("Please fill in all required fields");
-        return;
+        throw new Error("Please fill in all required fields");
       }
 
       if (isLogin) {
-        console.log("Attempting login with:", { email: trimmedEmail }); // Log email for debugging
+        console.log("Attempting login with email:", trimmedEmail);
         const { data, error } = await supabase.auth.signInWithPassword({
           email: trimmedEmail,
           password: trimmedPassword,
         });
         
         if (error) {
-          console.error("Login error:", error); // Log full error for debugging
+          console.error("Login error:", error);
           throw error;
         }
 
         if (data?.user) {
-          console.log("Login successful:", data.user.id); // Log success for debugging
+          console.log("Login successful for user:", data.user.id);
           toast.success("Welcome back!");
           navigate("/");
         }
       } else {
         if (!name.trim()) {
-          toast.error("Please enter your name");
-          return;
+          throw new Error("Please enter your name");
         }
 
-        console.log("Attempting signup with:", { email: trimmedEmail }); // Log email for debugging
+        console.log("Attempting signup with email:", trimmedEmail);
         const { data, error } = await supabase.auth.signUp({
           email: trimmedEmail,
           password: trimmedPassword,
@@ -65,12 +87,12 @@ export function Auth() {
         });
         
         if (error) {
-          console.error("Signup error:", error); // Log full error for debugging
+          console.error("Signup error:", error);
           throw error;
         }
 
         if (data?.user) {
-          console.log("Signup successful:", data.user.id); // Log success for debugging
+          console.log("Signup successful for user:", data.user.id);
           toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
         }
       }
