@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 
@@ -28,6 +28,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const loadCartItems = async () => {
     try {
+      const { data: session } = await supabase.auth.getSession();
+      
+      if (!session?.session) {
+        setItems([]);
+        setIsLoading(false);
+        return;
+      }
+
       const { data: cartItems, error } = await supabase
         .from("cart_items")
         .select(`
@@ -36,7 +44,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         `)
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error loading cart items:", error);
+        throw error;
+      }
+
       setItems(cartItems as CartItem[]);
     } catch (error) {
       console.error("Error loading cart items:", error);
@@ -53,7 +65,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     loadCartItems();
 
-    // Subscribe to cart changes
     const channel = supabase
       .channel("cart_changes")
       .on(
