@@ -18,9 +18,12 @@ export function Auth() {
   // Check if user is already authenticated
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError) {
+        console.error("Session check error:", sessionError);
+      }
       if (session) {
-        console.log("User already authenticated, redirecting to home");
+        console.log("User already authenticated:", session.user.id);
         navigate("/");
       }
     };
@@ -28,9 +31,9 @@ export function Auth() {
     checkSession();
 
     // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event, session?.user?.id);
       if (session) {
-        console.log("Auth state changed: User authenticated");
         navigate("/");
       }
     });
@@ -65,13 +68,18 @@ export function Auth() {
           console.error("Login error details:", {
             message: error.message,
             status: error.status,
-            name: error.name
+            name: error.name,
+            stack: error.stack
           });
           throw error;
         }
 
         if (data?.user) {
-          console.log("Login successful for user:", data.user.id);
+          console.log("Login successful for user:", {
+            id: data.user.id,
+            email: data.user.email,
+            lastSignIn: data.user.last_sign_in_at
+          });
           toast.success("Welcome back!");
           navigate("/");
         }
@@ -95,13 +103,18 @@ export function Auth() {
           console.error("Signup error details:", {
             message: error.message,
             status: error.status,
-            name: error.name
+            name: error.name,
+            stack: error.stack
           });
           throw error;
         }
 
         if (data?.user) {
-          console.log("Signup successful for user:", data.user.id);
+          console.log("Signup successful for user:", {
+            id: data.user.id,
+            email: data.user.email,
+            confirmationSent: data.user.confirmation_sent_at
+          });
           toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
         }
       }
