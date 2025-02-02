@@ -31,21 +31,21 @@ export function HeroSection() {
               role="listitem"
             >
               <Shield className="w-5 h-5 text-green-500" aria-hidden="true" />
-              <span>Trusted Community</span>
+              <span>Monthly Listing Fee</span>
             </div>
             <div 
               className="flex items-center gap-2 text-shop-700"
               role="listitem"
             >
               <CheckCircle2 className="w-5 h-5 text-green-500" aria-hidden="true" />
-              <span>Items from $100 to $1,000+</span>
+              <span>Expert Authentication Available</span>
             </div>
             <div 
               className="flex items-center gap-2 text-shop-700"
               role="listitem"
             >
               <CheckCircle2 className="w-5 h-5 text-green-500" aria-hidden="true" />
-              <span>Expert Authentication</span>
+              <span>Honest Descriptions</span>
             </div>
           </div>
         </div>
