@@ -13,7 +13,9 @@ const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   description: z.string().optional(),
   subcategories: z.array(
-    z.string().min(2, "Subcategory must be at least 2 characters")
+    z.object({
+      value: z.string().min(2, "Subcategory must be at least 2 characters")
+    })
   ).default([]),
 });
 
@@ -33,7 +35,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
     },
   });
 
-  const { fields, append, remove } = useFieldArray<FormValues>({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "subcategories",
   });
@@ -41,8 +43,12 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
   const handleSubmit = async (values: FormValues) => {
     try {
       console.log("Submitting category with values:", values);
-      await onSubmit(values);
-      
+      // Transform the subcategories array to match the expected format
+      const transformedValues = {
+        ...values,
+        subcategories: values.subcategories.map(sub => sub.value),
+      };
+      await onSubmit(transformedValues);
       form.reset();
       toast.success("Category created successfully");
     } catch (error) {
@@ -106,7 +112,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => append("")}
+                onClick={() => append({ value: "" })}
                 className="flex items-center gap-2"
                 aria-label="Add subcategory"
               >
@@ -119,7 +125,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
               <FormField
                 key={field.id}
                 control={form.control}
-                name={`subcategories.${index}`}
+                name={`subcategories.${index}.value`}
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex gap-2">
