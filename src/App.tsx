@@ -23,6 +23,7 @@ import PurchaseHistory from "@/pages/PurchaseHistory";
 import PersonalCollection from "@/pages/PersonalCollection";
 import AdminDashboard from "@/pages/AdminDashboard";
 import CategoryManagement from "@/pages/CategoryManagement";
+import NewArrivals from "@/pages/NewArrivals";
 import { Toaster } from "@/components/ui/sonner";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PublicLayout } from "@/components/layout/PublicLayout";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/about" element={<PublicLayout><AboutUs /></PublicLayout>} />
         <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
         <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+        <Route path="/new-arrivals" element={<PublicLayout><NewArrivals /></PublicLayout>} />
         
         {/* Legal pages with PageLayout */}
         <Route path="/terms-of-service" element={<PageLayout><TermsOfService /></PageLayout>} />
