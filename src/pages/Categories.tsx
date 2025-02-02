@@ -19,24 +19,33 @@ interface CategoryWithSubcategories extends Category {
 
 export default function Categories() {
   const { toast } = useToast();
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
 
   const { data: categories, refetch, error: fetchError } = useQuery({
     queryKey: ["categories-with-subcategories"],
     queryFn: async () => {
+      console.log("Fetching categories and subcategories...");
+      
       // First fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
         .select("*")
         .order("name");
 
-      if (categoriesError) throw categoriesError;
+      if (categoriesError) {
+        console.error("Error fetching categories:", categoriesError);
+        throw categoriesError;
+      }
 
       // Then fetch subcategories
       const { data: subcategoriesData, error: subcategoriesError } = await supabase
         .from("subcategories")
         .select("*");
 
-      if (subcategoriesError) throw subcategoriesError;
+      if (subcategoriesError) {
+        console.error("Error fetching subcategories:", subcategoriesError);
+        throw subcategoriesError;
+      }
 
       // Combine the data
       const categoriesWithSubs = categoriesData.map((category) => ({
@@ -46,12 +55,15 @@ export default function Categories() {
         ),
       })) satisfies CategoryWithSubcategories[];
 
+      console.log("Successfully fetched categories:", categoriesWithSubs);
       return categoriesWithSubs;
     },
   });
 
   const handleSubmit = async (values: { name: string; subcategories: string[] }) => {
     try {
+      console.log("Creating new category with values:", values);
+      
       // Insert the category
       const { data: categoryData, error: categoryError } = await supabase
         .from("categories")
@@ -61,30 +73,51 @@ export default function Categories() {
         .select()
         .single();
 
-      if (categoryError) throw categoryError;
+      if (categoryError) {
+        console.error("Error creating category:", categoryError);
+        throw categoryError;
+      }
+
+      console.log("Category created successfully:", categoryData);
 
       // Insert subcategories
-      const subcategoryPromises = values.subcategories.map(subcategoryName =>
-        supabase
-          .from("subcategories")
-          .insert([{
-            name: subcategoryName,
-            category_id: categoryData.id,
-          }])
-      );
+      const subcategoryPromises = values.subcategories
+        .filter(name => name.trim()) // Filter out empty subcategories
+        .map(subcategoryName =>
+          supabase
+            .from("subcategories")
+            .insert([{
+              name: subcategoryName,
+              category_id: categoryData.id,
+            }])
+        );
 
-      await Promise.all(subcategoryPromises);
+      const subcategoryResults = await Promise.all(subcategoryPromises);
+      
+      // Check for subcategory creation errors
+      const subcategoryErrors = subcategoryResults
+        .filter(result => result.error)
+        .map(result => result.error);
+      
+      if (subcategoryErrors.length > 0) {
+        console.error("Errors creating subcategories:", subcategoryErrors);
+        throw new Error("Failed to create some subcategories");
+      }
 
+      console.log("Subcategories created successfully");
+      
       toast({
         title: "Success",
         description: "Category created successfully",
       });
 
+      setIsCreateDialogOpen(false);
       refetch();
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Error in handleSubmit:", error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred",
+        description: error.message || "An unexpected error occurred",
         variant: "destructive",
       });
     }
@@ -114,7 +147,7 @@ export default function Categories() {
             </div>
             <p className="text-shop-600 mt-2">Organize your collectibles into categories and subcategories</p>
           </div>
-          <Dialog>
+          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-shop-accent1 hover:bg-shop-accent1/90 text-white">
                 <PlusCircle className="mr-2 h-4 w-4" />
