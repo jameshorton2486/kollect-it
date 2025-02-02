@@ -48,12 +48,12 @@ export function MainNavbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-shop-900 border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <h1 className="text-2xl font-bold text-shop-800">Kollect-It</h1>
+              <h1 className="text-2xl font-bold text-white">Kollect-It</h1>
             </Link>
           </div>
 
@@ -66,7 +66,7 @@ export function MainNavbar() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -74,7 +74,7 @@ export function MainNavbar() {
 
                 {/* Shop Navigation */}
                 <div className="relative group">
-                  <button className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                  <button className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
                     Shop
                     <ChevronDown className="h-4 w-4" />
                   </button>
@@ -95,7 +95,7 @@ export function MainNavbar() {
 
                 {/* Help Navigation */}
                 <div className="relative group">
-                  <button className="text-shop-600 hover:text-shop-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                  <button className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
                     Help
                     <ChevronDown className="h-4 w-4" />
                   </button>
@@ -135,16 +135,15 @@ export function MainNavbar() {
 
           <div className="flex items-center space-x-4">
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative text-white hover:text-gray-300">
                 <ShoppingCart className="h-5 w-5" />
-                {/* Add cart items count badge here if needed */}
               </Button>
             </Link>
 
             {/* User Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -171,7 +170,7 @@ export function MainNavbar() {
             {isMobile && (
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
