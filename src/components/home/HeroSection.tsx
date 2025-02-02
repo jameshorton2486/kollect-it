@@ -15,9 +15,9 @@ export function HeroSection() {
           Your Trusted Marketplace for Unique Collectibles
         </h1>
         <p className="text-xl text-shop-600 max-w-3xl mx-auto animate-fade-in">
-          Discover and trade extraordinary collectibles across a variety of categories. 
+          Discover and trade collectibles across a variety of categories. 
           Whether you're a seasoned collector or just starting your journey, Kollect-It 
-          connects you with rare finds at accessible prices.
+          connects you with interesting finds at accessible prices.
         </p>
         
         <div className="space-y-6 animate-fade-in">
