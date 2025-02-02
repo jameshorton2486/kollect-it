@@ -1,8 +1,9 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -30,6 +31,11 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "subcategories",
+  });
+
   const handleSubmit = async (values: FormValues) => {
     try {
       console.log("Submitting category with values:", values);
@@ -41,19 +47,6 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
       console.error("Error creating category:", error);
       toast.error("Failed to create category. Please try again.");
     }
-  };
-
-  const addSubcategory = () => {
-    const currentSubcategories = form.getValues("subcategories") || [];
-    form.setValue("subcategories", [...currentSubcategories, ""]);
-  };
-
-  const removeSubcategory = (index: number) => {
-    const currentSubcategories = form.getValues("subcategories") || [];
-    form.setValue(
-      "subcategories",
-      currentSubcategories.filter((_, i) => i !== index)
-    );
   };
 
   return (
@@ -90,9 +83,9 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
                 <FormItem>
                   <FormLabel className="text-base font-semibold">Description (Optional)</FormLabel>
                   <FormControl>
-                    <Input 
+                    <Textarea 
                       placeholder="Enter category description" 
-                      className="w-full"
+                      className="w-full min-h-[100px] resize-y"
                       {...field} 
                     />
                   </FormControl>
@@ -111,17 +104,18 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={addSubcategory}
+                onClick={() => append("")}
                 className="flex items-center gap-2"
+                aria-label="Add subcategory"
               >
                 <Plus className="h-4 w-4" />
                 Add Subcategory
               </Button>
             </div>
 
-            {form.watch("subcategories")?.map((_, index) => (
+            {fields.map((field, index) => (
               <FormField
-                key={index}
+                key={field.id}
                 control={form.control}
                 name={`subcategories.${index}`}
                 render={({ field }) => (
@@ -141,7 +135,8 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
                         type="button"
                         variant="destructive"
                         size="icon"
-                        onClick={() => removeSubcategory(index)}
+                        onClick={() => remove(index)}
+                        aria-label={`Remove subcategory ${index + 1}`}
                       >
                         <Minus className="h-4 w-4" />
                       </Button>
@@ -152,7 +147,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
               />
             ))}
 
-            {!form.watch("subcategories")?.length && (
+            {fields.length === 0 && (
               <p className="text-sm text-muted-foreground">
                 No subcategories added yet. Click the button above to add one.
               </p>
