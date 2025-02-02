@@ -139,17 +139,17 @@ export function DashboardLayout({
               <div className="flex items-center justify-between h-16 gap-4 overflow-x-auto">
                 <Button
                   variant="ghost"
-                  className="min-w-[120px]"
+                  className="min-w-[100px]"
                   onClick={() => navigate('/buyer-dashboard')}
                 >
-                  Buyer Dashboard
+                  Buyers
                 </Button>
                 <Button
                   variant="ghost"
-                  className="min-w-[120px]"
+                  className="min-w-[100px]"
                   onClick={() => navigate('/seller-dashboard')}
                 >
-                  Seller Dashboard
+                  Sellers
                 </Button>
                 <Button
                   variant="ghost"
