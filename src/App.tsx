@@ -29,6 +29,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { ArticleDetail } from "@/components/articles/ArticleDetail";
 
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
         <Route path="/admin-dashboard" element={<DashboardLayout><AdminDashboard /></DashboardLayout>} />
         <Route path="/category-management" element={<DashboardLayout><CategoryManagement /></DashboardLayout>} />
         
+        <Route path="/articles/:id" element={<PageLayout><ArticleDetail /></PageLayout>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
