@@ -53,7 +53,7 @@ export function MainNavbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <h1 className="text-2xl font-bold text-[#1A1F2C]">Kollect-It</h1>
+              <h1 className="text-2xl font-bold text-white">Kollect-It</h1>
             </Link>
           </div>
 
@@ -66,17 +66,19 @@ export function MainNavbar() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="text-[#1A1F2C] hover:text-[#403E43] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors relative group"
                   >
                     {item.label}
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
                   </Link>
                 ))}
 
                 {/* Shop Navigation */}
                 <div className="relative group">
-                  <button className="text-[#1A1F2C] hover:text-[#403E43] px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                  <button className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 relative group">
                     Shop
                     <ChevronDown className="h-4 w-4" />
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
                   </button>
                   <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="py-1">
@@ -84,7 +86,7 @@ export function MainNavbar() {
                         <Link
                           key={item.path}
                           to={item.path}
-                          className="block px-4 py-2 text-sm text-[#1A1F2C] hover:bg-shop-50"
+                          className="block px-4 py-2 text-sm text-shop-800 hover:bg-shop-50"
                         >
                           {item.label}
                         </Link>
@@ -95,9 +97,10 @@ export function MainNavbar() {
 
                 {/* Help Navigation */}
                 <div className="relative group">
-                  <button className="text-[#1A1F2C] hover:text-[#403E43] px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                  <button className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 relative group">
                     Help
                     <ChevronDown className="h-4 w-4" />
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
                   </button>
                   <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="py-1">
@@ -105,7 +108,7 @@ export function MainNavbar() {
                         <Link
                           key={item.path}
                           to={item.path}
-                          className="block px-4 py-2 text-sm text-[#1A1F2C] hover:bg-shop-50"
+                          className="block px-4 py-2 text-sm text-shop-800 hover:bg-shop-50"
                         >
                           {item.label}
                         </Link>
@@ -124,9 +127,9 @@ export function MainNavbar() {
                       placeholder="Search collectibles..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pr-10"
+                      className="w-full pr-10 bg-white/10 text-white placeholder:text-gray-300 border-gray-700"
                     />
-                    <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-300" />
                   </div>
                 </form>
               </div>
@@ -135,7 +138,7 @@ export function MainNavbar() {
 
           <div className="flex items-center space-x-4">
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative text-[#1A1F2C] hover:text-[#403E43]">
+              <Button variant="ghost" size="icon" className="text-white hover:text-gray-200">
                 <ShoppingCart className="h-5 w-5" />
               </Button>
             </Link>
@@ -143,7 +146,7 @@ export function MainNavbar() {
             {/* User Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-[#1A1F2C] hover:text-[#403E43]">
+                <Button variant="ghost" size="icon" className="text-white hover:text-gray-200">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -170,7 +173,7 @@ export function MainNavbar() {
             {isMobile && (
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-[#1A1F2C] hover:text-[#403E43]">
+                  <Button variant="ghost" size="icon" className="text-white hover:text-gray-200">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
