@@ -53,7 +53,7 @@ export function MainNavbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <h1 className="text-2xl font-bold text-white">Kollect-It</h1>
+              <h1 className="text-2xl font-bold text-[#1A1F2C]">Kollect-It</h1>
             </Link>
           </div>
 
@@ -66,7 +66,7 @@ export function MainNavbar() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    className="text-[#1A1F2C] hover:text-[#403E43] px-3 py-2 rounded-md text-sm font-medium transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -74,7 +74,7 @@ export function MainNavbar() {
 
                 {/* Shop Navigation */}
                 <div className="relative group">
-                  <button className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                  <button className="text-[#1A1F2C] hover:text-[#403E43] px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
                     Shop
                     <ChevronDown className="h-4 w-4" />
                   </button>
@@ -84,7 +84,7 @@ export function MainNavbar() {
                         <Link
                           key={item.path}
                           to={item.path}
-                          className="block px-4 py-2 text-sm text-shop-600 hover:bg-shop-50"
+                          className="block px-4 py-2 text-sm text-[#1A1F2C] hover:bg-shop-50"
                         >
                           {item.label}
                         </Link>
@@ -95,7 +95,7 @@ export function MainNavbar() {
 
                 {/* Help Navigation */}
                 <div className="relative group">
-                  <button className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
+                  <button className="text-[#1A1F2C] hover:text-[#403E43] px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">
                     Help
                     <ChevronDown className="h-4 w-4" />
                   </button>
@@ -105,7 +105,7 @@ export function MainNavbar() {
                         <Link
                           key={item.path}
                           to={item.path}
-                          className="block px-4 py-2 text-sm text-shop-600 hover:bg-shop-50"
+                          className="block px-4 py-2 text-sm text-[#1A1F2C] hover:bg-shop-50"
                         >
                           {item.label}
                         </Link>
@@ -135,7 +135,7 @@ export function MainNavbar() {
 
           <div className="flex items-center space-x-4">
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative text-white hover:text-gray-300">
+              <Button variant="ghost" size="icon" className="relative text-[#1A1F2C] hover:text-[#403E43]">
                 <ShoppingCart className="h-5 w-5" />
               </Button>
             </Link>
@@ -143,7 +143,7 @@ export function MainNavbar() {
             {/* User Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
+                <Button variant="ghost" size="icon" className="text-[#1A1F2C] hover:text-[#403E43]">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -170,7 +170,7 @@ export function MainNavbar() {
             {isMobile && (
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
+                  <Button variant="ghost" size="icon" className="text-[#1A1F2C] hover:text-[#403E43]">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
