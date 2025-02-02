@@ -4,7 +4,6 @@ import {
   Package,
   ShoppingCart,
   Settings,
-  BarChart3,
   Tags,
   Shield,
   Users,
@@ -26,7 +25,6 @@ const menuItems: MenuItem[] = [
   { icon: Package, label: "Products", path: "/products" },
   { icon: Store, label: "Sellers", path: "/seller-dashboard" },
   { icon: ShoppingCart, label: "Orders", path: "/purchase-history" },
-  { icon: BarChart3, label: "Analytics", path: "/analytics" },
   { icon: Settings, label: "Settings", path: "/settings" },
   { 
     icon: Shield, 

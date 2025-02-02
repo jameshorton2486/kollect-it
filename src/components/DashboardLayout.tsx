@@ -161,13 +161,6 @@ export function DashboardLayout({
                 <Button
                   variant="ghost"
                   className="min-w-[100px]"
-                  onClick={() => navigate('/analytics')}
-                >
-                  Analytics
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="min-w-[100px]"
                   onClick={() => navigate('/settings')}
                 >
                   Settings
