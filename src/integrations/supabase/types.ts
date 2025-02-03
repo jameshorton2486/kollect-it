@@ -136,10 +136,13 @@ export type Database = {
           condition: string | null
           created_at: string
           description: string | null
+          era: string | null
+          estimated_age: string | null
           id: string
           image_url: string | null
           name: string
           price: number
+          provenance: string | null
           updated_at: string
           user_id: string
         }
@@ -148,10 +151,13 @@ export type Database = {
           condition?: string | null
           created_at?: string
           description?: string | null
+          era?: string | null
+          estimated_age?: string | null
           id?: string
           image_url?: string | null
           name: string
           price: number
+          provenance?: string | null
           updated_at?: string
           user_id: string
         }
@@ -160,10 +166,13 @@ export type Database = {
           condition?: string | null
           created_at?: string
           description?: string | null
+          era?: string | null
+          estimated_age?: string | null
           id?: string
           image_url?: string | null
           name?: string
           price?: number
+          provenance?: string | null
           updated_at?: string
           user_id?: string
         }
