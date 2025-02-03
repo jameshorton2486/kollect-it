@@ -14,6 +14,7 @@ export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [selectedCondition, setSelectedCondition] = useState("all");
+  const [selectedEra, setSelectedEra] = useState("all");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -47,11 +48,12 @@ export default function Products() {
   const filteredProducts = products?.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCondition = selectedCondition === "all" || product.condition === selectedCondition;
+    const matchesEra = selectedEra === "all" || product.era === selectedEra;
     const matchesPriceRange =
       (!priceRange.min || product.price >= Number(priceRange.min)) &&
       (!priceRange.max || product.price <= Number(priceRange.max));
 
-    return matchesSearch && matchesCondition && matchesPriceRange;
+    return matchesSearch && matchesCondition && matchesEra && matchesPriceRange;
   }) || [];
 
   const handleCreateProduct = async (values: any) => {
@@ -109,6 +111,8 @@ export default function Products() {
           onPriceRangeChange={setPriceRange}
           selectedCondition={selectedCondition}
           onConditionChange={setSelectedCondition}
+          selectedEra={selectedEra}
+          onEraChange={setSelectedEra}
         />
 
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>

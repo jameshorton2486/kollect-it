@@ -74,6 +74,8 @@ export function ProductsContent({
             onPriceRangeChange={onPriceRangeChange}
             selectedCondition={selectedCondition}
             onConditionChange={onConditionChange}
+            selectedEra={selectedEra}
+            onEraChange={onEraChange}
           />
         </Card>
       </aside>

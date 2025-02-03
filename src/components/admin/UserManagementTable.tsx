@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -10,10 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Shield, UserX, UserCheck } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formatDate } from "@/lib/utils";
 
-type UserRole = "buyer" | "seller" | "admin";
+type UserRole = "admin" | "buyer" | "seller";
 
 interface Profile {
   id: string;
@@ -27,9 +26,6 @@ interface Profile {
 }
 
 export function UserManagementTable() {
-  const { toast } = useToast();
-  const [loading, setLoading] = useState<string | null>(null);
-
   const { data: users, refetch } = useQuery({
     queryKey: ["admin-users"],
     queryFn: async () => {
@@ -51,7 +47,7 @@ export function UserManagementTable() {
       if (authError) throw authError;
 
       // Combine profile data with email from auth users
-      const enrichedProfiles = profiles.map(profile => {
+      const enrichedProfiles = profiles!.map(profile => {
         const authUser = authUsers.users.find(user => user.id === profile.id);
         return {
           ...profile,
@@ -64,102 +60,102 @@ export function UserManagementTable() {
     },
   });
 
-  const handleRoleUpdate = async (userId: string, role: UserRole) => {
+  const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
-      setLoading(userId);
-      
-      // First, delete any existing roles for this user
+      // Remove existing roles
       await supabase
         .from("user_roles")
         .delete()
         .eq("user_id", userId);
 
-      // Then insert the new role
-      const { error } = await supabase
+      // Add new role
+      await supabase
         .from("user_roles")
-        .insert({
-          user_id: userId,
-          role: role,
-        });
+        .insert([
+          { user_id: userId, role: newRole }
+        ]);
 
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "User role updated successfully",
-      });
       refetch();
     } catch (error) {
-      console.error('Update error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update user role",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(null);
+      console.error("Error updating user role:", error);
     }
   };
 
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      // Delete user from auth.users
+      await supabase.auth.admin.deleteUser(userId);
+
+      // Delete user from profiles (should cascade to user_roles)
+      await supabase
+        .from("profiles")
+        .delete()
+        .eq("id", userId);
+
+      refetch();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
+  if (!users) return <div>Loading...</div>;
+
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users?.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>
-                {user.first_name} {user.last_name}
-              </TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>
-                {user.user_roles?.[0]?.role || "buyer"}
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-end gap-4">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => handleRoleUpdate(user.id, "admin")}
-                    disabled={loading === user.id}
-                    className="bg-shop-accent1 text-white hover:bg-shop-accent1/90 text-lg px-6 py-3"
-                  >
-                    <Shield className="h-5 w-5 mr-2" />
-                    Make Admin
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => handleRoleUpdate(user.id, "seller")}
-                    disabled={loading === user.id}
-                    className="bg-shop-accent1 text-white hover:bg-shop-accent1/90 text-lg px-6 py-3"
-                  >
-                    <UserCheck className="h-5 w-5 mr-2" />
-                    Make Seller
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => handleRoleUpdate(user.id, "buyer")}
-                    disabled={loading === user.id}
-                    className="bg-shop-accent1 text-white hover:bg-shop-accent1/90 text-lg px-6 py-3"
-                  >
-                    <UserX className="h-5 w-5 mr-2" />
-                    Remove Role
-                  </Button>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>User</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+          <TableHead>Joined</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {users.map((user) => (
+          <TableRow key={user.id}>
+            <TableCell className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage src={user.avatar_url || undefined} />
+                <AvatarFallback>
+                  {user.first_name?.[0]}
+                  {user.last_name?.[0]}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <div className="font-medium">
+                  {user.first_name} {user.last_name}
                 </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+                <div className="text-sm text-gray-500">
+                  {user.id}
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>
+              <select
+                value={user.user_roles[0]?.role || "buyer"}
+                onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
+                className="border rounded px-2 py-1"
+              >
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+                <option value="admin">Admin</option>
+              </select>
+            </TableCell>
+            <TableCell>{formatDate(user.created_at)}</TableCell>
+            <TableCell>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => handleDeleteUser(user.id)}
+              >
+                Delete
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
