@@ -51,13 +51,10 @@ export function UserManagementTable() {
       
       if (authError) throw authError;
 
-      type ValidUserRoles = { role: UserRole }[];
-      
       // Process profiles with proper type casting and validation
-      const enrichedProfiles = profiles.map(profile => {
-        // Ensure user_roles is properly typed and defaulted if needed
+      const enrichedProfiles = profiles.map((profile): Profile => {
         const userRoles = Array.isArray(profile.user_roles) 
-          ? (profile.user_roles as ValidUserRoles)
+          ? profile.user_roles as { role: UserRole }[]
           : [{ role: 'buyer' as UserRole }];
 
         const authUser = authUsers.users.find(user => user.id === profile.id);
@@ -66,7 +63,7 @@ export function UserManagementTable() {
           ...profile,
           email: authUser?.email || 'No email found',
           user_roles: userRoles
-        } as Profile;
+        };
       });
 
       return enrichedProfiles;
