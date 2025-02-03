@@ -7,14 +7,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pencil, Trash2 } from "lucide-react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ContentManagement() {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { data: articles, refetch } = useQuery({
+  const { data: articles, refetch, isLoading, error } = useQuery({
     queryKey: ["admin-articles"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -29,6 +32,17 @@ export function ContentManagement() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!title.trim() || !content.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Title and content are required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("No user found");
@@ -37,8 +51,8 @@ export function ContentManagement() {
         const { error } = await supabase
           .from("articles")
           .update({ 
-            title, 
-            content,
+            title: title.trim(), 
+            content: content.trim(),
             updated_at: new Date().toISOString()
           })
           .eq("id", editingId);
@@ -52,8 +66,8 @@ export function ContentManagement() {
         const { error } = await supabase
           .from("articles")
           .insert([{ 
-            title, 
-            content,
+            title: title.trim(), 
+            content: content.trim(),
             user_id: user.id,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
@@ -76,6 +90,8 @@ export function ContentManagement() {
         description: "Failed to save article",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -101,63 +117,92 @@ export function ContentManagement() {
     }
   };
 
-  return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          placeholder="Article Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <Textarea
-          placeholder="Article Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          className="min-h-[200px]"
-        />
-        <Button type="submit">
-          {editingId ? "Update Article" : "Create Article"}
-        </Button>
-      </form>
+  if (error) {
+    throw error; // This will be caught by the ErrorBoundary
+  }
 
-      <div className="grid gap-4">
-        {articles?.map((article) => (
-          <Card key={article.id}>
-            <CardHeader>
-              <CardTitle>{article.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-500 mb-4">
-                {article.content.substring(0, 200)}...
-              </p>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setEditingId(article.id);
-                    setTitle(article.title);
-                    setContent(article.content);
-                  }}
-                >
-                  <Pencil className="h-4 w-4 mr-1" />
-                  Edit
-                </Button>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => handleDelete(article.id)}
-                >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  Delete
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+  return (
+    <ErrorBoundary>
+      <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            placeholder="Article Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            disabled={isSubmitting}
+            className="disabled:opacity-70"
+          />
+          <Textarea
+            placeholder="Article Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+            disabled={isSubmitting}
+            className="min-h-[200px] disabled:opacity-70"
+          />
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Please wait..." : editingId ? "Update Article" : "Create Article"}
+          </Button>
+        </form>
+
+        <div className="grid gap-4">
+          {isLoading ? (
+            // Loading skeleton
+            Array.from({ length: 3 }).map((_, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <Skeleton className="h-6 w-2/3" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-20 w-full mb-4" />
+                  <div className="flex gap-2">
+                    <Skeleton className="h-9 w-20" />
+                    <Skeleton className="h-9 w-20" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            articles?.map((article) => (
+              <Card key={article.id}>
+                <CardHeader>
+                  <CardTitle>{article.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-500 mb-4">
+                    {article.content.substring(0, 200)}...
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setEditingId(article.id);
+                        setTitle(article.title);
+                        setContent(article.content);
+                      }}
+                      disabled={isSubmitting}
+                    >
+                      <Pencil className="h-4 w-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(article.id)}
+                      disabled={isSubmitting}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }
