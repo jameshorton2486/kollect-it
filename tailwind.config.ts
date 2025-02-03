@@ -63,10 +63,10 @@ export default {
           700: "#334155",
           800: "#1e293b",
           900: "#0f172a",
-          accent1: "#1A1F2C", // Changed from purple to dark blue
+          accent1: "#1A1F2C",
           accent2: "#F97316",
           accent3: "#0FA0CE",
-          muted1: "#E5F6FF", // Changed to match blue theme
+          muted1: "#E5F6FF",
           muted2: "#FDE1D3",
         },
       },
@@ -95,6 +95,10 @@ export default {
           "0%": { backgroundPosition: "-200%" },
           "100%": { backgroundPosition: "200%" },
         },
+        scaleIn: {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -103,6 +107,7 @@ export default {
         slideIn: "slideIn 0.3s ease-out",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 2s linear infinite",
+        scaleIn: "scaleIn 0.2s ease-out",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

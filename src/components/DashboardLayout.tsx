@@ -54,7 +54,7 @@ export function DashboardLayout({
     <div className="flex min-h-screen w-full bg-background">
       {/* Desktop Sidebar - Only show for admin users */}
       {isAdmin && (
-        <div className="hidden md:block w-64 flex-shrink-0">
+        <div className="hidden md:block w-64 flex-shrink-0 transition-all duration-300">
           <DashboardSidebar />
         </div>
       )}
@@ -66,7 +66,7 @@ export function DashboardLayout({
             <Button 
               variant="ghost" 
               size="icon" 
-              className="fixed top-4 left-4 z-50 md:hidden"
+              className="fixed top-4 left-4 z-50 md:hidden hover:bg-white/10 transition-colors"
             >
               <Menu className="h-5 w-5" />
             </Button>
@@ -79,46 +79,49 @@ export function DashboardLayout({
 
       {/* Main content */}
       <div className={cn(
-        "flex-1 flex flex-col min-h-screen",
+        "flex-1 flex flex-col min-h-screen transition-all duration-300",
         !isAdmin && "container mx-auto" // Center content for non-admin users
       )}>
-        <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
+        <div className="sticky top-0 z-10 bg-[#1A1F2C] text-white shadow-lg">
           <div className="container mx-auto">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 h-16 px-4">
               <div className="flex items-center gap-4">
                 {showBackButton && (
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => navigate(-1)}
-                    className="mr-2"
+                    className="mr-2 hover:bg-white/10 transition-colors"
                   >
                     <ArrowLeft className="h-5 w-5" />
                   </Button>
                 )}
 
                 {pageTitle && (
-                  <h1 className="text-xl font-semibold text-shop-800">{pageTitle}</h1>
+                  <h1 className="text-xl font-semibold text-white">{pageTitle}</h1>
                 )}
               </div>
               
-              <div className={`relative flex-1 max-w-2xl transition-all duration-200 ${
+              <div className={cn(
+                "relative flex-1 max-w-2xl transition-all duration-200",
                 isSearchFocused ? 'scale-105' : ''
-              }`}>
+              )}>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                   <Input 
                     type="search" 
                     placeholder="Search for art and collectibles..." 
-                    className="w-full pl-10 pr-4 py-2 border-2 focus:border-shop-accent1 transition-colors"
+                    className="w-full pl-10 pr-4 py-2 bg-white/10 border-white/20 text-white placeholder:text-gray-400
+                             focus:bg-white/20 focus:border-white/30 transition-all duration-200"
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
                     onChange={(e) => handleSearch(e.target.value)}
                   />
                 </div>
                 {isSearchFocused && (
-                  <div className="absolute top-full left-0 right-0 bg-white mt-1 p-4 rounded-lg shadow-lg border border-gray-200 animate-fadeIn">
-                    <div className="text-sm text-gray-500">
+                  <div className="absolute top-full left-0 right-0 mt-1 p-4 bg-[#1A1F2C] rounded-lg shadow-lg
+                                border border-white/20 animate-fadeIn">
+                    <div className="text-sm text-gray-400">
                       Popular searches: Vintage Art, Rare Coins, Comics...
                     </div>
                   </div>
@@ -134,33 +137,33 @@ export function DashboardLayout({
 
         {/* Normal user navigation - Only show for non-admin users */}
         {!isAdmin && (
-          <nav className="border-b border-gray-200 bg-white">
+          <nav className="border-b border-gray-200 bg-white shadow-sm">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between h-16 gap-4 overflow-x-auto">
                 <Button
                   variant="ghost"
-                  className="min-w-[100px]"
+                  className="min-w-[100px] hover:bg-gray-100 transition-colors"
                   onClick={() => navigate('/buyer-dashboard')}
                 >
                   Buyers
                 </Button>
                 <Button
                   variant="ghost"
-                  className="min-w-[100px]"
+                  className="min-w-[100px] hover:bg-gray-100 transition-colors"
                   onClick={() => navigate('/seller-dashboard')}
                 >
                   Sellers
                 </Button>
                 <Button
                   variant="ghost"
-                  className="min-w-[100px]"
+                  className="min-w-[100px] hover:bg-gray-100 transition-colors"
                   onClick={() => navigate('/orders')}
                 >
                   Orders
                 </Button>
                 <Button
                   variant="ghost"
-                  className="min-w-[100px]"
+                  className="min-w-[100px] hover:bg-gray-100 transition-colors"
                   onClick={() => navigate('/settings')}
                 >
                   Settings
@@ -170,7 +173,7 @@ export function DashboardLayout({
           </nav>
         )}
 
-        <div className="flex-1 container mx-auto px-4 py-8">
+        <div className="flex-1 container mx-auto px-4 py-8 animate-fadeIn">
           {children}
         </div>
       </div>
