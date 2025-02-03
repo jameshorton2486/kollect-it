@@ -43,14 +43,19 @@ export function UserManagementTable() {
       if (authError) throw authError;
 
       // Combine profile data with email from auth users
-      const enrichedProfiles = profiles.map((profile: any) => {
+      const enrichedProfiles = (profiles as any[]).map(profile => {
+        if (!profile.id) {
+          console.error("Missing ID for profile:", profile);
+          return null;
+        }
+
         const authUser = authUsers.users.find(user => user.id === profile.id);
         return {
           ...profile,
           email: authUser?.email || 'No email found',
           user_roles: profile.user_roles || []
         } as Profile;
-      });
+      }).filter((profile): profile is Profile => profile !== null);
 
       return enrichedProfiles;
     },
