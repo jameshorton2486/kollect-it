@@ -44,7 +44,7 @@ export function CategoryCardGrid() {
     {
       icon: <Palette className="w-8 h-8" />,
       title: "Fine Art & Antiques",
-      description: "Masterpieces and historical treasures from renowned artists and periods",
+      description: "Original art, prints and antiques",
       href: "/categories/fine-art",
       imageUrl: "/placeholder.svg"
     },
