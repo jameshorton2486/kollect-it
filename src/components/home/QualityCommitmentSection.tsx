@@ -1,60 +1,91 @@
 import { Shield, AlertTriangle } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 export function QualityCommitmentSection() {
   return (
-    <section className="py-20 px-4 bg-shop-50">
+    <motion.section 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      className="section-padding bg-shop-50"
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Shield className="w-8 h-8 text-green-500" />
-            <h2 className="text-3xl md:text-4xl font-bold text-shop-900">
+            <h2 className="heading-responsive text-shop-900">
               Our Commitment to Quality
             </h2>
           </div>
-          <p className="text-lg text-shop-600 max-w-2xl mx-auto">
+          <p className="text-responsive text-shop-600 max-w-2xl mx-auto">
             We maintain high standards to ensure a trustworthy marketplace for all collectors
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-500 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold text-shop-800 mb-2">
-                  First Violation
-                </h3>
-                <p className="text-shop-600">
-                  Sellers receive a warning and the listing will be removed
-                </p>
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card className="p-6 hover-lift">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="w-6 h-6 text-yellow-500 mt-1" />
+                <div>
+                  <h3 className="text-xl font-semibold text-shop-800 mb-2">
+                    First Violation
+                  </h3>
+                  <p className="text-shop-600">
+                    Sellers receive a warning and the listing will be removed
+                  </p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </motion.div>
 
-          <Card className="p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-red-500 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold text-shop-800 mb-2">
-                  Second Violation
-                </h3>
-                <p className="text-shop-600">
-                  Results in permanent account suspension
-                </p>
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card className="p-6 hover-lift">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="w-6 h-6 text-red-500 mt-1" />
+                <div>
+                  <h3 className="text-xl font-semibold text-shop-800 mb-2">
+                    Second Violation
+                  </h3>
+                  <p className="text-shop-600">
+                    Results in permanent account suspension
+                  </p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </motion.div>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-shop-600 max-w-3xl mx-auto mb-8">
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-responsive text-shop-600 max-w-3xl mx-auto mb-8">
             Our commitment to quality ensures that every item listed on Kollect-It meets our 
             high standards for accuracy and authenticity. We take pride in maintaining a 
             trusted marketplace where collectors can buy and sell with confidence.
           </p>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
