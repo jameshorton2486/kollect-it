@@ -48,10 +48,10 @@ export function MainNavbar() {
   };
 
   return (
-    <nav className="bg-shop-900 border-b border-gray-800 sticky top-0 z-50">
+    <nav className="bg-[#1A1F2C] border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo Section - Added pt-2 for 1/8 inch (12px) downward shift */}
+          {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center h-full">
             <Link to="/" className="flex items-center pt-2">
               <h1 className="text-2xl font-bold text-white">Kollect-It</h1>
