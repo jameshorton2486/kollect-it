@@ -10,6 +10,7 @@ import {
   Store,
   BarChart,
   CreditCard,
+  FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -23,31 +24,44 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
+  // General user menu items
   { icon: LayoutDashboard, label: "Overview", path: "/buyer-dashboard" },
   { icon: Package, label: "Products", path: "/products" },
   { icon: Store, label: "Sellers", path: "/seller-dashboard" },
   { icon: ShoppingCart, label: "Orders", path: "/purchase-history" },
+  
+  // Seller specific items
   { icon: CreditCard, label: "Subscription", path: "/seller/subscription", roles: ["seller"] },
   { icon: Package, label: "Inventory", path: "/seller/inventory", roles: ["seller"] },
   { icon: BarChart, label: "Analytics", path: "/seller/analytics", roles: ["seller"] },
   { icon: Tags, label: "Listings", path: "/seller/listings", roles: ["seller"] },
+  
+  // Settings for all users
   { icon: Settings, label: "Settings", path: "/settings" },
+  
+  // Admin specific items
   { 
     icon: Shield, 
-    label: "Admin Panel", 
+    label: "Admin Overview", 
     path: "/admin-dashboard",
-    roles: ["admin"]
-  },
-  { 
-    icon: Tags, 
-    label: "Category Management", 
-    path: "/category-management",
     roles: ["admin"]
   },
   { 
     icon: Users, 
     label: "User Management", 
     path: "/user-management",
+    roles: ["admin"]
+  },
+  { 
+    icon: FileText, 
+    label: "Content Management", 
+    path: "/content-management",
+    roles: ["admin"]
+  },
+  { 
+    icon: Tags, 
+    label: "Category Management", 
+    path: "/category-management",
     roles: ["admin"]
   },
 ];
