@@ -21,6 +21,9 @@ interface Profile {
   last_name: string | null;
   email: string;
   user_roles: { role: UserRole }[];
+  avatar_url: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export function UserManagementTable() {
@@ -30,7 +33,8 @@ export function UserManagementTable() {
   const { data: users, refetch } = useQuery({
     queryKey: ["admin-users"],
     queryFn: async () => {
-      const { data: profiles, error } = await supabase
+      // First get profiles with their roles
+      const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
         .select(`
           *,
@@ -39,21 +43,24 @@ export function UserManagementTable() {
           )
         `);
 
-      if (error) throw error;
+      if (profilesError) throw profilesError;
 
-      // Get user emails from auth.users table
-      const { data: authUsers } = await supabase.auth.admin.listUsers();
+      // Then get user emails from auth.users table
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       
+      if (authError) throw authError;
+
       // Combine profile data with email from auth users
       const enrichedProfiles = profiles.map(profile => {
         const authUser = authUsers.users.find(user => user.id === profile.id);
         return {
           ...profile,
-          email: authUser?.email || 'No email found'
-        };
+          email: authUser?.email || 'No email found',
+          user_roles: profile.user_roles || []
+        } as Profile;
       });
 
-      return enrichedProfiles as Profile[];
+      return enrichedProfiles;
     },
   });
 
