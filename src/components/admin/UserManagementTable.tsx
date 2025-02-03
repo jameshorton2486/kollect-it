@@ -1,16 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatDate } from "@/lib/utils";
+import { Table, TableBody } from "@/components/ui/table";
+import { UserTableHeader } from "./UserTableHeader";
+import { UserTableRow } from "./UserTableRow";
 
 type UserRole = "admin" | "buyer" | "seller";
 
@@ -23,16 +15,6 @@ interface Profile {
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
-}
-
-interface SupabaseProfile {
-  id: string;
-  first_name: string | null;
-  last_name: string | null;
-  avatar_url: string | null;
-  created_at: string;
-  updated_at: string;
-  user_roles: { role: UserRole }[];
 }
 
 export function UserManagementTable() {
@@ -56,15 +38,12 @@ export function UserManagementTable() {
       if (profilesError) throw profilesError;
       if (!profiles) return [];
 
-      // Type assertion to help TypeScript understand the structure
-      const typedProfiles = profiles as SupabaseProfile[];
-
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) throw authError;
 
       // Combine profile data with email from auth users
-      const enrichedProfiles = typedProfiles.map(profile => {
+      const enrichedProfiles = profiles.map(profile => {
         const authUser = authUsers.users.find(user => user.id === profile.id);
         return {
           ...profile,
@@ -119,58 +98,15 @@ export function UserManagementTable() {
 
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>User</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead>Joined</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <UserTableHeader />
       <TableBody>
         {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell className="flex items-center gap-3">
-              <Avatar>
-                <AvatarImage src={user.avatar_url || undefined} />
-                <AvatarFallback>
-                  {user.first_name?.[0]}
-                  {user.last_name?.[0]}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="font-medium">
-                  {user.first_name} {user.last_name}
-                </div>
-                <div className="text-sm text-gray-500">
-                  {user.id}
-                </div>
-              </div>
-            </TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>
-              <select
-                value={user.user_roles[0]?.role || "buyer"}
-                onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
-                className="border rounded px-2 py-1"
-              >
-                <option value="buyer">Buyer</option>
-                <option value="seller">Seller</option>
-                <option value="admin">Admin</option>
-              </select>
-            </TableCell>
-            <TableCell>{formatDate(user.created_at)}</TableCell>
-            <TableCell>
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => handleDeleteUser(user.id)}
-              >
-                Delete
-              </Button>
-            </TableCell>
-          </TableRow>
+          <UserTableRow
+            key={user.id}
+            user={user}
+            onRoleChange={handleRoleChange}
+            onDeleteUser={handleDeleteUser}
+          />
         ))}
       </TableBody>
     </Table>
