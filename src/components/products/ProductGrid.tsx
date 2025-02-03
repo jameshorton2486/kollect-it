@@ -6,9 +6,23 @@ import { supabase } from "@/integrations/supabase/client";
 interface ProductGridProps {
   products: Tables<"products">[];
   categories: Tables<"categories">[] | undefined;
+  filters: {
+    search: string;
+    category: string;
+    condition: string;
+    priceRange: { min: string; max: string };
+    era: string;
+  };
+  onFilterChange: (filters: {
+    search: string;
+    category: string;
+    condition: string;
+    priceRange: { min: string; max: string };
+    era: string;
+  }) => void;
 }
 
-export function ProductGrid({ products, categories }: ProductGridProps) {
+export function ProductGrid({ products, categories, filters, onFilterChange }: ProductGridProps) {
   // Fetch trending products for badges
   const { data: trendingProducts } = useQuery({
     queryKey: ["trending-products"],
