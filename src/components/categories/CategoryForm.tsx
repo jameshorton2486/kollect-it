@@ -14,12 +14,13 @@ const formSchema = z.object({
   description: z.string().optional(),
   subcategories: z.array(
     z.object({
+      id: z.string().optional(),
       value: z.string().min(2, "Subcategory must be at least 2 characters")
     })
   ).default([]),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
 interface CategoryFormProps {
   onSubmit: (values: { name: string; description?: string; subcategories: string[] }) => Promise<void>;

@@ -1,14 +1,12 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { PlusCircle } from "lucide-react";
 import { useState } from "react";
-import { CategoryForm } from "@/components/categories/CategoryForm";
-import { CategoryCard } from "@/components/categories/CategoryCard";
+import { CategoryDialog } from "@/components/categories/management/CategoryDialog";
+import { CategoryHeader } from "@/components/categories/management/CategoryHeader";
+import { CategoryGrid } from "@/components/categories/management/CategoryGrid";
+import { Tables } from "@/integrations/supabase/types";
 
 export default function CategoryManagement() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -16,7 +14,7 @@ export default function CategoryManagement() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: categories, refetch } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const { data: categories, error } = await supabase
@@ -37,7 +35,6 @@ export default function CategoryManagement() {
 
   const handleCreateCategory = async (values: { name: string; description?: string; subcategories: string[] }) => {
     try {
-      // Create the category
       const { data: category, error: categoryError } = await supabase
         .from("categories")
         .insert({
@@ -49,7 +46,6 @@ export default function CategoryManagement() {
 
       if (categoryError) throw categoryError;
 
-      // Create subcategories if any
       if (values.subcategories.length > 0) {
         const { error: subcategoriesError } = await supabase
           .from("subcategories")
@@ -63,13 +59,12 @@ export default function CategoryManagement() {
         if (subcategoriesError) throw subcategoriesError;
       }
 
+      setIsCreateDialogOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       toast({
         title: "Success",
         description: "Category created successfully",
       });
-
-      setIsCreateDialogOpen(false);
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
     } catch (error) {
       console.error("Error creating category:", error);
       toast({
@@ -84,7 +79,6 @@ export default function CategoryManagement() {
     try {
       if (!editingCategory) return;
 
-      // Update the category
       const { error: categoryError } = await supabase
         .from("categories")
         .update({
@@ -95,7 +89,6 @@ export default function CategoryManagement() {
 
       if (categoryError) throw categoryError;
 
-      // Delete existing subcategories
       const { error: deleteError } = await supabase
         .from("subcategories")
         .delete()
@@ -103,7 +96,6 @@ export default function CategoryManagement() {
 
       if (deleteError) throw deleteError;
 
-      // Create new subcategories
       if (values.subcategories.length > 0) {
         const { error: subcategoriesError } = await supabase
           .from("subcategories")
@@ -117,13 +109,12 @@ export default function CategoryManagement() {
         if (subcategoriesError) throw subcategoriesError;
       }
 
+      setEditingCategory(null);
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       toast({
         title: "Success",
         description: "Category updated successfully",
       });
-
-      setEditingCategory(null);
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
     } catch (error) {
       console.error("Error updating category:", error);
       toast({
@@ -162,59 +153,32 @@ export default function CategoryManagement() {
   return (
     <DashboardLayout>
       <div className="container mx-auto p-6">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-shop-800">Category Management</h1>
-            <p className="text-shop-600 mt-2">Manage your store categories</p>
-          </div>
-          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-shop-700 hover:bg-shop-800">
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add Category
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add New Category</DialogTitle>
-              </DialogHeader>
-              <CategoryForm onSubmit={handleCreateCategory} />
-            </DialogContent>
-          </Dialog>
-        </div>
+        <CategoryHeader onAddCategory={() => setIsCreateDialogOpen(true)} />
+        
+        <CategoryGrid 
+          categories={categories}
+          onEdit={setEditingCategory}
+          onDelete={handleDeleteCategory}
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories?.map((category) => (
-            <CategoryCard
-              key={category.id}
-              id={category.id}
-              name={category.name}
-              description={category.description || ""}
-              subcategories={category.subcategories || []}
-              onEdit={() => setEditingCategory(category)}
-              onDelete={() => handleDeleteCategory(category.id)}
-            />
-          ))}
-        </div>
+        <CategoryDialog
+          isOpen={isCreateDialogOpen}
+          onOpenChange={setIsCreateDialogOpen}
+          onSubmit={handleCreateCategory}
+          title="Add New Category"
+        />
 
-        {/* Edit Category Dialog */}
-        <Dialog open={!!editingCategory} onOpenChange={(open) => !open && setEditingCategory(null)}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit Category</DialogTitle>
-            </DialogHeader>
-            {editingCategory && (
-              <CategoryForm
-                onSubmit={handleEditCategory}
-                defaultValues={{
-                  name: editingCategory.name,
-                  description: editingCategory.description,
-                  subcategories: editingCategory.subcategories?.map((sub: any) => ({ value: sub.name })) || [],
-                }}
-              />
-            )}
-          </DialogContent>
-        </Dialog>
+        <CategoryDialog
+          isOpen={!!editingCategory}
+          onOpenChange={(open) => !open && setEditingCategory(null)}
+          onSubmit={handleEditCategory}
+          title="Edit Category"
+          defaultValues={editingCategory && {
+            name: editingCategory.name,
+            description: editingCategory.description,
+            subcategories: editingCategory.subcategories?.map((sub: any) => ({ value: sub.name })) || [],
+          }}
+        />
       </div>
     </DashboardLayout>
   );

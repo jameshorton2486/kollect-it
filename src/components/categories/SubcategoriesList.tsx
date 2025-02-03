@@ -5,17 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Minus, AlertCircle } from "lucide-react";
 import { UseFieldArrayReturn, Control } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-
-interface SubcategoryField {
-  id: string;
-  value?: string;
-}
-
-interface FormValues {
-  subcategories?: SubcategoryField[];
-  description?: string;
-  name?: string;
-}
+import { FormValues } from "./CategoryForm";
 
 interface SubcategoriesListProps {
   fields: UseFieldArrayReturn<FormValues, "subcategories">["fields"];
@@ -34,7 +24,7 @@ export function SubcategoriesList({ fields, append, remove, control }: Subcatego
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => append({ value: "" })}
+            onClick={() => append({ id: crypto.randomUUID(), value: "" })}
             className="flex items-center gap-2 hover:bg-shop-accent1/10 hover:text-shop-accent1"
             aria-label="Add subcategory"
           >
