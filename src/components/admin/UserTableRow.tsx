@@ -15,27 +15,39 @@ interface UserTableRowProps {
     created_at: string;
     user_roles: { role: UserRole }[];
   };
+  selected?: boolean;
+  onSelect?: () => void;
   onRoleChange: (userId: string, newRole: UserRole) => Promise<void>;
   onDeleteUser: (userId: string) => Promise<void>;
 }
 
-export function UserTableRow({ user, onRoleChange, onDeleteUser }: UserTableRowProps) {
+export function UserTableRow({ user, selected, onSelect, onRoleChange, onDeleteUser }: UserTableRowProps) {
   return (
     <TableRow>
-      <TableCell className="flex items-center gap-3">
-        <Avatar>
-          <AvatarImage src={user.avatar_url || undefined} />
-          <AvatarFallback>
-            {user.first_name?.[0]}
-            {user.last_name?.[0]}
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <div className="font-medium">
-            {user.first_name} {user.last_name}
-          </div>
-          <div className="text-sm text-gray-500">
-            {user.id}
+      <TableCell>
+        {onSelect && (
+          <input
+            type="checkbox"
+            checked={selected}
+            onChange={onSelect}
+            className="mr-2"
+          />
+        )}
+        <div className="flex items-center gap-3">
+          <Avatar>
+            <AvatarImage src={user.avatar_url || undefined} />
+            <AvatarFallback>
+              {user.first_name?.[0]}
+              {user.last_name?.[0]}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="font-medium">
+              {user.first_name} {user.last_name}
+            </div>
+            <div className="text-sm text-gray-500">
+              {user.id}
+            </div>
           </div>
         </div>
       </TableCell>

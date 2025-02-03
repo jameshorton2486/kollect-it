@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { UserTableRow } from "./UserTableRow";
 import { Table, TableHeader, TableBody } from "@/components/ui/table";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type UserRole = 'admin' | 'buyer' | 'seller';
 
@@ -12,7 +14,7 @@ interface Profile {
   id: string;
   first_name: string | null;
   last_name: string | null;
-  email: string;  // Changed from optional to required
+  email: string;
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
@@ -25,14 +27,12 @@ export function UserManagementTable() {
   const { data: users, isLoading, error } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      // First get all profiles
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
         .select('*');
 
       if (profilesError) throw profilesError;
 
-      // Then get user roles for each profile
       const profilesWithRoles = await Promise.all(
         profiles.map(async (profile) => {
           const { data: roles } = await supabase
@@ -74,69 +74,101 @@ export function UserManagementTable() {
     );
   };
 
-  if (isLoading) {
-    return <div>Loading users...</div>;
-  }
-
   if (error) {
-    return <div>Error loading users: {error.message}</div>;
+    return (
+      <div className="p-4 text-red-500">
+        Error loading users: {error.message}
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">User Management</h2>
-        <div className="space-x-2">
-          <Button
-            variant="destructive"
-            disabled={selectedUsers.length === 0}
-            onClick={() => {/* Implement bulk delete */}}
-          >
-            Delete Selected
-          </Button>
-          <Button
-            variant="outline"
-            disabled={selectedUsers.length === 0}
-            onClick={() => {/* Implement bulk role update */}}
-          >
-            Update Roles
-          </Button>
+    <ErrorBoundary>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">User Management</h2>
+          <div className="space-x-2">
+            <Button
+              variant="destructive"
+              disabled={selectedUsers.length === 0}
+              onClick={() => {/* Implement bulk delete */}}
+            >
+              Delete Selected
+            </Button>
+            <Button
+              variant="outline"
+              disabled={selectedUsers.length === 0}
+              onClick={() => {/* Implement bulk role update */}}
+            >
+              Update Roles
+            </Button>
+          </div>
         </div>
-      </div>
 
-      <Table>
-        <TableHeader>
-          <tr>
-            <th className="w-12">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  if (users) {
-                    setSelectedUsers(
-                      e.target.checked ? users.map(user => user.id) : []
-                    );
-                  }
-                }}
-              />
-            </th>
-            <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </TableHeader>
-        <TableBody>
-          {users?.map((user) => (
-            <UserTableRow
-              key={user.id}
-              user={user}
-              selected={selectedUsers.includes(user.id)}
-              onSelect={() => handleUserSelection(user.id)}
-              onRoleChange={handleRoleChange}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+        <Table>
+          <TableHeader>
+            <tr>
+              <th className="w-12">
+                <input
+                  type="checkbox"
+                  onChange={(e) => {
+                    if (users) {
+                      setSelectedUsers(
+                        e.target.checked ? users.map(user => user.id) : []
+                      );
+                    }
+                  }}
+                />
+              </th>
+              <th>User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index}>
+                  <td colSpan={5}>
+                    <div className="flex items-center space-x-4 p-4">
+                      <Skeleton className="h-12 w-12 rounded-full" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-[250px]" />
+                        <Skeleton className="h-4 w-[200px]" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              users?.map((user) => (
+                <UserTableRow
+                  key={user.id}
+                  user={user}
+                  selected={selectedUsers.includes(user.id)}
+                  onSelect={() => handleUserSelection(user.id)}
+                  onRoleChange={handleRoleChange}
+                  onDeleteUser={async (userId) => {
+                    try {
+                      const { error } = await supabase
+                        .from('profiles')
+                        .delete()
+                        .eq('id', userId);
+                      
+                      if (error) throw error;
+                      toast.success("User deleted successfully");
+                    } catch (error) {
+                      console.error('Error deleting user:', error);
+                      toast.error('Failed to delete user');
+                    }
+                  }}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </ErrorBoundary>
   );
 }
