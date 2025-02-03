@@ -37,8 +37,8 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-shop-700 mt-8 pt-8 text-center text-white footer-copyright">
-          <p>&copy; {new Date().getFullYear()} Kollect-It. All rights reserved.</p>
+        <div className="border-t border-shop-700 mt-8 pt-8 text-center footer-copyright">
+          <p className="text-white">&copy; {new Date().getFullYear()} Kollect-It. All rights reserved.</p>
         </div>
       </div>
     </footer>
