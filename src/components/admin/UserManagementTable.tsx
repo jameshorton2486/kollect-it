@@ -51,17 +51,20 @@ export function UserManagementTable() {
           user_roles (
             role
           )
-        `) as { data: SupabaseProfile[] | null; error: Error | null };
+        `);
 
       if (profilesError) throw profilesError;
       if (!profiles) return [];
+
+      // Type assertion to help TypeScript understand the structure
+      const typedProfiles = profiles as SupabaseProfile[];
 
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) throw authError;
 
       // Combine profile data with email from auth users
-      const enrichedProfiles = profiles.map(profile => {
+      const enrichedProfiles = typedProfiles.map(profile => {
         const authUser = authUsers.users.find(user => user.id === profile.id);
         return {
           ...profile,
