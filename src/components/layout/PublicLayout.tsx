@@ -15,7 +15,7 @@ interface PublicLayoutProps {
 const navigationItems = [
   { label: "All Products", path: "/products" },
   { label: "Categories", path: "/categories" },
-  { label: "Blog", path: "/blog" },  // Changed from "Articles" to "Blog" and path from "/articles" to "/blog"
+  { label: "Blog", path: "/blog" },
   { label: "Featured", path: "/featured" },
   { label: "Popular", path: "/popular" },
 ];
@@ -27,17 +27,17 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
       
       <div className="flex-1 flex">
         {/* Desktop Navigation Sidebar */}
-        <div className="hidden md:block w-64 bg-white border-r border-gray-200">
+        <div className="hidden md:block w-64 bg-[#008080] border-r border-[#008080]/20">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-shop-800 mb-4">Browse</h2>
+            <h2 className="text-lg font-semibold text-white mb-4">Browse</h2>
             <nav className="space-y-1">
               {navigationItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "block px-4 py-2 text-shop-600 hover:bg-shop-50 rounded-lg transition-colors",
-                    "hover:text-shop-900"
+                    "block px-4 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
+                    "hover:text-white"
                   )}
                 >
                   {item.label}
@@ -59,15 +59,15 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 pt-20">
+            <SheetContent side="left" className="w-64 pt-20 bg-[#008080]">
               <nav className="space-y-1">
                 {navigationItems.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
                     className={cn(
-                      "block px-4 py-2 text-shop-600 hover:bg-shop-50 rounded-lg transition-colors",
-                      "hover:text-shop-900"
+                      "block px-4 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
+                      "hover:text-white"
                     )}
                   >
                     {item.label}
