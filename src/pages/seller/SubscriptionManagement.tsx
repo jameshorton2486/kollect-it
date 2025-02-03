@@ -49,26 +49,26 @@ export default function SubscriptionManagement() {
         <h1 className="text-3xl font-bold text-shop-800 mb-8">Choose Your Plan</h1>
         <div className="grid md:grid-cols-3 gap-8">
           {subscriptionPlans.map((plan) => (
-            <Card key={plan.name} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-center">
+            <Card key={plan.name} className="hover:shadow-lg transition-shadow flex flex-col">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl font-bold">
                   {plan.name}
                 </CardTitle>
-                <div className="text-center mt-2">
+                <div className="mt-2">
                   <span className="text-4xl font-bold text-shop-800">${plan.price}</span>
                   <span className="text-shop-600">/month</span>
                 </div>
               </CardHeader>
-              <CardContent>
-                <ul className="space-y-4">
+              <CardContent className="flex flex-col flex-grow">
+                <ul className="space-y-4 mb-8 flex-grow">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">
-                      <Check className="h-5 w-5 text-teal-600" />
+                      <Check className="h-5 w-5 text-teal-600 flex-shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full mt-6 bg-[#008080] hover:bg-[#006666] text-white">
+                <Button className="w-full mt-auto bg-[#008080] hover:bg-[#006666] text-white">
                   Select Plan
                 </Button>
               </CardContent>

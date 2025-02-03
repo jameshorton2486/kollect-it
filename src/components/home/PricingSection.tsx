@@ -60,7 +60,7 @@ export function PricingSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan) => (
-            <Card key={plan.name} className="p-6 hover:shadow-lg transition-shadow">
+            <Card key={plan.name} className="p-6 hover:shadow-lg transition-shadow flex flex-col">
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold text-shop-800 mb-2">{plan.name}</h3>
                 <div className="text-4xl font-bold text-shop-900 mb-2">
@@ -70,17 +70,17 @@ export function PricingSection() {
                 <p className="text-shop-600">Up to {plan.listings} listings per month</p>
               </div>
               
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2">
-                    <Check className="w-5 h-5 text-green-500" />
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <span className="text-shop-700">{feature}</span>
                   </li>
                 ))}
               </ul>
               
-              <Button className="w-full bg-[#008080] hover:bg-[#008080]/90 text-white">
-                Get Started
+              <Button className="w-full bg-[#008080] hover:bg-[#008080]/90 text-white mt-auto">
+                Select Plan
               </Button>
             </Card>
           ))}
