@@ -6,15 +6,18 @@ import { UserTableRow } from "./UserTableRow";
 
 type UserRole = "admin" | "buyer" | "seller";
 
-interface Profile {
+interface BaseProfile {
   id: string;
   first_name: string | null;
   last_name: string | null;
-  email: string;
-  user_roles: { role: UserRole }[];
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
+  user_roles: { role: UserRole }[];
+}
+
+interface Profile extends BaseProfile {
+  email: string;
 }
 
 export function UserManagementTable() {
@@ -43,7 +46,7 @@ export function UserManagementTable() {
       if (authError) throw authError;
 
       // Combine profile data with email from auth users
-      const enrichedProfiles = (profiles as any[]).map(profile => {
+      const enrichedProfiles = (profiles as BaseProfile[]).map(profile => {
         if (!profile.id) {
           console.error("Missing ID for profile:", profile);
           return null;
