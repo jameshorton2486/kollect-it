@@ -13,6 +13,16 @@ import { Button } from "@/components/ui/button";
 import { Shield, UserX, UserCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+type UserRole = "buyer" | "seller" | "admin";
+
+interface Profile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  user_roles: { role: UserRole }[];
+}
+
 export function UserManagementTable() {
   const { toast } = useToast();
   const [loading, setLoading] = useState<string | null>(null);
@@ -30,17 +40,27 @@ export function UserManagementTable() {
         `);
 
       if (error) throw error;
-      return profiles;
+      return profiles as Profile[];
     },
   });
 
-  const handleRoleUpdate = async (userId: string, role: string) => {
+  const handleRoleUpdate = async (userId: string, role: UserRole) => {
     try {
       setLoading(userId);
+      
+      // First, delete any existing roles for this user
+      await supabase
+        .from("user_roles")
+        .delete()
+        .eq("user_id", userId);
+
+      // Then insert the new role
       const { error } = await supabase
         .from("user_roles")
-        .upsert({ user_id: userId, role })
-        .eq("user_id", userId);
+        .insert({
+          user_id: userId,
+          role: role,
+        });
 
       if (error) throw error;
 
@@ -50,6 +70,7 @@ export function UserManagementTable() {
       });
       refetch();
     } catch (error) {
+      console.error('Update error:', error);
       toast({
         title: "Error",
         description: "Failed to update user role",
