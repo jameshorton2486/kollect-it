@@ -6,20 +6,26 @@ export function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative bg-[#008080] py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center space-y-6">
-          <h1 className="text-5xl md:text-6xl font-bold text-white">
-            Your Online Antique Store
+    <section className="relative min-h-[600px] bg-gradient-to-br from-[#008080] to-[#006666] py-20 px-4">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10" />
+      
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="text-left space-y-6">
+          <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+            Your Online 
+            <span className="block">Antique Store</span>
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto">
-            Sell antiques and collectibles without paying high commission fees. List 30 items for $20, 
-            50 for $30, or 100 for $50 a month.
+          
+          <p className="text-xl text-white/90 max-w-xl">
+            Join our curated marketplace for unique antiques and collectibles. 
+            List your items with our seller-friendly subscription plans.
           </p>
-          <div className="flex justify-center gap-4 pt-4">
+          
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
               size="lg"
-              className="bg-white text-[#008080] hover:bg-white/90"
+              className="bg-white text-[#008080] hover:bg-white/90 text-lg px-8"
               onClick={() => navigate("/products")}
             >
               <ShoppingBag className="mr-2 h-5 w-5" />
@@ -28,13 +34,37 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white/10"
+              className="border-2 border-white text-white hover:bg-white/10 text-lg px-8"
               onClick={() => navigate("/pricing")}
             >
               <Star className="mr-2 h-5 w-5" />
               View Pricing Plans
             </Button>
           </div>
+
+          <div className="flex items-center gap-8 pt-8">
+            <div className="text-white/90">
+              <div className="text-2xl font-bold">1000+</div>
+              <div className="text-sm">Unique Items</div>
+            </div>
+            <div className="text-white/90">
+              <div className="text-2xl font-bold">500+</div>
+              <div className="text-sm">Active Sellers</div>
+            </div>
+            <div className="text-white/90">
+              <div className="text-2xl font-bold">24/7</div>
+              <div className="text-sm">Support</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden md:block relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#008080]/20 to-transparent rounded-lg" />
+          <img
+            src="/placeholder.svg"
+            alt="Featured Antiques"
+            className="w-full h-[500px] object-cover rounded-lg shadow-2xl"
+          />
         </div>
       </div>
     </section>
