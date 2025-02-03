@@ -3,6 +3,7 @@ import { CategoryFilter } from "@/components/products/filters/CategoryFilter";
 import { ConditionFilter } from "@/components/products/filters/ConditionFilter";
 import { PriceRangeFilter } from "@/components/products/filters/PriceRangeFilter";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X } from "lucide-react";
 import { Tables } from "@/integrations/supabase/types";
 
@@ -13,6 +14,8 @@ interface FilterContentProps {
   setSelectedCategory: (value: string) => void;
   selectedCondition: string;
   setSelectedCondition: (value: string) => void;
+  selectedEra: string;
+  setSelectedEra: (value: string) => void;
   priceRange: { min: string; max: string };
   setPriceRange: (value: { min: string; max: string }) => void;
   categories: Tables<"categories">[] | undefined;
@@ -26,11 +29,22 @@ export function FilterContent({
   setSelectedCategory,
   selectedCondition,
   setSelectedCondition,
+  selectedEra,
+  setSelectedEra,
   priceRange,
   setPriceRange,
   categories,
   resetFilters,
 }: FilterContentProps) {
+  const eras = [
+    { value: "all", label: "All Eras" },
+    { value: "victorian", label: "Victorian" },
+    { value: "art-deco", label: "Art Deco" },
+    { value: "mid-century", label: "Mid-Century" },
+    { value: "vintage", label: "Vintage" },
+    { value: "contemporary", label: "Contemporary" },
+  ];
+
   return (
     <div className="space-y-6">
       <SearchFilter
@@ -46,6 +60,21 @@ export function FilterContent({
         selectedCondition={selectedCondition}
         onConditionChange={setSelectedCondition}
       />
+      <div className="space-y-4">
+        <h3 className="font-semibold text-shop-800">Era</h3>
+        <Select value={selectedEra} onValueChange={setSelectedEra}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select Era" />
+          </SelectTrigger>
+          <SelectContent>
+            {eras.map((era) => (
+              <SelectItem key={era.value} value={era.value}>
+                {era.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <PriceRangeFilter
         priceRange={priceRange}
         onPriceRangeChange={setPriceRange}

@@ -6,16 +6,53 @@ import { ProductListingSort } from "./ProductListingSort";
 
 export function ProductListingGrid() {
   const [sortBy, setSortBy] = useState("created_at_desc");
+  const [filters, setFilters] = useState({
+    search: "",
+    category: "all",
+    condition: "all",
+    priceRange: { min: "", max: "" },
+    era: "all"
+  });
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products", sortBy],
+    queryKey: ["products", sortBy, filters],
     queryFn: async () => {
       const [field, direction] = sortBy.split("_");
       
-      const { data, error } = await supabase
+      let query = supabase
         .from("products")
         .select("*, categories(*)")
         .order(field, { ascending: direction === "asc" });
+
+      // Apply search filter
+      if (filters.search) {
+        query = query.ilike("name", `%${filters.search}%`);
+      }
+
+      // Apply category filter
+      if (filters.category !== "all") {
+        query = query.eq("category_id", filters.category);
+      }
+
+      // Apply condition filter
+      if (filters.condition !== "all") {
+        query = query.eq("condition", filters.condition);
+      }
+
+      // Apply price range filter
+      if (filters.priceRange.min) {
+        query = query.gte("price", parseFloat(filters.priceRange.min));
+      }
+      if (filters.priceRange.max) {
+        query = query.lte("price", parseFloat(filters.priceRange.max));
+      }
+
+      // Apply era filter
+      if (filters.era !== "all") {
+        query = query.eq("era", filters.era);
+      }
+
+      const { data, error } = await query;
       
       if (error) throw error;
       return data;
@@ -37,10 +74,22 @@ export function ProductListingGrid() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <p className="text-sm text-shop-600">
+          {isLoading ? (
+            "Loading products..."
+          ) : (
+            `${products?.length || 0} products found`
+          )}
+        </p>
         <ProductListingSort sortBy={sortBy} onSortChange={setSortBy} />
       </div>
-      <ProductGrid products={products || []} categories={categories} />
+      <ProductGrid 
+        products={products || []} 
+        categories={categories}
+        filters={filters}
+        onFilterChange={setFilters}
+      />
     </div>
   );
 }

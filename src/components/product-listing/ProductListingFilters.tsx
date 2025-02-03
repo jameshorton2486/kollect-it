@@ -10,11 +10,13 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { FilterContent } from "./filters/FilterContent";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function ProductListingFilters() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedCondition, setSelectedCondition] = useState("all");
+  const [selectedEra, setSelectedEra] = useState("all");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,6 +37,7 @@ export function ProductListingFilters() {
     setSearchQuery("");
     setSelectedCategory("all");
     setSelectedCondition("all");
+    setSelectedEra("all");
     setPriceRange({ min: "", max: "" });
   };
 
@@ -45,11 +48,22 @@ export function ProductListingFilters() {
     setSelectedCategory,
     selectedCondition,
     setSelectedCondition,
+    selectedEra,
+    setSelectedEra,
     priceRange,
     setPriceRange,
     categories,
     resetFilters,
   };
+
+  const eras = [
+    { value: "all", label: "All Eras" },
+    { value: "victorian", label: "Victorian" },
+    { value: "art-deco", label: "Art Deco" },
+    { value: "mid-century", label: "Mid-Century" },
+    { value: "vintage", label: "Vintage" },
+    { value: "contemporary", label: "Contemporary" },
+  ];
 
   return (
     <>
@@ -60,8 +74,23 @@ export function ProductListingFilters() {
             Filters
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-6">
           <FilterContent {...filterProps} />
+          <div className="space-y-4">
+            <h3 className="font-semibold text-shop-800">Era</h3>
+            <Select value={selectedEra} onValueChange={setSelectedEra}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select Era" />
+              </SelectTrigger>
+              <SelectContent>
+                {eras.map((era) => (
+                  <SelectItem key={era.value} value={era.value}>
+                    {era.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </CardContent>
       </Card>
 
