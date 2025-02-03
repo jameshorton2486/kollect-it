@@ -39,6 +39,36 @@ export type Database = {
         }
         Relationships: []
       }
+      auth_tokens: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          token: string
+          type: Database["public"]["Enums"]["auth_token_type"]
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          id?: string
+          token: string
+          type: Database["public"]["Enums"]["auth_token_type"]
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          token?: string
+          type?: Database["public"]["Enums"]["auth_token_type"]
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string
@@ -396,6 +426,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      auth_token_type: "email_verification" | "password_reset"
       user_role: "buyer" | "seller" | "admin"
     }
     CompositeTypes: {
