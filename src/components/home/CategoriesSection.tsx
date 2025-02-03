@@ -1,4 +1,4 @@
-import { Award, BookOpen, Gem, Paint, Ring, ShoppingBag } from "lucide-react";
+import { Award, BookOpen, Gem, ShoppingBag, Star, Palette } from "lucide-react";
 import { CategoryCard } from "./CategoryCard";
 
 export function CategoriesSection() {
@@ -24,7 +24,7 @@ export function CategoriesSection() {
           aria-label="Collection categories"
         >
           <CategoryCard
-            icon={<Paint className="w-8 h-8 text-[#008080]" />}
+            icon={<Palette className="w-8 h-8 text-[#008080]" />}
             title="Fine Art & Antiques"
             description="Masterpieces and historical treasures from renowned artists and periods"
             href="/categories/fine-art"
@@ -36,7 +36,7 @@ export function CategoriesSection() {
             href="/categories/books"
           />
           <CategoryCard
-            icon={<Ring className="w-8 h-8 text-[#008080]" />}
+            icon={<Star className="w-8 h-8 text-[#008080]" />}
             title="Jewelry & Accessories"
             description="Vintage and antique jewelry pieces with unique character"
             href="/categories/jewelry"
