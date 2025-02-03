@@ -1,55 +1,56 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 interface LoadingSkeletonProps {
-  variant?: "card" | "list" | "table";
-  count?: number;
   className?: string;
+  count?: number;
+  variant?: "card" | "list" | "table";
 }
 
-export function LoadingSkeleton({
-  variant = "card",
-  count = 1,
-  className
+export function LoadingSkeleton({ 
+  className, 
+  count = 1, 
+  variant = "card" 
 }: LoadingSkeletonProps) {
-  const renderSkeleton = () => {
+  const skeletons = Array.from({ length: count }, (_, i) => i);
+
+  const getSkeletonContent = () => {
     switch (variant) {
       case "card":
         return (
           <div className="space-y-3">
-            <Skeleton className="h-[200px] w-full rounded-lg" />
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-4 w-1/2" />
+            <div className="h-40 bg-gray-200 rounded-lg animate-pulse" />
+            <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+            <div className="h-4 bg-gray-200 rounded animate-pulse" />
+            <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse" />
           </div>
         );
       case "list":
         return (
           <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
+            <div className="h-12 w-12 bg-gray-200 rounded-full animate-pulse" />
+            <div className="space-y-2 flex-1">
+              <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+              <div className="h-4 bg-gray-200 rounded animate-pulse" />
             </div>
           </div>
         );
       case "table":
         return (
-          <div className="space-y-2">
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
+          <div className="flex items-center space-x-4">
+            <div className="h-8 w-8 bg-gray-200 rounded animate-pulse" />
+            <div className="space-y-2 flex-1">
+              <div className="h-4 bg-gray-200 rounded w-1/4 animate-pulse" />
+            </div>
           </div>
         );
-      default:
-        return null;
     }
   };
 
   return (
-    <div className={cn("w-full animate-pulse", className)}>
-      {Array.from({ length: count }).map((_, index) => (
-        <div key={index} className="mb-4">
-          {renderSkeleton()}
+    <div className={cn("space-y-4", className)}>
+      {skeletons.map((index) => (
+        <div key={index} className="animate-fade-in">
+          {getSkeletonContent()}
         </div>
       ))}
     </div>

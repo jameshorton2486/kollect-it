@@ -1,0 +1,44 @@
+@layer utilities {
+  /* Responsive Typography */
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .heading-responsive {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold;
+  }
+
+  /* Responsive Spacing */
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12;
+  }
+
+  .content-padding {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+
+  /* Responsive Grid */
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+  }
+
+  /* Responsive Navigation */
+  .nav-container {
+    @apply flex flex-col sm:flex-row items-center justify-between;
+  }
+
+  /* Responsive Images */
+  .image-responsive {
+    @apply w-full h-auto object-cover rounded-lg;
+  }
+
+  /* Responsive Forms */
+  .form-responsive {
+    @apply max-w-sm sm:max-w-md lg:max-w-lg mx-auto;
+  }
+
+  /* Responsive Cards */
+  .card-responsive {
+    @apply p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+}
