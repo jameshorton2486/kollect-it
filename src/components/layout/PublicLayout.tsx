@@ -29,7 +29,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
         {/* Desktop Navigation Sidebar */}
         <div className="hidden md:block w-64 bg-[#008080] border-r border-[#008080]/20">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-white mb-4">Browse</h2>
+            <h2 className="text-lg font-semibold text-white nav-brand mb-4">Browse</h2>
             <nav className="space-y-1">
               {navigationItems.map((item) => (
                 <Link
@@ -80,7 +80,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
 
         {/* Main Content */}
         <main className={cn(
-          "flex-1 max-w-[1600px] mx-auto px-2 md:px-4 py-6", // Increased max-width and reduced padding
+          "flex-1 max-w-[1600px] mx-auto px-2 md:px-4 py-6",
           className
         )}>
           {children}

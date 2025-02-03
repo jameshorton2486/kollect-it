@@ -70,7 +70,7 @@ export function DashboardSidebar() {
   return (
     <div className="h-screen w-64 bg-[#008080] border-r border-[#008080]/20 fixed left-0 top-0 overflow-y-auto">
       <div className="p-6">
-        <h1 className="text-2xl font-semibold text-white">Kollect-It</h1>
+        <h1 className="text-2xl font-semibold text-white nav-brand">Kollect-It</h1>
       </div>
       <nav className="px-4 py-2">
         {filteredMenuItems.map((item) => (

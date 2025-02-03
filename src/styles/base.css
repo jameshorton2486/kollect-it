@@ -82,4 +82,12 @@
   button {
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
   }
+
+  .footer-brand,
+  .footer-copyright,
+  .page-title,
+  .section-title,
+  .nav-brand {
+    @apply text-white;
+  }
 }
