@@ -14,7 +14,7 @@ const formSchema = z.object({
   description: z.string().optional(),
   subcategories: z.array(
     z.object({
-      id: z.string().optional(),
+      id: z.string(),
       value: z.string().min(2, "Subcategory must be at least 2 characters")
     })
   ).default([]),
