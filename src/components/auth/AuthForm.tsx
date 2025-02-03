@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Mail, Lock, User, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { AuthFormFields } from "./AuthFormFields";
+import { AuthLoginExtras } from "./AuthLoginExtras";
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -49,65 +47,17 @@ export function AuthForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {!isLogin && (
-        <div className="space-y-2">
-          <Label htmlFor="name">Full Name</Label>
-          <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="name"
-              type="text"
-              placeholder="John Doe"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="pl-10"
-              required={!isLogin}
-            />
-          </div>
-        </div>
-      )}
-
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <div className="relative">
-          <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="pl-10"
-            required
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <div className="relative">
-          <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="pl-10"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
-          >
-            {showPassword ? "Hide" : "Show"}
-          </button>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          {isLogin ? "" : "Use 8+ characters with a mix of letters, numbers & symbols"}
-        </p>
-      </div>
+      <AuthFormFields
+        isLogin={isLogin}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        name={name}
+        setName={setName}
+        showPassword={showPassword}
+        setShowPassword={setShowPassword}
+      />
 
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Please wait..." : isLogin 
@@ -115,27 +65,7 @@ export function AuthForm({
           : "Create Account"}
       </Button>
 
-      {isLogin && (
-        <div className="flex items-center justify-between text-sm">
-          <Link
-            to="/password-recovery"
-            className="text-primary hover:underline inline-flex items-center"
-          >
-            <KeyRound className="mr-1 h-3 w-3" />
-            Forgot password?
-          </Link>
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="remember"
-              className="rounded border-gray-300"
-            />
-            <label htmlFor="remember" className="text-muted-foreground">
-              Remember me
-            </label>
-          </div>
-        </div>
-      )}
+      {isLogin && <AuthLoginExtras />}
     </form>
   );
 }

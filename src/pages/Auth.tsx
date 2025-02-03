@@ -6,6 +6,8 @@ import { AuthHeader } from "@/components/auth/AuthHeader";
 import { AuthFeatures } from "@/components/auth/AuthFeatures";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { AuthFAQ } from "@/components/auth/AuthFAQ";
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { AuthSwitchMode } from "@/components/auth/AuthSwitchMode";
 
 export function Auth() {
   const navigate = useNavigate();
@@ -15,7 +17,6 @@ export function Auth() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  // Check if user is already authenticated
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
@@ -30,7 +31,6 @@ export function Auth() {
     
     checkSession();
 
-    // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Auth state changed:", event, session?.user?.id);
       if (session) {
@@ -57,7 +57,6 @@ export function Auth() {
       }
 
       if (isLogin) {
-        // Add detailed logging for login attempt
         console.log("Starting login process...");
         const { data, error } = await supabase.auth.signInWithPassword({
           email: trimmedEmail,
@@ -116,7 +115,6 @@ export function Auth() {
             confirmationSent: data.user.confirmation_sent_at
           });
 
-          // Send verification email
           const response = await supabase.functions.invoke('send-verification-email', {
             body: {
               email: trimmedEmail,
@@ -146,49 +144,24 @@ export function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="border-b">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold">Kollect-It</h1>
-        </div>
-      </nav>
+    <AuthLayout>
+      <AuthHeader isLogin={isLogin} />
+      {!isLogin && <AuthFeatures />}
+      
+      <AuthForm
+        isLogin={isLogin}
+        isLoading={isLoading}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        name={name}
+        setName={setName}
+        handleAuth={handleAuth}
+      />
 
-      <div className="max-w-md mx-auto mt-12 px-4">
-        <AuthHeader isLogin={isLogin} />
-        {!isLogin && <AuthFeatures />}
-        
-        <AuthForm
-          isLogin={isLogin}
-          isLoading={isLoading}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          name={name}
-          setName={setName}
-          handleAuth={handleAuth}
-        />
-
-        <div className="mt-6 text-center">
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-sm text-primary hover:underline"
-          >
-            {isLogin
-              ? "New to collecting? Start your journey!"
-              : "Already a collector? Sign in"}
-          </button>
-        </div>
-
-        <AuthFAQ />
-      </div>
-
-      <footer className="border-t mt-16">
-        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Kollect-It. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+      <AuthSwitchMode isLogin={isLogin} setIsLogin={setIsLogin} />
+      <AuthFAQ />
+    </AuthLayout>
   );
 }
