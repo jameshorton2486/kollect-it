@@ -12,6 +12,11 @@ interface Stat {
   trendDirection: 'up' | 'down';
 }
 
+interface OrderWithAmount {
+  total_amount: number;
+  buyer_id: string;
+}
+
 export function StatCards() {
   const { data: stats } = useQuery({
     queryKey: ["seller-stats"],
@@ -30,7 +35,7 @@ export function StatCards() {
           .eq("user_id", session.user.id),
         supabase
           .from("orders")
-          .select("total_amount")
+          .select<"*", OrderWithAmount>("*")
           .eq("seller_id", session.user.id),
         supabase
           .from("reviews")
@@ -40,14 +45,15 @@ export function StatCards() {
 
       const totalRevenue = orders?.reduce((sum, order) => sum + order.total_amount, 0) || 0;
       const averageRating = reviews?.reduce((sum, review) => sum + review.rating, 0) / (reviews?.length || 1);
+      const uniqueCustomers = orders ? new Set(orders.map(o => o.buyer_id)).size : 0;
 
       return {
         totalRevenue,
         totalProducts,
         totalOrders: orders?.length || 0,
         averageRating: averageRating.toFixed(1),
-        totalCustomers: new Set(orders?.map(o => o.buyer_id)).size || 0,
-        growth: ((totalRevenue / 1000) - 1) * 100 // Placeholder calculation
+        totalCustomers: uniqueCustomers,
+        growth: ((totalRevenue / 1000) - 1) * 100
       };
     },
     placeholderData: {

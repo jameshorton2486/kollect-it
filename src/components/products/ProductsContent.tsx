@@ -16,6 +16,8 @@ interface ProductsContentProps {
   onPriceRangeChange: (value: { min: string; max: string }) => void;
   selectedCondition: string;
   onConditionChange: (value: string) => void;
+  selectedEra: string;
+  onEraChange: (value: string) => void;
 }
 
 export function ProductsContent({
@@ -30,7 +32,25 @@ export function ProductsContent({
   onPriceRangeChange,
   selectedCondition,
   onConditionChange,
+  selectedEra,
+  onEraChange,
 }: ProductsContentProps) {
+  const filters = {
+    search: searchQuery,
+    category: selectedCategory,
+    condition: selectedCondition,
+    priceRange,
+    era: selectedEra,
+  };
+
+  const handleFilterChange = (newFilters: typeof filters) => {
+    onSearchChange(newFilters.search);
+    onCategoryChange(newFilters.category);
+    onConditionChange(newFilters.condition);
+    onPriceRangeChange(newFilters.priceRange);
+    onEraChange(newFilters.era);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
       <aside className="space-y-6 md:col-span-1">
@@ -72,7 +92,12 @@ export function ProductsContent({
             </p>
           </CardHeader>
         </Card>
-        <ProductGrid products={filteredProducts} categories={categories} />
+        <ProductGrid 
+          products={filteredProducts} 
+          categories={categories}
+          filters={filters}
+          onFilterChange={handleFilterChange}
+        />
       </main>
     </div>
   );

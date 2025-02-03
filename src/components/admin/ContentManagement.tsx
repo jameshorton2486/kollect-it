@@ -30,10 +30,17 @@ export function ContentManagement() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
+
       if (editingId) {
         const { error } = await supabase
           .from("articles")
-          .update({ title, content })
+          .update({ 
+            title, 
+            content,
+            updated_at: new Date().toISOString()
+          })
           .eq("id", editingId);
 
         if (error) throw error;
@@ -44,7 +51,13 @@ export function ContentManagement() {
       } else {
         const { error } = await supabase
           .from("articles")
-          .insert([{ title, content }]);
+          .insert([{ 
+            title, 
+            content,
+            user_id: user.id,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }]);
 
         if (error) throw error;
         toast({

@@ -40,7 +40,20 @@ export function UserManagementTable() {
         `);
 
       if (error) throw error;
-      return profiles as Profile[];
+
+      // Get user emails from auth.users table
+      const { data: authUsers } = await supabase.auth.admin.listUsers();
+      
+      // Combine profile data with email from auth users
+      const enrichedProfiles = profiles.map(profile => {
+        const authUser = authUsers.users.find(user => user.id === profile.id);
+        return {
+          ...profile,
+          email: authUser?.email || 'No email found'
+        };
+      });
+
+      return enrichedProfiles as Profile[];
     },
   });
 
