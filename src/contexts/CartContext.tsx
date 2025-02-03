@@ -87,18 +87,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = async (productId: string, quantity: number = 1) => {
     try {
-      // Check if item already exists in cart
+      const { data: session } = await supabase.auth.getSession();
+      if (!session?.session) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to add items to your cart.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const existingItem = items.find((item) => item.product_id === productId);
 
       if (existingItem) {
-        // Update quantity if item exists
         await updateQuantity(existingItem.id, existingItem.quantity + quantity);
       } else {
-        // Add new item if it doesn't exist
         const { error } = await supabase.from("cart_items").insert({
           product_id: productId,
           quantity,
-          user_id: (await supabase.auth.getUser()).data.user?.id,
+          user_id: session.session.user.id,
         });
 
         if (error) throw error;
