@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { UserTableRow } from "./UserTableRow";
+import { Table, TableHeader, TableBody } from "@/components/ui/table";
 
 type UserRole = 'admin' | 'buyer' | 'seller';
 
@@ -26,7 +28,7 @@ export function UserManagementTable() {
         .from('profiles')
         .select(`
           *,
-          user_roles!inner (
+          user_roles (
             role
           )
         `);
@@ -92,75 +94,39 @@ export function UserManagementTable() {
         </div>
       </div>
 
-      <div className="border rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-muted">
-            <tr>
-              <th className="p-4 text-left">
-                <input
-                  type="checkbox"
-                  onChange={(e) => {
-                    if (users) {
-                      setSelectedUsers(
-                        e.target.checked ? users.map(user => user.id) : []
-                      );
-                    }
-                  }}
-                />
-              </th>
-              <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Email</th>
-              <th className="p-4 text-left">Role</th>
-              <th className="p-4 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((user) => (
-              <tr key={user.id} className="border-t">
-                <td className="p-4">
-                  <input
-                    type="checkbox"
-                    checked={selectedUsers.includes(user.id)}
-                    onChange={() => handleUserSelection(user.id)}
-                  />
-                </td>
-                <td className="p-4">
-                  {user.first_name} {user.last_name}
-                </td>
-                <td className="p-4">{user.id}</td>
-                <td className="p-4">
-                  <select
-                    value={user.user_roles[0]?.role || 'buyer'}
-                    onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
-                    className="border rounded p-1"
-                  >
-                    <option value="buyer">Buyer</option>
-                    <option value="seller">Seller</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-                <td className="p-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {/* Implement edit */}}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-destructive"
-                    onClick={() => {/* Implement delete */}}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <TableHeader>
+          <tr>
+            <th className="w-12">
+              <input
+                type="checkbox"
+                onChange={(e) => {
+                  if (users) {
+                    setSelectedUsers(
+                      e.target.checked ? users.map(user => user.id) : []
+                    );
+                  }
+                }}
+              />
+            </th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </TableHeader>
+        <TableBody>
+          {users?.map((user) => (
+            <UserTableRow
+              key={user.id}
+              user={user}
+              selected={selectedUsers.includes(user.id)}
+              onSelect={() => handleUserSelection(user.id)}
+              onRoleChange={handleRoleChange}
+            />
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
