@@ -52,6 +52,9 @@ export default {
           DEFAULT: "#FFFFFF",
           foreground: "#000000",
         },
+        nav: {
+          DEFAULT: "#1A1F2C",
+        },
         shop: {
           50: "#F0F7F7",    // Lightest teal tint
           100: "#E0E0E0",   // Light gray
