@@ -9,6 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      activity_logs: {
+        Row: {
+          activity_type: Database["public"]["Enums"]["activity_type"]
+          created_at: string
+          details: Json | null
+          id: string
+          ip_address: string | null
+          user_id: string | null
+        }
+        Insert: {
+          activity_type: Database["public"]["Enums"]["activity_type"]
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          activity_type?: Database["public"]["Enums"]["activity_type"]
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      admin_settings: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       articles: {
         Row: {
           content: string
@@ -511,8 +562,28 @@ export type Database = {
         }
         Returns: boolean
       }
+      log_activity: {
+        Args: {
+          activity: Database["public"]["Enums"]["activity_type"]
+          details?: Json
+          ip_address?: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
+      activity_type:
+        | "login"
+        | "logout"
+        | "profile_update"
+        | "password_change"
+        | "role_change"
+        | "content_create"
+        | "content_update"
+        | "content_delete"
+        | "category_create"
+        | "category_update"
+        | "category_delete"
       auth_token_type: "email_verification" | "password_reset"
       user_role: "buyer" | "seller" | "admin"
     }
