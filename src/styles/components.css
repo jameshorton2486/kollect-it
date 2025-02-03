@@ -1,31 +1,31 @@
 @layer components {
   .btn-primary {
-    @apply bg-shop-500 hover:bg-shop-600 text-white font-medium px-6 py-3 rounded-lg 
+    @apply bg-accent hover:bg-accent/90 text-white font-medium px-6 py-3 rounded-lg 
            transition-colors duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply bg-shop-400 hover:bg-shop-400/90 text-shop-500 font-medium px-6 py-3 rounded-lg 
+    @apply bg-secondary hover:bg-secondary/90 text-primary font-medium px-6 py-3 rounded-lg 
            transition-colors duration-200 flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-outline {
-    @apply border-2 border-shop-400 text-shop-500 hover:bg-shop-400/10 font-medium 
+    @apply border-2 border-accent text-accent hover:bg-accent/10 font-medium 
            px-6 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-ghost {
-    @apply text-shop-700 hover:text-shop-800 hover:bg-shop-50 font-medium px-6 py-3 rounded-lg 
+    @apply text-foreground hover:text-foreground/80 hover:bg-secondary/50 font-medium px-6 py-3 rounded-lg 
            transition-colors duration-200 flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .card {
-    @apply bg-white dark:bg-shop-800 rounded-lg shadow-sm border border-shop-200 
-           dark:border-shop-700 overflow-hidden transition-shadow duration-200 hover:shadow-md;
+    @apply bg-background dark:bg-primary rounded-lg shadow-sm border border-secondary 
+           dark:border-secondary/20 overflow-hidden transition-shadow duration-200 hover:shadow-md;
   }
 
   .card-hover {
@@ -33,12 +33,12 @@
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-shop-500 to-shop-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent;
   }
 
   .product-card {
-    @apply relative bg-white dark:bg-shop-800 rounded-lg shadow-sm border border-shop-200 
-           dark:border-shop-700 overflow-hidden hover:shadow-md transition-all duration-300;
+    @apply relative bg-background dark:bg-primary rounded-lg shadow-sm border border-secondary 
+           dark:border-secondary/20 overflow-hidden hover:shadow-md transition-all duration-300;
   }
 
   .product-image {
@@ -51,7 +51,7 @@
   }
 
   .quick-action-button {
-    @apply rounded-full bg-white/90 hover:bg-white text-shop-800 p-2 
+    @apply rounded-full bg-white/90 hover:bg-white text-primary p-2 
            transition-all duration-200 hover:scale-110;
   }
 
@@ -60,13 +60,13 @@
   }
 
   .input-label {
-    @apply block text-sm font-medium text-shop-700 dark:text-shop-200;
+    @apply block text-sm font-medium text-foreground/70;
   }
 
   .input-field {
-    @apply w-full px-4 py-2 rounded-lg border border-shop-200 dark:border-shop-700
-           focus:ring-2 focus:ring-shop-500 focus:border-transparent
-           bg-white dark:bg-shop-800 text-shop-800 dark:text-shop-100;
+    @apply w-full px-4 py-2 rounded-lg border border-secondary dark:border-secondary/20
+           focus:ring-2 focus:ring-accent focus:border-transparent
+           bg-background dark:bg-primary text-foreground;
   }
 
   .badge {
@@ -74,15 +74,15 @@
   }
 
   .badge-primary {
-    @apply bg-shop-500/20 text-shop-500;
+    @apply bg-accent/20 text-accent;
   }
 
   .badge-secondary {
-    @apply bg-shop-400/20 text-shop-400;
+    @apply bg-secondary/20 text-foreground;
   }
 
   .badge-accent {
-    @apply bg-shop-400/20 text-shop-400;
+    @apply bg-accent/20 text-accent;
   }
 
   .container-padding {
