@@ -6,7 +6,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white">Kollect-It</h3>
+            <h3 className="text-xl font-bold mb-4 text-white footer-brand">Kollect-It</h3>
             <p className="text-shop-300">Your trusted marketplace for unique collectibles and fine art.</p>
           </div>
           <div>
@@ -37,7 +37,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-shop-700 mt-8 pt-8 text-center text-white">
+        <div className="border-t border-shop-700 mt-8 pt-8 text-center text-white footer-copyright">
           <p>&copy; {new Date().getFullYear()} Kollect-It. All rights reserved.</p>
         </div>
       </div>
