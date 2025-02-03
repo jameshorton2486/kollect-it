@@ -8,6 +8,8 @@ import {
   Shield,
   Users,
   Store,
+  BarChart,
+  CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -25,6 +27,10 @@ const menuItems: MenuItem[] = [
   { icon: Package, label: "Products", path: "/products" },
   { icon: Store, label: "Sellers", path: "/seller-dashboard" },
   { icon: ShoppingCart, label: "Orders", path: "/purchase-history" },
+  { icon: CreditCard, label: "Subscription", path: "/seller/subscription", roles: ["seller"] },
+  { icon: Package, label: "Inventory", path: "/seller/inventory", roles: ["seller"] },
+  { icon: BarChart, label: "Analytics", path: "/seller/analytics", roles: ["seller"] },
+  { icon: Tags, label: "Listings", path: "/seller/listings", roles: ["seller"] },
   { icon: Settings, label: "Settings", path: "/settings" },
   { 
     icon: Shield, 
