@@ -53,22 +53,27 @@ export default {
           foreground: "#000000",
         },
         shop: {
-          50: "#F0F7F7",
-          100: "#E0E0E0",
-          200: "#B3B3B3",
-          300: "#808080",
-          400: "#4D4D4D",
-          500: "#000000",
-          600: "#006666",
-          700: "#004D4D",
-          800: "#003333",
-          900: "#001A1A",
-          accent1: "#008080",
-          accent2: "#E0E0E0",
-          accent3: "#FFFFFF",
-          muted1: "#E0E0E0",
-          muted2: "#CCCCCC",
+          50: "#F0F7F7",    // Lightest teal tint
+          100: "#E0E0E0",   // Light gray
+          200: "#B3B3B3",   // Medium light gray
+          300: "#808080",   // Medium gray
+          400: "#4D4D4D",   // Medium dark gray
+          500: "#000000",   // Pure black
+          600: "#006666",   // Dark teal
+          700: "#004D4D",   // Darker teal
+          800: "#003333",   // Very dark teal
+          900: "#001A1A",   // Almost black teal
+          accent1: "#008080", // Vibrant teal
+          accent2: "#E0E0E0", // Cool gray
+          accent3: "#FFFFFF", // Crisp white
+          muted1: "#E0E0E0", // Muted gray
+          muted2: "#CCCCCC", // Lighter muted gray
         },
+      },
+      spacing: {
+        section: "40px",    // Section margins
+        header: "20px",     // Header padding
+        button: "12px",     // Button padding
       },
       keyframes: {
         "accordion-down": {
