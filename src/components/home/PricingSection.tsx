@@ -7,19 +7,40 @@ const plans = [
     name: "Starter",
     price: 20,
     listings: 30,
-    features: ["Basic listing analytics", "Standard support", "Community access"],
+    features: [
+      "30 monthly listings",
+      "Basic analytics",
+      "Standard support",
+      "Community access",
+      "No commission fees",
+    ],
   },
   {
     name: "Professional",
-    price: 40,
-    listings: 70,
-    features: ["Advanced analytics", "Priority support", "Featured listings", "Bulk upload tools"],
+    price: 30,
+    listings: 50,
+    features: [
+      "50 monthly listings",
+      "Advanced analytics",
+      "Priority support",
+      "Featured listings",
+      "Bulk upload tools",
+      "No commission fees",
+    ],
   },
   {
     name: "Enterprise",
     price: 50,
     listings: 100,
-    features: ["Custom analytics", "24/7 support", "Featured listings", "Bulk upload tools", "API access"],
+    features: [
+      "100 monthly listings",
+      "Custom analytics",
+      "24/7 support",
+      "Featured listings",
+      "Bulk upload tools",
+      "API access",
+      "No commission fees",
+    ],
   },
 ];
 
@@ -29,10 +50,11 @@ export function PricingSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-shop-900 mb-4">
-            List Your Items & Grow Your Collection
+            Affordable Subscription Plans for Every Seller
           </h2>
           <p className="text-lg text-shop-600 max-w-2xl mx-auto">
-            Choose the perfect plan for your collection. No hidden fees—just an easy way to share your treasures with the world.
+            No percentage-based fees, just simple monthly pricing. Save more as you sell more with 
+            our transparent subscription plans.
           </p>
         </div>
         
@@ -45,7 +67,7 @@ export function PricingSection() {
                   ${plan.price}
                   <span className="text-lg text-shop-600">/mo</span>
                 </div>
-                <p className="text-shop-600">Up to {plan.listings} listings</p>
+                <p className="text-shop-600">Up to {plan.listings} listings per month</p>
               </div>
               
               <ul className="space-y-4 mb-8">
@@ -57,7 +79,7 @@ export function PricingSection() {
                 ))}
               </ul>
               
-              <Button className="w-full bg-shop-accent1 hover:bg-shop-accent1/90">
+              <Button className="w-full bg-[#008080] hover:bg-[#008080]/90 text-white">
                 Get Started
               </Button>
             </Card>
