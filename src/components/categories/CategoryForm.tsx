@@ -23,12 +23,13 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface CategoryFormProps {
   onSubmit: (values: { name: string; description?: string; subcategories: string[] }) => Promise<void>;
+  defaultValues?: FormValues;
 }
 
-export function CategoryForm({ onSubmit }: CategoryFormProps) {
+export function CategoryForm({ onSubmit, defaultValues }: CategoryFormProps) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       name: "",
       description: "",
       subcategories: [],
@@ -42,17 +43,18 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      console.log("Submitting category with values:", values);
       await onSubmit({
         name: values.name,
         description: values.description,
         subcategories: values.subcategories.map(sub => sub.value),
       });
-      form.reset();
-      toast.success("Category created successfully");
+      if (!defaultValues) {
+        form.reset();
+      }
+      toast.success(defaultValues ? "Category updated successfully" : "Category created successfully");
     } catch (error) {
-      console.error("Error creating category:", error);
-      toast.error("Failed to create category. Please try again.");
+      console.error("Error saving category:", error);
+      toast.error("Failed to save category. Please try again.");
     }
   };
 
@@ -114,7 +116,7 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
           type="submit" 
           className="w-full bg-shop-accent1 hover:bg-shop-accent1/90"
         >
-          Create Category
+          {defaultValues ? "Update Category" : "Create Category"}
         </Button>
       </form>
     </Form>
