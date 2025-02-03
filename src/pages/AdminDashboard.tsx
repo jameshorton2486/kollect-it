@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Users, ShoppingBag, DollarSign, Activity, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function AdminDashboard() {
   const { data: stats } = useQuery({
@@ -45,25 +46,29 @@ export default function AdminDashboard() {
       title: "Total Users", 
       value: stats?.usersCount || 0, 
       icon: Users,
-      color: "bg-shop-accent3/10 text-shop-accent3"
+      color: "bg-shop-accent3/10 text-shop-accent3",
+      trend: "+12%"
     },
     { 
       title: "Total Products", 
       value: stats?.productsCount || 0, 
       icon: ShoppingBag,
-      color: "bg-shop-accent2/10 text-shop-accent2"
+      color: "bg-shop-accent2/10 text-shop-accent2",
+      trend: "+8%"
     },
     { 
       title: "Total Revenue", 
       value: `$${stats?.revenue || 0}`, 
       icon: DollarSign,
-      color: "bg-green-100 text-green-600"
+      color: "bg-green-100 text-green-600",
+      trend: "+15%"
     },
     { 
       title: "Active Users", 
       value: stats?.activeUsers || 0, 
       icon: Activity,
-      color: "bg-purple-100 text-purple-600"
+      color: "bg-purple-100 text-purple-600",
+      trend: "+5%"
     },
   ];
 
@@ -79,25 +84,45 @@ export default function AdminDashboard() {
   return (
     <DashboardLayout>
       <div className="space-y-8 animate-fade-in">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-bold text-shop-800">Admin Dashboard</h1>
-          <p className="text-shop-600 max-w-3xl">
-            Overview of your platform's performance. Monitor key metrics, user activity, and manage your collectibles marketplace effectively.
+        {/* Header Section */}
+        <div className="flex flex-col gap-4 bg-gradient-to-r from-shop-accent1 to-shop-accent1/90 text-white p-8 rounded-xl shadow-lg">
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome to Admin Dashboard</h1>
+          <p className="text-white/90 max-w-3xl text-lg">
+            Monitor key metrics, user activity, and manage your collectibles marketplace effectively.
           </p>
+          <div className="flex gap-4 mt-4">
+            <Button 
+              size="lg"
+              className="bg-white text-shop-accent1 hover:bg-white/90 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              View Reports
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="bg-transparent border-2 border-white text-white hover:bg-white/10 transition-all duration-300"
+            >
+              Export Data
+            </Button>
+          </div>
         </div>
 
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {statsCards.map((card) => (
             <Card 
               key={card.title}
-              className="hover:shadow-lg transition-all duration-300 animate-scale-in"
+              className="hover:shadow-lg transition-all duration-300 animate-scale-in transform hover:-translate-y-1"
             >
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className={`${card.color} p-3 rounded-lg`}>
                     <card.icon className="w-6 h-6" />
                   </div>
-                  <TrendingUp className="w-4 h-4 text-green-500" />
+                  <div className="flex items-center gap-1 text-green-500">
+                    <TrendingUp className="w-4 h-4" />
+                    <span className="text-sm font-medium">{card.trend}</span>
+                  </div>
                 </div>
                 <div className="mt-4">
                   <p className="text-sm font-medium text-shop-600">{card.title}</p>
@@ -108,9 +133,11 @@ export default function AdminDashboard() {
           ))}
         </div>
 
+        {/* Charts and Activity Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Growth Chart */}
           <Card className="hover:shadow-lg transition-all duration-300">
-            <CardHeader className="border-b border-gray-100">
+            <CardHeader className="border-b border-gray-100 p-6">
               <CardTitle className="text-xl font-semibold text-shop-800">User Growth</CardTitle>
               <p className="text-sm text-shop-600">Monthly user acquisition trends</p>
             </CardHeader>
@@ -140,17 +167,18 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
+          {/* Recent Activity */}
           <Card className="hover:shadow-lg transition-all duration-300">
-            <CardHeader className="border-b border-gray-100">
+            <CardHeader className="border-b border-gray-100 p-6">
               <CardTitle className="text-xl font-semibold text-shop-800">Recent Activity</CardTitle>
               <p className="text-sm text-shop-600">Latest platform interactions</p>
             </CardHeader>
             <CardContent className="p-6">
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {recentActivity?.map((activity) => (
                   <div 
                     key={activity.id} 
-                    className="flex items-center space-x-4 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
+                    className="flex items-center space-x-4 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-200 transform hover:-translate-x-1"
                   >
                     <div className="bg-shop-accent3/10 p-2 rounded-full">
                       <Activity className="w-4 h-4 text-shop-accent3" />
@@ -169,6 +197,13 @@ export default function AdminDashboard() {
                         })}
                       </p>
                     </div>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="hover:bg-shop-accent3/10 hover:text-shop-accent3"
+                    >
+                      View
+                    </Button>
                   </div>
                 ))}
                 {(!recentActivity || recentActivity.length === 0) && (
