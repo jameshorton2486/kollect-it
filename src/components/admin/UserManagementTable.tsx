@@ -12,6 +12,7 @@ interface Profile {
   id: string;
   first_name: string | null;
   last_name: string | null;
+  email?: string; // Added to match the required type
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
@@ -24,20 +25,29 @@ export function UserManagementTable() {
   const { data: users, isLoading, error } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
+      // First get all profiles
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select(`
-          *,
-          user_roles (
-            role
-          )
-        `);
+        .select('*');
 
-      if (profilesError) {
-        throw profilesError;
-      }
+      if (profilesError) throw profilesError;
 
-      return profiles as Profile[];
+      // Then get user roles for each profile
+      const profilesWithRoles = await Promise.all(
+        profiles.map(async (profile) => {
+          const { data: roles } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', profile.id);
+
+          return {
+            ...profile,
+            user_roles: roles || []
+          } as Profile;
+        })
+      );
+
+      return profilesWithRoles;
     }
   });
 
@@ -49,7 +59,7 @@ export function UserManagementTable() {
         .eq('user_id', userId);
 
       if (error) throw error;
-      toast.success(`User role updated successfully`);
+      toast.success("User role updated successfully");
     } catch (error) {
       console.error('Error updating user role:', error);
       toast.error('Failed to update user role');
