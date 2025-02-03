@@ -29,11 +29,15 @@ export function UserManagementTable() {
   const { data: users, refetch } = useQuery({
     queryKey: ["admin-users"],
     queryFn: async () => {
-      // First get profiles with their roles
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
         .select(`
-          *,
+          id,
+          first_name,
+          last_name,
+          avatar_url,
+          created_at,
+          updated_at,
           user_roles (
             role
           )
@@ -41,7 +45,6 @@ export function UserManagementTable() {
 
       if (profilesError) throw profilesError;
 
-      // Then get user emails from auth.users table
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) throw authError;

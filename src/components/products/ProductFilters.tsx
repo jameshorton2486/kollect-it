@@ -15,6 +15,8 @@ interface ProductFiltersProps {
   onPriceRangeChange: (value: { min: string; max: string }) => void;
   selectedCondition: string;
   onConditionChange: (value: string) => void;
+  selectedEra?: string;
+  onEraChange?: (value: string) => void;
 }
 
 export function ProductFilters({
@@ -27,6 +29,8 @@ export function ProductFilters({
   onPriceRangeChange,
   selectedCondition,
   onConditionChange,
+  selectedEra,
+  onEraChange,
 }: ProductFiltersProps) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm space-y-6">
