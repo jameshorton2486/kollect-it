@@ -41,18 +41,12 @@ export function UserManagementTable() {
       if (profilesError) throw profilesError;
       if (!profiles) return [];
 
-      // Type guard to ensure profiles is an array
-      if (!Array.isArray(profiles)) {
-        console.error("Invalid profiles data structure");
-        return [];
-      }
-
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) throw authError;
 
       // Process profiles with proper type casting and validation
-      const enrichedProfiles = profiles.map((profile): Profile => {
+      const enrichedProfiles = profiles.map((profile: any): Profile => {
         const userRoles = Array.isArray(profile.user_roles) 
           ? profile.user_roles as { role: UserRole }[]
           : [{ role: 'buyer' as UserRole }];
