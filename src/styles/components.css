@@ -1,24 +1,24 @@
 @layer components {
   .btn-primary {
-    @apply bg-shop-accent1 hover:bg-shop-accent1/90 text-white font-medium px-6 py-3 rounded-lg 
+    @apply bg-shop-500 hover:bg-shop-600 text-white font-medium px-6 py-3 rounded-lg 
            transition-colors duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply bg-shop-accent2 hover:bg-shop-accent2/90 text-white font-medium px-6 py-3 rounded-lg 
+    @apply bg-shop-400 hover:bg-shop-400/90 text-shop-500 font-medium px-6 py-3 rounded-lg 
            transition-colors duration-200 flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-outline {
-    @apply border-2 border-shop-accent3 text-shop-accent3 hover:bg-shop-accent3/10 font-medium 
+    @apply border-2 border-shop-400 text-shop-500 hover:bg-shop-400/10 font-medium 
            px-6 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-ghost {
-    @apply text-shop-600 hover:text-shop-800 hover:bg-shop-100 font-medium px-6 py-3 rounded-lg 
+    @apply text-shop-700 hover:text-shop-800 hover:bg-shop-50 font-medium px-6 py-3 rounded-lg 
            transition-colors duration-200 flex items-center justify-center gap-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
@@ -33,7 +33,7 @@
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-shop-accent1 to-shop-accent3 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-shop-500 to-shop-400 bg-clip-text text-transparent;
   }
 
   .product-card {
@@ -65,7 +65,7 @@
 
   .input-field {
     @apply w-full px-4 py-2 rounded-lg border border-shop-200 dark:border-shop-700
-           focus:ring-2 focus:ring-shop-accent1 focus:border-transparent
+           focus:ring-2 focus:ring-shop-500 focus:border-transparent
            bg-white dark:bg-shop-800 text-shop-800 dark:text-shop-100;
   }
 
@@ -74,15 +74,15 @@
   }
 
   .badge-primary {
-    @apply bg-shop-accent1/20 text-shop-accent1;
+    @apply bg-shop-500/20 text-shop-500;
   }
 
   .badge-secondary {
-    @apply bg-shop-accent2/20 text-shop-accent2;
+    @apply bg-shop-400/20 text-shop-400;
   }
 
   .badge-accent {
-    @apply bg-shop-accent3/20 text-shop-accent3;
+    @apply bg-shop-400/20 text-shop-400;
   }
 
   .container-padding {
