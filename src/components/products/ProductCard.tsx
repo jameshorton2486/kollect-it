@@ -4,7 +4,7 @@ import { formatPrice } from "@/lib/utils";
 import { ProductDetail } from "./ProductDetail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart, Eye, Sparkles, Star } from "lucide-react";
+import { Heart, Eye, Clock, Award } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 
@@ -38,6 +38,18 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
     });
   };
 
+  const getConditionColor = (condition: string | null) => {
+    const colors: Record<string, string> = {
+      mint: "bg-emerald-500",
+      excellent: "bg-green-500",
+      "very-good": "bg-blue-500",
+      good: "bg-yellow-500",
+      fair: "bg-orange-500",
+      poor: "bg-red-500",
+    };
+    return colors[condition?.toLowerCase() ?? ""] || "bg-gray-500";
+  };
+
   return (
     <>
       <div
@@ -54,21 +66,27 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute top-2 right-2 flex flex-col gap-2">
-                {badges?.isNew && (
-                  <Badge className="bg-accent text-white border-none">
-                    <Star className="w-3 h-3 mr-1" /> New
+                {product.condition && (
+                  <Badge className={`${getConditionColor(product.condition)} text-white border-none`}>
+                    {product.condition}
+                  </Badge>
+                )}
+                {product.era && (
+                  <Badge variant="secondary" className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {product.era}
                   </Badge>
                 )}
                 {badges?.isTrending && (
-                  <Badge className="bg-secondary text-white border-none">
-                    <Sparkles className="w-3 h-3 mr-1" /> Trending
+                  <Badge className="bg-shop-accent1 text-white border-none flex items-center gap-1">
+                    <Award className="w-3 h-3" />
+                    Featured
                   </Badge>
                 )}
               </div>
             </div>
           )}
           
-          {/* Quick actions overlay */}
           <div 
             className={`absolute inset-0 bg-black/40 flex items-center justify-center gap-2 transition-opacity duration-200 ${
               isHovered ? 'opacity-100' : 'opacity-0'
@@ -100,6 +118,11 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
           <h3 className="text-lg font-semibold text-shop-800 mt-1 line-clamp-1">
             {product.name}
           </h3>
+          {product.estimated_age && (
+            <p className="text-shop-600 text-sm mt-1">
+              Age: {product.estimated_age}
+            </p>
+          )}
           <p className="text-shop-600 mt-1 line-clamp-2">{product.description}</p>
           <div className="flex justify-between items-center mt-4">
             <span className="text-shop-900 font-bold">
