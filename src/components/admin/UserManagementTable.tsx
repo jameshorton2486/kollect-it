@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+type UserRole = 'admin' | 'buyer' | 'seller';
+
 interface Profile {
   id: string;
   first_name: string | null;
@@ -11,10 +13,8 @@ interface Profile {
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
-  user_roles: UserRole[];
+  user_roles: { role: UserRole }[];
 }
-
-type UserRole = 'admin' | 'buyer' | 'seller';
 
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
@@ -26,7 +26,7 @@ export function UserManagementTable() {
         .from('profiles')
         .select(`
           *,
-          user_roles (
+          user_roles!inner (
             role
           )
         `);
@@ -130,7 +130,7 @@ export function UserManagementTable() {
                 <td className="p-4">{user.id}</td>
                 <td className="p-4">
                   <select
-                    value={user.user_roles?.[0]?.role || 'buyer'}
+                    value={user.user_roles[0]?.role || 'buyer'}
                     onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
                     className="border rounded p-1"
                   >
