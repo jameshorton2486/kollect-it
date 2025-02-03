@@ -6,27 +6,22 @@ import { Plus, Minus, AlertCircle } from "lucide-react";
 import { UseFieldArrayReturn, Control } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface SubcategoryField {
+  id: string;
+  value?: string;
+}
+
+interface FormValues {
+  subcategories?: SubcategoryField[];
+  description?: string;
+  name?: string;
+}
+
 interface SubcategoriesListProps {
-  fields: UseFieldArrayReturn<{
-    subcategories?: { value?: string }[];
-    description?: string;
-    name?: string;
-  }>["fields"];
-  append: UseFieldArrayReturn<{
-    subcategories?: { value?: string }[];
-    description?: string;
-    name?: string;
-  }>["append"];
-  remove: UseFieldArrayReturn<{
-    subcategories?: { value?: string }[];
-    description?: string;
-    name?: string;
-  }>["remove"];
-  control: Control<{
-    subcategories?: { value?: string }[];
-    description?: string;
-    name?: string;
-  }>;
+  fields: UseFieldArrayReturn<FormValues, "subcategories">["fields"];
+  append: UseFieldArrayReturn<FormValues, "subcategories">["append"];
+  remove: UseFieldArrayReturn<FormValues, "subcategories">["remove"];
+  control: Control<FormValues>;
 }
 
 export function SubcategoriesList({ fields, append, remove, control }: SubcategoriesListProps) {

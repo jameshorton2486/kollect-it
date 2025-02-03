@@ -1,12 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Table, TableBody } from "@/components/ui/table";
-import { UserTableHeader } from "./UserTableHeader";
-import { UserTableRow } from "./UserTableRow";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { Loader2 } from "lucide-react";
 
-type UserRole = "admin" | "buyer" | "seller";
-
-interface BaseProfile {
+interface Profile {
   id: string;
   first_name: string | null;
   last_name: string | null;
@@ -14,28 +21,21 @@ interface BaseProfile {
   created_at: string;
   updated_at: string;
   user_roles: { role: UserRole }[];
+  email?: string;
 }
 
-interface Profile extends BaseProfile {
-  email: string;
-}
+type UserRole = 'admin' | 'buyer' | 'seller';
 
 export function UserManagementTable() {
-  const { data: users, refetch } = useQuery<Profile[]>({
-    queryKey: ["admin-users"],
+  const { data: users, isLoading, error } = useQuery({
+    queryKey: ["users"],
     queryFn: async () => {
+      // Fetch profiles with roles
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
         .select(`
-          id,
-          first_name,
-          last_name,
-          avatar_url,
-          created_at,
-          updated_at,
-          user_roles!inner (
-            role
-          )
+          *,
+          user_roles (role)
         `);
 
       if (profilesError) throw profilesError;
@@ -47,76 +47,100 @@ export function UserManagementTable() {
 
       // Process profiles with proper type casting and validation
       const enrichedProfiles = profiles.map((profile: any): Profile => {
+        const matchingAuthUser = authUsers?.users.find(u => u.id === profile.id);
         const userRoles = Array.isArray(profile.user_roles) 
           ? profile.user_roles as { role: UserRole }[]
           : [{ role: 'buyer' as UserRole }];
 
-        const authUser = authUsers.users.find(user => user.id === profile.id);
-        
         return {
-          ...profile,
-          email: authUser?.email || 'No email found',
-          user_roles: userRoles
+          id: profile.id,
+          first_name: profile.first_name,
+          last_name: profile.last_name,
+          avatar_url: profile.avatar_url,
+          created_at: profile.created_at,
+          updated_at: profile.updated_at,
+          user_roles: userRoles,
+          email: matchingAuthUser?.email
         };
       });
 
       return enrichedProfiles;
-    },
+    }
   });
 
-  const handleRoleChange = async (userId: string, newRole: UserRole) => {
-    try {
-      // Remove existing roles
-      await supabase
-        .from("user_roles")
-        .delete()
-        .eq("user_id", userId);
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin text-shop-600" />
+      </div>
+    );
+  }
 
-      // Add new role
-      await supabase
-        .from("user_roles")
-        .insert([
-          { user_id: userId, role: newRole }
-        ]);
-
-      refetch();
-    } catch (error) {
-      console.error("Error updating user role:", error);
-    }
-  };
-
-  const handleDeleteUser = async (userId: string) => {
-    try {
-      // Delete user from auth.users
-      await supabase.auth.admin.deleteUser(userId);
-
-      // Delete user from profiles (should cascade to user_roles)
-      await supabase
-        .from("profiles")
-        .delete()
-        .eq("id", userId);
-
-      refetch();
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
-
-  if (!users) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div className="text-center p-4 text-red-500">
+        Error loading users. Please try again later.
+      </div>
+    );
+  }
 
   return (
-    <Table>
-      <UserTableHeader />
-      <TableBody>
-        {users.map((user) => (
-          <UserTableRow
-            key={user.id}
-            user={user}
-            onRoleChange={handleRoleChange}
-            onDeleteUser={handleDeleteUser}
-          />
-        ))}
-      </TableBody>
-    </Table>
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>User</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Roles</TableHead>
+            <TableHead>Joined</TableHead>
+            <TableHead>Last Updated</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users?.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell className="flex items-center gap-3">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.avatar_url || undefined} />
+                  <AvatarFallback>
+                    {user.first_name?.[0]?.toUpperCase() || 'U'}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-medium">
+                    {user.first_name} {user.last_name}
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <div className="flex gap-1">
+                  {user.user_roles.map(({ role }, index) => (
+                    <Badge
+                      key={`${user.id}-${role}-${index}`}
+                      variant={
+                        role === 'admin'
+                          ? 'destructive'
+                          : role === 'seller'
+                          ? 'default'
+                          : 'secondary'
+                      }
+                    >
+                      {role}
+                    </Badge>
+                  ))}
+                </div>
+              </TableCell>
+              <TableCell>
+                {format(new Date(user.created_at), 'MMM d, yyyy')}
+              </TableCell>
+              <TableCell>
+                {format(new Date(user.updated_at), 'MMM d, yyyy')}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
