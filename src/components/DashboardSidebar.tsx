@@ -68,9 +68,9 @@ export function DashboardSidebar() {
   });
 
   return (
-    <div className="h-screen w-64 bg-shop-accent1 border-r border-shop-accent1/20 fixed left-0 top-0 overflow-y-auto">
+    <div className="h-screen w-64 bg-[#D3E4FD] border-r border-[#D3E4FD]/20 fixed left-0 top-0 overflow-y-auto">
       <div className="p-6">
-        <h1 className="text-2xl font-semibold text-white">Kollect-It</h1>
+        <h1 className="text-2xl font-semibold text-[#403E43]">Kollect-It</h1>
       </div>
       <nav className="px-4 py-2">
         {filteredMenuItems.map((item) => (
@@ -78,8 +78,8 @@ export function DashboardSidebar() {
             key={item.path}
             to={item.path}
             className={cn(
-              "flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
-              "hover:text-white group"
+              "flex items-center gap-3 px-4 py-3 text-[#403E43]/80 hover:bg-white/30 rounded-lg transition-colors",
+              "hover:text-[#403E43] group"
             )}
           >
             <item.icon className="w-5 h-5" />
