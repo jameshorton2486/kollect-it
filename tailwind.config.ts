@@ -36,52 +36,52 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#000000",
+          DEFAULT: "#156064", // Darker teal
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#E0E0E0",
-          foreground: "#000000",
+          DEFAULT: "#D3D3D3", // Pale gray
+          foreground: "#156064",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "#E0E0E0",
-          foreground: "#000000",
+          DEFAULT: "#D8BCAB", // Cool beige
+          foreground: "#156064",
         },
         accent: {
-          DEFAULT: "#008080",
-          foreground: "#FFFFFF",
+          DEFAULT: "#D4AF37", // Gold
+          foreground: "#156064",
         },
         popover: {
           DEFAULT: "#FFFFFF",
-          foreground: "#000000",
+          foreground: "#156064",
         },
         card: {
           DEFAULT: "#FFFFFF",
-          foreground: "#000000",
+          foreground: "#156064",
         },
         nav: {
-          DEFAULT: "#008080",
+          DEFAULT: "#156064", // Darker teal
         },
         shop: {
-          50: "#F0F7F7",
-          100: "#E0E0E0",
-          200: "#B3B3B3",
-          300: "#808080",
-          400: "#4D4D4D",
-          500: "#000000",
-          600: "#006666",
-          700: "#004D4D",
-          800: "#003333",
-          900: "#001A1A",
-          accent1: "#008080",
-          accent2: "#E0E0E0",
-          accent3: "#FFFFFF",
-          muted1: "#E0E0E0",
-          muted2: "#CCCCCC",
+          50: "#F5F7F7",  // Lightest background
+          100: "#D3D3D3", // Pale gray
+          200: "#C0C0C0", // Silver
+          300: "#D8BCAB", // Cool beige
+          400: "#D4AF37", // Gold
+          500: "#156064", // Primary teal
+          600: "#006C67", // Alternative teal
+          700: "#5D2F27", // Chestnut brown
+          800: "#0F4447", // Darker teal shade
+          900: "#0A2D2F", // Darkest teal
+          accent1: "#156064", // Primary teal
+          accent2: "#D4AF37", // Gold
+          accent3: "#FFFFFF", // White
+          muted1: "#D3D3D3", // Pale gray
+          muted2: "#C0C0C0", // Silver
         },
       },
       spacing: {
