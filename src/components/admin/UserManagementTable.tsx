@@ -26,7 +26,7 @@ interface Profile {
 }
 
 export function UserManagementTable() {
-  const { data: users, refetch } = useQuery({
+  const { data: users, refetch } = useQuery<Profile[]>({
     queryKey: ["admin-users"],
     queryFn: async () => {
       const { data: profiles, error: profilesError } = await supabase
