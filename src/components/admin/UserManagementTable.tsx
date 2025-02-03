@@ -33,7 +33,7 @@ export function UserManagementTable() {
           avatar_url,
           created_at,
           updated_at,
-          user_roles (
+          user_roles!inner (
             role
           )
         `);
@@ -45,20 +45,20 @@ export function UserManagementTable() {
       
       if (authError) throw authError;
 
-      // Combine profile data with email from auth users
-      const enrichedProfiles = (profiles as BaseProfile[]).map(profile => {
-        if (!profile.id) {
-          console.error("Missing ID for profile:", profile);
-          return null;
-        }
+      // Ensure user_roles is always an array and properly typed
+      const enrichedProfiles = profiles.map(profile => {
+        const userRoles = Array.isArray(profile.user_roles) 
+          ? profile.user_roles 
+          : [{ role: 'buyer' as UserRole }]; // Default to buyer if no roles found
 
         const authUser = authUsers.users.find(user => user.id === profile.id);
+        
         return {
           ...profile,
           email: authUser?.email || 'No email found',
-          user_roles: profile.user_roles || []
+          user_roles: userRoles
         } as Profile;
-      }).filter((profile): profile is Profile => profile !== null);
+      });
 
       return enrichedProfiles;
     },
