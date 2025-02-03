@@ -54,7 +54,7 @@ export function DashboardLayout({
     <div className="flex min-h-screen w-full bg-background">
       {/* Desktop Sidebar - Only show for admin users */}
       {isAdmin && (
-        <div className="hidden md:block w-64 flex-shrink-0 transition-all duration-300">
+        <div className="hidden md:block w-64 flex-shrink-0">
           <DashboardSidebar />
         </div>
       )}
@@ -80,11 +80,11 @@ export function DashboardLayout({
       {/* Main content */}
       <div className={cn(
         "flex-1 flex flex-col min-h-screen transition-all duration-300",
-        !isAdmin && "container mx-auto"
+        !isAdmin && "max-w-[1600px] mx-auto" // Increased max-width
       )}>
         <div className="sticky top-0 z-10 bg-[#1A1F2C] text-white shadow-lg transition-shadow duration-300">
-          <div className="container mx-auto">
-            <div className="flex items-center justify-between gap-4 h-20 px-6">
+          <div className="w-full px-2 md:px-4"> {/* Reduced padding */}
+            <div className="flex items-center justify-between gap-4 h-20">
               <div className="flex items-center gap-4">
                 {showBackButton && (
                   <Button 
@@ -139,7 +139,7 @@ export function DashboardLayout({
         {/* Normal user navigation - Only show for non-admin users */}
         {!isAdmin && (
           <nav className="border-b border-gray-200 bg-white shadow-sm sticky top-20 z-10">
-            <div className="container mx-auto px-6">
+            <div className="w-full px-2 md:px-4"> {/* Reduced padding */}
               <div className="flex items-center justify-between h-16 gap-6 overflow-x-auto">
                 <Button
                   variant="ghost"
@@ -190,7 +190,7 @@ export function DashboardLayout({
           </nav>
         )}
 
-        <div className="flex-1 container mx-auto px-6 py-8 animate-fade-in">
+        <div className="flex-1 px-2 md:px-4 py-6"> {/* Reduced padding */}
           {children}
         </div>
       </div>
