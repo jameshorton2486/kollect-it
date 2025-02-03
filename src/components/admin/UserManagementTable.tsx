@@ -43,7 +43,7 @@ export function UserManagementTable() {
       if (authError) throw authError;
 
       // Combine profile data with email from auth users
-      const enrichedProfiles = profiles.map(profile => {
+      const enrichedProfiles = profiles.map((profile: any) => {
         const authUser = authUsers.users.find(user => user.id === profile.id);
         return {
           ...profile,
