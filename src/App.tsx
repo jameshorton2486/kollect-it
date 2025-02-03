@@ -7,6 +7,7 @@ import InventoryManagement from "@/pages/seller/InventoryManagement";
 import SalesAnalytics from "@/pages/seller/SalesAnalytics";
 import ListingManagement from "@/pages/seller/ListingManagement";
 import Index from "@/pages/Index";
+import { VerifyEmail } from "@/pages/VerifyEmail";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/seller/inventory" element={<InventoryManagement />} />
         <Route path="/seller/analytics" element={<SalesAnalytics />} />
         <Route path="/seller/listings" element={<ListingManagement />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
       </Routes>
     </Router>
   );

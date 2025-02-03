@@ -115,6 +115,20 @@ export function Auth() {
             email: data.user.email,
             confirmationSent: data.user.confirmation_sent_at
           });
+
+          // Send verification email
+          const response = await supabase.functions.invoke('send-verification-email', {
+            body: {
+              email: trimmedEmail,
+              userId: data.user.id,
+            },
+          });
+
+          if (response.error) {
+            console.error("Error sending verification email:", response.error);
+            throw new Error("Failed to send verification email");
+          }
+
           toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
         }
       }
