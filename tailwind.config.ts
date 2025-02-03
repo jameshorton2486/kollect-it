@@ -18,6 +18,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Poppins', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'display': ['4rem', { lineHeight: '1.2' }],
+        'h1': ['2.5rem', { lineHeight: '1.3' }],
+        'h2': ['2rem', { lineHeight: '1.4' }],
+        'h3': ['1.5rem', { lineHeight: '1.5' }],
+        'body': ['1rem', { lineHeight: '1.6' }],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -56,27 +67,27 @@ export default {
           DEFAULT: "#1A1F2C",
         },
         shop: {
-          50: "#F0F7F7",    // Lightest teal tint
-          100: "#E0E0E0",   // Light gray
-          200: "#B3B3B3",   // Medium light gray
-          300: "#808080",   // Medium gray
-          400: "#4D4D4D",   // Medium dark gray
-          500: "#000000",   // Pure black
-          600: "#006666",   // Dark teal
-          700: "#004D4D",   // Darker teal
-          800: "#003333",   // Very dark teal
-          900: "#001A1A",   // Almost black teal
-          accent1: "#008080", // Vibrant teal
-          accent2: "#E0E0E0", // Cool gray
-          accent3: "#FFFFFF", // Crisp white
-          muted1: "#E0E0E0", // Muted gray
-          muted2: "#CCCCCC", // Lighter muted gray
+          50: "#F0F7F7",
+          100: "#E0E0E0",
+          200: "#B3B3B3",
+          300: "#808080",
+          400: "#4D4D4D",
+          500: "#000000",
+          600: "#006666",
+          700: "#004D4D",
+          800: "#003333",
+          900: "#001A1A",
+          accent1: "#008080",
+          accent2: "#E0E0E0",
+          accent3: "#FFFFFF",
+          muted1: "#E0E0E0",
+          muted2: "#CCCCCC",
         },
       },
       spacing: {
-        section: "40px",    // Section margins
-        header: "20px",     // Header padding
-        button: "12px",     // Button padding
+        section: "40px",
+        header: "20px",
+        button: "12px",
       },
       keyframes: {
         "accordion-down": {
