@@ -89,7 +89,7 @@ export function UserManagementTable() {
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,32 +103,35 @@ export function UserManagementTable() {
                 {user.user_roles?.[0]?.role || "buyer"}
               </TableCell>
               <TableCell>
-                <div className="flex gap-2">
+                <div className="flex justify-end gap-4">
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="lg"
                     onClick={() => handleRoleUpdate(user.id, "admin")}
                     disabled={loading === user.id}
+                    className="bg-shop-accent1 text-white hover:bg-shop-accent1/90 text-lg px-6 py-3"
                   >
-                    <Shield className="h-4 w-4 mr-1" />
+                    <Shield className="h-5 w-5 mr-2" />
                     Make Admin
                   </Button>
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="lg"
                     onClick={() => handleRoleUpdate(user.id, "seller")}
                     disabled={loading === user.id}
+                    className="bg-shop-accent1 text-white hover:bg-shop-accent1/90 text-lg px-6 py-3"
                   >
-                    <UserCheck className="h-4 w-4 mr-1" />
+                    <UserCheck className="h-5 w-5 mr-2" />
                     Make Seller
                   </Button>
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="lg"
                     onClick={() => handleRoleUpdate(user.id, "buyer")}
                     disabled={loading === user.id}
+                    className="bg-shop-accent1 text-white hover:bg-shop-accent1/90 text-lg px-6 py-3"
                   >
-                    <UserX className="h-4 w-4 mr-1" />
+                    <UserX className="h-5 w-5 mr-2" />
                     Remove Role
                   </Button>
                 </div>
