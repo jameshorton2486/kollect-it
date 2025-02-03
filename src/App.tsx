@@ -6,12 +6,14 @@ import SubscriptionManagement from "@/pages/seller/SubscriptionManagement";
 import InventoryManagement from "@/pages/seller/InventoryManagement";
 import SalesAnalytics from "@/pages/seller/SalesAnalytics";
 import ListingManagement from "@/pages/seller/ListingManagement";
+import Index from "@/pages/Index";
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Products />} />
+        <Route path="/" element={<Index />} />
+        <Route path="/products" element={<Products />} />
         <Route path="/seller-dashboard" element={<SellerDashboard />} />
         <Route path="/product-listing" element={<ProductListing />} />
         <Route path="/seller/subscription" element={<SubscriptionManagement />} />
