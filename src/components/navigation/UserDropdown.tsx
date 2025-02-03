@@ -30,6 +30,9 @@ export function UserDropdown({ items }: UserDropdownProps) {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/profile-settings">Profile Settings</Link>
+        </DropdownMenuItem>
         {items.map((item) => (
           <DropdownMenuItem key={item.path} asChild>
             <Link to={item.path}>{item.label}</Link>
