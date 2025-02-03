@@ -38,11 +38,13 @@ export function FilterContent({
 }: FilterContentProps) {
   const eras = [
     { value: "all", label: "All Eras" },
-    { value: "victorian", label: "Victorian" },
-    { value: "art-deco", label: "Art Deco" },
-    { value: "mid-century", label: "Mid-Century" },
-    { value: "vintage", label: "Vintage" },
-    { value: "contemporary", label: "Contemporary" },
+    { value: "victorian", label: "Victorian (1837-1901)" },
+    { value: "art-deco", label: "Art Deco (1920-1939)" },
+    { value: "mid-century", label: "Mid-Century Modern (1945-1969)" },
+    { value: "art-nouveau", label: "Art Nouveau (1890-1910)" },
+    { value: "edwardian", label: "Edwardian (1901-1910)" },
+    { value: "vintage", label: "Vintage (50+ years old)" },
+    { value: "contemporary", label: "Contemporary (Post-1970)" },
   ];
 
   return (
