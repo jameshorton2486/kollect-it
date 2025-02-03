@@ -64,7 +64,7 @@ export default {
           foreground: "#000000",
         },
         nav: {
-          DEFAULT: "#1A1F2C",
+          DEFAULT: "#008080",
         },
         shop: {
           50: "#F0F7F7",
