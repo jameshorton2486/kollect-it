@@ -9,7 +9,7 @@ import { UseFormReturn } from "react-hook-form";
 
 interface ProductFormLayoutProps {
   form: UseFormReturn<any>;
-  onSubmit: (values: any) => Promise<any>;
+  onSubmit: (values: any) => Promise<{ id: string }>;
   isSubmitting: boolean;
   createdProductId: string | null;
   handleAIRewrite: () => Promise<void>;

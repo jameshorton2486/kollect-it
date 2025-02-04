@@ -20,7 +20,12 @@ const productSchema = z.object({
 
 type ProductFormValues = z.infer<typeof productSchema>;
 
-export function CreateProductForm() {
+interface CreateProductFormProps {
+  onSubmit?: (values: ProductFormValues) => Promise<{ id: string }>;
+  categories?: any[];
+}
+
+export function CreateProductForm({ onSubmit: externalSubmit, categories }: CreateProductFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdProductId, setCreatedProductId] = useState<string | null>(null);
@@ -41,7 +46,7 @@ export function CreateProductForm() {
     },
   });
 
-  const onSubmit = async (data: ProductFormValues) => {
+  const handleSubmit = async (data: ProductFormValues) => {
     setIsSubmitting(true);
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -54,11 +59,21 @@ export function CreateProductForm() {
         return { id: "" };
       }
 
+      if (externalSubmit) {
+        return await externalSubmit(data);
+      }
+
       const { data: result, error } = await supabase
         .from("products")
         .insert({
-          ...data,
+          name: data.name,
+          description: data.description,
           price: parseFloat(data.price),
+          condition: data.condition,
+          category_id: data.category_id,
+          era: data.era,
+          estimated_age: data.estimated_age,
+          provenance: data.provenance,
           user_id: session.user.id,
         })
         .select()
@@ -131,7 +146,7 @@ export function CreateProductForm() {
   return (
     <ProductFormLayout
       form={form}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       isSubmitting={isSubmitting}
       createdProductId={createdProductId}
       handleAIRewrite={handleAIRewrite}
