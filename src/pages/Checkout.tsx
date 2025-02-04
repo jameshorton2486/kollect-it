@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
@@ -8,23 +9,46 @@ import { ShippingForm, type ShippingInfo } from "@/components/checkout/ShippingF
 import { PaymentForm, type PaymentInfo } from "@/components/checkout/PaymentForm";
 import { OrderSummary } from "@/components/checkout/OrderSummary";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+
+// Initialize Stripe
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export default function Checkout() {
   const navigate = useNavigate();
   const { items, total, clearCart } = useCart();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isGuest, setIsGuest] = useState(true);
+  const [shippingInfo, setShippingInfo] = useState<ShippingInfo | null>(null);
 
   const handleCheckout = async (shippingInfo: ShippingInfo, paymentInfo: PaymentInfo) => {
     setIsLoading(true);
+    setError(null);
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
       if (items.length === 0) {
-        toast.error("Your cart is empty");
-        return;
+        throw new Error("Your cart is empty");
       }
+
+      // Create a payment intent
+      const { data: paymentData, error: paymentError } = await supabase.functions.invoke(
+        'create-payment-intent',
+        {
+          body: {
+            items,
+            shipping: shippingInfo,
+            paymentMethodId: paymentInfo.paymentMethodId,
+          },
+        }
+      );
+
+      if (paymentError) throw paymentError;
 
       // Group items by seller
       const itemsBySeller = items.reduce((acc, item) => {
@@ -36,14 +60,15 @@ export default function Checkout() {
         return acc;
       }, {} as Record<string, typeof items>);
 
-      // Create an order for each seller
+      // Create orders and order items
       for (const [sellerId, sellerItems] of Object.entries(itemsBySeller)) {
         const sellerTotal = sellerItems.reduce(
           (sum, item) => sum + item.product.price * item.quantity,
           0
         );
 
-        const { error: orderError } = await supabase
+        // Create the order
+        const { data: order, error: orderError } = await supabase
           .from('orders')
           .insert({
             seller_id: sellerId,
@@ -54,24 +79,49 @@ export default function Checkout() {
             } : null,
             shipping_address: {
               ...shippingInfo,
-              country: "United States", // Default for now
+              country: "United States",
             },
             total_amount: sellerTotal,
             status: 'pending',
-            payment_method: 'credit_card', // Simplified for now
+            payment_method: 'credit_card',
+            payment_status: 'processing',
+            payment_intent_id: paymentData.paymentIntentId,
+            payment_method_details: {
+              last4: paymentInfo.last4,
+              brand: paymentInfo.brand,
+            },
             shipping_method: 'standard',
-          });
+          })
+          .select()
+          .single();
 
-        if (orderError) {
-          throw new Error(orderError.message);
-        }
+        if (orderError) throw orderError;
+
+        // Create order items
+        const { error: itemsError } = await supabase
+          .from('order_items')
+          .insert(
+            sellerItems.map(item => ({
+              order_id: order.id,
+              product_id: item.product.id,
+              quantity: item.quantity,
+              price_at_time: item.product.price,
+            }))
+          );
+
+        if (itemsError) throw itemsError;
       }
 
       toast.success("Order placed successfully!");
       clearCart();
-      navigate("/order-confirmation");
+      navigate("/order-confirmation", {
+        state: {
+          clientSecret: paymentData.clientSecret,
+        }
+      });
     } catch (error: any) {
       console.error('Checkout error:', error);
+      setError(error.message || "Failed to process order");
       toast.error(error.message || "Failed to process order");
     } finally {
       setIsLoading(false);
@@ -90,30 +140,27 @@ export default function Checkout() {
       className="bg-background min-h-screen"
     >
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {error && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-8">
             <ShippingForm
               isGuest={isGuest}
-              onSubmit={(shippingInfo) => {
-                // Handle shipping info submission
-                console.log('Shipping info:', shippingInfo);
-              }}
+              onSubmit={setShippingInfo}
             />
             
-            <PaymentForm
-              onSubmit={(paymentInfo) => {
-                // Handle payment info submission
-                console.log('Payment info:', paymentInfo);
-              }}
-            />
-
-            <Button
-              onClick={() => handleCheckout}
-              className="w-full"
-              disabled={isLoading}
-            >
-              {isLoading ? "Processing..." : "Place Order"}
-            </Button>
+            <Elements stripe={stripePromise}>
+              <PaymentForm
+                isLoading={isLoading}
+                onSubmit={handleCheckout}
+                shippingInfo={shippingInfo}
+              />
+            </Elements>
           </div>
 
           <div>

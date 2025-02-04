@@ -179,47 +179,107 @@ export type Database = {
         }
         Relationships: []
       }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string | null
+          price_at_time: number
+          product_id: string | null
+          quantity: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          price_at_time: number
+          product_id?: string | null
+          quantity: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          price_at_time?: number
+          product_id?: string | null
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           buyer_id: string
           created_at: string
+          estimated_delivery_date: string | null
           guest_info: Json | null
           id: string
+          payment_intent_id: string | null
           payment_method: string | null
+          payment_method_details: Json | null
+          payment_status: string | null
           product_id: string
           seller_id: string
           shipping_address: Json
           shipping_method: string | null
           status: string
           total_amount: number
+          tracking_carrier: string | null
+          tracking_number: string | null
           updated_at: string
         }
         Insert: {
           buyer_id: string
           created_at?: string
+          estimated_delivery_date?: string | null
           guest_info?: Json | null
           id?: string
+          payment_intent_id?: string | null
           payment_method?: string | null
+          payment_method_details?: Json | null
+          payment_status?: string | null
           product_id: string
           seller_id: string
           shipping_address?: Json
           shipping_method?: string | null
           status?: string
           total_amount: number
+          tracking_carrier?: string | null
+          tracking_number?: string | null
           updated_at?: string
         }
         Update: {
           buyer_id?: string
           created_at?: string
+          estimated_delivery_date?: string | null
           guest_info?: Json | null
           id?: string
+          payment_intent_id?: string | null
           payment_method?: string | null
+          payment_method_details?: Json | null
+          payment_status?: string | null
           product_id?: string
           seller_id?: string
           shipping_address?: Json
           shipping_method?: string | null
           status?: string
           total_amount?: number
+          tracking_carrier?: string | null
+          tracking_number?: string | null
           updated_at?: string
         }
         Relationships: [
