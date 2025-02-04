@@ -1,21 +1,16 @@
 import { Form } from "@/components/ui/form";
-import { UseFormReturn } from "react-hook-form";
-import { DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
-import { ProductBasicDetails } from "./ProductBasicDetails";
-import { ProductAdditionalDetails } from "./ProductAdditionalDetails";
+import { DialogFooter } from "@/components/ui/dialog";
+import { ProductBasicInfo } from "./ProductBasicInfo";
 import { ProductDescriptionSection } from "./ProductDescriptionSection";
+import { ProductAdditionalDetails } from "./ProductAdditionalDetails";
 import { ProductImageSection } from "./ProductImageSection";
-import { Tables } from "@/integrations/supabase/types";
+import { UseFormReturn } from "react-hook-form";
 
 interface ProductFormLayoutProps {
   form: UseFormReturn<any>;
-  categories: Tables<"categories">[] | undefined;
-  onSubmit: (values: any) => Promise<{ id: string } | undefined>;
+  onSubmit: (values: any) => Promise<any>;
   isSubmitting: boolean;
-  formErrors: string[];
   createdProductId: string | null;
   handleAIRewrite: () => Promise<void>;
   isGenerating: boolean;
@@ -24,10 +19,8 @@ interface ProductFormLayoutProps {
 
 export function ProductFormLayout({
   form,
-  categories,
   onSubmit,
   isSubmitting,
-  formErrors,
   createdProductId,
   handleAIRewrite,
   isGenerating,
@@ -35,45 +28,16 @@ export function ProductFormLayout({
 }: ProductFormLayoutProps) {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {formErrors.length > 0 && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Validation Error</AlertTitle>
-            <AlertDescription>
-              <ul className="list-disc pl-4">
-                {formErrors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </Alert>
-        )}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid gap-6">
+          <ProductBasicInfo form={form} />
+          <ProductDescriptionSection
+            form={form}
+            handleAIRewrite={handleAIRewrite}
+            isGenerating={isGenerating}
+          />
+          <ProductAdditionalDetails form={form} />
 
-        <div className="space-y-8">
-          {/* Basic Details Section */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium mb-4">Basic Details</h3>
-            <ProductBasicDetails form={form} categories={categories} />
-          </div>
-
-          {/* Additional Details Section */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium mb-4">Additional Details</h3>
-            <ProductAdditionalDetails form={form} />
-          </div>
-
-          {/* Description Section */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium mb-4">Description</h3>
-            <ProductDescriptionSection 
-              form={form} 
-              handleAIRewrite={handleAIRewrite} 
-              isGenerating={isGenerating} 
-            />
-          </div>
-
-          {/* Image Upload Section - Only shown after product creation */}
           {createdProductId && (
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <h3 className="text-lg font-medium mb-4">Product Images</h3>
