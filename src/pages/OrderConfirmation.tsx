@@ -4,18 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Check, Package, Printer, Receipt, Truck } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { OrderSummary } from "@/components/checkout/OrderSummary";
-import { Tables } from "@/integrations/supabase/types";
-
-type OrderWithItems = Tables<"orders"> & {
-  order_items: Array<Tables<"order_items"> & {
-    product: Tables<"products">;
-  }>;
-};
+import { OrderDetails } from "@/types/order";
 
 export default function OrderConfirmation() {
   const location = useLocation();
   const navigate = useNavigate();
-  const order = location.state?.order as OrderWithItems;
+  const order = location.state?.order as OrderDetails;
 
   if (!order) {
     navigate("/");
@@ -95,7 +89,7 @@ export default function OrderConfirmation() {
                 id: item.id,
                 product: {
                   name: item.product.name,
-                  price: Number(item.price_at_time)
+                  price: Number(item.product.price)
                 },
                 quantity: item.quantity
               }))}

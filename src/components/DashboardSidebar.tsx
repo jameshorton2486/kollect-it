@@ -11,6 +11,8 @@ import {
   BarChart,
   CreditCard,
   FileText,
+  Heart,
+  Bell,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -29,6 +31,8 @@ const menuItems: MenuItem[] = [
   { icon: Package, label: "Products", path: "/products" },
   { icon: Store, label: "Sellers", path: "/seller-dashboard" },
   { icon: ShoppingCart, label: "Orders", path: "/purchase-history" },
+  { icon: Heart, label: "Wishlist", path: "/wishlist" },
+  { icon: Bell, label: "Notifications", path: "/notifications" },
   
   // Seller specific items
   { icon: CreditCard, label: "Subscription", path: "/seller/subscription", roles: ["seller"] },
