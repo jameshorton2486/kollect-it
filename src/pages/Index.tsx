@@ -5,8 +5,19 @@ import { PricingSection } from "@/components/home/PricingSection";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
 import { QualityCommitmentSection } from "@/components/home/QualityCommitmentSection";
 import { motion } from "framer-motion";
+import { AuthPromptBanner } from "@/components/auth/AuthPromptBanner";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
+  const { data: session } = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      return session;
+    }
+  });
+
   return (
     <DashboardLayout>
       <motion.div
@@ -14,6 +25,7 @@ const Index = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
+        {!session && <AuthPromptBanner />}
         <HeroSection />
         <CategoriesSection />
         <PricingSection />
