@@ -33,7 +33,7 @@ export function ProductFormLayout({
 }: ProductFormLayoutProps) {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {formErrors.length > 0 && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -48,27 +48,40 @@ export function ProductFormLayout({
           </Alert>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-6">
+        <div className="space-y-8">
+          {/* Basic Details Section */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-medium mb-4">Basic Details</h3>
             <ProductBasicDetails form={form} categories={categories} />
           </div>
-          <div className="space-y-6">
+
+          {/* Additional Details Section */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-medium mb-4">Additional Details</h3>
             <ProductAdditionalDetails form={form} />
           </div>
-        </div>
 
-        <ProductDescriptionSection 
-          form={form} 
-          handleAIRewrite={handleAIRewrite} 
-          isGenerating={isGenerating} 
-        />
-
-        {createdProductId && (
-          <div className="border-t border-gray-200 pt-6">
-            <h3 className="text-lg font-medium mb-4">Product Images</h3>
-            <ProductImageSection productId={createdProductId} />
+          {/* Description Section */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-medium mb-4">Description</h3>
+            <ProductDescriptionSection 
+              form={form} 
+              handleAIRewrite={handleAIRewrite} 
+              isGenerating={isGenerating} 
+            />
           </div>
-        )}
+
+          {/* Image Upload Section - Only shown after product creation */}
+          {createdProductId && (
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-medium mb-4">Product Images</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Upload up to 10 images. The first image will be used as the main product image.
+              </p>
+              <ProductImageSection productId={createdProductId} />
+            </div>
+          )}
+        </div>
 
         <DialogFooter>
           <Button type="submit" disabled={isSubmitting}>

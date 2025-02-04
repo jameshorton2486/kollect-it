@@ -84,7 +84,7 @@ export default function ListingManagement() {
         </div>
 
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogContent className="sm:max-w-[800px] w-[95vw]">
+          <DialogContent className="sm:max-w-[800px] w-[95vw] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-2xl font-semibold text-shop-800">
                 Create New Listing
