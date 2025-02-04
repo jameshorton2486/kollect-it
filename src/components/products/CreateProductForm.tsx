@@ -79,7 +79,9 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
           title: "Success",
           description: "Product created successfully. You can now add images.",
         });
+        return result; // Return the result to match the expected type
       }
+      return { id: "" }; // Return a default value if result is undefined
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
@@ -87,6 +89,7 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
         description: "Failed to create product. Please try again.",
         variant: "destructive",
       });
+      return { id: "" }; // Return a default value in case of error
     } finally {
       setIsSubmitting(false);
     }
