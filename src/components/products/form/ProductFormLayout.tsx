@@ -49,8 +49,12 @@ export function ProductFormLayout({
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProductBasicDetails form={form} categories={categories} />
-          <ProductAdditionalDetails form={form} />
+          <div className="space-y-6">
+            <ProductBasicDetails form={form} categories={categories} />
+          </div>
+          <div className="space-y-6">
+            <ProductAdditionalDetails form={form} />
+          </div>
         </div>
 
         <ProductDescriptionSection 
@@ -60,9 +64,10 @@ export function ProductFormLayout({
         />
 
         {createdProductId && (
-          <ProductImageSection 
-            productId={createdProductId} 
-          />
+          <div className="border-t border-gray-200 pt-6">
+            <h3 className="text-lg font-medium mb-4">Product Images</h3>
+            <ProductImageSection productId={createdProductId} />
+          </div>
         )}
 
         <DialogFooter>

@@ -84,11 +84,15 @@ export default function ListingManagement() {
         </div>
 
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogContent className="sm:max-w-[600px]">
+          <DialogContent className="sm:max-w-[800px] w-[95vw]">
             <DialogHeader>
               <DialogTitle className="text-2xl font-semibold text-shop-800">
                 Create New Listing
               </DialogTitle>
+              <p className="text-sm text-muted-foreground mt-2">
+                List your collectible with accurate details. Remember our commitment to quality:
+                first violation receives a warning, repeated offenses result in a permanent ban.
+              </p>
             </DialogHeader>
             <CreateProductForm
               onSubmit={handleCreateProduct}
