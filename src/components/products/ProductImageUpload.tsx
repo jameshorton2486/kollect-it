@@ -1,11 +1,9 @@
 import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Image as ImageIcon, Loader2, Camera } from "lucide-react";
-import { removeBackground } from "@/lib/imageProcessing";
+import { supabase } from "@/integrations/supabase/client";
+import { ImageUploadArea } from "./upload/ImageUploadArea";
+import { ImagePreviewGrid } from "./upload/ImagePreviewGrid";
+import { processImage } from "./upload/imageProcessing";
 
 interface ProductImageUploadProps {
   productId: string;
@@ -17,68 +15,6 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedImages, setUploadedImages] = useState<{ url: string; id: string }[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  const processImage = async (file: File): Promise<File> => {
-    try {
-      setIsProcessing(true);
-      
-      // Create an image element from the file
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-      await new Promise((resolve) => (img.onload = resolve));
-
-      // Create a canvas for resizing
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Could not get canvas context');
-
-      // Set fixed dimensions
-      const targetSize = 500;
-      canvas.width = targetSize;
-      canvas.height = targetSize;
-
-      // Fill with white background
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, targetSize, targetSize);
-
-      // Calculate dimensions maintaining aspect ratio
-      let drawWidth = targetSize;
-      let drawHeight = targetSize;
-      const aspectRatio = img.width / img.height;
-
-      if (aspectRatio > 1) {
-        drawHeight = targetSize / aspectRatio;
-      } else {
-        drawWidth = targetSize * aspectRatio;
-      }
-
-      // Center the image
-      const x = (targetSize - drawWidth) / 2;
-      const y = (targetSize - drawHeight) / 2;
-
-      // Draw the image
-      ctx.drawImage(img, x, y, drawWidth, drawHeight);
-
-      // Remove background if possible
-      try {
-        const processedBlob = await removeBackground(img);
-        const processedFile = new File([processedBlob], file.name, { type: 'image/png' });
-        return processedFile;
-      } catch (error) {
-        console.error('Background removal failed, using original image:', error);
-        // If background removal fails, continue with the resized image
-        return new Promise((resolve) => {
-          canvas.toBlob((blob) => {
-            if (blob) {
-              resolve(new File([blob], file.name, { type: 'image/png' }));
-            }
-          }, 'image/png');
-        });
-      }
-    } finally {
-      setIsProcessing(false);
-    }
-  };
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (uploadedImages.length + acceptedFiles.length > maxImages) {
@@ -96,8 +32,9 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
       for (let i = 0; i < acceptedFiles.length; i++) {
         const file = acceptedFiles[i];
         
-        // Process the image
+        setIsProcessing(true);
         const processedFile = await processImage(file);
+        setIsProcessing(false);
         
         const fileExt = file.name.split('.').pop();
         const filePath = `${productId}/${crypto.randomUUID()}.${fileExt}`;
@@ -145,14 +82,6 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
     }
   }, [productId, maxImages, onImagesUploaded, uploadedImages.length]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
-    },
-    maxFiles: maxImages,
-  });
-
   const handleCameraCapture = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -169,76 +98,14 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-4 mb-4">
-        <div
-          {...getRootProps()}
-          className={`flex-1 border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
-            ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'}
-            bg-white shadow-sm hover:shadow-md`}
-        >
-          <input {...getInputProps()} />
-          <div className="space-y-4">
-            <div className="text-sm text-gray-600">
-              {isDragActive ? (
-                <p className="font-medium">Drop the files here...</p>
-              ) : (
-                <div className="space-y-2">
-                  <p className="font-medium">Drag & drop images here</p>
-                  <p className="text-xs text-gray-500">
-                    or click to select files (up to {maxImages} images)
-                  </p>
-                </div>
-              )}
-            </div>
-            {(isUploading || isProcessing) && (
-              <div className="flex items-center justify-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <p className="text-sm text-gray-500">
-                  {isProcessing ? "Processing images..." : "Uploading..."}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleCameraCapture}
-          className="flex items-center gap-2 bg-white hover:bg-gray-50"
-        >
-          <Camera className="h-4 w-4" />
-          Take Photo
-        </Button>
-      </div>
-
-      {uploadedImages.length > 0 && (
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="images" className="border rounded-lg overflow-hidden">
-            <AccordionTrigger className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50">
-              <ImageIcon className="h-4 w-4" />
-              <span>View Uploaded Images ({uploadedImages.length})</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 bg-white">
-                {uploadedImages.map((image, index) => (
-                  <div key={image.id} className="relative aspect-square bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <img
-                      src={image.url}
-                      alt={`Product image ${index + 1}`}
-                      className="w-full h-full object-contain rounded-md"
-                    />
-                    {index === 0 && (
-                      <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-md text-xs font-medium">
-                        Main Image
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      )}
+      <ImageUploadArea
+        onDrop={onDrop}
+        isUploading={isUploading}
+        isProcessing={isProcessing}
+        maxImages={maxImages}
+        onCameraCapture={handleCameraCapture}
+      />
+      <ImagePreviewGrid images={uploadedImages} />
     </div>
   );
 }
