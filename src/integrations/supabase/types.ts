@@ -183,9 +183,13 @@ export type Database = {
         Row: {
           buyer_id: string
           created_at: string
+          guest_info: Json | null
           id: string
+          payment_method: string | null
           product_id: string
           seller_id: string
+          shipping_address: Json
+          shipping_method: string | null
           status: string
           total_amount: number
           updated_at: string
@@ -193,9 +197,13 @@ export type Database = {
         Insert: {
           buyer_id: string
           created_at?: string
+          guest_info?: Json | null
           id?: string
+          payment_method?: string | null
           product_id: string
           seller_id: string
+          shipping_address?: Json
+          shipping_method?: string | null
           status?: string
           total_amount: number
           updated_at?: string
@@ -203,9 +211,13 @@ export type Database = {
         Update: {
           buyer_id?: string
           created_at?: string
+          guest_info?: Json | null
           id?: string
+          payment_method?: string | null
           product_id?: string
           seller_id?: string
+          shipping_address?: Json
+          shipping_method?: string | null
           status?: string
           total_amount?: number
           updated_at?: string
