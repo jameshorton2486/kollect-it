@@ -1,27 +1,15 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { ProductInfo } from "@/components/products/detail/ProductInfo";
 import { ProductGallery } from "@/components/products/detail/ProductGallery";
+import { ProductInfo } from "@/components/products/detail/ProductInfo";
 import { ProductActions } from "@/components/products/detail/ProductActions";
 import { RelatedProducts } from "@/components/products/detail/RelatedProducts";
 import { Footer } from "@/components/home/Footer";
-import { Tables } from "@/integrations/supabase/types";
-
-interface ProductWithDetails extends Tables<"products"> {
-  category?: {
-    name: string | null;
-  } | null;
-  seller?: {
-    first_name: string | null;
-    last_name: string | null;
-    avatar_url: string | null;
-  } | null;
-}
+import type { ProductWithDetails } from "@/components/products/detail/types";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ["product", id],
@@ -39,7 +27,15 @@ export default function ProductDetailPage() {
       if (error) throw error;
       if (!data) throw new Error("Product not found");
 
-      return data as ProductWithDetails;
+      // Handle potential error in seller data
+      const processedData: ProductWithDetails = {
+        ...data,
+        seller: data.seller?.error 
+          ? { first_name: null, last_name: null, avatar_url: null }
+          : data.seller
+      };
+
+      return processedData;
     },
   });
 

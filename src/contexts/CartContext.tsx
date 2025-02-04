@@ -1,79 +1,105 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { Tables } from "@/integrations/supabase/types";
-import { supabase } from "@/integrations/supabase/client";
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 export interface CartItem {
   id: string;
+  product_id: string;
   quantity: number;
-  product: Tables<"products">;
+  product: {
+    id: string;
+    name: string;
+    price: number;
+    image_url: string | null;
+  };
 }
 
 export interface CartContextType {
   items: CartItem[];
-  addItem: (product: Tables<"products">, quantity?: number) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
   total: number;
-  itemCount: number;
+  isLoading: boolean;
+  addItem: (productId: string) => Promise<void>;
+  removeItem: (itemId: string) => void;
+  updateQuantity: (itemId: string, quantity: number) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const addItem = (product: Tables<"products">, quantity = 1) => {
-    setItems(currentItems => {
-      const existingItem = currentItems.find(item => item.product.id === product.id);
-      
+  const addItem = useCallback(async (productId: string) => {
+    setIsLoading(true);
+    try {
+      const { data: product, error: productError } = await supabase
+        .from('products')
+        .select('id, name, price, image_url')
+        .eq('id', productId)
+        .single();
+
+      if (productError) throw productError;
+
+      const existingItem = items.find(item => item.product_id === productId);
       if (existingItem) {
-        return currentItems.map(item =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+        updateQuantity(existingItem.id, existingItem.quantity + 1);
+      } else {
+        const newItem: CartItem = {
+          id: crypto.randomUUID(),
+          product_id: productId,
+          quantity: 1,
+          product
+        };
+        setItems(prev => [...prev, newItem]);
       }
-      
-      return [...currentItems, { id: product.id, product, quantity }];
-    });
-  };
+      toast({
+        title: "Added to cart",
+        description: "Item has been added to your cart"
+      });
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [items]);
 
-  const removeItem = (productId: string) => {
-    setItems(currentItems => currentItems.filter(item => item.product.id !== productId));
-  };
+  const removeItem = useCallback((itemId: string) => {
+    setItems(prev => prev.filter(item => item.id !== itemId));
+  }, []);
 
-  const updateQuantity = (productId: string, quantity: number) => {
-    setItems(currentItems =>
-      currentItems.map(item =>
-        item.product.id === productId ? { ...item, quantity } : item
+  const updateQuantity = useCallback((itemId: string, quantity: number) => {
+    if (quantity < 1) return;
+    setItems(prev => 
+      prev.map(item => 
+        item.id === itemId ? { ...item, quantity } : item
       )
     );
-  };
+  }, []);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setItems([]);
-  };
+  }, []);
 
-  const total = items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
+  const total = items.reduce((sum, item) => 
+    sum + (item.product.price * item.quantity), 0
   );
 
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-
   return (
-    <CartContext.Provider
-      value={{
-        items,
-        addItem,
-        removeItem,
-        updateQuantity,
-        clearCart,
-        total,
-        itemCount,
-      }}
-    >
+    <CartContext.Provider value={{
+      items,
+      total,
+      isLoading,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clearCart
+    }}>
       {children}
     </CartContext.Provider>
   );
@@ -82,7 +108,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
+    throw new Error('useCart must be used within a CartProvider');
   }
   return context;
 }
