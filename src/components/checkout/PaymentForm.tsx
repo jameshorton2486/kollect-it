@@ -4,14 +4,7 @@ import type { ShippingInfo } from "./ShippingForm";
 import { PaymentFormHeader } from "./payment/PaymentFormHeader";
 import { CardElementWrapper } from "./payment/CardElementWrapper";
 import { usePaymentSubmission } from "./payment/usePaymentSubmission";
-import type { PaymentInfo } from "./payment/types";
-
-interface PaymentFormProps {
-  onSubmit: (shippingInfo: ShippingInfo, paymentInfo: PaymentInfo) => void;
-  shippingInfo: ShippingInfo | null;
-  isLoading?: boolean;
-  amount: number;
-}
+import type { PaymentFormProps } from "./payment/types";
 
 export function PaymentForm({ onSubmit, shippingInfo, isLoading = false, amount }: PaymentFormProps) {
   const stripe = useStripe();

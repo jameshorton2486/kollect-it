@@ -15,7 +15,7 @@ export const usePaymentSubmission = ({ stripe, elements, shippingInfo, amount, o
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     if (!stripe || !elements || !shippingInfo) {
