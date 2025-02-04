@@ -10,6 +10,7 @@ import { Auth } from "@/pages/Auth";
 import { VerifyEmail } from "@/pages/VerifyEmail";
 import { PasswordRecovery } from "@/pages/PasswordRecovery";
 import ProfileSettings from "@/pages/ProfileSettings";
+import ShoppingCart from "@/pages/ShoppingCart";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/seller/inventory" element={<InventoryManagement />} />
         <Route path="/seller/analytics" element={<SalesAnalytics />} />
         <Route path="/seller/listings" element={<ListingManagement />} />
+        <Route path="/cart" element={<ShoppingCart />} />
       </Routes>
     </Router>
   );
