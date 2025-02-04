@@ -8,13 +8,15 @@ import { NavLinks } from "./NavLinks";
 import { AdminDropdown } from "./AdminDropdown";
 import { UserDropdown } from "./UserDropdown";
 import { MobileMenu } from "./MobileMenu";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 
 const mainNavItems = [
@@ -48,6 +50,15 @@ export function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const isMobile = useIsMobile();
+
+  // Check authentication status
+  const { data: session } = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      return session;
+    }
+  });
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,14 +105,35 @@ export function MainNavbar() {
                 </NavigationMenuList>
               </NavigationMenu>
 
-              <Link 
-                to="/seller-dashboard" 
-                className="text-white hover:text-white/80 px-3 py-2 text-sm font-medium"
-              >
-                Sell
-              </Link>
-
-              <AdminDropdown items={adminNavItems} />
+              {session ? (
+                <>
+                  <Link 
+                    to="/seller-dashboard" 
+                    className="text-white hover:text-white/80 px-3 py-2 text-sm font-medium"
+                  >
+                    Sell
+                  </Link>
+                  <AdminDropdown items={adminNavItems} />
+                </>
+              ) : (
+                <div className="flex items-center space-x-4">
+                  <Link 
+                    to="/auth" 
+                    className="text-white hover:text-white/80 px-3 py-2 text-sm font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Button 
+                    asChild
+                    variant="secondary" 
+                    className="bg-white text-[#156064] hover:bg-white/90"
+                  >
+                    <Link to="/auth?signup=true">
+                      Sign Up
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </div>
           )}
 
@@ -120,13 +152,15 @@ export function MainNavbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="text-white hover:text-white/80">
-                <ShoppingCart className="h-5 w-5" />
-              </Button>
-            </Link>
+            {session && (
+              <Link to="/cart">
+                <Button variant="ghost" size="icon" className="text-white hover:text-white/80">
+                  <ShoppingCart className="h-5 w-5" />
+                </Button>
+              </Link>
+            )}
 
-            <UserDropdown items={userNavItems} />
+            {session && <UserDropdown items={userNavItems} />}
 
             {isMobile && (
               <MobileMenu
