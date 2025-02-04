@@ -12,10 +12,11 @@ import { ProductBasicInfo } from "./form/ProductBasicInfo";
 import { ProductCategorySelect } from "./form/ProductCategorySelect";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
-  description: z.string().optional(),
+  description: z.string().min(10, "Description must be at least 10 characters"),
   price: z.string().min(1, "Price is required"),
   category_id: z.string().min(1, "Category is required"),
   condition: z.string().min(1, "Condition is required"),
@@ -32,6 +33,7 @@ interface CreateProductFormProps {
 
 export function CreateProductForm({ onSubmit, categories }: CreateProductFormProps) {
   const [createdProductId, setCreatedProductId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,9 +51,24 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    const result = await onSubmit(values);
-    if (result?.id) {
-      setCreatedProductId(result.id);
+    try {
+      setIsSubmitting(true);
+      const result = await onSubmit(values);
+      if (result?.id) {
+        setCreatedProductId(result.id);
+        toast({
+          title: "Success",
+          description: "Product created successfully. You can now add images.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create product. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -152,13 +169,19 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
               productId={createdProductId}
               onImagesUploaded={() => {
                 // Handle successful upload
+                toast({
+                  title: "Success",
+                  description: "Images uploaded successfully",
+                });
               }}
             />
           </div>
         )}
 
         <DialogFooter>
-          <Button type="submit">Create Product</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Creating..." : "Create Product"}
+          </Button>
         </DialogFooter>
       </form>
     </Form>
