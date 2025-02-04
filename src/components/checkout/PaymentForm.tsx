@@ -16,6 +16,7 @@ interface PaymentFormProps {
 export function PaymentForm({ onSubmit, shippingInfo, isLoading = false, amount }: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
+  
   const { error, handleSubmit } = usePaymentSubmission({
     stripe,
     elements,

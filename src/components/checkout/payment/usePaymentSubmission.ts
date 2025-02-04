@@ -1,27 +1,39 @@
-import { useState } from "react";
-import { StripeCardElement, StripeCardElementChangeEvent } from "@stripe/stripe-js";
-import { ShippingInfo } from "../ShippingForm";
+import { useState, FormEvent } from "react";
+import { Stripe, StripeElements } from "@stripe/stripe-js";
+import type { ShippingInfo } from "../ShippingForm";
+import type { PaymentInfo } from "./types";
 
-export const usePaymentSubmission = () => {
+interface UsePaymentSubmissionProps {
+  stripe: Stripe | null;
+  elements: StripeElements | null;
+  shippingInfo: ShippingInfo | null;
+  amount: number;
+  onSubmit: (shippingInfo: ShippingInfo, paymentInfo: PaymentInfo) => void;
+}
+
+export const usePaymentSubmission = ({ stripe, elements, shippingInfo, amount, onSubmit }: UsePaymentSubmissionProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (
-    stripe: any,
-    elements: any,
-    cardElement: StripeCardElement,
-    shippingInfo: ShippingInfo,
-    amount: number
-  ) => {
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    
+    if (!stripe || !elements || !shippingInfo) {
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
 
-    try {
-      if (!stripe || !elements) {
-        throw new Error("Stripe has not been initialized");
-      }
+    const cardElement = elements.getElement('card');
+    if (!cardElement) {
+      setError("Card element not found");
+      setIsProcessing(false);
+      return;
+    }
 
-      const { error: cardError } = await stripe.createPaymentMethod({
+    try {
+      const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
         card: cardElement,
         billing_details: {
@@ -41,17 +53,15 @@ export const usePaymentSubmission = () => {
         throw cardError;
       }
 
-      // Return success
-      return {
-        success: true,
-        paymentMethod: {
-          last4: (cardElement as any)._implementation._frame.state.value.last4,
-          brand: (cardElement as any)._implementation._frame.state.value.brand,
-        },
-      };
+      if (paymentMethod) {
+        onSubmit(shippingInfo, {
+          paymentMethodId: paymentMethod.id,
+          last4: paymentMethod.card?.last4 || '',
+          brand: paymentMethod.card?.brand || '',
+        });
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during payment processing");
-      return { success: false, error: err.message };
     } finally {
       setIsProcessing(false);
     }

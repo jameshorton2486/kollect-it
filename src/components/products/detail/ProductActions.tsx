@@ -18,7 +18,7 @@ export function ProductActions({ product }: ProductActionsProps) {
 
   const handleAddToCart = async () => {
     try {
-      await addItem(product.id, quantity);
+      await addItem(product.id);
       toast({
         title: "Added to cart",
         description: `${product.name} has been added to your cart.`,
