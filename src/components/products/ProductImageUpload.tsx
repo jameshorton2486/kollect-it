@@ -11,7 +11,7 @@ interface ProductImageUploadProps {
   onImagesUploaded: () => void;
 }
 
-export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded }: ProductImageUploadProps) {
+export function ProductImageUpload({ productId, maxImages = 8, onImagesUploaded }: ProductImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedImages, setUploadedImages] = useState<{ url: string; id: string }[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -104,6 +104,7 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
         isProcessing={isProcessing}
         maxImages={maxImages}
         onCameraCapture={handleCameraCapture}
+        uploadedCount={uploadedImages.length}
       />
       <ImagePreviewGrid images={uploadedImages} />
     </div>

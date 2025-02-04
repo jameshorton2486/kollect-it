@@ -10,7 +10,7 @@ export function ProductImageSection({ productId }: ProductImageSectionProps) {
     <div className="space-y-2">
       <ProductImageUpload
         productId={productId}
-        maxImages={10}
+        maxImages={8}
         onImagesUploaded={() => {
           toast({
             title: "Success",
