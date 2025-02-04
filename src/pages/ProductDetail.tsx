@@ -8,6 +8,17 @@ import { RelatedProducts } from "@/components/products/detail/RelatedProducts";
 import { Footer } from "@/components/home/Footer";
 import { Tables } from "@/integrations/supabase/types";
 
+interface ProductWithDetails extends Tables<"products"> {
+  category?: {
+    name: string | null;
+  } | null;
+  seller?: {
+    first_name: string | null;
+    last_name: string | null;
+    avatar_url: string | null;
+  } | null;
+}
+
 export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,7 +26,7 @@ export default function ProductDetailPage() {
   const { data: product, isLoading, error } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
-      const { data: product, error } = await supabase
+      const { data, error } = await supabase
         .from("products")
         .select(`
           *,
@@ -26,12 +37,9 @@ export default function ProductDetailPage() {
         .single();
 
       if (error) throw error;
-      if (!product) throw new Error("Product not found");
+      if (!data) throw new Error("Product not found");
 
-      return product as Tables<"products"> & {
-        category?: { name: string };
-        seller?: { first_name: string; last_name: string; avatar_url: string };
-      };
+      return data as ProductWithDetails;
     },
   });
 
@@ -47,11 +55,13 @@ export default function ProductDetailPage() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8">
-          <ProductGallery product={product} />
+          <div className="relative">
+            <ProductGallery defaultImage={product.image_url || ''} images={[]} />
+          </div>
           <div>
             <ProductInfo 
               product={product} 
-              categoryName={product.category?.name} 
+              categoryName={product.category?.name || undefined} 
             />
             <ProductActions product={product} />
           </div>

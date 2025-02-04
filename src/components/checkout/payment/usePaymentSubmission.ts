@@ -1,88 +1,65 @@
 import { useState } from "react";
-import { toast } from "sonner";
-import type { Stripe, StripeElements } from "@stripe/stripe-js";
-import type { ShippingInfo } from "../ShippingForm";
-import type { PaymentInfo } from "./types";
+import { StripeCardElement, StripeCardElementChangeEvent } from "@stripe/stripe-js";
+import { ShippingInfo } from "../ShippingForm";
 
-interface UsePaymentSubmissionProps {
-  stripe: Stripe | null;
-  elements: StripeElements | null;
-  shippingInfo: ShippingInfo | null;
-  amount: number;
-  onSubmit: (shippingInfo: ShippingInfo, paymentInfo: PaymentInfo) => void;
-}
-
-export function usePaymentSubmission({
-  stripe,
-  elements,
-  shippingInfo,
-  amount,
-  onSubmit,
-}: UsePaymentSubmissionProps) {
+export const usePaymentSubmission = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (
+    stripe: any,
+    elements: any,
+    cardElement: StripeCardElement,
+    shippingInfo: ShippingInfo,
+    amount: number
+  ) => {
+    setIsProcessing(true);
     setError(null);
 
-    if (!stripe || !elements || !shippingInfo) {
-      return;
-    }
-
     try {
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      if (!stripe || !elements) {
+        throw new Error("Stripe has not been initialized");
+      }
+
+      const { error: cardError } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+        billing_details: {
+          name: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
+          email: shippingInfo.email,
+          phone: shippingInfo.phone,
+          address: {
+            line1: shippingInfo.address,
+            city: shippingInfo.city,
+            postal_code: shippingInfo.postalCode,
+            country: "US",
+          },
         },
-        body: JSON.stringify({
-          amount,
-          shipping: shippingInfo,
-        }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to create payment intent');
+      if (cardError) {
+        throw cardError;
       }
 
-      const { clientSecret } = await response.json();
-
-      const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
-        clientSecret,
-        {
-          payment_method: {
-            card: elements.getElement(CardElement)!,
-            billing_details: {
-              name: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
-              email: shippingInfo.email,
-              address: {
-                line1: shippingInfo.address,
-                city: shippingInfo.city,
-                postal_code: shippingInfo.postalCode,
-              },
-            },
-          },
-        }
-      );
-
-      if (confirmError) {
-        throw confirmError;
-      }
-
-      if (paymentIntent.status === 'succeeded') {
-        const card = paymentIntent.payment_method as any;
-        onSubmit(shippingInfo, {
-          paymentMethodId: paymentIntent.payment_method as string,
-          last4: card.card.last4,
-          brand: card.card.brand,
-        });
-        toast.success('Payment successful!');
-      }
+      // Return success
+      return {
+        success: true,
+        paymentMethod: {
+          last4: (cardElement as any)._implementation._frame.state.value.last4,
+          brand: (cardElement as any)._implementation._frame.state.value.brand,
+        },
+      };
     } catch (err: any) {
-      setError(err.message || 'Payment failed');
-      toast.error('Payment failed. Please try again.');
+      setError(err.message || "An error occurred during payment processing");
+      return { success: false, error: err.message };
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  return { error, handleSubmit };
-}
+  return {
+    handleSubmit,
+    isProcessing,
+    error,
+  };
+};
