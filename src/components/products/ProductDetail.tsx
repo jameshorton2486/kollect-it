@@ -12,11 +12,6 @@ interface ProductDetailProps {
     category?: {
       name: string | null;
     } | null;
-    seller?: {
-      first_name: string | null;
-      last_name: string | null;
-      avatar_url: string | null;
-    } | null;
   };
   isOpen: boolean;
   onClose: () => void;
@@ -25,32 +20,46 @@ interface ProductDetailProps {
 
 export function ProductDetail({ product, isOpen, onClose, categoryName }: ProductDetailProps) {
   const [images, setImages] = useState<{ id: string; image_url: string; display_order: number; }[]>([]);
-  
-  // Process seller data to handle potential errors
-  const processedProduct = {
-    ...product,
-    seller: product.seller?.error 
-      ? { first_name: null, last_name: null, avatar_url: null }
-      : product.seller
-  };
+  const [seller, setSeller] = useState<{
+    first_name: string | null;
+    last_name: string | null;
+    avatar_url: string | null;
+  } | null>(null);
 
   useEffect(() => {
-    async function loadImages() {
-      const { data, error } = await supabase
-        .from('product_images')
-        .select('*')
-        .eq('product_id', product.id)
-        .order('display_order');
+    async function loadData() {
+      if (isOpen) {
+        // Load images
+        const { data: imageData } = await supabase
+          .from('product_images')
+          .select('*')
+          .eq('product_id', product.id)
+          .order('display_order');
 
-      if (!error && data) {
-        setImages(data);
+        if (imageData) {
+          setImages(imageData);
+        }
+
+        // Load seller data
+        if (product.user_id) {
+          const { data: sellerData } = await supabase
+            .from('profiles')
+            .select('first_name, last_name, avatar_url')
+            .eq('id', product.user_id)
+            .single();
+
+          setSeller(sellerData);
+        }
       }
     }
 
-    if (isOpen) {
-      loadImages();
-    }
-  }, [isOpen, product.id]);
+    loadData();
+  }, [isOpen, product.id, product.user_id]);
+
+  const processedProduct = {
+    ...product,
+    seller: seller || { first_name: null, last_name: null, avatar_url: null }
+  };
 
   const content = (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
