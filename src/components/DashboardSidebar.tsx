@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
@@ -13,10 +13,12 @@ import {
   FileText,
   Heart,
   Bell,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface MenuItem {
   icon: any;
@@ -71,6 +73,9 @@ const menuItems: MenuItem[] = [
 ];
 
 export function DashboardSidebar() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  
   const { data: userRoles } = useQuery({
     queryKey: ["user-roles"],
     queryFn: async () => {
@@ -86,6 +91,24 @@ export function DashboardSidebar() {
     }
   });
 
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account"
+      });
+      navigate("/auth");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast({
+        title: "Error logging out",
+        description: "Please try again",
+        variant: "destructive"
+      });
+    }
+  };
+
   const filteredMenuItems = menuItems.filter(item => {
     if (!item.roles) return true;
     return userRoles?.some(role => item.roles?.includes(role));
@@ -96,20 +119,33 @@ export function DashboardSidebar() {
       <div className="p-6">
         <h1 className="text-2xl font-semibold text-white nav-brand">Kollect-It</h1>
       </div>
-      <nav className="px-4 py-2">
-        {filteredMenuItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={cn(
-              "flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
-              "hover:text-white group"
-            )}
-          >
-            <item.icon className="w-5 h-5" />
-            <span className="font-medium">{item.label}</span>
-          </Link>
-        ))}
+      <nav className="px-4 py-2 flex flex-col justify-between h-[calc(100vh-100px)]">
+        <div className="space-y-1">
+          {filteredMenuItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
+                "hover:text-white group"
+              )}
+            >
+              <item.icon className="w-5 h-5" />
+              <span className="font-medium">{item.label}</span>
+            </Link>
+          ))}
+        </div>
+        
+        <button
+          onClick={handleLogout}
+          className={cn(
+            "flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition-colors mt-auto",
+            "hover:text-white group w-full"
+          )}
+        >
+          <LogOut className="w-5 h-5" />
+          <span className="font-medium">Logout</span>
+        </button>
       </nav>
     </div>
   );

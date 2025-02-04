@@ -4,40 +4,78 @@ import { DashboardNavigation } from "./dashboard/DashboardNavigation";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
   showBackButton?: boolean;
   pageTitle?: string;
+  requiredRole?: 'admin' | 'seller' | 'buyer';
 }
 
 export function DashboardLayout({ 
   children, 
   showBackButton = false,
-  pageTitle
+  pageTitle,
+  requiredRole
 }: DashboardLayoutProps) {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const { data: isAdmin } = useQuery({
-    queryKey: ["user-role-admin"],
+  // Check authentication and role
+  const { data: session } = useQuery({
+    queryKey: ["session"],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return false;
+      return session;
+    }
+  });
 
+  const { data: userRoles } = useQuery({
+    queryKey: ["user-roles", session?.user?.id],
+    enabled: !!session?.user?.id,
+    queryFn: async () => {
       const { data: roles } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", session.user.id);
+        .eq("user_id", session!.user.id);
 
-      return roles?.some(r => r.role === 'admin') || false;
+      return roles?.map(r => r.role) || [];
     }
   });
+
+  // Check authentication and redirect if needed
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (!session) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to access this page",
+          variant: "destructive"
+        });
+        navigate("/auth");
+        return;
+      }
+
+      // If a specific role is required, check if user has it
+      if (requiredRole && userRoles && !userRoles.includes(requiredRole)) {
+        toast({
+          title: "Access denied",
+          description: `You need ${requiredRole} access for this page`,
+          variant: "destructive"
+        });
+        navigate("/");
+      }
+    };
+
+    checkAuth();
+  }, [session, userRoles, requiredRole, navigate, toast]);
 
   const handleSearch = (searchTerm: string) => {
     toast({
@@ -45,6 +83,15 @@ export function DashboardLayout({
       description: `Searching for: ${searchTerm}`,
     });
   };
+
+  // Show loading state while checking auth
+  if (!session || (requiredRole && !userRoles)) {
+    return <div className="flex items-center justify-center min-h-screen">
+      Loading...
+    </div>;
+  }
+
+  const isAdmin = userRoles?.includes('admin');
 
   return (
     <div className="flex min-h-screen w-full bg-background">
