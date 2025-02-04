@@ -79,9 +79,9 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
           title: "Success",
           description: "Product created successfully. You can now add images.",
         });
-        return result; // Return the result to match the expected type
+        return result;
       }
-      return { id: "" }; // Return a default value if result is undefined
+      return { id: "" };
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
@@ -89,7 +89,7 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
         description: "Failed to create product. Please try again.",
         variant: "destructive",
       });
-      return { id: "" }; // Return a default value in case of error
+      return { id: "" };
     } finally {
       setIsSubmitting(false);
     }
@@ -125,6 +125,13 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
     }
   };
 
+  const handleImagesUploaded = () => {
+    toast({
+      title: "Success",
+      description: "Images uploaded successfully.",
+    });
+  };
+
   return (
     <ProductFormLayout
       form={form}
@@ -135,6 +142,7 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
       createdProductId={createdProductId}
       handleAIRewrite={handleAIRewrite}
       isGenerating={isGenerating}
+      onImagesUploaded={handleImagesUploaded}
     />
   );
 }

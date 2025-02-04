@@ -19,6 +19,7 @@ interface ProductFormLayoutProps {
   createdProductId: string | null;
   handleAIRewrite: () => Promise<void>;
   isGenerating: boolean;
+  onImagesUploaded: () => void;
 }
 
 export function ProductFormLayout({
@@ -30,6 +31,7 @@ export function ProductFormLayout({
   createdProductId,
   handleAIRewrite,
   isGenerating,
+  onImagesUploaded,
 }: ProductFormLayoutProps) {
   return (
     <Form {...form}>
@@ -76,18 +78,23 @@ export function ProductFormLayout({
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <h3 className="text-lg font-medium mb-4">Product Images</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Upload up to 10 images. The first image will be used as the main product image.
+                Upload up to 8 images. The first image will be used as the main product image.
               </p>
-              <ProductImageSection productId={createdProductId} />
+              <ProductImageSection 
+                productId={createdProductId} 
+                onImagesUploaded={onImagesUploaded}
+              />
             </div>
           )}
         </div>
 
-        <DialogFooter>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Creating..." : "Create Product"}
-          </Button>
-        </DialogFooter>
+        {!createdProductId && (
+          <DialogFooter>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating..." : "Create Product"}
+            </Button>
+          </DialogFooter>
+        )}
       </form>
     </Form>
   );

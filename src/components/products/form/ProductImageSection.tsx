@@ -1,22 +1,17 @@
 import { ProductImageUpload } from "../ProductImageUpload";
-import { toast } from "@/components/ui/use-toast";
 
 interface ProductImageSectionProps {
   productId: string;
+  onImagesUploaded: () => void;
 }
 
-export function ProductImageSection({ productId }: ProductImageSectionProps) {
+export function ProductImageSection({ productId, onImagesUploaded }: ProductImageSectionProps) {
   return (
     <div className="space-y-2">
       <ProductImageUpload
         productId={productId}
         maxImages={8}
-        onImagesUploaded={() => {
-          toast({
-            title: "Success",
-            description: "Images uploaded successfully",
-          });
-        }}
+        onImagesUploaded={onImagesUploaded}
       />
     </div>
   );
