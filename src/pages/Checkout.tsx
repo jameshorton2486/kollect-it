@@ -1,8 +1,6 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { ShippingForm, type ShippingInfo } from "@/components/checkout/ShippingForm";
@@ -14,7 +12,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 
-// Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export default function Checkout() {
@@ -35,20 +32,6 @@ export default function Checkout() {
       if (items.length === 0) {
         throw new Error("Your cart is empty");
       }
-
-      // Create a payment intent
-      const { data: paymentData, error: paymentError } = await supabase.functions.invoke(
-        'create-payment-intent',
-        {
-          body: {
-            items,
-            shipping: shippingInfo,
-            paymentMethodId: paymentInfo.paymentMethodId,
-          },
-        }
-      );
-
-      if (paymentError) throw paymentError;
 
       // Group items by seller
       const itemsBySeller = items.reduce((acc, item) => {
@@ -84,8 +67,7 @@ export default function Checkout() {
             total_amount: sellerTotal,
             status: 'pending',
             payment_method: 'credit_card',
-            payment_status: 'processing',
-            payment_intent_id: paymentData.paymentIntentId,
+            payment_status: 'completed',
             payment_method_details: {
               last4: paymentInfo.last4,
               brand: paymentInfo.brand,
@@ -114,11 +96,7 @@ export default function Checkout() {
 
       toast.success("Order placed successfully!");
       clearCart();
-      navigate("/order-confirmation", {
-        state: {
-          clientSecret: paymentData.clientSecret,
-        }
-      });
+      navigate("/order-confirmation");
     } catch (error: any) {
       console.error('Checkout error:', error);
       setError(error.message || "Failed to process order");
@@ -159,6 +137,7 @@ export default function Checkout() {
                 isLoading={isLoading}
                 onSubmit={handleCheckout}
                 shippingInfo={shippingInfo}
+                amount={total}
               />
             </Elements>
           </div>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { FormError } from "@/components/ui/form-error";
@@ -10,11 +9,13 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import type { ShippingInfo } from "./ShippingForm";
+import { toast } from "sonner";
 
 interface PaymentFormProps {
   onSubmit: (shippingInfo: ShippingInfo, paymentInfo: PaymentInfo) => void;
   shippingInfo: ShippingInfo | null;
   isLoading?: boolean;
+  amount: number;
 }
 
 export interface PaymentInfo {
@@ -38,7 +39,7 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-export function PaymentForm({ onSubmit, shippingInfo, isLoading = false }: PaymentFormProps) {
+export function PaymentForm({ onSubmit, shippingInfo, isLoading = false, amount }: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState<string | null>(null);
@@ -51,21 +52,61 @@ export function PaymentForm({ onSubmit, shippingInfo, isLoading = false }: Payme
       return;
     }
 
-    const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement)!,
-    });
+    try {
+      // Create payment intent
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount,
+          shipping: shippingInfo,
+        }),
+      });
 
-    if (stripeError) {
-      setError(stripeError.message || "Payment failed");
-      return;
+      if (!response.ok) {
+        throw new Error('Failed to create payment intent');
+      }
+
+      const { clientSecret } = await response.json();
+
+      // Confirm the payment
+      const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement)!,
+            billing_details: {
+              name: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
+              email: shippingInfo.email,
+              address: {
+                line1: shippingInfo.address,
+                city: shippingInfo.city,
+                postal_code: shippingInfo.postalCode,
+              },
+            },
+          },
+        }
+      );
+
+      if (confirmError) {
+        throw confirmError;
+      }
+
+      if (paymentIntent.status === 'succeeded') {
+        const card = paymentIntent.payment_method as any;
+        onSubmit(shippingInfo, {
+          paymentMethodId: paymentIntent.payment_method as string,
+          last4: card.card.last4,
+          brand: card.card.brand,
+        });
+        toast.success('Payment successful!');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Payment failed');
+      toast.error('Payment failed. Please try again.');
     }
-
-    onSubmit(shippingInfo, {
-      paymentMethodId: paymentMethod.id,
-      last4: paymentMethod.card!.last4,
-      brand: paymentMethod.card!.brand,
-    });
   };
 
   return (
@@ -92,7 +133,7 @@ export function PaymentForm({ onSubmit, shippingInfo, isLoading = false }: Payme
           disabled={!stripe || isLoading}
           className="w-full"
         >
-          {isLoading ? "Processing..." : "Place Order"}
+          {isLoading ? "Processing..." : `Pay ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)}`}
         </Button>
       </div>
     </form>
