@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -8,12 +8,28 @@ import { NavLinks } from "./NavLinks";
 import { AdminDropdown } from "./AdminDropdown";
 import { UserDropdown } from "./UserDropdown";
 import { MobileMenu } from "./MobileMenu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const mainNavItems = [
   { label: "Home", path: "/" },
-  { label: "Products", path: "/products" },
-  { label: "Categories", path: "/categories" },
-  { label: "Blog", path: "/blog" },
+  { label: "About Us", path: "/about" },
+  { label: "Contact", path: "/contact" },
+];
+
+const shopCategories = [
+  { label: "Antiques", path: "/categories/antiques" },
+  { label: "Collectibles", path: "/categories/collectibles" },
+  { label: "Art", path: "/categories/art" },
+  { label: "Furniture", path: "/categories/furniture" },
+  { label: "Jewelry", path: "/categories/jewelry" },
+  { label: "Books", path: "/categories/books" },
 ];
 
 const adminNavItems = [
@@ -49,6 +65,42 @@ export function MainNavbar() {
           {!isMobile && (
             <div className="hidden md:flex items-center space-x-8">
               <NavLinks items={mainNavItems} />
+              
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="text-white hover:text-white/80">
+                      Shop
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                        {shopCategories.map((category) => (
+                          <li key={category.path}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to={category.path}
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              >
+                                <div className="text-sm font-medium leading-none">
+                                  {category.label}
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+
+              <Link 
+                to="/seller-dashboard" 
+                className="text-white hover:text-white/80 px-3 py-2 text-sm font-medium"
+              >
+                Sell
+              </Link>
+
               <AdminDropdown items={adminNavItems} />
             </div>
           )}
@@ -78,7 +130,7 @@ export function MainNavbar() {
 
             {isMobile && (
               <MobileMenu
-                mainItems={mainNavItems}
+                mainItems={[...mainNavItems, { label: "Shop", path: "/categories" }, { label: "Sell", path: "/seller-dashboard" }]}
                 adminItems={adminNavItems}
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
