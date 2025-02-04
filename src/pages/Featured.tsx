@@ -14,7 +14,7 @@ export default function Featured() {
       const { data, error } = await supabase
         .from("products")
         .select("*, categories(*)")
-        .order("price", { ascending: false })
+        .order("created_at", { ascending: false })
         .limit(12);
 
       if (error) throw error;
