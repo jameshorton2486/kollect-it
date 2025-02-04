@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Image as ImageIcon, Loader2 } from "lucide-react";
+import { Image as ImageIcon, Loader2, Camera } from "lucide-react";
+import { removeBackground } from "@/lib/imageProcessing";
 
 interface ProductImageUploadProps {
   productId: string;
@@ -15,6 +16,69 @@ interface ProductImageUploadProps {
 export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded }: ProductImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedImages, setUploadedImages] = useState<{ url: string; id: string }[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const processImage = async (file: File): Promise<File> => {
+    try {
+      setIsProcessing(true);
+      
+      // Create an image element from the file
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      await new Promise((resolve) => (img.onload = resolve));
+
+      // Create a canvas for resizing
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Could not get canvas context');
+
+      // Set fixed dimensions
+      const targetSize = 500;
+      canvas.width = targetSize;
+      canvas.height = targetSize;
+
+      // Fill with white background
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, targetSize, targetSize);
+
+      // Calculate dimensions maintaining aspect ratio
+      let drawWidth = targetSize;
+      let drawHeight = targetSize;
+      const aspectRatio = img.width / img.height;
+
+      if (aspectRatio > 1) {
+        drawHeight = targetSize / aspectRatio;
+      } else {
+        drawWidth = targetSize * aspectRatio;
+      }
+
+      // Center the image
+      const x = (targetSize - drawWidth) / 2;
+      const y = (targetSize - drawHeight) / 2;
+
+      // Draw the image
+      ctx.drawImage(img, x, y, drawWidth, drawHeight);
+
+      // Remove background if possible
+      try {
+        const processedBlob = await removeBackground(img);
+        const processedFile = new File([processedBlob], file.name, { type: 'image/png' });
+        return processedFile;
+      } catch (error) {
+        console.error('Background removal failed, using original image:', error);
+        // If background removal fails, continue with the resized image
+        return new Promise((resolve) => {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(new File([blob], file.name, { type: 'image/png' }));
+            }
+          }, 'image/png');
+        });
+      }
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (uploadedImages.length + acceptedFiles.length > maxImages) {
@@ -31,12 +95,16 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
       const newImages = [];
       for (let i = 0; i < acceptedFiles.length; i++) {
         const file = acceptedFiles[i];
+        
+        // Process the image
+        const processedFile = await processImage(file);
+        
         const fileExt = file.name.split('.').pop();
         const filePath = `${productId}/${crypto.randomUUID()}.${fileExt}`;
 
         const { error: uploadError } = await supabase.storage
           .from('product-images')
-          .upload(filePath, file);
+          .upload(filePath, processedFile);
 
         if (uploadError) throw uploadError;
 
@@ -66,6 +134,7 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
       });
       onImagesUploaded();
     } catch (error) {
+      console.error('Upload error:', error);
       toast({
         title: "Error",
         description: "Failed to upload images",
@@ -84,29 +153,56 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
     maxFiles: maxImages,
   });
 
+  const handleCameraCapture = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        await onDrop([file]);
+      }
+    };
+    input.click();
+  };
+
   return (
     <div className="space-y-4">
-      <div
-        {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
-          ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'}`}
-      >
-        <input {...getInputProps()} />
-        <div className="space-y-4">
-          <div className="text-sm text-gray-600">
-            {isDragActive ? (
-              <p>Drop the files here...</p>
-            ) : (
-              <p>Drag & drop up to {maxImages} images here, or click to select files</p>
+      <div className="flex gap-4 mb-4">
+        <div
+          {...getRootProps()}
+          className={`flex-1 border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
+            ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'}`}
+        >
+          <input {...getInputProps()} />
+          <div className="space-y-4">
+            <div className="text-sm text-gray-600">
+              {isDragActive ? (
+                <p>Drop the files here...</p>
+              ) : (
+                <p>Drag & drop up to {maxImages} images here, or click to select files</p>
+              )}
+            </div>
+            {(isUploading || isProcessing) && (
+              <div className="flex items-center justify-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <p className="text-sm text-gray-500">
+                  {isProcessing ? "Processing images..." : "Uploading..."}
+                </p>
+              </div>
             )}
           </div>
-          {isUploading && (
-            <div className="flex items-center justify-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <p className="text-sm text-gray-500">Uploading...</p>
-            </div>
-          )}
         </div>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleCameraCapture}
+          className="flex items-center gap-2"
+        >
+          <Camera className="h-4 w-4" />
+          Take Photo
+        </Button>
       </div>
 
       {uploadedImages.length > 0 && (
@@ -119,11 +215,11 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
             <AccordionContent>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
                 {uploadedImages.map((image, index) => (
-                  <div key={image.id} className="relative aspect-square">
+                  <div key={image.id} className="relative aspect-square bg-white">
                     <img
                       src={image.url}
                       alt={`Product image ${index + 1}`}
-                      className="w-full h-full object-cover rounded-md"
+                      className="w-full h-full object-contain rounded-md"
                     />
                     {index === 0 && (
                       <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-md text-xs">

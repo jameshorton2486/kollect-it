@@ -13,13 +13,14 @@ import { ProductCategorySelect } from "./form/ProductCategorySelect";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-import { Loader2, Wand2 } from "lucide-react";
+import { Loader2, Wand2, AlertCircle } from "lucide-react";
 import { useAIDescription } from "@/hooks/useAIDescription";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  price: z.string().min(1, "Price is required"),
+  price: z.string().min(1, "Price is required").refine((val) => !isNaN(Number(val)), "Price must be a valid number"),
   category_id: z.string().min(1, "Category is required"),
   condition: z.string().min(1, "Condition is required"),
   era: z.string().optional(),
@@ -36,6 +37,7 @@ interface CreateProductFormProps {
 export function CreateProductForm({ onSubmit, categories }: CreateProductFormProps) {
   const [createdProductId, setCreatedProductId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState<string[]>([]);
   const { generateDescription, isGenerating } = useAIDescription();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,11 +55,35 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
     },
   });
 
+  const validateForm = () => {
+    const errors: string[] = [];
+    const values = form.getValues();
+
+    if (!values.name) errors.push("Product name is required");
+    if (!values.description) errors.push("Description is required");
+    if (!values.price) errors.push("Price is required");
+    if (!values.category_id) errors.push("Category is required");
+    if (!values.condition) errors.push("Condition is required");
+
+    setFormErrors(errors);
+    return errors.length === 0;
+  };
+
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("Form submission started", values);
+    
+    if (!validateForm()) {
+      console.log("Form validation failed", formErrors);
+      return;
+    }
+
     try {
       setIsSubmitting(true);
+      console.log("Submitting form data...");
+      
       const result = await onSubmit(values);
       if (result?.id) {
+        console.log("Product created successfully", result.id);
         setCreatedProductId(result.id);
         toast({
           title: "Success",
@@ -65,6 +91,7 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
         });
       }
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Error",
         description: "Failed to create product. Please try again.",
@@ -96,6 +123,7 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
         });
       }
     } catch (error) {
+      console.error("AI rewrite error:", error);
       toast({
         title: "Error",
         description: "Failed to generate AI description. Please try again.",
@@ -107,6 +135,20 @@ export function CreateProductForm({ onSubmit, categories }: CreateProductFormPro
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        {formErrors.length > 0 && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Validation Error</AlertTitle>
+            <AlertDescription>
+              <ul className="list-disc pl-4">
+                {formErrors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Column - Basic Information */}
           <div className="space-y-4">
