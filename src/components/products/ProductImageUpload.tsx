@@ -172,16 +172,22 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
       <div className="flex gap-4 mb-4">
         <div
           {...getRootProps()}
-          className={`flex-1 border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
-            ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'}`}
+          className={`flex-1 border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
+            ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'}
+            bg-white shadow-sm hover:shadow-md`}
         >
           <input {...getInputProps()} />
           <div className="space-y-4">
             <div className="text-sm text-gray-600">
               {isDragActive ? (
-                <p>Drop the files here...</p>
+                <p className="font-medium">Drop the files here...</p>
               ) : (
-                <p>Drag & drop up to {maxImages} images here, or click to select files</p>
+                <div className="space-y-2">
+                  <p className="font-medium">Drag & drop images here</p>
+                  <p className="text-xs text-gray-500">
+                    or click to select files (up to {maxImages} images)
+                  </p>
+                </div>
               )}
             </div>
             {(isUploading || isProcessing) && (
@@ -198,7 +204,7 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
           type="button"
           variant="outline"
           onClick={handleCameraCapture}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 bg-white hover:bg-gray-50"
         >
           <Camera className="h-4 w-4" />
           Take Photo
@@ -207,22 +213,22 @@ export function ProductImageUpload({ productId, maxImages = 10, onImagesUploaded
 
       {uploadedImages.length > 0 && (
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="images">
-            <AccordionTrigger className="flex items-center gap-2">
+          <AccordionItem value="images" className="border rounded-lg overflow-hidden">
+            <AccordionTrigger className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50">
               <ImageIcon className="h-4 w-4" />
               <span>View Uploaded Images ({uploadedImages.length})</span>
             </AccordionTrigger>
             <AccordionContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 bg-white">
                 {uploadedImages.map((image, index) => (
-                  <div key={image.id} className="relative aspect-square bg-white">
+                  <div key={image.id} className="relative aspect-square bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <img
                       src={image.url}
                       alt={`Product image ${index + 1}`}
                       className="w-full h-full object-contain rounded-md"
                     />
                     {index === 0 && (
-                      <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-md text-xs">
+                      <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-md text-xs font-medium">
                         Main Image
                       </div>
                     )}
