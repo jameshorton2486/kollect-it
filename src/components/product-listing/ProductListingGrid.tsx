@@ -9,6 +9,7 @@ export function ProductListingGrid() {
   const [filters, setFilters] = useState({
     search: "",
     category: "all",
+    subcategory: "all",
     condition: "all",
     priceRange: { min: "", max: "" },
     era: "all"
@@ -21,7 +22,7 @@ export function ProductListingGrid() {
       
       let query = supabase
         .from("products")
-        .select("*, categories(*)")
+        .select("*, categories(*), subcategories(*)")
         .order(field, { ascending: direction === "asc" });
 
       // Apply search filter
@@ -32,6 +33,11 @@ export function ProductListingGrid() {
       // Apply category filter
       if (filters.category !== "all") {
         query = query.eq("category_id", filters.category);
+      }
+
+      // Apply subcategory filter
+      if (filters.subcategory !== "all") {
+        query = query.eq("subcategory_id", filters.subcategory);
       }
 
       // Apply condition filter

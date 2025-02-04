@@ -1,8 +1,11 @@
+import React from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
 import { Tables } from "@/integrations/supabase/types";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ProductBasicDetailsProps {
   form: UseFormReturn<any>;
@@ -10,6 +13,24 @@ interface ProductBasicDetailsProps {
 }
 
 export function ProductBasicDetails({ form, categories }: ProductBasicDetailsProps) {
+  const [selectedCategory, setSelectedCategory] = React.useState<string>("");
+
+  const { data: subcategories } = useQuery({
+    queryKey: ["subcategories", selectedCategory],
+    queryFn: async () => {
+      if (!selectedCategory) return [];
+      const { data, error } = await supabase
+        .from("subcategories")
+        .select("*")
+        .eq("category_id", selectedCategory)
+        .order("name");
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!selectedCategory,
+  });
+
   return (
     <div className="space-y-4">
       <FormField
@@ -46,7 +67,13 @@ export function ProductBasicDetails({ form, categories }: ProductBasicDetailsPro
         render={({ field }) => (
           <FormItem>
             <FormLabel>Category</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select 
+              onValueChange={(value) => {
+                field.onChange(value);
+                setSelectedCategory(value);
+              }} 
+              value={field.value}
+            >
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
@@ -56,6 +83,35 @@ export function ProductBasicDetails({ form, categories }: ProductBasicDetailsPro
                 {categories?.map((category) => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="subcategory_id"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Subcategory</FormLabel>
+            <Select 
+              onValueChange={field.onChange} 
+              value={field.value}
+              disabled={!selectedCategory}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder={selectedCategory ? "Select subcategory" : "Select a category first"} />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {subcategories?.map((subcategory) => (
+                  <SelectItem key={subcategory.id} value={subcategory.id}>
+                    {subcategory.name}
                   </SelectItem>
                 ))}
               </SelectContent>

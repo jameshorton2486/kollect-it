@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export function ProductListingFilters() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("all");
   const [selectedCondition, setSelectedCondition] = useState("all");
   const [selectedEra, setSelectedEra] = useState("all");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
@@ -36,6 +37,7 @@ export function ProductListingFilters() {
   const resetFilters = () => {
     setSearchQuery("");
     setSelectedCategory("all");
+    setSelectedSubcategory("all");
     setSelectedCondition("all");
     setSelectedEra("all");
     setPriceRange({ min: "", max: "" });
@@ -46,6 +48,8 @@ export function ProductListingFilters() {
     setSearchQuery,
     selectedCategory,
     setSelectedCategory,
+    selectedSubcategory,
+    setSelectedSubcategory,
     selectedCondition,
     setSelectedCondition,
     selectedEra,
@@ -75,7 +79,26 @@ export function ProductListingFilters() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <FilterContent {...filterProps} />
+          <SearchFilter searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+          
+          <CategoryFilter
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            selectedSubcategory={selectedSubcategory}
+            onSubcategoryChange={setSelectedSubcategory}
+            categories={categories}
+          />
+          
+          <PriceRangeFilter
+            priceRange={priceRange}
+            onPriceRangeChange={setPriceRange}
+          />
+          
+          <ConditionFilter
+            selectedCondition={selectedCondition}
+            onConditionChange={setSelectedCondition}
+          />
+
           <div className="space-y-4">
             <h3 className="font-semibold text-shop-800">Era</h3>
             <Select value={selectedEra} onValueChange={setSelectedEra}>
