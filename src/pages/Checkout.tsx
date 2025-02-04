@@ -56,6 +56,7 @@ export default function Checkout() {
           .insert({
             seller_id: sellerId,
             buyer_id: user?.id,
+            product_id: sellerItems[0].product_id, // Use first product as reference
             guest_info: isGuest ? {
               email: shippingInfo.email,
               name: `${shippingInfo.firstName} ${shippingInfo.lastName}`,

@@ -9,6 +9,9 @@ import { RelatedProducts } from "./detail/RelatedProducts";
 
 interface ProductDetailProps {
   product: Tables<"products"> & {
+    category?: {
+      name: string | null;
+    } | null;
     seller?: {
       first_name: string | null;
       last_name: string | null;
