@@ -1,21 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "@/pages/Home";
+import Home from "@/pages/Home";
 import { Auth } from "@/pages/Auth";
-import { Products } from "@/pages/Products";
-import { Categories } from "@/pages/Categories";
-import { Featured } from "@/pages/Featured";
-import { NewArrivals } from "@/pages/NewArrivals";
-import { Blog } from "@/pages/Blog";
-import { AboutUs } from "@/pages/AboutUs";
-import { Contact } from "@/pages/Contact";
+import Products from "@/pages/Products";
+import Categories from "@/pages/Categories";
+import Featured from "@/pages/Featured";
+import NewArrivals from "@/pages/NewArrivals";
+import Blog from "@/pages/Blog";
+import AboutUs from "@/pages/AboutUs";
+import Contact from "@/pages/Contact";
 import { VerifyEmail } from "@/pages/VerifyEmail";
 import { PasswordRecovery } from "@/pages/PasswordRecovery";
 import ProfileSettings from "@/pages/ProfileSettings";
 import ShoppingCart from "@/pages/ShoppingCart";
 import ProductDetailPage from "@/pages/ProductDetail";
-import { InventoryManagement } from "@/pages/seller/InventoryManagement";
-import { SalesAnalytics } from "@/pages/seller/SalesAnalytics";
-import { ListingManagement } from "@/pages/seller/ListingManagement";
+import InventoryManagement from "@/pages/seller/InventoryManagement";
+import SalesAnalytics from "@/pages/seller/SalesAnalytics";
+import ListingManagement from "@/pages/seller/ListingManagement";
+import Checkout from "@/pages/Checkout";
+import OrderConfirmation from "@/pages/OrderConfirmation";
 
 export default function App() {
   return (
@@ -35,6 +37,8 @@ export default function App() {
         <Route path="/password-recovery" element={<PasswordRecovery />} />
         <Route path="/profile-settings" element={<ProfileSettings />} />
         <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/seller/inventory" element={<InventoryManagement />} />
         <Route path="/seller/analytics" element={<SalesAnalytics />} />
         <Route path="/seller/listings" element={<ListingManagement />} />

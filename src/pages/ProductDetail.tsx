@@ -1,14 +1,18 @@
-import { useParams } from "react-router-dom";
-import { PageLayout } from "@/components/layout/PageLayout";
-import { ArticleDetail } from "@/components/articles/ArticleDetail";
-import { ProductDetail } from "@/components/products/ProductDetail";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { ProductInfo } from "@/components/products/detail/ProductInfo";
+import { ProductGallery } from "@/components/products/detail/ProductGallery";
+import { ProductActions } from "@/components/products/detail/ProductActions";
+import { RelatedProducts } from "@/components/products/detail/RelatedProducts";
+import { Footer } from "@/components/home/Footer";
+import { Tables } from "@/integrations/supabase/types";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { data: product, isLoading } = useQuery({
+  const { data: product, isLoading, error } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
       const { data: product, error } = await supabase
@@ -22,55 +26,42 @@ export default function ProductDetailPage() {
         .single();
 
       if (error) throw error;
-      return product;
-    },
-  });
+      if (!product) throw new Error("Product not found");
 
-  const { data: categoryName } = useQuery({
-    queryKey: ["category", product?.category_id],
-    enabled: !!product?.category_id,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("categories")
-        .select("name")
-        .eq("id", product?.category_id)
-        .single();
-
-      if (error) throw error;
-      return data?.name;
+      return product as Tables<"products"> & {
+        category?: { name: string };
+        seller?: { first_name: string; last_name: string; avatar_url: string };
+      };
     },
   });
 
   if (isLoading) {
-    return (
-      <PageLayout>
-        <div className="animate-pulse">Loading...</div>
-      </PageLayout>
-    );
+    return <div>Loading...</div>;
   }
 
-  if (!product) {
-    return (
-      <PageLayout>
-        <div>Product not found</div>
-      </PageLayout>
-    );
+  if (error || !product) {
+    return <div>Error loading product</div>;
   }
-
-  const breadcrumbs = [
-    { label: "Products", href: "/products" },
-    { label: categoryName || "Category", href: `/categories/${product.category_id}` },
-    { label: product.name },
-  ];
 
   return (
-    <PageLayout breadcrumbs={breadcrumbs} showBackButton>
-      <ProductDetail 
-        product={product} 
-        isOpen={true} 
-        onClose={() => {}} 
-        categoryName={categoryName} 
-      />
-    </PageLayout>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <div className="grid md:grid-cols-2 gap-8">
+          <ProductGallery product={product} />
+          <div>
+            <ProductInfo 
+              product={product} 
+              categoryName={product.category?.name} 
+            />
+            <ProductActions product={product} />
+          </div>
+        </div>
+        <RelatedProducts 
+          categoryId={product.category_id} 
+          currentProductId={product.id} 
+        />
+      </main>
+      <Footer />
+    </div>
   );
 }
