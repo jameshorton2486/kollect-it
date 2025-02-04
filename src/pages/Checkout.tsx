@@ -12,6 +12,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import type { Tables } from "@/integrations/supabase/types";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -34,15 +35,30 @@ export default function Checkout() {
         throw new Error("Your cart is empty");
       }
 
-      // Group items by seller
-      const itemsBySeller = items.reduce((acc, item) => {
-        const sellerId = item.product.user_id;
+      // First, fetch the complete product details for each item
+      const productDetails = await Promise.all(
+        items.map(async (item) => {
+          const { data } = await supabase
+            .from('products')
+            .select('*, user_id')
+            .eq('id', item.product_id)
+            .single();
+          return data;
+        })
+      );
+
+      // Group items by seller using the fetched product details
+      const itemsBySeller = items.reduce((acc, item, index) => {
+        const product = productDetails[index];
+        if (!product) return acc;
+        
+        const sellerId = product.user_id;
         if (!acc[sellerId]) {
           acc[sellerId] = [];
         }
-        acc[sellerId].push(item);
+        acc[sellerId].push({ ...item, product });
         return acc;
-      }, {} as Record<string, typeof items>);
+      }, {} as Record<string, Array<typeof items[0] & { product: Tables<"products"> }>>);
 
       // Create orders and order items
       for (const [sellerId, sellerItems] of Object.entries(itemsBySeller)) {
@@ -57,7 +73,7 @@ export default function Checkout() {
           .insert({
             seller_id: sellerId,
             buyer_id: user?.id,
-            product_id: sellerItems[0].product_id, // Use first product as reference
+            product_id: sellerItems[0].product.id, // Use first product as reference
             guest_info: isGuest ? {
               email: shippingInfo.email,
               name: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
