@@ -8,6 +8,7 @@ import { NavLinks } from "./NavLinks";
 import { AdminDropdown } from "./AdminDropdown";
 import { UserDropdown } from "./UserDropdown";
 import { MobileMenu } from "./MobileMenu";
+import { SignUpModal } from "@/components/auth/SignUpModal";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -51,7 +52,6 @@ export function MainNavbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const isMobile = useIsMobile();
 
-  // Check authentication status
   const { data: session } = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
@@ -123,15 +123,7 @@ export function MainNavbar() {
                   >
                     Login
                   </Link>
-                  <Button 
-                    asChild
-                    variant="secondary" 
-                    className="bg-white text-[#156064] hover:bg-white/90"
-                  >
-                    <Link to="/auth?signup=true">
-                      Sign Up
-                    </Link>
-                  </Button>
+                  <SignUpModal />
                 </div>
               )}
             </div>
