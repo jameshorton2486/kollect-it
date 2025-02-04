@@ -19,3 +19,10 @@ export interface ProductGalleryProps {
     display_order: number;
   }>;
 }
+
+export interface ProductDetailProps {
+  product: ProductWithDetails;
+  isOpen: boolean;
+  onClose: () => void;
+  categoryName?: string;
+}

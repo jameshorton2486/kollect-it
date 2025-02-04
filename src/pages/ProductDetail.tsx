@@ -1,68 +1,56 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { ProductDetail as Product } from "@/components/products/ProductDetail";
+import { ProductDetail } from "@/components/products/ProductDetail";
 import { Loader } from "@/components/ui/loader";
 import { NotFound } from "@/components/ui/not-found";
 import type { Tables } from "@/integrations/supabase/types";
+import type { ProductWithDetails } from "@/components/products/detail/types";
 
-export default function ProductDetail() {
+export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Tables<"products"> | null>(null);
-  const [seller, setSeller] = useState<{
-    first_name: string | null;
-    last_name: string | null;
-    avatar_url: string | null;
-  } | null>(null);
+  const [product, setProduct] = useState<ProductWithDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProductAndSeller = async () => {
+    const fetchProduct = async () => {
       try {
-        // Fetch product
-        const { data: productData, error: productError } = await supabase
+        const { data, error } = await supabase
           .from('products')
-          .select('*')
+          .select(`
+            *,
+            category:category_id (
+              name
+            )
+          `)
           .eq('id', id)
           .single();
 
-        if (productError) throw productError;
-        setProduct(productData);
-
-        // Fetch seller data
-        if (productData?.user_id) {
-          const { data: sellerData } = await supabase
-            .from('profiles')
-            .select('first_name, last_name, avatar_url')
-            .eq('id', productData.user_id)
-            .maybeSingle();
-
-          setSeller(sellerData);
-        }
-      } catch (err) {
+        if (error) throw error;
+        setProduct(data);
+      } catch (err: any) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProductAndSeller();
+    fetchProduct();
   }, [id]);
 
   if (loading) return <Loader />;
   if (error) return <NotFound message={error} />;
   if (!product) return <NotFound message="Product not found" />;
 
-  const sellerData = seller || {
-    first_name: '',
-    last_name: '',
-    avatar_url: null
-  };
-
   return (
     <div>
-      <Product product={product} seller={sellerData} />
+      <ProductDetail 
+        product={product} 
+        isOpen={true} 
+        onClose={() => {}} 
+        categoryName={product.category?.name || undefined}
+      />
     </div>
   );
 }

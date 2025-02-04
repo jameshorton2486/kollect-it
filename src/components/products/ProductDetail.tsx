@@ -6,17 +6,7 @@ import { ProductGallery } from "./detail/ProductGallery";
 import { ProductInfo } from "./detail/ProductInfo";
 import { ProductActions } from "./detail/ProductActions";
 import { RelatedProducts } from "./detail/RelatedProducts";
-
-interface ProductDetailProps {
-  product: Tables<"products"> & {
-    category?: {
-      name: string | null;
-    } | null;
-  };
-  isOpen: boolean;
-  onClose: () => void;
-  categoryName?: string;
-}
+import { ProductDetailProps } from "./detail/types";
 
 export function ProductDetail({ product, isOpen, onClose, categoryName }: ProductDetailProps) {
   const [images, setImages] = useState<{ id: string; image_url: string; display_order: number; }[]>([]);
@@ -46,9 +36,9 @@ export function ProductDetail({ product, isOpen, onClose, categoryName }: Produc
             .from('profiles')
             .select('first_name, last_name, avatar_url')
             .eq('id', product.user_id)
-            .single();
+            .maybeSingle();
 
-          setSeller(sellerData);
+          setSeller(sellerData || { first_name: null, last_name: null, avatar_url: null });
         }
       }
     }
