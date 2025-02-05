@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -72,13 +73,13 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="hidden md:block relative"
+          className="hidden md:block relative h-[400px] w-full max-w-[500px] ml-auto"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-[#008080]/20 to-transparent rounded-lg" />
           <img
             src="/placeholder.svg"
             alt="Featured Antiques"
-            className="w-full h-[500px] object-cover rounded-lg shadow-2xl image-responsive"
+            className="w-full h-full object-cover rounded-lg shadow-2xl"
           />
         </motion.div>
       </div>
