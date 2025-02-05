@@ -16,6 +16,7 @@ import Index from "./pages/Index";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import CategoryManagement from "./pages/CategoryManagement";
 import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 
 export default function App() {
   return (
@@ -25,12 +26,15 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/password-recovery" element={<PasswordRecovery />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/profile-settings" element={<ProfileSettings />} />
           <Route path="/category-management" element={<CategoryManagement />} />
+          <Route path="/seller-dashboard" element={<DashboardLayout />} />
+          <Route path="/categories/*" element={<CategoryManagement />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
             <Route path="analytics" element={<AnalyticsDashboard />} />
             <Route path="users" element={<UserManagementTable />} />
