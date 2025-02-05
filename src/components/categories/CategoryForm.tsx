@@ -1,10 +1,10 @@
+
 import { useForm, useFieldArray } from "react-hook-form";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
 import { SubcategoriesList } from "./SubcategoriesList";
+import { CategoryFormFields } from "./form/CategoryFormFields";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -64,45 +64,7 @@ export function CategoryForm({ onSubmit, defaultValues }: CategoryFormProps) {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <Card className="p-6">
           <CardContent className="space-y-4 p-0">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-semibold">Category Name</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter category name" 
-                      className="w-full"
-                      {...field} 
-                      onBlur={(e) => {
-                        field.onBlur();
-                        field.onChange(e.target.value.trim());
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-semibold">Description (Optional)</FormLabel>
-                  <FormControl>
-                    <Textarea 
-                      placeholder="Enter category description" 
-                      className="w-full min-h-[100px] resize-y"
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <CategoryFormFields form={form} />
           </CardContent>
         </Card>
 
