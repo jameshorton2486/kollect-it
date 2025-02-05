@@ -1,48 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "@/pages/Home";
-import { Auth } from "@/pages/Auth";
-import Products from "@/pages/Products";
-import Categories from "@/pages/Categories";
-import Featured from "@/pages/Featured";
-import NewArrivals from "@/pages/NewArrivals";
-import Blog from "@/pages/Blog";
-import AboutUs from "@/pages/AboutUs";
-import Contact from "@/pages/Contact";
-import { VerifyEmail } from "@/pages/VerifyEmail";
-import { PasswordRecovery } from "@/pages/PasswordRecovery";
-import ProfileSettings from "@/pages/ProfileSettings";
-import ShoppingCart from "@/pages/ShoppingCart";
-import ProductDetailPage from "@/pages/ProductDetail";
-import InventoryManagement from "@/pages/seller/InventoryManagement";
-import SalesAnalytics from "@/pages/seller/SalesAnalytics";
-import ListingManagement from "@/pages/seller/ListingManagement";
-import Checkout from "@/pages/Checkout";
-import OrderConfirmation from "@/pages/OrderConfirmation";
+import { Auth } from "./pages/Auth";
+import { AuthCallback } from "./components/auth/AuthCallback";
+import { PasswordRecovery } from "./pages/PasswordRecovery";
+import { VerifyEmail } from "./pages/VerifyEmail";
+import { ProfileSettings } from "./pages/ProfileSettings";
+import { AdminDashboard } from "./pages/AdminDashboard";
+import { UserManagementTable } from "./components/admin/UserManagementTable";
+import { ContentManagement } from "./components/admin/ContentManagement";
+import { AnalyticsDashboard } from "./components/admin/AnalyticsDashboard";
+import { DashboardLayout } from "./components/DashboardLayout";
+import { MainNavbar } from "./components/navigation/MainNavbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function App() {
   return (
     <Router>
+      <MainNavbar />
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/featured" element={<Featured />} />
-        <Route path="/new-arrivals" element={<NewArrivals />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/password-recovery" element={<PasswordRecovery />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/profile-settings" element={<ProfileSettings />} />
-        <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
-        <Route path="/seller/inventory" element={<InventoryManagement />} />
-        <Route path="/seller/analytics" element={<SalesAnalytics />} />
-        <Route path="/seller/listings" element={<ListingManagement />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />}>
+          <Route path="analytics" element={<AnalyticsDashboard />} />
+          <Route path="users" element={<UserManagementTable />} />
+          <Route path="content" element={<ContentManagement />} />
+        </Route>
       </Routes>
+      <Toaster />
     </Router>
   );
 }
