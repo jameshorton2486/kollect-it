@@ -8,7 +8,7 @@ export function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[600px] bg-gradient-to-br from-[#008080] to-[#006666] section-padding">
+    <section className="relative min-h-[600px] bg-gradient-to-br from-[#008080] to-[#006666] py-16 px-4 md:px-8">
       <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10" />
       
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -18,12 +18,12 @@ export function HeroSection() {
           transition={{ duration: 0.6 }}
           className="text-left space-y-6"
         >
-          <h1 className="heading-responsive text-white leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
             Your Online 
             <span className="block animate-fade-in">Antique Store</span>
           </h1>
           
-          <p className="text-responsive text-white/90 max-w-xl animate-slide-in">
+          <p className="text-lg md:text-xl text-white/90 max-w-xl animate-slide-in">
             Join our curated marketplace for unique antiques and collectibles. 
             List your items with our seller-friendly subscription plans.
           </p>
@@ -31,20 +31,24 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
               size="lg"
-              className="bg-white text-[#008080] hover:bg-white/90 text-lg px-8 hover-lift"
+              variant="default"
+              className="w-full sm:w-auto bg-white text-[#008080] hover:bg-white/90 text-lg px-8 
+                       transform transition-all duration-200 hover:-translate-y-1"
               onClick={() => navigate("/products")}
             >
               <ShoppingBag className="mr-2 h-5 w-5" />
               Browse Collection
             </Button>
             <Button
-              variant="outline"
               size="lg"
-              className="border-2 border-white bg-transparent text-white hover:bg-white/10 text-lg px-8 hover-lift"
+              variant="outline"
+              className="w-full sm:w-auto border-2 border-white bg-transparent text-white 
+                       hover:bg-white/10 text-lg px-8 transform transition-all duration-200 
+                       hover:-translate-y-1"
               onClick={() => navigate("/pricing")}
             >
               <Star className="mr-2 h-5 w-5" />
-              View Pricing Plans
+              View Pricing
             </Button>
           </div>
 
@@ -86,3 +90,4 @@ export function HeroSection() {
     </section>
   );
 }
+
