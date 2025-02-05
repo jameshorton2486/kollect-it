@@ -31,7 +31,6 @@ interface ProductInfoProps {
 
 export function ProductInfo({ product, categoryName }: ProductInfoProps) {
   useEffect(() => {
-    // Update metadata when component mounts
     if (product.seo_title || product.seo_description) {
       document.title = product.seo_title || product.name;
       const metaDescription = document.querySelector('meta[name="description"]');
@@ -55,44 +54,41 @@ export function ProductInfo({ product, categoryName }: ProductInfoProps) {
           break;
         case "instagram":
           toast("Instagram Sharing", {
-            description: "Please use the Instagram app to share this product.",
+            description: "Please use the Instagram app to share this product."
           });
           return;
         case "copy":
           await navigator.clipboard.writeText(shareUrl);
           toast("Link Copied", {
-            description: "Product link has been copied to clipboard!",
+            description: "Product link has been copied to clipboard!"
           });
           return;
       }
 
-      // Log the share
       await supabase.from("social_shares").insert({
         product_id: product.id,
         platform,
         shared_by: (await supabase.auth.getUser()).data.user?.id,
       });
 
-      // Open share dialog
       if (shareLink) {
         window.open(shareLink, "_blank", "width=600,height=400");
       }
 
       toast("Shared Successfully", {
-        description: `Product has been shared on ${platform}!`,
+        description: `Product has been shared on ${platform}!`
       });
     } catch (error) {
       console.error("Share error:", error);
       toast("Share Failed", {
-        description: "Unable to share this product.",
-        variant: "destructive",
+        description: "Unable to share this product."
       });
     }
   };
 
   const handleWishlist = () => {
     toast("Coming soon", {
-      description: "Wishlist functionality will be available soon!",
+      description: "Wishlist functionality will be available soon!"
     });
   };
 

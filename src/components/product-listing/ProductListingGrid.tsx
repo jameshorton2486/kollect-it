@@ -18,6 +18,21 @@ interface ProductListingGridProps {
   };
 }
 
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string | null;
+  category_id: string;
+  categories?: {
+    name: string | null;
+  } | null;
+  subcategories?: {
+    name: string | null;
+  } | null;
+};
+
 export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps) {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products", sortBy, filters],
@@ -28,10 +43,8 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
         .from("products")
         .select("*, categories(*), subcategories(*)");
 
-      // Apply sorting
       query = query.order(field, { ascending: direction === "asc" });
 
-      // Apply filters
       if (filters.search) {
         query = query.ilike("name", `%${filters.search}%`);
       }
@@ -62,7 +75,7 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
       const { data, error } = await query;
       
       if (error) throw error;
-      return data;
+      return data as Product[];
     },
   });
 
@@ -79,7 +92,6 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {isLoading ? (
-          // Loading skeletons
           [...Array(8)].map((_, i) => (
             <Card key={i} className="overflow-hidden">
               <Skeleton className="h-48 w-full" />
