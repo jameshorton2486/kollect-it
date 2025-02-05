@@ -31,8 +31,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
               size="lg"
-              variant="default"
-              className="w-full sm:w-auto bg-white text-[#008080] hover:bg-white/90 text-lg px-8 
+              className="w-full sm:w-auto bg-white hover:bg-white/90 text-[#008080] text-lg px-8 
                        transform transition-all duration-200 hover:-translate-y-1"
               onClick={() => navigate("/products")}
             >
@@ -90,4 +89,3 @@ export function HeroSection() {
     </section>
   );
 }
-
