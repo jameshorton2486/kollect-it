@@ -1,11 +1,10 @@
 import React from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
 import { Tables } from "@/integrations/supabase/types";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 
 interface ProductBasicDetailsProps {
   form: UseFormReturn<any>;
@@ -14,22 +13,6 @@ interface ProductBasicDetailsProps {
 
 export function ProductBasicDetails({ form, categories }: ProductBasicDetailsProps) {
   const [selectedCategory, setSelectedCategory] = React.useState<string>("");
-
-  const { data: subcategories } = useQuery({
-    queryKey: ["subcategories", selectedCategory],
-    queryFn: async () => {
-      if (!selectedCategory) return [];
-      const { data, error } = await supabase
-        .from("subcategories")
-        .select("*")
-        .eq("category_id", selectedCategory)
-        .order("name");
-      
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!selectedCategory,
-  });
 
   return (
     <div className="space-y-4">
@@ -41,6 +24,63 @@ export function ProductBasicDetails({ form, categories }: ProductBasicDetailsPro
             <FormLabel>Name</FormLabel>
             <FormControl>
               <Input placeholder="Product name" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="seo_title"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>SEO Title</FormLabel>
+            <FormControl>
+              <Input 
+                placeholder="SEO optimized title (optional)"
+                {...field} 
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="seo_description"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>SEO Description</FormLabel>
+            <FormControl>
+              <Textarea 
+                placeholder="SEO optimized description (optional)"
+                className="min-h-[100px]"
+                {...field} 
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="seo_keywords"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>SEO Keywords</FormLabel>
+            <FormControl>
+              <Input 
+                placeholder="Comma-separated keywords (optional)"
+                {...field}
+                onChange={(e) => {
+                  const keywords = e.target.value.split(',').map(k => k.trim());
+                  field.onChange(keywords);
+                }}
+                value={field.value?.join(', ') || ''}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -83,35 +123,6 @@ export function ProductBasicDetails({ form, categories }: ProductBasicDetailsPro
                 {categories?.map((category) => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="subcategory_id"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Subcategory</FormLabel>
-            <Select 
-              onValueChange={field.onChange} 
-              value={field.value}
-              disabled={!selectedCategory}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder={selectedCategory ? "Select subcategory" : "Select a category first"} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {subcategories?.map((subcategory) => (
-                  <SelectItem key={subcategory.id} value={subcategory.id}>
-                    {subcategory.name}
                   </SelectItem>
                 ))}
               </SelectContent>

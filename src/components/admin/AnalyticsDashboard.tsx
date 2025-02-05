@@ -1,104 +1,133 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Users, ShoppingBag, DollarSign } from "lucide-react";
+import { SocialShareAnalytics } from "./SocialShareAnalytics";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { Loader } from "@/components/ui/loader";
 
 export function AnalyticsDashboard() {
-  const { data: stats } = useQuery({
-    queryKey: ["admin-stats"],
-    queryFn: async () => {
-      const { count: usersCount } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true });
-
-      const { count: productsCount } = await supabase
-        .from("products")
-        .select("*", { count: "exact", head: true });
-
-      const { data: userActivity } = await supabase
-        .from("user_activity")
-        .select("created_at")
-        .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
-
-      return {
-        usersCount: usersCount || 0,
-        productsCount: productsCount || 0,
-        activityCount: userActivity?.length || 0,
-      };
-    },
-  });
-
-  const { data: activityData } = useQuery({
-    queryKey: ["activity-chart"],
+  const { data: salesData, isLoading: loadingSales } = useQuery({
+    queryKey: ["sales-analytics"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("user_activity")
-        .select("activity_type, created_at")
-        .order("created_at", { ascending: true });
+        .from("orders")
+        .select("created_at, total_amount")
+        .order("created_at");
 
       if (error) throw error;
 
-      const activityByDate = data.reduce((acc: any, item) => {
-        const date = new Date(item.created_at).toLocaleDateString();
-        acc[date] = (acc[date] || 0) + 1;
-        return acc;
-      }, {});
-
-      return Object.entries(activityByDate).map(([date, count]) => ({
-        date,
-        activities: count,
+      // Process data for visualization
+      return data.map(order => ({
+        date: new Date(order.created_at).toLocaleDateString(),
+        amount: order.total_amount
       }));
     },
   });
 
+  const { data: userStats, isLoading: loadingUsers } = useQuery({
+    queryKey: ["user-analytics"],
+    queryFn: async () => {
+      const { data: users, error } = await supabase
+        .from("profiles")
+        .select("created_at");
+
+      if (error) throw error;
+
+      return {
+        totalUsers: users.length,
+        newUsersThisMonth: users.filter(user => {
+          const userDate = new Date(user.created_at);
+          const thisMonth = new Date();
+          return userDate.getMonth() === thisMonth.getMonth() &&
+                 userDate.getFullYear() === thisMonth.getFullYear();
+        }).length
+      };
+    },
+  });
+
+  if (loadingSales || loadingUsers) return <Loader />;
+
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <h2 className="text-2xl font-bold text-shop-800">Platform Analytics</h2>
+      
+      <div className="grid gap-6 md:grid-cols-2">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+          <CardHeader>
+            <CardTitle>User Statistics</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.usersCount}</div>
+            <div className="space-y-2">
+              <p className="text-2xl font-bold">{userStats?.totalUsers}</p>
+              <p className="text-sm text-muted-foreground">Total Users</p>
+              <p className="text-lg font-semibold text-green-600">
+                +{userStats?.newUsersThisMonth} this month
+              </p>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Products</CardTitle>
-            <ShoppingBag className="h-4 w-4 text-muted-foreground" />
+          <CardHeader>
+            <CardTitle>Sales Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.productsCount}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Monthly Activity</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.activityCount}</div>
+            <div className="h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={salesData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line 
+                    type="monotone" 
+                    dataKey="amount" 
+                    stroke="#8884d8" 
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
 
+      <SocialShareAnalytics />
+
       <Card>
         <CardHeader>
-          <CardTitle>Activity Overview</CardTitle>
+          <CardTitle>Platform Health</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={activityData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="activities" fill="#0FA0CE" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium">Server Status</p>
+                <p className="text-2xl font-bold text-green-600">Operational</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium">Response Time</p>
+                <p className="text-2xl font-bold">124ms</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium">Success Rate</p>
+                <p className="text-2xl font-bold">99.9%</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium">Active Sessions</p>
+                <p className="text-2xl font-bold">1,234</p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>

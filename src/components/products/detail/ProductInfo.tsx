@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart, Share2, Info, Facebook, Twitter, Instagram, Link as LinkIcon } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
+import { Heart, Share2, Facebook, Twitter, Instagram, Link as LinkIcon, Info } from "lucide-react";
+import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 import {
   HoverCard,
@@ -12,6 +12,18 @@ import { formatPrice } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
+
+const getConditionDescription = (condition: string): string => {
+  const descriptions: Record<string, string> = {
+    mint: "Item is in perfect, like-new condition",
+    excellent: "Item shows minimal signs of wear",
+    "very-good": "Item shows light wear but maintains overall good condition",
+    good: "Item shows normal signs of use",
+    fair: "Item shows significant wear but remains functional",
+    poor: "Item shows heavy wear and may need restoration",
+  };
+  return descriptions[condition.toLowerCase()] || "Condition description not available";
+};
 
 interface ProductInfoProps {
   product: Tables<"products">;
