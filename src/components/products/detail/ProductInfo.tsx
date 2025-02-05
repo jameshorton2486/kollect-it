@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart, Share2, Info } from "lucide-react";
+import { Heart, Share2, Info, Facebook, Twitter, Instagram, Link as LinkIcon } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { Tables } from "@/integrations/supabase/types";
 import {
@@ -9,6 +9,9 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { formatPrice } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 interface ProductInfoProps {
   product: Tables<"products">;
@@ -16,16 +19,65 @@ interface ProductInfoProps {
 }
 
 export function ProductInfo({ product, categoryName }: ProductInfoProps) {
-  const handleShare = async () => {
+  useEffect(() => {
+    // Update metadata when component mounts
+    if (product.seo_title || product.seo_description) {
+      document.title = product.seo_title || product.name;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute("content", product.seo_description || product.description || "");
+      }
+    }
+  }, [product]);
+
+  const handleShare = async (platform: string) => {
     try {
-      await navigator.share({
-        title: product.name,
-        text: product.description,
-        url: window.location.href,
+      const shareUrl = window.location.href;
+      let shareLink = "";
+
+      switch (platform) {
+        case "facebook":
+          shareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+          break;
+        case "twitter":
+          shareLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(product.name)}`;
+          break;
+        case "instagram":
+          // Instagram sharing is typically done through their app/stories
+          toast({
+            title: "Instagram Sharing",
+            description: "Please use the Instagram app to share this product.",
+          });
+          return;
+        case "copy":
+          await navigator.clipboard.writeText(shareUrl);
+          toast({
+            title: "Link Copied",
+            description: "Product link has been copied to clipboard!",
+          });
+          return;
+      }
+
+      // Log the share
+      await supabase.from("social_shares").insert({
+        product_id: product.id,
+        platform,
+        shared_by: (await supabase.auth.getUser()).data.user?.id,
+      });
+
+      // Open share dialog
+      if (shareLink) {
+        window.open(shareLink, "_blank", "width=600,height=400");
+      }
+
+      toast({
+        title: "Shared Successfully",
+        description: `Product has been shared on ${platform}!`,
       });
     } catch (error) {
+      console.error("Share error:", error);
       toast({
-        title: "Share failed",
+        title: "Share Failed",
         description: "Unable to share this product.",
         variant: "destructive",
       });
@@ -39,28 +91,39 @@ export function ProductInfo({ product, categoryName }: ProductInfoProps) {
     });
   };
 
-  const getConditionDescription = (condition: string) => {
-    const descriptions = {
-      new: "Never used, original packaging",
-      "like-new": "Minimal wear, excellent condition",
-      excellent: "Minor wear, no significant flaws",
-      good: "Normal wear, all pieces intact",
-      fair: "Visible wear, may need minor repairs",
-    };
-    return descriptions[condition as keyof typeof descriptions] || condition;
-  };
-
   return (
     <div className="space-y-4">
+      <Helmet>
+        <title>{product.seo_title || product.name}</title>
+        <meta name="description" content={product.seo_description || product.description || ""} />
+        {product.seo_keywords && (
+          <meta name="keywords" content={product.seo_keywords.join(", ")} />
+        )}
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description || ""} />
+        {product.image_url && <meta property="og:image" content={product.image_url} />}
+      </Helmet>
+
       <div className="flex justify-between items-start">
         <h2 className="text-2xl font-semibold text-shop-800">{product.name}</h2>
         <div className="flex gap-2">
           <Button variant="ghost" size="icon" onClick={handleWishlist}>
             <Heart className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" onClick={handleShare}>
-            <Share2 className="h-5 w-5" />
-          </Button>
+          <div className="flex gap-1">
+            <Button variant="ghost" size="icon" onClick={() => handleShare("facebook")}>
+              <Facebook className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => handleShare("twitter")}>
+              <Twitter className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => handleShare("instagram")}>
+              <Instagram className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => handleShare("copy")}>
+              <LinkIcon className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </div>
 

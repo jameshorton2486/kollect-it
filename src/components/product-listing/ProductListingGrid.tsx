@@ -31,9 +31,12 @@ export function ProductListingGrid() {
       
       let query = supabase
         .from("products")
-        .select("*, categories(*), subcategories(*)")
-        .order(field, { ascending: direction === "asc" });
+        .select("*, categories(*), subcategories(*)");
 
+      // Apply sorting
+      query = query.order(field, { ascending: direction === "asc" });
+
+      // Apply filters
       if (filters.search) {
         query = query.ilike("name", `%${filters.search}%`);
       }

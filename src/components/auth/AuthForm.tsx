@@ -1,77 +1,51 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Mail, Lock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { 
+import { Label } from "@/components/ui/label";
+import { User, Mail, Lock, UserPlus, LogIn } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage 
+  FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
+const authSchema = z.object({
+  firstName: z.string().min(2, "First name must be at least 2 characters").optional(),
+  lastName: z.string().min(2, "Last name must be at least 2 characters").optional(),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export function AuthForm({ mode = "login" }: { mode?: "login" | "signup" }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const { toast } = useToast();
+type AuthFormValues = z.infer<typeof authSchema>;
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+interface AuthFormProps {
+  mode?: "login" | "signup";
+  onSubmit: (values: AuthFormValues) => Promise<void>;
+}
+
+export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<AuthFormValues>({
+    resolver: zodResolver(authSchema),
     defaultValues: {
-      email: "",
-      password: "",
       firstName: "",
       lastName: "",
+      email: "",
+      password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: AuthFormValues) => {
     setIsLoading(true);
     try {
-      if (mode === "login") {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: values.email,
-          password: values.password,
-        });
-        if (error) throw error;
-        navigate("/");
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email: values.email,
-          password: values.password,
-          options: {
-            data: {
-              first_name: values.firstName,
-              last_name: values.lastName,
-            },
-          },
-        });
-        if (error) throw error;
-        toast({
-          title: "Success",
-          description: "Please check your email to verify your account.",
-        });
-      }
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      await onSubmit(values);
     } finally {
       setIsLoading(false);
     }
@@ -79,9 +53,9 @@ export function AuthForm({ mode = "login" }: { mode?: "login" | "signup" }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         {mode === "signup" && (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
               name="firstName"
@@ -89,12 +63,15 @@ export function AuthForm({ mode = "login" }: { mode?: "login" | "signup" }) {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input 
-                      {...field} 
-                      type="text"
-                      placeholder="John"
-                      icon={<User className="h-4 w-4" />}
-                    />
+                    <div className="relative">
+                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <Input
+                        {...field}
+                        className="pl-9"
+                        placeholder="Enter your first name"
+                        disabled={isLoading}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -107,12 +84,15 @@ export function AuthForm({ mode = "login" }: { mode?: "login" | "signup" }) {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input 
-                      {...field} 
-                      type="text"
-                      placeholder="Doe"
-                      icon={<User className="h-4 w-4" />}
-                    />
+                    <div className="relative">
+                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <Input
+                        {...field}
+                        className="pl-9"
+                        placeholder="Enter your last name"
+                        disabled={isLoading}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,12 +107,16 @@ export function AuthForm({ mode = "login" }: { mode?: "login" | "signup" }) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input 
-                  {...field} 
-                  type="email"
-                  placeholder="you@example.com"
-                  icon={<Mail className="h-4 w-4" />}
-                />
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    {...field}
+                    type="email"
+                    className="pl-9"
+                    placeholder="Enter your email"
+                    disabled={isLoading}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,24 +129,45 @@ export function AuthForm({ mode = "login" }: { mode?: "login" | "signup" }) {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input 
-                  {...field} 
-                  type="password"
-                  placeholder="••••••••"
-                  icon={<Lock className="h-4 w-4" />}
-                />
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    {...field}
+                    type="password"
+                    className="pl-9"
+                    placeholder="Enter your password"
+                    disabled={isLoading}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isLoading}
+        >
           {isLoading ? (
-            "Loading..."
-          ) : mode === "login" ? (
-            "Sign In"
+            <div className="flex items-center">
+              <span className="animate-spin mr-2">⌛</span>
+              {mode === "login" ? "Signing in..." : "Creating account..."}
+            </div>
           ) : (
-            "Create Account"
+            <div className="flex items-center">
+              {mode === "login" ? (
+                <>
+                  <LogIn className="mr-2 h-4 w-4" />
+                  Sign In
+                </>
+              ) : (
+                <>
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Create Account
+                </>
+              )}
+            </div>
           )}
         </Button>
       </form>
