@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -9,6 +9,13 @@ interface SalesData {
   sales: number;
   orders: number;
 }
+
+interface ProductPerformance {
+  name: string;
+  value: number;
+}
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
 export function SalesChart() {
   const { data: salesData } = useQuery({
@@ -34,15 +41,36 @@ export function SalesChart() {
       }, {}) || {};
 
       return Object.values(monthlyData);
-    },
-    placeholderData: [
-      { month: 'Jan', sales: 4000, orders: 40 },
-      { month: 'Feb', sales: 3000, orders: 30 },
-      { month: 'Mar', sales: 5000, orders: 50 },
-      { month: 'Apr', sales: 2780, orders: 28 },
-      { month: 'May', sales: 1890, orders: 19 },
-      { month: 'Jun', sales: 2390, orders: 24 },
-    ]
+    }
+  });
+
+  const { data: topProducts } = useQuery({
+    queryKey: ["seller-top-products"],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return [];
+
+      const { data: products } = await supabase
+        .from("orders")
+        .select(`
+          product_id,
+          products (name),
+          total_amount
+        `)
+        .eq("seller_id", session.user.id);
+
+      // Group and sum by product
+      const productPerformance = products?.reduce((acc: Record<string, number>, order) => {
+        const productName = order.products?.name || 'Unknown Product';
+        acc[productName] = (acc[productName] || 0) + Number(order.total_amount);
+        return acc;
+      }, {});
+
+      return Object.entries(productPerformance || {})
+        .map(([name, value]) => ({ name, value }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 5);
+    }
   });
 
   return (
@@ -50,9 +78,9 @@ export function SalesChart() {
       <Card className="hover:shadow-lg transition-shadow">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>Sales Performance Overview</CardTitle>
+            <CardTitle>Revenue Overview</CardTitle>
             <p className="text-sm text-shop-600 mt-1">
-              Track your revenue trends and identify growth patterns
+              Monthly revenue and order trends
             </p>
           </div>
           <Info className="h-4 w-4 text-shop-600 cursor-help" />
@@ -84,27 +112,60 @@ export function SalesChart() {
         </CardContent>
       </Card>
 
-      <Card className="hover:shadow-lg transition-shadow">
-        <CardHeader>
-          <CardTitle>Order Volume Analysis</CardTitle>
-          <p className="text-sm text-shop-600">
-            Monitor your monthly order volumes
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="orders" fill="#008080" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardHeader>
+            <CardTitle>Order Volume</CardTitle>
+            <p className="text-sm text-shop-600">
+              Monthly order distribution
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={salesData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="orders" fill="#008080" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardHeader>
+            <CardTitle>Top Products</CardTitle>
+            <p className="text-sm text-shop-600">
+              Best performing products by revenue
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={topProducts}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label
+                  >
+                    {topProducts?.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
