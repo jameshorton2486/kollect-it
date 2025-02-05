@@ -4,9 +4,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { ProductListingSort } from "./ProductListingSort";
 
+interface Filters {
+  search: string;
+  category: string;
+  subcategory: string;
+  condition: string;
+  priceRange: { min: string; max: string };
+  era: string;
+}
+
 export function ProductListingGrid() {
   const [sortBy, setSortBy] = useState("created_at_desc");
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     search: "",
     category: "all",
     subcategory: "all",
@@ -25,27 +34,22 @@ export function ProductListingGrid() {
         .select("*, categories(*), subcategories(*)")
         .order(field, { ascending: direction === "asc" });
 
-      // Apply search filter
       if (filters.search) {
         query = query.ilike("name", `%${filters.search}%`);
       }
 
-      // Apply category filter
       if (filters.category !== "all") {
         query = query.eq("category_id", filters.category);
       }
 
-      // Apply subcategory filter
       if (filters.subcategory !== "all") {
         query = query.eq("subcategory_id", filters.subcategory);
       }
 
-      // Apply condition filter
       if (filters.condition !== "all") {
         query = query.eq("condition", filters.condition);
       }
 
-      // Apply price range filter
       if (filters.priceRange.min) {
         query = query.gte("price", parseFloat(filters.priceRange.min));
       }
@@ -53,7 +57,6 @@ export function ProductListingGrid() {
         query = query.lte("price", parseFloat(filters.priceRange.max));
       }
 
-      // Apply era filter
       if (filters.era !== "all") {
         query = query.eq("era", filters.era);
       }
@@ -65,18 +68,9 @@ export function ProductListingGrid() {
     },
   });
 
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("categories")
-        .select("*")
-        .order("name");
-      
-      if (error) throw error;
-      return data;
-    },
-  });
+  const handleFilterChange = (newFilters: Filters) => {
+    setFilters(newFilters);
+  };
 
   return (
     <div className="space-y-6">
@@ -92,9 +86,9 @@ export function ProductListingGrid() {
       </div>
       <ProductGrid 
         products={products || []} 
-        categories={categories}
+        categories={[]}
         filters={filters}
-        onFilterChange={setFilters}
+        onFilterChange={handleFilterChange}
       />
     </div>
   );

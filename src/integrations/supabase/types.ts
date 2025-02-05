@@ -426,6 +426,10 @@ export type Database = {
           name: string
           price: number
           provenance: string | null
+          seo_description: string | null
+          seo_keywords: string[] | null
+          seo_title: string | null
+          social_shares: number | null
           updated_at: string
           user_id: string
         }
@@ -441,6 +445,10 @@ export type Database = {
           name: string
           price: number
           provenance?: string | null
+          seo_description?: string | null
+          seo_keywords?: string[] | null
+          seo_title?: string | null
+          social_shares?: number | null
           updated_at?: string
           user_id: string
         }
@@ -456,6 +464,10 @@ export type Database = {
           name?: string
           price?: number
           provenance?: string | null
+          seo_description?: string | null
+          seo_keywords?: string[] | null
+          seo_title?: string | null
+          social_shares?: number | null
           updated_at?: string
           user_id?: string
         }
@@ -533,6 +545,38 @@ export type Database = {
             columns: ["order_id"]
             isOneToOne: false
             referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      social_shares: {
+        Row: {
+          created_at: string | null
+          id: string
+          platform: string
+          product_id: string | null
+          shared_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          platform: string
+          product_id?: string | null
+          shared_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          platform?: string
+          product_id?: string | null
+          shared_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "social_shares_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
