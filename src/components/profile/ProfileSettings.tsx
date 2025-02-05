@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -5,19 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
-import { User, Settings2, Mail } from "lucide-react";
+import { User } from "lucide-react";
 
 interface Profile {
   id: string;
   first_name: string | null;
   last_name: string | null;
-  avatar_url: string | null;
 }
 
 export function ProfileSettings() {
-  const [isUploading, setIsUploading] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: profile, isLoading } = useQuery({
@@ -59,35 +57,6 @@ export function ProfileSettings() {
     }
   });
 
-  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      setIsUploading(true);
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${crypto.randomUUID()}.${fileExt}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
-
-      await updateProfile.mutateAsync({ avatar_url: publicUrl });
-      toast.success('Avatar updated successfully');
-    } catch (error) {
-      console.error('Upload error:', error);
-      toast.error('Failed to upload avatar');
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
   if (isLoading) {
     return <div>Loading profile...</div>;
   }
@@ -102,31 +71,6 @@ export function ProfileSettings() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-20 w-20">
-              <AvatarImage src={profile?.avatar_url || undefined} />
-              <AvatarFallback>
-                {profile?.first_name?.[0]}
-                {profile?.last_name?.[0]}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <Label htmlFor="avatar" className="cursor-pointer">
-                <Button variant="outline" disabled={isUploading}>
-                  {isUploading ? 'Uploading...' : 'Change Avatar'}
-                </Button>
-              </Label>
-              <Input
-                id="avatar"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleAvatarUpload}
-                disabled={isUploading}
-              />
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
