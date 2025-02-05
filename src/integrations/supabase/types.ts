@@ -254,6 +254,47 @@ export type Database = {
           },
         ]
       }
+      order_notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          order_id: string | null
+          read: boolean | null
+          type: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message: string
+          order_id?: string | null
+          read?: boolean | null
+          type: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string
+          order_id?: string | null
+          read?: boolean | null
+          type?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_notifications_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           buyer_id: string
@@ -266,8 +307,13 @@ export type Database = {
           payment_method_details: Json | null
           payment_status: string | null
           product_id: string
+          refund_amount: number | null
+          refund_status: string | null
+          return_reason: string | null
+          return_status: string | null
           seller_id: string
           shipping_address: Json
+          shipping_label_url: string | null
           shipping_method: string | null
           status: string
           total_amount: number
@@ -286,8 +332,13 @@ export type Database = {
           payment_method_details?: Json | null
           payment_status?: string | null
           product_id: string
+          refund_amount?: number | null
+          refund_status?: string | null
+          return_reason?: string | null
+          return_status?: string | null
           seller_id: string
           shipping_address?: Json
+          shipping_label_url?: string | null
           shipping_method?: string | null
           status?: string
           total_amount: number
@@ -306,8 +357,13 @@ export type Database = {
           payment_method_details?: Json | null
           payment_status?: string | null
           product_id?: string
+          refund_amount?: number | null
+          refund_status?: string | null
+          return_reason?: string | null
+          return_status?: string | null
           seller_id?: string
           shipping_address?: Json
+          shipping_label_url?: string | null
           shipping_method?: string | null
           status?: string
           total_amount?: number
