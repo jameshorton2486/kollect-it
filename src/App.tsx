@@ -13,6 +13,7 @@ import { MainNavbar } from "./components/navigation/MainNavbar";
 import { Toaster } from "@/components/ui/toaster";
 import Index from "./pages/Index";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import CategoryManagement from "./pages/CategoryManagement";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/password-recovery" element={<PasswordRecovery />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/profile-settings" element={<ProfileSettings />} />
+          <Route path="/category-management" element={<CategoryManagement />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
             <Route path="analytics" element={<AnalyticsDashboard />} />
             <Route path="users" element={<UserManagementTable />} />

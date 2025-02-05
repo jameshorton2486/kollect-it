@@ -5,8 +5,19 @@ import { ProductListingFilters } from "@/components/product-listing/ProductListi
 import { NewArrivals } from "@/components/product-listing/NewArrivals";
 import { CuratedCollections } from "@/components/product-listing/CuratedCollections";
 import { ProductListingPagination } from "@/components/product-listing/ProductListingPagination";
+import { useState } from "react";
 
 export default function ProductListing() {
+  const [sortBy, setSortBy] = useState("created_at_desc");
+  const [filters, setFilters] = useState({
+    search: "",
+    category: "all",
+    subcategory: "all",
+    condition: "all",
+    priceRange: { min: "", max: "" },
+    era: "all",
+  });
+
   return (
     <DashboardLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -19,7 +30,7 @@ export default function ProductListing() {
             <ProductListingFilters />
           </aside>
           <main className="md:col-span-3">
-            <ProductListingGrid />
+            <ProductListingGrid sortBy={sortBy} filters={filters} />
             <ProductListingPagination />
           </main>
         </div>
