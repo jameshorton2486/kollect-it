@@ -1,3 +1,4 @@
+
 export interface Product {
   id: string;
   name: string;
@@ -7,12 +8,12 @@ export interface Product {
   category_id: string | null;
   condition: string | null;
   era: string | null;
+  subcategories: {
+    name: string;
+  }[] | null;
   categories?: {
     name: string | null;
   } | null;
-  subcategories?: {
-    name: string;
-  }[];
 }
 
 export interface ProductListingGridProps {

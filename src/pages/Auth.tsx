@@ -96,7 +96,7 @@ export function Auth() {
 
   return (
     <AuthLayout>
-      <AuthHeader />
+      <AuthHeader mode={mode} />
       {mode === "signup" && <AuthFeatures />}
       
       <AuthForm
