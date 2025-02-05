@@ -129,11 +129,11 @@ export default function AboutUs() {
           <div className="flex flex-col md:flex-row justify-center gap-6 mb-8">
             <div className="flex items-center justify-center gap-2">
               <Mail className="h-5 w-5 text-shop-600" />
-              <span className="text-shop-600">support@kollect-it.com</span>
+              <span className="text-shop-600">info@kollect-it.com</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <Phone className="h-5 w-5 text-shop-600" />
-              <span className="text-shop-600">(555) 123-4567</span>
+              <span className="text-shop-600">469-386-6065</span>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row justify-center gap-4">

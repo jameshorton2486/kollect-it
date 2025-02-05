@@ -1,3 +1,4 @@
+
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Footer } from "@/components/home/Footer";
 import { Mail, Phone, MapPin } from "lucide-react";
@@ -35,12 +36,12 @@ export default function Contact() {
             <div className="text-center">
               <Phone className="h-8 w-8 text-shop-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Phone</h3>
-              <p className="text-shop-600">+1 (555) 123-4567</p>
+              <p className="text-shop-600">469-386-6065</p>
             </div>
             <div className="text-center">
               <Mail className="h-8 w-8 text-shop-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Email</h3>
-              <p className="text-shop-600">support@kollect-it.com</p>
+              <p className="text-shop-600">info@kollect-it.com</p>
             </div>
             <div className="text-center">
               <MapPin className="h-8 w-8 text-shop-600 mx-auto mb-4" />
