@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Auth } from "./pages/Auth";
 import { AuthCallback } from "./components/auth/AuthCallback";
@@ -14,6 +15,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Index from "./pages/Index";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import CategoryManagement from "./pages/CategoryManagement";
+import AboutUs from "./pages/AboutUs";
 
 export default function App() {
   return (
@@ -22,6 +24,7 @@ export default function App() {
         <MainNavbar />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/password-recovery" element={<PasswordRecovery />} />
