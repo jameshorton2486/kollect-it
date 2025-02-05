@@ -1,29 +1,24 @@
-import { ProductGrid } from "@/components/products/ProductGrid";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
-import { ProductListingSort } from "./ProductListingSort";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Flame, TrendingUp } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
-interface Filters {
-  search: string;
-  category: string;
-  subcategory: string;
-  condition: string;
-  priceRange: { min: string; max: string };
-  era: string;
+interface ProductListingGridProps {
+  sortBy: string;
+  filters: {
+    search: string;
+    category: string;
+    subcategory: string;
+    condition: string;
+    priceRange: { min: string; max: string };
+    era: string;
+  };
 }
 
-export function ProductListingGrid() {
-  const [sortBy, setSortBy] = useState("created_at_desc");
-  const [filters, setFilters] = useState<Filters>({
-    search: "",
-    category: "all",
-    subcategory: "all",
-    condition: "all",
-    priceRange: { min: "", max: "" },
-    era: "all"
-  });
-
+export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps) {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products", sortBy, filters],
     queryFn: async () => {
@@ -71,10 +66,6 @@ export function ProductListingGrid() {
     },
   });
 
-  const handleFilterChange = (newFilters: Filters) => {
-    setFilters(newFilters);
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -85,14 +76,67 @@ export function ProductListingGrid() {
             `${products?.length || 0} products found`
           )}
         </p>
-        <ProductListingSort sortBy={sortBy} onSortChange={setSortBy} />
       </div>
-      <ProductGrid 
-        products={products || []} 
-        categories={[]}
-        filters={filters}
-        onFilterChange={handleFilterChange}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {isLoading ? (
+          // Loading skeletons
+          [...Array(8)].map((_, i) => (
+            <Card key={i} className="overflow-hidden">
+              <Skeleton className="h-48 w-full" />
+              <div className="p-4 space-y-3">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-4 w-1/4" />
+              </div>
+            </Card>
+          ))
+        ) : products?.length === 0 ? (
+          <div className="col-span-full text-center py-12">
+            <p className="text-shop-600">No products found matching your criteria.</p>
+          </div>
+        ) : (
+          products?.map((product) => (
+            <Card 
+              key={product.id} 
+              className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer"
+            >
+              {product.image_url && (
+                <div className="relative aspect-square">
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-2 right-2">
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <TrendingUp className="w-3 h-3" />
+                      Trending
+                    </Badge>
+                  </div>
+                </div>
+              )}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-shop-800 mb-2 line-clamp-1">
+                  {product.name}
+                </h3>
+                <p className="text-shop-600 text-sm mb-3 line-clamp-2">
+                  {product.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-shop-900 font-bold">
+                    {formatPrice(product.price)}
+                  </span>
+                  {product.categories && (
+                    <span className="text-shop-500 text-sm">
+                      {product.categories.name}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 }

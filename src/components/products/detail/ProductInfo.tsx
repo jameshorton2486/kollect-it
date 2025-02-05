@@ -11,7 +11,6 @@ import {
 import { formatPrice } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
 
 const getConditionDescription = (condition: string): string => {
   const descriptions: Record<string, string> = {
@@ -55,16 +54,13 @@ export function ProductInfo({ product, categoryName }: ProductInfoProps) {
           shareLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(product.name)}`;
           break;
         case "instagram":
-          // Instagram sharing is typically done through their app/stories
-          toast({
-            title: "Instagram Sharing",
+          toast("Instagram Sharing", {
             description: "Please use the Instagram app to share this product.",
           });
           return;
         case "copy":
           await navigator.clipboard.writeText(shareUrl);
-          toast({
-            title: "Link Copied",
+          toast("Link Copied", {
             description: "Product link has been copied to clipboard!",
           });
           return;
@@ -82,14 +78,12 @@ export function ProductInfo({ product, categoryName }: ProductInfoProps) {
         window.open(shareLink, "_blank", "width=600,height=400");
       }
 
-      toast({
-        title: "Shared Successfully",
+      toast("Shared Successfully", {
         description: `Product has been shared on ${platform}!`,
       });
     } catch (error) {
       console.error("Share error:", error);
-      toast({
-        title: "Share Failed",
+      toast("Share Failed", {
         description: "Unable to share this product.",
         variant: "destructive",
       });
@@ -97,25 +91,13 @@ export function ProductInfo({ product, categoryName }: ProductInfoProps) {
   };
 
   const handleWishlist = () => {
-    toast({
-      title: "Coming soon",
+    toast("Coming soon", {
       description: "Wishlist functionality will be available soon!",
     });
   };
 
   return (
     <div className="space-y-4">
-      <Helmet>
-        <title>{product.seo_title || product.name}</title>
-        <meta name="description" content={product.seo_description || product.description || ""} />
-        {product.seo_keywords && (
-          <meta name="keywords" content={product.seo_keywords.join(", ")} />
-        )}
-        <meta property="og:title" content={product.name} />
-        <meta property="og:description" content={product.description || ""} />
-        {product.image_url && <meta property="og:image" content={product.image_url} />}
-      </Helmet>
-
       <div className="flex justify-between items-start">
         <h2 className="text-2xl font-semibold text-shop-800">{product.name}</h2>
         <div className="flex gap-2">
