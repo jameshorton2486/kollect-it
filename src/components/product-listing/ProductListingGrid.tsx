@@ -1,6 +1,7 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../products/ProductCard";
 import { NoProductsFound } from "./NoProductsFound";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { Product, ProductListingGridProps } from "./types";
@@ -41,7 +42,7 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Product[];
+      return data as unknown as Product[];
     },
   });
 

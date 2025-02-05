@@ -11,9 +11,14 @@ export interface Product {
   subcategories: {
     name: string;
   }[] | null;
-  categories?: {
+  categories: {
     name: string | null;
   } | null;
+  created_at?: string;
+  updated_at?: string;
+  user_id?: string;
+  estimated_age?: string | null;
+  provenance?: string | null;
 }
 
 export interface ProductListingGridProps {

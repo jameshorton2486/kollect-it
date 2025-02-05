@@ -106,7 +106,7 @@ export function Auth() {
 
       <AuthSwitchMode 
         mode={mode} 
-        onChange={(newMode) => setMode(newMode as "login" | "signup" | "guest")} 
+        onChange={setMode}
       />
       <AuthFAQ />
     </AuthLayout>
