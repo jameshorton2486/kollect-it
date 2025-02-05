@@ -1,3 +1,4 @@
+
 import { Mail, Lock, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,13 +9,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
+import { AuthFormValues } from "./AuthForm";
 
 interface AuthFormFieldsProps {
   isLogin: boolean;
   isGuest?: boolean;
   showPassword: boolean;
   setShowPassword: (show: boolean) => void;
-  form: UseFormReturn<any>;
+  form: UseFormReturn<AuthFormValues>;
 }
 
 export function AuthFormFields({

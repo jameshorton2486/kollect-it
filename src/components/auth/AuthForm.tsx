@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
@@ -7,6 +8,13 @@ import { UserPlus, LogIn } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { AuthFormFields } from "./AuthFormFields";
 
+export interface AuthFormValues {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password: string;
+}
+
 const authSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters").optional(),
   lastName: z.string().min(2, "Last name must be at least 2 characters").optional(),
@@ -14,10 +22,8 @@ const authSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-type AuthFormValues = z.infer<typeof authSchema>;
-
-interface AuthFormProps {
-  mode?: "login" | "signup" | "guest";
+export interface AuthFormProps {
+  mode: "login" | "signup" | "guest";
   onSubmit: (values: AuthFormValues) => Promise<void>;
 }
 
