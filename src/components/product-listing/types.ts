@@ -19,6 +19,10 @@ export interface Product {
   user_id?: string;
   estimated_age?: string | null;
   provenance?: string | null;
+  seo_title?: string | null;
+  seo_description?: string | null;
+  seo_keywords?: string[] | null;
+  social_shares?: number;
 }
 
 export interface ProductListingGridProps {

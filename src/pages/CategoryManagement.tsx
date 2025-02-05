@@ -1,3 +1,4 @@
+
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { CategoryGrid } from "@/components/categories/management/CategoryGrid";
 import { CategoryDialog } from "@/components/categories/management/CategoryDialog";
