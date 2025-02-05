@@ -4,7 +4,9 @@ import { SearchFilter } from "./filters/SearchFilter";
 import { CategoryFilter } from "./filters/CategoryFilter";
 import { PriceRangeFilter } from "./filters/PriceRangeFilter";
 import { ConditionFilter } from "./filters/ConditionFilter";
+import { SavedSearchDialog } from "./filters/SavedSearchDialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
 
 interface ProductFiltersProps {
   searchQuery: string;
@@ -44,8 +46,21 @@ export function ProductFilters({
     { value: "contemporary", label: "Contemporary (Post-1970)" },
   ];
 
+  const currentFilters = {
+    search: searchQuery,
+    category: selectedCategory,
+    condition: selectedCondition,
+    priceRange,
+    era: selectedEra,
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm space-y-6">
+    <Card className="bg-white p-6 rounded-lg shadow-sm space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold text-shop-800">Filters</h2>
+        <SavedSearchDialog searchCriteria={currentFilters} />
+      </div>
+
       <SearchFilter searchQuery={searchQuery} onSearchChange={onSearchChange} />
       
       <Separator />
@@ -87,6 +102,6 @@ export function ProductFilters({
           </SelectContent>
         </Select>
       </div>
-    </div>
+    </Card>
   );
 }

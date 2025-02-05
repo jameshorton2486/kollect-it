@@ -549,6 +549,36 @@ export type Database = {
           },
         ]
       }
+      saved_searches: {
+        Row: {
+          created_at: string | null
+          criteria: Json
+          id: string
+          name: string
+          notify: boolean | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          criteria: Json
+          id?: string
+          name: string
+          notify?: boolean | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          criteria?: Json
+          id?: string
+          name?: string
+          notify?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       social_shares: {
         Row: {
           created_at: string | null

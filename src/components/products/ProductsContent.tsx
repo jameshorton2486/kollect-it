@@ -3,6 +3,8 @@ import { Tag } from "lucide-react";
 import { Tables } from "@/integrations/supabase/types";
 import { ProductGrid } from "./ProductGrid";
 import { ProductFilters } from "./ProductFilters";
+import { SavedSearchesList } from "./SavedSearchesList";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ProductsContentProps {
   isLoading: boolean;
@@ -54,30 +56,30 @@ export function ProductsContent({
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
       <aside className="space-y-6 md:col-span-1">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Tag className="h-5 w-5" />
-              Search & Browse
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Use our intuitive filters to discover collectibles that match your interests
-            </p>
-          </CardHeader>
-          <ProductFilters
-            searchQuery={searchQuery}
-            onSearchChange={onSearchChange}
-            selectedCategory={selectedCategory}
-            onCategoryChange={onCategoryChange}
-            categories={categories}
-            priceRange={priceRange}
-            onPriceRangeChange={onPriceRangeChange}
-            selectedCondition={selectedCondition}
-            onConditionChange={onConditionChange}
-            selectedEra={selectedEra}
-            onEraChange={onEraChange}
-          />
-        </Card>
+        <Tabs defaultValue="filters">
+          <TabsList className="w-full">
+            <TabsTrigger value="filters" className="flex-1">Filters</TabsTrigger>
+            <TabsTrigger value="saved" className="flex-1">Saved</TabsTrigger>
+          </TabsList>
+          <TabsContent value="filters">
+            <ProductFilters
+              searchQuery={searchQuery}
+              onSearchChange={onSearchChange}
+              selectedCategory={selectedCategory}
+              onCategoryChange={onCategoryChange}
+              categories={categories}
+              priceRange={priceRange}
+              onPriceRangeChange={onPriceRangeChange}
+              selectedCondition={selectedCondition}
+              onConditionChange={onConditionChange}
+              selectedEra={selectedEra}
+              onEraChange={onEraChange}
+            />
+          </TabsContent>
+          <TabsContent value="saved">
+            <SavedSearchesList />
+          </TabsContent>
+        </Tabs>
       </aside>
 
       <main className="md:col-span-3">
@@ -87,11 +89,6 @@ export function ProductsContent({
               <Tag className="h-5 w-5" />
               {isLoading ? "Loading..." : `${filteredProducts.length} Products Found`}
             </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              {filteredProducts.length === 0 
-                ? "Try adjusting your filters or exploring new categories. Our curated collection is always growing with unique and rare finds."
-                : "Browse our curated collection of fine art and collectibles, with prices ranging from $100 to $1,000+"}
-            </p>
           </CardHeader>
         </Card>
         <ProductGrid 
