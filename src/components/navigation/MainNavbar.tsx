@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { ShoppingCart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { NavLinks } from "./NavLinks";
-import { AdminDropdown } from "./AdminDropdown";
 import { UserDropdown } from "./UserDropdown";
 import { MobileMenu } from "./MobileMenu";
 import { SignUpModal } from "@/components/auth/SignUpModal";
@@ -33,12 +33,6 @@ const shopCategories = [
   { label: "Furniture", path: "/categories/furniture" },
   { label: "Jewelry", path: "/categories/jewelry" },
   { label: "Books", path: "/categories/books" },
-];
-
-const adminNavItems = [
-  { label: "Dashboard", path: "/admin-dashboard" },
-  { label: "Category Management", path: "/category-management" },
-  { label: "User Management", path: "/user-management" },
 ];
 
 const userNavItems = [
@@ -113,7 +107,7 @@ export function MainNavbar() {
                   >
                     Sell
                   </Link>
-                  <AdminDropdown items={adminNavItems} />
+                  <UserDropdown items={userNavItems} />
                 </>
               ) : (
                 <div className="flex items-center space-x-4">
@@ -152,12 +146,10 @@ export function MainNavbar() {
               </Link>
             )}
 
-            {session && <UserDropdown items={userNavItems} />}
-
             {isMobile && (
               <MobileMenu
                 mainItems={[...mainNavItems, { label: "Shop", path: "/categories" }, { label: "Sell", path: "/seller-dashboard" }]}
-                adminItems={adminNavItems}
+                adminItems={[]}
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
               />
