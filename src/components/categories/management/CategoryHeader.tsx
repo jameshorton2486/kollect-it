@@ -1,24 +1,35 @@
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
 
 interface CategoryHeaderProps {
-  onAddCategory: () => void;
+  onCreateClick: () => void;
+  onBulkUploadClick: () => void;
 }
 
-export function CategoryHeader({ onAddCategory }: CategoryHeaderProps) {
+export function CategoryHeader({ onCreateClick, onBulkUploadClick }: CategoryHeaderProps) {
   return (
-    <div className="flex justify-between items-center mb-8">
+    <div className="flex items-center justify-between">
       <div>
-        <h1 className="text-3xl font-bold text-shop-800">Category Management</h1>
-        <p className="text-shop-600 mt-2">Manage your store categories</p>
+        <h1 className="text-2xl font-bold text-gray-900">Category Management</h1>
+        <p className="text-sm text-gray-500">Manage your product categories and bulk upload products</p>
       </div>
-      <Button 
-        className="bg-shop-700 hover:bg-shop-800"
-        onClick={onAddCategory}
-      >
-        <PlusCircle className="mr-2 h-4 w-4" />
-        Add Category
-      </Button>
+      <div className="flex gap-3">
+        <Button
+          onClick={onBulkUploadClick}
+          variant="outline"
+          className="flex items-center gap-2"
+        >
+          <Upload className="h-4 w-4" />
+          Bulk Upload Products
+        </Button>
+        <Button
+          onClick={onCreateClick}
+          className="flex items-center gap-2 bg-[#008080] hover:bg-[#006666]"
+        >
+          <Plus className="h-4 w-4" />
+          New Category
+        </Button>
+      </div>
     </div>
   );
 }
