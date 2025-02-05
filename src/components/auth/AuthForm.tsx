@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { User, Mail, Lock, UserPlus, LogIn } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { UserPlus, LogIn } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -14,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { AuthFormFields } from "./AuthFormFields";
 
 const authSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters").optional(),
@@ -25,12 +24,13 @@ const authSchema = z.object({
 type AuthFormValues = z.infer<typeof authSchema>;
 
 interface AuthFormProps {
-  mode?: "login" | "signup";
+  mode?: "login" | "signup" | "guest";
   onSubmit: (values: AuthFormValues) => Promise<void>;
 }
 
 export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<AuthFormValues>({
     resolver: zodResolver(authSchema),
@@ -51,99 +51,20 @@ export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
     }
   };
 
+  const isGuest = mode === "guest";
+  const isLogin = mode === "login";
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        {mode === "signup" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input
-                        {...field}
-                        className="pl-9"
-                        placeholder="Enter your first name"
-                        disabled={isLoading}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input
-                        {...field}
-                        className="pl-9"
-                        placeholder="Enter your last name"
-                        disabled={isLoading}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        )}
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input
-                    {...field}
-                    type="email"
-                    className="pl-9"
-                    placeholder="Enter your email"
-                    disabled={isLoading}
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <AuthFormFields
+          isLogin={isLogin}
+          isGuest={isGuest}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+          form={form}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input
-                    {...field}
-                    type="password"
-                    className="pl-9"
-                    placeholder="Enter your password"
-                    disabled={isLoading}
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <Button
           type="submit"
           className="w-full"
@@ -152,7 +73,9 @@ export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
           {isLoading ? (
             <div className="flex items-center">
               <span className="animate-spin mr-2">⌛</span>
-              {mode === "login" ? "Signing in..." : "Creating account..."}
+              {mode === "login" ? "Signing in..." : 
+               mode === "guest" ? "Continuing as guest..." : 
+               "Creating account..."}
             </div>
           ) : (
             <div className="flex items-center">
@@ -160,6 +83,11 @@ export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
                 <>
                   <LogIn className="mr-2 h-4 w-4" />
                   Sign In
+                </>
+              ) : mode === "guest" ? (
+                <>
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Continue as Guest
                 </>
               ) : (
                 <>
