@@ -123,25 +123,37 @@ export type Database = {
       cart_items: {
         Row: {
           created_at: string
+          guest_email: string | null
+          guest_session_id: string | null
           id: string
+          last_activity: string | null
           product_id: string
           quantity: number
+          reminder_sent: boolean | null
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
+          guest_email?: string | null
+          guest_session_id?: string | null
           id?: string
+          last_activity?: string | null
           product_id: string
           quantity?: number
+          reminder_sent?: boolean | null
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
+          guest_email?: string | null
+          guest_session_id?: string | null
           id?: string
+          last_activity?: string | null
           product_id?: string
           quantity?: number
+          reminder_sent?: boolean | null
           updated_at?: string
           user_id?: string
         }
@@ -512,31 +524,61 @@ export type Database = {
         Row: {
           buyer_id: string
           comment: string | null
+          communication_rating: number | null
+          condition_accuracy: number | null
           created_at: string
           id: string
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
           order_id: string
+          price_satisfaction: number | null
+          product_accuracy: number | null
+          product_quality: number | null
           rating: number
           seller_id: string
+          shipping_speed: number | null
+          status: string | null
           updated_at: string
         }
         Insert: {
           buyer_id: string
           comment?: string | null
+          communication_rating?: number | null
+          condition_accuracy?: number | null
           created_at?: string
           id?: string
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
           order_id: string
+          price_satisfaction?: number | null
+          product_accuracy?: number | null
+          product_quality?: number | null
           rating: number
           seller_id: string
+          shipping_speed?: number | null
+          status?: string | null
           updated_at?: string
         }
         Update: {
           buyer_id?: string
           comment?: string | null
+          communication_rating?: number | null
+          condition_accuracy?: number | null
           created_at?: string
           id?: string
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
           order_id?: string
+          price_satisfaction?: number | null
+          product_accuracy?: number | null
+          product_quality?: number | null
           rating?: number
           seller_id?: string
+          shipping_speed?: number | null
+          status?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -576,6 +618,51 @@ export type Database = {
           notify?: boolean | null
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      shipping_zones: {
+        Row: {
+          additional_item_cost: number
+          base_cost: number
+          country: string
+          created_at: string
+          estimated_days_max: number
+          estimated_days_min: number
+          free_shipping_threshold: number | null
+          id: string
+          name: string
+          state: string | null
+          updated_at: string
+          zip_code_pattern: string | null
+        }
+        Insert: {
+          additional_item_cost?: number
+          base_cost?: number
+          country: string
+          created_at?: string
+          estimated_days_max: number
+          estimated_days_min: number
+          free_shipping_threshold?: number | null
+          id?: string
+          name: string
+          state?: string | null
+          updated_at?: string
+          zip_code_pattern?: string | null
+        }
+        Update: {
+          additional_item_cost?: number
+          base_cost?: number
+          country?: string
+          created_at?: string
+          estimated_days_max?: number
+          estimated_days_min?: number
+          free_shipping_threshold?: number | null
+          id?: string
+          name?: string
+          state?: string | null
+          updated_at?: string
+          zip_code_pattern?: string | null
         }
         Relationships: []
       }
@@ -820,6 +907,44 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_product_rating: {
+        Args: {
+          product_uuid: string
+        }
+        Returns: {
+          avg_quality: number
+          avg_price_satisfaction: number
+          avg_condition: number
+          total_reviews: number
+        }[]
+      }
+      calculate_seller_rating: {
+        Args: {
+          seller_uuid: string
+        }
+        Returns: {
+          avg_communication: number
+          avg_shipping: number
+          avg_accuracy: number
+          total_reviews: number
+        }[]
+      }
+      calculate_shipping_cost: {
+        Args: {
+          p_total_amount: number
+          p_item_count: number
+          p_country: string
+          p_state?: string
+          p_zip_code?: string
+        }
+        Returns: {
+          base_cost: number
+          total_cost: number
+          estimated_days_min: number
+          estimated_days_max: number
+          is_free_shipping: boolean
+        }[]
+      }
       has_role: {
         Args: {
           user_id: string

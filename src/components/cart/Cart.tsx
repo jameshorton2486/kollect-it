@@ -15,6 +15,18 @@ export function Cart() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const handleCheckout = () => {
+    if (items.length === 0) {
+      toast({
+        title: "Cart is empty",
+        description: "Please add items to your cart before proceeding to checkout.",
+        variant: "destructive"
+      });
+      return;
+    }
+    navigate("/checkout");
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -35,7 +47,7 @@ export function Cart() {
       <SheetContent className="w-full sm:max-w-lg">
         <SheetHeader>
           <SheetTitle className="text-2xl font-bold text-shop-800 dark:text-shop-100">
-            Shopping Cart
+            Shopping Cart ({items.length} {items.length === 1 ? 'item' : 'items'})
           </SheetTitle>
         </SheetHeader>
         {isLoading ? (
@@ -46,6 +58,13 @@ export function Cart() {
           <div className="flex flex-col items-center justify-center h-40 text-shop-500">
             <ShoppingCart className="h-12 w-12 mb-4" />
             <p className="text-shop-600 dark:text-shop-400">Your cart is empty</p>
+            <Button 
+              variant="outline" 
+              className="mt-4"
+              onClick={() => navigate("/products")}
+            >
+              Continue Shopping
+            </Button>
           </div>
         ) : (
           <div className="flex flex-col h-full">
@@ -57,7 +76,7 @@ export function Cart() {
               </div>
 
               <div className="mt-6 space-y-4">
-                <ShippingEstimate total={total} />
+                <ShippingEstimate total={total} itemCount={items.length} />
                 
                 <div className="flex items-center justify-center space-x-2 text-sm text-shop-600 dark:text-shop-400">
                   <Shield className="h-4 w-4" />
@@ -82,18 +101,14 @@ export function Cart() {
               </div>
               <Button 
                 className="w-full btn-primary mb-2"
-                onClick={() => {
-                  navigate("/checkout");
-                }}
+                onClick={handleCheckout}
               >
                 Proceed to Checkout
               </Button>
               <Button 
                 variant="outline" 
                 className="w-full"
-                onClick={() => {
-                  navigate("/products");
-                }}
+                onClick={() => navigate("/products")}
               >
                 Continue Shopping
               </Button>
