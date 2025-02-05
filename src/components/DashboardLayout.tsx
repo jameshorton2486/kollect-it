@@ -1,3 +1,4 @@
+
 import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardHeader } from "./dashboard/DashboardHeader";
 import { DashboardNavigation } from "./dashboard/DashboardNavigation";
@@ -29,7 +30,7 @@ export function DashboardLayout({
   const navigate = useNavigate();
 
   // Check authentication and role
-  const { data: session } = useQuery({
+  const { data: session, isLoading: sessionLoading } = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -37,7 +38,7 @@ export function DashboardLayout({
     }
   });
 
-  const { data: userRoles } = useQuery({
+  const { data: userRoles, isLoading: rolesLoading } = useQuery({
     queryKey: ["user-roles", session?.user?.id],
     enabled: !!session?.user?.id,
     queryFn: async () => {
@@ -50,10 +51,9 @@ export function DashboardLayout({
     }
   });
 
-  // Check authentication and redirect if needed
   useEffect(() => {
     const checkAuth = async () => {
-      if (!session) {
+      if (!sessionLoading && !session) {
         toast({
           title: "Authentication required",
           description: "Please log in to access this page",
@@ -63,8 +63,7 @@ export function DashboardLayout({
         return;
       }
 
-      // If a specific role is required, check if user has it
-      if (requiredRole && userRoles && !userRoles.includes(requiredRole)) {
+      if (!rolesLoading && requiredRole && userRoles && !userRoles.includes(requiredRole)) {
         toast({
           title: "Access denied",
           description: `You need ${requiredRole} access for this page`,
@@ -75,17 +74,10 @@ export function DashboardLayout({
     };
 
     checkAuth();
-  }, [session, userRoles, requiredRole, navigate, toast]);
-
-  const handleSearch = (searchTerm: string) => {
-    toast({
-      title: "Search",
-      description: `Searching for: ${searchTerm}`,
-    });
-  };
+  }, [session, userRoles, requiredRole, navigate, toast, sessionLoading, rolesLoading]);
 
   // Show loading state while checking auth
-  if (!session || (requiredRole && !userRoles)) {
+  if (sessionLoading || (requiredRole && rolesLoading)) {
     return <div className="flex items-center justify-center min-h-screen">
       Loading...
     </div>;
@@ -130,7 +122,7 @@ export function DashboardLayout({
           pageTitle={pageTitle}
           isSearchFocused={isSearchFocused}
           setIsSearchFocused={setIsSearchFocused}
-          handleSearch={handleSearch}
+          handleSearch={() => {}}
         />
 
         {/* Normal user navigation - Only show for non-admin users */}
