@@ -26,12 +26,23 @@ export function SavedSearchDialog({ searchCriteria }: SavedSearchDialogProps) {
 
   const handleSaveSearch = async () => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to save searches",
+        });
+        return;
+      }
+
       const { error } = await supabase
         .from("saved_searches")
         .insert({
           name: searchName,
           criteria: searchCriteria,
           notify: notifyOnNew,
+          user_id: user.id
         });
 
       if (error) throw error;

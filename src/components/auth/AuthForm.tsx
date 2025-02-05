@@ -4,14 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserPlus, LogIn } from "lucide-react";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { AuthFormFields } from "./AuthFormFields";
 
 const authSchema = z.object({
