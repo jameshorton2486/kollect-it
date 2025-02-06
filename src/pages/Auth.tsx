@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { AuthHeader } from "@/components/auth/AuthHeader";
 import { AuthFeatures } from "@/components/auth/AuthFeatures";
 import { AuthForm } from "@/components/auth/AuthForm";
-import { AuthFAQ } from "@/components/auth/AuthFAQ";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthSwitchMode } from "@/components/auth/AuthSwitchMode";
 
@@ -108,7 +107,6 @@ export function Auth() {
         mode={mode} 
         onChange={setMode}
       />
-      <AuthFAQ />
     </AuthLayout>
   );
 }
