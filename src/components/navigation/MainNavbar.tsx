@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,7 +43,7 @@ export function MainNavbar() {
   };
 
   return (
-    <nav className="bg-shop-700 border-b border-shop-800/20 sticky top-0 z-50">
+    <nav className="bg-[#008080] border-b border-[#008080]/20 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center">
