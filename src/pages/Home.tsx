@@ -1,3 +1,4 @@
+
 import { HeroSection } from "@/components/home/HeroSection";
 import { CategoriesSection } from "@/components/home/CategoriesSection";
 import { PricingSection } from "@/components/home/PricingSection";
