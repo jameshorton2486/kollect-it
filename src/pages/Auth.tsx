@@ -13,6 +13,8 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 export type AuthMode = "login" | "signup" | "guest";
 
 const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION = 15; // minutes
 
 export function Auth() {
   const navigate = useNavigate();
@@ -117,18 +119,39 @@ export function Auth() {
         // Validate login data
         loginSchema.parse(values);
 
+        // Check rate limiting
+        const { data: rateLimitCheck, error: rateLimitError } = await supabase
+          .rpc('check_rate_limit', {
+            check_ip: 'client-ip', // In a real app, you'd get the actual client IP
+            check_email: values.email.trim()
+          });
+
+        if (rateLimitError) {
+          console.error("Rate limit check error:", rateLimitError);
+          throw new Error("An error occurred. Please try again later.");
+        }
+
+        if (rateLimitCheck) {
+          throw new Error(`Too many failed attempts. Please try again after ${LOCKOUT_DURATION} minutes.`);
+        }
+
         const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email.trim(),
           password: values.password.trim(),
         });
+
+        // Log the attempt
+        await supabase
+          .from('login_attempts')
+          .insert({
+            ip_address: 'client-ip', // In a real app, you'd get the actual client IP
+            email: values.email.trim(),
+            success: !error
+          });
         
         if (error) {
-          if (error.message.includes("Email not confirmed")) {
-            toast.error("Please verify your email before logging in.");
-            navigate("/email-verification");
-            return;
-          }
-          throw error;
+          // Generic error message to avoid revealing specific details
+          throw new Error("Invalid email or password.");
         }
 
         if (data?.user) {
@@ -157,7 +180,7 @@ export function Auth() {
         // Validate registration data
         registerSchema.parse(values);
 
-        // Check if email already exists
+        // Check if email already exists - use a generic error message
         const { data: existingUser } = await supabase
           .from('profiles')
           .select('id')
@@ -165,7 +188,7 @@ export function Auth() {
           .single();
 
         if (existingUser) {
-          throw new Error("This email is already registered. Please use a different email or try logging in.");
+          throw new Error("Unable to create account with these credentials.");
         }
 
         const { data, error } = await supabase.auth.signUp({
@@ -179,13 +202,15 @@ export function Auth() {
           },
         });
         
-        if (error) throw error;
+        if (error) {
+          // Generic error message
+          throw new Error("Unable to create account. Please try again later.");
+        }
 
         if (data?.user) {
           console.log("Account created successfully for user:", data.user.id);
           toast.success("Account created successfully! Welcome to Kollect-It!");
           
-          // Check if email verification is required
           if (data.user.identities?.[0]?.identity_data?.email_verified) {
             toast.success("You are now logged in!");
           } else {
@@ -203,7 +228,8 @@ export function Auth() {
           toast.error(err.message);
         });
       } else {
-        toast.error(error.message || "Authentication failed. Please try again.");
+        // Use the error message we defined or a generic one
+        toast.error(error.message || "Authentication failed. Please try again later.");
       }
     } finally {
       setIsSubmitting(false);

@@ -191,6 +191,30 @@ export type Database = {
         }
         Relationships: []
       }
+      login_attempts: {
+        Row: {
+          attempt_time: string | null
+          email: string
+          id: string
+          ip_address: string
+          success: boolean
+        }
+        Insert: {
+          attempt_time?: string | null
+          email: string
+          id?: string
+          ip_address: string
+          success: boolean
+        }
+        Update: {
+          attempt_time?: string | null
+          email?: string
+          id?: string
+          ip_address?: string
+          success?: boolean
+        }
+        Relationships: []
+      }
       notification_settings: {
         Row: {
           created_at: string
@@ -983,6 +1007,15 @@ export type Database = {
           estimated_days_max: number
           is_free_shipping: boolean
         }[]
+      }
+      check_rate_limit: {
+        Args: {
+          check_ip: string
+          check_email: string
+          window_minutes?: number
+          max_attempts?: number
+        }
+        Returns: boolean
       }
       has_role: {
         Args: {
