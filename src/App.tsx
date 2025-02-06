@@ -17,6 +17,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import CategoryManagement from "./pages/CategoryManagement";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
+import SellerDashboard from "./pages/SellerDashboard";
 
 export default function App() {
   return (
@@ -33,14 +34,7 @@ export default function App() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/profile-settings" element={<ProfileSettings />} />
           <Route path="/category-management" element={<CategoryManagement />} />
-          <Route path="/seller-dashboard" element={
-            <DashboardLayout>
-              <div className="p-6">
-                <h1 className="text-2xl font-bold mb-4">Seller Dashboard</h1>
-                <p>Welcome to your seller dashboard. Start managing your listings and track your sales.</p>
-              </div>
-            </DashboardLayout>
-          } />
+          <Route path="/seller-dashboard" element={<SellerDashboard />} />
           <Route path="/categories/*" element={<CategoryManagement />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
             <Route path="analytics" element={<AnalyticsDashboard />} />
