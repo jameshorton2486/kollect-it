@@ -24,14 +24,22 @@ export function StatCards() {
         .from("seller_analytics")
         .select("*")
         .eq("seller_id", session.user.id)
-        .single();
+        .maybeSingle();
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error("Error fetching seller analytics:", error);
         return null;
       }
 
-      return analytics;
+      // Return default values if no analytics exists yet
+      return analytics || {
+        total_revenue: 0,
+        total_orders: 0,
+        total_products: 0,
+        average_rating: 0,
+        total_customers: 0,
+        growth_rate: 0
+      };
     }
   });
 
