@@ -2,10 +2,10 @@
 import { supabase } from "@/integrations/supabase/client";
 import { AuthFormValues } from "@/components/auth/AuthForm";
 import { loginSchema, registerSchema } from "@/lib/validations/schemas";
-import { toast } from "sonner";
+import { AuthError, User, Session } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 
-export async function handleLogin(values: AuthFormValues) {
+export async function handleLogin(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
   // Validate login data
   loginSchema.parse(values);
 
@@ -47,7 +47,7 @@ export async function handleLogin(values: AuthFormValues) {
   return data;
 }
 
-export async function handleSignup(values: AuthFormValues) {
+export async function handleSignup(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
   // Validate registration data
   registerSchema.parse(values);
 
@@ -80,4 +80,3 @@ export async function handleSignup(values: AuthFormValues) {
 
   return data;
 }
-
