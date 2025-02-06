@@ -38,40 +38,40 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#27455D", // Dark Blue
+          DEFAULT: "#308cc0", // Blue
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#497D74", // Muted Teal
+          DEFAULT: "#145da0", // Medium Blue
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#71BBB2", // Light Teal
-          foreground: "#FFFFFF",
+          DEFAULT: "#afd1de", // Light Blue
+          foreground: "#0d2e49",
         },
         muted: {
-          DEFAULT: "#EFE9D5", // Light Beige
-          foreground: "#27455D",
+          DEFAULT: "#fdfefe", // White
+          foreground: "#0d2e49",
         },
         nav: {
-          DEFAULT: "#FFFFFF",
+          DEFAULT: "#0d2e49", // Dark Blue
         },
         shop: {
-          50: "#EFE9D5",  // Light Beige (Background)
-          100: "#E5DFC7", // Lighter Beige
-          200: "#71BBB2", // Light Teal (Accent)
-          300: "#497D74", // Muted Teal (Secondary)
-          400: "#27455D", // Dark Blue (Primary)
-          500: "#27455D", // Primary for actions
-          600: "#1E3447", // Darker Blue
-          700: "#27455D", // Dark Blue
-          800: "#1E3447", // Darker shade
-          900: "#152532", // Darkest shade
-          accent1: "#71BBB2", // Light Teal
-          accent2: "#497D74", // Muted Teal
+          50: "#fdfefe",  // White (Background)
+          100: "#e6f1f6", // Lighter Blue
+          200: "#afd1de", // Light Blue
+          300: "#308cc0", // Blue
+          400: "#145da0", // Medium Blue
+          500: "#0d2e49", // Dark Blue
+          600: "#0a2438", // Darker Blue
+          700: "#071824", // Darkest Blue
+          800: "#040f16",
+          900: "#020709",
+          accent1: "#308cc0", // Blue
+          accent2: "#145da0", // Medium Blue
           accent3: "#FFFFFF", // White
-          muted1: "#EFE9D5", // Light Beige
-          muted2: "#E5DFC7", // Lighter Beige
+          muted1: "#fdfefe", // White
+          muted2: "#e6f1f6", // Lighter Blue
         },
       },
       spacing: {
