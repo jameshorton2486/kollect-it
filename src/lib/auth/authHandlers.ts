@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { AuthFormValues } from "@/components/auth/AuthForm";
 import { loginSchema, registerSchema } from "@/lib/validations/schemas";
