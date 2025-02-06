@@ -12,11 +12,46 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 
 export type AuthMode = "login" | "signup" | "guest";
 
+const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
+
 export function Auth() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<AuthMode>("login");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Setup inactivity timeout
+  useEffect(() => {
+    let inactivityTimer: number;
 
+    const resetInactivityTimer = () => {
+      window.clearTimeout(inactivityTimer);
+      inactivityTimer = window.setTimeout(async () => {
+        console.log("User inactive for too long, signing out...");
+        await supabase.auth.signOut();
+        toast.info("You've been logged out due to inactivity");
+        navigate("/auth");
+      }, INACTIVITY_TIMEOUT);
+    };
+
+    // Reset timer on user activity
+    const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    activityEvents.forEach(event => {
+      document.addEventListener(event, resetInactivityTimer);
+    });
+
+    // Initial setup
+    resetInactivityTimer();
+
+    // Cleanup
+    return () => {
+      window.clearTimeout(inactivityTimer);
+      activityEvents.forEach(event => {
+        document.removeEventListener(event, resetInactivityTimer);
+      });
+    };
+  }, [navigate]);
+
+  // Check session and handle auth state changes
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
@@ -35,6 +70,12 @@ export function Auth() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session?.user?.id);
+      
+      if (event === 'SIGNED_OUT') {
+        console.log("User signed out");
+        navigate("/auth");
+        return;
+      }
       
       if (session) {
         // Check if email is verified
@@ -67,7 +108,7 @@ export function Auth() {
     };
   }, [navigate]);
 
-  const handleAuth = async (values: any) => {
+  const handleAuth = async (values: Record<string, string>) => {
     setIsSubmitting(true);
     console.log(`Processing ${mode} request with values:`, values);
 
@@ -132,8 +173,8 @@ export function Auth() {
           password: values.password.trim(),
           options: {
             data: {
-              first_name: values.firstName.trim(),
-              last_name: values.lastName.trim(),
+              first_name: values.firstName?.trim(),
+              last_name: values.lastName?.trim(),
             },
           },
         });
