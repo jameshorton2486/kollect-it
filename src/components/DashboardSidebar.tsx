@@ -124,7 +124,7 @@ export function DashboardSidebar() {
   });
 
   return (
-    <div className="h-screen w-64 bg-[#008080] border-r border-[#008080]/20 fixed left-0 top-0 overflow-y-auto">
+    <div className="h-screen w-64 bg-[#308cc0] border-r border-[#308cc0]/20 fixed left-0 top-0 overflow-y-auto">
       <div className="p-6">
         <h1 className="text-2xl font-semibold text-white nav-brand">Kollect-It</h1>
       </div>
