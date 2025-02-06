@@ -1,10 +1,16 @@
 
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Footer } from "@/components/home/Footer";
-import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
+import { Mail, Phone, Clock, Facebook, Instagram, Twitter } from "lucide-react";
 import { Form } from "@/components/ui/form";
 
 export default function Contact() {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Open default email client with support email
+    window.location.href = "mailto:support@kollect-it.com";
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navbar placeholder */}
@@ -33,33 +39,24 @@ export default function Contact() {
       {/* Contact Information Grid */}
       <section className="py-12">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div className="text-center">
               <Mail className="h-8 w-8 text-shop-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-              <div className="space-y-2">
-                <p className="text-shop-600">General: info@kollect-it.com</p>
-                <p className="text-shop-600">Support: support@kollect-it.com</p>
-                <p className="text-shop-600">Sellers: sell@kollect-it.com</p>
+              <h3 className="text-xl font-semibold mb-4">Email Us</h3>
+              <div className="space-y-3">
+                <p className="text-shop-600">General Inquiries:<br />info@kollect-it.com</p>
+                <p className="text-shop-600">Customer Support:<br />support@kollect-it.com</p>
+                <p className="text-shop-600">Seller Inquiries:<br />sell@kollect-it.com</p>
               </div>
             </div>
             <div className="text-center">
               <Phone className="h-8 w-8 text-shop-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Call Us</h3>
+              <h3 className="text-xl font-semibold mb-4">Call Us</h3>
               <p className="text-shop-600">469-386-6065</p>
               <div className="flex items-center justify-center mt-2">
                 <Clock className="h-4 w-4 text-shop-600 mr-2" />
                 <p className="text-shop-600 text-sm">Mon-Fri: 9AM-5PM (EST)</p>
               </div>
-            </div>
-            <div className="text-center">
-              <MapPin className="h-8 w-8 text-shop-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
-              <p className="text-shop-600">
-                Kollect-It<br />
-                7324 Hovingham<br />
-                San Antonio, Texas 78257
-              </p>
             </div>
           </div>
         </div>
@@ -96,7 +93,7 @@ export default function Contact() {
       <section className="bg-shop-50 py-12">
         <div className="max-w-2xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-center mb-8">Send us a Message</h2>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-shop-700 mb-1">First Name</label>
