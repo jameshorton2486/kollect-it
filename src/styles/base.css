@@ -1,47 +1,48 @@
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 13%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
-    --primary: 200 70% 30%;
+    --background: 45 27% 89%;
+    --foreground: 206 40% 26%;
+    --card: 45 27% 89%;
+    --card-foreground: 206 40% 26%;
+    --popover: 45 27% 89%;
+    --popover-foreground: 206 40% 26%;
+    --primary: 206 40% 26%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 200 15% 40%;
+    --secondary: 171 26% 38%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 200 10% 96%;
-    --muted-foreground: 0 0% 13%;
-    --accent: 200 70% 30%;
+    --muted: 45 27% 89%;
+    --muted-foreground: 206 40% 26%;
+    --accent: 174 36% 59%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 200 10% 90%;
-    --input: 200 10% 90%;
-    --ring: 200 70% 30%;
+    --border: 171 26% 38%;
+    --input: 171 26% 38%;
+    --ring: 206 40% 26%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 200 25% 13%;
+    --background: 206 40% 26%;
     --foreground: 0 0% 100%;
-    --card: 200 25% 13%;
+    --card: 206 40% 26%;
     --card-foreground: 0 0% 100%;
-    --popover: 200 25% 13%;
+    --popover: 206 40% 26%;
     --popover-foreground: 0 0% 100%;
-    --primary: 200 70% 50%;
+    --primary: 174 36% 59%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 200 15% 40%;
+    --secondary: 171 26% 38%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 200 25% 20%;
+    --muted: 206 40% 20%;
     --muted-foreground: 0 0% 100%;
-    --accent: 200 70% 50%;
+    --accent: 174 36% 59%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
-    --border: 200 25% 20%;
-    --input: 200 25% 20%;
-    --ring: 200 70% 50%;
+    --border: 206 40% 20%;
+    --input: 206 40% 20%;
+    --ring: 174 36% 59%;
   }
 }
 
@@ -56,31 +57,31 @@
   }
 
   h1, .h1 {
-    @apply font-heading text-h1 font-bold tracking-tight text-shop-700 mb-6;
+    @apply font-heading text-h1 font-bold tracking-tight text-primary mb-6;
   }
 
   h2, .h2 {
-    @apply font-heading text-h2 font-semibold text-shop-700/90 mb-4;
+    @apply font-heading text-h2 font-semibold text-primary/90 mb-4;
   }
 
   h3, .h3 {
-    @apply font-heading text-h3 font-medium text-shop-700/80 mb-3;
+    @apply font-heading text-h3 font-medium text-primary/80 mb-3;
   }
 
   p {
-    @apply text-body text-shop-300 leading-relaxed mb-4;
+    @apply text-body text-secondary leading-relaxed mb-4;
   }
 
   a {
-    @apply text-shop-500 hover:text-shop-600 transition-colors duration-200;
+    @apply text-accent hover:text-accent/80 transition-colors duration-200;
   }
 
   input, textarea, select {
-    @apply focus:outline-none focus:ring-2 focus:ring-shop-500 focus:border-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
   }
 
   button {
-    @apply focus:outline-none focus:ring-2 focus:ring-shop-500 focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
   }
 
   .section {
@@ -92,14 +93,15 @@
   }
 
   .btn {
-    @apply bg-shop-500 text-white px-button py-button rounded-full 
-           hover:bg-shop-600 transition-colors duration-200
-           focus:ring-2 focus:ring-shop-500 focus:ring-offset-2;
+    @apply bg-primary text-white px-button py-button rounded-full 
+           hover:bg-primary/90 transition-colors duration-200
+           focus:ring-2 focus:ring-primary focus:ring-offset-2;
   }
 
   .nav-brand,
   .footer-brand,
   .footer-copyright {
-    @apply text-shop-700;
+    @apply text-primary;
   }
 }
+

@@ -28,7 +28,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
       
       <div className="flex-1 flex">
         {/* Desktop Navigation Sidebar */}
-        <div className="hidden md:block w-64 bg-black border-r border-black/20">
+        <div className="hidden md:block w-64 bg-primary border-r border-primary/20">
           <div className="p-6">
             <h2 className="text-lg font-semibold text-white nav-brand mb-4">Browse</h2>
             <nav className="space-y-1">
@@ -60,7 +60,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 pt-20 bg-black">
+            <SheetContent side="left" className="w-64 pt-20 bg-primary">
               <nav className="space-y-1">
                 {navigationItems.map((item) => (
                   <Link
@@ -81,7 +81,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
 
         {/* Main Content */}
         <main className={cn(
-          "flex-1 max-w-[1600px] mx-auto px-2 md:px-4 py-6",
+          "flex-1 max-w-[1600px] mx-auto px-2 md:px-4 py-6 bg-muted",
           className
         )}>
           {children}
@@ -92,3 +92,4 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
     </div>
   );
 }
+

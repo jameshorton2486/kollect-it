@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -37,40 +38,40 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#1A365D", // Rich navy blue
+          DEFAULT: "#27455D", // Dark Blue
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#4A5568", // Sophisticated gray
+          DEFAULT: "#497D74", // Muted Teal
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#2B6CB0", // Professional blue
+          DEFAULT: "#71BBB2", // Light Teal
           foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#F7FAFC", // Light gray background
-          foreground: "#1A365D",
+          DEFAULT: "#EFE9D5", // Light Beige
+          foreground: "#27455D",
         },
         nav: {
           DEFAULT: "#FFFFFF",
         },
         shop: {
-          50: "#F7FAFC",  // Light background
-          100: "#EDF2F7", // Border color
-          200: "#E2E8F0", // Lighter text
-          300: "#4A5568", // Secondary text
-          400: "#1A365D", // Primary text
-          500: "#2B6CB0", // Primary blue
-          600: "#2C5282", // Darker blue
-          700: "#1A365D", // Navy blue
-          800: "#162A4F", // Dark navy
-          900: "#1A202C", // Almost black
-          accent1: "#2B6CB0", // Primary blue
-          accent2: "#2C5282", // Darker blue
+          50: "#EFE9D5",  // Light Beige (Background)
+          100: "#E5DFC7", // Lighter Beige
+          200: "#71BBB2", // Light Teal (Accent)
+          300: "#497D74", // Muted Teal (Secondary)
+          400: "#27455D", // Dark Blue (Primary)
+          500: "#27455D", // Primary for actions
+          600: "#1E3447", // Darker Blue
+          700: "#27455D", // Dark Blue
+          800: "#1E3447", // Darker shade
+          900: "#152532", // Darkest shade
+          accent1: "#71BBB2", // Light Teal
+          accent2: "#497D74", // Muted Teal
           accent3: "#FFFFFF", // White
-          muted1: "#F7FAFC", // Light background
-          muted2: "#EDF2F7", // Border color
+          muted1: "#EFE9D5", // Light Beige
+          muted2: "#E5DFC7", // Lighter Beige
         },
       },
       spacing: {
@@ -101,3 +102,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
