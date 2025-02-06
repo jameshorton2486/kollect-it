@@ -31,7 +31,7 @@ export async function handleLogin(values: AuthFormValues): Promise<{ user: User 
   });
 
   // Log the attempt
-  await supabase
+  const { error: logError } = await supabase
     .from('login_attempts')
     .insert({
       ip_address: 'client-ip', // In a real app, you'd get the actual client IP
@@ -52,11 +52,15 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   registerSchema.parse(values);
 
   // Check if email already exists - use a generic error message
-  const { data: existingUser } = await supabase
+  const { data: existingUser, error: queryError } = await supabase
     .from('profiles')
     .select('id')
     .eq('email', values.email.trim())
     .single();
+
+  if (queryError && queryError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+    throw new Error("Unable to create account. Please try again later.");
+  }
 
   if (existingUser) {
     throw new Error("Unable to create account with these credentials.");
