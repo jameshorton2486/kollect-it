@@ -58,16 +58,16 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   registerSchema.parse(values);
 
   // Check if email already exists - use a friendly message
-  const { data: existingProfiles, error: queryError } = await supabase
+  const { data: profiles, error: queryError } = await supabase
     .from('profiles')
-    .select<'profiles', Profile>('id, email')
-    .eq('email', values.email.trim());
+    .select('id, email');
 
-  if (queryError && queryError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+  if (queryError) {
     throw new Error("Unable to create account. Please try again later.");
   }
 
-  if (existingProfiles && existingProfiles.length > 0) {
+  const existingProfile = profiles?.find(profile => profile.email === values.email.trim());
+  if (existingProfile) {
     throw new Error("Already a collector? Looks like you have an account! Please sign in instead.");
   }
 
