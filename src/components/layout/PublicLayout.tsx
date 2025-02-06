@@ -28,7 +28,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
       
       <div className="flex-1 flex">
         {/* Desktop Navigation Sidebar */}
-        <div className="hidden md:block w-64 bg-primary border-r border-primary/20">
+        <div className="hidden md:block w-64 bg-[#308cc0] border-r border-[#308cc0]/20">
           <div className="p-6">
             <h2 className="text-lg font-semibold text-white nav-brand mb-4">Browse</h2>
             <nav className="space-y-1">
@@ -37,7 +37,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "block px-4 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
+                    "block px-4 py-2 text-white/80 hover:bg-[#145da0] rounded-lg transition-colors",
                     "hover:text-white"
                   )}
                 >
@@ -60,14 +60,14 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 pt-20 bg-primary">
+            <SheetContent side="left" className="w-64 pt-20 bg-[#308cc0]">
               <nav className="space-y-1">
                 {navigationItems.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
                     className={cn(
-                      "block px-4 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors",
+                      "block px-4 py-2 text-white/80 hover:bg-[#145da0] rounded-lg transition-colors",
                       "hover:text-white"
                     )}
                   >
@@ -81,7 +81,7 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
 
         {/* Main Content */}
         <main className={cn(
-          "flex-1 max-w-[1600px] mx-auto px-2 md:px-4 py-6 bg-muted",
+          "flex-1 max-w-[1600px] mx-auto px-2 md:px-4 py-6 bg-[#fdfefe]",
           className
         )}>
           {children}
@@ -92,4 +92,3 @@ export function PublicLayout({ children, className = "" }: PublicLayoutProps) {
     </div>
   );
 }
-
