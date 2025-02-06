@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { AuthFormValues } from "@/components/auth/AuthForm";
 import { loginSchema, registerSchema } from "@/lib/validations/schemas";
@@ -51,21 +50,22 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   // Validate registration data
   registerSchema.parse(values);
 
-  // Use auth API to check if user exists
-  const { data: existingUsers, error: emailCheckError } = await supabase.auth.admin.listUsers({
-    filters: {
-      email: values.email.trim()
-    }
+  // First check if user exists using signUp - this is the recommended way
+  const { data: userCheck, error: checkError } = await supabase.auth.signUp({
+    email: values.email.trim(),
+    password: values.password.trim(),
   });
 
-  if (emailCheckError) {
+  if (checkError) {
     throw new Error("Unable to create account. Please try again later.");
   }
 
-  if (existingUsers?.users.length > 0) {
+  // If userCheck.user exists but session is null, the user already exists
+  if (userCheck.user && !userCheck.session) {
     throw new Error("Already a collector? Looks like you have an account! Please sign in instead.");
   }
 
+  // If we get here, it's a new signup
   const { data, error } = await supabase.auth.signUp({
     email: values.email.trim(),
     password: values.password.trim(),
