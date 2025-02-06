@@ -80,3 +80,4 @@ export async function handleSignup(values: AuthFormValues) {
 
   return data;
 }
+
