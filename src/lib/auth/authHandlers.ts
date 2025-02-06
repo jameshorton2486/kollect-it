@@ -5,15 +5,6 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 import { AuthError, User, Session } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 
-// Define specific types for queries to avoid deep type instantiation
-type ProfileQueryResult = {
-  data: Array<{
-    id: string;
-    email?: string | null;
-  }> | null;
-  error: AuthError | null;
-}
-
 export async function handleLogin(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
   // Validate login data
   loginSchema.parse(values);
@@ -60,15 +51,18 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   // Validate registration data
   registerSchema.parse(values);
 
-  // Check if user exists - we'll use auth API directly instead of querying profiles
-  const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
-  
-  if (usersError) {
+  // Use auth API to check if user exists
+  const { data: existingUsers, error: emailCheckError } = await supabase.auth.admin.listUsers({
+    filters: {
+      email: values.email.trim()
+    }
+  });
+
+  if (emailCheckError) {
     throw new Error("Unable to create account. Please try again later.");
   }
 
-  const existingUser = users?.find(user => user.email === values.email.trim());
-  if (existingUser) {
+  if (existingUsers?.users.length > 0) {
     throw new Error("Already a collector? Looks like you have an account! Please sign in instead.");
   }
 
