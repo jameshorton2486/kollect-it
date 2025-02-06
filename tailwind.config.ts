@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -38,40 +37,40 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#222222", // Etsy's primary text color
+          DEFAULT: "#1A365D", // Rich navy blue
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#595959", // Etsy's secondary text color
+          DEFAULT: "#4A5568", // Sophisticated gray
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#F1641E", // Etsy's primary orange
+          DEFAULT: "#2B6CB0", // Professional blue
           foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#F5F5F5", // Etsy's background gray
-          foreground: "#222222",
+          DEFAULT: "#F7FAFC", // Light gray background
+          foreground: "#1A365D",
         },
         nav: {
           DEFAULT: "#FFFFFF",
         },
         shop: {
-          50: "#F5F5F1",  // Light background
-          100: "#E5E5E5", // Border color
-          200: "#D3D3D3", // Lighter text
-          300: "#595959", // Secondary text
-          400: "#222222", // Primary text
-          500: "#F1641E", // Primary orange
-          600: "#D35400", // Darker orange
-          700: "#222222", // Black text
-          800: "#000000", // Pure black
-          900: "#111111", // Dark background
-          accent1: "#F1641E", // Primary orange
-          accent2: "#D35400", // Darker orange
+          50: "#F7FAFC",  // Light background
+          100: "#EDF2F7", // Border color
+          200: "#E2E8F0", // Lighter text
+          300: "#4A5568", // Secondary text
+          400: "#1A365D", // Primary text
+          500: "#2B6CB0", // Primary blue
+          600: "#2C5282", // Darker blue
+          700: "#1A365D", // Navy blue
+          800: "#162A4F", // Dark navy
+          900: "#1A202C", // Almost black
+          accent1: "#2B6CB0", // Primary blue
+          accent2: "#2C5282", // Darker blue
           accent3: "#FFFFFF", // White
-          muted1: "#F5F5F1", // Light background
-          muted2: "#E5E5E5", // Border color
+          muted1: "#F7FAFC", // Light background
+          muted2: "#EDF2F7", // Border color
         },
       },
       spacing: {
