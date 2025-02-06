@@ -21,6 +21,7 @@ export function Auth() {
       }
       if (session) {
         console.log("User already authenticated:", session.user.id);
+        toast.success("You are already logged in!");
         navigate("/");
       }
     };
@@ -30,6 +31,7 @@ export function Auth() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Auth state changed:", event, session?.user?.id);
       if (session) {
+        console.log("User authenticated successfully:", session.user.id);
         navigate("/");
       }
     });
@@ -52,6 +54,8 @@ export function Auth() {
         if (error) throw error;
 
         if (data?.user) {
+          console.log("Login successful for user:", data.user.id);
+          
           // Fetch user roles
           const { data: roles } = await supabase
             .from('user_roles')
@@ -62,7 +66,7 @@ export function Auth() {
           
           const isAdmin = roles?.some(r => r.role === 'admin');
           
-          toast.success(`Welcome back${isAdmin ? ' Administrator' : ''}!`);
+          toast.success(`Welcome back${isAdmin ? ' Administrator' : ''}! You are now logged in.`);
           navigate(isAdmin ? "/admin" : "/");
         }
       } else if (mode === "signup") {
@@ -84,7 +88,13 @@ export function Auth() {
         if (error) throw error;
 
         if (data?.user) {
-          toast.success("Welcome to Kollect-It! Please check your email to verify your account.");
+          console.log("Account created successfully for user:", data.user.id);
+          toast.success("Account created successfully! Welcome to Kollect-It!");
+          if (data.user.identities?.[0]?.identity_data?.email_verified) {
+            toast.success("You are now logged in!");
+          } else {
+            toast.info("Please check your email to verify your account.");
+          }
         }
       }
     } catch (error: any) {
