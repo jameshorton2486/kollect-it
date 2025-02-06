@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -149,7 +150,7 @@ export default function Categories() {
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-shop-accent1 hover:bg-shop-accent1/90 text-white">
+              <Button className="bg-[#0d2e49] hover:bg-[#0a2438] text-white">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Add Category
               </Button>
