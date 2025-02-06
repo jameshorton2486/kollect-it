@@ -8,10 +8,12 @@ import { AuthFeatures } from "@/components/auth/AuthFeatures";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthSwitchMode } from "@/components/auth/AuthSwitchMode";
+import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 
 export function Auth() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"login" | "signup" | "guest">("login");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -42,10 +44,14 @@ export function Auth() {
   }, [navigate]);
 
   const handleAuth = async (values: any) => {
+    setIsSubmitting(true);
     console.log(`Attempting ${mode} with values:`, values);
 
     try {
       if (mode === "login") {
+        // Validate login data
+        loginSchema.parse(values);
+
         const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email.trim(),
           password: values.password.trim(),
@@ -70,8 +76,23 @@ export function Auth() {
           navigate(isAdmin ? "/admin" : "/");
         }
       } else if (mode === "signup") {
-        if (!values.firstName || !values.lastName) {
-          throw new Error("Please enter your name");
+        // Validate registration data
+        registerSchema.parse({
+          email: values.email,
+          password: values.password,
+          firstName: values.firstName,
+          lastName: values.lastName,
+        });
+
+        // Check if email already exists
+        const { data: existingUser } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('email', values.email.trim())
+          .single();
+
+        if (existingUser) {
+          throw new Error("This email is already registered. Please use a different email or try logging in.");
         }
 
         const { data, error } = await supabase.auth.signUp({
@@ -90,16 +111,41 @@ export function Auth() {
         if (data?.user) {
           console.log("Account created successfully for user:", data.user.id);
           toast.success("Account created successfully! Welcome to Kollect-It!");
+          
+          // Check if email verification is required
           if (data.user.identities?.[0]?.identity_data?.email_verified) {
             toast.success("You are now logged in!");
           } else {
             toast.info("Please check your email to verify your account.");
+            
+            // Trigger verification email using our edge function
+            const { error: verificationError } = await supabase.functions.invoke('send-verification-email', {
+              body: {
+                email: values.email.trim(),
+                userId: data.user.id,
+              },
+            });
+
+            if (verificationError) {
+              console.error("Error sending verification email:", verificationError);
+              toast.error("There was an issue sending the verification email. Please contact support.");
+            }
           }
         }
       }
     } catch (error: any) {
       console.error("Auth error:", error);
-      toast.error(error.message || "Authentication failed. Please try again.");
+      
+      // Handle Zod validation errors
+      if (error.errors) {
+        error.errors.forEach((err: any) => {
+          toast.error(err.message);
+        });
+      } else {
+        toast.error(error.message || "Authentication failed. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -111,6 +157,7 @@ export function Auth() {
       <AuthForm
         mode={mode}
         onSubmit={handleAuth}
+        isSubmitting={isSubmitting}
       />
 
       <AuthSwitchMode 

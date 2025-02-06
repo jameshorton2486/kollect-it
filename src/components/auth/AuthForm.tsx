@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserPlus, LogIn } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { AuthFormFields } from "./AuthFormFields";
+import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 
 export interface AuthFormValues {
   firstName?: string;
@@ -15,24 +16,17 @@ export interface AuthFormValues {
   password: string;
 }
 
-const authSchema = z.object({
-  firstName: z.string().min(2, "First name must be at least 2 characters").optional(),
-  lastName: z.string().min(2, "Last name must be at least 2 characters").optional(),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
 export interface AuthFormProps {
   mode: "login" | "signup" | "guest";
   onSubmit: (values: AuthFormValues) => Promise<void>;
+  isSubmitting?: boolean;
 }
 
-export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
+export function AuthForm({ mode = "login", onSubmit, isSubmitting = false }: AuthFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<AuthFormValues>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(mode === "login" ? loginSchema : registerSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -42,12 +36,7 @@ export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
   });
 
   const handleSubmit = async (values: AuthFormValues) => {
-    setIsLoading(true);
-    try {
-      await onSubmit(values);
-    } finally {
-      setIsLoading(false);
-    }
+    await onSubmit(values);
   };
 
   const isGuest = mode === "guest";
@@ -67,9 +56,9 @@ export function AuthForm({ mode = "login", onSubmit }: AuthFormProps) {
         <Button
           type="submit"
           className="w-full"
-          disabled={isLoading}
+          disabled={isSubmitting}
         >
-          {isLoading ? (
+          {isSubmitting ? (
             <div className="flex items-center">
               <span className="animate-spin mr-2">⌛</span>
               {mode === "login" ? "Signing in..." : 
