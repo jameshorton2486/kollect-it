@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,7 +21,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Poppins', 'system-ui', 'sans-serif'],
+        heading: ['Guardian-EgypT', 'serif'],
+        display: ['Guardian-EgypT', 'serif'],
       },
       fontSize: {
         'display': ['4rem', { lineHeight: '1.2' }],
@@ -36,46 +38,51 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#000000", // Pure Black
-          foreground: "#FFFFFF", // Crisp White
+          DEFAULT: "#222222", // Etsy's primary text color
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#E0E0E0", // Cool Gray
-          foreground: "#000000", // Pure Black
+          DEFAULT: "#595959", // Etsy's secondary text color
+          foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#008080", // Vibrant Teal
-          foreground: "#FFFFFF", // Crisp White
+          DEFAULT: "#F1641E", // Etsy's primary orange
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#E0E0E0", // Cool Gray
-          foreground: "#000000", // Pure Black
+          DEFAULT: "#F5F5F5", // Etsy's background gray
+          foreground: "#222222",
         },
         nav: {
-          DEFAULT: "#000000", // Pure Black
+          DEFAULT: "#FFFFFF",
         },
         shop: {
-          50: "#F5F7F7",  // Lightest background
-          100: "#E0E0E0", // Cool Gray
-          200: "#CCCCCC", // Light Gray
-          300: "#B3B3B3", // Medium Gray
-          400: "#008080", // Vibrant Teal
-          500: "#006666", // Darker Teal
-          600: "#004C4C", // Darkest Teal
-          700: "#000000", // Pure Black
-          800: "#000000", // Pure Black
-          900: "#000000", // Pure Black
-          accent1: "#008080", // Vibrant Teal
-          accent2: "#006666", // Darker Teal
-          accent3: "#FFFFFF", // Crisp White
-          muted1: "#E0E0E0", // Cool Gray
-          muted2: "#CCCCCC", // Light Gray
+          50: "#F5F5F1",  // Light background
+          100: "#E5E5E5", // Border color
+          200: "#D3D3D3", // Lighter text
+          300: "#595959", // Secondary text
+          400: "#222222", // Primary text
+          500: "#F1641E", // Primary orange
+          600: "#D35400", // Darker orange
+          700: "#222222", // Black text
+          800: "#000000", // Pure black
+          900: "#111111", // Dark background
+          accent1: "#F1641E", // Primary orange
+          accent2: "#D35400", // Darker orange
+          accent3: "#FFFFFF", // White
+          muted1: "#F5F5F1", // Light background
+          muted2: "#E5E5E5", // Border color
         },
       },
       spacing: {
-        section: "40px", // Consistent section spacing
-        header: "40px", // Header spacing
-        button: "12px", // Button padding
+        section: "40px",
+        header: "40px",
+        button: "12px",
+      },
+      borderRadius: {
+        lg: "24px",
+        md: "12px",
+        sm: "6px",
       },
       keyframes: {
         "accordion-down": {
