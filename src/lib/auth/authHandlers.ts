@@ -5,9 +5,10 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 import { AuthError, User, Session } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 
-type SupabaseQueryResult = {
-  data: null | { id: string }[];
-  error: null | { code: string; message: string };
+// Define a more specific type for the profiles query result
+type Profile = {
+  id: string;
+  email: string;
 };
 
 export async function handleLogin(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
@@ -57,17 +58,16 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   registerSchema.parse(values);
 
   // Check if email already exists - use a friendly message
-  const { data: existingUser, error: queryError }: SupabaseQueryResult = await supabase
+  const { data: existingProfiles, error: queryError } = await supabase
     .from('profiles')
-    .select('id')
-    .eq('email', values.email.trim())
-    .single();
+    .select<'profiles', Profile>('id, email')
+    .eq('email', values.email.trim());
 
   if (queryError && queryError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
     throw new Error("Unable to create account. Please try again later.");
   }
 
-  if (existingUser) {
+  if (existingProfiles && existingProfiles.length > 0) {
     throw new Error("Already a collector? Looks like you have an account! Please sign in instead.");
   }
 
