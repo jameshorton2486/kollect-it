@@ -621,6 +621,45 @@ export type Database = {
         }
         Relationships: []
       }
+      seller_analytics: {
+        Row: {
+          average_rating: number
+          created_at: string
+          growth_rate: number
+          id: string
+          seller_id: string
+          total_customers: number
+          total_orders: number
+          total_products: number
+          total_revenue: number
+          updated_at: string
+        }
+        Insert: {
+          average_rating?: number
+          created_at?: string
+          growth_rate?: number
+          id?: string
+          seller_id: string
+          total_customers?: number
+          total_orders?: number
+          total_products?: number
+          total_revenue?: number
+          updated_at?: string
+        }
+        Update: {
+          average_rating?: number
+          created_at?: string
+          growth_rate?: number
+          id?: string
+          seller_id?: string
+          total_customers?: number
+          total_orders?: number
+          total_products?: number
+          total_revenue?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       shipping_zones: {
         Row: {
           additional_item_cost: number

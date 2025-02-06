@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign, Package, ShoppingCart, TrendingUp, Star, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -12,64 +13,32 @@ interface Stat {
   trendDirection: 'up' | 'down';
 }
 
-interface OrderWithAmount {
-  total_amount: number;
-  buyer_id: string;
-}
-
 export function StatCards() {
   const { data: stats } = useQuery({
-    queryKey: ["seller-stats"],
+    queryKey: ["seller-analytics"],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return null;
+      if (!session) throw new Error("No session");
 
-      const [
-        { count: totalProducts },
-        { data: orders },
-        { data: reviews }
-      ] = await Promise.all([
-        supabase
-          .from("products")
-          .select("*", { count: "exact", head: true })
-          .eq("user_id", session.user.id),
-        supabase
-          .from("orders")
-          .select<"*", OrderWithAmount>("*")
-          .eq("seller_id", session.user.id),
-        supabase
-          .from("reviews")
-          .select("rating")
-          .eq("seller_id", session.user.id)
-      ]);
+      const { data: analytics, error } = await supabase
+        .from("seller_analytics")
+        .select("*")
+        .eq("seller_id", session.user.id)
+        .single();
 
-      const totalRevenue = orders?.reduce((sum, order) => sum + order.total_amount, 0) || 0;
-      const averageRating = reviews?.reduce((sum, review) => sum + review.rating, 0) / (reviews?.length || 1);
-      const uniqueCustomers = orders ? new Set(orders.map(o => o.buyer_id)).size : 0;
+      if (error) {
+        console.error("Error fetching seller analytics:", error);
+        return null;
+      }
 
-      return {
-        totalRevenue,
-        totalProducts,
-        totalOrders: orders?.length || 0,
-        averageRating: averageRating.toFixed(1),
-        totalCustomers: uniqueCustomers,
-        growth: ((totalRevenue / 1000) - 1) * 100
-      };
-    },
-    placeholderData: {
-      totalRevenue: 12345,
-      totalProducts: 45,
-      totalOrders: 28,
-      averageRating: "4.5",
-      totalCustomers: 150,
-      growth: 12.5
+      return analytics;
     }
   });
 
   const performanceStats: Stat[] = [
     {
       title: "Total Revenue",
-      value: `$${stats?.totalRevenue?.toLocaleString()}`,
+      value: `$${stats?.total_revenue?.toLocaleString() || '0'}`,
       icon: DollarSign,
       description: "Track your earnings and revenue growth",
       trend: "+12.5%",
@@ -77,7 +46,7 @@ export function StatCards() {
     },
     {
       title: "Active Listings",
-      value: stats?.totalProducts?.toString() || "0",
+      value: stats?.total_products?.toString() || "0",
       icon: Package,
       description: "Monitor your active product listings",
       trend: "+5",
@@ -85,7 +54,7 @@ export function StatCards() {
     },
     {
       title: "Total Orders",
-      value: stats?.totalOrders?.toString() || "0",
+      value: stats?.total_orders?.toString() || "0",
       icon: ShoppingCart,
       description: "Track completed orders",
       trend: "+8",
@@ -93,7 +62,7 @@ export function StatCards() {
     },
     {
       title: "Customer Rating",
-      value: stats?.averageRating || "0.0",
+      value: stats?.average_rating?.toFixed(1) || "0.0",
       icon: Star,
       description: "Your average customer rating",
       trend: "+0.2",
@@ -101,7 +70,7 @@ export function StatCards() {
     },
     {
       title: "Total Customers",
-      value: stats?.totalCustomers?.toString() || "0",
+      value: stats?.total_customers?.toString() || "0",
       icon: Users,
       description: "Unique customers served",
       trend: "+15",
@@ -109,7 +78,7 @@ export function StatCards() {
     },
     {
       title: "Growth Rate",
-      value: `${stats?.growth}%`,
+      value: `${stats?.growth_rate || 0}%`,
       icon: TrendingUp,
       description: "Month-over-month growth",
       trend: "+2.3%",
