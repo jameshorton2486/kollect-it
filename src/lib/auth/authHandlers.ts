@@ -5,6 +5,11 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 import { AuthError, User, Session } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 
+type SupabaseQueryResult = {
+  data: null | { id: string }[];
+  error: null | { code: string; message: string };
+};
+
 export async function handleLogin(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
   // Validate login data
   loginSchema.parse(values);
@@ -51,8 +56,8 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   // Validate registration data
   registerSchema.parse(values);
 
-  // Check if email already exists - use a generic error message
-  const { data: existingUser, error: queryError } = await supabase
+  // Check if email already exists - use a friendly message
+  const { data: existingUser, error: queryError }: SupabaseQueryResult = await supabase
     .from('profiles')
     .select('id')
     .eq('email', values.email.trim())
@@ -63,7 +68,7 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   }
 
   if (existingUser) {
-    throw new Error("Unable to create account with these credentials.");
+    throw new Error("Already a collector? Looks like you have an account! Please sign in instead.");
   }
 
   const { data, error } = await supabase.auth.signUp({
