@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,39 +18,19 @@ export function VerifyEmail() {
     const verifyEmail = async () => {
       try {
         const token = searchParams.get("token");
-        if (!token) {
-          throw new Error("No verification token provided");
+        const type = searchParams.get("type");
+        
+        if (!token || type !== 'signup') {
+          throw new Error("Invalid verification link");
         }
 
-        // Get the token from the database
-        const { data: tokenData, error: tokenError } = await supabase
-          .from("auth_tokens")
-          .select("*")
-          .eq("token", token)
-          .eq("type", "email_verification")
-          .single();
+        // Verify the token
+        const { error } = await supabase.auth.verifyOtp({
+          token_hash: token,
+          type: 'signup'
+        });
 
-        if (tokenError || !tokenData) {
-          throw new Error("Invalid or expired verification token");
-        }
-
-        if (tokenData.used_at) {
-          throw new Error("This verification link has already been used");
-        }
-
-        if (new Date(tokenData.expires_at) < new Date()) {
-          throw new Error("This verification link has expired");
-        }
-
-        // Mark the token as used
-        const { error: updateError } = await supabase
-          .from("auth_tokens")
-          .update({ used_at: new Date().toISOString() })
-          .eq("token", token);
-
-        if (updateError) {
-          throw new Error("Failed to verify email");
-        }
+        if (error) throw error;
 
         setIsSuccess(true);
         toast.success("Email verified successfully!");

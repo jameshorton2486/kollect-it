@@ -10,9 +10,11 @@ import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthSwitchMode } from "@/components/auth/AuthSwitchMode";
 import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 
+export type AuthMode = "login" | "signup" | "guest";
+
 export function Auth() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"login" | "signup" | "guest">("login");
+  const [mode, setMode] = useState<AuthMode>("login");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -20,21 +22,43 @@ export function Auth() {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       if (sessionError) {
         console.error("Session check error:", sessionError);
+        toast.error("Error checking session status");
       }
       if (session) {
         console.log("User already authenticated:", session.user.id);
-        toast.success("You are already logged in!");
+        toast.success("Welcome back! You are already logged in.");
         navigate("/");
       }
     };
     
     checkSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session?.user?.id);
+      
       if (session) {
+        // Check if email is verified
+        if (!session.user.email_confirmed_at) {
+          console.log("Email not verified yet");
+          navigate("/email-verification");
+          return;
+        }
+
         console.log("User authenticated successfully:", session.user.id);
-        navigate("/");
+        
+        // Fetch user roles
+        const { data: roles, error: rolesError } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id);
+
+        if (rolesError) {
+          console.error("Error fetching user roles:", rolesError);
+        }
+
+        const isAdmin = roles?.some(r => r.role === 'admin');
+        toast.success(`Welcome${isAdmin ? ' Administrator' : ''}! You've successfully logged in.`);
+        navigate(isAdmin ? "/admin" : "/");
       }
     });
 
@@ -45,7 +69,7 @@ export function Auth() {
 
   const handleAuth = async (values: any) => {
     setIsSubmitting(true);
-    console.log(`Attempting ${mode} with values:`, values);
+    console.log(`Processing ${mode} request with values:`, values);
 
     try {
       if (mode === "login") {
@@ -57,11 +81,24 @@ export function Auth() {
           password: values.password.trim(),
         });
         
-        if (error) throw error;
+        if (error) {
+          if (error.message.includes("Email not confirmed")) {
+            toast.error("Please verify your email before logging in.");
+            navigate("/email-verification");
+            return;
+          }
+          throw error;
+        }
 
         if (data?.user) {
           console.log("Login successful for user:", data.user.id);
           
+          if (!data.user.email_confirmed_at) {
+            toast.info("Please verify your email to complete the login process.");
+            navigate("/email-verification");
+            return;
+          }
+
           // Fetch user roles
           const { data: roles } = await supabase
             .from('user_roles')
@@ -77,12 +114,7 @@ export function Auth() {
         }
       } else if (mode === "signup") {
         // Validate registration data
-        registerSchema.parse({
-          email: values.email,
-          password: values.password,
-          firstName: values.firstName,
-          lastName: values.lastName,
-        });
+        registerSchema.parse(values);
 
         // Check if email already exists
         const { data: existingUser } = await supabase
@@ -117,19 +149,7 @@ export function Auth() {
             toast.success("You are now logged in!");
           } else {
             toast.info("Please check your email to verify your account.");
-            
-            // Trigger verification email using our edge function
-            const { error: verificationError } = await supabase.functions.invoke('send-verification-email', {
-              body: {
-                email: values.email.trim(),
-                userId: data.user.id,
-              },
-            });
-
-            if (verificationError) {
-              console.error("Error sending verification email:", verificationError);
-              toast.error("There was an issue sending the verification email. Please contact support.");
-            }
+            navigate("/email-verification");
           }
         }
       }
