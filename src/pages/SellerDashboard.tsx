@@ -6,7 +6,7 @@ import { QuickActions } from "@/components/seller-dashboard/QuickActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Package, TrendingUp, ShoppingBag, Settings } from "lucide-react";
+import { Package, TrendingUp, ShoppingBag, Settings, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,10 +33,10 @@ export default function SellerDashboard() {
 
   const quickAccessLinks = [
     {
-      title: "Manage Products",
-      icon: Package,
-      description: "Add, edit, or remove your product listings",
-      path: "/seller/inventory"
+      title: "Add New Product",
+      icon: Plus,
+      description: "List a new item for sale",
+      path: "/seller/products/new"
     },
     {
       title: "Sales Analytics",
