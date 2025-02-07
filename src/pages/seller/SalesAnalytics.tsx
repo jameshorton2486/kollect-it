@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/select";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { addDays, subDays } from "date-fns";
+import { DateRange } from "react-day-picker";
 
 export default function SalesAnalytics() {
-  const [dateRange, setDateRange] = React.useState({
+  const [dateRange, setDateRange] = React.useState<DateRange>({
     from: subDays(new Date(), 30),
     to: new Date(),
   });
@@ -47,13 +48,38 @@ export default function SalesAnalytics() {
           )
         `)
         .eq("seller_id", session.user.id)
-        .gte("created_at", dateRange.from.toISOString())
-        .lte("created_at", dateRange.to.toISOString())
+        .gte("created_at", dateRange.from?.toISOString() ?? '')
+        .lte("created_at", dateRange.to?.toISOString() ?? '')
         .order("created_at", { ascending: true });
 
       return orders || [];
     }
   });
+
+  // Calculate key metrics
+  const metrics = React.useMemo(() => {
+    if (!salesData?.length) return {
+      totalSales: 0,
+      averageOrderValue: 0,
+      totalOrders: 0,
+      conversionRate: 0
+    };
+
+    const totalSales = salesData.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+    const totalOrders = salesData.length;
+    const averageOrderValue = totalSales / totalOrders;
+    
+    // Assuming 100 views per order for demo purposes
+    // In a real app, you'd track actual product views
+    const conversionRate = (totalOrders / (totalOrders * 100)) * 100;
+
+    return {
+      totalSales,
+      averageOrderValue,
+      totalOrders,
+      conversionRate
+    };
+  }, [salesData]);
 
   const handleExport = () => {
     if (!salesData?.length) {
@@ -79,37 +105,12 @@ export default function SalesAnalytics() {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `sales_report_${dateRange.from.toISOString().split('T')[0]}_to_${dateRange.to.toISOString().split('T')[0]}.csv`;
+    link.download = `sales_report_${dateRange.from?.toISOString().split('T')[0]}_to_${dateRange.to?.toISOString().split('T')[0]}.csv`;
     link.click();
     URL.revokeObjectURL(link.href);
     
     toast.success("Sales report downloaded successfully");
   };
-
-  // Calculate key metrics
-  const metrics = React.useMemo(() => {
-    if (!salesData?.length) return {
-      totalSales: 0,
-      averageOrderValue: 0,
-      totalOrders: 0,
-      conversionRate: 0
-    };
-
-    const totalSales = salesData.reduce((sum, order) => sum + order.total_amount, 0);
-    const totalOrders = salesData.length;
-    const averageOrderValue = totalSales / totalOrders;
-    
-    // Assuming 100 views per order for demo purposes
-    // In a real app, you'd track actual product views
-    const conversionRate = (totalOrders / (totalOrders * 100)) * 100;
-
-    return {
-      totalSales,
-      averageOrderValue,
-      totalOrders,
-      conversionRate
-    };
-  }, [salesData]);
 
   return (
     <DashboardLayout pageTitle="Sales Analytics">
@@ -129,7 +130,9 @@ export default function SalesAnalytics() {
           <div className="grid gap-4 md:flex md:items-center md:gap-6">
             <DateRangePicker
               value={dateRange}
-              onChange={setDateRange}
+              onChange={(newDateRange: DateRange) => {
+                setDateRange(newDateRange);
+              }}
             />
             <Select
               value={timeFrame}
@@ -166,7 +169,7 @@ export default function SalesAnalytics() {
           <div className="p-6">
             <h3 className="font-semibold text-lg mb-4">Sales Trend</h3>
             <SalesChart 
-              data={salesData} 
+              data={salesData || []} 
               chartType={chartType}
               timeFrame={timeFrame}
               dateRange={dateRange}

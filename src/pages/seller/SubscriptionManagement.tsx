@@ -3,7 +3,7 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, AlertCircle } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -32,10 +32,13 @@ interface UserSubscription {
   current_period_start: string;
   current_period_end: string;
   plan_id: string;
+  created_at: string;
   subscription_plans: SubscriptionPlan;
 }
 
 export default function SubscriptionManagement() {
+  const queryClient = useQueryClient();
+
   const { data: subscriptionPlans, isLoading: plansLoading } = useQuery({
     queryKey: ["subscription-plans"],
     queryFn: async () => {

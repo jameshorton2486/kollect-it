@@ -20,8 +20,14 @@ import { Bell, Package, AlertTriangle, Check } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { subDays } from "date-fns";
 
 export default function SellerDashboard() {
+  const [dateRange] = React.useState({
+    from: subDays(new Date(), 30),
+    to: new Date(),
+  });
+
   // Fetch notifications with real-time updates
   const { data: notifications, refetch: refetchNotifications } = useQuery({
     queryKey: ["seller-notifications"],
@@ -39,6 +45,57 @@ export default function SellerDashboard() {
       return data || [];
     }
   });
+
+  const { data: salesData } = useQuery({
+    queryKey: ["seller-dashboard-metrics"],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return [];
+
+      const { data: orders } = await supabase
+        .from("orders")
+        .select(`
+          id,
+          created_at,
+          total_amount,
+          status,
+          products (
+            id,
+            name,
+            category_id,
+            price
+          )
+        `)
+        .eq("seller_id", session.user.id)
+        .gte("created_at", dateRange.from.toISOString())
+        .lte("created_at", dateRange.to.toISOString())
+        .order("created_at", { ascending: true });
+
+      return orders || [];
+    }
+  });
+
+  // Calculate metrics
+  const metrics = React.useMemo(() => {
+    if (!salesData?.length) return {
+      totalSales: 0,
+      averageOrderValue: 0,
+      totalOrders: 0,
+      conversionRate: 0
+    };
+
+    const totalSales = salesData.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+    const totalOrders = salesData.length;
+    const averageOrderValue = totalSales / totalOrders;
+    const conversionRate = (totalOrders / (totalOrders * 100)) * 100;
+
+    return {
+      totalSales,
+      averageOrderValue,
+      totalOrders,
+      conversionRate
+    };
+  }, [salesData]);
 
   // Subscribe to real-time notifications
   React.useEffect(() => {
@@ -84,8 +141,13 @@ export default function SellerDashboard() {
         
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-6 lg:col-span-2">
-            <StatCards />
-            <SalesChart />
+            <StatCards metrics={metrics} />
+            <SalesChart 
+              data={salesData || []} 
+              chartType="area"
+              timeFrame="daily"
+              dateRange={dateRange}
+            />
           </div>
           
           <div className="space-y-6">
