@@ -26,7 +26,7 @@ const quickAccessLinks = [
     title: "Settings",
     icon: Settings,
     description: "Configure your shop preferences",
-    path: "/seller/settings"
+    path: "/profile-settings"
   }
 ];
 
