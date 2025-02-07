@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -67,26 +68,28 @@ export function MobileMenu({ mainItems, adminItems, isOpen, onOpenChange }: Mobi
                 key={item.path}
                 to={item.path}
                 onClick={() => onOpenChange(false)}
-                className="text-lg font-medium"
+                className="text-lg font-medium hover:text-primary transition-colors"
               >
                 {item.label}
               </Link>
             );
           })}
           
-          <div className="pt-4 border-t">
-            <h3 className="font-semibold mb-2">Admin</h3>
-            {adminItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => onOpenChange(false)}
-                className="block py-2 text-sm"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+          {adminItems.length > 0 && (
+            <div className="pt-4 border-t">
+              <h3 className="font-semibold mb-2">Admin</h3>
+              {adminItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => onOpenChange(false)}
+                  className="block py-2 text-sm hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          )}
         </nav>
       </SheetContent>
     </Sheet>
