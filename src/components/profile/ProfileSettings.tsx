@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { toast } from "sonner";
-import { User, PencilIcon, Camera, Info } from "lucide-react";
+import { User, PencilIcon, Camera, Info, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Progress } from "@/components/ui/progress";
 
 interface Profile {
   id: string;
@@ -26,6 +27,7 @@ export function ProfileSettings() {
   const [formData, setFormData] = useState<Partial<Profile>>({});
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ['profile'],
@@ -63,20 +65,24 @@ export function ProfileSettings() {
 
       // Handle avatar upload if a new file was selected
       if (avatarFile) {
+        setUploadProgress(10);
         const fileExt = avatarFile.name.split('.').pop();
         const filePath = `${session.user.id}-${Math.random()}.${fileExt}`;
 
+        setUploadProgress(30);
         const { error: uploadError } = await supabase.storage
           .from('avatars')
           .upload(filePath, avatarFile);
 
         if (uploadError) throw uploadError;
+        setUploadProgress(70);
 
         const { data: { publicUrl } } = supabase.storage
           .from('avatars')
           .getPublicUrl(filePath);
 
         avatarUrl = publicUrl;
+        setUploadProgress(90);
       }
 
       const { error } = await supabase
@@ -85,15 +91,22 @@ export function ProfileSettings() {
         .eq('id', session.user.id);
 
       if (error) throw error;
+      setUploadProgress(100);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile'] });
-      toast.success('Profile updated successfully');
+      toast.success('Profile updated successfully', {
+        description: 'Your changes have been saved.'
+      });
       setAvatarFile(null);
+      setUploadProgress(0);
     },
     onError: (error) => {
       console.error('Update error:', error);
-      toast.error('Failed to update profile');
+      toast.error('Failed to update profile', {
+        description: 'Please try again or contact support if the issue persists.'
+      });
+      setUploadProgress(0);
     }
   });
 
@@ -116,7 +129,7 @@ export function ProfileSettings() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
+    <div className="max-w-4xl mx-auto p-4 space-y-6 pb-24">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -129,6 +142,15 @@ export function ProfileSettings() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
+            {updateProfile.isPending && uploadProgress > 0 && (
+              <div className="space-y-2">
+                <Progress value={uploadProgress} className="h-2" />
+                <p className="text-sm text-muted-foreground text-center">
+                  Saving changes... {uploadProgress}%
+                </p>
+              </div>
+            )}
+
             {/* Avatar Upload Section */}
             <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <div className="relative">
@@ -213,20 +235,30 @@ export function ProfileSettings() {
                 />
               </div>
             </div>
-
-            <div className="flex justify-end">
-              <Button 
-                type="submit" 
-                className="w-full md:w-auto"
-                disabled={updateProfile.isPending}
-              >
-                <PencilIcon className="mr-2 h-4 w-4" />
-                {updateProfile.isPending ? 'Saving Changes...' : 'Save Changes'}
-              </Button>
-            </div>
           </form>
         </CardContent>
       </Card>
+
+      {/* Floating Save Button */}
+      <div className="fixed bottom-8 right-8 left-8 flex justify-center">
+        <Button 
+          onClick={handleSubmit}
+          className="shadow-lg w-full max-w-md"
+          disabled={updateProfile.isPending}
+        >
+          {updateProfile.isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Saving Changes...
+            </>
+          ) : (
+            <>
+              <PencilIcon className="mr-2 h-4 w-4" />
+              Save Changes
+            </>
+          )}
+        </Button>
+      </div>
     </div>
   );
 }
