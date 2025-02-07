@@ -1,3 +1,4 @@
+
 @layer utilities {
   /* Responsive Typography */
   .text-responsive {
@@ -40,5 +41,30 @@
   /* Responsive Cards */
   .card-responsive {
     @apply p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Modern Animations */
+  .hover-lift {
+    @apply transition-all duration-200;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+
+  .hover-scale {
+    @apply transition-all duration-200;
+  }
+
+  .hover-scale:hover {
+    @apply scale-105;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-200;
+  }
+
+  .hover-glow:hover {
+    @apply shadow-lg shadow-primary/20;
   }
 }
