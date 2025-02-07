@@ -15,13 +15,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Bell, Package, AlertTriangle } from "lucide-react";
+import { Bell, Package, AlertTriangle, Check } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function SellerDashboard() {
-  // Fetch notifications
-  const { data: notifications } = useQuery({
+  // Fetch notifications with real-time updates
+  const { data: notifications, refetch: refetchNotifications } = useQuery({
     queryKey: ["seller-notifications"],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -37,6 +38,43 @@ export default function SellerDashboard() {
       return data || [];
     }
   });
+
+  // Subscribe to real-time notifications
+  React.useEffect(() => {
+    const channel = supabase
+      .channel('db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'order_notifications',
+        },
+        (payload) => {
+          refetchNotifications();
+          toast.info("New notification received");
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [refetchNotifications]);
+
+  // Mark notification as read
+  const markAsRead = async (notificationId: string) => {
+    const { error } = await supabase
+      .from("order_notifications")
+      .update({ read: true })
+      .eq("id", notificationId);
+
+    if (error) {
+      toast.error("Failed to mark notification as read");
+    } else {
+      refetchNotifications();
+    }
+  };
 
   return (
     <DashboardLayout requiredRole="seller">
@@ -70,7 +108,9 @@ export default function SellerDashboard() {
                       {notifications.map((notification) => (
                         <div
                           key={notification.id}
-                          className="flex items-start space-x-4 rounded-lg border p-3"
+                          className={`flex items-start space-x-4 rounded-lg border p-3 ${
+                            notification.read ? 'bg-muted/50' : 'bg-white'
+                          }`}
                         >
                           {notification.type === 'new_order' ? (
                             <Package className="h-5 w-5 text-blue-500" />
@@ -85,9 +125,21 @@ export default function SellerDashboard() {
                               {new Date(notification.created_at).toLocaleString()}
                             </p>
                           </div>
-                          <Badge variant="secondary">
-                            {notification.type === 'new_order' ? 'Order' : 'Alert'}
-                          </Badge>
+                          <div className="flex flex-col gap-2">
+                            <Badge variant={notification.read ? "secondary" : "default"}>
+                              {notification.type === 'new_order' ? 'Order' : 'Alert'}
+                            </Badge>
+                            {!notification.read && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                                onClick={() => markAsRead(notification.id)}
+                              >
+                                <Check className="h-4 w-4" />
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>
