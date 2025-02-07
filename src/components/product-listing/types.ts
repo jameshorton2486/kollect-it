@@ -8,15 +8,18 @@ export interface Product {
   category_id: string | null;
   condition: string | null;
   era: string | null;
-  created_at: string;  // Removed optional marker since it's required
-  updated_at: string;  // Removed optional marker since it's required
-  user_id: string;     // Removed optional marker since it's required
+  created_at: string;
+  updated_at: string;
+  user_id: string;
   estimated_age: string | null;
   provenance: string | null;
   seo_title: string | null;
   seo_description: string | null;
   seo_keywords: string[] | null;
   social_shares: number | null;
+  stock_quantity: number;
+  low_stock_threshold: number;
+  stock_status: 'in_stock' | 'low_stock' | 'out_of_stock';
   subcategories: {
     name: string;
   }[] | null;

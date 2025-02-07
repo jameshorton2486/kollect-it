@@ -57,10 +57,20 @@ export default function InventoryManagement() {
       return;
     }
 
-    const updates = selectedProducts.map(productId => ({
-      id: productId,
-      stock_quantity: action === 'increment' ? products?.find(p => p.id === productId)?.stock_quantity + 1 : Math.max(0, products?.find(p => p.id === productId)?.stock_quantity - 1)
-    }));
+    const updates = selectedProducts.map(productId => {
+      const product = products?.find(p => p.id === productId);
+      if (!product) return null;
+      
+      return {
+        id: productId,
+        stock_quantity: action === 'increment' ? product.stock_quantity + 1 : Math.max(0, product.stock_quantity - 1),
+        user_id: session.user.id,
+        name: product.name,
+        price: product.price
+      };
+    }).filter(Boolean);
+
+    if (!updates.length) return;
 
     const { error } = await supabase
       .from('products')
@@ -117,7 +127,6 @@ export default function InventoryManagement() {
             </CardContent>
           </Card>
 
-          {/* Search and Filter Section */}
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -144,7 +153,6 @@ export default function InventoryManagement() {
             </div>
           </div>
 
-          {/* Bulk Actions */}
           {selectedProducts.length > 0 && (
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => handleBulkUpdate('increment')}>
@@ -156,7 +164,6 @@ export default function InventoryManagement() {
             </div>
           )}
 
-          {/* Products Grid */}
           {isLoading ? (
             <div>Loading inventory...</div>
           ) : (
@@ -179,7 +186,7 @@ export default function InventoryManagement() {
                       <span>{product.name}</span>
                       <Badge variant={
                         product.stock_status === 'in_stock' ? 'default' :
-                        product.stock_status === 'low_stock' ? 'warning' :
+                        product.stock_status === 'low_stock' ? 'destructive' :
                         'destructive'
                       }>
                         {product.stock_status === 'in_stock' ? 'In Stock' :
