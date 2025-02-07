@@ -459,6 +459,7 @@ export type Database = {
           estimated_age: string | null
           id: string
           image_url: string | null
+          low_stock_threshold: number | null
           name: string
           price: number
           provenance: string | null
@@ -466,6 +467,8 @@ export type Database = {
           seo_keywords: string[] | null
           seo_title: string | null
           social_shares: number | null
+          stock_quantity: number | null
+          stock_status: string | null
           updated_at: string
           user_id: string
         }
@@ -478,6 +481,7 @@ export type Database = {
           estimated_age?: string | null
           id?: string
           image_url?: string | null
+          low_stock_threshold?: number | null
           name: string
           price: number
           provenance?: string | null
@@ -485,6 +489,8 @@ export type Database = {
           seo_keywords?: string[] | null
           seo_title?: string | null
           social_shares?: number | null
+          stock_quantity?: number | null
+          stock_status?: string | null
           updated_at?: string
           user_id: string
         }
@@ -497,6 +503,7 @@ export type Database = {
           estimated_age?: string | null
           id?: string
           image_url?: string | null
+          low_stock_threshold?: number | null
           name?: string
           price?: number
           provenance?: string | null
@@ -504,6 +511,8 @@ export type Database = {
           seo_keywords?: string[] | null
           seo_title?: string | null
           social_shares?: number | null
+          stock_quantity?: number | null
+          stock_status?: string | null
           updated_at?: string
           user_id?: string
         }
