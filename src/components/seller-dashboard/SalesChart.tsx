@@ -1,171 +1,188 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Info } from "lucide-react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 
-interface SalesData {
-  month: string;
-  sales: number;
-  orders: number;
+import { Card, CardContent } from "@/components/ui/card";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
+import { format, startOfWeek, startOfMonth, addDays, addWeeks, addMonths, isSameDay, isSameWeek, isSameMonth } from 'date-fns';
+
+interface Order {
+  id: string;
+  created_at: string;
+  total_amount: number;
+  status: string;
+  products: {
+    id: string;
+    name: string;
+    category_id: string;
+    price: number;
+  };
 }
 
-interface ProductPerformance {
-  name: string;
-  value: number;
+interface SalesChartProps {
+  data: Order[];
+  chartType: "area" | "bar" | "pie";
+  timeFrame: "daily" | "weekly" | "monthly";
+  dateRange: {
+    from: Date;
+    to: Date;
+  };
 }
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
-export function SalesChart() {
-  const { data: salesData } = useQuery({
-    queryKey: ["seller-sales"],
-    queryFn: async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return [];
+export function SalesChart({ data, chartType, timeFrame, dateRange }: SalesChartProps) {
+  const aggregateData = () => {
+    const aggregated = new Map();
+    
+    data.forEach(order => {
+      const date = new Date(order.created_at);
+      let key;
+      
+      switch (timeFrame) {
+        case 'weekly':
+          key = format(startOfWeek(date), 'yyyy-MM-dd');
+          break;
+        case 'monthly':
+          key = format(startOfMonth(date), 'yyyy-MM');
+          break;
+        default:
+          key = format(date, 'yyyy-MM-dd');
+      }
 
-      const { data: orders } = await supabase
-        .from("orders")
-        .select("created_at, total_amount")
-        .eq("seller_id", session.user.id);
+      if (!aggregated.has(key)) {
+        aggregated.set(key, {
+          date: key,
+          sales: 0,
+          orders: 0
+        });
+      }
+      
+      const current = aggregated.get(key);
+      current.sales += order.total_amount;
+      current.orders += 1;
+    });
 
-      // Group orders by month
-      const monthlyData = orders?.reduce((acc: Record<string, SalesData>, order) => {
-        const month = new Date(order.created_at).toLocaleString('default', { month: 'short' });
-        if (!acc[month]) {
-          acc[month] = { month, sales: 0, orders: 0 };
-        }
-        acc[month].sales += order.total_amount;
-        acc[month].orders += 1;
-        return acc;
-      }, {}) || {};
+    return Array.from(aggregated.values());
+  };
 
-      return Object.values(monthlyData);
+  const aggregateByProduct = () => {
+    const productSales = new Map();
+    
+    data.forEach(order => {
+      const productName = order.products?.name || 'Unknown Product';
+      const currentAmount = productSales.get(productName) || 0;
+      productSales.set(productName, currentAmount + order.total_amount);
+    });
+
+    return Array.from(productSales.entries())
+      .map(([name, value]) => ({ name, value }))
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
+  };
+
+  const chartData = chartType === 'pie' ? aggregateByProduct() : aggregateData();
+
+  const renderChart = () => {
+    switch (chartType) {
+      case 'bar':
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="date"
+                tickFormatter={(value) => {
+                  switch (timeFrame) {
+                    case 'weekly':
+                      return `Week ${format(new Date(value), 'w')}`;
+                    case 'monthly':
+                      return format(new Date(value), 'MMM yyyy');
+                    default:
+                      return format(new Date(value), 'MMM d');
+                  }
+                }}
+              />
+              <YAxis />
+              <Tooltip 
+                formatter={(value: number) => [`$${value.toFixed(2)}`, 'Sales']}
+                labelFormatter={(label) => {
+                  switch (timeFrame) {
+                    case 'weekly':
+                      return `Week of ${format(new Date(label), 'MMM d, yyyy')}`;
+                    case 'monthly':
+                      return format(new Date(label), 'MMMM yyyy');
+                    default:
+                      return format(new Date(label), 'MMM d, yyyy');
+                  }
+                }}
+              />
+              <Bar dataKey="sales" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+      
+      case 'pie':
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={150}
+                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+              >
+                {chartData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+      
+      default:
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <AreaChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="date"
+                tickFormatter={(value) => {
+                  switch (timeFrame) {
+                    case 'weekly':
+                      return `Week ${format(new Date(value), 'w')}`;
+                    case 'monthly':
+                      return format(new Date(value), 'MMM yyyy');
+                    default:
+                      return format(new Date(value), 'MMM d');
+                  }
+                }}
+              />
+              <YAxis />
+              <Tooltip 
+                formatter={(value: number) => [`$${value.toFixed(2)}`, 'Sales']}
+                labelFormatter={(label) => {
+                  switch (timeFrame) {
+                    case 'weekly':
+                      return `Week of ${format(new Date(label), 'MMM d, yyyy')}`;
+                    case 'monthly':
+                      return format(new Date(label), 'MMMM yyyy');
+                    default:
+                      return format(new Date(label), 'MMM d, yyyy');
+                  }
+                }}
+              />
+              <Area type="monotone" dataKey="sales" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        );
     }
-  });
-
-  const { data: topProducts } = useQuery({
-    queryKey: ["seller-top-products"],
-    queryFn: async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return [];
-
-      const { data: products } = await supabase
-        .from("orders")
-        .select(`
-          product_id,
-          products (name),
-          total_amount
-        `)
-        .eq("seller_id", session.user.id);
-
-      // Group and sum by product
-      const productPerformance = products?.reduce((acc: Record<string, number>, order) => {
-        const productName = order.products?.name || 'Unknown Product';
-        acc[productName] = (acc[productName] || 0) + Number(order.total_amount);
-        return acc;
-      }, {});
-
-      return Object.entries(productPerformance || {})
-        .map(([name, value]) => ({ name, value }))
-        .sort((a, b) => b.value - a.value)
-        .slice(0, 5);
-    }
-  });
+  };
 
   return (
-    <div className="grid gap-6">
-      <Card className="hover:shadow-lg transition-shadow">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Revenue Overview</CardTitle>
-            <p className="text-sm text-shop-600 mt-1">
-              Monthly revenue and order trends
-            </p>
-          </div>
-          <Info className="h-4 w-4 text-shop-600 cursor-help" />
-        </CardHeader>
-        <CardContent>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" className="text-shop-200" />
-                <XAxis dataKey="month" className="text-shop-600" />
-                <YAxis className="text-shop-600" />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'white',
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '0.375rem'
-                  }}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="sales" 
-                  stroke="#008080" 
-                  fill="#008080" 
-                  fillOpacity={0.2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle>Order Volume</CardTitle>
-            <p className="text-sm text-shop-600">
-              Monthly order distribution
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={salesData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="orders" fill="#008080" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle>Top Products</CardTitle>
-            <p className="text-sm text-shop-600">
-              Best performing products by revenue
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={topProducts}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    label
-                  >
-                    {topProducts?.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    <div className="w-full">
+      {renderChart()}
     </div>
   );
 }
