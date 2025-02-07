@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 interface NavItem {
@@ -17,7 +18,7 @@ export function NavLinks({ items, className = "" }: NavLinksProps) {
         <Link
           key={item.path}
           to={item.path}
-          className={`text-white hover:text-white/80 px-3 py-2 text-sm font-medium ${className}`}
+          className={`text-white hover:text-white/80 px-3 py-2 ${className}`}
         >
           {item.label}
         </Link>

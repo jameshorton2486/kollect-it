@@ -46,27 +46,32 @@ export function MainNavbar() {
   return (
     <nav className="bg-primary shadow-lg">
       <div className="max-w-7xl mx-auto">
-        {/* Upper Navigation Bar */}
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+        <div className="px-6 lg:px-8">
+          <div className="flex items-center justify-between h-24">
+            {/* Logo */}
             <Link 
               to="/" 
-              className="flex items-center space-x-2 group hover:opacity-90 transition-opacity"
+              className="flex items-center space-x-3 group hover:opacity-90 transition-opacity"
             >
-              <h1 className="text-3xl font-bold text-white tracking-tight 
+              <h1 className="text-4xl font-extrabold text-white tracking-tight 
                             shadow-sm transition-all duration-200 group-hover:scale-105">
                 Kollect-It
               </h1>
             </Link>
 
+            {/* Primary Navigation */}
             {!isMobile && (
-              <div className="hidden md:flex items-center space-x-8">
-                <NavLinks items={mainNavItems} />
+              <div className="hidden md:flex items-center space-x-10 ml-12">
+                <NavLinks 
+                  items={mainNavItems} 
+                  className="text-base font-semibold tracking-wide 
+                            hover:text-white hover:scale-105 transition-all duration-200"
+                />
                 {session ? (
                   <Link 
                     to="/seller-dashboard" 
-                    className="text-white hover:text-white/80 px-3 py-2 text-sm font-medium
-                             transition-colors duration-200"
+                    className="text-white hover:text-white/90 px-4 py-2 text-base font-semibold
+                             tracking-wide transition-all duration-200 hover:scale-105"
                   >
                     Sell
                   </Link>
@@ -74,7 +79,8 @@ export function MainNavbar() {
               </div>
             )}
 
-            <div className="flex items-center space-x-4">
+            {/* Secondary Navigation */}
+            <div className="flex items-center space-x-6">
               {/* Search Bar */}
               {!isMobile && (
                 <form onSubmit={handleSearch} className="relative w-64">
@@ -84,7 +90,7 @@ export function MainNavbar() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pr-10 bg-white/10 text-white placeholder:text-white/70 
-                             border-transparent focus:border-white rounded-full"
+                             border-transparent focus:border-white rounded-full text-sm"
                   />
                   <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
                 </form>
@@ -92,12 +98,13 @@ export function MainNavbar() {
 
               {/* Auth/User Actions */}
               {session ? (
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-6">
                   <Link to="/cart">
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="text-white hover:text-white/80 hover:bg-white/10"
+                      className="text-white/90 hover:text-white hover:bg-white/10 
+                               transition-all duration-200"
                     >
                       <ShoppingCart className="h-5 w-5" />
                     </Button>
@@ -105,10 +112,11 @@ export function MainNavbar() {
                   <UserDropdown items={userNavItems} />
                 </div>
               ) : (
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-6">
                   <Link 
                     to="/auth" 
-                    className="text-white hover:text-white/80 px-3 py-2 text-sm font-medium"
+                    className="text-white/90 hover:text-white text-sm font-medium 
+                             transition-colors duration-200"
                   >
                     Login
                   </Link>
