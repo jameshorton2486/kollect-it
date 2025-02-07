@@ -24,6 +24,14 @@
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
+  .button-accent {
+    @apply transition-all duration-200;
+  }
+
+  .button-accent:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
   .card {
     @apply bg-white rounded-lg shadow-sm border border-shop-100 
            hover:shadow-md transition-all duration-200;
