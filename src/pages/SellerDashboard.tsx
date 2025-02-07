@@ -1,4 +1,5 @@
 
+import React from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { WelcomeSection } from "@/components/seller-dashboard/WelcomeSection";
 import { QuickAccessGrid } from "@/components/seller-dashboard/QuickAccessGrid";
