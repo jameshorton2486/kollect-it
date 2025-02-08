@@ -191,6 +191,35 @@ export type Database = {
         }
         Relationships: []
       }
+      favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inventory_alerts: {
         Row: {
           alert_type: string
@@ -275,6 +304,53 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "inventory_history_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_tracking: {
+        Row: {
+          created_at: string | null
+          id: string
+          last_restock_date: string | null
+          low_stock_threshold: number | null
+          next_restock_date: string | null
+          product_id: string
+          seller_id: string
+          sold_count: number
+          stock: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          last_restock_date?: string | null
+          low_stock_threshold?: number | null
+          next_restock_date?: string | null
+          product_id: string
+          seller_id: string
+          sold_count?: number
+          stock?: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          last_restock_date?: string | null
+          low_stock_threshold?: number | null
+          next_restock_date?: string | null
+          product_id?: string
+          seller_id?: string
+          sold_count?: number
+          stock?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_tracking_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
