@@ -52,11 +52,16 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
       const { data, error } = await query;
       if (error) throw error;
       
-      // Transform the data to match our Product interface
+      // Transform and validate the data to match our Product interface
       return (data as any[]).map(item => ({
         ...item,
-        categories: item.categories,
-        subcategories: Array.isArray(item.subcategories) ? item.subcategories : []
+        categories: item.categories || null,
+        subcategories: Array.isArray(item.subcategories) 
+          ? item.subcategories.map(sub => ({
+              id: sub.id,
+              name: sub.name
+            }))
+          : null
       })) as Product[];
     },
   });
@@ -81,4 +86,3 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
     </div>
   );
 }
-
