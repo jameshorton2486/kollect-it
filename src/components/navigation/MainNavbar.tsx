@@ -49,8 +49,10 @@ export function MainNavbar() {
     }
   };
 
-  const handleSellClick = () => {
-    navigate('/seller-dashboard');
+  const handleSellClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Navigating to seller dashboard");
+    navigate('/seller-dashboard', { replace: false });
   };
 
   return (
