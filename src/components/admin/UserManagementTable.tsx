@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,6 +19,11 @@ interface Profile {
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
+  business_name: string | null;
+  is_seller: boolean | null;
+  seller_since: string | null;
+  total_sales: number | null;
+  rating: number | null;
   user_roles: { role: UserRole }[];
 }
 
@@ -27,27 +33,32 @@ export function UserManagementTable() {
   const { data: users, isLoading, error } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
+      // First get profiles
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select('*');
+        .select(`
+          *,
+          user_roles (
+            role
+          )
+        `);
 
       if (profilesError) throw profilesError;
 
-      const profilesWithRoles = await Promise.all(
-        profiles.map(async (profile) => {
-          const { data: roles } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', profile.id);
+      // Then get emails from auth.users
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+      if (authError) throw authError;
 
-          return {
-            ...profile,
-            user_roles: roles || []
-          } as Profile;
-        })
-      );
+      // Combine the data
+      const profilesWithEmails = profiles.map(profile => {
+        const authUser = authUsers.users.find(u => u.id === profile.id);
+        return {
+          ...profile,
+          email: authUser?.email || '',
+        } as Profile;
+      });
 
-      return profilesWithRoles;
+      return profilesWithEmails;
     }
   });
 
