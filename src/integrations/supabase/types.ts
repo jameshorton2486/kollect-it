@@ -660,6 +660,7 @@ export type Database = {
           name: string
           price: number
           provenance: string | null
+          search_vector: unknown | null
           seo_description: string | null
           seo_keywords: string[] | null
           seo_title: string | null
@@ -682,6 +683,7 @@ export type Database = {
           name: string
           price: number
           provenance?: string | null
+          search_vector?: unknown | null
           seo_description?: string | null
           seo_keywords?: string[] | null
           seo_title?: string | null
@@ -704,6 +706,7 @@ export type Database = {
           name?: string
           price?: number
           provenance?: string | null
+          search_vector?: unknown | null
           seo_description?: string | null
           seo_keywords?: string[] | null
           seo_title?: string | null
@@ -1309,6 +1312,13 @@ export type Database = {
           ip_address?: string
         }
         Returns: undefined
+      }
+      matches_saved_search: {
+        Args: {
+          product_row: unknown
+          search_criteria: Json
+        }
+        Returns: boolean
       }
       set_limit: {
         Args: {
