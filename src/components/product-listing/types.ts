@@ -41,4 +41,3 @@ export interface ProductListingGridProps {
     era: string;
   };
 }
-

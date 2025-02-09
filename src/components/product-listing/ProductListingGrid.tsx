@@ -56,27 +56,17 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
         throw error;
       }
       
-      // Log raw data for debugging
-      console.log("Raw data from Supabase:", data);
-      
       // Transform and validate the data to match our Product interface
-      const transformedProducts = (data as any[]).map(item => {
-        console.log("Processing item:", item);
-        console.log("Subcategories:", item.subcategories);
-        
-        return {
-          ...item,
-          categories: item.categories || null,
-          subcategories: Array.isArray(item.subcategories) 
-            ? item.subcategories.map(sub => ({
-                id: sub.id,
-                name: sub.name
-              }))
-            : null
-        };
-      });
-      
-      console.log("Transformed products:", transformedProducts);
+      const transformedProducts = (data as any[]).map(item => ({
+        ...item,
+        categories: item.categories || null,
+        subcategories: Array.isArray(item.subcategories) 
+          ? item.subcategories.map(sub => ({
+              id: sub.id,
+              name: sub.name
+            }))
+          : null
+      }));
       
       return transformedProducts as Product[];
     },
@@ -102,4 +92,3 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
     </div>
   );
 }
-
