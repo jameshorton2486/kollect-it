@@ -49,10 +49,13 @@ export function MainNavbar() {
     }
   };
 
-  const handleSellClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("Navigating to seller dashboard");
-    navigate('/seller-dashboard', { replace: false });
+  const handleSellClick = () => {
+    console.log("Current path:", location.pathname);
+    // Only navigate if we're not already on the seller dashboard
+    if (location.pathname !== '/seller-dashboard') {
+      console.log("Navigating to seller dashboard");
+      navigate('/seller-dashboard');
+    }
   };
 
   return (
