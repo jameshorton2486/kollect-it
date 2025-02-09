@@ -700,26 +700,41 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          business_name: string | null
           created_at: string
           first_name: string | null
           id: string
+          is_seller: boolean | null
           last_name: string | null
+          rating: number | null
+          seller_since: string | null
+          total_sales: number | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          business_name?: string | null
           created_at?: string
           first_name?: string | null
           id: string
+          is_seller?: boolean | null
           last_name?: string | null
+          rating?: number | null
+          seller_since?: string | null
+          total_sales?: number | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          business_name?: string | null
           created_at?: string
           first_name?: string | null
           id?: string
+          is_seller?: boolean | null
           last_name?: string | null
+          rating?: number | null
+          seller_since?: string | null
+          total_sales?: number | null
           updated_at?: string
         }
         Relationships: []
