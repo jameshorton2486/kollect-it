@@ -34,17 +34,15 @@ interface Profile {
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  const { data: users, isLoading, error } = useQuery({
+  const { data: users, isLoading, error } = useQuery<Profile[]>({
     queryKey: ['users'],
     queryFn: async () => {
-      // First get profiles
+      // First get profiles with user roles
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
         .select(`
           *,
-          user_roles:user_roles (
-            role
-          )
+          user_roles:user_roles(role)
         `);
 
       if (profilesError) throw profilesError;
@@ -53,17 +51,18 @@ export function UserManagementTable() {
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       if (authError) throw authError;
 
-      // Combine the data
-      const profilesWithEmails = profiles.map(profile => {
+      // Combine the data and ensure user_roles is properly formatted
+      return profiles.map(profile => {
         const authUser = authUsers.users.find(u => u.id === profile.id);
         return {
           ...profile,
           email: authUser?.email || '',
-          user_roles: profile.user_roles as UserRoleData[]
+          // Ensure user_roles is properly typed even if it's null
+          user_roles: Array.isArray(profile.user_roles) 
+            ? profile.user_roles.map(r => ({ role: r.role as UserRole }))
+            : []
         } as Profile;
       });
-
-      return profilesWithEmails;
     }
   });
 
