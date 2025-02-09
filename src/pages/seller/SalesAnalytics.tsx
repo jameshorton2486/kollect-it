@@ -27,13 +27,14 @@ export default function SalesAnalytics() {
   const [chartType, setChartType] = React.useState<"area" | "bar" | "pie">("area");
   const [timeFrame, setTimeFrame] = React.useState<"daily" | "weekly" | "monthly">("daily");
 
+  // Fetch sales data and analytics
   const { data: salesData } = useQuery({
-    queryKey: ["seller-sales-export", dateRange, timeFrame],
+    queryKey: ["seller-sales-analytics", dateRange, timeFrame],
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return [];
 
-      const { data: orders } = await supabase
+      const { data: orders, error } = await supabase
         .from("orders")
         .select(`
           id,
@@ -52,26 +53,56 @@ export default function SalesAnalytics() {
         .lte("created_at", dateRange.to?.toISOString() ?? '')
         .order("created_at", { ascending: true });
 
+      if (error) {
+        toast.error("Error fetching sales data");
+        return [];
+      }
+
       return orders || [];
     }
   });
 
-  // Calculate key metrics
+  // Fetch seller analytics data
+  const { data: analyticsData } = useQuery({
+    queryKey: ["seller-analytics-metrics"],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return null;
+
+      const { data, error } = await supabase
+        .from("seller_analytics")
+        .select("*")
+        .eq("seller_id", session.user.id)
+        .single();
+
+      if (error) {
+        console.error("Error fetching analytics:", error);
+        return null;
+      }
+
+      return data;
+    }
+  });
+
+  // Calculate metrics from sales data and analytics
   const metrics = React.useMemo(() => {
-    if (!salesData?.length) return {
+    const defaultMetrics = {
       totalSales: 0,
       averageOrderValue: 0,
       totalOrders: 0,
       conversionRate: 0
     };
 
+    if (!salesData?.length) return defaultMetrics;
+
     const totalSales = salesData.reduce((sum, order) => sum + (order.total_amount || 0), 0);
     const totalOrders = salesData.length;
     const averageOrderValue = totalSales / totalOrders;
     
-    // Assuming 100 views per order for demo purposes
-    // In a real app, you'd track actual product views
-    const conversionRate = (totalOrders / (totalOrders * 100)) * 100;
+    // Calculate conversion rate using analytics data if available
+    const conversionRate = analyticsData 
+      ? (analyticsData.total_orders / analyticsData.total_customers) * 100 
+      : (totalOrders / (totalOrders * 100)) * 100;
 
     return {
       totalSales,
@@ -79,7 +110,7 @@ export default function SalesAnalytics() {
       totalOrders,
       conversionRate
     };
-  }, [salesData]);
+  }, [salesData, analyticsData]);
 
   const handleExport = () => {
     if (!salesData?.length) {
@@ -92,8 +123,7 @@ export default function SalesAnalytics() {
       Order_ID: order.id,
       Product: order.products?.name || 'Unknown Product',
       Amount: order.total_amount,
-      Status: order.status,
-      Category: order.products?.category_id || 'Uncategorized'
+      Status: order.status
     }));
 
     const headers = Object.keys(csvData[0]);
@@ -172,7 +202,10 @@ export default function SalesAnalytics() {
               data={salesData || []} 
               chartType={chartType}
               timeFrame={timeFrame}
-              dateRange={dateRange}
+              dateRange={{
+                from: dateRange.from || new Date(),
+                to: dateRange.to || new Date()
+              }}
             />
           </div>
         </div>
