@@ -81,3 +81,4 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
     </div>
   );
 }
+

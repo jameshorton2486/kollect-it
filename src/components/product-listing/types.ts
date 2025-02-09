@@ -25,8 +25,8 @@ export interface Product {
     name: string | null;
   } | null;
   subcategories?: {
-    name: string;
     id: string;
+    name: string;
   }[] | null;
 }
 
@@ -41,3 +41,4 @@ export interface ProductListingGridProps {
     era: string;
   };
 }
+
