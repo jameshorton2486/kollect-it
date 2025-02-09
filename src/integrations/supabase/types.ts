@@ -867,8 +867,11 @@ export type Database = {
         Row: {
           average_rating: number
           created_at: string
+          customer_demographics: Json | null
           growth_rate: number
           id: string
+          inventory_metrics: Json | null
+          monthly_revenue: Json | null
           most_viewed_products: Json | null
           product_performance: Json | null
           recent_notifications: Json | null
@@ -879,12 +882,16 @@ export type Database = {
           total_products: number
           total_revenue: number
           updated_at: string
+          yearly_revenue: Json | null
         }
         Insert: {
           average_rating?: number
           created_at?: string
+          customer_demographics?: Json | null
           growth_rate?: number
           id?: string
+          inventory_metrics?: Json | null
+          monthly_revenue?: Json | null
           most_viewed_products?: Json | null
           product_performance?: Json | null
           recent_notifications?: Json | null
@@ -895,12 +902,16 @@ export type Database = {
           total_products?: number
           total_revenue?: number
           updated_at?: string
+          yearly_revenue?: Json | null
         }
         Update: {
           average_rating?: number
           created_at?: string
+          customer_demographics?: Json | null
           growth_rate?: number
           id?: string
+          inventory_metrics?: Json | null
+          monthly_revenue?: Json | null
           most_viewed_products?: Json | null
           product_performance?: Json | null
           recent_notifications?: Json | null
@@ -911,6 +922,7 @@ export type Database = {
           total_products?: number
           total_revenue?: number
           updated_at?: string
+          yearly_revenue?: Json | null
         }
         Relationships: []
       }
