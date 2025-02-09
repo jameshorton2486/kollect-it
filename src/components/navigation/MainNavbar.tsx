@@ -1,5 +1,5 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingCart, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,7 @@ export function MainNavbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const isMobile = useIsMobile();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { data: session } = useQuery({
     queryKey: ["session"],
@@ -45,6 +46,13 @@ export function MainNavbar() {
     console.log("Search query:", searchQuery);
     if (isMobile) {
       setShowMobileSearch(false);
+    }
+  };
+
+  const handleSellClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname !== '/seller-dashboard') {
+      navigate('/seller-dashboard');
     }
   };
 
@@ -79,18 +87,14 @@ export function MainNavbar() {
                             hover:text-white hover:scale-105 transition-all duration-200"
                 />
                 {session ? (
-                  <Link 
-                    to="/seller-dashboard" 
+                  <Button 
+                    variant="ghost"
                     className="text-white hover:text-white/90 px-4 py-2 text-base font-semibold
                              tracking-wide transition-all duration-200 hover:scale-105"
-                    onClick={(e) => {
-                      if (location.pathname === '/seller-dashboard') {
-                        e.preventDefault();
-                      }
-                    }}
+                    onClick={handleSellClick}
                   >
                     Sell
-                  </Link>
+                  </Button>
                 ) : null}
               </div>
             )}
