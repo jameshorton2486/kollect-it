@@ -1,7 +1,9 @@
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Loader } from '@/components/ui/loader';
 
 export function AuthCallback() {
   const navigate = useNavigate();
@@ -18,8 +20,28 @@ export function AuthCallback() {
       }
 
       if (session) {
-        toast.success('Successfully signed in!');
-        navigate('/');
+        // Check if email is verified when that setting is enabled
+        if (!session.user.email_confirmed_at) {
+          console.log("Email not verified yet");
+          navigate("/email-verification");
+          return;
+        }
+
+        // Fetch user roles
+        const { data: roles, error: rolesError } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id);
+
+        if (rolesError) {
+          console.error("Error fetching user roles:", rolesError);
+        }
+
+        const isAdmin = roles?.some(r => r.role === 'admin');
+        toast.success(`Welcome${isAdmin ? ' Administrator' : ''}! You've successfully logged in.`);
+        navigate(isAdmin ? "/admin" : "/");
+      } else {
+        navigate('/auth');
       }
     };
 
@@ -28,7 +50,7 @@ export function AuthCallback() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      <Loader className="w-8 h-8" />
     </div>
   );
 }
