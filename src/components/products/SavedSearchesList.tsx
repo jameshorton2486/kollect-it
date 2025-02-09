@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -13,9 +14,16 @@ export function SavedSearchesList() {
   const { data: savedSearches, refetch } = useQuery({
     queryKey: ["saved-searches"],
     queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        return [];
+      }
+
       const { data, error } = await supabase
         .from("saved_searches")
         .select("*")
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -48,7 +56,6 @@ export function SavedSearchesList() {
   };
 
   const applySearch = (criteria: any) => {
-    // Convert criteria to URL parameters
     const params = new URLSearchParams();
     Object.entries(criteria).forEach(([key, value]) => {
       if (typeof value === "object") {
@@ -77,7 +84,12 @@ export function SavedSearchesList() {
               <Search className="h-4 w-4 text-muted-foreground" />
               <span className="font-medium">{search.name}</span>
               {search.notify && (
-                <Bell className="h-4 w-4 text-shop-accent1" />
+                <div className="flex items-center gap-1">
+                  <Bell className="h-4 w-4 text-shop-accent1" />
+                  <span className="text-xs text-muted-foreground">
+                    {search.notification_frequency}
+                  </span>
+                </div>
               )}
             </div>
             <div className="flex gap-2">
@@ -97,6 +109,11 @@ export function SavedSearchesList() {
               </Button>
             </div>
           </div>
+          {search.notify && (
+            <div className="mt-2 text-xs text-muted-foreground">
+              Notifications: {search.notification_frequency}
+            </div>
+          )}
         </Card>
       ))}
     </div>

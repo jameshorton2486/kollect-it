@@ -796,8 +796,11 @@ export type Database = {
           created_at: string | null
           criteria: Json
           id: string
+          last_notification_sent: string | null
           name: string
+          notification_frequency: string | null
           notify: boolean | null
+          notify_criteria: Json | null
           updated_at: string | null
           user_id: string
         }
@@ -805,8 +808,11 @@ export type Database = {
           created_at?: string | null
           criteria: Json
           id?: string
+          last_notification_sent?: string | null
           name: string
+          notification_frequency?: string | null
           notify?: boolean | null
+          notify_criteria?: Json | null
           updated_at?: string | null
           user_id: string
         }
@@ -814,8 +820,11 @@ export type Database = {
           created_at?: string | null
           criteria?: Json
           id?: string
+          last_notification_sent?: string | null
           name?: string
+          notification_frequency?: string | null
           notify?: boolean | null
+          notify_criteria?: Json | null
           updated_at?: string | null
           user_id?: string
         }
@@ -1193,6 +1202,36 @@ export type Database = {
         }
         Returns: boolean
       }
+      gtrgm_compress: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      gtrgm_decompress: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      gtrgm_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      gtrgm_options: {
+        Args: {
+          "": unknown
+        }
+        Returns: undefined
+      }
+      gtrgm_out: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
       has_role: {
         Args: {
           user_id: string
@@ -1213,6 +1252,22 @@ export type Database = {
           ip_address?: string
         }
         Returns: undefined
+      }
+      set_limit: {
+        Args: {
+          "": number
+        }
+        Returns: number
+      }
+      show_limit: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      show_trgm: {
+        Args: {
+          "": string
+        }
+        Returns: string[]
       }
     }
     Enums: {

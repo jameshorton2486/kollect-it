@@ -1,8 +1,10 @@
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +24,7 @@ export function SavedSearchDialog({ searchCriteria }: SavedSearchDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchName, setSearchName] = useState("");
   const [notifyOnNew, setNotifyOnNew] = useState(false);
+  const [notificationFrequency, setNotificationFrequency] = useState("daily");
   const { toast } = useToast();
 
   const handleSaveSearch = async () => {
@@ -32,6 +35,7 @@ export function SavedSearchDialog({ searchCriteria }: SavedSearchDialogProps) {
         toast({
           title: "Authentication required",
           description: "Please sign in to save searches",
+          variant: "destructive"
         });
         return;
       }
@@ -42,14 +46,22 @@ export function SavedSearchDialog({ searchCriteria }: SavedSearchDialogProps) {
           name: searchName,
           criteria: searchCriteria,
           notify: notifyOnNew,
-          user_id: user.id
+          user_id: user.id,
+          notify_criteria: {
+            price_threshold: searchCriteria.priceRange.max,
+            condition: searchCriteria.condition,
+            category: searchCriteria.category
+          },
+          notification_frequency: notificationFrequency
         });
 
       if (error) throw error;
 
       toast({
         title: "Search saved successfully",
-        description: "You'll be notified when new items match your criteria",
+        description: notifyOnNew 
+          ? `You'll be notified ${notificationFrequency} when new items match your criteria` 
+          : "Your search has been saved",
       });
       setIsOpen(false);
     } catch (error) {
@@ -92,6 +104,24 @@ export function SavedSearchDialog({ searchCriteria }: SavedSearchDialogProps) {
             />
             <Label htmlFor="notify">Notify me when new items match</Label>
           </div>
+          {notifyOnNew && (
+            <div className="space-y-2">
+              <Label htmlFor="frequency">Notification Frequency</Label>
+              <Select
+                value={notificationFrequency}
+                onValueChange={setNotificationFrequency}
+              >
+                <SelectTrigger id="frequency">
+                  <SelectValue placeholder="Select frequency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="real-time">Real-time</SelectItem>
+                  <SelectItem value="daily">Daily Digest</SelectItem>
+                  <SelectItem value="weekly">Weekly Summary</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <Button onClick={handleSaveSearch} className="w-full">
             Save Search
           </Button>
