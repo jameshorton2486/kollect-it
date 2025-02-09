@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +30,7 @@ export function MainNavbar() {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const isMobile = useIsMobile();
+  const location = useLocation();
 
   const { data: session } = useQuery({
     queryKey: ["session"],
@@ -56,6 +57,11 @@ export function MainNavbar() {
             <Link 
               to="/" 
               className="flex items-center space-x-3 group hover:opacity-90 transition-opacity"
+              onClick={(e) => {
+                if (location.pathname === '/') {
+                  e.preventDefault();
+                }
+              }}
             >
               <h1 className="text-4xl font-extrabold text-white tracking-tight 
                             shadow-sm transition-all duration-200 group-hover:scale-105
@@ -77,6 +83,11 @@ export function MainNavbar() {
                     to="/seller-dashboard" 
                     className="text-white hover:text-white/90 px-4 py-2 text-base font-semibold
                              tracking-wide transition-all duration-200 hover:scale-105"
+                    onClick={(e) => {
+                      if (location.pathname === '/seller-dashboard') {
+                        e.preventDefault();
+                      }
+                    }}
                   >
                     Sell
                   </Link>
