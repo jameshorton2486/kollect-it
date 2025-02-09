@@ -1,23 +1,14 @@
 
 import React from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { SalesChart } from "@/components/seller-dashboard/SalesChart";
-import { StatCards } from "@/components/seller-dashboard/StatCards";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DateRangePicker } from "@/components/ui/date-range-picker";
-import { addDays, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import { DateRange } from "react-day-picker";
+import { AnalyticsHeader } from "@/components/seller-dashboard/AnalyticsHeader";
+import { AnalyticsFilters } from "@/components/seller-dashboard/AnalyticsFilters";
+import { AnalyticsChart } from "@/components/seller-dashboard/AnalyticsChart";
 
 export default function SalesAnalytics() {
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
@@ -99,7 +90,6 @@ export default function SalesAnalytics() {
     const totalOrders = salesData.length;
     const averageOrderValue = totalSales / totalOrders;
     
-    // Calculate conversion rate using analytics data if available
     const conversionRate = analyticsData 
       ? (analyticsData.total_orders / analyticsData.total_customers) * 100 
       : (totalOrders / (totalOrders * 100)) * 100;
@@ -145,70 +135,27 @@ export default function SalesAnalytics() {
   return (
     <DashboardLayout pageTitle="Sales Analytics">
       <div className="container mx-auto py-8 space-y-8">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <h1 className="text-2xl font-bold">Sales Analytics</h1>
-            <Button
-              onClick={handleExport}
-              className="flex items-center gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Export Report
-            </Button>
-          </div>
-
-          <div className="grid gap-4 md:flex md:items-center md:gap-6">
-            <DateRangePicker
-              value={dateRange}
-              onChange={(newDateRange: DateRange | undefined) => {
-                setDateRange(newDateRange);
-              }}
-            />
-            <Select
-              value={timeFrame}
-              onValueChange={(value: "daily" | "weekly" | "monthly") => setTimeFrame(value)}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select time frame" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select
-              value={chartType}
-              onValueChange={(value: "area" | "bar" | "pie") => setChartType(value)}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select chart type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="area">Area Chart</SelectItem>
-                <SelectItem value="bar">Bar Chart</SelectItem>
-                <SelectItem value="pie">Pie Chart</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <StatCards metrics={metrics} />
+        <AnalyticsHeader onExport={handleExport} />
         
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-          <div className="p-6">
-            <h3 className="font-semibold text-lg mb-4">Sales Trend</h3>
-            <SalesChart 
-              data={salesData || []} 
-              chartType={chartType}
-              timeFrame={timeFrame}
-              dateRange={{
-                from: dateRange?.from || new Date(),
-                to: dateRange?.to || new Date()
-              }}
-            />
-          </div>
-        </div>
+        <AnalyticsFilters
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+          timeFrame={timeFrame}
+          onTimeFrameChange={setTimeFrame}
+          chartType={chartType}
+          onChartTypeChange={setChartType}
+        />
+
+        <AnalyticsChart
+          salesData={salesData || []}
+          metrics={metrics}
+          chartType={chartType}
+          timeFrame={timeFrame}
+          dateRange={{
+            from: dateRange?.from || new Date(),
+            to: dateRange?.to || new Date()
+          }}
+        />
       </div>
     </DashboardLayout>
   );
