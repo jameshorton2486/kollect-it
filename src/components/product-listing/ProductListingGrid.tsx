@@ -13,7 +13,16 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
       const [field, direction] = sortBy.split("_");
       let query = supabase
         .from("products")
-        .select("*, categories(*), subcategories(*)");
+        .select(`
+          *,
+          categories (
+            name
+          ),
+          subcategories (
+            id,
+            name
+          )
+        `);
 
       query = query.order(field, { ascending: direction === "asc" });
 
@@ -42,7 +51,13 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as Product[];
+      
+      // Transform the data to match our Product interface
+      return (data as any[]).map(item => ({
+        ...item,
+        categories: item.categories,
+        subcategories: Array.isArray(item.subcategories) ? item.subcategories : []
+      })) as Product[];
     },
   });
 

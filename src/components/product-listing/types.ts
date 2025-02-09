@@ -20,12 +20,13 @@ export interface Product {
   stock_quantity: number;
   low_stock_threshold: number;
   stock_status: 'in_stock' | 'low_stock' | 'out_of_stock';
-  search_vector: any | null; // Added this to match database schema
+  search_vector: any | null;
   categories?: {
     name: string | null;
   } | null;
   subcategories?: {
     name: string;
+    id: string;
   }[] | null;
 }
 
