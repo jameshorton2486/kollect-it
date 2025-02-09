@@ -857,7 +857,11 @@ export type Database = {
           created_at: string
           growth_rate: number
           id: string
+          most_viewed_products: Json | null
+          product_performance: Json | null
+          recent_notifications: Json | null
           seller_id: string
+          social_engagement_metrics: Json | null
           total_customers: number
           total_orders: number
           total_products: number
@@ -869,7 +873,11 @@ export type Database = {
           created_at?: string
           growth_rate?: number
           id?: string
+          most_viewed_products?: Json | null
+          product_performance?: Json | null
+          recent_notifications?: Json | null
           seller_id: string
+          social_engagement_metrics?: Json | null
           total_customers?: number
           total_orders?: number
           total_products?: number
@@ -881,7 +889,11 @@ export type Database = {
           created_at?: string
           growth_rate?: number
           id?: string
+          most_viewed_products?: Json | null
+          product_performance?: Json | null
+          recent_notifications?: Json | null
           seller_id?: string
+          social_engagement_metrics?: Json | null
           total_customers?: number
           total_orders?: number
           total_products?: number
