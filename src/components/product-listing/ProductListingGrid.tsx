@@ -5,12 +5,15 @@ import { ProductCard } from "../products/ProductCard";
 import { NoProductsFound } from "./NoProductsFound";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { Product, ProductListingGridProps } from "./types";
+import { toast } from "sonner";
 
 export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps) {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products", sortBy, filters],
     queryFn: async () => {
+      console.log("Fetching products with filters:", filters);
       const [field, direction] = sortBy.split("_");
+      
       let query = supabase
         .from("products")
         .select(`
@@ -53,21 +56,30 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
       
       if (error) {
         console.error("Supabase query error:", error);
+        toast.error("Error fetching products");
         throw error;
       }
+
+      console.log("Raw response from Supabase:", data);
       
       // Transform and validate the data to match our Product interface
-      const transformedProducts = (data as any[]).map(item => ({
-        ...item,
-        categories: item.categories || null,
-        subcategories: Array.isArray(item.subcategories) 
-          ? item.subcategories.map(sub => ({
-              id: sub.id,
-              name: sub.name
-            }))
-          : null
-      }));
+      const transformedProducts = (data as any[]).map(item => {
+        // Log each item's subcategories for debugging
+        console.log(`Processing product ${item.id} - Subcategories:`, item.subcategories);
+        
+        return {
+          ...item,
+          categories: item.categories || null,
+          subcategories: Array.isArray(item.subcategories) 
+            ? item.subcategories.map(sub => ({
+                id: sub.id || '',
+                name: sub.name || ''
+              }))
+            : null
+        };
+      });
       
+      console.log("Transformed products:", transformedProducts);
       return transformedProducts as Product[];
     },
   });
