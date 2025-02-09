@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -11,7 +12,6 @@ import {
   BarChart,
   CreditCard,
   FileText,
-  Heart,
   Bell,
   LogOut,
   ChevronDown,
@@ -99,7 +99,6 @@ export function DashboardSidebar() {
     { icon: Package, label: "Products", path: "/products" },
     { icon: Store, label: "Sellers", path: "/seller-dashboard" },
     { icon: ShoppingCart, label: "Orders", path: "/purchase-history" },
-    { icon: Heart, label: "Wishlist", path: "/wishlist" },
     { icon: Bell, label: "Notifications", path: "/notifications" },
     
     // Seller specific items

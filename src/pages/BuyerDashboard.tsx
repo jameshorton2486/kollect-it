@@ -1,8 +1,9 @@
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { Heart, ShoppingBag, Clock, MessageSquare } from "lucide-react";
+import { ShoppingBag, Clock, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function BuyerDashboard() {
@@ -19,12 +20,6 @@ export default function BuyerDashboard() {
   }, [navigate]);
 
   const stats = [
-    {
-      title: "Wishlist Items",
-      value: "12",
-      icon: Heart,
-      description: "Items you've saved",
-    },
     {
       title: "Recent Orders",
       value: "3",
@@ -50,7 +45,7 @@ export default function BuyerDashboard() {
       <div className="space-y-6">
         <h1 className="text-3xl font-bold text-shop-800">Buyer Dashboard</h1>
         
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {stats.map((stat) => (
             <Card key={stat.title} className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">

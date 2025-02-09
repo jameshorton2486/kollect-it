@@ -1,6 +1,7 @@
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart, Share2, Facebook, Twitter, Instagram, Link as LinkIcon, Info } from "lucide-react";
+import { Share2, Facebook, Twitter, Instagram, Link as LinkIcon, Info } from "lucide-react";
 import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 import {
@@ -86,34 +87,23 @@ export function ProductInfo({ product, categoryName }: ProductInfoProps) {
     }
   };
 
-  const handleWishlist = () => {
-    toast("Coming soon", {
-      description: "Wishlist functionality will be available soon!"
-    });
-  };
-
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-start">
         <h2 className="text-2xl font-semibold text-shop-800">{product.name}</h2>
-        <div className="flex gap-2">
-          <Button variant="ghost" size="icon" onClick={handleWishlist}>
-            <Heart className="h-5 w-5" />
+        <div className="flex gap-1">
+          <Button variant="ghost" size="icon" onClick={() => handleShare("facebook")}>
+            <Facebook className="h-5 w-5" />
           </Button>
-          <div className="flex gap-1">
-            <Button variant="ghost" size="icon" onClick={() => handleShare("facebook")}>
-              <Facebook className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={() => handleShare("twitter")}>
-              <Twitter className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={() => handleShare("instagram")}>
-              <Instagram className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={() => handleShare("copy")}>
-              <LinkIcon className="h-5 w-5" />
-            </Button>
-          </div>
+          <Button variant="ghost" size="icon" onClick={() => handleShare("twitter")}>
+            <Twitter className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon" onClick={() => handleShare("instagram")}>
+            <Instagram className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon" onClick={() => handleShare("copy")}>
+            <LinkIcon className="h-5 w-5" />
+          </Button>
         </div>
       </div>
 

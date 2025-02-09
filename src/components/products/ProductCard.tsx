@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { Tables } from "@/integrations/supabase/types";
 import { formatPrice } from "@/lib/utils";
 import { ProductDetail } from "./ProductDetail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart, Eye, Clock, Award } from "lucide-react";
+import { Eye, Clock, Award } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 
@@ -22,13 +23,6 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
   const [isHovered, setIsHovered] = useState(false);
   const { toast } = useToast();
   const { addItem } = useCart();
-
-  const handleWishlist = () => {
-    toast({
-      title: "Coming soon!",
-      description: "Wishlist functionality will be available soon.",
-    });
-  };
 
   const handleQuickAdd = () => {
     addItem(product.id);
@@ -99,14 +93,6 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
               onClick={() => setIsDetailOpen(true)}
             >
               <Eye className="h-4 w-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="secondary"
-              className="rounded-full"
-              onClick={handleWishlist}
-            >
-              <Heart className="h-4 w-4" />
             </Button>
           </div>
         </div>
