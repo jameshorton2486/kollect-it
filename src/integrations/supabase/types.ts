@@ -313,8 +313,10 @@ export type Database = {
       }
       inventory_tracking: {
         Row: {
+          avg_daily_sales: number | null
           created_at: string | null
           id: string
+          last_order_date: string | null
           last_restock_date: string | null
           low_stock_threshold: number | null
           next_restock_date: string | null
@@ -325,8 +327,10 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          avg_daily_sales?: number | null
           created_at?: string | null
           id?: string
+          last_order_date?: string | null
           last_restock_date?: string | null
           low_stock_threshold?: number | null
           next_restock_date?: string | null
@@ -337,8 +341,10 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          avg_daily_sales?: number | null
           created_at?: string | null
           id?: string
+          last_order_date?: string | null
           last_restock_date?: string | null
           low_stock_threshold?: number | null
           next_restock_date?: string | null
@@ -501,6 +507,9 @@ export type Database = {
       orders: {
         Row: {
           buyer_id: string
+          cancellation_reason: string | null
+          cancellation_status: string | null
+          cancellation_window: unknown | null
           created_at: string
           estimated_delivery_date: string | null
           guest_info: Json | null
@@ -512,8 +521,10 @@ export type Database = {
           product_id: string
           refund_amount: number | null
           refund_status: string | null
+          restocking_fee_percentage: number | null
           return_reason: string | null
           return_status: string | null
+          return_window: unknown | null
           seller_id: string
           shipping_address: Json
           shipping_label_url: string | null
@@ -526,6 +537,9 @@ export type Database = {
         }
         Insert: {
           buyer_id: string
+          cancellation_reason?: string | null
+          cancellation_status?: string | null
+          cancellation_window?: unknown | null
           created_at?: string
           estimated_delivery_date?: string | null
           guest_info?: Json | null
@@ -537,8 +551,10 @@ export type Database = {
           product_id: string
           refund_amount?: number | null
           refund_status?: string | null
+          restocking_fee_percentage?: number | null
           return_reason?: string | null
           return_status?: string | null
+          return_window?: unknown | null
           seller_id: string
           shipping_address?: Json
           shipping_label_url?: string | null
@@ -551,6 +567,9 @@ export type Database = {
         }
         Update: {
           buyer_id?: string
+          cancellation_reason?: string | null
+          cancellation_status?: string | null
+          cancellation_window?: unknown | null
           created_at?: string
           estimated_delivery_date?: string | null
           guest_info?: Json | null
@@ -562,8 +581,10 @@ export type Database = {
           product_id?: string
           refund_amount?: number | null
           refund_status?: string | null
+          restocking_fee_percentage?: number | null
           return_reason?: string | null
           return_status?: string | null
+          return_window?: unknown | null
           seller_id?: string
           shipping_address?: Json
           shipping_label_url?: string | null
