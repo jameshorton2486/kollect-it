@@ -31,6 +31,25 @@ interface Profile {
   user_roles: UserRoleData[];
 }
 
+interface SupabaseUserRole {
+  role: UserRole;
+}
+
+interface ProfileResponse {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  created_at: string;
+  updated_at: string;
+  business_name: string | null;
+  is_seller: boolean | null;
+  seller_since: string | null;
+  total_sales: number | null;
+  rating: number | null;
+  user_roles: SupabaseUserRole[] | null;
+}
+
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
@@ -43,9 +62,10 @@ export function UserManagementTable() {
         .select(`
           *,
           user_roles:user_roles(role)
-        `);
+        `) as { data: ProfileResponse[] | null, error: Error | null };
 
       if (profilesError) throw profilesError;
+      if (!profiles) throw new Error('No profiles found');
 
       // Then get emails from auth.users
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
@@ -59,7 +79,7 @@ export function UserManagementTable() {
           email: authUser?.email || '',
           // Ensure user_roles is properly typed even if it's null
           user_roles: Array.isArray(profile.user_roles) 
-            ? profile.user_roles.map(r => ({ role: r.role as UserRole }))
+            ? profile.user_roles.map(r => ({ role: r.role }))
             : []
         } as Profile;
       });
