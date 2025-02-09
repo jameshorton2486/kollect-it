@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Tables } from "@/integrations/supabase/types";
 import { formatPrice } from "@/lib/utils";
-import { ProductDetail } from "./ProductDetail";
+import { ProductDetail } from "@/components/products/ProductDetail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, Clock, Award } from "lucide-react";
