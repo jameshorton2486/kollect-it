@@ -49,12 +49,10 @@ export function MainNavbar() {
     }
   };
 
-  const handleSellClick = () => {
-    console.log("Current path:", location.pathname);
-    // Only navigate if we're not already on the seller dashboard
-    if (location.pathname !== '/seller-dashboard') {
-      console.log("Navigating to seller dashboard");
-      navigate('/seller-dashboard');
+  const handleNavigation = (path: string) => {
+    console.log("Navigating to:", path);
+    if (location.pathname !== path) {
+      navigate(path);
     }
   };
 
@@ -88,16 +86,16 @@ export function MainNavbar() {
                   className="text-base font-semibold tracking-wide 
                             hover:text-white hover:scale-105 transition-all duration-200"
                 />
-                {session ? (
+                {session && (
                   <Button 
                     variant="ghost"
                     className="text-white hover:text-white/90 px-4 py-2 text-base font-semibold
                              tracking-wide transition-all duration-200 hover:scale-105"
-                    onClick={handleSellClick}
+                    onClick={() => handleNavigation('/seller-dashboard')}
                   >
                     Sell
                   </Button>
-                ) : null}
+                )}
               </div>
             )}
 
