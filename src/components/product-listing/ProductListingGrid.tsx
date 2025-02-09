@@ -42,7 +42,7 @@ export function ProductListingGrid({ sortBy, filters }: ProductListingGridProps)
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as unknown as Product[];
+      return data as Product[];
     },
   });
 
