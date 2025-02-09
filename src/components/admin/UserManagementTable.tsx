@@ -11,6 +11,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 type UserRole = 'admin' | 'buyer' | 'seller';
 
+interface UserRoleData {
+  role: UserRole;
+}
+
 interface Profile {
   id: string;
   first_name: string | null;
@@ -24,7 +28,7 @@ interface Profile {
   seller_since: string | null;
   total_sales: number | null;
   rating: number | null;
-  user_roles: { role: UserRole }[];
+  user_roles: UserRoleData[];
 }
 
 export function UserManagementTable() {
@@ -38,7 +42,7 @@ export function UserManagementTable() {
         .from('profiles')
         .select(`
           *,
-          user_roles (
+          user_roles:user_roles (
             role
           )
         `);
@@ -55,6 +59,7 @@ export function UserManagementTable() {
         return {
           ...profile,
           email: authUser?.email || '',
+          user_roles: profile.user_roles as UserRoleData[]
         } as Profile;
       });
 
