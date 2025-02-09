@@ -92,27 +92,36 @@ export type Database = {
       }
       auth_tokens: {
         Row: {
+          client_info: Json | null
+          consumed_at: string | null
           created_at: string
           expires_at: string
           id: string
+          invalidated_at: string | null
           token: string
           type: Database["public"]["Enums"]["auth_token_type"]
           used_at: string | null
           user_id: string
         }
         Insert: {
+          client_info?: Json | null
+          consumed_at?: string | null
           created_at?: string
           expires_at: string
           id?: string
+          invalidated_at?: string | null
           token: string
           type: Database["public"]["Enums"]["auth_token_type"]
           used_at?: string | null
           user_id: string
         }
         Update: {
+          client_info?: Json | null
+          consumed_at?: string | null
           created_at?: string
           expires_at?: string
           id?: string
+          invalidated_at?: string | null
           token?: string
           type?: Database["public"]["Enums"]["auth_token_type"]
           used_at?: string | null
@@ -1046,21 +1055,36 @@ export type Database = {
           activity_type: string
           created_at: string
           details: Json | null
+          device_type: string | null
           id: string
+          ip_address: string | null
+          platform: string | null
+          session_id: string | null
+          user_agent: string | null
           user_id: string
         }
         Insert: {
           activity_type: string
           created_at?: string
           details?: Json | null
+          device_type?: string | null
           id?: string
+          ip_address?: string | null
+          platform?: string | null
+          session_id?: string | null
+          user_agent?: string | null
           user_id: string
         }
         Update: {
           activity_type?: string
           created_at?: string
           details?: Json | null
+          device_type?: string | null
           id?: string
+          ip_address?: string | null
+          platform?: string | null
+          session_id?: string | null
+          user_agent?: string | null
           user_id?: string
         }
         Relationships: []
