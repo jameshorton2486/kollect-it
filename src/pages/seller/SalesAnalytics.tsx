@@ -20,7 +20,7 @@ import { addDays, subDays } from "date-fns";
 import { DateRange } from "react-day-picker";
 
 export default function SalesAnalytics() {
-  const [dateRange, setDateRange] = React.useState<DateRange>({
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
     from: subDays(new Date(), 30),
     to: new Date(),
   });
@@ -49,8 +49,8 @@ export default function SalesAnalytics() {
           )
         `)
         .eq("seller_id", session.user.id)
-        .gte("created_at", dateRange.from?.toISOString() ?? '')
-        .lte("created_at", dateRange.to?.toISOString() ?? '')
+        .gte("created_at", dateRange?.from?.toISOString() ?? '')
+        .lte("created_at", dateRange?.to?.toISOString() ?? '')
         .order("created_at", { ascending: true });
 
       if (error) {
@@ -135,7 +135,7 @@ export default function SalesAnalytics() {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `sales_report_${dateRange.from?.toISOString().split('T')[0]}_to_${dateRange.to?.toISOString().split('T')[0]}.csv`;
+    link.download = `sales_report_${dateRange?.from?.toISOString().split('T')[0]}_to_${dateRange?.to?.toISOString().split('T')[0]}.csv`;
     link.click();
     URL.revokeObjectURL(link.href);
     
@@ -160,7 +160,7 @@ export default function SalesAnalytics() {
           <div className="grid gap-4 md:flex md:items-center md:gap-6">
             <DateRangePicker
               value={dateRange}
-              onChange={(newDateRange: DateRange) => {
+              onChange={(newDateRange: DateRange | undefined) => {
                 setDateRange(newDateRange);
               }}
             />
@@ -203,8 +203,8 @@ export default function SalesAnalytics() {
               chartType={chartType}
               timeFrame={timeFrame}
               dateRange={{
-                from: dateRange.from || new Date(),
-                to: dateRange.to || new Date()
+                from: dateRange?.from || new Date(),
+                to: dateRange?.to || new Date()
               }}
             />
           </div>
