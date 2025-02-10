@@ -16,7 +16,7 @@ export function useSession() {
         .insert({
           user_id: session.user.id,
           refresh_token: session.refresh_token,
-          expires_at: new Date(session.expires_at!),
+          expires_at: new Date(session.expires_at!).toISOString(), // Convert Date to ISO string
           user_agent: navigator.userAgent,
         });
 
