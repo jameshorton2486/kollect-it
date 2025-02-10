@@ -38,7 +38,6 @@ export function MFASetup() {
         setSecret(factorData.totp.secret);
         setFactorId(factorData.id);
 
-        // Get initial challenge
         const { data: challengeData, error: challengeError } = await supabase.auth.mfa.challenge({
           factorId: factorData.id
         });
@@ -83,8 +82,8 @@ export function MFASetup() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Shield className="h-5 w-5" />
-          Multi-Factor Authentication
+          <Shield className="h-5 w-5" aria-hidden="true" />
+          <span>Multi-Factor Authentication</span>
         </CardTitle>
         <CardDescription>
           Enhance your account security by enabling two-factor authentication
@@ -96,25 +95,31 @@ export function MFASetup() {
             onClick={enableMFA} 
             disabled={isEnabling}
             className="w-full"
+            aria-label={isEnabling ? "Setting up MFA..." : "Enable MFA"}
           >
             {isEnabling ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Setting up MFA...
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                <span>Setting up MFA...</span>
               </>
             ) : (
               <>
-                <Smartphone className="mr-2 h-4 w-4" />
-                Enable MFA
+                <Smartphone className="mr-2 h-4 w-4" aria-hidden="true" />
+                <span>Enable MFA</span>
               </>
             )}
           </Button>
         ) : (
           <div className="space-y-4">
             <div className="flex flex-col items-center gap-4">
-              <img src={qrCodeUrl} alt="QR Code" className="w-48 h-48" />
+              <img 
+                src={qrCodeUrl} 
+                alt="QR Code for MFA setup" 
+                className="w-48 h-48"
+                aria-label="Scan this QR code with your authenticator app"
+              />
               {secret && (
-                <code className="p-2 bg-muted rounded text-sm break-all">
+                <code className="p-2 bg-muted rounded text-sm break-all select-all" role="textbox" aria-label="Secret key for manual entry">
                   {secret}
                 </code>
               )}
@@ -123,25 +128,31 @@ export function MFASetup() {
               <Label htmlFor="code">Verification Code</Label>
               <Input
                 id="code"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 placeholder="Enter 6-digit code"
                 value={verificationCode}
                 onChange={(e) => setVerificationCode(e.target.value)}
                 maxLength={6}
                 className="text-center text-2xl tracking-widest"
+                aria-label="Enter the 6-digit verification code from your authenticator app"
+                required
               />
             </div>
             <Button 
               onClick={verifyMFA} 
               className="w-full"
               disabled={isVerifying || !verificationCode}
+              aria-label={isVerifying ? "Verifying..." : "Verify and Enable MFA"}
             >
               {isVerifying ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Verifying...
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                  <span>Verifying...</span>
                 </>
               ) : (
-                "Verify and Enable MFA"
+                <span>Verify and Enable MFA</span>
               )}
             </Button>
           </div>

@@ -39,7 +39,7 @@ export function useSession() {
       if (event === 'SIGNED_IN') {
         await trackSession(session);
         toast.success('Successfully authenticated!');
-      } else if (event === 'SIGNED_OUT') {
+      } else if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
         try {
           if (session?.user) {
             const { error } = await supabase
@@ -59,9 +59,6 @@ export function useSession() {
         }
       } else if (event === 'TOKEN_REFRESHED') {
         console.log('Session token refreshed');
-      } else if (event === 'SIGNED_OUT') {
-        toast.error('Your session has ended');
-        navigate('/auth');
       }
     });
 
