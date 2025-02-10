@@ -81,6 +81,15 @@ export function Auth() {
           console.log("Login successful for user:", data.user.id);
           setLoginAttempts(0); // Reset attempts on successful login
           
+          // Check for MFA enrollment
+          const { data: mfaData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+          
+          if (mfaData?.currentLevel === 'aal1' && mfaData?.nextLevel === 'aal2') {
+            // User has MFA enabled but needs to complete the challenge
+            navigate("/mfa-verification");
+            return;
+          }
+          
           if (!data.user.email_confirmed_at) {
             toast.info("Please verify your email to complete the login process.");
             navigate("/email-verification");
@@ -186,4 +195,3 @@ export function Auth() {
     </AuthLayout>
   );
 }
-
