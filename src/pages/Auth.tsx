@@ -21,6 +21,10 @@ export function Auth() {
   const [mode, setMode] = useState<AuthMode>("login");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const maxAttempts = 5;
+  const lockoutDuration = 15 * 60 * 1000; // 15 minutes in milliseconds
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   
   useInactivityTimeout();
   useAuthSession();
@@ -28,23 +32,44 @@ export function Auth() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data: rolesData } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          const { data: rolesData } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', session.user.id);
 
-        const isAdmin = rolesData?.some(r => r.role === 'admin');
-        navigate(isAdmin ? '/admin-dashboard' : '/');
+          const isAdmin = rolesData?.some(r => r.role === 'admin');
+          navigate(isAdmin ? '/admin-dashboard' : '/');
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        toast.error('Error checking authentication status');
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     checkAuth();
   }, [navigate]);
 
+  useEffect(() => {
+    // Check if user is locked out
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      const remainingTime = Math.ceil((lockoutUntil - Date.now()) / 1000 / 60);
+      toast.error(`Too many failed attempts. Please try again in ${remainingTime} minutes.`);
+    }
+  }, [lockoutUntil]);
+
   const handleAuth = async (values: AuthFormValues) => {
+    // Check for lockout
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      const remainingTime = Math.ceil((lockoutUntil - Date.now()) / 1000 / 60);
+      toast.error(`Account is temporarily locked. Please try again in ${remainingTime} minutes.`);
+      return;
+    }
+
     setIsSubmitting(true);
     console.log(`Processing ${mode} request with values:`, values);
 
@@ -53,6 +78,7 @@ export function Auth() {
         const data = await handleLogin(values);
         if (data?.user) {
           console.log("Login successful for user:", data.user.id);
+          setLoginAttempts(0); // Reset attempts on successful login
           
           if (!data.user.email_confirmed_at) {
             toast.info("Please verify your email to complete the login process.");
@@ -101,6 +127,21 @@ export function Auth() {
       }
     } catch (error: any) {
       console.error("Auth error:", error);
+      
+      if (mode === "login") {
+        const newAttempts = loginAttempts + 1;
+        setLoginAttempts(newAttempts);
+        
+        if (newAttempts >= maxAttempts) {
+          const lockoutTime = Date.now() + lockoutDuration;
+          setLockoutUntil(lockoutTime);
+          toast.error(`Account temporarily locked. Please try again in 15 minutes.`);
+          return;
+        }
+        
+        const remainingAttempts = maxAttempts - newAttempts;
+        toast.error(`Login failed. ${remainingAttempts} attempts remaining.`);
+      }
       
       if (error.errors) {
         error.errors.forEach((err: any) => {
