@@ -1,89 +1,18 @@
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { UserTableRow } from "./UserTableRow";
+import { supabase } from "@/integrations/supabase/client";
 import { Table, TableHeader, TableBody } from "@/components/ui/table";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type UserRole = 'admin' | 'buyer' | 'seller';
-
-interface UserRoleData {
-  role: UserRole;
-}
-
-interface Profile {
-  id: string;
-  first_name: string | null;
-  last_name: string | null;
-  email: string;
-  avatar_url: string | null;
-  created_at: string;
-  updated_at: string;
-  business_name: string | null;
-  is_seller: boolean | null;
-  seller_since: string | null;
-  total_sales: number | null;
-  rating: number | null;
-  user_roles: UserRoleData[];
-}
-
-interface SupabaseProfile {
-  id: string;
-  first_name: string | null;
-  last_name: string | null;
-  avatar_url: string | null;
-  created_at: string;
-  updated_at: string;
-  business_name: string | null;
-  is_seller: boolean | null;
-  seller_since: string | null;
-  total_sales: number | null;
-  rating: number | null;
-  user_roles: { role: UserRole }[] | null;
-}
-
-interface AuthUser {
-  id: string;
-  email?: string;
-}
+import { UserTableRow } from "./UserTableRow";
+import { UserTableActions } from "./components/UserTableActions";
+import { useUserData } from "./hooks/useUserData";
+import type { UserRole } from "./types/userManagement";
 
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-
-  const { data: users, isLoading, error } = useQuery<Profile[]>({
-    queryKey: ['users'],
-    queryFn: async () => {
-      // First get profiles with user roles
-      const { data: profiles, error: profilesError } = await supabase
-        .from('profiles')
-        .select(`
-          *,
-          user_roles:user_roles(role)
-        `) as { data: SupabaseProfile[] | null, error: any };
-
-      if (profilesError) throw profilesError;
-      if (!profiles) throw new Error('No profiles found');
-
-      // Then get emails from auth.users
-      const { data: { users: authUsers }, error: authError } = await supabase.auth.admin.listUsers();
-      
-      if (authError) throw authError;
-
-      // Combine the data and ensure user_roles is properly formatted
-      return profiles.map(profile => {
-        const authUser = (authUsers as AuthUser[]).find(u => u.id === profile.id);
-        return {
-          ...profile,
-          email: authUser?.email || '',
-          user_roles: profile.user_roles?.map(r => ({ role: r.role })) || []
-        } satisfies Profile;
-      });
-    }
-  });
+  const { data: users, isLoading, error } = useUserData();
 
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
@@ -121,22 +50,7 @@ export function UserManagementTable() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold">User Management</h2>
-          <div className="space-x-2">
-            <Button
-              variant="destructive"
-              disabled={selectedUsers.length === 0}
-              onClick={() => {/* Implement bulk delete */}}
-            >
-              Delete Selected
-            </Button>
-            <Button
-              variant="outline"
-              disabled={selectedUsers.length === 0}
-              onClick={() => {/* Implement bulk role update */}}
-            >
-              Update Roles
-            </Button>
-          </div>
+          <UserTableActions selectedUsers={selectedUsers} />
         </div>
 
         <Table>
