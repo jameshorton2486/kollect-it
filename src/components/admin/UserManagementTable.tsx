@@ -46,6 +46,11 @@ interface SupabaseProfile {
   user_roles: { role: UserRole }[] | null;
 }
 
+interface AuthUser {
+  id: string;
+  email?: string;
+}
+
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
@@ -70,7 +75,7 @@ export function UserManagementTable() {
 
       // Combine the data and ensure user_roles is properly formatted
       return profiles.map(profile => {
-        const authUser = authUsers.find(u => u.id === profile.id);
+        const authUser = (authUsers as AuthUser[]).find(u => u.id === profile.id);
         return {
           ...profile,
           email: authUser?.email || '',
