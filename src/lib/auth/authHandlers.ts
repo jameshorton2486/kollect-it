@@ -1,8 +1,7 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { AuthFormValues } from "@/components/auth/AuthForm";
 import { loginSchema, registerSchema } from "@/lib/validations/schemas";
-import { AuthError, User, Session } from '@supabase/supabase-js';
+import { AuthError, User, Session, Provider } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 
 /**
@@ -96,4 +95,31 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
   }
 
   return data;
+}
+
+/**
+ * Handles OAuth sign in with supported providers
+ * @param provider - The OAuth provider to use (e.g., 'google', 'github')
+ * @returns Promise resolving to the OAuth sign in response
+ * @throws Error if OAuth sign in fails
+ */
+export async function handleOAuthSignIn(provider: Provider) {
+  try {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("OAuth error:", error);
+      throw new Error("Failed to sign in with OAuth provider");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("OAuth sign in error:", error);
+    throw error;
+  }
 }

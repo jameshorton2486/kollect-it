@@ -13,6 +13,7 @@ import { handleLogin, handleSignup } from "@/lib/auth/authHandlers";
 import { useSession } from "@/hooks/useSession";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { OAuthProviders } from "@/components/auth/OAuthProviders";
 
 export type AuthMode = "login" | "signup" | "guest";
 
@@ -176,6 +177,8 @@ export function Auth() {
         isSubmitting={isSubmitting}
       />
 
+      <OAuthProviders />
+
       <AuthSwitchMode 
         mode={mode} 
         onChange={setMode}
@@ -183,3 +186,4 @@ export function Auth() {
     </AuthLayout>
   );
 }
+
