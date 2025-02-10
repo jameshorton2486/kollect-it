@@ -23,9 +23,18 @@ export default function MFAVerification() {
 
     setIsVerifying(true);
     try {
-      const { data, error } = await supabase.auth.mfa.verify({
-        code,
+      // First get the challenge
+      const { data: challengeData, error: challengeError } = await supabase.auth.mfa.challenge({
         factorId: 'totp'
+      });
+
+      if (challengeError) throw challengeError;
+
+      // Then verify with the challenge ID
+      const { data, error } = await supabase.auth.mfa.verify({
+        factorId: 'totp',
+        challengeId: challengeData.id,
+        code
       });
 
       if (error) throw error;

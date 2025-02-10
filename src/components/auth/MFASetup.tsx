@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Shield, Smartphone } from "lucide-react";
+import { Shield, Smartphone, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export function MFASetup() {
@@ -13,6 +13,9 @@ export function MFASetup() {
   const [verificationCode, setVerificationCode] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const [secret, setSecret] = useState<string | null>(null);
+  const [factorId, setFactorId] = useState<string | null>(null);
+  const [challengeId, setChallengeId] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const enableMFA = async () => {
     try {
@@ -33,6 +36,15 @@ export function MFASetup() {
       if (factorData) {
         setQrCodeUrl(factorData.totp.qr_code);
         setSecret(factorData.totp.secret);
+        setFactorId(factorData.id);
+
+        // Get initial challenge
+        const { data: challengeData, error: challengeError } = await supabase.auth.mfa.challenge({
+          factorId: factorData.id
+        });
+
+        if (challengeError) throw challengeError;
+        setChallengeId(challengeData.id);
       }
     } catch (error: any) {
       toast.error(error.message || "Failed to enable MFA");
@@ -42,14 +54,16 @@ export function MFASetup() {
   };
 
   const verifyMFA = async () => {
-    try {
-      if (!verificationCode) {
-        toast.error("Please enter verification code");
-        return;
-      }
+    if (!verificationCode || !factorId || !challengeId) {
+      toast.error("Please enter verification code");
+      return;
+    }
 
-      const { data, error } = await supabase.auth.mfa.challenge({
-        factorId: 'totp',
+    try {
+      setIsVerifying(true);
+      const { data, error } = await supabase.auth.mfa.verify({
+        factorId,
+        challengeId,
         code: verificationCode
       });
 
@@ -60,6 +74,8 @@ export function MFASetup() {
       }
     } catch (error: any) {
       toast.error(error.message || "Failed to verify MFA");
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -81,8 +97,17 @@ export function MFASetup() {
             disabled={isEnabling}
             className="w-full"
           >
-            <Smartphone className="mr-2 h-4 w-4" />
-            {isEnabling ? "Setting up MFA..." : "Enable MFA"}
+            {isEnabling ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Setting up MFA...
+              </>
+            ) : (
+              <>
+                <Smartphone className="mr-2 h-4 w-4" />
+                Enable MFA
+              </>
+            )}
           </Button>
         ) : (
           <div className="space-y-4">
@@ -102,14 +127,22 @@ export function MFASetup() {
                 value={verificationCode}
                 onChange={(e) => setVerificationCode(e.target.value)}
                 maxLength={6}
+                className="text-center text-2xl tracking-widest"
               />
             </div>
             <Button 
               onClick={verifyMFA} 
               className="w-full"
-              disabled={!verificationCode}
+              disabled={isVerifying || !verificationCode}
             >
-              Verify and Enable MFA
+              {isVerifying ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Verifying...
+                </>
+              ) : (
+                "Verify and Enable MFA"
+              )}
             </Button>
           </div>
         )}

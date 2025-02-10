@@ -4,23 +4,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-/**
- * Hook for managing user session lifecycle and tracking
- * 
- * Handles:
- * - Session state changes (sign in, sign out)
- * - Session tracking in database
- * - Automatic redirection on session events
- * - Clean up of expired sessions
- */
 export function useSession() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    /**
-     * Tracks a new user session in the database
-     * @param session - The active Supabase session
-     */
     const trackSession = async (session: any) => {
       if (!session?.user) return;
 
@@ -46,7 +33,6 @@ export function useSession() {
       }
     };
 
-    // Subscribe to auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('Auth state changed:', event);
       
@@ -73,13 +59,12 @@ export function useSession() {
         }
       } else if (event === 'TOKEN_REFRESHED') {
         console.log('Session token refreshed');
-      } else if (event === 'USER_DELETED') {
-        toast.error('Your account has been deleted');
+      } else if (event === 'SIGNED_OUT') {
+        toast.error('Your session has ended');
         navigate('/auth');
       }
     });
 
-    // Cleanup subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
