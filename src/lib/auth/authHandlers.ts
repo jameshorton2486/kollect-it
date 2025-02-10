@@ -5,6 +5,12 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 import { AuthError, User, Session } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 
+/**
+ * Handles user login authentication
+ * @param values - Object containing login credentials (email and password)
+ * @returns Promise resolving to the authenticated user and session
+ * @throws Error if login fails or rate limit is exceeded
+ */
 export async function handleLogin(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
   // Validate login data
   loginSchema.parse(values);
@@ -47,6 +53,12 @@ export async function handleLogin(values: AuthFormValues): Promise<{ user: User 
   return data;
 }
 
+/**
+ * Handles new user registration
+ * @param values - Object containing registration details (email, password, and optional profile info)
+ * @returns Promise resolving to the created user and session
+ * @throws Error if registration fails or user already exists
+ */
 export async function handleSignup(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
   // Validate registration data
   registerSchema.parse(values);
