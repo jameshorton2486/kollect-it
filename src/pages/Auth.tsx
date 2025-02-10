@@ -14,6 +14,7 @@ import { useSession } from "@/hooks/useSession";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 import { OAuthProviders } from "@/components/auth/OAuthProviders";
+import { useQuery } from "@tanstack/react-query";
 
 export type AuthMode = "login" | "signup" | "guest";
 
@@ -21,7 +22,6 @@ export function Auth() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<AuthMode>("login");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [loginAttempts, setLoginAttempts] = useState(0);
   const maxAttempts = 5;
   const lockoutDuration = 15 * 60 * 1000; // 15 minutes in milliseconds
@@ -31,32 +31,42 @@ export function Auth() {
   useAuthSession();
   useSession();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          const { data: rolesData } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', session.user.id);
+  const { data: session, isLoading: isSessionLoading } = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) throw error;
+      return session;
+    }
+  });
 
-          const isAdmin = rolesData?.some(r => r.role === 'admin');
-          navigate(isAdmin ? '/admin-dashboard' : '/');
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        toast.error('Error checking authentication status');
-      } finally {
-        setIsLoading(false);
+  const { data: userRoles, isLoading: isRolesLoading } = useQuery({
+    queryKey: ["userRoles", session?.user?.id],
+    enabled: !!session?.user?.id,
+    queryFn: async () => {
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session!.user.id);
+
+      if (rolesError) throw rolesError;
+      return rolesData || [];
+    }
+  });
+
+  useEffect(() => {
+    if (session && userRoles) {
+      const isAdmin = userRoles.some(r => r.role === 'admin');
+      console.log("User authenticated with roles:", userRoles);
+      if (!session.user.email_confirmed_at) {
+        navigate("/email-verification");
+        return;
       }
-    };
-
-    checkAuth();
-  }, [navigate]);
+      navigate(isAdmin ? '/admin-dashboard' : '/');
+    }
+  }, [session, userRoles, navigate]);
 
   useEffect(() => {
-    // Check if user is locked out
     if (lockoutUntil && Date.now() < lockoutUntil) {
       const remainingTime = Math.ceil((lockoutUntil - Date.now()) / 1000 / 60);
       toast.error(`Too many failed attempts. Please try again in ${remainingTime} minutes.`);
@@ -64,7 +74,6 @@ export function Auth() {
   }, [lockoutUntil]);
 
   const handleAuth = async (values: AuthFormValues) => {
-    // Check for lockout
     if (lockoutUntil && Date.now() < lockoutUntil) {
       const remainingTime = Math.ceil((lockoutUntil - Date.now()) / 1000 / 60);
       toast.error(`Account is temporarily locked. Please try again in ${remainingTime} minutes.`);
@@ -85,7 +94,6 @@ export function Auth() {
           const { data: mfaData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
           
           if (mfaData?.currentLevel === 'aal1' && mfaData?.nextLevel === 'aal2') {
-            // User has MFA enabled but needs to complete the challenge
             navigate("/mfa-verification");
             return;
           }
@@ -165,7 +173,7 @@ export function Auth() {
     }
   };
 
-  if (isLoading) {
+  if (isSessionLoading || isRolesLoading) {
     return (
       <AuthLayout>
         <div className="flex items-center justify-center min-h-[400px]">
