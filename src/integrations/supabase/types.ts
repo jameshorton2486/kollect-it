@@ -912,6 +912,47 @@ export type Database = {
         }
         Relationships: []
       }
+      session_audit_logs: {
+        Row: {
+          created_at: string | null
+          event_details: Json | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          session_id: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_details?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_details?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_audit_logs_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "user_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       shipping_zones: {
         Row: {
           additional_item_cost: number
@@ -1140,32 +1181,47 @@ export type Database = {
       }
       user_sessions: {
         Row: {
+          compliance_accepted: boolean | null
           created_at: string | null
+          device_info: Json | null
           expires_at: string
+          gdpr_consent: Json | null
           id: string
           ip_address: string | null
           is_active: boolean | null
+          last_active: string | null
           refresh_token: string
+          session_metadata: Json | null
           user_agent: string | null
           user_id: string | null
         }
         Insert: {
+          compliance_accepted?: boolean | null
           created_at?: string | null
+          device_info?: Json | null
           expires_at: string
+          gdpr_consent?: Json | null
           id?: string
           ip_address?: string | null
           is_active?: boolean | null
+          last_active?: string | null
           refresh_token: string
+          session_metadata?: Json | null
           user_agent?: string | null
           user_id?: string | null
         }
         Update: {
+          compliance_accepted?: boolean | null
           created_at?: string | null
+          device_info?: Json | null
           expires_at?: string
+          gdpr_consent?: Json | null
           id?: string
           ip_address?: string | null
           is_active?: boolean | null
+          last_active?: string | null
           refresh_token?: string
+          session_metadata?: Json | null
           user_agent?: string | null
           user_id?: string | null
         }
