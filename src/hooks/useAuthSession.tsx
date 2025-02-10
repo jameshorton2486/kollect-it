@@ -16,7 +16,7 @@ export function useAuthSession() {
       }
       if (session) {
         // Fetch user roles
-        const { data: roles, error: rolesError } = await supabase
+        const { data: rolesData, error: rolesError } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', session.user.id);
@@ -26,7 +26,8 @@ export function useAuthSession() {
           return;
         }
 
-        const isAdmin = roles?.some(r => r.role === 'admin');
+        const roles = rolesData || [];
+        const isAdmin = roles.some(r => r.role === 'admin');
         console.log("User already authenticated:", session.user.id, isAdmin ? '(admin)' : '');
         toast.success("Welcome back! You are already logged in.");
         navigate(isAdmin ? "/admin-dashboard" : "/");
@@ -55,7 +56,7 @@ export function useAuthSession() {
         console.log("User authenticated successfully:", session.user.id);
         
         // Fetch user roles
-        const { data: roles, error: rolesError } = await supabase
+        const { data: rolesData, error: rolesError } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', session.user.id);
@@ -65,7 +66,8 @@ export function useAuthSession() {
           return;
         }
 
-        const isAdmin = roles?.some(r => r.role === 'admin');
+        const roles = rolesData || [];
+        const isAdmin = roles.some(r => r.role === 'admin');
         toast.success(`Welcome${isAdmin ? ' Administrator' : ''}! You've successfully logged in.`);
         navigate(isAdmin ? "/admin-dashboard" : "/");
       }

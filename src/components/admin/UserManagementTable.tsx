@@ -31,34 +31,10 @@ interface Profile {
   user_roles: UserRoleData[];
 }
 
-interface SupabaseUserRole {
-  role: UserRole;
-}
-
-interface ProfileResponse {
-  id: string;
-  first_name: string | null;
-  last_name: string | null;
-  avatar_url: string | null;
-  created_at: string;
-  updated_at: string;
-  business_name: string | null;
-  is_seller: boolean | null;
-  seller_since: string | null;
-  total_sales: number | null;
-  rating: number | null;
-  user_roles: SupabaseUserRole[] | null;
-}
-
-interface AuthUser {
-  id: string;
-  email?: string;
-}
-
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  const { data: users, isLoading, error } = useQuery<Profile[]>({
+  const { data: users, isLoading, error } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       // First get profiles with user roles
@@ -67,28 +43,25 @@ export function UserManagementTable() {
         .select(`
           *,
           user_roles:user_roles(role)
-        `) as { data: ProfileResponse[] | null, error: Error | null };
+        `);
 
       if (profilesError) throw profilesError;
       if (!profiles) throw new Error('No profiles found');
 
       // Then get emails from auth.users
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers() as { 
-        data: { users: AuthUser[] }, 
-        error: Error | null 
-      };
+      const { data: { users: authUsers }, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) throw authError;
 
       // Combine the data and ensure user_roles is properly formatted
       return profiles.map(profile => {
-        const authUser = authUsers.users.find(u => u.id === profile.id);
+        const authUser = authUsers.find(u => u.id === profile.id);
         return {
           ...profile,
           email: authUser?.email || '',
           // Ensure user_roles is properly typed even if it's null
           user_roles: Array.isArray(profile.user_roles) 
-            ? profile.user_roles.map(r => ({ role: r.role }))
+            ? profile.user_roles.map(r => ({ role: r.role as UserRole }))
             : []
         } as Profile;
       });
