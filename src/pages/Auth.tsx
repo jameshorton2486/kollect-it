@@ -10,6 +10,7 @@ import { AuthSwitchMode } from "@/components/auth/AuthSwitchMode";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { useInactivityTimeout } from "@/hooks/useInactivityTimeout";
 import { handleLogin, handleSignup } from "@/lib/auth/authHandlers";
+import { supabase } from "@/integrations/supabase/client";
 
 export type AuthMode = "login" | "signup" | "guest";
 
@@ -113,3 +114,4 @@ export function Auth() {
     </AuthLayout>
   );
 }
+
