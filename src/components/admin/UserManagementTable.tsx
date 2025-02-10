@@ -31,10 +31,25 @@ interface Profile {
   user_roles: UserRoleData[];
 }
 
+interface SupabaseProfile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  created_at: string;
+  updated_at: string;
+  business_name: string | null;
+  is_seller: boolean | null;
+  seller_since: string | null;
+  total_sales: number | null;
+  rating: number | null;
+  user_roles: { role: UserRole }[] | null;
+}
+
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  const { data: users, isLoading, error } = useQuery({
+  const { data: users, isLoading, error } = useQuery<Profile[]>({
     queryKey: ['users'],
     queryFn: async () => {
       // First get profiles with user roles
@@ -43,7 +58,7 @@ export function UserManagementTable() {
         .select(`
           *,
           user_roles:user_roles(role)
-        `);
+        `) as { data: SupabaseProfile[] | null, error: any };
 
       if (profilesError) throw profilesError;
       if (!profiles) throw new Error('No profiles found');
@@ -61,7 +76,7 @@ export function UserManagementTable() {
           email: authUser?.email || '',
           // Ensure user_roles is properly typed even if it's null
           user_roles: Array.isArray(profile.user_roles) 
-            ? profile.user_roles.map(r => ({ role: r.role as UserRole }))
+            ? profile.user_roles.map(r => ({ role: r.role }))
             : []
         } as Profile;
       });
@@ -94,7 +109,7 @@ export function UserManagementTable() {
   if (error) {
     return (
       <div className="p-4 text-red-500">
-        Error loading users: {error.message}
+        Error loading users: {(error as Error).message}
       </div>
     );
   }
