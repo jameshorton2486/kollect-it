@@ -35,11 +35,18 @@ export function AuthCallback() {
 
         if (rolesError) {
           console.error("Error fetching user roles:", rolesError);
+          toast.error('Error fetching user roles');
+          return;
         }
 
         const isAdmin = roles?.some(r => r.role === 'admin');
         toast.success(`Welcome${isAdmin ? ' Administrator' : ''}! You've successfully logged in.`);
-        navigate(isAdmin ? "/admin" : "/");
+        
+        if (isAdmin) {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/');
+        }
       } else {
         navigate('/auth');
       }

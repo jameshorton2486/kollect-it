@@ -15,9 +15,21 @@ export function useAuthSession() {
         toast.error("Error checking session status");
       }
       if (session) {
-        console.log("User already authenticated:", session.user.id);
+        // Fetch user roles
+        const { data: roles, error: rolesError } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id);
+
+        if (rolesError) {
+          console.error("Error fetching user roles:", rolesError);
+          return;
+        }
+
+        const isAdmin = roles?.some(r => r.role === 'admin');
+        console.log("User already authenticated:", session.user.id, isAdmin ? '(admin)' : '');
         toast.success("Welcome back! You are already logged in.");
-        navigate("/");
+        navigate(isAdmin ? "/admin-dashboard" : "/");
       }
     };
     
@@ -50,11 +62,12 @@ export function useAuthSession() {
 
         if (rolesError) {
           console.error("Error fetching user roles:", rolesError);
+          return;
         }
 
         const isAdmin = roles?.some(r => r.role === 'admin');
         toast.success(`Welcome${isAdmin ? ' Administrator' : ''}! You've successfully logged in.`);
-        navigate(isAdmin ? "/admin" : "/");
+        navigate(isAdmin ? "/admin-dashboard" : "/");
       }
     });
 

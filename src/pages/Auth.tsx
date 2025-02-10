@@ -36,6 +36,25 @@ export function Auth() {
             navigate("/email-verification");
             return;
           }
+
+          // Fetch user roles after successful login
+          const { data: roles, error: rolesError } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', data.user.id);
+
+          if (rolesError) {
+            console.error("Error fetching user roles:", rolesError);
+            toast.error('Error fetching user roles');
+            return;
+          }
+
+          const isAdmin = roles?.some(r => r.role === 'admin');
+          if (isAdmin) {
+            navigate('/admin-dashboard');
+          } else {
+            navigate('/');
+          }
         }
       } else if (mode === "signup") {
         const data = await handleSignup(values);
@@ -45,6 +64,14 @@ export function Auth() {
           
           if (data.user.identities?.[0]?.identity_data?.email_verified) {
             toast.success("You are now logged in!");
+            // Fetch roles and redirect appropriately after signup
+            const { data: roles } = await supabase
+              .from('user_roles')
+              .select('role')
+              .eq('user_id', data.user.id);
+
+            const isAdmin = roles?.some(r => r.role === 'admin');
+            navigate(isAdmin ? '/admin-dashboard' : '/');
           } else {
             toast.info("Please check your email to verify your account.");
             navigate("/email-verification");
@@ -86,4 +113,3 @@ export function Auth() {
     </AuthLayout>
   );
 }
-
