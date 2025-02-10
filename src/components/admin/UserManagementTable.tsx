@@ -50,6 +50,11 @@ interface ProfileResponse {
   user_roles: SupabaseUserRole[] | null;
 }
 
+interface AuthUser {
+  id: string;
+  email?: string;
+}
+
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
@@ -68,7 +73,11 @@ export function UserManagementTable() {
       if (!profiles) throw new Error('No profiles found');
 
       // Then get emails from auth.users
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers() as { 
+        data: { users: AuthUser[] }, 
+        error: Error | null 
+      };
+      
       if (authError) throw authError;
 
       // Combine the data and ensure user_roles is properly formatted
