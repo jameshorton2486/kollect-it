@@ -101,7 +101,7 @@ export function useSession() {
             updateActivity(session.access_token);
           }, 5 * 60 * 1000); // Update every 5 minutes
         }
-      } else if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
+      } else if (['SIGNED_OUT', 'USER_DELETED'].includes(event)) {
         try {
           if (session?.user) {
             const { error } = await supabase
