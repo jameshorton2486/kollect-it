@@ -74,11 +74,8 @@ export function UserManagementTable() {
         return {
           ...profile,
           email: authUser?.email || '',
-          // Ensure user_roles is properly typed even if it's null
-          user_roles: Array.isArray(profile.user_roles) 
-            ? profile.user_roles.map(r => ({ role: r.role }))
-            : []
-        } as Profile;
+          user_roles: profile.user_roles?.map(r => ({ role: r.role })) || []
+        } satisfies Profile;
       });
     }
   });
