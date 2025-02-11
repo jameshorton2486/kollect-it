@@ -1,3 +1,4 @@
+
 import { Check, ShoppingCart, Truck, CreditCard } from "lucide-react";
 
 interface CheckoutProgressProps {
@@ -17,7 +18,7 @@ export function CheckoutProgress({ currentStep }: CheckoutProgressProps) {
   };
 
   return (
-    <div className="w-full py-4">
+    <div className="w-full py-6">
       <div className="flex justify-between">
         {steps.map((step, index) => {
           const isActive = index <= getCurrentStepIndex();
@@ -27,35 +28,36 @@ export function CheckoutProgress({ currentStep }: CheckoutProgressProps) {
             <div key={step.id} className="flex flex-col items-center flex-1">
               <div className="relative flex items-center justify-center w-full">
                 <div
-                  className={`h-1 flex-1 ${
-                    index === 0 ? "invisible" : isActive ? "bg-shop-accent1" : "bg-gray-200"
+                  className={`h-0.5 flex-1 ${
+                    index === 0 ? "invisible" : isActive ? "bg-[#C6A961]" : "bg-gray-200"
                   }`}
                 />
                 <div
                   className={`
-                    w-8 h-8 rounded-full flex items-center justify-center
+                    w-10 h-10 rounded-full flex items-center justify-center
+                    transition-all duration-300
                     ${
                       isActive
-                        ? "bg-shop-accent1 text-white"
+                        ? "bg-[#C6A961] text-white shadow-lg scale-110"
                         : "bg-gray-200 text-gray-400"
                     }
                   `}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-5 h-5" />
                 </div>
                 <div
-                  className={`h-1 flex-1 ${
+                  className={`h-0.5 flex-1 ${
                     index === steps.length - 1
                       ? "invisible"
                       : index < getCurrentStepIndex()
-                      ? "bg-shop-accent1"
+                      ? "bg-[#C6A961]"
                       : "bg-gray-200"
                   }`}
                 />
               </div>
               <span
-                className={`mt-2 text-sm ${
-                  isActive ? "text-shop-accent1 font-medium" : "text-gray-400"
+                className={`mt-3 text-sm font-medium transition-colors duration-300 ${
+                  isActive ? "text-[#C6A961]" : "text-gray-500"
                 }`}
               >
                 {step.label}

@@ -7,6 +7,7 @@ import { ShippingForm, type ShippingInfo } from "@/components/checkout/ShippingF
 import { PaymentForm } from "@/components/checkout/PaymentForm";
 import type { PaymentInfo } from "@/components/checkout/payment/types";
 import { OrderSummary } from "@/components/checkout/OrderSummary";
+import { CheckoutProgress } from "@/components/checkout/CheckoutProgress";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -23,6 +24,7 @@ export default function Checkout() {
   const [error, setError] = useState<string | null>(null);
   const [isGuest, setIsGuest] = useState(true);
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo | null>(null);
+  const [currentStep, setCurrentStep] = useState<"shipping" | "payment" | "confirmation">("shipping");
 
   const handleCheckout = async (shippingInfo: ShippingInfo, paymentInfo: PaymentInfo) => {
     setIsLoading(true);
@@ -35,7 +37,6 @@ export default function Checkout() {
         throw new Error("Your cart is empty");
       }
 
-      // First, fetch the complete product details for each item
       const productDetails = await Promise.all(
         items.map(async (item) => {
           const { data } = await supabase
@@ -47,7 +48,6 @@ export default function Checkout() {
         })
       );
 
-      // Group items by seller using the fetched product details
       const itemsBySeller = items.reduce((acc, item, index) => {
         const product = productDetails[index];
         if (!product) return acc;
@@ -60,20 +60,18 @@ export default function Checkout() {
         return acc;
       }, {} as Record<string, Array<typeof items[0] & { product: Tables<"products"> }>>);
 
-      // Create orders and order items
       for (const [sellerId, sellerItems] of Object.entries(itemsBySeller)) {
         const sellerTotal = sellerItems.reduce(
           (sum, item) => sum + item.product.price * item.quantity,
           0
         );
 
-        // Create the order
         const { data: order, error: orderError } = await supabase
           .from('orders')
           .insert({
             seller_id: sellerId,
             buyer_id: user?.id,
-            product_id: sellerItems[0].product.id, // Use first product as reference
+            product_id: sellerItems[0].product.id,
             guest_info: isGuest ? {
               email: shippingInfo.email,
               name: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
@@ -97,7 +95,6 @@ export default function Checkout() {
 
         if (orderError) throw orderError;
 
-        // Create order items
         const { error: itemsError } = await supabase
           .from('order_items')
           .insert(
@@ -124,44 +121,60 @@ export default function Checkout() {
     }
   };
 
-  const breadcrumbs = [
-    { label: "Cart", href: "/cart" },
-    { label: "Checkout" },
-  ];
-
   return (
-    <PageLayout 
-      showBackButton 
-      breadcrumbs={breadcrumbs}
-      className="bg-background min-h-screen"
-    >
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <PageLayout className="bg-[#FDFEFE]">
+      <div className="border-b bg-white">
+        <div className="container mx-auto px-4">
+          <CheckoutProgress currentStep={currentStep} />
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-12">
         {error && (
-          <Alert variant="destructive" className="mb-6">
+          <Alert variant="destructive" className="mb-8">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
           <div className="md:col-span-2 space-y-8">
-            <ShippingForm
-              isGuest={isGuest}
-              onSubmit={setShippingInfo}
-            />
+            {currentStep === "shipping" && (
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <h2 className="text-2xl font-display font-semibold text-shop-800 mb-6">
+                  Shipping Information
+                </h2>
+                <ShippingForm
+                  isGuest={isGuest}
+                  onSubmit={(info) => {
+                    setShippingInfo(info);
+                    setCurrentStep("payment");
+                  }}
+                />
+              </div>
+            )}
             
-            <Elements stripe={stripePromise}>
-              <PaymentForm
-                isLoading={isLoading}
-                onSubmit={handleCheckout}
-                shippingInfo={shippingInfo}
-                amount={total}
-              />
-            </Elements>
+            {currentStep === "payment" && shippingInfo && (
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <h2 className="text-2xl font-display font-semibold text-shop-800 mb-6">
+                  Payment Information
+                </h2>
+                <Elements stripe={stripePromise}>
+                  <PaymentForm
+                    isLoading={isLoading}
+                    onSubmit={handleCheckout}
+                    shippingInfo={shippingInfo}
+                    amount={total}
+                  />
+                </Elements>
+              </div>
+            )}
           </div>
 
           <div>
-            <OrderSummary items={items} total={total} />
+            <div className="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+              <OrderSummary items={items} total={total} />
+            </div>
           </div>
         </div>
       </div>
