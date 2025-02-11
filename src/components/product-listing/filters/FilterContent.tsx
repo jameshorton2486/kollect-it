@@ -1,3 +1,4 @@
+
 import { SearchFilter } from "@/components/products/filters/SearchFilter";
 import { CategoryFilter } from "@/components/products/filters/CategoryFilter";
 import { ConditionFilter } from "@/components/products/filters/ConditionFilter";
@@ -48,47 +49,54 @@ export function FilterContent({
   ];
 
   return (
-    <div className="space-y-6">
-      <SearchFilter
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        categories={categories}
-      />
-      <ConditionFilter
-        selectedCondition={selectedCondition}
-        onConditionChange={setSelectedCondition}
-      />
-      <div className="space-y-4">
-        <h3 className="font-semibold text-shop-800">Era</h3>
-        <Select value={selectedEra} onValueChange={setSelectedEra}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select Era" />
-          </SelectTrigger>
-          <SelectContent>
-            {eras.map((era) => (
-              <SelectItem key={era.value} value={era.value}>
-                {era.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="space-y-6 p-6 bg-white rounded-lg shadow-sm border border-shop-200">
+      <div className="space-y-6">
+        <SearchFilter
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+          categories={categories}
+        />
+        <ConditionFilter
+          selectedCondition={selectedCondition}
+          onConditionChange={setSelectedCondition}
+        />
+        <div className="space-y-4">
+          <h3 className="font-heading text-lg font-semibold text-shop-800">Era</h3>
+          <Select value={selectedEra} onValueChange={setSelectedEra}>
+            <SelectTrigger className="w-full bg-white border-shop-200 hover:border-shop-accent1 transition-colors">
+              <SelectValue placeholder="Select Era" />
+            </SelectTrigger>
+            <SelectContent>
+              {eras.map((era) => (
+                <SelectItem 
+                  key={era.value} 
+                  value={era.value}
+                  className="font-sans hover:bg-shop-accent1/10 hover:text-shop-accent1"
+                >
+                  {era.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <PriceRangeFilter
+          priceRange={priceRange}
+          onPriceRangeChange={setPriceRange}
+        />
+        <Button 
+          variant="outline" 
+          className="w-full mt-4 border-shop-200 hover:bg-shop-accent1/10 hover:text-shop-accent1 
+                     hover:border-shop-accent1 transition-all duration-200"
+          onClick={resetFilters}
+        >
+          <X className="h-4 w-4 mr-2" />
+          Reset Filters
+        </Button>
       </div>
-      <PriceRangeFilter
-        priceRange={priceRange}
-        onPriceRangeChange={setPriceRange}
-      />
-      <Button 
-        variant="outline" 
-        className="w-full mt-4"
-        onClick={resetFilters}
-      >
-        <X className="h-4 w-4 mr-2" />
-        Reset Filters
-      </Button>
     </div>
   );
 }

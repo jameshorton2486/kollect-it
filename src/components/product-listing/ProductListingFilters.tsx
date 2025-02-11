@@ -21,6 +21,7 @@ export function ProductListingFilters() {
   const [selectedCondition, setSelectedCondition] = useState("all");
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [selectedSellerType, setSelectedSellerType] = useState("all");
+  const [selectedEra, setSelectedEra] = useState("all");
   const [showInStock, setShowInStock] = useState(true);
   const [showPreOrder, setShowPreOrder] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
@@ -45,6 +46,7 @@ export function ProductListingFilters() {
     setSelectedCondition("all");
     setSelectedMaterials([]);
     setSelectedSellerType("all");
+    setSelectedEra("all");
     setShowInStock(true);
     setShowPreOrder(false);
     setPriceRange({ min: "", max: "" });
@@ -61,6 +63,8 @@ export function ProductListingFilters() {
     setSelectedMaterials,
     selectedSellerType,
     setSelectedSellerType,
+    selectedEra,
+    setSelectedEra,
     showInStock,
     setShowInStock,
     showPreOrder,
@@ -73,71 +77,34 @@ export function ProductListingFilters() {
 
   return (
     <>
-      <Card className="hidden md:block">
+      <Card className="hidden md:block bg-white shadow-sm border-shop-200 hover:border-shop-accent1/50 transition-all duration-300">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold flex items-center">
-            <Filter className="h-5 w-5 mr-2" />
+          <CardTitle className="text-xl font-heading font-semibold flex items-center text-shop-800">
+            <Filter className="h-5 w-5 mr-2 text-shop-accent1" />
             Filters
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <SearchFilter searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-          
-          <CategoryFilter
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-            categories={categories}
-          />
-          
-          <PriceRangeFilter
-            priceRange={priceRange}
-            onPriceRangeChange={setPriceRange}
-          />
-          
-          <MaterialFilter
-            selectedMaterials={selectedMaterials}
-            onMaterialChange={setSelectedMaterials}
-          />
-          
-          <ConditionFilter
-            selectedCondition={selectedCondition}
-            onConditionChange={setSelectedCondition}
-          />
-          
-          <SellerTypeFilter
-            selectedType={selectedSellerType}
-            onTypeChange={setSelectedSellerType}
-          />
-          
-          <AvailabilityFilter
-            showInStock={showInStock}
-            showPreOrder={showPreOrder}
-            onInStockChange={setShowInStock}
-            onPreOrderChange={setShowPreOrder}
-          />
-
-          <Button 
-            variant="outline" 
-            className="w-full mt-4"
-            onClick={resetFilters}
-          >
-            <X className="h-4 w-4 mr-2" />
-            Reset Filters
-          </Button>
+          <FilterContent {...filterProps} />
         </CardContent>
       </Card>
 
       <div className="md:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full border-shop-200 hover:bg-shop-accent1/10 
+                         hover:text-shop-accent1 hover:border-shop-accent1 
+                         transition-all duration-200"
+            >
               <Filter className="h-4 w-4 mr-2" />
               Filters
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full sm:max-w-lg">
             <SheetHeader>
-              <SheetTitle>Filters</SheetTitle>
+              <SheetTitle className="font-heading text-xl text-shop-800">Filters</SheetTitle>
             </SheetHeader>
             <div className="mt-6">
               <FilterContent {...filterProps} />
