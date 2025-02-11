@@ -1,7 +1,11 @@
+
 import { CategoryFilter } from "@/components/products/filters/CategoryFilter";
 import { ConditionFilter } from "@/components/products/filters/ConditionFilter";
 import { PriceRangeFilter } from "@/components/products/filters/PriceRangeFilter";
 import { SearchFilter } from "@/components/products/filters/SearchFilter";
+import { MaterialFilter } from "@/components/products/filters/MaterialFilter";
+import { SellerTypeFilter } from "@/components/products/filters/SellerTypeFilter";
+import { AvailabilityFilter } from "@/components/products/filters/AvailabilityFilter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Filter, X } from "lucide-react";
@@ -10,14 +14,15 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { FilterContent } from "./filters/FilterContent";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function ProductListingFilters() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("all");
   const [selectedCondition, setSelectedCondition] = useState("all");
-  const [selectedEra, setSelectedEra] = useState("all");
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [selectedSellerType, setSelectedSellerType] = useState("all");
+  const [showInStock, setShowInStock] = useState(true);
+  const [showPreOrder, setShowPreOrder] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,9 +42,11 @@ export function ProductListingFilters() {
   const resetFilters = () => {
     setSearchQuery("");
     setSelectedCategory("all");
-    setSelectedSubcategory("all");
     setSelectedCondition("all");
-    setSelectedEra("all");
+    setSelectedMaterials([]);
+    setSelectedSellerType("all");
+    setShowInStock(true);
+    setShowPreOrder(false);
     setPriceRange({ min: "", max: "" });
   };
 
@@ -48,26 +55,21 @@ export function ProductListingFilters() {
     setSearchQuery,
     selectedCategory,
     setSelectedCategory,
-    selectedSubcategory,
-    setSelectedSubcategory,
     selectedCondition,
     setSelectedCondition,
-    selectedEra,
-    setSelectedEra,
+    selectedMaterials,
+    setSelectedMaterials,
+    selectedSellerType,
+    setSelectedSellerType,
+    showInStock,
+    setShowInStock,
+    showPreOrder,
+    setShowPreOrder,
     priceRange,
     setPriceRange,
     categories,
     resetFilters,
   };
-
-  const eras = [
-    { value: "all", label: "All Eras" },
-    { value: "victorian", label: "Victorian" },
-    { value: "art-deco", label: "Art Deco" },
-    { value: "mid-century", label: "Mid-Century" },
-    { value: "vintage", label: "Vintage" },
-    { value: "contemporary", label: "Contemporary" },
-  ];
 
   return (
     <>
@@ -84,8 +86,6 @@ export function ProductListingFilters() {
           <CategoryFilter
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
-            selectedSubcategory={selectedSubcategory}
-            onSubcategoryChange={setSelectedSubcategory}
             categories={categories}
           />
           
@@ -94,26 +94,36 @@ export function ProductListingFilters() {
             onPriceRangeChange={setPriceRange}
           />
           
+          <MaterialFilter
+            selectedMaterials={selectedMaterials}
+            onMaterialChange={setSelectedMaterials}
+          />
+          
           <ConditionFilter
             selectedCondition={selectedCondition}
             onConditionChange={setSelectedCondition}
           />
+          
+          <SellerTypeFilter
+            selectedType={selectedSellerType}
+            onTypeChange={setSelectedSellerType}
+          />
+          
+          <AvailabilityFilter
+            showInStock={showInStock}
+            showPreOrder={showPreOrder}
+            onInStockChange={setShowInStock}
+            onPreOrderChange={setShowPreOrder}
+          />
 
-          <div className="space-y-4">
-            <h3 className="font-semibold text-shop-800">Era</h3>
-            <Select value={selectedEra} onValueChange={setSelectedEra}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Era" />
-              </SelectTrigger>
-              <SelectContent>
-                {eras.map((era) => (
-                  <SelectItem key={era.value} value={era.value}>
-                    {era.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <Button 
+            variant="outline" 
+            className="w-full mt-4"
+            onClick={resetFilters}
+          >
+            <X className="h-4 w-4 mr-2" />
+            Reset Filters
+          </Button>
         </CardContent>
       </Card>
 
