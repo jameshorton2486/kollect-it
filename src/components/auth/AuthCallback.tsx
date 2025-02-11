@@ -10,6 +10,8 @@ export function AuthCallback() {
 
   useEffect(() => {
     const handleAuthCallback = async () => {
+      console.log("Starting auth callback handling");
+      
       const { data: { session }, error } = await supabase.auth.getSession();
       
       if (error) {
@@ -20,9 +22,16 @@ export function AuthCallback() {
       }
 
       if (session) {
+        console.log("Session obtained successfully:", {
+          userId: session.user.id,
+          email: session.user.email,
+          lastSignIn: session.user.last_sign_in_at
+        });
+
         // Check if email is verified when that setting is enabled
         if (!session.user.email_confirmed_at) {
           console.log("Email not verified yet");
+          toast.warning("Please verify your email to complete the login process");
           navigate("/email-verification");
           return;
         }
@@ -40,6 +49,8 @@ export function AuthCallback() {
         }
 
         const isAdmin = roles?.some(r => r.role === 'admin');
+        console.log("User roles fetched:", { roles, isAdmin });
+        
         toast.success(`Welcome${isAdmin ? ' Administrator' : ''}! You've successfully logged in.`);
         
         if (isAdmin) {
@@ -48,6 +59,7 @@ export function AuthCallback() {
           navigate('/');
         }
       } else {
+        console.warn("No session found in callback");
         navigate('/auth');
       }
     };
@@ -61,3 +73,4 @@ export function AuthCallback() {
     </div>
   );
 }
+
