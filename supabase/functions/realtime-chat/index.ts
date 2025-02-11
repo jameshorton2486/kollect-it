@@ -6,18 +6,28 @@ if (!OPENAI_API_KEY) {
   throw new Error('OPENAI_API_KEY is required')
 }
 
-// Define CORS headers
+// Define CORS headers with specific origin
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://loveable.dev',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Max-Age': '86400',
+  'Access-Control-Allow-Credentials': 'true',
 }
 
 serve(async (req) => {
+  // Log the request for debugging
+  console.log("Received request:", {
+    method: req.method,
+    url: req.url,
+    headers: Object.fromEntries(req.headers.entries())
+  })
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
+    console.log("Handling OPTIONS preflight request")
     return new Response(null, {
+      status: 204,
       headers: {
         ...corsHeaders,
         'Allow': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -29,9 +39,13 @@ serve(async (req) => {
   const { headers } = req
   const upgradeHeader = headers.get("upgrade") || ""
   if (upgradeHeader.toLowerCase() !== "websocket") {
+    console.log("Non-WebSocket request received, returning 400")
     return new Response("Expected WebSocket connection", { 
       status: 400,
-      headers: corsHeaders
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'text/plain'
+      }
     })
   }
 
@@ -51,7 +65,6 @@ serve(async (req) => {
     // Handle OpenAI WebSocket connection
     openAISocket.onopen = () => {
       console.log("Connected to OpenAI WebSocket")
-      // Send initial configuration
       try {
         openAISocket.send(JSON.stringify({
           type: 'init',
@@ -124,7 +137,10 @@ serve(async (req) => {
     console.error("WebSocket setup error:", err)
     return new Response(`Failed to setup WebSocket: ${err.message}`, { 
       status: 500,
-      headers: corsHeaders
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'text/plain'
+      }
     })
   }
 })
