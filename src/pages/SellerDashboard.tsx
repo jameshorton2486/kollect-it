@@ -30,7 +30,11 @@ export default function SellerDashboard() {
   const { salesData, metrics } = useSellerMetrics(dateRange);
 
   if (rolesLoading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-shop-50">
+        <div className="animate-pulse text-shop-600">Loading...</div>
+      </div>
+    );
   }
 
   if (!userRoles?.includes('seller')) {
@@ -38,47 +42,72 @@ export default function SellerDashboard() {
   }
 
   return (
-    <div className="space-y-6 p-6 pb-16">
-      <WelcomeSection />
-      
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
-          <StatCards metrics={metrics} />
-          <SalesChart 
-            data={salesData || []} 
-            chartType="area"
-            timeFrame="daily"
-            dateRange={dateRange}
-          />
-        </div>
+    <div className="min-h-screen bg-shop-50">
+      <div className="space-y-6 p-6 pb-16 max-w-[1600px] mx-auto">
+        <WelcomeSection />
         
-        <div className="space-y-6">
-          {/* Notifications Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-semibold">
-                  Recent Notifications
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-6 lg:col-span-2">
+            <StatCards metrics={metrics} />
+            <Card className="border-shop-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <CardHeader>
+                <CardTitle className="text-xl font-semibold text-shop-600">
+                  Sales Overview
                 </CardTitle>
-                <Bell className="h-5 w-5 text-muted-foreground" />
-              </div>
-              <CardDescription>
-                Stay updated with your store's activity
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <NotificationsList 
-                notifications={notifications} 
-                onMarkAsRead={markAsRead}
-              />
-            </CardContent>
-          </Card>
+                <CardDescription className="text-shop-400">
+                  Your sales performance over time
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SalesChart 
+                  data={salesData || []} 
+                  chartType="area"
+                  timeFrame="daily"
+                  dateRange={dateRange}
+                />
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="space-y-6">
+            <Card className="border-shop-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-shop-600">
+                    Recent Notifications
+                  </CardTitle>
+                  <Bell className="h-5 w-5 text-shop-accent1" />
+                </div>
+                <CardDescription className="text-shop-400">
+                  Stay updated with your store's activity
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <NotificationsList 
+                  notifications={notifications} 
+                  onMarkAsRead={markAsRead}
+                />
+              </CardContent>
+            </Card>
 
-          <QuickAccessGrid />
+            <QuickAccessGrid />
+          </div>
         </div>
-      </div>
 
-      <MonitoringSection />
+        <Card className="border-shop-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-shop-600">
+              Performance Monitoring
+            </CardTitle>
+            <CardDescription className="text-shop-400">
+              Track your store's key metrics and performance indicators
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MonitoringSection />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
