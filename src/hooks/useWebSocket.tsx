@@ -113,8 +113,6 @@ export function useWebSocket(config: WebSocketConfig = {}) {
 
         ws.onerror = (event) => {
           log('WebSocket error:', event);
-          // TypeScript doesn't expose the error property on the event
-          // but it might be available in some browsers
           const errorEvent = event as ErrorEvent;
           const errorMessage = errorEvent.message || 'Unknown error occurred';
           setError(`WebSocket error: ${errorMessage}. Check console for details.`);
