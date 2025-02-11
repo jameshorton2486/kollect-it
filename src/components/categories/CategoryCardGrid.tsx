@@ -11,7 +11,6 @@ interface CategoryWithSubcategories {
   name: string;
   description: string | null;
   created_at: string;
-  image_url: string | null;
   subcategories: {
     id: string;
     name: string;
@@ -23,11 +22,10 @@ interface CategoryCardProps {
   title: string;
   description: string;
   href: string;
-  imageUrl?: string | null;
   subcategories?: { id: string; name: string }[];
 }
 
-export function CategoryCard({ icon, title, description, href, imageUrl, subcategories }: CategoryCardProps) {
+export function CategoryCard({ icon, title, description, href, subcategories }: CategoryCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -35,52 +33,42 @@ export function CategoryCard({ icon, title, description, href, imageUrl, subcate
       transition={{ duration: 0.5 }}
       whileHover={{ y: -8 }}
     >
-      <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
+      <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 rounded-lg border border-transparent hover:border-[#C6A961]">
         <a href={href} className="block">
-          <div className="relative aspect-square overflow-hidden">
-            {imageUrl ? (
-              <motion.img 
-                src={imageUrl} 
-                alt={title}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500"
+          <div className="relative aspect-square overflow-hidden bg-[#F5F5F5]">
+            <div className="w-full h-full flex items-center justify-center">
+              <motion.div 
+                className="text-[#C6A961]"
                 whileHover={{ scale: 1.1 }}
-              />
-            ) : (
-              <div className="w-full h-full bg-shop-100 flex items-center justify-center">
-                <motion.div 
-                  className="text-shop-accent1"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {icon}
-                </motion.div>
-              </div>
-            )}
+                transition={{ duration: 0.3 }}
+              >
+                {icon}
+              </motion.div>
+            </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           <div className="p-6">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-shop-accent1">{icon}</span>
-              <h3 className="text-xl font-semibold text-shop-600 group-hover:text-shop-accent1 transition-colors duration-300">
+              <span className="text-[#C6A961]">{icon}</span>
+              <h3 className="font-display text-xl font-semibold text-[#222222] group-hover:text-[#C6A961] transition-colors duration-300 tracking-wide">
                 {title}
               </h3>
             </div>
-            <p className="text-shop-400 mb-4 line-clamp-2">{description}</p>
+            <p className="font-sans text-[#555555] mb-4 line-clamp-2">{description}</p>
             {subcategories && subcategories.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {subcategories.slice(0, 3).map((sub) => (
                   <span
                     key={sub.id}
-                    className="text-xs bg-shop-100 text-shop-400 px-2 py-1 rounded-full 
-                             transition-colors duration-200 group-hover:bg-shop-accent1/10 
-                             group-hover:text-shop-accent1"
+                    className="text-xs bg-[#F5F5F5] text-[#555555] px-2 py-1 rounded-full 
+                             transition-colors duration-200 group-hover:bg-[#C6A961]/10 
+                             group-hover:text-[#C6A961]"
                   >
                     {sub.name}
                   </span>
                 ))}
                 {subcategories.length > 3 && (
-                  <span className="text-xs text-shop-400">
+                  <span className="text-xs text-[#555555]">
                     +{subcategories.length - 3} more
                   </span>
                 )}
@@ -104,7 +92,6 @@ export function CategoryCardGrid() {
           name,
           description,
           created_at,
-          image_url,
           subcategories (
             id,
             name
@@ -117,7 +104,8 @@ export function CategoryCardGrid() {
         return [];
       }
       
-      return data as CategoryWithSubcategories[];
+      // Ensure we return an array that matches our interface
+      return (data || []) as CategoryWithSubcategories[];
     }
   });
 
@@ -144,11 +132,11 @@ export function CategoryCardGrid() {
             transition={{ duration: 0.3, delay: i * 0.1 }}
           >
             <Card className="animate-pulse">
-              <div className="aspect-square bg-shop-100" />
+              <div className="aspect-square bg-[#F5F5F5]" />
               <div className="p-6 space-y-3">
-                <div className="h-6 bg-shop-100 rounded w-2/3" />
-                <div className="h-4 bg-shop-100 rounded w-full" />
-                <div className="h-4 bg-shop-100 rounded w-3/4" />
+                <div className="h-6 bg-[#F5F5F5] rounded w-2/3" />
+                <div className="h-4 bg-[#F5F5F5] rounded w-full" />
+                <div className="h-4 bg-[#F5F5F5] rounded w-3/4" />
               </div>
             </Card>
           </motion.div>
@@ -177,7 +165,6 @@ export function CategoryCardGrid() {
               title={category.name}
               description={category.description || `Explore our collection of ${category.name.toLowerCase()}`}
               href={`/categories/${category.id}`}
-              imageUrl={category.image_url}
               subcategories={category.subcategories}
             />
           </motion.div>

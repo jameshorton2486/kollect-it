@@ -21,15 +21,16 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Montserrat', 'system-ui', 'sans-serif'],
-        heading: ['Playfair Display', 'serif'],
         display: ['Playfair Display', 'serif'],
+        heading: ['Playfair Display', 'serif'],
       },
       fontSize: {
-        'display': ['4rem', { lineHeight: '1.2' }],
-        'h1': ['3rem', { lineHeight: '1.3' }],  // 48px
-        'h2': ['2.25rem', { lineHeight: '1.4' }],  // 36px
-        'h3': ['1.5rem', { lineHeight: '1.5' }],  // 24px
-        'body': ['1rem', { lineHeight: '1.6' }],  // 16px
+        'display': ['4rem', { lineHeight: '1.2', letterSpacing: '0.5px' }],
+        'h1': ['3rem', { lineHeight: '1.3', letterSpacing: '0.5px' }],
+        'h2': ['2.25rem', { lineHeight: '1.4', letterSpacing: '0.5px' }],
+        'h3': ['1.75rem', { lineHeight: '1.5' }],
+        'body': ['1.125rem', { lineHeight: '1.6' }],
+        'button': ['1.125rem', { lineHeight: '1.5', fontWeight: '700' }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,7 +58,7 @@ export default {
           50: "#FFFFFF",    // Pure White
           100: "#F5F5F5",   // Soft Gray
           200: "#EEEEEE",   // Light Gray
-          300: "#C6A961",   // Gold
+          300: "#DDDDDD",   // Border Gray
           400: "#555555",   // Muted Text
           500: "#333333",   // Charcoal Black
           600: "#222222",   // Dark Text
@@ -75,11 +76,16 @@ export default {
         section: "40px",
         header: "40px",
         button: "12px",
+        panel: "20px",
       },
       borderRadius: {
-        lg: "24px",
-        md: "12px",
-        sm: "6px",
+        lg: "8px",
+        md: "6px",
+        sm: "4px",
+      },
+      boxShadow: {
+        card: "0 2px 4px rgba(224, 224, 224, 0.3)",
+        'card-hover': "0 4px 8px rgba(224, 224, 224, 0.4)",
       },
       keyframes: {
         "accordion-down": {
