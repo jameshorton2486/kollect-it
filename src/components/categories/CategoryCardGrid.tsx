@@ -1,7 +1,9 @@
+
 import { Award, BookOpen, Gem, ShoppingBag, Star, Palette } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { motion } from "framer-motion";
 
 interface CategoryCardProps {
   icon: React.ReactNode;
@@ -14,48 +16,59 @@ interface CategoryCardProps {
 
 export function CategoryCard({ icon, title, description, href, imageUrl, subcategories }: CategoryCardProps) {
   return (
-    <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
-      <a href={href} className="block">
-        <div className="relative h-48 overflow-hidden">
-          {imageUrl ? (
-            <img 
-              src={imageUrl} 
-              alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          ) : (
-            <div className="w-full h-full bg-shop-50 flex items-center justify-center">
-              <div className="text-shop-accent1">{icon}</div>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        </div>
-        <div className="p-6">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-shop-accent1">{icon}</span>
-            <h3 className="text-xl font-semibold text-shop-800">{title}</h3>
+    <motion.div
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
+        <a href={href} className="block">
+          <div className="relative aspect-square overflow-hidden">
+            {imageUrl ? (
+              <img 
+                src={imageUrl} 
+                alt={title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            ) : (
+              <div className="w-full h-full bg-shop-50 flex items-center justify-center">
+                <div className="text-shop-accent1 transform group-hover:scale-110 transition-transform duration-300">
+                  {icon}
+                </div>
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
-          <p className="text-shop-600 mb-4">{description}</p>
-          {subcategories && subcategories.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {subcategories.slice(0, 3).map((sub) => (
-                <span
-                  key={sub.id}
-                  className="text-xs bg-shop-100 text-shop-600 px-2 py-1 rounded-full"
-                >
-                  {sub.name}
-                </span>
-              ))}
-              {subcategories.length > 3 && (
-                <span className="text-xs text-shop-400">
-                  +{subcategories.length - 3} more
-                </span>
-              )}
+          <div className="p-6">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-shop-accent1">{icon}</span>
+              <h3 className="text-xl font-semibold text-shop-800 group-hover:text-shop-accent1 transition-colors duration-300">
+                {title}
+              </h3>
             </div>
-          )}
-        </div>
-      </a>
-    </Card>
+            <p className="text-shop-600 mb-4 line-clamp-2">{description}</p>
+            {subcategories && subcategories.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {subcategories.slice(0, 3).map((sub) => (
+                  <span
+                    key={sub.id}
+                    className="text-xs bg-shop-100 text-shop-600 px-2 py-1 rounded-full 
+                             transition-colors duration-200 group-hover:bg-shop-accent1/10 
+                             group-hover:text-shop-accent1"
+                  >
+                    {sub.name}
+                  </span>
+                ))}
+                {subcategories.length > 3 && (
+                  <span className="text-xs text-shop-400">
+                    +{subcategories.length - 3} more
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        </a>
+      </Card>
+    </motion.div>
   );
 }
 
@@ -69,6 +82,7 @@ export function CategoryCardGrid() {
           id,
           name,
           description,
+          image_url,
           subcategories (
             id,
             name
@@ -95,7 +109,7 @@ export function CategoryCardGrid() {
 
   return (
     <div 
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8"
       role="list"
       aria-label="Collection categories"
     >
@@ -108,6 +122,7 @@ export function CategoryCardGrid() {
             title={category.name}
             description={category.description || `Explore our collection of ${category.name.toLowerCase()}`}
             href={`/categories/${category.id}`}
+            imageUrl={category.image_url}
             subcategories={category.subcategories}
           />
         );
