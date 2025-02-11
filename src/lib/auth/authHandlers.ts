@@ -146,23 +146,30 @@ export async function handleOAuthSignIn(provider: Provider) {
   console.log("Starting OAuth sign in with provider:", provider);
   
   try {
+    const redirectTo = `${window.location.origin}/auth/callback`;
+    console.log("Redirect URL:", redirectTo);
+    
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+        redirectTo,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent'
+        }
+      }
     });
 
     if (error) {
       console.error("OAuth error:", error);
-      throw new Error("Failed to sign in with OAuth provider");
+      throw new Error(`Failed to sign in with ${provider}: ${error.message}`);
     }
 
     console.log("OAuth sign in initiated successfully");
     return data;
   } catch (error: any) {
     console.error("OAuth sign in error:", error);
-    toast.error("Failed to initiate OAuth sign in. Please try again.");
+    toast.error(`Failed to initiate ${provider} sign in. Please try again.`);
     throw error;
   }
 }
