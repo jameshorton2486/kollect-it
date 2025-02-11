@@ -78,16 +78,13 @@ export function CategoryCard({ icon, title, description, href, imageUrl, subcate
 }
 
 export function CategoryCardGrid() {
-  const { data: categories } = useQuery<CategoryWithSubcategories[]>({
+  const { data: categories, isLoading } = useQuery<CategoryWithSubcategories[]>({
     queryKey: ["categories-with-subcategories"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("categories")
         .select(`
-          id,
-          name,
-          description,
-          image_url,
+          *,
           subcategories (
             id,
             name
@@ -95,7 +92,10 @@ export function CategoryCardGrid() {
         `)
         .order('name');
       
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching categories:", error);
+        return [];
+      }
       return data;
     }
   });
@@ -111,6 +111,23 @@ export function CategoryCardGrid() {
     };
     return icons[categoryName] || ShoppingBag;
   };
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8">
+        {[...Array(8)].map((_, i) => (
+          <Card key={i} className="animate-pulse">
+            <div className="aspect-square bg-shop-100" />
+            <div className="p-6 space-y-3">
+              <div className="h-6 bg-shop-100 rounded w-2/3" />
+              <div className="h-4 bg-shop-100 rounded w-full" />
+              <div className="h-4 bg-shop-100 rounded w-3/4" />
+            </div>
+          </Card>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div 
