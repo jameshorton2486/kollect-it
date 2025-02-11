@@ -20,16 +20,16 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Guardian-EgypT', 'serif'],
-        display: ['Guardian-EgypT', 'serif'],
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
+        heading: ['Playfair Display', 'serif'],
+        display: ['Playfair Display', 'serif'],
       },
       fontSize: {
         'display': ['4rem', { lineHeight: '1.2' }],
-        'h1': ['2.5rem', { lineHeight: '1.3' }],
-        'h2': ['2rem', { lineHeight: '1.4' }],
-        'h3': ['1.5rem', { lineHeight: '1.5' }],
-        'body': ['1rem', { lineHeight: '1.6' }],
+        'h1': ['3rem', { lineHeight: '1.3' }],  // 48px
+        'h2': ['2.25rem', { lineHeight: '1.4' }],  // 36px
+        'h3': ['1.5rem', { lineHeight: '1.5' }],  // 24px
+        'body': ['1rem', { lineHeight: '1.6' }],  // 16px
       },
       colors: {
         border: "hsl(var(--border))",
