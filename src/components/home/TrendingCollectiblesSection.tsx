@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
@@ -26,11 +27,11 @@ export function TrendingCollectiblesSection() {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-2 justify-center mb-8">
           <Flame className="w-6 h-6 text-orange-500" />
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-shop-900">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-shop-900 font-display">
             Trending Now
           </h2>
         </div>
-        <p className="text-lg text-shop-600 text-center mb-12 max-w-3xl mx-auto">
+        <p className="text-lg text-shop-600 text-center mb-12 max-w-3xl mx-auto font-sans">
           Discover the most sought-after collectibles making waves in our community
         </p>
 
@@ -70,10 +71,10 @@ export function TrendingCollectiblesSection() {
                   </div>
                 )}
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold text-shop-800 mb-2 line-clamp-1">
+                  <h3 className="text-lg font-semibold text-shop-800 mb-2 line-clamp-1 font-display">
                     {product.name}
                   </h3>
-                  <p className="text-shop-600 text-sm mb-3 line-clamp-2">
+                  <p className="text-shop-600 text-sm mb-3 line-clamp-2 font-sans">
                     {product.description}
                   </p>
                   <div className="flex items-center justify-between">

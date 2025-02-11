@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
@@ -26,11 +27,11 @@ export function FeaturedListingsSection() {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-2 justify-center mb-4">
           <Sparkles className="w-6 h-6 text-yellow-500" />
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-shop-900">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-shop-900 font-display">
             Featured Listings
           </h2>
         </div>
-        <p className="text-lg text-shop-600 text-center mb-12 max-w-3xl mx-auto">
+        <p className="text-lg text-shop-600 text-center mb-12 max-w-3xl mx-auto font-sans">
           Discover exceptional pieces from our curated collection
         </p>
 
@@ -73,10 +74,10 @@ export function FeaturedListingsSection() {
                   <Badge variant="secondary" className="mb-2">
                     {product.categories?.name || "Uncategorized"}
                   </Badge>
-                  <h3 className="text-xl font-semibold mb-2 text-shop-800">
+                  <h3 className="text-xl font-semibold mb-2 text-shop-800 font-display">
                     {product.name}
                   </h3>
-                  <p className="text-shop-600 mb-4 line-clamp-2">
+                  <p className="text-shop-600 mb-4 line-clamp-2 font-sans">
                     {product.description}
                   </p>
                   <div className="text-xl font-bold text-shop-900">

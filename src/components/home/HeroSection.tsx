@@ -18,32 +18,32 @@ export function HeroSection() {
           transition={{ duration: 0.6 }}
           className="text-left space-y-6"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-            Your Online 
-            <span className="block animate-fade-in">Antique Store</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-display">
+            Discover Rare & 
+            <span className="block animate-fade-in">Unique Collectibles</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-white/90 max-w-xl animate-slide-in">
-            Join our curated marketplace for unique antiques and collectibles. 
-            List your items with our seller-friendly subscription plans.
+          <p className="text-lg md:text-xl text-white/90 max-w-xl animate-slide-in-right font-sans">
+            Curated collections from the world's top sellers. 
+            Join our marketplace for unique antiques and collectibles.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
               size="lg"
-              className="w-full sm:w-auto bg-white hover:bg-white/90 text-[#308cc0] text-lg px-8 
-                       transform transition-all duration-200 hover:-translate-y-1"
+              className="w-full sm:w-auto bg-[#C6A961] hover:bg-[#1C2833] text-white text-lg px-8 
+                       transform transition-all duration-200 hover:-translate-y-1 uppercase font-sans tracking-wide"
               onClick={() => navigate("/products")}
             >
               <ShoppingBag className="mr-2 h-5 w-5" />
-              Browse Collection
+              Shop Now
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="w-full sm:w-auto border-2 border-white bg-transparent text-white 
                        hover:bg-white/10 text-lg px-8 transform transition-all duration-200 
-                       hover:-translate-y-1"
+                       hover:-translate-y-1 uppercase font-sans tracking-wide"
               onClick={() => navigate("/pricing")}
             >
               <Star className="mr-2 h-5 w-5" />
