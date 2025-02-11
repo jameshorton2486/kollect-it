@@ -38,40 +38,37 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#308cc0", // Blue
+          DEFAULT: "#333333", // Charcoal Black
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#145da0", // Medium Blue
-          foreground: "#FFFFFF",
+          DEFAULT: "#F5F5F5", // Soft Gray
+          foreground: "#222222",
         },
         accent: {
-          DEFAULT: "#afd1de", // Light Blue
-          foreground: "#0d2e49",
+          DEFAULT: "#C6A961", // Gold
+          foreground: "#222222",
         },
         muted: {
-          DEFAULT: "#fdfefe", // White
-          foreground: "#0d2e49",
-        },
-        nav: {
-          DEFAULT: "#0d2e49", // Dark Blue
+          DEFAULT: "#FFFFFF", // Pure White
+          foreground: "#555555",
         },
         shop: {
-          50: "#fdfefe",  // White (Background)
-          100: "#e6f1f6", // Lighter Blue
-          200: "#afd1de", // Light Blue
-          300: "#308cc0", // Blue
-          400: "#145da0", // Medium Blue
-          500: "#0d2e49", // Dark Blue
-          600: "#0a2438", // Darker Blue
-          700: "#071824", // Darkest Blue
-          800: "#040f16",
-          900: "#020709",
-          accent1: "#308cc0", // Blue
-          accent2: "#145da0", // Medium Blue
+          50: "#FFFFFF",    // Pure White
+          100: "#F5F5F5",   // Soft Gray
+          200: "#EEEEEE",   // Light Gray
+          300: "#C6A961",   // Gold
+          400: "#555555",   // Muted Text
+          500: "#333333",   // Charcoal Black
+          600: "#222222",   // Dark Text
+          700: "#1C2833",   // Deep Navy
+          800: "#111111",   // Darker Text
+          900: "#000000",   // Black
+          accent1: "#C6A961", // Gold
+          accent2: "#1C2833", // Deep Navy
           accent3: "#FFFFFF", // White
-          muted1: "#fdfefe", // White
-          muted2: "#e6f1f6", // Lighter Blue
+          muted1: "#F5F5F5", // Soft Gray
+          muted2: "#EEEEEE", // Light Gray
         },
       },
       spacing: {

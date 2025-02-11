@@ -4,13 +4,18 @@ import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
+import type { Tables } from "@/integrations/supabase/types";
+
+interface CategoryWithSubcategories extends Tables<"categories"> {
+  subcategories: Tables<"subcategories">[];
+}
 
 interface CategoryCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
   href: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
   subcategories?: { id: string; name: string }[];
 }
 
@@ -30,7 +35,7 @@ export function CategoryCard({ icon, title, description, href, imageUrl, subcate
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             ) : (
-              <div className="w-full h-full bg-shop-50 flex items-center justify-center">
+              <div className="w-full h-full bg-shop-100 flex items-center justify-center">
                 <div className="text-shop-accent1 transform group-hover:scale-110 transition-transform duration-300">
                   {icon}
                 </div>
@@ -41,17 +46,17 @@ export function CategoryCard({ icon, title, description, href, imageUrl, subcate
           <div className="p-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-shop-accent1">{icon}</span>
-              <h3 className="text-xl font-semibold text-shop-800 group-hover:text-shop-accent1 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-shop-600 group-hover:text-shop-accent1 transition-colors duration-300">
                 {title}
               </h3>
             </div>
-            <p className="text-shop-600 mb-4 line-clamp-2">{description}</p>
+            <p className="text-shop-400 mb-4 line-clamp-2">{description}</p>
             {subcategories && subcategories.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {subcategories.slice(0, 3).map((sub) => (
                   <span
                     key={sub.id}
-                    className="text-xs bg-shop-100 text-shop-600 px-2 py-1 rounded-full 
+                    className="text-xs bg-shop-100 text-shop-400 px-2 py-1 rounded-full 
                              transition-colors duration-200 group-hover:bg-shop-accent1/10 
                              group-hover:text-shop-accent1"
                   >
@@ -73,7 +78,7 @@ export function CategoryCard({ icon, title, description, href, imageUrl, subcate
 }
 
 export function CategoryCardGrid() {
-  const { data: categories } = useQuery({
+  const { data: categories } = useQuery<CategoryWithSubcategories[]>({
     queryKey: ["categories-with-subcategories"],
     queryFn: async () => {
       const { data, error } = await supabase
