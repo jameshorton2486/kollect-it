@@ -2,7 +2,7 @@
 import { useWebSocket } from '../hooks/useWebSocket';
 import { Button } from './ui/button';
 import { Alert, AlertDescription } from './ui/alert';
-import { ArrowClockwise } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 
 export function Chat() {
   const { isConnected, error, sendMessage, reconnectAttempts } = useWebSocket({
@@ -32,7 +32,7 @@ export function Chat() {
         <Alert variant="destructive">
           <AlertDescription className="flex items-center gap-2">
             {error}
-            {reconnectAttempts > 0 && <ArrowClockwise className="animate-spin" />}
+            {reconnectAttempts > 0 && <RefreshCw className="animate-spin" />}
           </AlertDescription>
         </Alert>
       )}
@@ -43,7 +43,7 @@ export function Chat() {
         className="flex items-center gap-2"
       >
         Send Test Message
-        {!isConnected && <ArrowClockwise className="animate-spin" />}
+        {!isConnected && <RefreshCw className="animate-spin" />}
       </Button>
     </div>
   );
