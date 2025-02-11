@@ -6,8 +6,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import type { Tables } from "@/integrations/supabase/types";
 
-interface CategoryWithSubcategories extends Tables<"categories"> {
-  subcategories: Tables<"subcategories">[];
+interface CategoryWithSubcategories {
+  id: string;
+  name: string;
+  description: string | null;
+  created_at: string;
+  image_url: string | null;
+  subcategories: {
+    id: string;
+    name: string;
+  }[];
 }
 
 interface CategoryCardProps {
@@ -16,7 +24,7 @@ interface CategoryCardProps {
   description: string;
   href: string;
   imageUrl?: string | null;
-  subcategories?: Tables<"subcategories">[];
+  subcategories?: { id: string; name: string }[];
 }
 
 export function CategoryCard({ icon, title, description, href, imageUrl, subcategories }: CategoryCardProps) {
@@ -92,9 +100,14 @@ export function CategoryCardGrid() {
       const { data, error } = await supabase
         .from("categories")
         .select(`
-          *,
+          id,
+          name,
+          description,
+          created_at,
+          image_url,
           subcategories (
-            *
+            id,
+            name
           )
         `)
         .order('name');
