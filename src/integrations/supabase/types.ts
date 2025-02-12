@@ -36,6 +36,66 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_activity_logs: {
+        Row: {
+          action_type: string
+          admin_id: string
+          changes: Json | null
+          created_at: string
+          id: string
+          ip_address: string | null
+          target_id: string | null
+          target_type: string
+        }
+        Insert: {
+          action_type: string
+          admin_id: string
+          changes?: Json | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          target_id?: string | null
+          target_type: string
+        }
+        Update: {
+          action_type?: string
+          admin_id?: string
+          changes?: Json | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          target_id?: string | null
+          target_type?: string
+        }
+        Relationships: []
+      }
+      admin_dashboard_settings: {
+        Row: {
+          admin_id: string
+          created_at: string
+          id: string
+          layout_preferences: Json | null
+          updated_at: string
+          visible_metrics: string[] | null
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string
+          id?: string
+          layout_preferences?: Json | null
+          updated_at?: string
+          visible_metrics?: string[] | null
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string
+          id?: string
+          layout_preferences?: Json | null
+          updated_at?: string
+          visible_metrics?: string[] | null
+        }
+        Relationships: []
+      }
       admin_settings: {
         Row: {
           created_at: string
@@ -87,6 +147,39 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      auth_attempts: {
+        Row: {
+          attempted_at: string | null
+          created_at: string
+          failure_reason: string | null
+          id: string
+          ip_address: string
+          success: boolean
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          attempted_at?: string | null
+          created_at?: string
+          failure_reason?: string | null
+          id?: string
+          ip_address: string
+          success: boolean
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          attempted_at?: string | null
+          created_at?: string
+          failure_reason?: string | null
+          id?: string
+          ip_address?: string
+          success?: boolean
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -1384,6 +1477,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_bans: {
+        Row: {
+          banned_by: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          lift_reason: string | null
+          lifted_at: string | null
+          lifted_by: string | null
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          banned_by: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          lift_reason?: string | null
+          lifted_at?: string | null
+          lifted_by?: string | null
+          reason: string
+          user_id: string
+        }
+        Update: {
+          banned_by?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          lift_reason?: string | null
+          lifted_at?: string | null
+          lifted_by?: string | null
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_preferences: {
         Row: {
           created_at: string
@@ -1563,6 +1692,12 @@ export type Database = {
           estimated_days_max: number
           is_free_shipping: boolean
         }[]
+      }
+      check_if_user_banned: {
+        Args: {
+          user_uuid: string
+        }
+        Returns: boolean
       }
       check_mfa_rate_limit: {
         Args: {
