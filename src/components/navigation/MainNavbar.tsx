@@ -13,6 +13,22 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { mainNavItems, userNavItems } from "@/config/navigation";
 
+// Ensure this matches the type expected by UserDropdown
+interface UserNavItem {
+  label: string;
+  path: string;
+  icon?: any;
+}
+
+// Convert our MenuItem to UserNavItem
+const convertToUserNavItems = (items: typeof userNavItems): UserNavItem[] => {
+  return items.map(item => ({
+    label: item.name,
+    path: item.path,
+    icon: item.icon
+  }));
+};
+
 export function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -42,6 +58,9 @@ export function MainNavbar() {
       navigate(path);
     }
   };
+
+  // Convert navigation items to match expected types
+  const userDropdownItems = convertToUserNavItems(userNavItems);
 
   return (
     <nav className="bg-primary shadow-lg relative">
@@ -128,7 +147,7 @@ export function MainNavbar() {
                       <ShoppingCart className="h-5 w-5" />
                     </Button>
                   </Link>
-                  <UserDropdown items={userNavItems} />
+                  <UserDropdown items={userDropdownItems} />
                 </div>
               ) : (
                 <div className="flex items-center space-x-6">
