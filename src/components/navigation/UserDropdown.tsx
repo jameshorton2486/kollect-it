@@ -32,9 +32,13 @@ export function UserDropdown({ items }: UserDropdownProps) {
     navigate("/auth");
   };
 
-  const getItemIcon = (path: string) => {
+  const renderIcon = (path: string) => {
     const item = items.find(item => item.path === path);
-    return item?.icon;
+    if (item?.icon) {
+      const IconComponent = item.icon;
+      return <IconComponent className="mr-2 h-4 w-4" />;
+    }
+    return null;
   };
 
   return (
@@ -51,18 +55,14 @@ export function UserDropdown({ items }: UserDropdownProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link to="/profile-settings" className="flex items-center">
-              {getItemIcon("/profile-settings") && (
-                <getItemIcon("/profile-settings") className="mr-2 h-4 w-4" />
-              )}
+              {renderIcon("/profile-settings")}
               Profile Settings
             </Link>
           </DropdownMenuItem>
           
           <DropdownMenuItem asChild>
             <Link to="/purchase-history" className="flex items-center">
-              {getItemIcon("/purchase-history") && (
-                <getItemIcon("/purchase-history") className="mr-2 h-4 w-4" />
-              )}
+              {renderIcon("/purchase-history")}
               Purchase History
             </Link>
           </DropdownMenuItem>
@@ -81,7 +81,7 @@ export function UserDropdown({ items }: UserDropdownProps) {
               </Link>
             </DropdownMenuItem>
           ))}
-        </DropdownMenuGroup>
+        </DropdownGroup>
         
         <DropdownMenuSeparator />
         
