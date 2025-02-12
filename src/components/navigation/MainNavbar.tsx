@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingCart, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -147,7 +146,11 @@ export function MainNavbar() {
                       <ShoppingCart className="h-5 w-5" />
                     </Button>
                   </Link>
-                  <UserDropdown items={userDropdownItems} />
+                  <UserDropdown items={userNavItems.map(item => ({
+                    label: item.name,
+                    path: item.path,
+                    icon: item.icon
+                  }))} />
                 </div>
               ) : (
                 <div className="flex items-center space-x-6">
