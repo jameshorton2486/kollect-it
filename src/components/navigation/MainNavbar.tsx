@@ -59,12 +59,17 @@ export function MainNavbar() {
 
   const userDropdownItems = convertToUserNavItems(userNavItems);
   const mainMenuItems = mainNavItems.map(item => ({
-    label: item.name,
+    name: item.name,  // Changed from label to name to match NavItem type
     path: item.path
   }));
 
   return (
     <nav className="bg-primary shadow-lg relative" role="navigation" aria-label="Main navigation">
+      {/* Skip link for keyboard navigation */}
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white text-primary px-4 py-2 rounded-md">
+        Skip to main content
+      </a>
+      
       <div className="max-w-7xl mx-auto">
         <div className="px-6 lg:px-8">
           <div className="flex items-center justify-between h-24">
