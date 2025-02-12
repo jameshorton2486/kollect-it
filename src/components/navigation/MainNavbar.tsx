@@ -11,19 +11,7 @@ import { MobileMenu } from "./MobileMenu";
 import { SignUpModal } from "@/components/auth/SignUpModal";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-
-const mainNavItems = [
-  { label: "Home", path: "/" },
-  { label: "About Us", path: "/about" },
-  { label: "Contact", path: "/contact" },
-  { label: "Shop", path: "/categories" },
-];
-
-const userNavItems = [
-  { label: "My Dashboard", path: "/buyer-dashboard" },
-  { label: "Purchase History", path: "/purchase-history" },
-  { label: "Settings", path: "/settings" },
-];
+import { mainNavItems, userNavItems } from "@/config/navigation";
 
 export function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +38,6 @@ export function MainNavbar() {
   };
 
   const handleNavigation = (path: string) => {
-    console.log("Navigating to:", path);
     if (location.pathname !== path) {
       navigate(path);
     }
@@ -159,7 +146,7 @@ export function MainNavbar() {
               {/* Mobile Menu */}
               {isMobile && (
                 <MobileMenu
-                  mainItems={[...mainNavItems, { label: "Sell", path: "/seller-dashboard" }]}
+                  mainItems={mainNavItems}
                   adminItems={[]}
                   isOpen={isOpen}
                   onOpenChange={setIsOpen}
