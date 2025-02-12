@@ -200,6 +200,57 @@ export type Database = {
         }
         Relationships: []
       }
+      collection_items_tags: {
+        Row: {
+          item_id: string
+          tag_id: string
+        }
+        Insert: {
+          item_id: string
+          tag_id: string
+        }
+        Update: {
+          item_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_items_tags_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "personal_collection_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_items_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "collection_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collection_tags: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       inventory_alerts: {
         Row: {
           alert_type: string
@@ -578,6 +629,44 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      personal_collection_items: {
+        Row: {
+          collection_type: string
+          created_at: string
+          id: string
+          notes: string | null
+          product_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          collection_type: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          product_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          collection_type?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          product_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "personal_collection_items_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
