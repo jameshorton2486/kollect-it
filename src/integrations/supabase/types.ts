@@ -129,6 +129,36 @@ export type Database = {
         }
         Relationships: []
       }
+      authentication_examples: {
+        Row: {
+          category: string
+          code_snippet: string
+          created_at: string
+          description: string
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          code_snippet: string
+          created_at?: string
+          description: string
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          code_snippet?: string
+          created_at?: string
+          description?: string
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string
@@ -1099,6 +1129,39 @@ export type Database = {
           total_revenue?: number
           updated_at?: string
           yearly_revenue?: Json | null
+        }
+        Relationships: []
+      }
+      seller_guidelines: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          is_active: boolean | null
+          order_position: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          order_position: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          order_position?: number
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }

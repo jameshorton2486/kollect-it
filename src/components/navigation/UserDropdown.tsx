@@ -81,7 +81,7 @@ export function UserDropdown({ items }: UserDropdownProps) {
               </Link>
             </DropdownMenuItem>
           ))}
-        </DropdownGroup>
+        </DropdownMenuGroup>
         
         <DropdownMenuSeparator />
         

@@ -1,8 +1,31 @@
+
+import { useEffect } from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, ShieldCheck, TrendingUp, Truck } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookOpen, ShieldCheck, TrendingUp, Truck, Camera, DollarSign, Scale, FileText } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 
 export default function SellerGuidelines() {
+  const { data: guidelines, isLoading } = useQuery({
+    queryKey: ["seller-guidelines"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("seller_guidelines")
+        .select("*")
+        .order("order_position");
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const filterGuidelinesByCategory = (category: string) => {
+    return guidelines?.filter(guide => guide.category === category) || [];
+  };
+
   return (
     <PageLayout 
       breadcrumbs={[
@@ -16,79 +39,89 @@ export default function SellerGuidelines() {
           <p className="text-muted-foreground">
             Everything you need to know about selling antiques and collectibles on Kollect-It.
           </p>
+          <Button variant="outline" className="mt-4">
+            <FileText className="h-4 w-4 mr-2" />
+            Download PDF Guide
+          </Button>
         </header>
 
-        <div className="grid gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5" />
-                Getting Started
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <h3 className="font-medium">Choose Your Subscription Plan</h3>
-              <p>Select from our range of seller plans based on your inventory needs:</p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Basic Seller: List up to 30 items for $20/month</li>
-                <li>Professional Seller: List up to 50 items for $30/month</li>
-                <li>Enterprise Seller: List up to 100 items for $50/month</li>
-              </ul>
-            </CardContent>
-          </Card>
+        <Tabs defaultValue="getting-started">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="getting-started">Getting Started</TabsTrigger>
+            <TabsTrigger value="listing">Listing Items</TabsTrigger>
+            <TabsTrigger value="selling">Selling</TabsTrigger>
+            <TabsTrigger value="compliance">Compliance</TabsTrigger>
+          </TabsList>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5" />
-                Item Authentication
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p>For each item listing, you must provide:</p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Clear, high-quality photos from multiple angles</li>
-                <li>Detailed item description including condition assessment</li>
-                <li>Provenance documentation when available</li>
-                <li>Accurate age estimation and historical context</li>
-              </ul>
-            </CardContent>
-          </Card>
+          <TabsContent value="getting-started">
+            <div className="grid gap-6">
+              {filterGuidelinesByCategory('getting-started').map((guideline) => (
+                <Card key={guideline.id}>
+                  <CardHeader>
+                    <CardTitle>{guideline.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: guideline.content }} />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Best Practices
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Respond to buyer inquiries within 24 hours</li>
-                <li>Keep your inventory updated and accurate</li>
-                <li>Use descriptive titles and relevant categories</li>
-                <li>Price items competitively based on market value</li>
-              </ul>
-            </CardContent>
-          </Card>
+          <TabsContent value="listing">
+            <div className="grid gap-6">
+              {filterGuidelinesByCategory('listing').map((guideline) => (
+                <Card key={guideline.id}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Camera className="h-5 w-5" />
+                      {guideline.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: guideline.content }} />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Truck className="h-5 w-5" />
-                Shipping Guidelines
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Package items securely with appropriate materials</li>
-                <li>Ship within 3 business days of purchase</li>
-                <li>Provide tracking information promptly</li>
-                <li>Insure valuable items during transit</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
+          <TabsContent value="selling">
+            <div className="grid gap-6">
+              {filterGuidelinesByCategory('selling').map((guideline) => (
+                <Card key={guideline.id}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <DollarSign className="h-5 w-5" />
+                      {guideline.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: guideline.content }} />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="compliance">
+            <div className="grid gap-6">
+              {filterGuidelinesByCategory('compliance').map((guideline) => (
+                <Card key={guideline.id}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Scale className="h-5 w-5" />
+                      {guideline.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: guideline.content }} />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </PageLayout>
   );
