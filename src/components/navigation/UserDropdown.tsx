@@ -32,6 +32,11 @@ export function UserDropdown({ items }: UserDropdownProps) {
     navigate("/auth");
   };
 
+  const getItemIcon = (path: string) => {
+    const item = items.find(item => item.path === path);
+    return item?.icon;
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,16 +51,18 @@ export function UserDropdown({ items }: UserDropdownProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link to="/profile-settings" className="flex items-center">
-              {items.find(item => item.path === "/profile-settings")?.icon && 
-                <items.find(item => item.path === "/profile-settings")!.icon className="mr-2 h-4 w-4" />}
+              {getItemIcon("/profile-settings") && (
+                <getItemIcon("/profile-settings") className="mr-2 h-4 w-4" />
+              )}
               Profile Settings
             </Link>
           </DropdownMenuItem>
           
           <DropdownMenuItem asChild>
             <Link to="/purchase-history" className="flex items-center">
-              {items.find(item => item.path === "/purchase-history")?.icon && 
-                <items.find(item => item.path === "/purchase-history")!.icon className="mr-2 h-4 w-4" />}
+              {getItemIcon("/purchase-history") && (
+                <getItemIcon("/purchase-history") className="mr-2 h-4 w-4" />
+              )}
               Purchase History
             </Link>
           </DropdownMenuItem>
