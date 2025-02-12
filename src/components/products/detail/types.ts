@@ -1,3 +1,4 @@
+
 import { Tables } from "@/integrations/supabase/types";
 
 export interface ProductWithDetails extends Tables<"products"> {
