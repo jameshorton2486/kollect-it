@@ -59,7 +59,7 @@ export function MainNavbar() {
 
   const userDropdownItems = convertToUserNavItems(userNavItems);
   const mainMenuItems = mainNavItems.map(item => ({
-    name: item.name,  // Changed from label to name to match NavItem type
+    label: item.name,  // Change back to label to match the NavLinks interface
     path: item.path
   }));
 

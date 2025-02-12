@@ -32,10 +32,12 @@ export function HeroSection() {
             <Button
               size="lg"
               className="w-full sm:w-auto bg-white hover:bg-white/90 text-[#1e3c72] text-lg px-8 
-                       transform transition-all duration-200 hover:-translate-y-1 uppercase font-sans tracking-wide"
+                       transform transition-all duration-200 hover:-translate-y-1 uppercase font-sans tracking-wide 
+                       min-h-[3rem] touch-manipulation"
               onClick={() => navigate("/products")}
+              aria-label="Browse our product collection"
             >
-              <ShoppingBag className="mr-2 h-5 w-5" />
+              <ShoppingBag className="mr-2 h-5 w-5" aria-hidden="true" />
               Shop Now
             </Button>
             <Button
@@ -43,10 +45,11 @@ export function HeroSection() {
               variant="outline"
               className="w-full sm:w-auto border-2 border-white bg-transparent text-white 
                        hover:bg-white/10 text-lg px-8 transform transition-all duration-200 
-                       hover:-translate-y-1 uppercase font-sans tracking-wide"
+                       hover:-translate-y-1 uppercase font-sans tracking-wide min-h-[3rem] touch-manipulation"
               onClick={() => navigate("/pricing")}
+              aria-label="View our pricing plans"
             >
-              <Star className="mr-2 h-5 w-5" />
+              <Star className="mr-2 h-5 w-5" aria-hidden="true" />
               View Pricing
             </Button>
           </div>
@@ -77,12 +80,16 @@ export function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           className="hidden md:block relative h-[400px] w-full max-w-[500px] ml-auto"
+          role="img"
+          aria-label="Featured antique collectibles showcase"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-[#3498db]/20 to-transparent rounded-lg" />
           <img
             src="/placeholder.svg"
             alt="Featured Antiques"
             className="w-full h-full object-cover rounded-lg shadow-2xl"
+            loading="lazy"
+            decoding="async"
           />
         </motion.div>
       </div>
