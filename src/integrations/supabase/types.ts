@@ -419,6 +419,44 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          order_id: string | null
+          read: boolean | null
+          receiver_id: string | null
+          sender_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          order_id?: string | null
+          read?: boolean | null
+          receiver_id?: string | null
+          sender_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          order_id?: string | null
+          read?: boolean | null
+          receiver_id?: string | null
+          sender_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notification_settings: {
         Row: {
           created_at: string
@@ -496,30 +534,39 @@ export type Database = {
       }
       order_notifications: {
         Row: {
+          action_required: boolean | null
           created_at: string | null
           id: string
           message: string
+          notification_type: string | null
           order_id: string | null
+          priority: string | null
           read: boolean | null
           type: string
           updated_at: string | null
           user_id: string | null
         }
         Insert: {
+          action_required?: boolean | null
           created_at?: string | null
           id?: string
           message: string
+          notification_type?: string | null
           order_id?: string | null
+          priority?: string | null
           read?: boolean | null
           type: string
           updated_at?: string | null
           user_id?: string | null
         }
         Update: {
+          action_required?: boolean | null
           created_at?: string | null
           id?: string
           message?: string
+          notification_type?: string | null
           order_id?: string | null
+          priority?: string | null
           read?: boolean | null
           type?: string
           updated_at?: string | null
@@ -1502,6 +1549,7 @@ export type Database = {
         | "category_update"
         | "category_delete"
       auth_token_type: "email_verification" | "password_reset"
+      order_status: "pending" | "shipped" | "delivered" | "cancelled"
       user_role: "buyer" | "seller" | "admin"
     }
     CompositeTypes: {
