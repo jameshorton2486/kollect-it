@@ -1,3 +1,4 @@
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingCart, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,14 +13,12 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { mainNavItems, userNavItems } from "@/config/navigation";
 
-// Ensure this matches the type expected by UserDropdown
 interface UserNavItem {
   label: string;
   path: string;
   icon?: any;
 }
 
-// Convert our MenuItem to UserNavItem
 const convertToUserNavItems = (items: typeof userNavItems): UserNavItem[] => {
   return items.map(item => ({
     label: item.name,
@@ -58,15 +57,17 @@ export function MainNavbar() {
     }
   };
 
-  // Convert navigation items to match expected types
   const userDropdownItems = convertToUserNavItems(userNavItems);
+  const mainMenuItems = mainNavItems.map(item => ({
+    label: item.name,
+    path: item.path
+  }));
 
   return (
-    <nav className="bg-primary shadow-lg relative">
+    <nav className="bg-primary shadow-lg relative" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto">
         <div className="px-6 lg:px-8">
           <div className="flex items-center justify-between h-24">
-            {/* Logo */}
             <Link 
               to="/" 
               className="flex items-center space-x-3 group hover:opacity-90 transition-opacity"
@@ -75,6 +76,7 @@ export function MainNavbar() {
                   e.preventDefault();
                 }
               }}
+              aria-label="Home"
             >
               <h1 className="text-4xl font-extrabold text-white tracking-tight 
                             shadow-sm transition-all duration-200 group-hover:scale-105
@@ -83,11 +85,10 @@ export function MainNavbar() {
               </h1>
             </Link>
 
-            {/* Primary Navigation */}
             {!isMobile && (
               <div className="hidden md:flex items-center space-x-10 ml-12">
                 <NavLinks 
-                  items={mainNavItems} 
+                  items={mainMenuItems}
                   className="text-base font-semibold tracking-wide 
                             hover:text-white hover:scale-105 transition-all duration-200"
                 />
@@ -104,11 +105,9 @@ export function MainNavbar() {
               </div>
             )}
 
-            {/* Secondary Navigation */}
             <div className="flex items-center space-x-6">
-              {/* Desktop Search Bar */}
               {!isMobile && (
-                <form onSubmit={handleSearch} className="relative w-64">
+                <form onSubmit={handleSearch} className="relative w-64" role="search">
                   <Input
                     type="search"
                     placeholder="Search antiques..."
@@ -116,27 +115,27 @@ export function MainNavbar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pr-10 bg-white/10 text-white placeholder:text-white/70 
                              border-transparent focus:border-white rounded-full text-sm"
+                    aria-label="Search antiques"
                   />
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
+                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" aria-hidden="true" />
                 </form>
               )}
 
-              {/* Mobile Search Button */}
               {isMobile && !showMobileSearch && (
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setShowMobileSearch(true)}
                   className="text-white/90 hover:text-white hover:bg-white/10"
+                  aria-label="Open search"
                 >
                   <Search className="h-5 w-5" />
                 </Button>
               )}
 
-              {/* Auth/User Actions */}
               {session ? (
                 <div className="flex items-center space-x-6">
-                  <Link to="/cart">
+                  <Link to="/cart" aria-label="Shopping cart">
                     <Button 
                       variant="ghost" 
                       size="icon" 
@@ -146,11 +145,7 @@ export function MainNavbar() {
                       <ShoppingCart className="h-5 w-5" />
                     </Button>
                   </Link>
-                  <UserDropdown items={userNavItems.map(item => ({
-                    label: item.name,
-                    path: item.path,
-                    icon: item.icon
-                  }))} />
+                  <UserDropdown items={userDropdownItems} />
                 </div>
               ) : (
                 <div className="flex items-center space-x-6">
@@ -165,10 +160,9 @@ export function MainNavbar() {
                 </div>
               )}
 
-              {/* Mobile Menu */}
               {isMobile && (
                 <MobileMenu
-                  mainItems={mainNavItems}
+                  mainItems={mainMenuItems}
                   adminItems={[]}
                   isOpen={isOpen}
                   onOpenChange={setIsOpen}
@@ -179,10 +173,9 @@ export function MainNavbar() {
         </div>
       </div>
 
-      {/* Mobile Search Bar Overlay */}
       {isMobile && showMobileSearch && (
         <div className="absolute top-0 left-0 w-full h-24 bg-primary z-50 px-4 
-                       flex items-center animate-fade-in">
+                       flex items-center animate-fade-in" role="search">
           <form onSubmit={handleSearch} className="flex-1 flex items-center gap-2">
             <Input
               type="search"
@@ -192,6 +185,7 @@ export function MainNavbar() {
               className="flex-1 bg-white/10 text-white placeholder:text-white/70 
                         border-transparent focus:border-white rounded-full"
               autoFocus
+              aria-label="Search antiques"
             />
             <Button
               type="button"
@@ -199,6 +193,7 @@ export function MainNavbar() {
               size="icon"
               onClick={() => setShowMobileSearch(false)}
               className="text-white/90 hover:text-white hover:bg-white/10"
+              aria-label="Close search"
             >
               <X className="h-5 w-5" />
             </Button>
