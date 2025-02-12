@@ -1,4 +1,3 @@
-
 import { Shield, Settings, Package, ShoppingCart, Home, Info, Mail, Store, User, FileText, HelpCircle, Truck, Book, History, BadgeCheck } from "lucide-react";
 
 interface MenuItem {
@@ -29,7 +28,17 @@ export const userNavItems: MenuItem[] = [
   { name: "Profile Settings", path: "/profile-settings", icon: Settings },
   { name: "Purchase History", path: "/purchase-history", icon: History },
   { name: "Shopping Cart", path: "/cart", icon: ShoppingCart },
-  { name: "Personal Collection", path: "/personal-collection", icon: Package }
+  { name: "Personal Collection", path: "/personal-collection", icon: Package },
+  { name: "Orders", path: "/purchase-history", icon: Package },
+  { name: "Auth Documentation", path: "/auth-documentation", icon: FileText },
+  { name: "Seller Guidelines", path: "/seller-guidelines", icon: Book },
+  { name: "Categories", path: "/categories", icon: Package },
+  { name: "Featured Items", path: "/featured", icon: BadgeCheck },
+  { name: "New Arrivals", path: "/new-arrivals", icon: Package },
+  { name: "FAQ", path: "/faq", icon: HelpCircle },
+  { name: "Privacy Policy", path: "/privacy-policy", icon: FileText },
+  { name: "Terms of Service", path: "/terms-of-service", icon: FileText },
+  { name: "Shipping & Returns", path: "/shipping-returns", icon: Truck }
 ];
 
 export const sellerNavItems: MenuItem[] = [

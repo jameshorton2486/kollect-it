@@ -1,3 +1,4 @@
+
 import { User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,11 +9,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 interface UserNavItem {
   label: string;
   path: string;
+  icon?: any;
 }
 
 interface UserDropdownProps {
@@ -20,6 +25,13 @@ interface UserDropdownProps {
 }
 
 export function UserDropdown({ items }: UserDropdownProps) {
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/auth");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,17 +42,44 @@ export function UserDropdown({ items }: UserDropdownProps) {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link to="/profile-settings">Profile Settings</Link>
-        </DropdownMenuItem>
-        {items.map((item) => (
-          <DropdownMenuItem key={item.path} asChild>
-            <Link to={item.path}>{item.label}</Link>
+        
+        <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link to="/profile-settings" className="flex items-center">
+              {items.find(item => item.path === "/profile-settings")?.icon && 
+                <items.find(item => item.path === "/profile-settings")!.icon className="mr-2 h-4 w-4" />}
+              Profile Settings
+            </Link>
           </DropdownMenuItem>
-        ))}
+          
+          <DropdownMenuItem asChild>
+            <Link to="/purchase-history" className="flex items-center">
+              {items.find(item => item.path === "/purchase-history")?.icon && 
+                <items.find(item => item.path === "/purchase-history")!.icon className="mr-2 h-4 w-4" />}
+              Purchase History
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link to="/auth">Sign Out</Link>
+        
+        <DropdownMenuGroup>
+          {items.filter(item => 
+            !["/profile-settings", "/purchase-history"].includes(item.path)
+          ).map((item) => (
+            <DropdownMenuItem key={item.path} asChild>
+              <Link to={item.path} className="flex items-center">
+                {item.icon && <item.icon className="mr-2 h-4 w-4" />}
+                {item.label}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuGroup>
+        
+        <DropdownMenuSeparator />
+        
+        <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
+          Sign Out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
