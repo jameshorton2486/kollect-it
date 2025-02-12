@@ -1,5 +1,5 @@
-import * as React from "react"
 
+import * as React from "react"
 import type {
   ToastActionElement,
   ToastProps,
@@ -178,6 +178,9 @@ function useToast() {
       if (index > -1) {
         listeners.splice(index, 1)
       }
+      // Clean up any remaining timeouts when the component unmounts
+      toastTimeouts.forEach((timeout) => clearTimeout(timeout))
+      toastTimeouts.clear()
     }
   }, [state])
 

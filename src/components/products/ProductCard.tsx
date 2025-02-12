@@ -21,15 +21,28 @@ interface ProductCardProps {
 export function ProductCard({ product, categoryName, badges }: ProductCardProps) {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const { addItem } = useCart();
 
-  const handleQuickAdd = () => {
-    addItem(product.id);
-    toast({
-      title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
-    });
+  const handleQuickAdd = async () => {
+    try {
+      setIsLoading(true);
+      await addItem(product.id);
+      toast({
+        title: "Added to cart",
+        description: `${product.name} has been added to your cart.`,
+      });
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getConditionColor = (condition: string | null) => {
@@ -62,6 +75,10 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
                 decoding="async"
+                onError={(e) => {
+                  // Fallback to placeholder on image load error
+                  (e.target as HTMLImageElement).src = '/placeholder.svg';
+                }}
               />
               <div className="absolute top-2 right-2 flex flex-col gap-2">
                 {product.condition && (
@@ -123,10 +140,11 @@ export function ProductCard({ product, categoryName, badges }: ProductCardProps)
               size="sm"
               variant="secondary"
               onClick={handleQuickAdd}
+              disabled={isLoading}
               className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 min-h-[2.5rem]"
               aria-label={`Quick add ${product.name} to cart`}
             >
-              Quick Add
+              {isLoading ? "Adding..." : "Quick Add"}
             </Button>
           </div>
         </div>
