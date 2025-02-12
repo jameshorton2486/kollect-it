@@ -8,8 +8,8 @@ export function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[600px] bg-gradient-to-br from-[#308cc0] to-[#145da0] py-16 px-4 md:px-8">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10" />
+    <section className="relative min-h-[600px] bg-gradient-to-br from-[#3498db] to-[#1e3c72] py-16 px-4 md:px-8">
+      <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-5" />
       
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <motion.div 
@@ -31,7 +31,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
               size="lg"
-              className="w-full sm:w-auto bg-[#C6A961] hover:bg-[#1C2833] text-white text-lg px-8 
+              className="w-full sm:w-auto bg-white hover:bg-white/90 text-[#1e3c72] text-lg px-8 
                        transform transition-all duration-200 hover:-translate-y-1 uppercase font-sans tracking-wide"
               onClick={() => navigate("/products")}
             >
@@ -78,7 +78,7 @@ export function HeroSection() {
           transition={{ duration: 0.5 }}
           className="hidden md:block relative h-[400px] w-full max-w-[500px] ml-auto"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-[#308cc0]/20 to-transparent rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3498db]/20 to-transparent rounded-lg" />
           <img
             src="/placeholder.svg"
             alt="Featured Antiques"
