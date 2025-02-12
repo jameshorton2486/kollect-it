@@ -9,22 +9,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { mainNavItems, adminNavItems } from "@/config/navigation";
 
 interface MobileMenuProps {
-  mainItems: Array<{ label: string; path: string }>;
-  adminItems: Array<{ label: string; path: string }>;
+  mainItems: Array<{ name: string; path: string }>;
+  adminItems: Array<{ name: string; path: string }>;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-const shopCategories = [
-  { label: "Antiques", path: "/categories/antiques" },
-  { label: "Collectibles", path: "/categories/collectibles" },
-  { label: "Art", path: "/categories/art" },
-  { label: "Furniture", path: "/categories/furniture" },
-  { label: "Jewelry", path: "/categories/jewelry" },
-  { label: "Books", path: "/categories/books" },
-];
 
 export function MobileMenu({ mainItems, adminItems, isOpen, onOpenChange }: MobileMenuProps) {
   return (
@@ -37,26 +29,28 @@ export function MobileMenu({ mainItems, adminItems, isOpen, onOpenChange }: Mobi
       <SheetContent side="right" className="w-[300px] sm:w-[400px]">
         <nav className="flex flex-col gap-4">
           {mainItems.map((item) => {
-            if (item.label === "Shop") {
+            if (item.name === "Shop") {
               return (
-                <Accordion key={item.label} type="single" collapsible>
+                <Accordion key={item.name} type="single" collapsible>
                   <AccordionItem value="shop">
                     <AccordionTrigger className="text-lg font-medium">
                       Shop
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2 pl-4">
-                        {shopCategories.map((category) => (
-                          <Link
-                            key={category.path}
-                            to={category.path}
-                            onClick={() => onOpenChange(false)}
-                            className="text-sm py-2 hover:text-primary flex items-center"
-                          >
-                            <ChevronRight className="h-4 w-4 mr-2" />
-                            {category.label}
-                          </Link>
-                        ))}
+                        {mainNavItems
+                          .find(nav => nav.name === "Shop")
+                          ?.children?.map((category) => (
+                            <Link
+                              key={category.path}
+                              to={category.path}
+                              onClick={() => onOpenChange(false)}
+                              className="text-sm py-2 hover:text-primary flex items-center"
+                            >
+                              <ChevronRight className="h-4 w-4 mr-2" />
+                              {category.name}
+                            </Link>
+                          ))}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -70,7 +64,7 @@ export function MobileMenu({ mainItems, adminItems, isOpen, onOpenChange }: Mobi
                 onClick={() => onOpenChange(false)}
                 className="text-lg font-medium hover:text-primary transition-colors"
               >
-                {item.label}
+                {item.name}
               </Link>
             );
           })}
@@ -85,7 +79,7 @@ export function MobileMenu({ mainItems, adminItems, isOpen, onOpenChange }: Mobi
                   onClick={() => onOpenChange(false)}
                   className="block py-2 text-sm hover:text-primary transition-colors"
                 >
-                  {item.label}
+                  {item.name}
                 </Link>
               ))}
             </div>

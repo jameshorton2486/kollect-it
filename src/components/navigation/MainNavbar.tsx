@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingCart, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -59,7 +58,8 @@ export function MainNavbar() {
 
   const userDropdownItems = convertToUserNavItems(userNavItems);
   const mainMenuItems = mainNavItems.map(item => ({
-    label: item.name,  // Change back to label to match the NavLinks interface
+    name: item.name,
+    label: item.name,
     path: item.path
   }));
 
