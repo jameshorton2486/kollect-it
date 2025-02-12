@@ -1,3 +1,4 @@
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CategoryForm } from "../CategoryForm";
 import { Tables } from "@/integrations/supabase/types";
