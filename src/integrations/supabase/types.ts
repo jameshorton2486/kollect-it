@@ -457,6 +457,60 @@ export type Database = {
           },
         ]
       }
+      mfa_settings: {
+        Row: {
+          backup_codes: Json | null
+          created_at: string
+          enabled: boolean | null
+          preferred_method: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_codes?: Json | null
+          created_at?: string
+          enabled?: boolean | null
+          preferred_method?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_codes?: Json | null
+          created_at?: string
+          enabled?: boolean | null
+          preferred_method?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mfa_verification_attempts: {
+        Row: {
+          attempt_time: string
+          id: string
+          ip_address: string | null
+          success: boolean | null
+          user_id: string | null
+          verification_type: string | null
+        }
+        Insert: {
+          attempt_time?: string
+          id?: string
+          ip_address?: string | null
+          success?: boolean | null
+          user_id?: string | null
+          verification_type?: string | null
+        }
+        Update: {
+          attempt_time?: string
+          id?: string
+          ip_address?: string | null
+          success?: boolean | null
+          user_id?: string | null
+          verification_type?: string | null
+        }
+        Relationships: []
+      }
       notification_settings: {
         Row: {
           created_at: string
@@ -1447,6 +1501,14 @@ export type Database = {
           is_free_shipping: boolean
         }[]
       }
+      check_mfa_rate_limit: {
+        Args: {
+          check_user_id: string
+          window_minutes?: number
+          max_attempts?: number
+        }
+        Returns: boolean
+      }
       check_rate_limit: {
         Args: {
           check_ip: string
@@ -1459,6 +1521,12 @@ export type Database = {
       cleanup_expired_sessions: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      generate_backup_codes: {
+        Args: {
+          num_codes?: number
+        }
+        Returns: string[]
       }
       gtrgm_compress: {
         Args: {

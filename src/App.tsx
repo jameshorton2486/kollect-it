@@ -20,6 +20,7 @@ import Contact from "./pages/Contact";
 import SellerDashboard from "./pages/SellerDashboard";
 import SalesAnalytics from "./pages/seller/SalesAnalytics";
 import BuyerDashboard from "./pages/BuyerDashboard";
+import MFAVerification from "./pages/MFAVerification";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
         <Route path="/seller/analytics" element={<SalesAnalytics />} />
         <Route path="/categories/*" element={<CategoryManagement />} />
+        <Route path="/mfa-verification" element={<MFAVerification />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />}>
           <Route path="analytics" element={<AnalyticsDashboard />} />
           <Route path="users" element={<UserManagementTable />} />
