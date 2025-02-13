@@ -43,12 +43,14 @@ export default function AuthDocumentation() {
             Learn about account management and security features on Kollect-It.
           </p>
           <div className="mt-4">
-            <Input 
-              type="search" 
-              placeholder="Search documentation..." 
-              className="max-w-md"
-              icon={<Search className="h-4 w-4" />}
-            />
+            <div className="relative">
+              <Input 
+                type="search" 
+                placeholder="Search documentation..." 
+                className="max-w-md pl-10"
+              />
+              <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            </div>
           </div>
         </header>
 

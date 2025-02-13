@@ -1,3 +1,4 @@
+
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductCard } from '../ProductCard';
 import { useCart } from '@/contexts/CartContext';
@@ -43,7 +44,7 @@ const mockProduct = {
   subcategory_id: 'test-sub',
   tags: ['test'],
   updated_at: new Date().toISOString(),
-} as const;
+};
 
 describe('ProductCard', () => {
   it('renders product information correctly', () => {

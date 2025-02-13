@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CategoryForm } from '../CategoryForm';
+import { CategoryForm, CategoryFormProps } from '../CategoryForm';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 describe('CategoryForm', () => {
   const mockOnSubmit = vi.fn();
-  const mockInitialValues = {
+  const defaultValues = {
     name: '',
     description: '',
     parentId: null,
@@ -16,14 +16,14 @@ describe('CategoryForm', () => {
   });
 
   it('renders form fields correctly', () => {
-    render(<CategoryForm onSubmit={mockOnSubmit} initialValues={mockInitialValues} />);
+    render(<CategoryForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />);
     
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
   });
 
   it('submits form with correct values', async () => {
-    render(<CategoryForm onSubmit={mockOnSubmit} initialValues={mockInitialValues} />);
+    render(<CategoryForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />);
     
     const nameInput = screen.getByLabelText(/name/i);
     const descriptionInput = screen.getByLabelText(/description/i);
@@ -44,7 +44,7 @@ describe('CategoryForm', () => {
   });
 
   it('validates required fields', async () => {
-    render(<CategoryForm onSubmit={mockOnSubmit} initialValues={mockInitialValues} />);
+    render(<CategoryForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />);
     
     const submitButton = screen.getByRole('button', { name: /save/i });
     fireEvent.click(submitButton);
@@ -57,7 +57,7 @@ describe('CategoryForm', () => {
   });
 
   it('submits form with valid data', async () => {
-    render(<CategoryForm onSubmit={mockOnSubmit} initialValues={mockInitialValues} />);
+    render(<CategoryForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />);
     
     const nameInput = screen.getByLabelText(/name/i);
     const descriptionInput = screen.getByLabelText(/description/i);
@@ -84,7 +84,7 @@ describe('CategoryForm', () => {
       parentId: null,
     };
 
-    render(<CategoryForm onSubmit={mockOnSubmit} initialValues={defaultValues} />);
+    render(<CategoryForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />);
 
     expect(screen.getByLabelText(/name/i)).toHaveValue('Existing Category');
     expect(screen.getByLabelText(/description/i)).toHaveValue('Existing Description');
