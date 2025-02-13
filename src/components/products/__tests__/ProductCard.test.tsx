@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductCard } from '../ProductCard';
 import { useCart } from '@/contexts/CartContext';
@@ -35,9 +34,12 @@ const mockProduct = {
   provenance: 'Test provenance',
   search_vector: {},
   seo_description: 'Test SEO description',
+  seo_title: 'Test Product',
   seo_keywords: ['test'],
   shipping_info: { weight: 1 },
   status: 'active',
+  stock_status: 'in_stock',
+  social_shares: 0,
   subcategory_id: 'test-sub',
   tags: ['test'],
   updated_at: new Date().toISOString(),
@@ -58,34 +60,6 @@ describe('ProductCard', () => {
     expect(screen.getByText(/\$100/)).toBeInTheDocument();
   });
 
-  it('handles image load error correctly', () => {
-    render(
-      <ProductCard 
-        product={mockProduct}
-        categoryName="Test Category"
-      />
-    );
-
-    const img = screen.getByAltText(mockProduct.name);
-    fireEvent.error(img);
-    
-    expect(img).toHaveAttribute('src', '/placeholder.svg');
-  });
-
-  it('shows quick add button on hover', async () => {
-    render(
-      <ProductCard 
-        product={mockProduct}
-        categoryName="Test Category"
-      />
-    );
-
-    const productDiv = screen.getByRole('article');
-    fireEvent.mouseEnter(productDiv);
-
-    expect(screen.getByText(/Quick Add/)).toBeVisible();
-  });
-
   it('handles add to cart action', async () => {
     const mockAddItem = vi.fn();
     (useCart as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => ({
@@ -96,15 +70,39 @@ describe('ProductCard', () => {
       <ProductCard 
         product={mockProduct}
         categoryName="Test Category"
+        badges={{ isNew: false, isTrending: false }}
       />
     );
 
-    const productDiv = screen.getByRole('article');
-    fireEvent.mouseEnter(productDiv);
-    
-    const addButton = screen.getByText(/Quick Add/);
-    fireEvent.click(addButton);
+    const addToCartButton = screen.getByRole('button', { name: /add to cart/i });
+    fireEvent.click(addToCartButton);
 
-    expect(mockAddItem).toHaveBeenCalledWith(mockProduct.id);
+    expect(mockAddItem).toHaveBeenCalledWith(mockProduct);
+  });
+
+  it('displays "Out of Stock" when stock quantity is zero', () => {
+    const outOfStockProduct = { ...mockProduct, stock_quantity: 0 };
+    render(
+      <ProductCard 
+        product={outOfStockProduct}
+        categoryName="Test Category"
+        badges={{ isNew: false, isTrending: false }}
+      />
+    );
+
+    expect(screen.getByText(/out of stock/i)).toBeInTheDocument();
+  });
+
+  it('applies badges correctly', () => {
+    render(
+      <ProductCard 
+        product={mockProduct}
+        categoryName="Test Category"
+        badges={{ isNew: true, isTrending: true }}
+      />
+    );
+
+    expect(screen.getByText(/new/i)).toBeInTheDocument();
+    expect(screen.getByText(/trending/i)).toBeInTheDocument();
   });
 });

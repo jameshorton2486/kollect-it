@@ -1,7 +1,6 @@
-
-import { 
-  loginSchema, 
-  registerSchema, 
+import {
+  loginSchema,
+  registerSchema,
   productSchema,
   categorySchema,
   profileSchema,
@@ -14,21 +13,19 @@ describe('Validation Schemas', () => {
     it('validates correct login data', () => {
       const validData = {
         email: 'test@example.com',
-        password: 'password123',
+        password: 'Password123!'
       };
       
-      const result = loginSchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => loginSchema.parse(validData)).not.toThrow();
     });
 
     it('rejects invalid email', () => {
       const invalidData = {
         email: 'invalid-email',
-        password: 'password123',
+        password: 'Password123!'
       };
       
-      const result = loginSchema.safeParse(invalidData);
-      expect(result.success).toBe(false);
+      expect(() => loginSchema.parse(invalidData)).toThrow();
     });
   });
 
@@ -41,8 +38,7 @@ describe('Validation Schemas', () => {
         lastName: 'Doe',
       };
       
-      const result = registerSchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => registerSchema.parse(validData)).not.toThrow();
     });
 
     it('rejects weak password', () => {
@@ -53,8 +49,7 @@ describe('Validation Schemas', () => {
         lastName: 'Doe',
       };
       
-      const result = registerSchema.safeParse(invalidData);
-      expect(result.success).toBe(false);
+      expect(() => registerSchema.parse(invalidData)).toThrow();
     });
   });
 
@@ -68,8 +63,7 @@ describe('Validation Schemas', () => {
         condition: 'new',
       };
       
-      const result = productSchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => productSchema.parse(validData)).not.toThrow();
     });
 
     it('rejects invalid price', () => {
@@ -81,8 +75,7 @@ describe('Validation Schemas', () => {
         condition: 'new',
       };
       
-      const result = productSchema.safeParse(invalidData);
-      expect(result.success).toBe(false);
+      expect(() => productSchema.parse(invalidData)).toThrow();
     });
   });
 
@@ -94,8 +87,7 @@ describe('Validation Schemas', () => {
         subcategories: [{ id: '1', value: 'Test Subcategory' }],
       };
       
-      const result = categorySchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => categorySchema.parse(validData)).not.toThrow();
     });
 
     it('allows empty subcategories', () => {
@@ -104,8 +96,7 @@ describe('Validation Schemas', () => {
         description: 'Test Description',
       };
       
-      const result = categorySchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => categorySchema.parse(validData)).not.toThrow();
     });
   });
 
@@ -117,8 +108,7 @@ describe('Validation Schemas', () => {
         avatar_url: 'https://example.com/avatar.jpg',
       };
       
-      const result = profileSchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => profileSchema.parse(validData)).not.toThrow();
     });
 
     it('allows missing avatar_url', () => {
@@ -127,8 +117,7 @@ describe('Validation Schemas', () => {
         last_name: 'Doe',
       };
       
-      const result = profileSchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => profileSchema.parse(validData)).not.toThrow();
     });
   });
 
@@ -139,8 +128,7 @@ describe('Validation Schemas', () => {
         comment: 'This is a great product with detailed feedback',
       };
       
-      const result = reviewSchema.safeParse(validData);
-      expect(result.success).toBe(true);
+      expect(() => reviewSchema.parse(validData)).not.toThrow();
     });
 
     it('rejects invalid rating', () => {
@@ -149,8 +137,7 @@ describe('Validation Schemas', () => {
         comment: 'This is a great product',
       };
       
-      const result = reviewSchema.safeParse(invalidData);
-      expect(result.success).toBe(false);
+      expect(() => reviewSchema.parse(invalidData)).toThrow();
     });
   });
 });

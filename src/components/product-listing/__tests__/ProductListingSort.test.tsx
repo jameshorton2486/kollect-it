@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductListingSort } from '../ProductListingSort';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
@@ -7,25 +6,39 @@ describe('ProductListingSort', () => {
   const mockOnSortChange = vi.fn();
 
   beforeEach(() => {
-    mockOnSortChange.mockClear();
+    vi.clearAllMocks();
   });
 
   it('renders sort options correctly', () => {
     render(
-      <ProductListingSort 
-        sortBy="created_at_desc" 
-        onSortChange={mockOnSortChange} 
+      <ProductListingSort
+        currentSort="price_asc"
+        onSortChange={mockOnSortChange}
       />
     );
 
-    expect(screen.getByText(/Sort by:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Newest First/i)).toBeInTheDocument();
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    expect(screen.getByText(/sort by/i)).toBeInTheDocument();
+  });
+
+  it('calls onSortChange when a sort option is selected', () => {
+    render(
+      <ProductListingSort
+        currentSort="price_asc"
+        onSortChange={mockOnSortChange}
+      />
+    );
+
+    const select = screen.getByRole('combobox');
+    fireEvent.change(select, { target: { value: 'price_desc' } });
+
+    expect(mockOnSortChange).toHaveBeenCalledWith('price_desc');
   });
 
   it('handles sort change correctly', async () => {
     render(
       <ProductListingSort 
-        sortBy="created_at_desc" 
+        currentSort="created_at_desc" 
         onSortChange={mockOnSortChange} 
       />
     );
@@ -42,7 +55,7 @@ describe('ProductListingSort', () => {
   it('displays current sort option', () => {
     render(
       <ProductListingSort 
-        sortBy="price_asc" 
+        currentSort="price_asc" 
         onSortChange={mockOnSortChange} 
       />
     );
