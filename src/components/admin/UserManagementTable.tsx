@@ -12,7 +12,7 @@ import type { UserRole } from "./types/userManagement";
 
 export function UserManagementTable() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const { data: users, isLoading, error } = useUserData();
+  const { data: users, isLoading, error, refetch } = useUserData();
 
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
@@ -23,6 +23,7 @@ export function UserManagementTable() {
 
       if (error) throw error;
       toast.success("User role updated successfully");
+      refetch();
     } catch (error) {
       console.error('Error updating user role:', error);
       toast.error('Failed to update user role');
@@ -35,6 +36,37 @@ export function UserManagementTable() {
         ? prev.filter(id => id !== userId)
         : [...prev, userId]
     );
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      // First delete from user_roles
+      const { error: rolesError } = await supabase
+        .from('user_roles')
+        .delete()
+        .eq('user_id', userId);
+      
+      if (rolesError) throw rolesError;
+
+      // Then delete from profiles
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('id', userId);
+      
+      if (profileError) throw profileError;
+
+      // Finally delete the auth user
+      const { error: authError } = await supabase.auth.admin.deleteUser(userId);
+      
+      if (authError) throw authError;
+
+      toast.success("User deleted successfully");
+      refetch();
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      toast.error('Failed to delete user');
+    }
   };
 
   if (error) {
@@ -97,20 +129,7 @@ export function UserManagementTable() {
                   selected={selectedUsers.includes(user.id)}
                   onSelect={() => handleUserSelection(user.id)}
                   onRoleChange={handleRoleChange}
-                  onDeleteUser={async (userId) => {
-                    try {
-                      const { error } = await supabase
-                        .from('profiles')
-                        .delete()
-                        .eq('id', userId);
-                      
-                      if (error) throw error;
-                      toast.success("User deleted successfully");
-                    } catch (error) {
-                      console.error('Error deleting user:', error);
-                      toast.error('Failed to delete user');
-                    }
-                  }}
+                  onDeleteUser={handleDeleteUser}
                 />
               ))
             )}
