@@ -48,12 +48,20 @@ export default function AdminDashboard() {
       const { data: adminSettings, error } = await supabase
         .from('admin_dashboard_settings')
         .select('*')
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
+      if (error) {
         toast.error("Failed to load dashboard settings");
+        return null;
       }
-      return adminSettings;
+      
+      // Return default settings if none exist
+      return adminSettings || {
+        show_metrics: true,
+        enable_notifications: true,
+        default_view: "analytics",
+        refresh_interval: 300, // 5 minutes
+      };
     },
   });
 
