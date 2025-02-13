@@ -3,7 +3,7 @@ import {
   Shield, Settings, Package, ShoppingCart, Home, Info, Mail, Store, 
   User, FileText, HelpCircle, Truck, Book, History, BadgeCheck,
   BarChart, Archive, LineChart, Users, Layout, ShoppingBag, CheckSquare,
-  FileBox, ScrollText, BookOpen
+  FileBox, ScrollText, BookOpen, ClipboardList, ShoppingBasket, CheckCircle
 } from "lucide-react";
 
 interface MenuItem {
@@ -36,6 +36,7 @@ export const userNavItems: MenuItem[] = [
   { name: "Profile Settings", path: "/profile-settings", icon: Settings },
   { name: "Shopping Cart", path: "/cart", icon: ShoppingCart },
   { name: "Checkout", path: "/checkout", icon: CheckSquare },
+  { name: "Order Confirmation", path: "/order-confirmation", icon: CheckCircle },
   { name: "Personal Collection", path: "/personal-collection", icon: FileBox },
   { name: "Purchase History", path: "/purchase-history", icon: History },
   { name: "Orders", path: "/purchase-history", icon: Package },
@@ -57,8 +58,8 @@ export const adminNavItems: MenuItem[] = [
 ];
 
 export const buyerNavItems: MenuItem[] = [
-  { name: "Buyer Dashboard", path: "/buyer-dashboard", icon: User },
-  { name: "Orders", path: "/purchase-history", icon: Package }
+  { name: "Buyer Dashboard", path: "/buyer-dashboard", icon: ShoppingBasket },
+  { name: "Orders", path: "/purchase-history", icon: ClipboardList }
 ];
 
 export const footerNavItems: MenuItem[] = [
