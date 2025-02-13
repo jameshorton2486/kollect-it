@@ -1,7 +1,7 @@
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductListingSort } from '../ProductListingSort';
-import { vi } from 'vitest';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProductListingSort', () => {
   const mockOnSortChange = vi.fn();

@@ -7,6 +7,7 @@ import {
   profileSchema,
   reviewSchema 
 } from '../schemas';
+import { describe, it, expect } from 'vitest';
 
 describe('Validation Schemas', () => {
   describe('loginSchema', () => {

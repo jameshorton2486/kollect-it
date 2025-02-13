@@ -2,7 +2,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductCard } from '../ProductCard';
 import { useCart } from '@/contexts/CartContext';
-import { vi } from 'vitest';
+import { vi, describe, it, expect } from 'vitest';
 
 // Mock the CartContext
 vi.mock('@/contexts/CartContext', () => ({
@@ -29,7 +29,19 @@ const mockProduct = {
   estimated_age: '50 years',
   category_id: '123',
   created_at: new Date().toISOString(),
-};
+  user_id: 'test-user',
+  stock_quantity: 1,
+  low_stock_threshold: 5,
+  provenance: 'Test provenance',
+  search_vector: {},
+  seo_description: 'Test SEO description',
+  seo_keywords: ['test'],
+  shipping_info: { weight: 1 },
+  status: 'active',
+  subcategory_id: 'test-sub',
+  tags: ['test'],
+  updated_at: new Date().toISOString(),
+} as const;
 
 describe('ProductCard', () => {
   it('renders product information correctly', () => {
@@ -76,7 +88,7 @@ describe('ProductCard', () => {
 
   it('handles add to cart action', async () => {
     const mockAddItem = vi.fn();
-    (useCart as jest.Mock).mockImplementation(() => ({
+    (useCart as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => ({
       addItem: mockAddItem,
     }));
 
