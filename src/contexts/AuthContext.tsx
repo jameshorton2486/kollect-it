@@ -21,31 +21,76 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let mounted = true;
+    let authListener: any = null;
+
     // Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    const initializeAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+
+        if (mounted) {
+          setSession(session);
+          setUser(session?.user ?? null);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error checking auth session:', error);
+        if (mounted) {
+          setSession(null);
+          setUser(null);
+          setIsLoading(false);
+        }
+      }
+    };
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    const setupAuthListener = () => {
+      try {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+          if (mounted) {
+            setSession(session);
+            setUser(session?.user ?? null);
+            setIsLoading(false);
+          }
+        });
+        authListener = subscription;
+      } catch (error) {
+        console.error('Error setting up auth listener:', error);
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    };
 
-    return () => subscription.unsubscribe();
+    initializeAuth();
+    setupAuthListener();
+
+    // Cleanup function
+    return () => {
+      mounted = false;
+      if (authListener) {
+        authListener.unsubscribe();
+      }
+    };
   }, []);
 
   const signOut = async () => {
     try {
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
       navigate('/auth');
       toast.success('Successfully signed out');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing out:', error);
-      toast.error('Error signing out');
+      toast.error('Error signing out: ' + (error.message || 'Unknown error'));
+      
+      // Force cleanup of session state even if signOut fails
+      setSession(null);
+      setUser(null);
+      navigate('/auth');
     }
   };
 

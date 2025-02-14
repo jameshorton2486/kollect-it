@@ -8,6 +8,9 @@ export function useSession() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let mounted = true;
+    let activityInterval: NodeJS.Timeout;
+
     const trackSession = async (session: any) => {
       console.log("Tracking session for user:", session?.user?.id);
       
@@ -62,20 +65,24 @@ export function useSession() {
             }
           });
 
-        if (error) {
+        if (error && mounted) {
           console.error('Error tracking session:', error);
           toast.error('Session tracking failed. Please try logging in again.');
-        } else {
+        } else if (mounted) {
           console.log("Session successfully tracked");
         }
       } catch (err) {
-        console.error('Session tracking error:', err);
-        toast.error('Unable to establish secure session. Please try again.');
+        if (mounted) {
+          console.error('Session tracking error:', err);
+          toast.error('Unable to establish secure session. Please try again.');
+        }
       }
     };
 
     // Update session activity periodically
     const updateActivity = async (sessionId: string) => {
+      if (!mounted) return;
+      
       console.log("Updating session activity:", sessionId);
       
       try {
@@ -90,84 +97,97 @@ export function useSession() {
           })
           .eq('id', sessionId);
 
-        if (error) {
+        if (error && mounted) {
           console.error('Error updating session activity:', error);
-        } else {
+        } else if (mounted) {
           console.log("Session activity updated successfully");
         }
       } catch (err) {
-        console.error('Session activity update error:', err);
+        if (mounted) {
+          console.error('Session activity update error:', err);
+        }
       }
     };
 
     // Set up activity tracking interval
-    let activityInterval: NodeJS.Timeout;
+    let unsubscribe: any;
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, 'for user:', session?.user?.id);
-      
-      if (event === 'SIGNED_IN') {
-        console.log("User signed in, initializing session tracking");
-        await trackSession(session);
-        toast.success('Successfully authenticated!');
+    const setupAuthListener = async () => {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+        if (!mounted) return;
         
-        // Start tracking activity
-        if (session?.access_token) {
-          console.log("Starting activity tracking interval");
-          activityInterval = setInterval(() => {
-            updateActivity(session.access_token);
-          }, 5 * 60 * 1000); // Update every 5 minutes
-        }
-      } else if (['SIGNED_OUT', 'USER_DELETED'].includes(event)) {
-        console.log("User signed out or deleted, cleaning up session");
-        try {
-          if (session?.user) {
-            const { error } = await supabase
-              .from('user_sessions')
-              .update({ 
-                is_active: false,
-                session_metadata: {
-                  last_activity_type: 'logout',
-                  logout_timestamp: new Date().toISOString()
-                }
-              })
-              .eq('user_id', session.user.id);
+        console.log('Auth state changed:', event, 'for user:', session?.user?.id);
+        
+        if (event === 'SIGNED_IN') {
+          console.log("User signed in, initializing session tracking");
+          await trackSession(session);
+          toast.success('Successfully authenticated!');
+          
+          // Start tracking activity
+          if (session?.access_token) {
+            console.log("Starting activity tracking interval");
+            activityInterval = setInterval(() => {
+              updateActivity(session.access_token);
+            }, 5 * 60 * 1000); // Update every 5 minutes
+          }
+        } else if (['SIGNED_OUT', 'USER_DELETED'].includes(event)) {
+          console.log("User signed out or deleted, cleaning up session");
+          try {
+            if (session?.user) {
+              const { error } = await supabase
+                .from('user_sessions')
+                .update({ 
+                  is_active: false,
+                  session_metadata: {
+                    last_activity_type: 'logout',
+                    logout_timestamp: new Date().toISOString()
+                  }
+                })
+                .eq('user_id', session.user.id);
 
-            if (error) {
-              console.error('Error cleaning up sessions:', error);
-            } else {
-              console.log("Session cleanup successful");
+              if (error && mounted) {
+                console.error('Error cleaning up sessions:', error);
+              } else if (mounted) {
+                console.log("Session cleanup successful");
+              }
+            }
+            toast.info('You have been signed out successfully');
+            navigate('/auth');
+          } catch (err) {
+            if (mounted) {
+              console.error('Sign out error:', err);
+              toast.error('Error during sign out. Please try again.');
+            }
+          } finally {
+            // Clear activity tracking
+            if (activityInterval) {
+              console.log("Clearing activity tracking interval");
+              clearInterval(activityInterval);
             }
           }
-          toast.info('You have been signed out successfully');
-          navigate('/auth');
-        } catch (err) {
-          console.error('Sign out error:', err);
-          toast.error('Error during sign out. Please try again.');
-        } finally {
-          // Clear activity tracking
-          if (activityInterval) {
-            console.log("Clearing activity tracking interval");
-            clearInterval(activityInterval);
+        } else if (event === 'TOKEN_REFRESHED') {
+          console.log('Session token refreshed');
+          // Update session metadata
+          if (session?.access_token) {
+            await updateActivity(session.access_token);
           }
         }
-      } else if (event === 'TOKEN_REFRESHED') {
-        console.log('Session token refreshed');
-        // Update session metadata
-        if (session?.access_token) {
-          await updateActivity(session.access_token);
-        }
-      }
-    });
+      });
+
+      unsubscribe = subscription.unsubscribe;
+    };
+
+    setupAuthListener();
 
     // Cleanup function
     return () => {
-      console.log("Cleaning up session hook");
-      subscription.unsubscribe();
+      mounted = false;
+      if (unsubscribe) {
+        unsubscribe();
+      }
       if (activityInterval) {
         clearInterval(activityInterval);
       }
     };
   }, [navigate]);
 }
-
