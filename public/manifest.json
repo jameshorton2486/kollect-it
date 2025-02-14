@@ -1,0 +1,29 @@
+
+{
+  "short_name": "Kollect-It",
+  "name": "Kollect-It - Fine Art & Collectibles Marketplace",
+  "icons": [
+    {
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#3498db",
+  "background_color": "#ffffff",
+  "description": "Discover and trade extraordinary collectibles across multiple categories. Find authenticated fine art, vintage items, and rare collectibles.",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle"]
+}
