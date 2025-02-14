@@ -11,7 +11,7 @@ interface CategoryDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   category?: Category | null;
-  onSubmit: (values: { name: string; description?: string; subcategories: string[] }) => Promise<void>;
+  onSubmit: (values: { name: string; description: string; subcategories: Array<{ id: string; value: string }> }) => Promise<void>;
 }
 
 export function CategoryDialog({ 

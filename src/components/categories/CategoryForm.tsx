@@ -10,18 +10,21 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   description: z.string(),
-  parentId: z.string().nullable(),
+  subcategories: z.array(z.object({
+    id: z.string(),
+    value: z.string()
+  }))
 });
 
-export type CategoryFormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
 export interface CategoryFormProps {
-  onSubmit: (values: CategoryFormValues) => void;
-  defaultValues?: CategoryFormValues;
+  onSubmit: (values: FormValues) => Promise<void>;
+  defaultValues?: Partial<FormValues>;
 }
 
-export function CategoryForm({ onSubmit, defaultValues = { name: '', description: '', parentId: null } }: CategoryFormProps) {
-  const form = useForm<CategoryFormValues>({
+export function CategoryForm({ onSubmit, defaultValues = { name: '', description: '', subcategories: [] } }: CategoryFormProps) {
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
