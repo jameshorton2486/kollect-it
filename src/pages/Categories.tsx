@@ -27,7 +27,6 @@ export default function Categories() {
     queryFn: async () => {
       console.log("Fetching categories and subcategories...");
       
-      // First fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
         .select("*")
@@ -38,7 +37,6 @@ export default function Categories() {
         throw categoriesError;
       }
 
-      // Then fetch subcategories
       const { data: subcategoriesData, error: subcategoriesError } = await supabase
         .from("subcategories")
         .select("*");
@@ -48,7 +46,6 @@ export default function Categories() {
         throw subcategoriesError;
       }
 
-      // Combine the data
       const categoriesWithSubs = categoriesData.map((category) => ({
         ...category,
         subcategories: subcategoriesData.filter(
@@ -61,7 +58,7 @@ export default function Categories() {
     },
   });
 
-  const handleSubmit = async (values: { name: string; subcategories: string[] }) => {
+  const handleSubmit = async (values: { name: string; description: string; subcategories: Array<{ id: string; value: string }> }) => {
     try {
       console.log("Creating new category with values:", values);
       
@@ -70,6 +67,7 @@ export default function Categories() {
         .from("categories")
         .insert([{
           name: values.name,
+          description: values.description
         }])
         .select()
         .single();
@@ -82,30 +80,32 @@ export default function Categories() {
       console.log("Category created successfully:", categoryData);
 
       // Insert subcategories
-      const subcategoryPromises = values.subcategories
-        .filter(name => name.trim()) // Filter out empty subcategories
-        .map(subcategoryName =>
-          supabase
-            .from("subcategories")
-            .insert([{
-              name: subcategoryName,
-              category_id: categoryData.id,
-            }])
-        );
+      if (values.subcategories && values.subcategories.length > 0) {
+        const subcategoryPromises = values.subcategories
+          .filter(sub => sub.value.trim()) // Filter out empty subcategories
+          .map(subcategory =>
+            supabase
+              .from("subcategories")
+              .insert([{
+                name: subcategory.value,
+                category_id: categoryData.id,
+              }])
+          );
 
-      const subcategoryResults = await Promise.all(subcategoryPromises);
-      
-      // Check for subcategory creation errors
-      const subcategoryErrors = subcategoryResults
-        .filter(result => result.error)
-        .map(result => result.error);
-      
-      if (subcategoryErrors.length > 0) {
-        console.error("Errors creating subcategories:", subcategoryErrors);
-        throw new Error("Failed to create some subcategories");
+        const subcategoryResults = await Promise.all(subcategoryPromises);
+        
+        // Check for subcategory creation errors
+        const subcategoryErrors = subcategoryResults
+          .filter(result => result.error)
+          .map(result => result.error);
+        
+        if (subcategoryErrors.length > 0) {
+          console.error("Errors creating subcategories:", subcategoryErrors);
+          throw new Error("Failed to create some subcategories");
+        }
+
+        console.log("Subcategories created successfully");
       }
-
-      console.log("Subcategories created successfully");
       
       toast({
         title: "Success",
