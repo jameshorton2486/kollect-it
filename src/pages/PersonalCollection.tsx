@@ -1,37 +1,15 @@
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Grid, List, Plus, Search, Tag, Share2, Trash2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-interface CollectionItem {
-  id: string;
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    image_url: string;
-    description: string;
-    condition: string;
-  };
-  collection_type: 'saved' | 'purchased' | 'wishlist';
-  created_at: string;
-  notes?: string;
-}
+import { CollectionHeader } from "@/components/collection/CollectionHeader";
+import { CollectionFilters } from "@/components/collection/CollectionFilters";
+import { CollectionItem } from "@/components/collection/CollectionItem";
+import { Card, CardContent } from "@/components/ui/card";
+import { Grid, List } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 export default function PersonalCollection() {
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -42,7 +20,7 @@ export default function PersonalCollection() {
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const { data: collectionItems, isLoading } = useQuery({
+  const { data: collectionItems, isLoading, refetch } = useQuery({
     queryKey: ["personalCollection"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -64,7 +42,7 @@ export default function PersonalCollection() {
         .eq("user_id", (await supabase.auth.getUser()).data.user?.id);
 
       if (error) throw error;
-      return data as CollectionItem[];
+      return data;
     },
   });
 
@@ -92,7 +70,6 @@ export default function PersonalCollection() {
   });
 
   const handleShare = (itemId: string) => {
-    // Copy share link to clipboard
     const shareUrl = `${window.location.origin}/products/${itemId}`;
     navigator.clipboard.writeText(shareUrl);
     toast({
@@ -102,95 +79,53 @@ export default function PersonalCollection() {
   };
 
   const handleRemoveItems = async () => {
-    const { error } = await supabase
-      .from("personal_collection_items")
-      .delete()
-      .in("id", selectedItems);
+    try {
+      const { error } = await supabase
+        .from("personal_collection_items")
+        .delete()
+        .in("id", selectedItems);
 
-    if (error) {
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to remove items from collection.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: "Items removed from collection.",
+        });
+        setSelectedItems([]);
+        refetch();
+      }
+    } catch (error) {
+      console.error("Error removing items:", error);
       toast({
         title: "Error",
-        description: "Failed to remove items from collection.",
+        description: "An unexpected error occurred.",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Success",
-        description: "Items removed from collection.",
-      });
-      setSelectedItems([]);
     }
   };
 
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-4xl font-bold tracking-tight text-[#222222]" style={{ fontFamily: "Playfair Display" }}>
-              My Collection
-            </h1>
-            <p className="text-[#555555] mt-2" style={{ fontFamily: "Montserrat" }}>
-              Showcase and organize your most prized collectibles
-            </p>
-          </div>
-          <div className="flex gap-2">
-            {selectedItems.length > 0 && (
-              <Button
-                variant="destructive"
-                onClick={handleRemoveItems}
-                className="bg-[#1C2833] hover:bg-[#2C3E50]"
-              >
-                <Trash2 className="w-4 h-4 mr-2" />
-                Remove Selected
-              </Button>
-            )}
-            <Button className="bg-[#C6A961] hover:bg-[#B5983F] text-white">
-              <Plus className="w-4 h-4 mr-2" />
-              Add to Collection
-            </Button>
-          </div>
-        </div>
+        <CollectionHeader 
+          selectedItems={selectedItems}
+          onRemoveItems={handleRemoveItems}
+        />
 
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input 
-              className="pl-10" 
-              placeholder="Search your collection..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2">
-            <Select value={collectionType} onValueChange={(value: any) => setCollectionType(value)}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Items</SelectItem>
-                <SelectItem value="saved">Saved</SelectItem>
-                <SelectItem value="purchased">Purchased</SelectItem>
-                <SelectItem value="wishlist">Wishlist</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="oldest">Oldest First</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" onClick={() => setIsTagDialogOpen(true)}>
-              <Tag className="w-4 h-4 mr-2" />
-              Manage Tags
-            </Button>
-          </div>
-        </div>
+        <CollectionFilters
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          collectionType={collectionType}
+          onCollectionTypeChange={setCollectionType}
+          sortBy={sortBy}
+          onSortByChange={setSortBy}
+          onManageTags={() => setIsTagDialogOpen(true)}
+        />
 
         <Tabs defaultValue="grid" className="w-full">
           <div className="flex justify-between items-center">
@@ -208,50 +143,17 @@ export default function PersonalCollection() {
 
           <TabsContent value="grid" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sortedItems?.map((item) => (
-                <Card key={item.id} className="group hover:shadow-lg transition-shadow duration-200">
-                  <CardHeader>
-                    <CardTitle className="font-serif text-xl text-[#222222]">
-                      {item.product.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="relative">
-                      <img
-                        src={item.product.image_url || "/placeholder.svg"}
-                        alt={item.product.name}
-                        className="w-full h-48 object-cover rounded mb-4 group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          className="bg-white hover:bg-gray-100"
-                          onClick={() => handleShare(item.product.id)}
-                        >
-                          <Share2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                    <p className="text-sm text-[#555555] mb-4">
-                      Added to {item.collection_type} on{" "}
-                      {new Date(item.created_at).toLocaleDateString()}
-                    </p>
-                    <div className="flex gap-2">
-                      <Button variant="secondary" size="sm">
-                        View Details
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleShare(item.product.id)}
-                      >
-                        Share
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                sortedItems?.map((item) => (
+                  <CollectionItem
+                    key={item.id}
+                    item={item}
+                    onShare={handleShare}
+                  />
+                ))
+              )}
             </div>
           </TabsContent>
 
@@ -259,35 +161,38 @@ export default function PersonalCollection() {
             <Card>
               <CardContent className="p-0">
                 <div className="divide-y">
-                  {sortedItems?.map((item) => (
-                    <div key={item.id} className="p-4 flex items-center gap-4">
-                      <img
-                        src={item.product.image_url || "/placeholder.svg"}
-                        alt={item.product.name}
-                        className="w-16 h-16 object-cover rounded"
-                      />
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-[#222222]">
-                          {item.product.name}
-                        </h3>
-                        <p className="text-sm text-[#555555]">
-                          Added on {new Date(item.created_at).toLocaleDateString()}
-                        </p>
+                  {isLoading ? (
+                    <p className="p-4">Loading...</p>
+                  ) : (
+                    sortedItems?.map((item) => (
+                      <div key={item.id} className="p-4 flex items-center gap-4">
+                        <img
+                          src={item.product.image_url || "/placeholder.svg"}
+                          alt={item.product.name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-[#222222]">
+                            {item.product.name}
+                          </h3>
+                          <p className="text-sm text-[#555555]">
+                            Added on {new Date(item.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button className="px-3 py-1 text-sm bg-secondary rounded">
+                            View
+                          </button>
+                          <button
+                            className="px-3 py-1 text-sm border rounded"
+                            onClick={() => handleShare(item.product.id)}
+                          >
+                            Share
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button variant="secondary" size="sm">
-                          View
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleShare(item.product.id)}
-                        >
-                          Share
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -299,7 +204,11 @@ export default function PersonalCollection() {
             <DialogHeader>
               <DialogTitle>Manage Tags</DialogTitle>
             </DialogHeader>
-            {/* Tag management UI will be implemented here */}
+            <div className="p-4">
+              <p className="text-sm text-muted-foreground">
+                Tag management functionality coming soon...
+              </p>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
