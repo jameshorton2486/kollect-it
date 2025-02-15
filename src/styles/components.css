@@ -1,4 +1,3 @@
-
 @layer components {
   .btn-primary {
     @apply bg-shop-500 hover:bg-shop-600 text-white font-medium px-6 py-3 rounded-full 
@@ -33,7 +32,7 @@
   }
 
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-shop-100 
+    @apply bg-white dark:bg-shop-800 rounded-lg shadow-sm border border-shop-100 dark:border-shop-700
            hover:shadow-md transition-all duration-200 hover:-translate-y-1;
   }
 
@@ -42,7 +41,8 @@
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-shop-500 to-shop-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-br from-shop-500 via-shop-400 to-shop-300 bg-clip-text text-transparent 
+           dark:from-shop-300 dark:via-shop-400 dark:to-shop-500;
   }
 
   .product-card {
@@ -116,5 +116,13 @@
 
   .footer-text {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-morphism {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)] dark:bg-black/5;
+  }
+  
+  .neo-blur {
+    @apply backdrop-blur-2xl bg-black/40 border border-white/10 dark:bg-white/40;
   }
 }

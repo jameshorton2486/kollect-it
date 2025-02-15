@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { NavLinks } from "./NavLinks";
 import { MobileMenu } from "./MobileMenu";
 import { UserDropdown } from "./UserDropdown";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { AccessibilitySettings } from "@/components/ui/accessibility-settings";
 import { cn } from "@/lib/utils";
 
 export function MainNavbar() {
@@ -22,6 +24,8 @@ export function MainNavbar() {
         </div>
 
         <div className="flex flex-1 items-center justify-end space-x-4">
+          <ThemeToggle />
+          <AccessibilitySettings />
           <UserDropdown
             items={[
               { path: "/profile-settings", label: "Profile Settings" },
