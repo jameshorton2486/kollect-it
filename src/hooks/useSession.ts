@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 import { SessionService } from '@/services/sessionService';
 import { getDeviceInfo } from '@/utils/deviceInfo';
-import type { SessionData, SessionMetadata } from '@/types/session';
+import type { SessionData, SessionMetadata, SessionError } from '@/types/session';
 
 export function useSession() {
   const navigate = useNavigate();
@@ -56,13 +56,15 @@ export function useSession() {
 
         if (error) {
           console.error('Error tracking session:', error);
+          const sessionError: SessionError = {
+            code: error.code,
+            message: error.message,
+            timestamp: new Date().toISOString()
+          };
+
           await SessionService.updateSessionError(
             session.user.id,
-            {
-              code: error.code,
-              message: error.message,
-              timestamp: new Date().toISOString()
-            },
+            sessionError,
             retryCount + 1
           );
 

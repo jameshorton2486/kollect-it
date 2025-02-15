@@ -1,4 +1,6 @@
 
+import type { Json } from '@/integrations/supabase/types';
+
 export interface DeviceInfo {
   platform: string;
   userAgent: string;
@@ -8,6 +10,7 @@ export interface DeviceInfo {
     width: number;
     height: number;
   };
+  [key: string]: unknown; // Add index signature for Json compatibility
 }
 
 export interface GDPRConsent {
@@ -16,6 +19,7 @@ export interface GDPRConsent {
   necessary: boolean;
   preferences: boolean;
   timestamp: string;
+  [key: string]: unknown; // Add index signature for Json compatibility
 }
 
 export interface SessionMetadata {
@@ -26,6 +30,7 @@ export interface SessionMetadata {
   logout_timestamp?: string;
   termination_reason?: string;
   expiry_reason?: string;
+  [key: string]: unknown; // Add index signature for Json compatibility
 }
 
 export interface SessionData {
@@ -43,4 +48,11 @@ export interface SessionData {
   compliance_accepted: boolean;
   gdpr_consent: GDPRConsent;
   session_metadata: SessionMetadata;
+}
+
+export interface SessionError {
+  code: string;
+  message: string;
+  timestamp: string;
+  [key: string]: unknown; // Add index signature for Json compatibility
 }
