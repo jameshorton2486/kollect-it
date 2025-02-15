@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { isDevelopment, signInWithTestAccount } from "@/lib/auth/devAuth";
 
 export function useAuthSession() {
   const navigate = useNavigate();
@@ -10,10 +11,22 @@ export function useAuthSession() {
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
       if (sessionError) {
         console.error("Session check error:", sessionError);
         toast.error("Error checking session status");
       }
+
+      // If no session and in development, attempt to sign in with test account
+      if (!session && isDevelopment) {
+        console.log("Development environment detected, attempting to sign in with test account...");
+        const testSignIn = await signInWithTestAccount();
+        if (testSignIn?.session) {
+          console.log("Successfully signed in with test account");
+          return;
+        }
+      }
+
       if (session) {
         // Fetch user roles
         const { data: rolesData, error: rolesError } = await supabase
