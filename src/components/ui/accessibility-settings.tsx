@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { accessibilitySettingsSchema } from "@/lib/validations/schemas";
 
 interface AccessibilitySettings {
   reduceMotion: boolean;
@@ -37,7 +38,18 @@ export function AccessibilitySettings() {
           .single();
 
         if (data?.accessibility_settings) {
-          setSettings(data.accessibility_settings as AccessibilitySettings);
+          try {
+            const validatedSettings = accessibilitySettingsSchema.parse(data.accessibility_settings);
+            setSettings(validatedSettings);
+          } catch (error) {
+            console.error("Invalid settings format:", error);
+            // Use default settings if stored settings are invalid
+            setSettings({
+              reduceMotion: false,
+              highContrast: false,
+              largeText: false,
+            });
+          }
         }
       }
     };
@@ -47,23 +59,36 @@ export function AccessibilitySettings() {
 
   const updateSettings = async (newSettings: Partial<AccessibilitySettings>) => {
     const updatedSettings = { ...settings, ...newSettings };
-    setSettings(updatedSettings);
+    
+    try {
+      // Validate settings before updating
+      const validatedSettings = accessibilitySettingsSchema.parse(updatedSettings);
+      setSettings(validatedSettings);
 
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user) {
-      const { error } = await supabase
-        .from('user_preferences')
-        .upsert({
-          user_id: session.user.id,
-          accessibility_settings: updatedSettings
-        });
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const { error } = await supabase
+          .from('user_preferences')
+          .upsert({
+            user_id: session.user.id,
+            accessibility_settings: validatedSettings
+          });
 
-      if (error) {
-        toast.error("Failed to save settings");
-        return;
+        if (error) {
+          toast.error("Failed to save settings");
+          return;
+        }
+
+        // Apply settings to document
+        document.documentElement.classList.toggle('reduce-motion', validatedSettings.reduceMotion);
+        document.documentElement.classList.toggle('high-contrast', validatedSettings.highContrast);
+        document.documentElement.classList.toggle('large-text', validatedSettings.largeText);
+
+        toast.success("Settings saved successfully");
       }
-
-      toast.success("Settings saved successfully");
+    } catch (error) {
+      console.error("Settings validation error:", error);
+      toast.error("Invalid settings format");
     }
   };
 

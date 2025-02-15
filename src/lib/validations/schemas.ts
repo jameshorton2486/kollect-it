@@ -63,3 +63,18 @@ export const reviewSchema = z.object({
   rating: z.number().min(1).max(5),
   comment: z.string().min(10, "Review comment must be at least 10 characters"),
 });
+
+// Accessibility settings schema
+export const accessibilitySettingsSchema = z.object({
+  reduceMotion: z.boolean(),
+  highContrast: z.boolean(),
+  largeText: z.boolean(),
+});
+
+// User preferences schema
+export const userPreferencesSchema = z.object({
+  theme: z.enum(['light', 'dark', 'system']),
+  accessibility_settings: accessibilitySettingsSchema,
+  last_viewed_items: z.array(z.string()).default([]),
+});
+
