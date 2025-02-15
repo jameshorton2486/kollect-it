@@ -40,10 +40,13 @@ export function AccessibilitySettings() {
         if (data?.accessibility_settings) {
           try {
             const validatedSettings = accessibilitySettingsSchema.parse(data.accessibility_settings);
-            setSettings(validatedSettings);
+            setSettings({
+              reduceMotion: Boolean(validatedSettings.reduceMotion),
+              highContrast: Boolean(validatedSettings.highContrast),
+              largeText: Boolean(validatedSettings.largeText),
+            });
           } catch (error) {
             console.error("Invalid settings format:", error);
-            // Use default settings if stored settings are invalid
             setSettings({
               reduceMotion: false,
               highContrast: false,
@@ -58,12 +61,18 @@ export function AccessibilitySettings() {
   }, []);
 
   const updateSettings = async (newSettings: Partial<AccessibilitySettings>) => {
-    const updatedSettings = { ...settings, ...newSettings };
+    const updatedSettings: AccessibilitySettings = {
+      ...settings,
+      ...newSettings,
+    };
     
     try {
-      // Validate settings before updating
       const validatedSettings = accessibilitySettingsSchema.parse(updatedSettings);
-      setSettings(validatedSettings);
+      setSettings({
+        reduceMotion: Boolean(validatedSettings.reduceMotion),
+        highContrast: Boolean(validatedSettings.highContrast),
+        largeText: Boolean(validatedSettings.largeText),
+      });
 
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
