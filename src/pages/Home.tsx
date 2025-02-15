@@ -9,7 +9,7 @@ import { TrendingCollectiblesSection } from "@/components/home/TrendingCollectib
 
 const Home = () => {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen" role="main" aria-label="Home page content">
       <HeroSection />
       <CategoriesSection />
       <FeaturedListingsSection />
