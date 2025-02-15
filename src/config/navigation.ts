@@ -1,9 +1,10 @@
-
 import { 
   Shield, Settings, Package, ShoppingCart, Home, Info, Mail, Store, 
   User, FileText, HelpCircle, Truck, Book, History, BadgeCheck,
   BarChart, Archive, LineChart, Users, Layout, ShoppingBag, CheckSquare,
-  FileBox, ScrollText, BookOpen, ClipboardList, ShoppingBasket, CheckCircle
+  FileBox, ScrollText, BookOpen, ClipboardList, ShoppingBasket, CheckCircle,
+  MessageCircle, Bookmark, Heart, Award, Coffee, Building, BookText,
+  GraduationCap, FileWarning, Files
 } from "lucide-react";
 
 interface MenuItem {
@@ -16,20 +17,39 @@ interface MenuItem {
 
 export const mainNavItems: MenuItem[] = [
   { name: "Home", path: "/", icon: Home },
-  { name: "About Us", path: "/about", icon: Info },
-  { name: "Blog", path: "/blog", icon: ScrollText },
-  { name: "Contact", path: "/contact", icon: Mail },
   { 
-    name: "Shop", 
-    path: "/categories",
-    icon: Store,
+    name: "About Us", 
+    path: "/about", 
+    icon: Info,
     children: [
-      { name: "Products", path: "/products", icon: ShoppingBag },
+      { name: "Our Team", path: "/about/team", icon: Users },
+      { name: "Company History", path: "/about/history", icon: Building },
+      { name: "Mission & Values", path: "/about/mission", icon: Heart }
+    ]
+  },
+  { 
+    name: "Products", 
+    path: "/products", 
+    icon: Package,
+    children: [
+      { name: "All Products", path: "/products", icon: ShoppingBag },
       { name: "Categories", path: "/categories", icon: Archive },
       { name: "Featured", path: "/featured", icon: BadgeCheck },
       { name: "New Arrivals", path: "/new-arrivals", icon: Package }
     ]
-  }
+  },
+  {
+    name: "Resources",
+    path: "/resources",
+    icon: Files,
+    children: [
+      { name: "Whitepapers", path: "/resources/whitepapers", icon: FileText },
+      { name: "Case Studies", path: "/resources/case-studies", icon: BookText },
+      { name: "Tutorials", path: "/resources/tutorials", icon: GraduationCap }
+    ]
+  },
+  { name: "Blog", path: "/blog", icon: ScrollText },
+  { name: "Contact", path: "/contact", icon: Mail }
 ];
 
 export const userNavItems: MenuItem[] = [
@@ -63,18 +83,39 @@ export const buyerNavItems: MenuItem[] = [
 ];
 
 export const footerNavItems: MenuItem[] = [
-  { name: "FAQ", path: "/faq", icon: HelpCircle },
-  { name: "Privacy Policy", path: "/privacy-policy", icon: FileText },
-  { name: "Terms of Service", path: "/terms-of-service", icon: FileText },
-  { name: "Shipping & Returns", path: "/shipping-returns", icon: Truck }
+  {
+    name: "Company",
+    path: "/about",
+    children: [
+      { name: "About Us", path: "/about", icon: Info },
+      { name: "Team", path: "/about/team", icon: Users },
+      { name: "Testimonials", path: "/testimonials", icon: MessageCircle }
+    ]
+  },
+  {
+    name: "Resources",
+    path: "/resources",
+    children: [
+      { name: "Blog", path: "/blog", icon: ScrollText },
+      { name: "FAQ", path: "/faq", icon: HelpCircle },
+      { name: "Support", path: "/support", icon: Coffee }
+    ]
+  },
+  {
+    name: "Legal",
+    path: "/legal",
+    children: [
+      { name: "Privacy Policy", path: "/privacy-policy", icon: FileText },
+      { name: "Terms of Service", path: "/terms-of-service", icon: FileText },
+      { name: "Shipping & Returns", path: "/shipping-returns", icon: Truck }
+    ]
+  }
 ];
 
-export const authNavItems: MenuItem[] = [
-  { name: "Login/Register", path: "/auth" },
-  { name: "Password Recovery", path: "/password-recovery" },
-  { name: "Verify Email", path: "/verify-email" },
-  { name: "MFA Verification", path: "/mfa-verification" },
-  { name: "Auth Documentation", path: "/auth-documentation" }
+export const specialPages: MenuItem[] = [
+  { name: "404 Error", path: "/404", icon: FileWarning },
+  { name: "Thank You", path: "/thank-you", icon: Heart },
+  { name: "Sitemap", path: "/sitemap", icon: Files }
 ];
 
 export const getAllNavItems = () => [
@@ -84,5 +125,5 @@ export const getAllNavItems = () => [
   ...adminNavItems,
   ...buyerNavItems,
   ...footerNavItems,
-  ...authNavItems
+  ...specialPages
 ];
