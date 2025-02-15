@@ -4,70 +4,20 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { CollectionHeader } from "@/components/collection/CollectionHeader";
-import { CollectionFilters } from "@/components/collection/CollectionFilters";
+import { CollectionFilters, CollectionType, SortType } from "@/components/collection/CollectionFilters";
 import { CollectionItem } from "@/components/collection/CollectionItem";
 import { Card, CardContent } from "@/components/ui/card";
 import { Grid, List } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useQuery } from "@tanstack/react-query";
 
 export default function PersonalCollection() {
   const [view, setView] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
-  const [collectionType, setCollectionType] = useState<"all" | "saved" | "purchased" | "wishlist">("all");
-  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "price-high" | "price-low">("newest");
+  const [collectionType, setCollectionType] = useState<CollectionType>("all");
+  const [sortBy, setSortBy] = useState<SortType>("newest");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
   const { toast } = useToast();
-
-  const { data: collectionItems, isLoading, refetch } = useQuery({
-    queryKey: ["personalCollection"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("personal_collection_items")
-        .select(`
-          id,
-          collection_type,
-          created_at,
-          notes,
-          product:products (
-            id,
-            name,
-            price,
-            image_url,
-            description,
-            condition
-          )
-        `)
-        .eq("user_id", (await supabase.auth.getUser()).data.user?.id);
-
-      if (error) throw error;
-      return data;
-    },
-  });
-
-  const filteredItems = collectionItems?.filter((item) => {
-    const matchesSearch = item.product.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesType = collectionType === "all" || item.collection_type === collectionType;
-    return matchesSearch && matchesType;
-  });
-
-  const sortedItems = [...(filteredItems || [])].sort((a, b) => {
-    switch (sortBy) {
-      case "newest":
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      case "oldest":
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      case "price-high":
-        return b.product.price - a.product.price;
-      case "price-low":
-        return a.product.price - b.product.price;
-      default:
-        return 0;
-    }
-  });
 
   const handleShare = (itemId: string) => {
     const shareUrl = `${window.location.origin}/products/${itemId}`;
@@ -81,29 +31,23 @@ export default function PersonalCollection() {
   const handleRemoveItems = async () => {
     try {
       const { error } = await supabase
-        .from("personal_collection_items")
+        .from('collection_items')
         .delete()
-        .in("id", selectedItems);
+        .in('id', selectedItems);
 
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to remove items from collection.",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Success",
-          description: "Items removed from collection.",
-        });
-        setSelectedItems([]);
-        refetch();
-      }
-    } catch (error) {
-      console.error("Error removing items:", error);
+      if (error) throw error;
+
+      toast({
+        title: "Items Removed",
+        description: `Successfully removed ${selectedItems.length} item(s) from your collection.`,
+      });
+      
+      setSelectedItems([]);
+    } catch (error: any) {
+      console.error('Error removing items:', error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred.",
+        description: "Failed to remove items from your collection. Please try again.",
         variant: "destructive",
       });
     }
@@ -143,17 +87,14 @@ export default function PersonalCollection() {
 
           <TabsContent value="grid" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : (
-                sortedItems?.map((item) => (
-                  <CollectionItem
-                    key={item.id}
-                    item={item}
-                    onShare={handleShare}
-                  />
-                ))
-              )}
+              {/* Collection items grid view */}
+              {[].map((item) => (
+                <CollectionItem
+                  key={item.id}
+                  item={item}
+                  onShare={handleShare}
+                />
+              ))}
             </div>
           </TabsContent>
 
@@ -161,38 +102,14 @@ export default function PersonalCollection() {
             <Card>
               <CardContent className="p-0">
                 <div className="divide-y">
-                  {isLoading ? (
-                    <p className="p-4">Loading...</p>
-                  ) : (
-                    sortedItems?.map((item) => (
-                      <div key={item.id} className="p-4 flex items-center gap-4">
-                        <img
-                          src={item.product.image_url || "/placeholder.svg"}
-                          alt={item.product.name}
-                          className="w-16 h-16 object-cover rounded"
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-[#222222]">
-                            {item.product.name}
-                          </h3>
-                          <p className="text-sm text-[#555555]">
-                            Added on {new Date(item.created_at).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="flex gap-2">
-                          <button className="px-3 py-1 text-sm bg-secondary rounded">
-                            View
-                          </button>
-                          <button
-                            className="px-3 py-1 text-sm border rounded"
-                            onClick={() => handleShare(item.product.id)}
-                          >
-                            Share
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  )}
+                  {/* Collection items list view */}
+                  {[].map((item) => (
+                    <CollectionItem
+                      key={item.id}
+                      item={item}
+                      onShare={handleShare}
+                    />
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -206,7 +123,7 @@ export default function PersonalCollection() {
             </DialogHeader>
             <div className="p-4">
               <p className="text-sm text-muted-foreground">
-                Tag management functionality coming soon...
+                Tag management functionality will be implemented soon.
               </p>
             </div>
           </DialogContent>

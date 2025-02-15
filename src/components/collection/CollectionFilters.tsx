@@ -4,13 +4,16 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
+export type CollectionType = "all" | "saved" | "purchased" | "wishlist";
+export type SortType = "newest" | "oldest" | "price-high" | "price-low";
+
 interface CollectionFiltersProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
-  collectionType: string;
-  onCollectionTypeChange: (value: string) => void;
-  sortBy: string;
-  onSortByChange: (value: string) => void;
+  collectionType: CollectionType;
+  onCollectionTypeChange: (value: CollectionType) => void;
+  sortBy: SortType;
+  onSortByChange: (value: SortType) => void;
   onManageTags: () => void;
 }
 
