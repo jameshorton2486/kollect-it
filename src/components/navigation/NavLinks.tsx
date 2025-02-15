@@ -1,88 +1,40 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-
-interface NavItem {
-  name: string;
-  path: string;
-  icon?: any;
-  children?: NavItem[];
-}
+import { useLocation } from "react-router-dom";
 
 interface NavLinksProps {
-  items: NavItem[];
   className?: string;
 }
 
-export function NavLinks({ items, className = "" }: NavLinksProps) {
+export function NavLinks({ className }: NavLinksProps) {
   const location = useLocation();
+  
+  const links = [
+    { href: '/', label: 'Home' },
+    { href: '/products', label: 'Products' },
+    { href: '/categories', label: 'Categories' },
+    { href: '/featured', label: 'Featured' },
+  ];
 
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        {items.map((item) => {
-          if (item.children) {
-            return (
-              <NavigationMenuItem key={item.name}>
-                <NavigationMenuTrigger className="text-white hover:text-white/80">
-                  {item.name}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {item.children.map((child) => (
-                      <li key={child.path}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to={child.path}
-                            className={cn(
-                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                              location.pathname === child.path
-                                ? "bg-accent text-accent-foreground"
-                                : "text-muted-foreground"
-                            )}
-                          >
-                            <div className="text-sm font-medium leading-none">
-                              {child.name}
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            );
-          }
-
-          return (
-            <NavigationMenuItem key={item.path}>
-              <Link
-                to={item.path}
-                className={cn(
-                  "text-white hover:text-white/80 px-3 py-2 transition-colors duration-200",
-                  location.pathname === item.path ? "opacity-100" : "opacity-80",
-                  className
-                )}
-                onClick={(e) => {
-                  if (location.pathname === item.path) {
-                    e.preventDefault();
-                  }
-                }}
-              >
-                {item.name}
-              </Link>
-            </NavigationMenuItem>
-          );
-        })}
-      </NavigationMenuList>
-    </NavigationMenu>
+    <nav className={cn("flex gap-6", className)}>
+      {links.map(({ href, label }) => (
+        <Link
+          key={href}
+          to={href}
+          className={cn(
+            "text-sm font-medium transition-colors hover:text-primary",
+            location.pathname === href 
+              ? "text-primary" 
+              : "text-muted-foreground",
+            "relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
+            location.pathname === href && "after:scale-x-100"
+          )}
+        >
+          {label}
+        </Link>
+      ))}
+    </nav>
   );
 }

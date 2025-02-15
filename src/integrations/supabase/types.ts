@@ -1515,25 +1515,31 @@ export type Database = {
       }
       user_preferences: {
         Row: {
+          accessibility_settings: Json | null
           created_at: string
           email_notifications: boolean | null
           id: string
+          last_viewed_items: Json | null
           theme: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          accessibility_settings?: Json | null
           created_at?: string
           email_notifications?: boolean | null
           id?: string
+          last_viewed_items?: Json | null
           theme?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          accessibility_settings?: Json | null
           created_at?: string
           email_notifications?: boolean | null
           id?: string
+          last_viewed_items?: Json | null
           theme?: string | null
           updated_at?: string
           user_id?: string
@@ -1828,6 +1834,7 @@ export type Database = {
         | "category_delete"
       auth_token_type: "email_verification" | "password_reset"
       order_status: "pending" | "shipped" | "delivered" | "cancelled"
+      theme_preference: "light" | "dark" | "system"
       user_role: "buyer" | "seller" | "admin"
     }
     CompositeTypes: {
