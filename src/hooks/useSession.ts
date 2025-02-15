@@ -5,6 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 
+interface SessionError {
+  code: string;
+  message: string;
+  timestamp: string;
+}
+
 export function useSession() {
   const navigate = useNavigate();
   const { session: authSession } = useAuth();
@@ -12,6 +18,8 @@ export function useSession() {
   useEffect(() => {
     let mounted = true;
     let activityInterval: NodeJS.Timeout;
+    let retryCount = 0;
+    const MAX_RETRIES = 3;
 
     const trackSession = async (session: any) => {
       if (!mounted || !session?.user) {
@@ -20,7 +28,6 @@ export function useSession() {
       }
 
       try {
-        // Get device and browser information
         const deviceInfo = {
           platform: navigator.platform,
           userAgent: navigator.userAgent,
@@ -32,43 +39,63 @@ export function useSession() {
           }
         };
 
-        // Insert with upsert to avoid duplicate sessions
+        const sessionData = {
+          user_id: session.user.id,
+          refresh_token: session.refresh_token,
+          expires_at: new Date(session.expires_at!).toISOString(),
+          user_agent: navigator.userAgent,
+          ip_address: '', // Handled server-side
+          is_active: true,
+          session_status: 'active',
+          device_info: deviceInfo,
+          last_active: new Date().toISOString(),
+          retry_count: 0,
+          last_error: null,
+          compliance_accepted: true,
+          gdpr_consent: {
+            analytics: true,
+            marketing: false,
+            necessary: true,
+            preferences: true,
+            timestamp: new Date().toISOString()
+          },
+          session_metadata: {
+            login_timestamp: new Date().toISOString(),
+            auth_method: 'email',
+            last_activity_type: 'login'
+          }
+        };
+
         const { error } = await supabase
           .from('user_sessions')
-          .upsert({
-            user_id: session.user.id,
-            refresh_token: session.refresh_token,
-            expires_at: new Date(session.expires_at!).toISOString(),
-            user_agent: navigator.userAgent,
-            ip_address: '', // IP is handled server-side for security
-            is_active: true,
-            device_info: deviceInfo,
-            last_active: new Date().toISOString(),
-            compliance_accepted: true,
-            gdpr_consent: {
-              analytics: true,
-              marketing: false,
-              necessary: true,
-              preferences: true,
-              timestamp: new Date().toISOString()
-            },
-            session_metadata: {
-              login_timestamp: new Date().toISOString(),
-              auth_method: 'email',
-              last_activity_type: 'login'
-            }
-          }, {
+          .upsert(sessionData, {
             onConflict: 'user_id',
             ignoreDuplicates: false
           });
 
         if (error) {
           console.error('Error tracking session:', error);
+          const sessionError: SessionError = {
+            code: error.code,
+            message: error.message,
+            timestamp: new Date().toISOString()
+          };
+
+          await supabase
+            .from('user_sessions')
+            .update({ 
+              last_error: sessionError,
+              retry_count: retryCount + 1,
+              last_retry_at: new Date().toISOString()
+            })
+            .eq('user_id', session.user.id);
+
           if (mounted) {
             toast.error('Session tracking failed. Please try logging in again.');
           }
         } else {
           console.log("Session successfully tracked");
+          retryCount = 0; // Reset retry count on success
         }
       } catch (err) {
         console.error('Session tracking error:', err);
@@ -86,18 +113,25 @@ export function useSession() {
           .from('user_sessions')
           .update({ 
             last_active: new Date().toISOString(),
+            session_status: 'active',
             session_metadata: {
               last_activity_type: 'heartbeat',
               last_activity_timestamp: new Date().toISOString()
             }
           })
           .eq('user_id', authSession.user.id)
-          .eq('is_active', true);
+          .eq('is_active', true)
+          .eq('session_status', 'active');
 
         if (error) {
           console.error('Error updating session activity:', error);
+          if (retryCount < MAX_RETRIES) {
+            retryCount++;
+            setTimeout(updateActivity, 1000 * retryCount); // Exponential backoff
+          }
         } else {
           console.log("Session activity updated successfully");
+          retryCount = 0; // Reset retry count on success
         }
       } catch (err) {
         console.error('Session activity update error:', err);
@@ -116,9 +150,8 @@ export function useSession() {
           await trackSession(session);
           toast.success('Successfully authenticated!');
           
-          // Start tracking activity
           if (session?.user?.id) {
-            activityInterval = setInterval(updateActivity, 5 * 60 * 1000); // Update every 5 minutes
+            activityInterval = setInterval(updateActivity, 5 * 60 * 1000);
           }
         } else if (['SIGNED_OUT', 'USER_DELETED'].includes(event)) {
           try {
@@ -127,13 +160,16 @@ export function useSession() {
                 .from('user_sessions')
                 .update({ 
                   is_active: false,
+                  session_status: 'terminated',
                   session_metadata: {
                     last_activity_type: 'logout',
-                    logout_timestamp: new Date().toISOString()
+                    logout_timestamp: new Date().toISOString(),
+                    termination_reason: event
                   }
                 })
                 .eq('user_id', session.user.id)
-                .eq('is_active', true);
+                .eq('is_active', true)
+                .eq('session_status', 'active');
 
               if (error) {
                 console.error('Error cleaning up sessions:', error);
@@ -162,7 +198,6 @@ export function useSession() {
       setupAuthListener();
     }
 
-    // Cleanup function
     return () => {
       mounted = false;
       if (unsubscribe) {

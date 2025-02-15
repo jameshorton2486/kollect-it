@@ -1572,8 +1572,12 @@ export type Database = {
           ip_address: string | null
           is_active: boolean | null
           last_active: string | null
+          last_error: Json | null
+          last_retry_at: string | null
           refresh_token: string
+          retry_count: number | null
           session_metadata: Json | null
+          session_status: string | null
           user_agent: string | null
           user_id: string | null
         }
@@ -1587,8 +1591,12 @@ export type Database = {
           ip_address?: string | null
           is_active?: boolean | null
           last_active?: string | null
+          last_error?: Json | null
+          last_retry_at?: string | null
           refresh_token: string
+          retry_count?: number | null
           session_metadata?: Json | null
+          session_status?: string | null
           user_agent?: string | null
           user_id?: string | null
         }
@@ -1602,8 +1610,12 @@ export type Database = {
           ip_address?: string | null
           is_active?: boolean | null
           last_active?: string | null
+          last_error?: Json | null
+          last_retry_at?: string | null
           refresh_token?: string
+          retry_count?: number | null
           session_metadata?: Json | null
+          session_status?: string | null
           user_agent?: string | null
           user_id?: string | null
         }
