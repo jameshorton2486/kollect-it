@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -31,7 +32,7 @@ export default function PersonalCollection() {
   const handleRemoveItems = async () => {
     try {
       const { error } = await supabase
-        .from('collection_items')
+        .from('personal_collection_items')
         .delete()
         .in('id', selectedItems);
 
