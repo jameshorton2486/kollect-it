@@ -862,29 +862,56 @@ export type Database = {
       }
       personal_collection_items: {
         Row: {
+          acquisition_date: string | null
+          acquisition_price: number | null
+          category: string | null
           collection_type: string
+          condition: string | null
           created_at: string
+          description: string | null
+          estimated_value: number | null
           id: string
+          images: string[] | null
+          name: string | null
           notes: string | null
           product_id: string | null
+          tags: string[] | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          acquisition_date?: string | null
+          acquisition_price?: number | null
+          category?: string | null
           collection_type: string
+          condition?: string | null
           created_at?: string
+          description?: string | null
+          estimated_value?: number | null
           id?: string
+          images?: string[] | null
+          name?: string | null
           notes?: string | null
           product_id?: string | null
+          tags?: string[] | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          acquisition_date?: string | null
+          acquisition_price?: number | null
+          category?: string | null
           collection_type?: string
+          condition?: string | null
           created_at?: string
+          description?: string | null
+          estimated_value?: number | null
           id?: string
+          images?: string[] | null
+          name?: string | null
           notes?: string | null
           product_id?: string | null
+          tags?: string[] | null
           updated_at?: string
           user_id?: string
         }
