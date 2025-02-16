@@ -3,12 +3,61 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kollect-It</title>
+    <title>Kollect-It - Your Trusted Marketplace for Fine Art & Collectibles</title>
+    <meta name="description" content="Discover and trade extraordinary collectibles across multiple categories. Find authenticated fine art, vintage items, and rare collectibles at Kollect-It." />
+    <meta name="author" content="Kollect-It" />
+    <meta name="keywords" content="antiques, collectibles, fine art, vintage items, marketplace, authentication, rare items" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/fonts/your-main-font.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/og-image.png" as="image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kollect-It - Premium Collectibles Marketplace" />
+    <meta property="og:description" content="Discover authenticated fine art, vintage items, and rare collectibles. Join our trusted community of collectors." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://kollect-it.com" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kollect-It - Premium Collectibles Marketplace" />
+    <meta name="twitter:description" content="Discover authenticated fine art, vintage items, and rare collectibles. Join our trusted community of collectors." />
+    <meta name="twitter:image" content="/og-image.png" />
+    
+    <!-- PWA Support -->
+    <meta name="theme-color" content="#3498db" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- SEO -->
+    <link rel="canonical" href="https://kollect-it.com" />
+    
+    <!-- Schema.org markup for rich results -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Kollect-It",
+        "description": "Premium marketplace for fine art and collectibles",
+        "url": "https://kollect-it.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://kollect-it.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    
     <!-- GPT Engineer script for Select feature -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
