@@ -22,6 +22,9 @@ interface CollectionItemType {
   images: string[];
   notes: string;
   created_at: string;
+  collection_type: string;
+  user_id: string;
+  updated_at: string;
 }
 
 export default function PersonalCollection() {
@@ -44,7 +47,15 @@ export default function PersonalCollection() {
 
         if (error) throw error;
 
-        setItems(data);
+        // Transform the data to match CollectionItemType
+        const transformedData = data.map(item => ({
+          ...item,
+          images: item.images || [],
+          category: item.category || '',
+          collection_type: item.collection_type || 'general'
+        })) as CollectionItemType[];
+
+        setItems(transformedData);
       } catch (error: any) {
         console.error('Error fetching collection items:', error);
         toast.error("Failed to load your collection items");
@@ -60,8 +71,7 @@ export default function PersonalCollection() {
     const shareUrl = `${window.location.origin}/collection/${itemId}`;
     navigator.clipboard.writeText(shareUrl);
     toast({
-      title: "Link Copied",
-      description: "The share link has been copied to your clipboard.",
+      description: "The share link has been copied to your clipboard."
     });
   };
 
