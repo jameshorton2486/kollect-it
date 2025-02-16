@@ -20,37 +20,17 @@ class Logger {
     });
   }
 
-  private static log(level: LogLevel, event: LogEvent, message: string, data?: Record<string, any>) {
-    const entry: LogEntry = {
-      timestamp: new Date().toISOString(),
-      level,
-      event,
-      message,
-      data: data ? this.sanitizeData(data) : undefined
-    };
-
-    const formattedEntry = this.formatLogEntry(entry);
-
-    switch (level) {
-      case 'debug':
-        if (DEBUG_MODE) {
-          console.debug(formattedEntry);
-        }
-        break;
-      case 'info':
-        console.info(formattedEntry);
-        break;
-      case 'warn':
-        console.warn(formattedEntry);
-        break;
-      case 'error':
-        console.error(formattedEntry);
-        break;
-    }
-
-    // In production, you might want to send logs to a service like Supabase
-    if (process.env.NODE_ENV === 'production') {
-      this.persistLog(entry);
+  private static async persistLog(entry: LogEntry) {
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      // Using activity_logs table instead of system_logs since it's already in the schema
+      await supabase.from('activity_logs').insert([{
+        activity_type: 'system',
+        details: entry,
+        timestamp: entry.timestamp
+      }]);
+    } catch (error) {
+      console.error('Failed to persist log:', error);
     }
   }
 
@@ -66,29 +46,59 @@ class Logger {
     }, {} as Record<string, any>);
   }
 
-  private static async persistLog(entry: LogEntry) {
-    try {
-      const { supabase } = await import('@/integrations/supabase/client');
-      await supabase.from('system_logs').insert([entry]);
-    } catch (error) {
-      console.error('Failed to persist log:', error);
+  static debug(event: LogEvent, message: string, data?: Record<string, any>) {
+    if (DEBUG_MODE) {
+      const entry: LogEntry = {
+        timestamp: new Date().toISOString(),
+        level: 'debug',
+        event,
+        message,
+        data: data ? this.sanitizeData(data) : undefined
+      };
+      console.debug(this.formatLogEntry(entry));
     }
   }
 
-  static debug(event: LogEvent, message: string, data?: Record<string, any>) {
-    this.log('debug', event, message, data);
-  }
-
   static info(event: LogEvent, message: string, data?: Record<string, any>) {
-    this.log('info', event, message, data);
+    const entry: LogEntry = {
+      timestamp: new Date().toISOString(),
+      level: 'info',
+      event,
+      message,
+      data: data ? this.sanitizeData(data) : undefined
+    };
+    console.info(this.formatLogEntry(entry));
+    if (process.env.NODE_ENV === 'production') {
+      this.persistLog(entry);
+    }
   }
 
   static warn(event: LogEvent, message: string, data?: Record<string, any>) {
-    this.log('warn', event, message, data);
+    const entry: LogEntry = {
+      timestamp: new Date().toISOString(),
+      level: 'warn',
+      event,
+      message,
+      data: data ? this.sanitizeData(data) : undefined
+    };
+    console.warn(this.formatLogEntry(entry));
+    if (process.env.NODE_ENV === 'production') {
+      this.persistLog(entry);
+    }
   }
 
   static error(event: LogEvent, message: string, data?: Record<string, any>) {
-    this.log('error', event, message, data);
+    const entry: LogEntry = {
+      timestamp: new Date().toISOString(),
+      level: 'error',
+      event,
+      message,
+      data: data ? this.sanitizeData(data) : undefined
+    };
+    console.error(this.formatLogEntry(entry));
+    if (process.env.NODE_ENV === 'production') {
+      this.persistLog(entry);
+    }
   }
 }
 
