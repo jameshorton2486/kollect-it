@@ -4,7 +4,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { logger } from "@/lib/logs/system/logger";
 
 interface Props {
   children: ReactNode;
@@ -29,17 +28,11 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    logger.error('error', 'Uncaught error in component', {
-      error: {
-        message: error.message,
-        stack: error.stack,
-        componentStack: errorInfo.componentStack,
-      }
-    });
+    console.error('Uncaught error in component:', error, errorInfo);
   }
 
   private handleRetry = () => {
-    logger.info('user_action', 'User triggered error boundary retry');
+    console.info('User triggered error boundary retry');
     this.setState({ hasError: false, error: null, errorInfo: null });
     window.location.reload();
   };

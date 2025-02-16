@@ -4,7 +4,6 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 import { AuthError, User, Session, Provider } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 import { toast } from "sonner";
-import { logger } from "@/lib/logs/system/logger";
 
 /**
  * Handles user login authentication
@@ -13,11 +12,11 @@ import { logger } from "@/lib/logs/system/logger";
  * @throws Error if login fails or rate limit is exceeded
  */
 export async function handleLogin(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
-  logger.info('auth', 'Login attempt initiated', { email: values.email });
+  console.info('Login attempt initiated', { email: values.email });
   
   try {
     loginSchema.parse(values);
-    logger.debug('auth', 'Login data validation passed');
+    console.debug('Login data validation passed');
 
     const { data: rateLimitCheck, error: rateLimitError } = await supabase
       .rpc('check_rate_limit', {
@@ -26,12 +25,12 @@ export async function handleLogin(values: AuthFormValues): Promise<{ user: User 
       });
 
     if (rateLimitError) {
-      logger.error('auth', 'Rate limit check failed', { error: rateLimitError });
+      console.error('Rate limit check failed', { error: rateLimitError });
       throw new Error("An error occurred while checking rate limits. Please try again later.");
     }
 
     if (rateLimitCheck) {
-      logger.warn('auth', 'Rate limit exceeded', { email: values.email });
+      console.warn('Rate limit exceeded', { email: values.email });
       throw new Error(`Too many failed attempts. Please try again after ${LOCKOUT_DURATION} minutes.`);
     }
 
@@ -49,18 +48,18 @@ export async function handleLogin(values: AuthFormValues): Promise<{ user: User 
       });
     
     if (logError) {
-      logger.error('auth', 'Failed to log login attempt', { error: logError });
+      console.error('Failed to log login attempt', { error: logError });
     }
     
     if (error) {
-      logger.error('auth', 'Login failed', { error: error.message });
+      console.error('Login failed', { error: error.message });
       throw new Error("Invalid email or password.");
     }
 
-    logger.info('auth', 'Login successful', { userId: data.user?.id });
+    console.info('Login successful', { userId: data.user?.id });
     return data;
   } catch (error: any) {
-    logger.error('auth', 'Login process failed', { 
+    console.error('Login process failed', { 
       error: error.message,
       stack: error.stack
     });
@@ -78,11 +77,11 @@ export async function handleLogin(values: AuthFormValues): Promise<{ user: User 
  * @throws Error if registration fails or user already exists
  */
 export async function handleSignup(values: AuthFormValues): Promise<{ user: User | null; session: Session | null }> {
-  logger.info('auth', 'Signup attempt initiated', { email: values.email });
+  console.info('Signup attempt initiated', { email: values.email });
   
   try {
     registerSchema.parse(values);
-    logger.debug('auth', 'Registration data validation passed');
+    console.debug('Registration data validation passed');
 
     const { data: userCheck, error: checkError } = await supabase.auth.signUp({
       email: values.email.trim(),
@@ -90,16 +89,16 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
     });
 
     if (checkError) {
-      logger.error('auth', 'User check failed', { error: checkError });
+      console.error('User check failed', { error: checkError });
       throw new Error("Unable to create account. Please try again later.");
     }
 
     if (userCheck.user && !userCheck.session) {
-      logger.warn('auth', 'Attempted to create duplicate account', { email: values.email });
+      console.warn('Attempted to create duplicate account', { email: values.email });
       throw new Error("Already a collector? Looks like you have an account! Please sign in instead.");
     }
 
-    logger.log('auth', 'User check passed', { email: values.email });
+    console.log('User check passed', { email: values.email });
     const { data, error } = await supabase.auth.signUp({
       email: values.email.trim(),
       password: values.password.trim(),
@@ -112,14 +111,14 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
     });
     
     if (error) {
-      logger.error('auth', 'Signup failed', { error: error.message });
+      console.error('Signup failed', { error: error.message });
       throw new Error("Unable to create account. Please try again later.");
     }
 
-    logger.info('auth', 'Signup successful', { userId: data.user?.id });
+    console.info('Signup successful', { userId: data.user?.id });
     return data;
   } catch (error: any) {
-    logger.error('auth', 'Signup process failed', { 
+    console.error('Signup process failed', { 
       error: error.message,
       stack: error.stack
     });
@@ -137,11 +136,11 @@ export async function handleSignup(values: AuthFormValues): Promise<{ user: User
  * @throws Error if OAuth sign in fails
  */
 export async function handleOAuthSignIn(provider: Provider) {
-  logger.info('auth', 'OAuth sign in attempt initiated', { provider: provider });
+  console.info('OAuth sign in attempt initiated', { provider: provider });
   
   try {
     const redirectTo = `${window.location.origin}/auth/callback`;
-    logger.log('auth', 'Redirect URL', { redirectTo: redirectTo });
+    console.log('Redirect URL', { redirectTo: redirectTo });
     
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -155,14 +154,14 @@ export async function handleOAuthSignIn(provider: Provider) {
     });
 
     if (error) {
-      logger.error('auth', 'OAuth error', { error: error.message });
+      console.error('OAuth error', { error: error.message });
       throw new Error(`Failed to sign in with ${provider}: ${error.message}`);
     }
 
-    logger.info('auth', 'OAuth sign in initiated successfully');
+    console.info('OAuth sign in initiated successfully');
     return data;
   } catch (error: any) {
-    logger.error('auth', 'OAuth sign in error', { error: error.message });
+    console.error('OAuth sign in error', { error: error.message });
     toast.error(`Failed to initiate ${provider} sign in. Please try again.`);
     throw error;
   }
@@ -176,23 +175,23 @@ export function isAuthError(error: unknown): error is AuthError {
 // Add session validation utility
 export function isValidSession(session: Session | null): session is Session {
   if (!session) {
-    logger.warn('auth', 'No session found');
+    console.warn('No session found');
     return false;
   }
   
   if (!session.user) {
-    logger.warn('auth', 'Session has no user');
+    console.warn('Session has no user');
     return false;
   }
   
   if (!session.access_token) {
-    logger.warn('auth', 'Session has no access token');
+    console.warn('Session has no access token');
     return false;
   }
   
   const tokenExpiry = new Date(session.expires_at! * 1000);
   if (tokenExpiry < new Date()) {
-    logger.warn('auth', 'Session token is expired');
+    console.warn('Session token is expired');
     return false;
   }
   
