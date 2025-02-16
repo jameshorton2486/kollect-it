@@ -5,6 +5,6 @@ interface ProtectedRouteProps {
 }
 
 // Temporarily disable auth protection
-export function ProtectedRoute({ children }: ProtectedRouteProps) {
+export function ProtectedRoute({ children, requireAdmin }: ProtectedRouteProps) {
   return <>{children}</>;
 }
