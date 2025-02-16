@@ -11,20 +11,32 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Grid, List } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-interface CollectionItemType {
+interface DatabaseCollectionItem {
   id: string;
-  name: string;
-  description: string;
-  category: string;
-  condition: string;
-  acquisition_date: string;
-  estimated_value: number;
-  images: string[];
-  notes: string;
-  created_at: string;
-  collection_type: string;
   user_id: string;
+  name: string;
+  description: string | null;
+  category: string | null;
+  condition: string | null;
+  acquisition_date: string | null;
+  acquisition_price: number | null;
+  estimated_value: number | null;
+  tags: string[] | null;
+  images: string[] | null;
+  notes: string | null;
+  created_at: string;
   updated_at: string;
+}
+
+interface CollectionItemDisplay {
+  id: string;
+  product: {
+    id: string;
+    name: string;
+    image_url: string;
+  };
+  collection_type: string;
+  created_at: string;
 }
 
 export default function PersonalCollection() {
@@ -34,7 +46,7 @@ export default function PersonalCollection() {
   const [sortBy, setSortBy] = useState<SortType>("newest");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
-  const [items, setItems] = useState<CollectionItemType[]>([]);
+  const [items, setItems] = useState<DatabaseCollectionItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -47,15 +59,7 @@ export default function PersonalCollection() {
 
         if (error) throw error;
 
-        // Transform the data to match CollectionItemType
-        const transformedData = data.map(item => ({
-          ...item,
-          images: item.images || [],
-          category: item.category || '',
-          collection_type: item.collection_type || 'general'
-        })) as CollectionItemType[];
-
-        setItems(transformedData);
+        setItems(data || []);
       } catch (error: any) {
         console.error('Error fetching collection items:', error);
         toast.error("Failed to load your collection items");
@@ -70,9 +74,7 @@ export default function PersonalCollection() {
   const handleShare = (itemId: string) => {
     const shareUrl = `${window.location.origin}/collection/${itemId}`;
     navigator.clipboard.writeText(shareUrl);
-    toast({
-      description: "The share link has been copied to your clipboard."
-    });
+    toast.error("The share link has been copied to your clipboard.");
   };
 
   const handleRemoveItems = async () => {
@@ -94,10 +96,21 @@ export default function PersonalCollection() {
   };
 
   const filteredItems = items.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         item.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = (item.name?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
+                         (item.description?.toLowerCase().includes(searchQuery.toLowerCase()) || false);
     const matchesType = collectionType === "all" || item.category === collectionType;
     return matchesSearch && matchesType;
+  });
+
+  const mapToDisplayItem = (item: DatabaseCollectionItem): CollectionItemDisplay => ({
+    id: item.id,
+    product: {
+      id: item.id,
+      name: item.name || 'Untitled Item',
+      image_url: item.images?.[0] || '/placeholder.svg'
+    },
+    collection_type: item.category || 'uncategorized',
+    created_at: item.created_at
   });
 
   return (
@@ -137,16 +150,7 @@ export default function PersonalCollection() {
               {filteredItems.map((item) => (
                 <CollectionItem
                   key={item.id}
-                  item={{
-                    id: item.id,
-                    product: {
-                      id: item.id,
-                      name: item.name,
-                      image_url: item.images?.[0] || '/placeholder.svg'
-                    },
-                    collection_type: item.category,
-                    created_at: item.created_at
-                  }}
+                  item={mapToDisplayItem(item)}
                   onShare={handleShare}
                 />
               ))}
@@ -160,16 +164,7 @@ export default function PersonalCollection() {
                   {filteredItems.map((item) => (
                     <CollectionItem
                       key={item.id}
-                      item={{
-                        id: item.id,
-                        product: {
-                          id: item.id,
-                          name: item.name,
-                          image_url: item.images?.[0] || '/placeholder.svg'
-                        },
-                        collection_type: item.category,
-                        created_at: item.created_at
-                      }}
+                      item={mapToDisplayItem(item)}
                       onShare={handleShare}
                     />
                   ))}
