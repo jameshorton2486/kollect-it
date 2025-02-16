@@ -4,7 +4,7 @@ import { loginSchema, registerSchema } from "@/lib/validations/schemas";
 import { AuthError, User, Session, Provider } from '@supabase/supabase-js';
 import { MAX_LOGIN_ATTEMPTS, LOCKOUT_DURATION } from "./constants";
 import { toast } from "sonner";
-import { logger } from "@/lib/logging/logger";
+import { logger } from "@/lib/logs/system/logger";
 
 /**
  * Handles user login authentication

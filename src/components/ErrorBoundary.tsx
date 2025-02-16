@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { logger } from "@/lib/logging/logger";
+import { logger } from "@/lib/logs/system/logger";
 
 interface Props {
   children: ReactNode;
