@@ -11,7 +11,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Grid, List } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-interface DatabaseCollectionItem {
+// Define the exact structure expected from the API
+interface CollectionItemType {
   id: string;
   user_id: string;
   product_id: string | null;
@@ -48,7 +49,7 @@ export default function PersonalCollection() {
   const [sortBy, setSortBy] = useState<SortType>("newest");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
-  const [items, setItems] = useState<DatabaseCollectionItem[]>([]);
+  const [items, setItems] = useState<CollectionItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -61,9 +62,32 @@ export default function PersonalCollection() {
 
         if (error) throw error;
 
-        // Explicitly type the data as DatabaseCollectionItem[]
-        const typedData = (data || []) as DatabaseCollectionItem[];
-        setItems(typedData);
+        // Validate that data is an array and has the expected structure
+        if (!Array.isArray(data)) {
+          throw new Error("API response is not an array");
+        }
+
+        // Type assertion after validation
+        const validatedItems: CollectionItemType[] = data.map(item => ({
+          id: item.id,
+          user_id: item.user_id,
+          product_id: item.product_id,
+          collection_type: item.collection_type,
+          notes: item.notes,
+          created_at: item.created_at,
+          updated_at: item.updated_at,
+          name: item.name,
+          description: item.description,
+          category: item.category,
+          condition: item.condition,
+          acquisition_date: item.acquisition_date,
+          acquisition_price: item.acquisition_price,
+          estimated_value: item.estimated_value,
+          tags: item.tags,
+          images: item.images
+        }));
+
+        setItems(validatedItems);
       } catch (error: any) {
         console.error('Error fetching collection items:', error);
         toast.error("Failed to load your collection items");
@@ -106,7 +130,7 @@ export default function PersonalCollection() {
     return matchesSearch && matchesType;
   });
 
-  const mapToDisplayItem = (item: DatabaseCollectionItem): CollectionItemDisplay => ({
+  const mapToDisplayItem = (item: CollectionItemType): CollectionItemDisplay => ({
     id: item.id,
     product: {
       id: item.id,
