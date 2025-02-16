@@ -54,11 +54,11 @@ export function Footer() {
               <li className="flex items-center gap-2 text-white/80">
                 <Phone className="w-4 h-4" />
                 <a 
-                  href="tel:1-800-KOLLECT" 
+                  href="tel:1-469-386-6065" 
                   className="hover:text-white transition-colors"
                   aria-label="Call support"
                 >
-                  1-800-KOLLECT
+                  1-469-386-6065
                 </a>
               </li>
             </ul>

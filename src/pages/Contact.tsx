@@ -1,4 +1,3 @@
-
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Footer } from "@/components/home/Footer";
 import { Mail, Phone, Clock, Facebook, Instagram, Twitter } from "lucide-react";
@@ -52,7 +51,7 @@ export default function Contact() {
             <div className="text-center">
               <Phone className="h-8 w-8 text-shop-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-4">Call Us</h3>
-              <p className="text-shop-600">469-386-6065</p>
+              <p className="text-shop-600">1-469-386-6065</p>
               <div className="flex items-center justify-center mt-2">
                 <Clock className="h-4 w-4 text-shop-600 mr-2" />
                 <p className="text-shop-600 text-sm">Mon-Fri: 9AM-5PM (EST)</p>
