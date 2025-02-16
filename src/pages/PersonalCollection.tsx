@@ -14,6 +14,11 @@ import { supabase } from "@/integrations/supabase/client";
 interface DatabaseCollectionItem {
   id: string;
   user_id: string;
+  product_id: string | null;
+  collection_type: string;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
   name: string;
   description: string | null;
   category: string | null;
@@ -23,9 +28,6 @@ interface DatabaseCollectionItem {
   estimated_value: number | null;
   tags: string[] | null;
   images: string[] | null;
-  notes: string | null;
-  created_at: string;
-  updated_at: string;
 }
 
 interface CollectionItemDisplay {
@@ -59,7 +61,9 @@ export default function PersonalCollection() {
 
         if (error) throw error;
 
-        setItems(data || []);
+        // Explicitly type the data as DatabaseCollectionItem[]
+        const typedData = (data || []) as DatabaseCollectionItem[];
+        setItems(typedData);
       } catch (error: any) {
         console.error('Error fetching collection items:', error);
         toast.error("Failed to load your collection items");
@@ -109,7 +113,7 @@ export default function PersonalCollection() {
       name: item.name || 'Untitled Item',
       image_url: item.images?.[0] || '/placeholder.svg'
     },
-    collection_type: item.category || 'uncategorized',
+    collection_type: item.collection_type || 'uncategorized',
     created_at: item.created_at
   });
 
