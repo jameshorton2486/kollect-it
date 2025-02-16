@@ -1,15 +1,28 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { CollectionHeader } from "@/components/collection/CollectionHeader";
 import { CollectionFilters, CollectionType, SortType } from "@/components/collection/CollectionFilters";
 import { CollectionItem } from "@/components/collection/CollectionItem";
 import { Card, CardContent } from "@/components/ui/card";
 import { Grid, List } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+interface CollectionItemType {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  condition: string;
+  acquisition_date: string;
+  estimated_value: number;
+  images: string[];
+  notes: string;
+  created_at: string;
+}
 
 export default function PersonalCollection() {
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -18,10 +31,33 @@ export default function PersonalCollection() {
   const [sortBy, setSortBy] = useState<SortType>("newest");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
-  const { toast } = useToast();
+  const [items, setItems] = useState<CollectionItemType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCollectionItems = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('personal_collection_items')
+          .select('*')
+          .order(sortBy === 'newest' ? 'created_at' : 'name');
+
+        if (error) throw error;
+
+        setItems(data);
+      } catch (error: any) {
+        console.error('Error fetching collection items:', error);
+        toast.error("Failed to load your collection items");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCollectionItems();
+  }, [sortBy]);
 
   const handleShare = (itemId: string) => {
-    const shareUrl = `${window.location.origin}/products/${itemId}`;
+    const shareUrl = `${window.location.origin}/collection/${itemId}`;
     navigator.clipboard.writeText(shareUrl);
     toast({
       title: "Link Copied",
@@ -38,21 +74,21 @@ export default function PersonalCollection() {
 
       if (error) throw error;
 
-      toast({
-        title: "Items Removed",
-        description: `Successfully removed ${selectedItems.length} item(s) from your collection.`,
-      });
-      
+      setItems(items.filter(item => !selectedItems.includes(item.id)));
+      toast.success(`Successfully removed ${selectedItems.length} item(s) from your collection.`);
       setSelectedItems([]);
     } catch (error: any) {
       console.error('Error removing items:', error);
-      toast({
-        title: "Error",
-        description: "Failed to remove items from your collection. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Failed to remove items from your collection. Please try again.");
     }
   };
+
+  const filteredItems = items.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         item.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = collectionType === "all" || item.category === collectionType;
+    return matchesSearch && matchesType;
+  });
 
   return (
     <DashboardLayout>
@@ -88,11 +124,19 @@ export default function PersonalCollection() {
 
           <TabsContent value="grid" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Collection items grid view */}
-              {[].map((item) => (
+              {filteredItems.map((item) => (
                 <CollectionItem
                   key={item.id}
-                  item={item}
+                  item={{
+                    id: item.id,
+                    product: {
+                      id: item.id,
+                      name: item.name,
+                      image_url: item.images?.[0] || '/placeholder.svg'
+                    },
+                    collection_type: item.category,
+                    created_at: item.created_at
+                  }}
                   onShare={handleShare}
                 />
               ))}
@@ -103,11 +147,19 @@ export default function PersonalCollection() {
             <Card>
               <CardContent className="p-0">
                 <div className="divide-y">
-                  {/* Collection items list view */}
-                  {[].map((item) => (
+                  {filteredItems.map((item) => (
                     <CollectionItem
                       key={item.id}
-                      item={item}
+                      item={{
+                        id: item.id,
+                        product: {
+                          id: item.id,
+                          name: item.name,
+                          image_url: item.images?.[0] || '/placeholder.svg'
+                        },
+                        collection_type: item.category,
+                        created_at: item.created_at
+                      }}
                       onShare={handleShare}
                     />
                   ))}
