@@ -26,7 +26,7 @@ if (!root) {
 
 createRoot(root).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="system" storageKey="kollect-it-theme">
+    <ThemeProvider defaultTheme="light" storageKey="kollect-it-theme">
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <CartProvider>
