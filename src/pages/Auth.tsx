@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -15,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 import { OAuthProviders } from "@/components/auth/OAuthProviders";
 import { useQuery } from "@tanstack/react-query";
+import { isDevelopment, signInWithTestAccount } from "@/lib/auth/devAuth";
 
 export type AuthMode = "login" | "signup" | "guest";
 
@@ -30,6 +30,17 @@ export function Auth() {
   useInactivityTimeout();
   useAuthSession();
   useSession();
+
+  useEffect(() => {
+    if (isDevelopment) {
+      signInWithTestAccount().then((data) => {
+        if (data?.user) {
+          console.log("Development mode: Auto-signed in with test account");
+          navigate('/');
+        }
+      });
+    }
+  }, [navigate]);
 
   const { data: session, isLoading: isSessionLoading } = useQuery({
     queryKey: ["session"],
@@ -185,21 +196,30 @@ export function Auth() {
 
   return (
     <AuthLayout>
-      <AuthHeader mode={mode} />
-      {mode === "signup" && <AuthFeatures />}
-      
-      <AuthForm
-        mode={mode}
-        onSubmit={handleAuth}
-        isSubmitting={isSubmitting}
-      />
+      {isDevelopment ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <span className="ml-2">Auto-signing in with test account...</span>
+        </div>
+      ) : (
+        <>
+          <AuthHeader mode={mode} />
+          {mode === "signup" && <AuthFeatures />}
+          
+          <AuthForm
+            mode={mode}
+            onSubmit={handleAuth}
+            isSubmitting={isSubmitting}
+          />
 
-      <OAuthProviders />
+          <OAuthProviders />
 
-      <AuthSwitchMode 
-        mode={mode} 
-        onChange={setMode}
-      />
+          <AuthSwitchMode 
+            mode={mode} 
+            onChange={setMode}
+          />
+        </>
+      )}
     </AuthLayout>
   );
 }
