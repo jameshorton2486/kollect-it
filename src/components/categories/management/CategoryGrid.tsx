@@ -1,3 +1,4 @@
+
 import { CategoryCard } from "../CategoryCard";
 import { Tables } from "@/integrations/supabase/types";
 

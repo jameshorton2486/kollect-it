@@ -43,24 +43,121 @@ function isRateLimited(clientId: string): { limited: boolean; retryAfter?: numbe
   return { limited: false };
 }
 
+// Handle WebSocket connection setup
+async function setupWebSocket(req: Request): Promise<Response> {
+  try {
+    const { socket, response } = Deno.upgradeWebSocket(req);
+    console.log("WebSocket connection established");
+
+    // Add CORS headers to WebSocket response
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+
+    // Set up OpenAI WebSocket connection
+    const openAISocket = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4-turbo-preview");
+    
+    setupOpenAIConnection(openAISocket, socket);
+    setupClientConnection(socket, openAISocket);
+
+    return response;
+  } catch (err) {
+    console.error("WebSocket setup error:", err);
+    return new Response(`Failed to setup WebSocket: ${err.message}`, { 
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
+function setupOpenAIConnection(openAISocket: WebSocket, clientSocket: WebSocket) {
+  openAISocket.onopen = () => {
+    console.log("Connected to OpenAI WebSocket");
+    try {
+      openAISocket.send(JSON.stringify({
+        type: 'init',
+        data: {
+          model: 'gpt-4-turbo-preview',
+          headers: {
+            'Authorization': `Bearer ${OPENAI_API_KEY}`
+          }
+        }
+      }));
+    } catch (err) {
+      console.error("Error sending initial configuration:", err);
+      clientSocket.send(JSON.stringify({ 
+        type: 'error', 
+        error: 'Failed to initialize OpenAI connection' 
+      }));
+    }
+  };
+
+  openAISocket.onerror = (error) => {
+    console.error("OpenAI WebSocket error:", error);
+    clientSocket.send(JSON.stringify({ 
+      type: 'error', 
+      error: 'OpenAI connection error' 
+    }));
+  };
+
+  openAISocket.onmessage = (event) => {
+    try {
+      clientSocket.send(event.data);
+    } catch (err) {
+      console.error("Error sending OpenAI response:", err);
+      clientSocket.send(JSON.stringify({ 
+        type: 'error', 
+        error: 'Failed to relay OpenAI response' 
+      }));
+    }
+  };
+
+  openAISocket.onclose = () => {
+    console.log("OpenAI WebSocket closed");
+    clientSocket.close();
+  };
+}
+
+function setupClientConnection(clientSocket: WebSocket, openAISocket: WebSocket) {
+  clientSocket.onmessage = async (event) => {
+    console.log("Received message from client:", event.data);
+    
+    try {
+      const message = JSON.parse(event.data);
+      openAISocket.send(JSON.stringify(message));
+    } catch (err) {
+      console.error("Error handling client message:", err);
+      clientSocket.send(JSON.stringify({ 
+        type: 'error', 
+        error: 'Failed to process message' 
+      }));
+    }
+  };
+
+  clientSocket.onclose = () => {
+    console.log("Client WebSocket closed");
+    openAISocket.close();
+  };
+}
+
 serve(async (req) => {
   // Log the request for debugging
   console.log("Received request:", {
     method: req.method,
     url: req.url,
     headers: Object.fromEntries(req.headers.entries())
-  })
+  });
 
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    console.log("Handling OPTIONS preflight request")
+    console.log("Handling OPTIONS preflight request");
     return new Response(null, {
       status: 204,
       headers: {
         ...corsHeaders,
         'Allow': 'GET, POST, PUT, DELETE, OPTIONS',
       },
-    })
+    });
   }
 
   // Check rate limit
@@ -86,126 +183,18 @@ serve(async (req) => {
   }
 
   // Verify WebSocket upgrade request
-  const { headers } = req
-  const upgradeHeader = headers.get("upgrade") || ""
+  const { headers } = req;
+  const upgradeHeader = headers.get("upgrade") || "";
   if (upgradeHeader.toLowerCase() !== "websocket") {
-    console.log("Non-WebSocket request received, returning 400")
+    console.log("Non-WebSocket request received, returning 400");
     return new Response("Expected WebSocket connection", { 
       status: 400,
       headers: {
         ...corsHeaders,
         'Content-Type': 'text/plain'
       }
-    })
+    });
   }
 
-  try {
-    // Create WebSocket connection
-    const { socket, response } = Deno.upgradeWebSocket(req)
-    console.log("WebSocket connection established")
-
-    // Add CORS headers to the WebSocket response
-    Object.entries(corsHeaders).forEach(([key, value]) => {
-      response.headers.set(key, value)
-    })
-
-    // Set up connection to OpenAI's WebSocket with proper error handling
-    const openAISocket = new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4-turbo-preview")
-    
-    // Handle OpenAI WebSocket connection
-    openAISocket.onopen = () => {
-      console.log("Connected to OpenAI WebSocket")
-      try {
-        openAISocket.send(JSON.stringify({
-          type: 'init',
-          data: {
-            model: 'gpt-4-turbo-preview',
-            headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`
-            }
-          }
-        }))
-      } catch (err) {
-        console.error("Error sending initial configuration:", err)
-        socket.send(JSON.stringify({ 
-          type: 'error', 
-          error: 'Failed to initialize OpenAI connection' 
-        }))
-      }
-    }
-
-    openAISocket.onerror = (error) => {
-      console.error("OpenAI WebSocket error:", error)
-      socket.send(JSON.stringify({ 
-        type: 'error', 
-        error: 'OpenAI connection error' 
-      }))
-    }
-    
-    // Handle incoming messages from client
-    socket.onmessage = async (event) => {
-      console.log("Received message from client:", event.data)
-      
-      // Check rate limit for each message
-      const messageRateLimit = isRateLimited(clientId);
-      if (messageRateLimit.limited) {
-        socket.send(JSON.stringify({
-          type: 'error',
-          error: {
-            code: 429,
-            message: 'Too many requests',
-            retryAfter: messageRateLimit.retryAfter
-          }
-        }));
-        return;
-      }
-
-      try {
-        const message = JSON.parse(event.data)
-        openAISocket.send(JSON.stringify(message))
-      } catch (err) {
-        console.error("Error handling client message:", err)
-        socket.send(JSON.stringify({ 
-          type: 'error', 
-          error: 'Failed to process message' 
-        }))
-      }
-    }
-
-    // Handle OpenAI responses
-    openAISocket.onmessage = (event) => {
-      try {
-        socket.send(event.data)
-      } catch (err) {
-        console.error("Error sending OpenAI response:", err)
-        socket.send(JSON.stringify({ 
-          type: 'error', 
-          error: 'Failed to relay OpenAI response' 
-        }))
-      }
-    }
-
-    // Handle client disconnection
-    socket.onclose = () => {
-      console.log("Client WebSocket closed")
-      openAISocket.close()
-    }
-
-    // Handle OpenAI disconnection
-    openAISocket.onclose = () => {
-      console.log("OpenAI WebSocket closed")
-      socket.close()
-    }
-
-    return response
-  } catch (err) {
-    console.error("WebSocket setup error:", err)
-    return new Response(`Failed to setup WebSocket: ${err.message}`, { 
-      status: 500,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'text/plain'
-      }
-    })
-  }
-})
+  return setupWebSocket(req);
+});
