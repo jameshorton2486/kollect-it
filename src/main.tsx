@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 import { CartProvider } from "@/contexts/CartContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient({
@@ -25,12 +26,14 @@ if (!root) {
 
 createRoot(root).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
+    <ThemeProvider defaultTheme="system" storageKey="kollect-it-theme">
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );

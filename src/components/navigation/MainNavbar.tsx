@@ -9,12 +9,12 @@ import { cn } from "@/lib/utils";
 
 export function MainNavbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-shop-900 to-shop-800 text-white">
+    <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center">
         <MobileMenu />
         
         <Link to="/" className="mr-6 flex items-center space-x-2">
-          <span className="hidden font-bold sm:inline-block">
+          <span className="hidden font-bold sm:inline-block text-foreground">
             Kollect-It
           </span>
         </Link>
