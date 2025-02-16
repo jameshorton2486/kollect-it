@@ -20,7 +20,7 @@ interface CollectionItemType {
   notes: string | null;
   created_at: string;
   updated_at: string;
-  name: string;
+  name: string | null;
   description: string | null;
   category: string | null;
   condition: string | null;
@@ -62,32 +62,11 @@ export default function PersonalCollection() {
 
         if (error) throw error;
 
-        // Validate that data is an array and has the expected structure
         if (!Array.isArray(data)) {
           throw new Error("API response is not an array");
         }
 
-        // Type assertion after validation
-        const validatedItems: CollectionItemType[] = data.map(item => ({
-          id: item.id,
-          user_id: item.user_id,
-          product_id: item.product_id,
-          collection_type: item.collection_type,
-          notes: item.notes,
-          created_at: item.created_at,
-          updated_at: item.updated_at,
-          name: item.name,
-          description: item.description,
-          category: item.category,
-          condition: item.condition,
-          acquisition_date: item.acquisition_date,
-          acquisition_price: item.acquisition_price,
-          estimated_value: item.estimated_value,
-          tags: item.tags,
-          images: item.images
-        }));
-
-        setItems(validatedItems);
+        setItems(data);
       } catch (error: any) {
         console.error('Error fetching collection items:', error);
         toast.error("Failed to load your collection items");
