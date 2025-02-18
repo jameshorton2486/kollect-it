@@ -1,16 +1,13 @@
 
-import { Award, BookOpen, Gem, ShoppingBag, Star, Palette } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import type { Tables } from "@/integrations/supabase/types";
+import { Award, BookOpen, Gem, ShoppingBag, Star, Palette } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
-interface CategoryWithSubcategories {
-  id: string;
-  name: string;
-  description: string | null;
-  created_at: string;
+interface CategoryWithSubcategories extends Tables<"categories"> {
   subcategories: {
     id: string;
     name: string;
@@ -22,10 +19,11 @@ interface CategoryCardProps {
   title: string;
   description: string;
   href: string;
+  imageUrl?: string | null;
   subcategories?: { id: string; name: string }[];
 }
 
-export function CategoryCard({ icon, title, description, href, subcategories }: CategoryCardProps) {
+function CategoryCard({ icon, title, description, href, imageUrl, subcategories }: CategoryCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -35,16 +33,25 @@ export function CategoryCard({ icon, title, description, href, subcategories }: 
     >
       <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 rounded-lg border border-transparent hover:border-[#C6A961]">
         <a href={href} className="block">
-          <div className="relative aspect-square overflow-hidden bg-[#F5F5F5]">
-            <div className="w-full h-full flex items-center justify-center">
-              <motion.div 
-                className="text-[#C6A961]"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {icon}
-              </motion.div>
-            </div>
+          <div className="relative aspect-[4/3] overflow-hidden bg-[#F5F5F5]">
+            {imageUrl ? (
+              <OptimizedImage
+                src={imageUrl}
+                alt={title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                fallbackSrc="/placeholder.svg"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <motion.div 
+                  className="text-[#C6A961]"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {icon}
+                </motion.div>
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           <div className="p-6">
@@ -88,10 +95,7 @@ export function CategoryCardGrid() {
       const { data, error } = await supabase
         .from("categories")
         .select(`
-          id,
-          name,
-          description,
-          created_at,
+          *,
           subcategories (
             id,
             name
@@ -104,8 +108,7 @@ export function CategoryCardGrid() {
         return [];
       }
       
-      // Ensure we return an array that matches our interface
-      return (data || []) as CategoryWithSubcategories[];
+      return data;
     }
   });
 
@@ -132,7 +135,7 @@ export function CategoryCardGrid() {
             transition={{ duration: 0.3, delay: i * 0.1 }}
           >
             <Card className="animate-pulse">
-              <div className="aspect-square bg-[#F5F5F5]" />
+              <div className="aspect-[4/3] bg-[#F5F5F5]" />
               <div className="p-6 space-y-3">
                 <div className="h-6 bg-[#F5F5F5] rounded w-2/3" />
                 <div className="h-4 bg-[#F5F5F5] rounded w-full" />
@@ -165,6 +168,7 @@ export function CategoryCardGrid() {
               title={category.name}
               description={category.description || `Explore our collection of ${category.name.toLowerCase()}`}
               href={`/categories/${category.id}`}
+              imageUrl={category.image_url}
               subcategories={category.subcategories}
             />
           </motion.div>
