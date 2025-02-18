@@ -23,9 +23,13 @@
     @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
   }
 
-  /* Responsive Navigation */
+  /* Touch-Friendly Navigation */
   .nav-container {
     @apply flex flex-col sm:flex-row items-center justify-between;
+  }
+
+  .nav-item {
+    @apply min-h-[48px] min-w-[48px] flex items-center justify-center px-4;
   }
 
   /* Responsive Images */
@@ -33,14 +37,31 @@
     @apply w-full h-auto object-cover rounded-lg;
   }
 
-  /* Responsive Forms */
+  /* Touch-Friendly Forms */
   .form-responsive {
     @apply max-w-sm sm:max-w-md lg:max-w-lg mx-auto;
+  }
+
+  .input-touch {
+    @apply min-h-[48px] px-4;
+  }
+
+  .button-touch {
+    @apply min-h-[48px] px-6 text-base;
   }
 
   /* Responsive Cards */
   .card-responsive {
     @apply p-4 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Grid Gap Utilities */
+  .touch-gap {
+    @apply gap-4 sm:gap-6;
+  }
+
+  .touch-spacing {
+    @apply space-y-4 sm:space-y-6;
   }
 
   /* Modern Animations */
@@ -66,5 +87,27 @@
 
   .hover-glow:hover {
     @apply shadow-lg shadow-primary/20;
+  }
+
+  /* PWA Loading States */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  .skeleton-text {
+    @apply h-4 bg-gray-200 rounded;
+  }
+
+  .skeleton-image {
+    @apply aspect-video bg-gray-200 rounded;
+  }
+
+  /* Touch-friendly Menu */
+  .mobile-menu {
+    @apply fixed inset-0 bg-white z-50 overflow-y-auto;
+  }
+
+  .mobile-menu-item {
+    @apply min-h-[48px] px-4 flex items-center;
   }
 }

@@ -13,7 +13,11 @@ export function MainNavbar() {
       <div className="container flex h-16 items-center">
         <MobileMenu />
         
-        <Link to="/" className="mr-6 flex items-center space-x-2">
+        <Link 
+          to="/" 
+          className="mr-6 flex items-center space-x-2 min-h-[48px] px-2"
+          aria-label="Go to homepage"
+        >
           <span className="hidden font-bold sm:inline-block text-foreground">
             Kollect-It
           </span>
@@ -24,8 +28,10 @@ export function MainNavbar() {
         </div>
 
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <ThemeToggle />
-          <AccessibilitySettings />
+          <div className="hidden sm:flex items-center space-x-4">
+            <ThemeToggle />
+            <AccessibilitySettings />
+          </div>
           <UserDropdown
             items={[
               { path: "/profile-settings", label: "Profile Settings" },
