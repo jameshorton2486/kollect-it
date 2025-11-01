@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { prisma } from '@/lib/prisma';
 import CartIcon from '@/components/CartIcon';
 import UserAccountDropdown from '@/components/UserAccountDropdown';
@@ -176,10 +177,14 @@ export default async function AboutPage() {
       {/* Gallery Image 1 */}
       <section className="p-0 mb-[100px]">
         <div className="max-w-[1400px] mx-auto">
-          <img
+          <Image
             src="https://c8.alamy.com/comp/TRNXR3/collectibles-and-antiques-on-display-in-the-historic-gaskill-brothers-stone-store-and-museum-in-campo-california-TRNXR3.jpg"
-            alt="Curated Collectibles Display"
+            alt="Curated collectibles on display in a historic stone store museum"
+            width={1600}
+            height={900}
             className="w-full h-auto object-cover aspect-[16/9]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1400px"
+            priority={false}
           />
         </div>
       </section>
@@ -215,10 +220,14 @@ export default async function AboutPage() {
       {/* Gallery Image 2 */}
       <section className="p-0 mb-[100px]">
         <div className="max-w-[1400px] mx-auto">
-          <img
+          <Image
             src="https://images.squarespace-cdn.com/content/v1/5fa1332a8b3f520c382b9816/080eb5c5-a933-4d73-be16-52c8efc0fc57/IMG_7691.jpg"
-            alt="Museum Display Furniture"
+            alt="Museum display furniture in a curated gallery setting"
+            width={1600}
+            height={900}
             className="w-full h-auto object-cover aspect-[16/9]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1400px"
+            priority={false}
           />
         </div>
       </section>
