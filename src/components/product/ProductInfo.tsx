@@ -69,10 +69,14 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
   )}
 
   {/* Title */}
-  <h1 className="product-info-title font-serif text-brand-navy leading-tight text-4xl">{product.title}</h1>
+  <h1 className="product-info-title ki-heading font-serif text-brand-navy leading-tight text-4xl">{product.title}</h1>
+  {/* Meta: SKU · Condition */}
+  <p className="mt-1 text-sm text-ink-secondary">
+    SKU: {sku}{product.condition ? ` · Condition: ${product.condition}` : ''}
+  </p>
 
   {/* Price */}
-  <div className="product-info-price text-brand-gold text-[32px] font-semibold">${product.price.toLocaleString()}</div>
+  <div className="product-info-price ki-price">${product.price.toLocaleString()}</div>
 
   {/* Quantity Selector */}
   <div className="product-qty my-4 flex items-center gap-3">
@@ -165,7 +169,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
             categoryName: product.category.name,
           }}
           quantity={quantity}
-          className="btn-cta"
+          className="ki-btn-primary"
         />
 
         <button

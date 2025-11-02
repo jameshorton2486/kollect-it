@@ -15,23 +15,32 @@ export default function ProductTabs({ product }: ProductTabsProps) {
   const [activeTab, setActiveTab] = useState<'details' | 'shipping' | 'authentication'>('details');
 
   return (
-    <div className="product-tabs-section section-spacing">
-      <div className="container">
+    <div className="product-tabs-section ki-section">
+      <div className="ki-container">
         {/* Tab Navigation */}
-        <div className="product-tabs-nav">
+        <div className="product-tabs-nav" role="tablist" aria-label="Product information tabs">
           <button
+            role="tab"
+            aria-controls="panel-details"
+            id="tab-details"
             className={`product-tab ${activeTab === 'details' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
             onClick={() => setActiveTab('details')}
           >
             Details
           </button>
           <button
+            role="tab"
+            aria-controls="panel-shipping"
+            id="tab-shipping"
             className={`product-tab ${activeTab === 'shipping' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
             onClick={() => setActiveTab('shipping')}
           >
             Shipping
           </button>
           <button
+            role="tab"
+            aria-controls="panel-authentication"
+            id="tab-authentication"
             className={`product-tab ${activeTab === 'authentication' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
             onClick={() => setActiveTab('authentication')}
           >
@@ -42,7 +51,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
         {/* Tab Content */}
         <div className="product-tabs-content leading-[1.8] text-[var(--color-gray-dark)]">
           {activeTab === 'details' && (
-            <div className="tab-panel">
+            <div className="tab-panel" role="tabpanel" id="panel-details" aria-labelledby="tab-details" tabIndex={0}>
               <h3 className="font-serif text-brand-navy">Product Description</h3>
               <p>{product.description}</p>
               {product.condition && (
@@ -58,7 +67,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           )}
 
           {activeTab === 'shipping' && (
-            <div className="tab-panel">
+            <div className="tab-panel" role="tabpanel" id="panel-shipping" aria-labelledby="tab-shipping" tabIndex={0}>
               <h3 className="font-serif text-brand-navy">Shipping Information</h3>
               <p>
                 We offer complimentary white-glove shipping on all orders over $99 within the continental
@@ -87,7 +96,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           )}
 
           {activeTab === 'authentication' && (
-            <div className="tab-panel">
+            <div className="tab-panel" role="tabpanel" id="panel-authentication" aria-labelledby="tab-authentication" tabIndex={0}>
               <h3 className="font-serif text-brand-navy">Our Authentication Guarantee</h3>
               <p>
                 Every item at Kollect-It undergoes rigorous authentication by our team of expert curators and

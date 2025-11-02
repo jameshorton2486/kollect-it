@@ -181,8 +181,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         />
 
         {/* Main Product Section */}
-        <div className="product-main section-spacing">
-          <div className="container">
+        <div className="product-main ki-section">
+          <div className="ki-container">
             <div className="product-layout">
               {/* Image Gallery */}
               <ImageGallery images={product.images} title={product.title} />
