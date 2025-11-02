@@ -32,6 +32,11 @@ interface BillingInfo {
   country: string;
 }
 
+export const metadata = {
+  title: 'Checkout - Kollect-It',
+  description: 'Securely complete your purchase with Kollect-It’s trusted checkout. Complimentary shipping and 30-day returns.',
+};
+
 export default function CheckoutPage() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -162,7 +167,7 @@ export default function CheckoutPage() {
   const stripePromise = getStripe();
 
   return (
-    <div className="checkout-page">
+    <div className="checkout-page ki-section">
       {/* Progress Indicator */}
       <div className="checkout-progress">
         <div className={`checkout-steps ${step === 'shipping' ? 'step-1' : 'step-2'}`}>
@@ -179,7 +184,7 @@ export default function CheckoutPage() {
       </div>
 
       <div className="checkout-content">
-        <div className="container">
+        <div className="ki-container">
           <div className="checkout-layout">
             {/* Left Column - Forms */}
             <div className="checkout-forms">
@@ -326,7 +331,7 @@ export default function CheckoutPage() {
                     <button
                       onClick={handleContinueToPayment}
                       disabled={loading}
-                      className="btn-continue"
+                      className="ki-btn-primary"
                     >
                       {loading ? 'Processing...' : 'Continue to Payment'}
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -40,7 +40,8 @@ export default function CartPage() {
 
   if (itemCount === 0) {
     return (
-      <div className="container py-16">
+      <div className="ki-section">
+        <div className="ki-container py-16">
         <div className="mx-auto max-w-xl text-center">
           <div className="mx-auto mb-4 h-24 w-24 text-[var(--color-charcoal)]">
             <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto">
@@ -50,15 +51,17 @@ export default function CartPage() {
             </svg>
           </div>
           <h1 className="font-serif text-3xl text-brand-navy">Your cart is empty</h1>
-          <p className="mt-2 text-[var(--color-charcoal)]">Start exploring our collection.</p>
-          <Link href="/shop" className="btn-cta mt-4 inline-block">Browse Products</Link>
+          <p className="mt-2 text-[var(--color-charcoal)]">Discover new arrivals and curated picks.</p>
+          <Link href="/shop" className="ki-btn-primary mt-4 inline-block">Discover New Arrivals →</Link>
+        </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container py-10">
+    <div className="ki-section">
+      <div className="ki-container py-10">
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--color-border)] pb-4">
         <div>
@@ -118,9 +121,8 @@ export default function CartPage() {
               <div className="flex items-center justify-between"><span>Estimated Tax (8%)</span><span>${tax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
             </div>
             <div className="my-3 border-t border-[var(--color-border)]" />
-            <div className="flex items-center justify-between font-semibold text-brand-gold"><span>Total</span><span>${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
-
-            <Link href="/checkout" className="btn-cta mt-4 block w-full text-center">Proceed to Checkout</Link>
+            <div className="flex items-center justify-between font-semibold text-brand-gold text-lg"><span>Total</span><span>${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+            <Link href="/checkout" className="ki-btn-primary mt-4 block w-full text-center">Proceed to Checkout</Link>
             <Link href="/shop" className="mt-2 block text-center text-sm text-brand-gold hover:underline">Continue Shopping</Link>
           </div>
         </aside>
@@ -149,6 +151,7 @@ export default function CartPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }
