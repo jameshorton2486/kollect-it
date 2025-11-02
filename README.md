@@ -358,6 +358,7 @@ Edit `src/app/kollect-it-styles.css`:
 2. Import on Vercel: https://vercel.com
 3. Vercel will auto-detect Next.js
 4. Add environment variables:
+
    ```env
    DATABASE_URL=your-postgresql-url
    NEXTAUTH_SECRET=your-random-secret
@@ -382,6 +383,7 @@ For production, migrate from SQLite to PostgreSQL:
 
 1. Get a PostgreSQL database (Railway.app, Supabase, Neon, etc.)
 2. Update `.env`:
+
    ```env
    DATABASE_URL="postgresql://user:password@host:5432/database"
    ```
@@ -449,6 +451,7 @@ bun run db:seed
 ```
 
 ### **Admin login doesn't work**
+
 Make sure `NEXTAUTH_SECRET` is set in `.env`
 
 ## 📞 Support

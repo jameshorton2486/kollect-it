@@ -8,22 +8,22 @@ export default function SellPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-cream)' }}>
-        <div className="container">
+      <section className="ki-section bg-[var(--color-cream)]">
+        <div className="ki-container">
           <p className="section-subtitle" data-reveal>CONSIGNMENT SERVICES</p>
           <h1 className="section-title-main" data-reveal data-reveal-delay="100">
             Sell Your Collection
           </h1>
-          <p style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto', fontSize: '17px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }} data-reveal data-reveal-delay="200">
+          <p className="text-center max-w-[700px] mx-auto text-[17px] leading-[1.7] text-[var(--color-gray-dark)]" data-reveal data-reveal-delay="200">
             Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.
           </p>
         </div>
       </section>
 
       {/* Animated Timeline Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0' }}>
-        <div className="container">
-          <h2 className="section-subtitle" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+      <section className="ki-section">
+        <div className="ki-container">
+          <h2 className="section-subtitle text-center mb-12">
             HOW IT WORKS
           </h2>
 
@@ -74,27 +74,27 @@ export default function SellPage() {
       </section>
 
       {/* Benefits Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-cream)' }}>
-        <div className="container">
-          <h2 className="section-subtitle" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+      <section className="ki-section bg-[var(--color-cream)]">
+        <div className="ki-container">
+          <h2 className="section-subtitle text-center mb-12">
             WHY CONSIGN WITH US
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', maxWidth: '1000px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center' }} data-reveal>
-              <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '1rem' }}>Expert Authentication</h3>
-              <p style={{ fontSize: '15px', lineHeight: '1.6', color: 'var(--color-gray-dark)' }}>
+          <div className="grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))] gap-12 max-w-[1000px] mx-auto">
+            <div className="text-center" data-reveal>
+              <h3 className="text-[18px] font-semibold mb-4">Expert Authentication</h3>
+              <p className="text-[15px] leading-[1.6] text-[var(--color-gray-dark)]">
                 Every item is verified by specialists with decades of experience
               </p>
             </div>
-            <div style={{ textAlign: 'center' }} data-reveal data-reveal-delay="150">
-              <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '1rem' }}>Transparent Pricing</h3>
-              <p style={{ fontSize: '15px', lineHeight: '1.6', color: 'var(--color-gray-dark)' }}>
+            <div className="text-center" data-reveal data-reveal-delay="150">
+              <h3 className="text-[18px] font-semibold mb-4">Transparent Pricing</h3>
+              <p className="text-[15px] leading-[1.6] text-[var(--color-gray-dark)]">
                 Fair market valuations with no hidden fees
               </p>
             </div>
-            <div style={{ textAlign: 'center' }} data-reveal data-reveal-delay="300">
-              <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '1rem' }}>Global Reach</h3>
-              <p style={{ fontSize: '15px', lineHeight: '1.6', color: 'var(--color-gray-dark)' }}>
+            <div className="text-center" data-reveal data-reveal-delay="300">
+              <h3 className="text-[18px] font-semibold mb-4">Global Reach</h3>
+              <p className="text-[15px] leading-[1.6] text-[var(--color-gray-dark)]">
                 Access to our network of collectors worldwide
               </p>
             </div>
@@ -103,15 +103,15 @@ export default function SellPage() {
       </section>
 
       {/* CTA Section with Shimmer */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0' }}>
-        <div className="container" style={{ textAlign: 'center' }}>
-          <h2 className="section-title" style={{ marginBottom: '2rem' }}>
+      <section className="ki-section">
+        <div className="ki-container text-center">
+          <h2 className="section-title mb-8">
             Ready to Consign?
           </h2>
-          <p style={{ maxWidth: '600px', margin: '0 auto 2rem', fontSize: '16px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }}>
+          <p className="max-w-[600px] mx-auto mb-8 text-[16px] leading-[1.7] text-[var(--color-gray-dark)]">
             Start the consignment process today and let our experts handle the rest.
           </p>
-          <Link href="/contact" className="btn-primary cta-shimmer" style={{ fontSize: '15px', padding: '1rem 3rem' }}>
+          <Link href="/contact" className="btn-primary cta-shimmer text-[15px] py-4 px-12">
             GET STARTED TODAY
           </Link>
         </div>
