@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -32,21 +32,7 @@ interface BillingInfo {
   country: string;
 }
 
-export const metadata = {
-  title: 'Checkout - Kollect-It',
-  description: 'Securely complete your purchase with Kollect-It’s trusted checkout. Complimentary shipping and 30-day returns.',
-  openGraph: {
-    title: 'Checkout - Kollect-It',
-    description: 'Securely complete your purchase with Kollect-It’s trusted checkout. Complimentary shipping and 30-day returns.',
-    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Checkout - Kollect-It',
-    description: 'Securely complete your purchase with Kollect-It’s trusted checkout. Complimentary shipping and 30-day returns.',
-    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
-  },
-};
+// metadata moved to ./metadata.ts for client component compliance
 
 export default function CheckoutPage() {
   const router = useRouter();

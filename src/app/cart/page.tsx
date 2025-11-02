@@ -6,22 +6,6 @@ import Image from 'next/image';
 import { BLUR_DATA_URL, transformCloudinary } from '@/lib/image';
 import { useEffect, useState } from 'react';
 
-export const metadata = {
-  title: 'Your Cart - Kollect-It',
-  description: 'Review items in your cart and proceed securely to checkout with Kollect-It.',
-  openGraph: {
-    title: 'Your Cart - Kollect-It',
-    description: 'Review items in your cart and proceed securely to checkout with Kollect-It.',
-    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Your Cart - Kollect-It',
-    description: 'Review items in your cart and proceed securely to checkout with Kollect-It.',
-    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
-  },
-};
-
 interface SuggestionProduct {
   id: string;
   title: string;

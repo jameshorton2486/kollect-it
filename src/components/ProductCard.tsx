@@ -41,7 +41,7 @@ export default function ProductCard({ product, variant = 'grid' }: { product: Pr
             {product.description && (
               <p className="mt-1 text-[14px] text-[var(--color-gray-dark)] line-clamp-2">{product.description}</p>
             )}
-            <div className="mt-2 text-[20px] font-semibold text-brand-gold">${product.price.toLocaleString()}</div>
+            <div className="mt-2 text-[20px] font-semibold text-brand-gold">${product.price.toLocaleString('en-US', { maximumFractionDigits: 0 })}</div>
             <div className="mt-3 flex items-center gap-2">
               <AddToCartButton
                 variant="secondary"
@@ -116,7 +116,7 @@ export default function ProductCard({ product, variant = 'grid' }: { product: Pr
       <Link href={`/product/${product.slug}`} className="mt-3 block no-underline">
         <h3 className="font-serif text-[20px] leading-snug text-brand-navy line-clamp-2">{product.title}</h3>
       </Link>
-      <div className="text-[20px] font-semibold text-brand-gold">${product.price.toLocaleString()}</div>
+  <div className="text-[20px] font-semibold text-brand-gold">${product.price.toLocaleString('en-US', { maximumFractionDigits: 0 })}</div>
 
       {/* Add to cart on hover */}
       <div className="mt-3 hidden items-center justify-between gap-2 group-hover:flex">

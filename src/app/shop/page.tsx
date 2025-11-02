@@ -136,7 +136,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: Promis
 
       {/* Page Content */}
       <section className="shop-page">
-        <div className="container">
+        <div className="ki-container px-4 md:px-6 lg:px-8">
           {/* Search Results */}
           {q && (
             <div className="mb-10">

@@ -30,16 +30,16 @@ export default function SortingBar({ showing, total, currentSort, currentView = 
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] pb-3 mb-6">
+    <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] pb-3">
       <div className="text-xs tracking-wider uppercase text-[var(--color-charcoal)]">
         Showing {showing} of {total} products
       </div>
 
-      <div className="flex items-center gap-3">
-        <label htmlFor="sort" className="text-xs tracking-wider uppercase text-[var(--color-charcoal)]">Sort by</label>
+      <div className="flex items-center gap-2">
+        <label htmlFor="sort" className="text-sm font-medium text-[var(--color-charcoal)]">Sort by</label>
         <select
           id="sort"
-          className="rounded border border-[var(--color-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white"
+          className="rounded border border-[var(--color-border)] bg-white px-3 py-2 text-sm leading-tight focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white"
           value={currentSort || 'featured'}
           onChange={(e) => updateParam('sort', e.target.value)}
         >
