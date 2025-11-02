@@ -62,10 +62,10 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
   };
 
   return (
-    <aside className="hidden lg:block w-64 shrink-0">
+    <aside className="hidden lg:block w-64 shrink-0" role="region" aria-label="Filters">
       <div className="sticky top-24 space-y-6">
-        <div>
-          <div className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Price</div>
+        <fieldset>
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Price</legend>
           <div className="flex items-center gap-2">
             <input type="number" className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm" value={priceMin}
                    min={0}
@@ -75,10 +75,10 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
                    min={0}
                    onChange={(e)=> setPriceMax(Math.max(0, Number(e.target.value) || 0))} aria-label="Max price" />
           </div>
-        </div>
+        </fieldset>
 
-        <div>
-          <div className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Condition</div>
+        <fieldset>
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Condition</legend>
           <div className="space-y-1">
             {CONDITIONS.map((c) => (
               <label key={c} className="flex items-center gap-2 text-sm">
@@ -95,10 +95,10 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
               </label>
             ))}
           </div>
-        </div>
+        </fieldset>
 
-        <div>
-          <div className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Year</div>
+        <fieldset>
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Year</legend>
           <div className="flex items-center gap-2">
             <input type="number" className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm" value={yearMin as number | ""}
                    min={0}
@@ -108,10 +108,10 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
                    min={0}
                    onChange={(e)=> setYearMax(Number(e.target.value) || "")} aria-label="Max year" />
           </div>
-        </div>
+        </fieldset>
 
         <div className="flex gap-2">
-          <button onClick={apply} className="btn-cta">Apply Filters</button>
+          <button onClick={apply} className="ki-btn-primary">Apply Filters</button>
           <button onClick={clearAll} className="rounded border border-[var(--color-border)] px-3 py-2 text-sm">Clear All</button>
         </div>
       </div>

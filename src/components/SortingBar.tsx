@@ -39,7 +39,7 @@ export default function SortingBar({ showing, total, currentSort, currentView = 
         <label htmlFor="sort" className="text-xs tracking-wider uppercase text-[var(--color-charcoal)]">Sort by</label>
         <select
           id="sort"
-          className="rounded border border-[var(--color-border)] bg-white px-2 py-1 text-sm"
+          className="rounded border border-[var(--color-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white"
           value={currentSort || 'featured'}
           onChange={(e) => updateParam('sort', e.target.value)}
         >
@@ -50,11 +50,11 @@ export default function SortingBar({ showing, total, currentSort, currentView = 
 
         <div className="ml-2 hidden md:flex items-center gap-1" role="group" aria-label="View toggle">
           <button
-            className={`rounded border px-2 py-1 text-sm ${currentView === 'grid' ? 'border-brand-gold text-brand-navy' : 'border-[var(--color-border)]'}`}
+            className={`rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${currentView === 'grid' ? 'border-brand-gold text-brand-navy' : 'border-[var(--color-border)]'}`}
             onClick={() => updateParam('view', 'grid')}
           >Grid</button>
           <button
-            className={`rounded border px-2 py-1 text-sm ${currentView === 'list' ? 'border-brand-gold text-brand-navy' : 'border-[var(--color-border)]'}`}
+            className={`rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${currentView === 'list' ? 'border-brand-gold text-brand-navy' : 'border-[var(--color-border)]'}`}
             onClick={() => updateParam('view', 'list')}
           >List</button>
         </div>

@@ -1,6 +1,23 @@
 'use client';
 
 import { useState } from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sign In - Kollect-It',
+  description: 'Access your Kollect-It account to view orders, wishlist, and personalized recommendations.',
+  openGraph: {
+    title: 'Sign In - Kollect-It',
+    description: 'Access your Kollect-It account to view orders, wishlist, and personalized recommendations.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sign In - Kollect-It',
+    description: 'Access your Kollect-It account to view orders, wishlist, and personalized recommendations.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+};
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -40,8 +57,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-container">
+    <div className="auth-page ki-section">
+      <div className="ki-container auth-container">
         <h1 className="auth-title">Welcome Back</h1>
         <p className="auth-subtitle">Sign in to your Kollect-It account</p>
 
@@ -91,7 +108,7 @@ export default function LoginPage() {
             <Link href="/forgot-password">Forgot your password?</Link>
           </div>
 
-          <button type="submit" disabled={loading} className="btn-auth">
+          <button type="submit" disabled={loading} className="ki-btn-primary">
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>

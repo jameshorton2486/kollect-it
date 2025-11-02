@@ -1,6 +1,23 @@
 'use client';
 
 import { useState } from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Create Account - Kollect-It',
+  description: 'Join Kollect-It to build your wishlist, manage orders, and discover curated arrivals.',
+  openGraph: {
+    title: 'Create Account - Kollect-It',
+    description: 'Join Kollect-It to build your wishlist, manage orders, and discover curated arrivals.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Create Account - Kollect-It',
+    description: 'Join Kollect-It to build your wishlist, manage orders, and discover curated arrivals.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+};
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
@@ -72,8 +89,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-container">
+    <div className="auth-page ki-section">
+      <div className="ki-container auth-container">
         <h1 className="auth-title">Create Account</h1>
         <p className="auth-subtitle">Join Kollect-It and start collecting</p>
 
@@ -150,7 +167,7 @@ export default function RegisterPage() {
             />
           </div>
 
-          <button type="submit" disabled={loading} className="btn-auth">
+          <button type="submit" disabled={loading} className="ki-btn-primary">
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>

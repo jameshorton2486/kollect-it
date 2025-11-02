@@ -18,12 +18,12 @@ export default function ProductTabs({ product }: ProductTabsProps) {
     <div className="product-tabs-section ki-section">
       <div className="ki-container">
         {/* Tab Navigation */}
-        <div className="product-tabs-nav" role="tablist" aria-label="Product information tabs">
+        <div className="product-tabs-nav mb-4 flex flex-wrap items-end gap-3 border-b border-[var(--color-border)] pb-2" role="tablist" aria-label="Product information tabs">
           <button
             role="tab"
             aria-controls="panel-details"
             id="tab-details"
-            className={`product-tab ${activeTab === 'details' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
+            className={`product-tab rounded-t px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${activeTab === 'details' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
             onClick={() => setActiveTab('details')}
           >
             Details
@@ -32,7 +32,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             role="tab"
             aria-controls="panel-shipping"
             id="tab-shipping"
-            className={`product-tab ${activeTab === 'shipping' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
+            className={`product-tab rounded-t px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${activeTab === 'shipping' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
             onClick={() => setActiveTab('shipping')}
           >
             Shipping
@@ -41,7 +41,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             role="tab"
             aria-controls="panel-authentication"
             id="tab-authentication"
-            className={`product-tab ${activeTab === 'authentication' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
+            className={`product-tab rounded-t px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${activeTab === 'authentication' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
             onClick={() => setActiveTab('authentication')}
           >
             Authentication

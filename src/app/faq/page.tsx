@@ -1,6 +1,17 @@
 export const metadata = {
   title: 'Frequently Asked Questions - Kollect-It',
   description: 'Common questions about authentication, shipping, returns, and our consignment process.',
+  openGraph: {
+    title: 'Frequently Asked Questions - Kollect-It',
+    description: 'Common questions about authentication, shipping, returns, and our consignment process.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Frequently Asked Questions - Kollect-It',
+    description: 'Common questions about authentication, shipping, returns, and our consignment process.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
 };
 
 const faqs = [
@@ -50,21 +61,21 @@ export default function FAQPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-cream)', textAlign: 'center' }}>
-        <div className="container">
+      <section className="ki-section bg-[var(--color-cream)] text-center">
+        <div className="ki-container">
           <p className="section-subtitle" data-reveal>HELP CENTER</p>
           <h1 className="section-title-main" data-reveal data-reveal-delay="100">
             Frequently Asked Questions
           </h1>
-          <p style={{ maxWidth: '700px', margin: '0 auto', fontSize: '16px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }} data-reveal data-reveal-delay="200">
+          <p className="mx-auto max-w-[700px] text-[16px] leading-[1.7] text-[var(--color-gray-dark)]" data-reveal data-reveal-delay="200">
             Find answers to common questions about our authentication process, shipping, returns, and consignment services.
           </p>
         </div>
       </section>
 
       {/* FAQ Accordion Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0' }}>
-        <div className="container" style={{ maxWidth: '900px' }}>
+      <section className="ki-section">
+        <div className="ki-container max-w-[900px]">
           <div>
             {faqs.map((item, i) => (
               <details key={i} className="faq-item">
@@ -79,15 +90,15 @@ export default function FAQPage() {
       </section>
 
       {/* Contact CTA */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-cream)', textAlign: 'center' }}>
-        <div className="container">
-          <h2 className="section-title" style={{ marginBottom: '1rem' }}>
+      <section className="ki-section bg-[var(--color-cream)] text-center">
+        <div className="ki-container">
+          <h2 className="section-title mb-4">
             Still Have Questions?
           </h2>
-          <p style={{ maxWidth: '600px', margin: '0 auto 2rem', fontSize: '16px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }}>
+          <p className="mx-auto mb-8 max-w-[600px] text-[16px] leading-[1.7] text-[var(--color-gray-dark)]">
             Our team of experts is here to help. Contact us for personalized assistance.
           </p>
-          <a href="/contact" className="btn-primary cta-pulse">
+          <a href="/contact" className="ki-btn-primary">
             CONTACT US
           </a>
         </div>

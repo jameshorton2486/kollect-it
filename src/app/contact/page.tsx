@@ -5,6 +5,17 @@ import ContactForm from '@/components/forms/ContactForm';
 export const metadata: Metadata = {
   title: 'Contact Us - Kollect-It',
   description: "Get in touch with our team of experts. We're here to help with authentication, appraisals, and acquisitions.",
+  openGraph: {
+    title: 'Contact Us - Kollect-It',
+    description: "Get in touch with our team of experts. We're here to help with authentication, appraisals, and acquisitions.",
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Us - Kollect-It',
+    description: "Get in touch with our team of experts. We're here to help with authentication, appraisals, and acquisitions.",
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
 };
 
 export default function ContactPage() {
@@ -30,8 +41,8 @@ export default function ContactPage() {
       </header>
 
       {/* Page Content */}
-      <section className="contact-page py-[clamp(4rem,8vw,6rem)]">
-        <div className="container">
+      <section className="contact-page ki-section">
+        <div className="ki-container">
           <div className="text-center mb-[clamp(3rem,6vw,5rem)]">
             <p className="section-subtitle">GET IN TOUCH</p>
             <h1 className="section-title-main">Contact Our Team</h1>
@@ -87,8 +98,8 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-[clamp(4rem,8vw,6rem)] bg-[var(--color-cream)]">
-        <div className="container">
+      <section className="ki-section bg-[var(--color-cream)]">
+        <div className="ki-container">
           <h2 className="section-subtitle text-center mb-8">VISIT OUR SHOWROOM</h2>
           <div className="map-container" data-reveal>
             <iframe
@@ -109,7 +120,7 @@ export default function ContactPage() {
 
       {/* Footer */}
       <footer className="footer">
-        <div className="container">
+        <div className="ki-container">
           <div className="footer-bottom">
             <p>&copy; Kollect-It {new Date().getFullYear()}</p>
           </div>

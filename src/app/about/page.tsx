@@ -9,6 +9,19 @@ import AnnouncementBar from '@/components/AnnouncementBar';
 export const metadata: Metadata = {
   title: "About Us - Kollect-It",
   description: "Curated antiques and collectibles for discerning collectors who value authenticity and character.",
+  openGraph: {
+    title: "About Us - Kollect-It",
+    description: "Curated antiques and collectibles for discerning collectors who value authenticity and character.",
+    images: [
+      "https://ext.same-assets.com/kollect-it/og-home.jpg",
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us - Kollect-It",
+    description: "Curated antiques and collectibles for discerning collectors who value authenticity and character.",
+    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
+  },
 };
 
 export const revalidate = 3600;
@@ -113,14 +126,14 @@ export default async function AboutPage() {
 
       {/* Hero Section - Gallery Quality */}
       <section
-        className="parallax-hero min-h-[65vh] flex items-center relative overflow-hidden bg-gradient-to-b from-black/40 to-black/60"
+        className="parallax-hero ki-section min-h-[65vh] flex items-center relative overflow-hidden bg-gradient-to-b from-black/40 to-black/60"
       >
         <div
           className="parallax-bg bg-about-hero absolute inset-0 z-0"
           data-parallax
         />
         <div
-          className="container relative z-10 text-center text-white max-w-[900px] py-[120px] px-8"
+          className="ki-container relative z-10 text-center text-white max-w-[900px] py-[120px] px-8"
         >
           <p
             className="section-subtitle"
@@ -146,8 +159,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-[100px] px-8 bg-white">
-        <div className="container max-w-[900px] mx-auto">
+      <section className="ki-section bg-white">
+        <div className="ki-container max-w-[900px] mx-auto">
           <h2
             className="text-center mb-8 text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase font-normal"
           >
@@ -175,8 +188,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Gallery Image 1 */}
-      <section className="p-0 mb-[100px]">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="ki-section p-0">
+        <div className="ki-container max-w-[1400px] mx-auto">
           <Image
             src="https://c8.alamy.com/comp/TRNXR3/collectibles-and-antiques-on-display-in-the-historic-gaskill-brothers-stone-store-and-museum-in-campo-california-TRNXR3.jpg"
             alt="Curated collectibles on display in a historic stone store museum"
@@ -190,8 +203,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Expertise Section */}
-      <section className="py-[100px] px-8 bg-[#FAFAF8]">
-        <div className="container max-w-[700px] text-center mx-auto">
+      <section className="ki-section bg-[#FAFAF8]">
+        <div className="ki-container max-w-[700px] text-center mx-auto">
           <p
             className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal"
           >
@@ -218,8 +231,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Gallery Image 2 */}
-      <section className="p-0 mb-[100px]">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="ki-section p-0">
+        <div className="ki-container max-w-[1400px] mx-auto">
           <Image
             src="https://images.squarespace-cdn.com/content/v1/5fa1332a8b3f520c382b9816/080eb5c5-a933-4d73-be16-52c8efc0fc57/IMG_7691.jpg"
             alt="Museum display furniture in a curated gallery setting"
@@ -233,8 +246,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-[100px] px-8 bg-[#FAFAF8] text-center">
-        <div className="container max-w-[900px] mx-auto">
+      <section className="ki-section bg-[#FAFAF8] text-center">
+        <div className="ki-container max-w-[900px] mx-auto">
           <p
             className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal"
           >
@@ -263,8 +276,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-[100px] px-8 bg-[var(--color-navy)] text-white text-center">
-        <div className="container max-w-[700px] mx-auto">
+      <section className="ki-section bg-[var(--color-navy)] text-white text-center">
+        <div className="ki-container max-w-[700px] mx-auto">
           <h2 className="font-serif text-[clamp(36px,4vw,42px)] font-normal mb-4 leading-[1.3] text-white">
             Begin Your Collection
           </h2>
@@ -282,7 +295,7 @@ export default async function AboutPage() {
 
       {/* Footer - Matches Homepage */}
       <footer className="footer">
-        <div className="container">
+        <div className="ki-container">
           <div className="footer-grid">
             <div className="footer-col">
               <div className="footer-brand">

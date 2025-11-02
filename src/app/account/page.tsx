@@ -1,4 +1,21 @@
  'use client';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'My Account - Kollect-It',
+  description: 'Manage your profile, orders, and wishlist in your Kollect-It account.',
+  openGraph: {
+    title: 'My Account - Kollect-It',
+    description: 'Manage your profile, orders, and wishlist in your Kollect-It account.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'My Account - Kollect-It',
+    description: 'Manage your profile, orders, and wishlist in your Kollect-It account.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
+};
 
 import { useEffect, useMemo, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
@@ -180,8 +197,8 @@ export default function AccountPage() {
       </div>
 
       {/* Tab Content */}
-      <div className="section-spacing">
-        <div className="container">
+      <div className="ki-section">
+        <div className="ki-container">
           {/* Profile Tab */}
           {activeTab === 'profile' && (
             <div
@@ -215,7 +232,7 @@ export default function AccountPage() {
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <button className="btn-cta">Edit Profile</button>
+                <button className="ki-btn-primary">Edit Profile</button>
                 <button className="inline-flex items-center justify-center rounded border border-[var(--color-gray-light)] px-4 py-2 text-[14px] text-[var(--color-charcoal)] hover:bg-cream">Change Password</button>
               </div>
             </div>
@@ -235,7 +252,7 @@ export default function AccountPage() {
                   <Receipt className="text-[var(--color-gray-dark)]" size={48} />
                   <h3 className="font-serif text-xl">No Orders Yet</h3>
                   <p className="text-[var(--color-gray-dark)]">You haven't placed any orders yet.</p>
-                  <Link href="/" className="btn-cta">Start Shopping</Link>
+                  <Link href="/" className="ki-btn-primary">Start Shopping</Link>
                 </div>
               ) : (
                 <div className="divide-y divide-[var(--color-gray-light)]">
@@ -282,7 +299,7 @@ export default function AccountPage() {
                   <Heart className="text-[var(--color-gray-dark)]" size={48} />
                   <h3 className="font-serif text-xl">No Wishlist Items</h3>
                   <p className="text-[var(--color-gray-dark)]">Save items you love to your wishlist.</p>
-                  <Link href="/" className="btn-cta">Browse Products</Link>
+                  <Link href="/" className="ki-btn-primary">Browse Products</Link>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -327,7 +344,7 @@ export default function AccountPage() {
                             categoryName: item.product.category.name,
                           }}
                           quantity={1}
-                          className="btn-cta"
+                          className="ki-btn-primary"
                         />
                       </div>
                     </div>
