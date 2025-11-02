@@ -74,45 +74,50 @@ A full-stack Next.js application for Kollect-It antiques and collectibles market
    - PCI-compliant payment processing
    - [📘 Full Stripe Setup Guide](./STRIPE_SETUP.md)
 
-10. **Admin Order Management** ✅
-   - Complete order dashboard with real-time stats
-   - Search and filter orders (status, date, customer)
-   - Detailed order view with customer info
-   - Update order status (Pending → Processing → Shipped → Delivered)
-   - Add tracking numbers and carrier information
-   - Upload/link shipping labels
-   - Automatic email notifications on status changes
-   - Mobile-responsive admin interface
-   - [📘 Full Order Management Guide](./docs/ORDER_MANAGEMENT_GUIDE.md)
+1. **Admin Order Management** ✅
 
-11. **Email Notification System** 🆕
-   - Powered by Resend with React Email components
-   - Order confirmation emails to customers
-   - Order status update notifications with tracking
-   - Admin new order alerts
-   - Welcome emails for newsletter signups
-   - Professional branded templates
-   - Automated triggers on key events
-   - Easy testing with API endpoint
-   - [📘 Full Email Setup Guide](./EMAIL_SETUP.md)
+- Complete order dashboard with real-time stats
+- Search and filter orders (status, date, customer)
+- Detailed order view with customer info
+- Update order status (Pending → Processing → Shipped → Delivered)
+- Add tracking numbers and carrier information
+- Upload/link shipping labels
+- Automatic email notifications on status changes
+- Mobile-responsive admin interface
+- [📘 Full Order Management Guide](./docs/ORDER_MANAGEMENT_GUIDE.md)
 
-12. **Detailed Product Pages**
-   - Image gallery with zoom
-   - Full product information
-   - Tabbed content (description, shipping, authentication)
-   - Related products carousel
-   - Mobile-optimized with sticky cart bar
+1. **Email Notification System** 🆕
 
-13. **API Routes**
-   - RESTful API for products and categories
-   - Authentication-protected admin routes
-   - Stripe payment intent creation
-   - Order management endpoints
-   - Wishlist and cart synchronization
+- Powered by Resend with React Email components
+- Order confirmation emails to customers
+- Order status update notifications with tracking
+- Admin new order alerts
+- Welcome emails for newsletter signups
+- Professional branded templates
+- Automated triggers on key events
+- Easy testing with API endpoint
+- [📘 Full Email Setup Guide](./EMAIL_SETUP.md)
+
+1. **Detailed Product Pages**
+
+- Image gallery with zoom
+- Full product information
+- Tabbed content (description, shipping, authentication)
+- Related products carousel
+- Mobile-optimized with sticky cart bar
+
+1. **API Routes**
+
+- RESTful API for products and categories
+- Authentication-protected admin routes
+- Stripe payment intent creation
+- Order management endpoints
+- Wishlist and cart synchronization
 
 ## 🚀 Getting Started
 
 ### **New to this project?**
+
 👉 Start with [SETUP_CHECKLIST.md](./SETUP_CHECKLIST.md) for a step-by-step guide!
 
 ### **Quick Start:**
@@ -135,8 +140,9 @@ bun run dev
 ```
 
 Visit:
-- **Homepage**: http://localhost:3000
-- **Admin Dashboard**: http://localhost:3000/admin/login
+
+- **Homepage**: [http://localhost:3000](http://localhost:3000)
+- **Admin Dashboard**: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 
 ### **Admin Login Credentials:**
 
@@ -150,12 +156,14 @@ Password: admin123
 ### **Environment Variables:**
 
 This project requires several API keys and configurations. See [ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md) for:
+
 - Complete list of all required variables
 - Where to get each API key
 - How to set variables locally and on Netlify
 - Security best practices
 
 **Quick setup:**
+
 ```bash
 cp .env.example .env
 # Edit .env and add your API keys (see ENVIRONMENT_VARIABLES.md)
@@ -164,11 +172,13 @@ cp .env.example .env
 ### **Database Setup:**
 
 This project uses PostgreSQL. See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for:
+
 - Getting a free PostgreSQL database (Supabase, Neon, or Vercel)
 - Running migrations and seeding data
 - All available database commands
 
 **Quick Database Commands:**
+
 ```bash
 bun run db:setup        # Complete setup (first time)
 bun run db:migrate      # Create new migration
@@ -198,13 +208,15 @@ Before you can accept payments, you need to configure Stripe:
 
 1. **See the detailed guide**: Read [STRIPE_SETUP.md](./STRIPE_SETUP.md) for step-by-step instructions
 2. **Quick summary**:
-   - Create a free Stripe account at https://stripe.com
+   - Create a free Stripe account at [stripe.com](https://stripe.com)
    - Get your test API keys from the Stripe Dashboard
    - Update your `.env` file with the keys:
+     
      ```env
      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_your-key"
      STRIPE_SECRET_KEY="sk_test_your-key"
      ```
+     
    - Restart the dev server
    - Test checkout with card: `4242 4242 4242 4242`
 
@@ -212,7 +224,7 @@ Before you can accept payments, you need to configure Stripe:
 
 ### **Adding a New Product:**
 
-1. Go to http://localhost:3000/admin/login
+1. Go to [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 2. Sign in with the admin credentials
 3. Click "**+ Add New Product**" button
 4. Fill in the form:
@@ -322,6 +334,7 @@ Usage example:
 ```
 
 Guidelines:
+
 - Do not import `globals.css` in pages/components; it is imported once by `src/app/layout.tsx`.
 - Prefer token utilities over hard-coded hex values (e.g., `.text-navy` instead of `text-[#0B3D91]`).
 - Keep CTAs consistent by using `.btn-cta` or equivalent Tailwind classes that reference the global tokens.
@@ -355,7 +368,7 @@ Edit `src/app/kollect-it-styles.css`:
 ### **Option 1: Vercel (Recommended)**
 
 1. Push your code to GitHub
-2. Import on Vercel: https://vercel.com
+2. Import on Vercel: [vercel.com](https://vercel.com)
 3. Vercel will auto-detect Next.js
 4. Add environment variables:
 
@@ -388,6 +401,7 @@ For production, migrate from SQLite to PostgreSQL:
    DATABASE_URL="postgresql://user:password@host:5432/database"
    ```
 3. Run migrations:
+
    ```bash
    bunx prisma migrate dev
    bun run db:seed
@@ -411,11 +425,13 @@ For production, migrate from SQLite to PostgreSQL:
 ## 📖 API Documentation
 
 ### **Get Products:**
+
 ```http
 GET /api/products?category=fine-art&limit=6&featured=true
 ```
 
 ### **Create Product (Admin Only):**
+
 ```http
 POST /api/products
 Content-Type: application/json

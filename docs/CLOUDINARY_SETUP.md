@@ -12,7 +12,7 @@ This guide will walk you through setting up Cloudinary for the multi-image uploa
 ## Step 2: Get Your Cloudinary Credentials
 
 1. Log in to your Cloudinary account
-2. Go to the Dashboard (https://console.cloudinary.com/)
+2. Go to the Dashboard ([https://console.cloudinary.com/](https://console.cloudinary.com/))
 3. You'll see your credentials in the "Account Details" section:
    - **Cloud Name**
    - **API Key**
@@ -51,6 +51,7 @@ NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET="kollect-it-uploads"
 ```
 
 **Important Notes:**
+
 - Replace `your-actual-cloud-name`, `your-actual-api-key`, and `your-actual-api-secret` with your real credentials
 - If you used a different upload preset name, update `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` accordingly
 - **Never commit your `.env` file to version control!** (It's already in `.gitignore`)
@@ -92,6 +93,7 @@ bun run dev
 ## Cloudinary Free Tier Limits
 
 The free tier includes:
+
 - 25 GB storage
 - 25 GB monthly bandwidth
 - 25,000 transformations per month
@@ -137,6 +139,7 @@ Make sure the preset name in your `.env` file exactly matches the name you creat
 ## Support
 
 For Cloudinary-specific issues, visit:
+
 - [Cloudinary Documentation](https://cloudinary.com/documentation)
 - [Cloudinary Support](https://support.cloudinary.com/)
 

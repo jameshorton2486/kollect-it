@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import NewsletterModal from "@/components/NewsletterModal";
 import LuxuryEnhancements from "@/components/LuxuryEnhancements";
+import Footer from "@/components/Footer";
 
 export default function ClientBody({
   children,
@@ -18,7 +18,7 @@ export default function ClientBody({
   return (
     <div className="antialiased">
       {children}
-      <NewsletterModal delaySeconds={30} />
+      <Footer />
       <LuxuryEnhancements />
     </div>
   );

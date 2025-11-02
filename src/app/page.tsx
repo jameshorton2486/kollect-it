@@ -6,7 +6,6 @@ import TrustStrip from "@/components/home/TrustStrip";
 import FeaturedCollection from "@/components/home/FeaturedCollection";
 import Testimonials from "@/components/home/Testimonials";
 import ProcessOverview from "@/components/home/ProcessOverview";
-import FooterExtended from "@/components/FooterExtended";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -62,8 +61,7 @@ export default function HomePage() {
       <FeaturedCollection />
       <ShopByCategories />
       <Testimonials />
-      <ProcessOverview />
-      <FooterExtended />
+  <ProcessOverview />
     </main>
   );
 }

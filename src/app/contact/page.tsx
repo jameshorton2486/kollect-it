@@ -118,14 +118,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="ki-container">
-          <div className="footer-bottom">
-            <p>&copy; Kollect-It {new Date().getFullYear()}</p>
-          </div>
-        </div>
-      </footer>
+      {/* Global footer is rendered via ClientBody */}
     </div>
   );
 }

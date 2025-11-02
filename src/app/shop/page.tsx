@@ -5,7 +5,6 @@ import { BLUR_DATA_URL, transformCloudinary } from '@/lib/image';
 import { prisma } from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductGrid from '@/components/ProductGrid';
-import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Shop All Collections - Kollect-It',
@@ -168,19 +167,30 @@ export default async function ShopPage({ searchParams }: { searchParams?: Promis
             </p>
           </div>
 
-          {/* Category Grid with Hover Lift */}
-          <div className="category-grid-new">
-            {categories.map((category) => (
-              <Link key={category.id} href={`/category/${category.slug}`} className="category-card shop-category-tile">
-                <div className="category-image">
-                  <Image src={transformCloudinary(category.image, { width: 800, height: 600, crop: 'fill', quality: 85 })} alt={`${category.name} banner`} width={800} height={600} className="h-full w-full object-cover" quality={85} loading="lazy" placeholder="blur" blurDataURL={BLUR_DATA_URL} />
+          {/* Category Grid 2x2 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {categories.slice(0, 4).map((category) => (
+              <Link
+                key={category.id}
+                href={`/category/${category.slug}`}
+                className="group block overflow-hidden rounded border border-[var(--color-gray-light)] bg-white shadow-sm transition hover:shadow-md"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={transformCloudinary(category.image, { width: 800, height: 600, crop: 'fill', quality: 85 })}
+                    alt={`${category.name} banner`}
+                    width={800}
+                    height={600}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    quality={85}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
+                  />
                 </div>
-                <div className="category-description">
-                  <h4>{category.name.toUpperCase()}</h4>
-                  <p>{category.description}</p>
-                </div>
-                <div className="category-card-overlay-cta">
-                  <span className="category-cta-text">Explore Collection</span>
+                <div className="p-4">
+                  <h4 className="ki-heading-sm mb-1">{category.name}</h4>
+                  <p className="ki-text-sm text-[var(--color-gray-dark)]">{category.description}</p>
                 </div>
               </Link>
             ))}
@@ -188,7 +198,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: Promis
         </div>
       </section>
 
-      <Footer />
+  {/* Global footer is rendered via ClientBody */}
     </div>
   );
 }
