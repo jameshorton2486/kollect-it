@@ -7,21 +7,21 @@ export default function AuthenticationPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-cream)', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: '900px' }}>
+      <section className="ki-section bg-[var(--color-cream)] text-center">
+        <div className="ki-container max-w-[900px]">
           <p className="section-subtitle" data-reveal>AUTHENTICATION GUARANTEE</p>
           <h1 className="section-title-main" data-reveal data-reveal-delay="100">
             Verified Authenticity
           </h1>
-          <p style={{ maxWidth: '700px', margin: '0 auto', fontSize: '16px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }} data-reveal data-reveal-delay="200">
+          <p className="max-w-[700px] mx-auto text-[16px] leading-[1.7] text-[var(--color-gray-dark)]" data-reveal data-reveal-delay="200">
             Every item sold through Kollect-It undergoes rigorous authentication by our team of specialists.
           </p>
         </div>
       </section>
 
       {/* Seal Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0' }}>
-        <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
+      <section className="ki-section">
+        <div className="ki-container max-w-[900px] text-center">
 
           {/* Animated Seal */}
           <div className="auth-seal">
@@ -33,7 +33,7 @@ export default function AuthenticationPage() {
             </svg>
           </div>
 
-          <h2 className="section-title" style={{ marginBottom: '2rem' }}>Our Authentication Process</h2>
+          <h2 className="section-title mb-8">Our Authentication Process</h2>
 
           {/* Verification Timeline */}
           <div className="verification-timeline">
@@ -41,20 +41,20 @@ export default function AuthenticationPage() {
 
             <div className="verification-step">
               <div className="verification-step-icon">1</div>
-              <p style={{ fontSize: '14px', fontWeight: 600, margin: 0 }}>Review</p>
-              <p style={{ fontSize: '12px', color: 'var(--color-gray-medium)', margin: 0 }}>Initial inspection</p>
+              <p className="text-[14px] font-semibold m-0">Review</p>
+              <p className="text-[12px] text-[var(--color-gray-medium)] m-0">Initial inspection</p>
             </div>
 
             <div className="verification-step">
               <div className="verification-step-icon">2</div>
-              <p style={{ fontSize: '14px', fontWeight: 600, margin: 0 }}>Verify</p>
-              <p style={{ fontSize: '12px', color: 'var(--color-gray-medium)', margin: 0 }}>Expert analysis</p>
+              <p className="text-[14px] font-semibold m-0">Verify</p>
+              <p className="text-[12px] text-[var(--color-gray-medium)] m-0">Expert analysis</p>
             </div>
 
             <div className="verification-step">
               <div className="verification-step-icon">3</div>
-              <p style={{ fontSize: '14px', fontWeight: 600, margin: 0 }}>Certify</p>
-              <p style={{ fontSize: '12px', color: 'var(--color-gray-medium)', margin: 0 }}>Issue certificate</p>
+              <p className="text-[14px] font-semibold m-0">Certify</p>
+              <p className="text-[12px] text-[var(--color-gray-medium)] m-0">Issue certificate</p>
             </div>
           </div>
 
@@ -62,32 +62,32 @@ export default function AuthenticationPage() {
       </section>
 
       {/* What We Verify Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-white)' }}>
-        <div className="container" style={{ maxWidth: '900px' }}>
-          <h2 className="section-subtitle" style={{ textAlign: 'center', marginBottom: '3rem' }}>WHAT WE VERIFY</h2>
+      <section className="ki-section bg-white">
+        <div className="ki-container max-w-[900px]">
+          <h2 className="section-subtitle text-center mb-12">WHAT WE VERIFY</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
 
             <div className="split-fade-left">
-              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'var(--color-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', color: 'var(--color-muted-gold)', fontSize: '24px' }}>✓</div>
-              <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '0.75rem' }}>Origin & Provenance</h3>
-              <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }}>
+              <div className="w-[50px] h-[50px] rounded-full bg-[var(--color-cream)] flex items-center justify-center mb-4 text-[var(--color-muted-gold)] text-[24px]">✓</div>
+              <h3 className="text-[18px] font-semibold mb-3">Origin & Provenance</h3>
+              <p className="text-[15px] leading-[1.7] text-[var(--color-gray-dark)]">
                 Complete documentation of ownership history and origin, verified through archival research and expert consultation.
               </p>
             </div>
 
-            <div className="split-fade-right" style={{ transitionDelay: '0.2s' }}>
-              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'var(--color-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', color: 'var(--color-muted-gold)', fontSize: '24px' }}>✓</div>
-              <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '0.75rem' }}>Age & Period</h3>
-              <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }}>
+            <div className="split-fade-right">
+              <div className="w-[50px] h-[50px] rounded-full bg-[var(--color-cream)] flex items-center justify-center mb-4 text-[var(--color-muted-gold)] text-[24px]">✓</div>
+              <h3 className="text-[18px] font-semibold mb-3">Age & Period</h3>
+              <p className="text-[15px] leading-[1.7] text-[var(--color-gray-dark)]">
                 Scientific dating methods and period-specific analysis to confirm authenticity and identify any anachronistic elements.
               </p>
             </div>
 
-            <div className="split-fade-left" style={{ transitionDelay: '0.4s' }}>
-              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'var(--color-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', color: 'var(--color-muted-gold)', fontSize: '24px' }}>✓</div>
-              <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '0.75rem' }}>Condition Assessment</h3>
-              <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'var(--color-gray-dark)' }}>
+            <div className="split-fade-left">
+              <div className="w-[50px] h-[50px] rounded-full bg-[var(--color-cream)] flex items-center justify-center mb-4 text-[var(--color-muted-gold)] text-[24px]">✓</div>
+              <h3 className="text-[18px] font-semibold mb-3">Condition Assessment</h3>
+              <p className="text-[15px] leading-[1.7] text-[var(--color-gray-dark)]">
                 Detailed examination of condition, restoration history, and any repairs or alterations, fully disclosed in listings.
               </p>
             </div>
@@ -97,13 +97,13 @@ export default function AuthenticationPage() {
       </section>
 
       {/* Guarantee Section */}
-      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', background: 'var(--color-cream)', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: '700px' }}>
-          <h2 className="section-title" style={{ marginBottom: '1.5rem' }}>Our Guarantee</h2>
-          <p style={{ fontSize: '17px', lineHeight: '1.8', color: 'var(--color-gray-dark)', marginBottom: '1rem' }}>
+      <section className="ki-section bg-[var(--color-cream)] text-center">
+        <div className="ki-container max-w-[700px]">
+          <h2 className="section-title mb-6">Our Guarantee</h2>
+          <p className="text-[17px] leading-[1.8] text-[var(--color-gray-dark)] mb-4">
             Every item comes with a certificate of authenticity signed by our specialists.
           </p>
-          <p style={{ fontSize: '17px', lineHeight: '1.8', color: 'var(--color-gray-dark)', fontWeight: 600, marginBottom: '2rem' }}>
+          <p className="text-[17px] leading-[1.8] text-[var(--color-gray-dark)] font-semibold mb-8">
             If any item is later found to be inauthentic, we offer a full refund with no questions asked.
           </p>
           <a href="/contact" className="btn-primary cta-shimmer">

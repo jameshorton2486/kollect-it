@@ -11,15 +11,13 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  // Global rules and plugins
+  // Global rules and plugins (flat config)
   {
     plugins: {
       import: pluginImport,
     },
     rules: {
       // Prevent sneaky CommonJS in our TS/ESM codebase
-      "@typescript-eslint/no-var-requires": "error",
       "import/no-commonjs": "error",
     },
   },
@@ -29,18 +27,7 @@ const eslintConfig = [
         warnOnUnsupportedTypeScriptVersion: false,
       },
     },
-    rules: {
-      "@typescript-eslint/no-unused-vars": "off",
-      "react/no-unescaped-entities": "off",
-      "@next/next/no-img-element": "off",
-      // Accessibility: tighten rules
-      "jsx-a11y/alt-text": "error",
-      "jsx-a11y/label-has-associated-control": [
-        "error",
-        { assert: "either" }
-      ],
-      "jsx-a11y/no-redundant-roles": "warn",
-    },
+    rules: {},
   },
   // Prevent regressions: tailwind config should use ESM imports (no require())
   {

@@ -240,11 +240,13 @@ function SortableImage({ image, index, onDelete }: SortableImageProps) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="image-preview-item">
+    // biome-ignore lint/style/noInlineStyles: dnd-kit requires inline transforms for smooth dragging
+    // eslint-disable-next-line no-inline-styles
+    // eslint-disable-next-line react/forbid-dom-props
+    <div ref={setNodeRef} style={style} className={`image-preview-item ${isDragging ? 'opacity-50' : 'opacity-100'}`}>
       <div className="image-preview-wrapper" {...attributes} {...listeners}>
   <Image src={image.url} alt={image.alt || `Product image ${index + 1}`} width={120} height={120} className="h-auto w-auto max-w-full" />
         {index === 0 && <span className="main-badge">Main</span>}

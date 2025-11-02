@@ -140,7 +140,7 @@ Visit:
 
 ### **Admin Login Credentials:**
 
-```
+```text
 Email: admin@kollect-it.com
 Password: admin123
 ```
@@ -268,7 +268,7 @@ This opens Prisma Studio in your browser to view/edit the database directly.
 
 ## 📁 Project Structure
 
-```
+```text
 kollect-it-dynamic/
 ├── prisma/
 │   ├── schema.prisma       # Database schema
@@ -358,7 +358,7 @@ Edit `src/app/kollect-it-styles.css`:
 2. Import on Vercel: https://vercel.com
 3. Vercel will auto-detect Next.js
 4. Add environment variables:
-   ```
+   ```env
    DATABASE_URL=your-postgresql-url
    NEXTAUTH_SECRET=your-random-secret
    NEXTAUTH_URL=https://your-domain.com
@@ -382,7 +382,7 @@ For production, migrate from SQLite to PostgreSQL:
 
 1. Get a PostgreSQL database (Railway.app, Supabase, Neon, etc.)
 2. Update `.env`:
-   ```
+   ```env
    DATABASE_URL="postgresql://user:password@host:5432/database"
    ```
 3. Run migrations:
@@ -409,35 +409,40 @@ For production, migrate from SQLite to PostgreSQL:
 ## 📖 API Documentation
 
 ### **Get Products:**
-```
+```http
 GET /api/products?category=fine-art&limit=6&featured=true
 ```
 
 ### **Create Product (Admin Only):**
-```
+```http
 POST /api/products
+Content-Type: application/json
+
 {
-  "title": "Product Name",
-  "description": "Description",
-  "price": 1000,
-  "categoryId": "category-id",
-  "images": [{"url": "image-url"}]
+   "title": "Product Name",
+   "description": "Description",
+   "price": 1000,
+   "categoryId": "category-id",
+   "images": [{"url": "image-url"}]
 }
 ```
 
 ### **Delete Product (Admin Only):**
-```
+
+```http
 DELETE /api/products/[id]
 ```
 
 ## 🆘 Common Issues
 
 ### **"Cannot find module '@prisma/client'"**
+
 ```bash
 bunx prisma generate
 ```
 
 ### **Database doesn't exist**
+
 ```bash
 bunx prisma db push
 bun run db:seed
@@ -449,13 +454,15 @@ Make sure `NEXTAUTH_SECRET` is set in `.env`
 ## 📞 Support
 
 If you need help with deployment, you can:
+
 1. Hire a developer on Fiverr/Upwork ($50-200 for deployment)
 2. Use Vercel's auto-deployment (easiest!)
-3. Contact deployment support: support@vercel.com
+3. Contact deployment support: [support@vercel.com](mailto:support@vercel.com)
 
 ## 🎉 What's Next?
 
 ### **✅ Recently Completed:**
+
 1. ~~Image Upload~~ ✅ **Multi-image upload with Cloudinary**
 2. ~~Product Details Pages~~ ✅ **Full product pages with gallery**
 3. ~~Shopping Cart~~ ✅ **Complete cart system with checkout UI**
@@ -479,6 +486,6 @@ If you need help with deployment, you can:
 
 ---
 
-**Built with ❤️ for Kollect-It**
+### Built with ❤️ for Kollect-It
 
 *This is a fully functional, production-ready application. The latest 6 products feature works automatically - just add products through the admin panel and they'll appear on the homepage!*

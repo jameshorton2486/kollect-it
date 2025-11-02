@@ -7,7 +7,7 @@
   "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lint": "bunx tsc --noEmit && next lint",
+  "lint": "bunx tsc --noEmit && bunx eslint . --max-warnings=0",
     "format": "bunx biome format --write",
     "db:generate": "bunx prisma generate",
     "db:migrate": "bunx prisma migrate dev --name init",

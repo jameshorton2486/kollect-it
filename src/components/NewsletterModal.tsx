@@ -176,7 +176,7 @@ export default function NewsletterModal({ delaySeconds = 30 }: NewsletterModalPr
 
                 <div className="form-group">
                   <label htmlFor="newsletter-firstname" className="form-label">
-                    First Name <span style={{ opacity: 0.6 }}>(optional)</span>
+                    First Name <span className="opacity-60">(optional)</span>
                   </label>
                   <input
                     id="newsletter-firstname"
@@ -237,7 +237,7 @@ export default function NewsletterModal({ delaySeconds = 30 }: NewsletterModalPr
                 Didn't receive it? Check your spam folder or{' '}
                 <button
                   onClick={() => setIsSuccess(false)}
-                  style={{ textDecoration: 'underline', background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
+                  className="underline bg-transparent border-0 text-inherit cursor-pointer"
                 >
                   try again
                 </button>
