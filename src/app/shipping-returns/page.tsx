@@ -1,4 +1,3 @@
-import Header from '@/components/layout/Header';
 import Link from 'next/link';
 
 export const metadata = {
@@ -21,7 +20,6 @@ export const metadata = {
 export default function ShippingReturnsPage() {
   return (
     <>
-      <Header />
       <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
         <h1 className="ki-heading-xl text-center">Shipping & Returns</h1>
 

@@ -1,4 +1,3 @@
-import Header from '@/components/layout/Header';
 import Link from 'next/link';
 
 export const metadata = {
@@ -21,9 +20,6 @@ export const metadata = {
 export default function AuthenticationPage() {
   return (
     <>
-      {/* Global Header */}
-      <Header />
-
       {/* Main Content */}
   <main className="ki-section ki-container px-4 sm:px-6 lg:px-8 py-12" role="main">
         <h1 className="ki-heading-xl text-center">Authentication Guarantee</h1>

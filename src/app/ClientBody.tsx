@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Header from "@/components/Header";
 import LuxuryEnhancements from "@/components/LuxuryEnhancements";
 import Footer from "@/components/Footer";
 
@@ -17,6 +18,7 @@ export default function ClientBody({
 
   return (
     <div className="antialiased">
+      <Header />
       {children}
       <Footer />
       <LuxuryEnhancements />
