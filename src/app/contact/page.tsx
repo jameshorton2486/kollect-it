@@ -22,6 +22,34 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Kollect-It",
+          description: "Authenticated antiques, collectibles, and fine art marketplace",
+          url: "https://kollect-it.com",
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "Customer Service",
+            telephone: "+1-555-123-4567",
+            email: "hello@kollect-it.com",
+            contactOption: "TollFree",
+          },
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "US",
+            addressRegion: "NY",
+          },
+          sameAs: [
+            "https://www.instagram.com/",
+            "https://www.facebook.com/",
+            "https://www.youtube.com/",
+          ],
+        }) }}
+      />
+
       <div className="text-center mb-[clamp(3rem,6vw,5rem)]">
         <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal">GET IN TOUCH</p>
         <h1 className="text-[clamp(36px,4vw,48px)] font-serif font-normal leading-[1.3] text-[var(--color-navy)]">Contact Our Team</h1>

@@ -106,6 +106,29 @@ export default async function ShopPage({ searchParams }: { searchParams?: Promis
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Shop All Collections",
+          description: "Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria",
+          url: "https://kollect-it.com/shop",
+          mainEntity: {
+            "@type": "ItemList",
+            name: "Featured Collections",
+            numberOfItems: categories.length,
+            itemListElement: categories.map((cat, idx) => ({
+              "@type": "CollectionPage",
+              position: idx + 1,
+              name: cat.name,
+              description: cat.description,
+              url: `https://kollect-it.com/category/${cat.slug}`,
+            })),
+          },
+        }) }}
+      />
+
       {/* Header */}
       <header className="header">
         <div className="header-container">

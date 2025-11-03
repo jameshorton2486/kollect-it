@@ -76,6 +76,29 @@ export default async function AboutPage() {
 
   return (
     <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Kollect-It",
+          url: "https://kollect-it.com",
+          description: "Authenticated antiques, collectibles, and fine art curated by specialists",
+          logo: "https://ext.same-assets.com/kollect-it/logo.png",
+          foundingDate: "2020",
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "Customer Service",
+            url: "https://kollect-it.com/contact",
+          },
+          sameAs: [
+            "https://www.instagram.com/",
+            "https://www.facebook.com/",
+            "https://www.youtube.com/",
+          ],
+        }) }}
+      />
+      
       <div className="max-w-[700px] text-center mx-auto">
         <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
           ABOUT US
