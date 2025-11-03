@@ -15,6 +15,8 @@ export const metadata = {
   },
 };
 
+import CTA from '@/components/CTA';
+
 const faqs = [
   {
     q: 'How do you authenticate items?',
@@ -85,19 +87,14 @@ export default function FAQPage() {
       </div>
 
       {/* Contact CTA */}
-      <div className="bg-[var(--color-cream)] text-center py-12 px-4 md:px-6 lg:px-8">
-        <div className="max-w-[600px] mx-auto">
-          <h2 className="text-[24px] font-serif font-normal mb-4 text-[var(--color-navy)]">
-            Still Have Questions?
-          </h2>
-          <p className="text-[16px] leading-[1.7] text-[var(--color-gray-dark)] mb-8">
-            Our team of experts is here to help. Contact us for personalized assistance.
-          </p>
-          <a href="/contact" className="ki-btn-primary inline-block">
-            CONTACT US
-          </a>
-        </div>
-      </div>
+      <CTA
+        title="Still Have Questions?"
+        description="Our team of experts is here to help. Contact us for personalized assistance."
+        buttonText="Contact Us"
+        buttonHref="/contact"
+        bgClass="bg-[var(--color-cream)]"
+        textClass="text-[var(--color-navy)]"
+      />
     </main>
   );
 }

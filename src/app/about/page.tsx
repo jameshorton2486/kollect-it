@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from '@/lib/prisma';
+import CTA from '@/components/CTA';
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -142,22 +143,12 @@ export default async function AboutPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="ki-section bg-[var(--color-navy)] text-white text-center">
-        <div className="ki-container max-w-[700px] mx-auto">
-          <h2 className="font-serif text-[clamp(36px,4vw,42px)] font-normal mb-4 leading-[1.3] text-white">
-            Begin Your Collection
-          </h2>
-          <p className="text-[18px] leading-[1.8] text-white/90 font-light mb-8">
-            Explore our curated selection of authenticated antiques and collectibles.
-          </p>
-          <Link
-            href="/"
-            className="about-cta-button inline-flex items-center justify-center px-10 py-4 border-2 border-[var(--color-gold)] text-[var(--color-gold)] text-[14px] font-medium tracking-[0.1em] uppercase rounded-[2px] no-underline transition-colors hover:bg-[var(--color-gold)] hover:text-[var(--color-navy)]"
-          >
-            BROWSE COLLECTION
-          </Link>
-        </div>
-      </section>
+      <CTA
+        title="Begin Your Collection"
+        description="Explore our curated selection of authenticated antiques and collectibles."
+        buttonText="Browse Collection"
+        buttonHref="/"
+      />
 
       {/* Global footer is rendered via ClientBody */}
     </main>
