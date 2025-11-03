@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import AddToCartButton from '../AddToCartButton';
-import { formatUSD } from '@/lib/currency';
+import { formatUSD0 } from '@/lib/currency';
 import { useWishlist } from '@/contexts/WishlistContext';
 
 interface Product {
@@ -77,7 +77,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
   </p>
 
   {/* Price */}
-  <div className="product-info-price ki-price">{formatUSD(product.price)}</div>
+  <div className="product-info-price ki-price">{formatUSD0(product.price)}</div>
 
   {/* Quantity Selector */}
   <div className="product-qty my-4 flex items-center gap-3">

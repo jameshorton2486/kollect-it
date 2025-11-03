@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { formatUSD } from '@/lib/currency';
+import { formatUSDWhole } from '@/lib/currency';
 import { useState } from 'react';
 import AddToCartButton from './AddToCartButton';
 import { useWishlist } from '@/contexts/WishlistContext';
@@ -42,7 +42,7 @@ export default function ProductCard({ product, variant = 'grid' }: { product: Pr
             {product.description && (
               <p className="mt-1 text-[14px] text-[var(--color-gray-dark)] line-clamp-2">{product.description}</p>
             )}
-            <div className="mt-2 text-[20px] font-semibold text-brand-gold">{formatUSD(product.price)}</div>
+            <div className="mt-2 text-[20px] font-semibold text-brand-gold">{formatUSDWhole(product.price)}</div>
             <div className="mt-3 flex items-center gap-2">
               <AddToCartButton
                 variant="secondary"
@@ -117,7 +117,7 @@ export default function ProductCard({ product, variant = 'grid' }: { product: Pr
       <Link href={`/product/${product.slug}`} className="mt-3 block no-underline">
         <h3 className="font-serif text-[20px] leading-snug text-brand-navy line-clamp-2">{product.title}</h3>
       </Link>
-  <div className="text-[20px] font-semibold text-brand-gold">{formatUSD(product.price)}</div>
+      <div className="text-[20px] font-semibold text-brand-gold">{formatUSDWhole(product.price)}</div>
 
       {/* Add to cart on hover */}
       <div className="mt-3 hidden items-center justify-between gap-2 group-hover:flex">

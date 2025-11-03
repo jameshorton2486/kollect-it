@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { formatUSD } from '@/lib/currency';
+import { formatUSD0 } from '@/lib/currency';
 import { BLUR_DATA_URL, transformCloudinary } from "@/lib/image";
 import { useRouter } from "next/navigation";
 
@@ -203,7 +203,7 @@ export default function Search() {
                         <div className="truncate font-medium text-brand-navy">{p.title}</div>
                         <div className="truncate text-[11px] uppercase tracking-wide text-brand-gold">{p.category?.name ?? ""}</div>
                       </div>
-                        <div className="shrink-0 text-[14px] font-semibold text-brand-gold">{formatUSD(p.price)}</div>
+                        <div className="shrink-0 text-[14px] font-semibold text-brand-gold">{formatUSD0(p.price)}</div>
                     </Link>
                   </li>
                 );

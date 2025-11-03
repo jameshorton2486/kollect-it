@@ -1,116 +1,49 @@
+import Header from '@/components/layout/Header';
+import Link from 'next/link';
+
 export const metadata = {
-  title: 'Authentication Guarantee - Kollect-It',
-  description: 'Our comprehensive authentication process ensures every item is genuine with documented provenance.',
+  title: 'Authentication Guarantee',
+  description: 'Our specialists rigorously authenticate every item we sell. Learn what we verify and our guarantee.',
 };
 
 export default function AuthenticationPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="ki-section bg-[var(--color-cream)] text-center">
-        <div className="ki-container max-w-[900px]">
-          <p className="section-subtitle" data-reveal>AUTHENTICATION GUARANTEE</p>
-          <h1 className="section-title-main" data-reveal data-reveal-delay="100">
-            Verified Authenticity
-          </h1>
-          <p className="max-w-[700px] mx-auto text-[16px] leading-[1.7] text-[var(--color-gray-dark)]" data-reveal data-reveal-delay="200">
+    <>
+      {/* Global Header */}
+      <Header />
+
+      {/* Main Content */}
+  <main className="ki-section ki-container px-4 sm:px-6 lg:px-8 py-12" role="main">
+        <h1 className="ki-heading-xl text-center">Authentication Guarantee</h1>
+
+        <section className="mt-12 space-y-6">
+          <h2 className="ki-heading-md">Verified Authenticity</h2>
+          <p className="ki-text-base">
             Every item sold through Kollect-It undergoes rigorous authentication by our team of specialists.
           </p>
-        </div>
-      </section>
+        </section>
 
-      {/* Seal Section */}
-      <section className="ki-section">
-        <div className="ki-container max-w-[900px] text-center">
-
-          {/* Animated Seal */}
-          <div className="auth-seal">
-            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="50" cy="50" r="45" />
-              <circle cx="50" cy="50" r="35" />
-              <path d="M 30 50 L 45 65 L 70 35" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="50" y="80" fontSize="8" fill="currentColor" textAnchor="middle" fontWeight="600">AUTHENTICATED</text>
-            </svg>
-          </div>
-
-          <h2 className="section-title mb-8">Our Authentication Process</h2>
-
-          {/* Verification Timeline */}
-          <div className="verification-timeline">
-            <div className="verification-timeline-fill"></div>
-
-            <div className="verification-step">
-              <div className="verification-step-icon">1</div>
-              <p className="text-[14px] font-semibold m-0">Review</p>
-              <p className="text-[12px] text-[var(--color-gray-medium)] m-0">Initial inspection</p>
-            </div>
-
-            <div className="verification-step">
-              <div className="verification-step-icon">2</div>
-              <p className="text-[14px] font-semibold m-0">Verify</p>
-              <p className="text-[12px] text-[var(--color-gray-medium)] m-0">Expert analysis</p>
-            </div>
-
-            <div className="verification-step">
-              <div className="verification-step-icon">3</div>
-              <p className="text-[14px] font-semibold m-0">Certify</p>
-              <p className="text-[12px] text-[var(--color-gray-medium)] m-0">Issue certificate</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* What We Verify Section */}
-      <section className="ki-section bg-white">
-        <div className="ki-container max-w-[900px]">
-          <h2 className="section-subtitle text-center mb-12">WHAT WE VERIFY</h2>
-
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
-
-            <div className="split-fade-left">
-              <div className="w-[50px] h-[50px] rounded-full bg-[var(--color-cream)] flex items-center justify-center mb-4 text-[var(--color-muted-gold)] text-[24px]">✓</div>
-              <h3 className="text-[18px] font-semibold mb-3">Origin & Provenance</h3>
-              <p className="text-[15px] leading-[1.7] text-[var(--color-gray-dark)]">
-                Complete documentation of ownership history and origin, verified through archival research and expert consultation.
-              </p>
-            </div>
-
-            <div className="split-fade-right">
-              <div className="w-[50px] h-[50px] rounded-full bg-[var(--color-cream)] flex items-center justify-center mb-4 text-[var(--color-muted-gold)] text-[24px]">✓</div>
-              <h3 className="text-[18px] font-semibold mb-3">Age & Period</h3>
-              <p className="text-[15px] leading-[1.7] text-[var(--color-gray-dark)]">
-                Scientific dating methods and period-specific analysis to confirm authenticity and identify any anachronistic elements.
-              </p>
-            </div>
-
-            <div className="split-fade-left">
-              <div className="w-[50px] h-[50px] rounded-full bg-[var(--color-cream)] flex items-center justify-center mb-4 text-[var(--color-muted-gold)] text-[24px]">✓</div>
-              <h3 className="text-[18px] font-semibold mb-3">Condition Assessment</h3>
-              <p className="text-[15px] leading-[1.7] text-[var(--color-gray-dark)]">
-                Detailed examination of condition, restoration history, and any repairs or alterations, fully disclosed in listings.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Guarantee Section */}
-      <section className="ki-section bg-[var(--color-cream)] text-center">
-        <div className="ki-container max-w-[700px]">
-          <h2 className="section-title mb-6">Our Guarantee</h2>
-          <p className="text-[17px] leading-[1.8] text-[var(--color-gray-dark)] mb-4">
-            Every item comes with a certificate of authenticity signed by our specialists.
+        <section className="mt-8 space-y-6">
+          <h2 className="ki-heading-md">What We Verify</h2>
+          <p className="ki-text-base">
+            Our specialists examine provenance, physical condition, maker marks, historical documentation, and consistency
+            with similar items in known collections. We verify antique status, originality, and quality grade.
           </p>
-          <p className="text-[17px] leading-[1.8] text-[var(--color-gray-dark)] font-semibold mb-8">
-            If any item is later found to be inauthentic, we offer a full refund with no questions asked.
+        </section>
+
+        <section className="mt-8 space-y-6">
+          <h2 className="ki-heading-md">Our Guarantee</h2>
+          <p className="ki-text-base">
+            Every item comes with a signed Certificate of Authenticity. If any item is later found to be inauthentic, we offer a full refund—no questions asked.
           </p>
-          <a href="/contact" className="btn-primary cta-shimmer">
-            CONTACT OUR EXPERTS
-          </a>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        <section className="mt-12 text-center">
+          <Link href="/contact" className="ki-btn-primary inline-block">Contact Our Experts</Link>
+        </section>
+      </main>
+
+      {/* Global Footer is rendered by ClientBody */}
+    </>
   );
 }
