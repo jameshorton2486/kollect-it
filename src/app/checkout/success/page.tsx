@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
+import { formatUSD } from '@/lib/currency';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -137,7 +138,7 @@ function SuccessContent() {
                     <p>Quantity: {item.quantity}</p>
                   </div>
                   <span className="success-item-price">
-                    ${(item.price * item.quantity).toLocaleString()}
+                    {formatUSD(item.price * item.quantity)}
                   </span>
                 </div>
               ))}
@@ -147,7 +148,7 @@ function SuccessContent() {
 
             <div className="success-total">
               <span>Total Paid</span>
-              <span>${orderDetails.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
+              <span>{formatUSD(orderDetails.total)}</span>
             </div>
           </div>
 

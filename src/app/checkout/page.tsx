@@ -10,6 +10,7 @@ import CheckoutForm from '@/components/checkout/CheckoutForm';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLUR_DATA_URL, transformCloudinary } from '@/lib/image';
+import { formatUSD } from '@/lib/currency';
 
 interface ShippingInfo {
   fullName: string;
@@ -486,7 +487,7 @@ export default function CheckoutPage() {
                       <p>Qty: {item.quantity}</p>
                     </div>
                     <span className="checkout-summary-item-price">
-                      ${(item.price * item.quantity).toLocaleString()}
+                      {formatUSD(item.price * item.quantity)}
                     </span>
                   </div>
                 ))}
@@ -496,7 +497,7 @@ export default function CheckoutPage() {
 
               <div className="checkout-summary-row">
                 <span>Subtotal ({itemCount} items)</span>
-                <span>${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span>{formatUSD(subtotal)}</span>
               </div>
 
               <div className="checkout-summary-row">
@@ -506,14 +507,14 @@ export default function CheckoutPage() {
 
               <div className="checkout-summary-row">
                 <span>Tax (8%)</span>
-                <span>${tax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span>{formatUSD(tax)}</span>
               </div>
 
               <div className="checkout-summary-divider" />
 
               <div className="checkout-summary-total">
                 <span>Total</span>
-                <span>${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span>{formatUSD(total)}</span>
               </div>
 
               <div className="checkout-trust-badges">

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { User, Receipt, Heart, Settings as SettingsIcon, LogOut } from 'lucide-react';
 import AddToCartButton from '@/components/AddToCartButton';
+import { formatUSD } from '@/lib/currency';
 
 interface WishlistItem {
   id: string;
@@ -257,7 +258,7 @@ export default function AccountPage() {
                         <div className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:justify-end">
                           <span className="text-[14px] text-[var(--color-gray-dark)]">Items: {order.items?.length ?? 0}</span>
                           <span className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-[12px] ${statusClass}`}>{order.status}</span>
-                          <span className="font-semibold">Total: ${order.total.toLocaleString()}</span>
+                          <span className="font-semibold">Total: {formatUSD(order.total)}</span>
                           <Link href={`/account/orders/${order.id}`} className="underline">View Details</Link>
                         </div>
                       </div>
@@ -306,7 +307,7 @@ export default function AccountPage() {
                         <Link href={`/product/${item.product.slug}`} className="font-medium hover:text-[var(--color-muted-gold)]">
                           {item.product.title}
                         </Link>
-                        <span className="text-brand-gold font-semibold">${item.product.price.toLocaleString()}</span>
+                        <span className="text-brand-gold font-semibold">{formatUSD(item.product.price)}</span>
                       </div>
                       <div className="mt-3 flex items-center justify-between gap-3">
                         <button

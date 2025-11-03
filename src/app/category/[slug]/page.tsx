@@ -246,7 +246,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
         {/* Main Content */}
         <div className="category-content ki-section">
-          <div className="ki-container">
+          <div className="ki-container px-4 md:px-6 lg:px-8">
             <div className="flex gap-6">
               {/* Filtering Sidebar (desktop) */}
               <CategoryFilters minPrice={minPriceVal} maxPrice={maxPriceVal} />

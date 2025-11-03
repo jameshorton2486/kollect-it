@@ -4,6 +4,7 @@ import { useCart } from '@/contexts/CartContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLUR_DATA_URL, transformCloudinary } from '@/lib/image';
+import { formatUSD } from '@/lib/currency';
 import { useEffect, useState } from 'react';
 
 interface SuggestionProduct {
@@ -86,7 +87,7 @@ export default function CartPage() {
                   <div>
                     <p className="text-[12px] uppercase tracking-wider text-brand-gold">{item.categoryName}</p>
                     <Link href={`/product/${item.slug}`} className="font-serif text-[18px] leading-snug text-brand-navy no-underline hover:underline">{item.title}</Link>
-                    <p className="text-brand-gold">${item.price.toLocaleString()}</p>
+                    <p className="text-brand-gold">{formatUSD(item.price)}</p>
                   </div>
 
                   <div className="text-right">
@@ -95,7 +96,7 @@ export default function CartPage() {
                       <span className="w-10 text-center">{item.quantity}</span>
                       <button onClick={() => updateQuantity(item.id, item.quantity + 1)} aria-label="Increase quantity" className="px-3 py-2">+</button>
                     </div>
-                    <div className="mt-2 font-semibold text-brand-gold">${(item.price * item.quantity).toLocaleString()}</div>
+                    <div className="mt-2 font-semibold text-brand-gold">{formatUSD(item.price * item.quantity)}</div>
                   </div>
                 </div>
 
@@ -116,12 +117,12 @@ export default function CartPage() {
           <div className="rounded border border-[var(--color-border)] p-4">
             <h2 className="font-serif text-brand-navy text-xl">Order Summary</h2>
             <div className="mt-3 space-y-2 text-sm">
-              <div className="flex items-center justify-between"><span>Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})</span><span>${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+              <div className="flex items-center justify-between"><span>Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})</span><span>{formatUSD(subtotal)}</span></div>
               <div className="flex items-center justify-between"><span>Shipping</span><span className="text-[var(--color-charcoal)]">Calculated at checkout</span></div>
-              <div className="flex items-center justify-between"><span>Estimated Tax (8%)</span><span>${tax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+              <div className="flex items-center justify-between"><span>Estimated Tax (8%)</span><span>{formatUSD(tax)}</span></div>
             </div>
             <div className="my-3 border-t border-[var(--color-border)]" />
-            <div className="flex items-center justify-between font-semibold text-brand-gold text-lg"><span>Total</span><span>${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+            <div className="flex items-center justify-between font-semibold text-brand-gold text-lg"><span>Total</span><span>{formatUSD(total)}</span></div>
             <Link href="/checkout" className="ki-btn-primary mt-4 block w-full text-center">Proceed to Checkout</Link>
             <Link href="/shop" className="mt-2 block text-center text-sm text-brand-gold hover:underline">Continue Shopping</Link>
           </div>
@@ -144,7 +145,7 @@ export default function CartPage() {
                 </div>
                 <div className="mt-2">
                   <h3 className="line-clamp-2 min-h-[3rem] text-sm">{p.title}</h3>
-                  <p className="text-brand-gold font-medium">${p.price.toLocaleString()}</p>
+                  <p className="text-brand-gold font-medium">{formatUSD(p.price)}</p>
                 </div>
               </Link>
             ))}

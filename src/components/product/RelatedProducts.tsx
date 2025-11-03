@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BLUR_DATA_URL, transformCloudinary } from '@/lib/image';
 import { useRef } from 'react';
+import { formatUSD } from '@/lib/currency';
 
 interface Product {
   id: string;
@@ -58,7 +59,7 @@ export default function RelatedProducts({ products, categoryName }: RelatedProdu
               </div>
               <div className="related-product-info mt-2">
                 <h3 className="related-product-title line-clamp-2 min-h-[3rem]">{product.title}</h3>
-                <p className="related-product-price text-brand-gold font-medium">${product.price.toLocaleString()}</p>
+                <p className="related-product-price text-brand-gold font-medium">{formatUSD(product.price)}</p>
               </div>
             </Link>
           ))}

@@ -7,6 +7,7 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import { formatUSD } from '@/lib/currency';
 
 interface AddressInfo {
   fullName: string;
@@ -136,7 +137,7 @@ export default function CheckoutForm({
               <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
               <line x1="1" y1="10" x2="23" y2="10" />
             </svg>
-            {typeof totalAmount === 'number' ? `Place Order - $${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Pay Now'}
+            {typeof totalAmount === 'number' ? `Place Order - ${formatUSD(totalAmount)}` : 'Pay Now'}
           </>
         )}
       </button>
