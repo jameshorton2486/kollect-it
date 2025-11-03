@@ -232,6 +232,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <Breadcrumbs
           items={[
             { label: 'Home', href: '/' },
+            { label: 'Shop', href: '/shop' },
             { label: category.name, href: `/category/${category.slug}` },
           ]}
         />

@@ -4,19 +4,18 @@ import Image from "next/image";
 import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
-  title: "About Us - Kollect-It",
-  description: "Curated antiques and collectibles for discerning collectors who value authenticity and character.",
+  title: "About Us",
+  description: "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
   openGraph: {
-    title: "About Us - Kollect-It",
-    description: "Curated antiques and collectibles for discerning collectors who value authenticity and character.",
-    images: [
-      "https://ext.same-assets.com/kollect-it/og-home.jpg",
-    ],
+    title: "About Us",
+    description: "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
+    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Us - Kollect-It",
-    description: "Curated antiques and collectibles for discerning collectors who value authenticity and character.",
+    title: "About Us",
+    description: "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
     images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
   },
 };

@@ -1,15 +1,16 @@
 export const metadata = {
-  title: 'Frequently Asked Questions - Kollect-It',
-  description: 'Common questions about authentication, shipping, returns, and our consignment process.',
+  title: 'Frequently Asked Questions',
+  description: 'Find answers to common questions about authentication, shipping, returns, consignments, and collecting with Kollect-It.',
   openGraph: {
-    title: 'Frequently Asked Questions - Kollect-It',
-    description: 'Common questions about authentication, shipping, returns, and our consignment process.',
+    title: 'Frequently Asked Questions',
+    description: 'Find answers to common questions about authentication, shipping, returns, consignments, and collecting with Kollect-It.',
     images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Frequently Asked Questions - Kollect-It',
-    description: 'Common questions about authentication, shipping, returns, and our consignment process.',
+    title: 'Frequently Asked Questions',
+    description: 'Find answers to common questions about authentication, shipping, returns, consignments, and collecting with Kollect-It.',
     images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
   },
 };
@@ -73,31 +74,30 @@ export default function FAQPage() {
 
       {/* FAQ Accordion Section */}
       <div className="max-w-[900px] mx-auto">
-            {faqs.map((item, i) => (
-              <details key={i} className="faq-item">
-                <summary>{item.q}</summary>
-                <div className="faq-answer">
-                  <p>{item.a}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+        {faqs.map((item, i) => (
+          <details key={i} className="faq-item">
+            <summary>{item.q}</summary>
+            <div className="faq-answer">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
 
       {/* Contact CTA */}
-      <section className="ki-section bg-[var(--color-cream)] text-center">
-        <div className="ki-container">
-          <h2 className="section-title mb-4">
+      <div className="bg-[var(--color-cream)] text-center py-12 px-4 md:px-6 lg:px-8">
+        <div className="max-w-[600px] mx-auto">
+          <h2 className="text-[24px] font-serif font-normal mb-4 text-[var(--color-navy)]">
             Still Have Questions?
           </h2>
-          <p className="mx-auto mb-8 max-w-[600px] text-[16px] leading-[1.7] text-[var(--color-gray-dark)]">
+          <p className="text-[16px] leading-[1.7] text-[var(--color-gray-dark)] mb-8">
             Our team of experts is here to help. Contact us for personalized assistance.
           </p>
-          <a href="/contact" className="ki-btn-primary">
+          <a href="/contact" className="ki-btn-primary inline-block">
             CONTACT US
           </a>
         </div>
-      </main>
-    );
-  }
+      </div>
+    </main>
+  );
+}

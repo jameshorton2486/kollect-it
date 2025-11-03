@@ -3,7 +3,19 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Authentication Guarantee',
-  description: 'Our specialists rigorously authenticate every item we sell. Learn what we verify and our guarantee.',
+  description: 'Our specialists rigorously authenticate every item we sell. Learn what we verify and our guarantee of authenticity for all purchases.',
+  openGraph: {
+    title: 'Authentication Guarantee',
+    description: 'Our specialists rigorously authenticate every item we sell. Learn what we verify and our guarantee of authenticity for all purchases.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Authentication Guarantee',
+    description: 'Our specialists rigorously authenticate every item we sell. Learn what we verify and our guarantee of authenticity for all purchases.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
 };
 
 export default function AuthenticationPage() {

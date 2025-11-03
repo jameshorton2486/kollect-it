@@ -7,8 +7,20 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductGrid from '@/components/ProductGrid';
 
 export const metadata: Metadata = {
-  title: 'Shop All Collections - Kollect-It',
-  description: 'Browse our curated collections of fine art, antique books, collectibles, and militaria.',
+  title: 'Shop All Collections',
+  description: 'Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria with verified provenance.',
+  openGraph: {
+    title: 'Shop All Collections',
+    description: 'Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria with verified provenance.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Shop All Collections',
+    description: 'Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria with verified provenance.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
 };
 
 export const revalidate = 60;

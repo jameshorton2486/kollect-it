@@ -3,17 +3,18 @@ import Link from 'next/link';
 import ContactForm from '@/components/forms/ContactForm';
 
 export const metadata: Metadata = {
-  title: 'Contact Us - Kollect-It',
-  description: "Get in touch with our team of experts. We're here to help with authentication, appraisals, and acquisitions.",
+  title: 'Contact Us',
+  description: "Get in touch with our team of experts for authentication, appraisals, acquisitions, and consignment inquiries.",
   openGraph: {
-    title: 'Contact Us - Kollect-It',
-    description: "Get in touch with our team of experts. We're here to help with authentication, appraisals, and acquisitions.",
+    title: 'Contact Us',
+    description: "Get in touch with our team of experts for authentication, appraisals, acquisitions, and consignment inquiries.",
     images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact Us - Kollect-It',
-    description: "Get in touch with our team of experts. We're here to help with authentication, appraisals, and acquisitions.",
+    title: 'Contact Us',
+    description: "Get in touch with our team of experts for authentication, appraisals, acquisitions, and consignment inquiries.",
     images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
   },
 };

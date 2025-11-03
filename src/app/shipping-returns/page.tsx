@@ -3,7 +3,19 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Shipping & Returns',
-  description: 'Shipping and returns policies for Kollect-It with secure packaging, insurance, and tracking.',
+  description: 'Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.',
+  openGraph: {
+    title: 'Shipping & Returns',
+    description: 'Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Shipping & Returns',
+    description: 'Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
 };
 
 export default function ShippingReturnsPage() {
