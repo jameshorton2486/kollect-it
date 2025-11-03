@@ -1,7 +1,21 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Sell Your Collection - Kollect-It',
+  description: 'Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.',
+  openGraph: {
+    title: 'Sell Your Collection - Kollect-It',
+    description: 'Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sell Your Collection - Kollect-It',
+    description: 'Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.',
+    images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
+  },
 };
 
 export default function SellPage() {
