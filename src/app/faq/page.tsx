@@ -59,24 +59,20 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="ki-section bg-[var(--color-cream)] text-center">
-        <div className="ki-container">
-          <p className="section-subtitle" data-reveal>HELP CENTER</p>
-          <h1 className="section-title-main" data-reveal data-reveal-delay="100">
-            Frequently Asked Questions
-          </h1>
-          <p className="mx-auto max-w-[700px] text-[16px] leading-[1.7] text-[var(--color-gray-dark)]" data-reveal data-reveal-delay="200">
-            Find answers to common questions about our authentication process, shipping, returns, and consignment services.
-          </p>
-        </div>
-      </section>
+    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+      {/* Header Section */}
+      <div className="text-center mb-[clamp(3rem,6vw,5rem)]">
+        <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal">HELP CENTER</p>
+        <h1 className="text-[clamp(36px,4vw,48px)] font-serif font-normal leading-[1.3] text-[var(--color-navy)] mb-6">
+          Frequently Asked Questions
+        </h1>
+        <p className="mx-auto max-w-[700px] text-[16px] leading-[1.7] text-[var(--color-gray-dark)]">
+          Find answers to common questions about our authentication process, shipping, returns, and consignment services.
+        </p>
+      </div>
 
       {/* FAQ Accordion Section */}
-      <section className="ki-section">
-        <div className="ki-container max-w-[900px]">
-          <div>
+      <div className="max-w-[900px] mx-auto">
             {faqs.map((item, i) => (
               <details key={i} className="faq-item">
                 <summary>{item.q}</summary>
@@ -102,7 +98,6 @@ export default function FAQPage() {
             CONTACT US
           </a>
         </div>
-      </section>
-    </div>
-  );
-}
+      </main>
+    );
+  }

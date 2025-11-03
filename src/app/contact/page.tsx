@@ -20,35 +20,13 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div>
-      {/* Header */}
-      <header className="header">
-        <div className="header-container">
-          <div className="logo">
-            <Link href="/" className="no-underline">
-              <span className="header-logo">
-                KOLLECT — IT
-              </span>
-            </Link>
-          </div>
-        </div>
-        <nav className="main-nav">
-          <Link href="/">Home</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/about">About Us</Link>
-          <Link href="/contact">Contact</Link>
-        </nav>
-      </header>
+    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+      <div className="text-center mb-[clamp(3rem,6vw,5rem)]">
+        <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal">GET IN TOUCH</p>
+        <h1 className="text-[clamp(36px,4vw,48px)] font-serif font-normal leading-[1.3] text-[var(--color-navy)]">Contact Our Team</h1>
+      </div>
 
-      {/* Page Content */}
-      <section className="contact-page ki-section">
-        <div className="ki-container">
-          <div className="text-center mb-[clamp(3rem,6vw,5rem)]">
-            <p className="section-subtitle">GET IN TOUCH</p>
-            <h1 className="section-title-main">Contact Our Team</h1>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-[clamp(3rem,6vw,5rem)] items-start">
+      <div className="grid md:grid-cols-2 gap-[clamp(3rem,6vw,5rem)] items-start max-w-[1000px] mx-auto">
             {/* Left: Info */}
             <div>
               <h2 className="font-serif text-[clamp(1.75rem,3vw,2.25rem)] mb-6">
@@ -94,31 +72,6 @@ export default function ContactPage() {
             {/* Right: Validated Client Form */}
             <ContactForm />
           </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="ki-section bg-[var(--color-cream)]">
-        <div className="ki-container">
-          <h2 className="section-subtitle text-center mb-8">VISIT OUR SHOWROOM</h2>
-          <div className="map-container" data-reveal>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.11976035!3d40.6974881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1234567890123"
-              width="600"
-              height="450"
-              className="border-0"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Kollect-It Location"
-            />
-          </div>
-          <p className="text-center mt-6 text-sm text-[var(--color-gray-medium)]">
-            By appointment only. Please contact us to schedule a visit.
-          </p>
-        </div>
-      </section>
-
-      {/* Global footer is rendered via ClientBody */}
-    </div>
-  );
-}
+        </main>
+      );
+    }

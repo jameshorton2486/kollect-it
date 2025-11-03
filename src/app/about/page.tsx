@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from '@/lib/prisma';
-import CartIcon from '@/components/CartIcon';
-import UserAccountDropdown from '@/components/UserAccountDropdown';
-import AnnouncementBar from '@/components/AnnouncementBar';
 
 export const metadata: Metadata = {
   title: "About Us - Kollect-It",
@@ -78,81 +75,27 @@ export default async function AboutPage() {
   const categories = await getCategories();
 
   return (
-    <div>
-      {/* Refined Announcement Bar with Dismiss */}
-      <AnnouncementBar />
+    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+      <div className="max-w-[700px] text-center mx-auto">
+        <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
+          ABOUT US
+        </p>
+        <h1 className="mb-6 text-[clamp(36px,4vw,48px)] font-serif font-normal leading-[1.3] text-[var(--color-navy)]">
+          Authenticated Expertise
+        </h1>
+        <p className="text-[16px] leading-[1.8] text-[var(--color-navy)] mb-12">
+          Our team includes historians, appraisers, and category specialists who verify authenticity and document provenance for every item we offer.
+        </p>
+      </div>
 
-      {/* Header */}
-      <header className="header">
-        <div className="header-container">
-          <button className="menu-toggle" aria-label="Menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-
-          <div className="logo">
-            <Link href="/" className="no-underline">
-              <span className="header-logo">
-                KOLLECT — IT
-              </span>
-            </Link>
-          </div>
-
-          <div className="header-icons">
-            <CartIcon />
-            <UserAccountDropdown />
-          </div>
-        </div>
-
-        <nav className="main-nav">
-          <Link href="/">Home</Link>
-          <div className="nav-dropdown">
-            <a href="#" className="dropdown-toggle">Shop by Category</a>
-            <div className="dropdown-menu">
-              {categories.map((cat) => (
-                <Link key={cat.id} href={`/category/${cat.slug}`}>
-                  {cat.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <Link href="/about">About Us</Link>
-          <Link href="/contact">Contact</Link>
-        </nav>
-      </header>
-
-      
-
-      {/* Expertise Section */}
-      <section className="ki-section bg-[#FAFAF8]">
-        <div className="ki-container max-w-[700px] text-center mx-auto">
-          <p
-            className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal"
-          >
-            EXPERTISE
-          </p>
-          <h2
-            className="mb-6 text-[clamp(32px,4vw,36px)] font-serif font-normal leading-[1.3] text-[var(--color-navy)]"
-          >
-            Authenticated by Specialists
-          </h2>
-          <p
-            className="text-[16px] leading-[1.8] text-[var(--color-navy)] mb-12"
-          >
-            Our team includes historians, appraisers, and category specialists who verify authenticity and document provenance for every item we offer.
-          </p>
-
-          <svg className="signature-svg" viewBox="0 0 200 60">
-            <path d="M 10 40 Q 30 10, 50 30 T 90 30 Q 110 10, 130 40 T 170 30 L 190 35" />
-          </svg>
-          <p className="text-[16px] text-[var(--color-gold)] mt-4 italic">
-            — The Kollect-It Team
-          </p>
-        </div>
+      <section className="bg-[#FAFAF8] rounded-sm p-8 md:p-12 max-w-[800px] mx-auto">
+        <h2 className="text-[24px] font-serif font-normal mb-4 text-[var(--color-navy)]">Our Mission</h2>
+        <p className="text-[16px] leading-[1.8] text-[rgba(50,41,35,0.9)]">
+          We connect discerning collectors with rare, authenticated antiques and collectibles. Every piece in our collection is carefully vetted by our team of experts and comes with comprehensive documentation of its provenance and condition.
+        </p>
       </section>
+
+      {/* Gallery Image */}
 
       {/* Gallery Image 2 */}
       <section className="ki-section p-0">
@@ -218,6 +161,6 @@ export default async function AboutPage() {
       </section>
 
       {/* Global footer is rendered via ClientBody */}
-    </div>
+    </main>
   );
 }

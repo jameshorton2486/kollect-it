@@ -1,7 +1,6 @@
 import Hero from "@/components/home/hero";
 import LatestArrivals from "@/components/home/LatestArrivalsClient";
 import ShopByCategories from "@/components/home/ShopByCategoriesClient";
-import Header from "@/components/Header";
 import TrustStrip from "@/components/home/TrustStrip";
 import FeaturedCollection from "@/components/home/FeaturedCollection";
 import Testimonials from "@/components/home/Testimonials";
@@ -54,7 +53,6 @@ export default function HomePage() {
           ],
         }) }}
       />
-      <Header />
       <Hero />
       <TrustStrip />
       <LatestArrivals />
