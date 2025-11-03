@@ -1,3 +1,7 @@
-const config = {};
+// Load environment variables from .env
+require('dotenv').config();
 
-export default config;
+// Prisma configuration
+module.exports = {
+  schema: './prisma/schema.prisma',
+};

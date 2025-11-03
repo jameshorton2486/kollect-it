@@ -22,8 +22,8 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="min-h-screen bg-surface-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-serif font-bold text-ink mb-2">Admin Settings</h1>
+      <div className="ki-container px-4 md:px-6 lg:px-8 py-8">
+        <h1 className="text-2xl font-serif font-bold text-ink mb-2">Settings</h1>
         <p className="text-sm text-ink-secondary mb-6">Configure administrative options. Coming soon.</p>
         <div className="rounded-lg border border-border-neutral bg-white p-6 text-ink-secondary">
           Placeholder: settings controls will appear here.

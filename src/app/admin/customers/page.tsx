@@ -22,7 +22,7 @@ export default function AdminCustomersPage() {
 
   return (
     <div className="min-h-screen bg-surface-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="ki-container px-4 md:px-6 lg:px-8 py-8">
         <h1 className="text-2xl font-serif font-bold text-ink mb-2">Customers</h1>
         <p className="text-sm text-ink-secondary mb-6">This section will allow viewing and managing customers. Coming soon.</p>
         <div className="rounded-lg border border-border-neutral bg-white p-6 text-ink-secondary">
