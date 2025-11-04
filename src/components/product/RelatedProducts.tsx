@@ -32,37 +32,125 @@ export default function RelatedProducts({ products, categoryName }: RelatedProdu
   };
 
   return (
-    <div className="related-products-section section-spacing">
+    <div className="related-products-section section-spacing py-12 bg-gradient-to-b from-white to-parchment">
       <div className="container">
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="related-products-title font-serif text-brand-navy text-3xl md:text-4xl">You May Also Like</h2>
-          <div className="hidden md:flex gap-2">
-            <button className="rounded border border-[var(--color-border)] px-3 py-2" aria-label="Scroll left" onClick={() => scrollByCards(-1)}>◀</button>
-            <button className="rounded border border-[var(--color-border)] px-3 py-2" aria-label="Scroll right" onClick={() => scrollByCards(1)}>▶</button>
+        {/* Section Header */}
+        <div className="mb-8">
+          <p className="text-xs uppercase tracking-wider font-semibold text-brand-gold mb-2">Continue Exploring</p>
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h2 className="related-products-title font-serif text-brand-navy text-3xl md:text-4xl">You May Also Like</h2>
+              <p className="text-sm text-ink-secondary mt-2">More authenticated pieces from our {categoryName} collection</p>
+            </div>
+            <div className="hidden md:flex gap-2">
+              <button 
+                className="rounded-full border border-brand-gold/30 bg-white hover:bg-brand-gold/10 p-2 transition-colors" 
+                aria-label="Scroll left" 
+                onClick={() => scrollByCards(-1)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <button 
+                className="rounded-full border border-brand-gold/30 bg-white hover:bg-brand-gold/10 p-2 transition-colors" 
+                aria-label="Scroll right" 
+                onClick={() => scrollByCards(1)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div ref={scrollerRef} className="mt-4 flex gap-4 overflow-x-auto scroll-smooth snap-x pb-2">
+        {/* Products Carousel */}
+        <div ref={scrollerRef} className="flex gap-4 overflow-x-auto scroll-smooth snap-x pb-4 -mx-4 px-4">
           {products.map((product) => (
             <Link
               key={product.id}
               href={`/product/${product.slug}`}
-              className="related-product-card snap-start shrink-0 w-[240px]"
+              className="related-product-card snap-start shrink-0 w-[240px] group"
               data-card="true"
             >
-              <div className="related-product-image h-[180px] w-full overflow-hidden rounded">
+              {/* Product Image Container */}
+              <div className="related-product-image relative h-[200px] w-full overflow-hidden rounded-lg border border-ink-tertiary/10 bg-white">
                 {product.images[0] ? (
-                  <Image src={transformCloudinary(product.images[0].url, 'thumbnail')} alt={`${product.title} - ${product.category.name} related`} width={300} height={180} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" quality={85} placeholder="blur" blurDataURL={BLUR_DATA_URL} />
+                  <>
+                    <Image 
+                      src={transformCloudinary(product.images[0].url, 'thumbnail')} 
+                      alt={`${product.title} - ${product.category.name}`} 
+                      width={300} 
+                      height={200} 
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" 
+                      loading="lazy" 
+                      quality={85} 
+                      placeholder="blur" 
+                      blurDataURL={BLUR_DATA_URL} 
+                    />
+                    {/* Overlay Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"></div>
+                  </>
                 ) : (
-                  <div className="related-product-placeholder h-full w-full bg-[var(--color-gray-light)]" />
+                  <div className="related-product-placeholder h-full w-full bg-gradient-to-br from-parchment to-ink-tertiary/10 flex items-center justify-center">
+                    <span className="text-xs text-ink-secondary">No Image</span>
+                  </div>
                 )}
+                
+                {/* Authentication Badge */}
+                <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-white/95 backdrop-blur-sm px-2 py-1 shadow-sm">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-green-600" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                  <span className="text-[10px] font-semibold text-brand-navy">Auth.</span>
+                </div>
+
+                {/* View Details CTA */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 text-sm font-medium text-brand-navy hover:bg-white">
+                    View Details
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <div className="related-product-info mt-2">
-                <h3 className="related-product-title line-clamp-2 min-h-[3rem]">{product.title}</h3>
-                <p className="related-product-price text-brand-gold font-medium">{formatUSD0(product.price)}</p>
+
+              {/* Product Info */}
+              <div className="related-product-info mt-3 space-y-2">
+                {/* Category Badge */}
+                <p className="text-[10px] uppercase tracking-wider font-bold text-brand-gold">{product.category.name}</p>
+                
+                {/* Title */}
+                <h3 className="related-product-title font-serif text-sm text-brand-navy line-clamp-2 min-h-[2.5rem] group-hover:text-brand-gold transition-colors">
+                  {product.title}
+                </h3>
+                
+                {/* Price */}
+                <div className="flex items-baseline justify-between pt-1">
+                  <p className="related-product-price font-serif text-lg font-bold text-brand-navy">{formatUSD0(product.price)}</p>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-gold opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Bottom CTA Section */}
+        <div className="mt-8 rounded-lg border border-brand-gold/20 bg-gradient-to-r from-brand-gold/5 to-transparent p-6 text-center">
+          <p className="text-sm text-ink-secondary mb-3">Didn't find what you're looking for?</p>
+          <Link 
+            href="/shop" 
+            className="inline-flex items-center gap-2 rounded-full bg-brand-navy hover:bg-brand-navy/90 text-white px-6 py-3 font-medium transition-colors"
+          >
+            Browse Full Inventory
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Link>
         </div>
       </div>
     </div>

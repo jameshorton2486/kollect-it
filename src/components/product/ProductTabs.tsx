@@ -12,54 +12,68 @@ interface ProductTabsProps {
 }
 
 export default function ProductTabs({ product }: ProductTabsProps) {
-  const [activeTab, setActiveTab] = useState<'details' | 'shipping' | 'authentication'>('details');
+  const [activeTab, setActiveTab] = useState<'details' | 'shipping' | 'authentication' | 'guarantee'>('details');
+
+  const tabs = [
+    { id: 'details', label: 'Details', icon: '📋' },
+    { id: 'shipping', label: 'Shipping & Returns', icon: '📦' },
+    { id: 'authentication', label: 'Authentication', icon: '✓' },
+    { id: 'guarantee', label: 'Guarantee', icon: '🛡️' },
+  ] as const;
 
   return (
-    <div className="product-tabs-section ki-section">
+    <div className="product-tabs-section ki-section py-12 bg-parchment">
       <div className="ki-container">
         {/* Tab Navigation */}
-        <div className="product-tabs-nav mb-4 flex flex-wrap items-end gap-3 border-b border-[var(--color-border)] pb-2" role="tablist" aria-label="Product information tabs">
-          <button
-            role="tab"
-            aria-controls="panel-details"
-            id="tab-details"
-            className={`product-tab rounded-t px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${activeTab === 'details' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
-            onClick={() => setActiveTab('details')}
-          >
-            Details
-          </button>
-          <button
-            role="tab"
-            aria-controls="panel-shipping"
-            id="tab-shipping"
-            className={`product-tab rounded-t px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${activeTab === 'shipping' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
-            onClick={() => setActiveTab('shipping')}
-          >
-            Shipping
-          </button>
-          <button
-            role="tab"
-            aria-controls="panel-authentication"
-            id="tab-authentication"
-            className={`product-tab rounded-t px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${activeTab === 'authentication' ? 'active border-b-[3px] border-brand-gold text-brand-navy font-medium' : ''}`}
-            onClick={() => setActiveTab('authentication')}
-          >
-            Authentication
-          </button>
+        <div className="mb-8 overflow-x-auto" role="tablist" aria-label="Product information tabs">
+          <div className="flex gap-2 border-b border-ink-tertiary/20 pb-0 flex-nowrap">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                role="tab"
+                aria-controls={`panel-${tab.id}`}
+                id={`tab-${tab.id}`}
+                aria-selected={activeTab === tab.id ? 'true' : 'false'}
+                className={`product-tab whitespace-nowrap px-6 py-4 font-medium text-sm transition-all focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 ${
+                  activeTab === tab.id
+                    ? 'border-b-[3px] border-brand-gold text-brand-navy bg-white'
+                    : 'text-ink-secondary hover:text-brand-navy hover:bg-white/50'
+                }`}
+                onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              >
+                <span className="inline-block mr-2">{tab.icon}</span>
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Tab Content */}
-        <div className="product-tabs-content leading-[1.8] text-[var(--color-gray-dark)]">
+        <div className="product-tabs-content">
           {activeTab === 'details' && (
-            <div className="tab-panel" role="tabpanel" id="panel-details" aria-labelledby="tab-details" tabIndex={0}>
-              <h3 className="font-serif text-brand-navy">Product Description</h3>
-              <p>{product.description}</p>
+            <div className="tab-panel space-y-6" role="tabpanel" id="panel-details" aria-labelledby="tab-details" tabIndex={0}>
+              <div className="rounded-lg border border-brand-gold/20 bg-white p-6">
+                <h3 className="font-serif text-2xl text-brand-navy mb-4 flex items-center gap-2">
+                  <span className="text-brand-gold">📖</span> Product Description
+                </h3>
+                <div className="prose prose-sm max-w-none text-ink-secondary leading-relaxed">
+                  <p className="mb-4 text-base">{product.description}</p>
+                  <p className="text-sm italic text-ink-secondary">
+                    This product has been carefully selected and authenticated by our expert curators. Every item in our collection is evaluated for quality, historical significance, and value.
+                  </p>
+                </div>
+              </div>
+
               {product.condition && (
-                <div className="condition-details">
-                  <h4 className="font-serif text-brand-navy">Condition Notes</h4>
-                  <p>
-                    This item is in <strong>{product.condition}</strong> condition. All items are carefully
-                    inspected and accurately described by our expert curators.
+                <div className="rounded-lg border border-green-200 bg-green-50/50 p-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-3 flex items-center gap-2">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-green-600" aria-hidden="true">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    Condition: <span className="font-bold text-green-700">{product.condition}</span>
+                  </h4>
+                  <p className="text-sm text-ink-secondary">
+                    This item is in <strong>{product.condition}</strong> condition. All items are carefully inspected and accurately described by our expert curators. Our condition grading follows industry standards for antique and collectible items.
                   </p>
                 </div>
               )}
@@ -67,61 +81,204 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           )}
 
           {activeTab === 'shipping' && (
-            <div className="tab-panel" role="tabpanel" id="panel-shipping" aria-labelledby="tab-shipping" tabIndex={0}>
-              <h3 className="font-serif text-brand-navy">Shipping Information</h3>
-              <p>
-                We offer complimentary white-glove shipping on all orders over $99 within the continental
-                United States. International shipping is available at checkout.
-              </p>
+            <div className="tab-panel space-y-6" role="tabpanel" id="panel-shipping" aria-labelledby="tab-shipping" tabIndex={0}>
+              <div className="rounded-lg border border-brand-gold/20 bg-white p-6 space-y-6">
+                <div>
+                  <h3 className="font-serif text-2xl text-brand-navy mb-4 flex items-center gap-2">
+                    <span className="text-brand-gold">📦</span> Shipping Information
+                  </h3>
+                  <p className="text-ink-secondary mb-3">
+                    We provide premium shipping services for all orders, including complimentary white-glove shipping for items over $99 within the continental United States.
+                  </p>
+                </div>
 
-              <h4 className="font-serif text-brand-navy">Delivery Times</h4>
-              <ul>
-                <li><strong>Standard Shipping:</strong> 5-7 business days</li>
-                <li><strong>Express Shipping:</strong> 2-3 business days</li>
-                <li><strong>International:</strong> 10-14 business days</li>
-              </ul>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="rounded-lg border border-ink-tertiary/10 p-4 bg-gradient-to-br from-parchment to-white">
+                    <p className="text-xs uppercase tracking-wider font-semibold text-brand-gold mb-2">Standard</p>
+                    <p className="font-serif text-lg text-brand-navy mb-1">5-7 Business Days</p>
+                    <p className="text-sm text-ink-secondary">Continental US</p>
+                  </div>
+                  <div className="rounded-lg border border-ink-tertiary/10 p-4 bg-gradient-to-br from-parchment to-white">
+                    <p className="text-xs uppercase tracking-wider font-semibold text-brand-gold mb-2">Express</p>
+                    <p className="font-serif text-lg text-brand-navy mb-1">2-3 Business Days</p>
+                    <p className="text-sm text-ink-secondary">Premium service</p>
+                  </div>
+                  <div className="rounded-lg border border-ink-tertiary/10 p-4 bg-gradient-to-br from-parchment to-white">
+                    <p className="text-xs uppercase tracking-wider font-semibold text-brand-gold mb-2">International</p>
+                    <p className="font-serif text-lg text-brand-navy mb-1">10-14 Business Days</p>
+                    <p className="text-sm text-ink-secondary">Worldwide available</p>
+                  </div>
+                </div>
 
-              <h4 className="font-serif text-brand-navy">Returns & Exchanges</h4>
-              <p>
-                We accept returns within 30 days of delivery for a full refund. Items must be returned in
-                their original condition. Please contact our concierge team to initiate a return.
-              </p>
+                <div className="border-t border-ink-tertiary/10 pt-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-3">✓ Professional Packaging</h4>
+                  <ul className="space-y-2 text-sm text-ink-secondary">
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold flex-shrink-0">→</span>
+                      <span>Museum-quality materials ensure safe transit</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold flex-shrink-0">→</span>
+                      <span>Fragile items receive additional protective padding</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold flex-shrink-0">→</span>
+                      <span>Full insurance coverage included with shipment</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold flex-shrink-0">→</span>
+                      <span>Real-time tracking available for all deliveries</span>
+                    </li>
+                  </ul>
+                </div>
 
-              <h4 className="font-serif text-brand-navy">Packaging</h4>
-              <p>
-                All items are professionally packaged with museum-quality materials to ensure safe transit.
-                Fragile items receive additional protective packaging and insurance.
-              </p>
+                <div className="border-t border-ink-tertiary/10 pt-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-3">↩ Returns & Exchanges</h4>
+                  <p className="text-sm text-ink-secondary mb-3">
+                    We accept returns within <strong>30 days of delivery</strong> for a full refund. Items must be returned in their original condition. Simply contact our concierge team to initiate a return – we'll even provide return shipping at no cost.
+                  </p>
+                  <p className="text-xs bg-brand-gold/10 border border-brand-gold/20 rounded p-3 text-brand-navy font-medium">
+                    💡 Not satisfied? No questions asked returns – we want you to be completely happy with your purchase.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
           {activeTab === 'authentication' && (
-            <div className="tab-panel" role="tabpanel" id="panel-authentication" aria-labelledby="tab-authentication" tabIndex={0}>
-              <h3 className="font-serif text-brand-navy">Our Authentication Guarantee</h3>
-              <p>
-                Every item at Kollect-It undergoes rigorous authentication by our team of expert curators and
-                specialists. We guarantee the authenticity and accurate representation of all pieces in our collection.
-              </p>
+            <div className="tab-panel space-y-6" role="tabpanel" id="panel-authentication" aria-labelledby="tab-authentication" tabIndex={0}>
+              <div className="rounded-lg border border-green-200 bg-white p-6">
+                <h3 className="font-serif text-2xl text-brand-navy mb-4 flex items-center gap-2">
+                  <span className="text-green-600">✓</span> Our Authentication Guarantee
+                </h3>
+                <p className="text-ink-secondary leading-relaxed mb-4">
+                  Every item at Kollect-It undergoes rigorous authentication by our team of expert curators and specialists. We guarantee the authenticity and accurate representation of all pieces in our collection. Your confidence is our priority.
+                </p>
+              </div>
 
-              <h4 className="font-serif text-brand-navy">Authentication Process</h4>
-              <ul>
-                <li><strong>Expert Examination:</strong> Physical inspection by category specialists</li>
-                <li><strong>Provenance Research:</strong> Verification of item history and ownership</li>
-                <li><strong>Condition Assessment:</strong> Detailed evaluation and documentation</li>
-                <li><strong>Market Analysis:</strong> Fair pricing based on current market values</li>
-              </ul>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="rounded-lg border border-brand-gold/20 bg-white p-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-4">🔍 Authentication Process</h4>
+                  <ul className="space-y-3">
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">1</span>
+                      <div>
+                        <p className="font-medium text-brand-navy text-sm">Expert Examination</p>
+                        <p className="text-xs text-ink-secondary">Physical inspection by category specialists</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">2</span>
+                      <div>
+                        <p className="font-medium text-brand-navy text-sm">Provenance Research</p>
+                        <p className="text-xs text-ink-secondary">Verification of item history and ownership</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">3</span>
+                      <div>
+                        <p className="font-medium text-brand-navy text-sm">Condition Assessment</p>
+                        <p className="text-xs text-ink-secondary">Detailed evaluation and documentation</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">4</span>
+                      <div>
+                        <p className="font-medium text-brand-navy text-sm">Market Analysis</p>
+                        <p className="text-xs text-ink-secondary">Fair pricing based on current market values</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
 
-              <h4 className="font-serif text-brand-navy">Certificate of Authenticity</h4>
-              <p>
-                Select items include a Certificate of Authenticity from Kollect-It or the original artist/maker.
-                All documentation is carefully preserved and included with your purchase.
-              </p>
+                <div className="rounded-lg border border-brand-gold/20 bg-white p-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-4">📜 Certificate of Authenticity</h4>
+                  <p className="text-sm text-ink-secondary mb-4">
+                    Select items include an official Certificate of Authenticity from Kollect-It or the original artist/maker. All documentation is carefully preserved and included with your purchase.
+                  </p>
+                  <div className="bg-parchment rounded p-3 border border-brand-gold/20">
+                    <p className="text-xs font-semibold text-brand-gold uppercase tracking-wider mb-1">Included with Certificate</p>
+                    <ul className="space-y-1 text-xs text-brand-navy">
+                      <li>✓ Detailed item description</li>
+                      <li>✓ Condition assessment report</li>
+                      <li>✓ Provenance documentation</li>
+                      <li>✓ Expert authentication seal</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
-              <h4 className="font-serif text-brand-navy">Lifetime Guarantee</h4>
-              <p>
-                If any item is ever determined to be inauthentic, we will provide a full refund including
-                original shipping costs. This guarantee remains valid for the lifetime of the item.
-              </p>
+          {activeTab === 'guarantee' && (
+            <div className="tab-panel space-y-6" role="tabpanel" id="panel-guarantee" aria-labelledby="tab-guarantee" tabIndex={0}>
+              <div className="rounded-lg border-2 border-green-200 bg-green-50/30 p-6">
+                <h3 className="font-serif text-2xl text-brand-navy mb-4 flex items-center gap-2">
+                  <span className="text-green-600">🛡️</span> Lifetime Authenticity Guarantee
+                </h3>
+                <p className="text-ink-secondary font-medium mb-3">
+                  Every Kollect-It purchase is backed by our unconditional lifetime authenticity guarantee.
+                </p>
+                <div className="bg-white rounded p-4 border border-green-200">
+                  <p className="text-sm text-brand-navy font-semibold">
+                    If any item is ever determined to be inauthentic, we will provide a full refund including original shipping costs. This guarantee remains valid for the lifetime of the item.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="rounded-lg border border-brand-gold/20 bg-white p-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-4">✓ What's Protected</h4>
+                  <ul className="space-y-3">
+                    <li className="flex gap-3">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-green-600 flex-shrink-0" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                      </svg>
+                      <span className="text-sm text-ink-secondary">Authenticity of materials and construction</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-green-600 flex-shrink-0" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                      </svg>
+                      <span className="text-sm text-ink-secondary">Accuracy of all descriptions and dates</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-green-600 flex-shrink-0" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                      </svg>
+                      <span className="text-sm text-ink-secondary">Fair market pricing based on authenticity</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-green-600 flex-shrink-0" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                      </svg>
+                      <span className="text-sm text-ink-secondary">Valid for the lifetime of the item</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="rounded-lg border border-brand-gold/20 bg-white p-6">
+                  <h4 className="font-serif text-lg text-brand-navy mb-4">💬 How to Make a Claim</h4>
+                  <ol className="space-y-3">
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">1</span>
+                      <span className="text-sm text-ink-secondary">Contact our concierge team with details</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">2</span>
+                      <span className="text-sm text-ink-secondary">Provide documentation of discrepancy</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">3</span>
+                      <span className="text-sm text-ink-secondary">We arrange item inspection by experts</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-brand-gold font-bold flex-shrink-0">4</span>
+                      <span className="text-sm text-ink-secondary">Full refund if claim is verified</span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
             </div>
           )}
         </div>
