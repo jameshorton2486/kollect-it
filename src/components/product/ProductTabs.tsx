@@ -33,7 +33,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
                 role="tab"
                 aria-controls={`panel-${tab.id}`}
                 id={`tab-${tab.id}`}
-                aria-selected={activeTab === tab.id ? 'true' : 'false'}
+                aria-selected={activeTab === tab.id}
                 className={`product-tab whitespace-nowrap px-6 py-4 font-medium text-sm transition-all focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 ${
                   activeTab === tab.id
                     ? 'border-b-[3px] border-brand-gold text-brand-navy bg-white'
