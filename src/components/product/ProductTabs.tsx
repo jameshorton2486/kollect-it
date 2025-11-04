@@ -30,6 +30,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
+                type="button"
                 role="tab"
                 aria-controls={`panel-${tab.id}`}
                 id={`tab-${tab.id}`}

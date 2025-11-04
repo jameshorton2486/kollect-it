@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from 'react';
+import React from 'react';
 
+/**
+ * Interface defining the structure of the form state.
+ */
 interface FormState {
   name: string;
   email: string;
@@ -9,13 +13,18 @@ interface FormState {
   message: string;
 }
 
+/**
+ * A reusable, accessible, and validated Contact Form component.
+ */
 export default function ContactForm() {
+  // --- State Initialization ---
   const [form, setForm] = useState<FormState>({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const validate = (f: FormState) => {
+  // --- Validation Logic ---
+  const validate = (f: FormState): Partial<FormState> => {
     const e: Partial<FormState> = {};
     if (!f.name.trim()) e.name = 'Name is required';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Valid email required';
@@ -24,23 +33,29 @@ export default function ContactForm() {
     return e;
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  // --- Submission Handler ---
+  const onSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    const v = validate(form);
-    setErrors(v);
-    if (Object.keys(v).length > 0) return;
+    const validationErrors = validate(form);
+    setErrors(validationErrors);
+    
+    if (Object.keys(validationErrors).length > 0) return;
+    
     setSubmitting(true);
     try {
-      // Example: no-op or send to an API route
-      await new Promise((r) => setTimeout(r, 600));
+      // 🚨 REPLACE THIS WITH YOUR ACTUAL API CALL to send the data
+      await new Promise((resolve) => setTimeout(resolve, 600)); // Simulated network delay
       setSent(true);
+      setForm({ name: '', email: '', subject: '', message: '' }); 
     } catch (err) {
-      if (process.env.NODE_ENV === 'development') console.error(err);
+      if (process.env.NODE_ENV === 'development') console.error('Form submission failed:', err);
+      alert('An error occurred. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
+  // --- Reusable Input Component for Name, Email, Subject ---
   const Input = ({ id, label, type = 'text' }: { id: keyof FormState; label: string; type?: string }) => (
     <div className="mb-4">
       <label htmlFor={id} className="mb-1 block text-sm font-medium text-[var(--color-charcoal)]">{label}</label>
@@ -49,7 +64,7 @@ export default function ContactForm() {
         type={type}
         value={form[id]}
         onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}
-        className={`w-full rounded border px-3 py-2 outline-none ${errors[id] ? 'border-red-500' : 'border-[var(--color-border)]'}`}
+        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors[id] ? 'border-red-500 ring-1 ring-red-500' : 'border-[var(--color-border)] focus:border-[var(--color-brand)]'}`}
         aria-invalid={!!errors[id]}
         aria-describedby={errors[id] ? `${id}-error` : undefined}
       />
@@ -57,18 +72,29 @@ export default function ContactForm() {
     </div>
   );
 
+  // --- Main Component Render ---
   return (
-    <form onSubmit={onSubmit} noValidate className="rounded border border-[var(--color-gray-light)] bg-cream p-6">
+    <form onSubmit={onSubmit} noValidate className="rounded border border-[var(--color-gray-light)] bg-cream p-6 shadow-lg">
       {sent ? (
-        <div className="text-center">
-          <h3 className="font-serif text-2xl text-brand-navy">Message sent</h3>
-          <p className="mt-2 text-[var(--color-charcoal)]">We\'ll get back to you shortly.</p>
+        <div className="text-center p-8">
+          <h3 className="font-serif text-3xl font-bold text-brand-navy">Message Sent Successfully! 🎉</h3>
+          <p className="mt-3 text-lg text-[var(--color-charcoal)]">We appreciate you reaching out. We'll get back to you shortly.</p>
+          <button 
+            onClick={() => setSent(false)} 
+            className="mt-6 text-sm text-brand-navy underline hover:text-[var(--color-brand)]"
+            type="button"
+          >
+            Send another message
+          </button>
         </div>
       ) : (
         <>
+          <h2 className="text-2xl font-semibold mb-6 text-brand-navy">Contact Us</h2>
+          
           <Input id="name" label="Name *" />
           <Input id="email" label="Email *" type="email" />
           <Input id="subject" label="Subject *" />
+          
           <div className="mb-4">
             <label htmlFor="message" className="mb-1 block text-sm font-medium text-[var(--color-charcoal)]">Message *</label>
             <textarea
@@ -77,14 +103,21 @@ export default function ContactForm() {
               maxLength={500}
               value={form.message}
               onChange={(ev) => setForm((s) => ({ ...s, message: ev.target.value }))}
-              className={`w-full rounded border px-3 py-2 outline-none ${errors.message ? 'border-red-500' : 'border-[var(--color-border)]'}`}
+              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors.message ? 'border-red-500 ring-1 ring-red-500' : 'border-[var(--color-border)] focus:border-[var(--color-brand)]'}`}
               aria-invalid={!!errors.message}
               aria-describedby={errors.message ? 'message-error' : undefined}
             />
-            <div className="mt-1 text-right text-xs text-[var(--color-gray-dark)]">{form.message.length} / 500</div>
-            {errors.message && <p id="message-error" className="mt-1 text-sm text-red-600">{errors.message}</p>}
+            <div className="flex justify-between items-center mt-1">
+                {errors.message && <p id="message-error" className="text-sm text-red-600">{errors.message}</p>}
+                <div className="ml-auto text-xs text-[var(--color-gray-dark)]">{form.message.length} / 500</div>
+            </div>
           </div>
-          <button type="submit" className="btn-cta w-full" disabled={submitting}>
+          
+          <button 
+            type="submit" 
+            className="btn-cta w-full py-2.5 font-bold rounded-md bg-brand-navy text-white hover:bg-brand-dark transition-colors duration-200 disabled:bg-gray-400" 
+            disabled={submitting}
+          >
             {submitting ? 'Sending…' : 'Send Message'}
           </button>
         </>

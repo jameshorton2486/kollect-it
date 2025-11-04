@@ -1,0 +1,210 @@
+warning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/.env.example b/.env.example[m
+[1mindex 72e8265..548910a 100644[m
+[1m--- a/.env.example[m
+[1m+++ b/.env.example[m
+[36m@@ -1,8 +1,10 @@[m
+ # =============================================================================[m
+ # KOLLECT-IT MARKETPLACE - ENVIRONMENT VARIABLES[m
+ # =============================================================================[m
+[31m-# Copy this file to .env and fill in your actual values[m
+[31m-# NEVER commit .env to version control - it contains sensitive credentials[m
+[32m+[m[32m# Instructions:[m
+[32m+[m[32m# 1. Copy this file to .env[m
+[32m+[m[32m# 2. Fill in your actual values[m
+[32m+[m[32m# 3. NEVER commit .env to version control[m
+ # =============================================================================[m
+ [m
+ # --- Core Application ---[m
+[36m@@ -10,16 +12,16 @@[m [mNODE_ENV=development[m
+ NEXT_PUBLIC_SITE_URL=https://kollect-it.com[m
+ [m
+ # --- Authentication (NextAuth.js) ---[m
+[31m-# Generate NEXTAUTH_SECRET: openssl rand -base64 32[m
+[32m+[m[32m# Generate: openssl rand -base64 32[m
+ NEXTAUTH_URL=http://localhost:3000[m
+ NEXTAUTH_SECRET=your-secret-key-here-min-32-characters[m
+ [m
+ # --- Database (PostgreSQL via Supabase) ---[m
+[31m-# Pooled connection for app queries (Port 6543 with pgbouncer)[m
+[31m-DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.okthcpumncidcihdhgea.supabase.co:6543/postgres?pgbouncer=true[m
+[32m+[m[32m# Pooled connection (Port 6543 with pgbouncer)[m
+[32m+[m[32mDATABASE_URL=postgres://postgres:YOUR_PASSWORD@db.okthcpumncidcihdhgea.supabase.co:6543/postgres?pgbouncer=true[m
+ [m
+[31m-# Direct connection for migrations (Port 5432) - Optional for local development[m
+[31m-DIRECT_URL=postgresql://postgres:YOUR_PASSWORD@db.okthcpumncidcihdhgea.supabase.co:5432/postgres[m
+[32m+[m[32m# Direct connection for migrations (Port 5432)[m
+[32m+[m[32mDIRECT_URL=postgres://postgres:YOUR_PASSWORD@db.okthcpumncidcihdhgea.supabase.co:5432/postgres[m
+ [m
+ # --- Stripe Payment Processing ---[m
+ STRIPE_SECRET_KEY=sk_test_your_secret_key_here[m
+[36m@@ -36,7 +38,7 @@[m [mNEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=public_your_public_key_here[m
+ NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your-id/[m
+ IMAGEKIT_PRIVATE_KEY=private_your_private_key_here[m
+ [m
+[31m-# --- Optional: Supabase API Keys (if using Supabase features beyond Postgres) ---[m
+[31m-NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co[m
+[32m+[m[32m# --- Optional: Supabase API (if using beyond Postgres) ---[m
+[32m+[m[32mNEXT_PUBLIC_SUPABASE_URL=https://okthcpumncidcihdhgea.supabase.co[m
+ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here[m
+ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here[m
+[1mdiff --git a/src/components/forms/ContactForm.tsx b/src/components/forms/ContactForm.tsx[m
+[1mindex a52af38..c1e1e8a 100644[m
+[1m--- a/src/components/forms/ContactForm.tsx[m
+[1m+++ b/src/components/forms/ContactForm.tsx[m
+[36m@@ -1,7 +1,11 @@[m
+ "use client";[m
+ [m
+ import { useState } from 'react';[m
+[32m+[m[32mimport React from 'react';[m
+ [m
+[32m+[m[32m/**[m
+[32m+[m[32m * Interface defining the structure of the form state.[m
+[32m+[m[32m */[m
+ interface FormState {[m
+   name: string;[m
+   email: string;[m
+[36m@@ -9,13 +13,18 @@[m [minterface FormState {[m
+   message: string;[m
+ }[m
+ [m
+[32m+[m[32m/**[m
+[32m+[m[32m * A reusable, accessible, and validated Contact Form component.[m
+[32m+[m[32m */[m
+ export default function ContactForm() {[m
+[32m+[m[32m  // --- State Initialization ---[m
+   const [form, setForm] = useState<FormState>({ name: '', email: '', subject: '', message: '' });[m
+   const [errors, setErrors] = useState<Partial<FormState>>({});[m
+   const [submitting, setSubmitting] = useState(false);[m
+   const [sent, setSent] = useState(false);[m
+ [m
+[31m-  const validate = (f: FormState) => {[m
+[32m+[m[32m  // --- Validation Logic ---[m
+[32m+[m[32m  const validate = (f: FormState): Partial<FormState> => {[m
+     const e: Partial<FormState> = {};[m
+     if (!f.name.trim()) e.name = 'Name is required';[m
+     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Valid email required';[m
+[36m@@ -24,23 +33,29 @@[m [mexport default function ContactForm() {[m
+     return e;[m
+   };[m
+ [m
+[31m-  const onSubmit = async (e: React.FormEvent) => {[m
+[32m+[m[32m  // --- Submission Handler ---[m
+[32m+[m[32m  const onSubmit = async (e: React.FormEvent): Promise<void> => {[m
+     e.preventDefault();[m
+[31m-    const v = validate(form);[m
+[31m-    setErrors(v);[m
+[31m-    if (Object.keys(v).length > 0) return;[m
+[32m+[m[32m    const validationErrors = validate(form);[m
+[32m+[m[32m    setErrors(validationErrors);[m
+[32m+[m[41m    [m
+[32m+[m[32m    if (Object.keys(validationErrors).length > 0) return;[m
+[32m+[m[41m    [m
+     setSubmitting(true);[m
+     try {[m
+[31m-      // Example: no-op or send to an API route[m
+[31m-      await new Promise((r) => setTimeout(r, 600));[m
+[32m+[m[32m      // 🚨 REPLACE THIS WITH YOUR ACTUAL API CALL to send the data[m
+[32m+[m[32m      await new Promise((resolve) => setTimeout(resolve, 600)); // Simulated network delay[m
+       setSent(true);[m
+[32m+[m[32m      setForm({ name: '', email: '', subject: '', message: '' });[m[41m [m
+     } catch (err) {[m
+[31m-      if (process.env.NODE_ENV === 'development') console.error(err);[m
+[32m+[m[32m      if (process.env.NODE_ENV === 'development') console.error('Form submission failed:', err);[m
+[32m+[m[32m      alert('An error occurred. Please try again.');[m
+     } finally {[m
+       setSubmitting(false);[m
+     }[m
+   };[m
+ [m
+[32m+[m[32m  // --- Reusable Input Component for Name, Email, Subject ---[m
+   const Input = ({ id, label, type = 'text' }: { id: keyof FormState; label: string; type?: string }) => ([m
+     <div className="mb-4">[m
+       <label htmlFor={id} className="mb-1 block text-sm font-medium text-[var(--color-charcoal)]">{label}</label>[m
+[36m@@ -49,7 +64,7 @@[m [mexport default function ContactForm() {[m
+         type={type}[m
+         value={form[id]}[m
+         onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}[m
+[31m-        className={`w-full rounded border px-3 py-2 outline-none ${errors[id] ? 'border-red-500' : 'border-[var(--color-border)]'}`}[m
+[32m+[m[32m        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors[id] ? 'border-red-500 ring-1 ring-red-500' : 'border-[var(--color-border)] focus:border-[var(--color-brand)]'}`}[m
+         aria-invalid={!!errors[id]}[m
+         aria-describedby={errors[id] ? `${id}-error` : undefined}[m
+       />[m
+[36m@@ -57,18 +72,29 @@[m [mexport default function ContactForm() {[m
+     </div>[m
+   );[m
+ [m
+[32m+[m[32m  // --- Main Component Render ---[m
+   return ([m
+[31m-    <form onSubmit={onSubmit} noValidate className="rounded border border-[var(--color-gray-light)] bg-cream p-6">[m
+[32m+[m[32m    <form onSubmit={onSubmit} noValidate className="rounded border border-[var(--color-gray-light)] bg-cream p-6 shadow-lg">[m
+       {sent ? ([m
+[31m-        <div className="text-center">[m
+[31m-          <h3 className="font-serif text-2xl text-brand-navy">Message sent</h3>[m
+[31m-          <p className="mt-2 text-[var(--color-charcoal)]">We\'ll get back to you shortly.</p>[m
+[32m+[m[32m        <div className="text-center p-8">[m
+[32m+[m[32m          <h3 className="font-serif text-3xl font-bold text-brand-navy">Message Sent Successfully! 🎉</h3>[m
+[32m+[m[32m          <p className="mt-3 text-lg text-[var(--color-charcoal)]">We appreciate you reaching out. We'll get back to you shortly.</p>[m
+[32m+[m[32m          <button[m[41m [m
+[32m+[m[32m            onClick={() => setSent(false)}[m[41m [m
+[32m+[m[32m            className="mt-6 text-sm text-brand-navy underline hover:text-[var(--color-brand)]"[m
+[32m+[m[32m            type="button"[m
+[32m+[m[32m          >[m
+[32m+[m[32m            Send another message[m
+[32m+[m[32m          </button>[m
+         </div>[m
+       ) : ([m
+         <>[m
+[32m+[m[32m          <h2 className="text-2xl font-semibold mb-6 text-brand-navy">Contact Us</h2>[m
+[32m+[m[41m          [m
+           <Input id="name" label="Name *" />[m
+           <Input id="email" label="Email *" type="email" />[m
+           <Input id="subject" label="Subject *" />[m
+[32m+[m[41m          [m
+           <div className="mb-4">[m
+             <label htmlFor="message" className="mb-1 block text-sm font-medium text-[var(--color-charcoal)]">Message *</label>[m
+             <textarea[m
+[36m@@ -77,18 +103,25 @@[m [mexport default function ContactForm() {[m
+               maxLength={500}[m
+               value={form.message}[m
+               onChange={(ev) => setForm((s) => ({ ...s, message: ev.target.value }))}[m
+[31m-              className={`w-full rounded border px-3 py-2 outline-none ${errors.message ? 'border-red-500' : 'border-[var(--color-border)]'}`}[m
+[32m+[m[32m              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors.message ? 'border-red-500 ring-1 ring-red-500' : 'border-[var(--color-border)] focus:border-[var(--color-brand)]'}`}[m
+               aria-invalid={!!errors.message}[m
+               aria-describedby={errors.message ? 'message-error' : undefined}[m
+             />[m
+[31m-            <div className="mt-1 text-right text-xs text-[var(--color-gray-dark)]">{form.message.length} / 500</div>[m
+[31m-            {errors.message && <p id="message-error" className="mt-1 text-sm text-red-600">{errors.message}</p>}[m
+[32m+[m[32m            <div className="flex justify-between items-center mt-1">[m
+[32m+[m[32m                {errors.message && <p id="message-error" className="text-sm text-red-600">{errors.message}</p>}[m
+[32m+[m[32m                <div className="ml-auto text-xs text-[var(--color-gray-dark)]">{form.message.length} / 500</div>[m
+[32m+[m[32m            </div>[m
+           </div>[m
+[31m-          <button type="submit" className="btn-cta w-full" disabled={submitting}>[m
+[32m+[m[41m          [m
+[32m+[m[32m          <button[m[41m [m
+[32m+[m[32m            type="submit"[m[41m [m
+[32m+[m[32m            className="btn-cta w-full py-2.5 font-bold rounded-md bg-brand-navy text-white hover:bg-brand-dark transition-colors duration-200 disabled:bg-gray-400"[m[41m [m
+[32m+[m[32m            disabled={submitting}[m
+[32m+[m[32m          >[m
+             {submitting ? 'Sending…' : 'Send Message'}[m
+           </button>[m
+         </>[m
+       )}[m
+     </form>[m
+   );[m
+[31m-}[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/components/product/ProductTabs.tsx b/src/components/product/ProductTabs.tsx[m
+[1mindex f4ab6e8..869ab30 100644[m
+[1m--- a/src/components/product/ProductTabs.tsx[m
+[1m+++ b/src/components/product/ProductTabs.tsx[m
+[36m@@ -30,6 +30,7 @@[m [mexport default function ProductTabs({ product }: ProductTabsProps) {[m
+             {tabs.map((tab) => ([m
+               <button[m
+                 key={tab.id}[m
+[32m+[m[32m                type="button"[m
+                 role="tab"[m
+                 aria-controls={`panel-${tab.id}`}[m
+                 id={`tab-${tab.id}`}[m
