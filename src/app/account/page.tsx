@@ -182,7 +182,7 @@ export default function AccountPage() {
 
       {/* Tab Content */}
       <div className="ki-section">
-        <div className="ki-container">
+        <div className="container mx-auto">
           {/* Profile Tab */}
           {activeTab === 'profile' && (
             <div

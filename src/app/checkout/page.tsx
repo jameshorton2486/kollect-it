@@ -182,7 +182,7 @@ export default function CheckoutPage() {
       </div>
 
       <div className="checkout-content">
-        <div className="ki-container">
+        <div className="container mx-auto">
           <div className="checkout-layout">
             {/* Left Column - Forms */}
             <div className="checkout-forms">

@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
+    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify({

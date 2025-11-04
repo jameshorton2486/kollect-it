@@ -75,7 +75,7 @@ export default async function AboutPage() {
   const categories = await getCategories();
 
   return (
-    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -122,7 +122,7 @@ export default async function AboutPage() {
 
       {/* Gallery Image 2 */}
       <section className="ki-section p-0">
-        <div className="ki-container max-w-[1400px] mx-auto">
+        <div className="container mx-auto max-w-[1400px]">
           <Image
             src="https://images.squarespace-cdn.com/content/v1/5fa1332a8b3f520c382b9816/080eb5c5-a933-4d73-be16-52c8efc0fc57/IMG_7691.jpg"
             alt="Museum display furniture in a curated gallery setting"
@@ -137,7 +137,7 @@ export default async function AboutPage() {
 
       {/* Categories Section */}
       <section className="ki-section bg-[#FAFAF8] text-center">
-        <div className="ki-container max-w-[900px] mx-auto">
+        <div className="container mx-auto max-w-[900px]">
           <p
             className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal"
           >

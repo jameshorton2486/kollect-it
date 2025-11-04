@@ -79,7 +79,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
+    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
       <div className="max-w-md mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-serif font-bold text-ink mb-2">Welcome Back</h1>

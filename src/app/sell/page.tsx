@@ -20,10 +20,10 @@ export const metadata: Metadata = {
 
 export default function SellPage() {
   return (
-    <div>
+    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
       {/* Hero Section */}
       <section className="ki-section bg-[var(--color-cream)]">
-        <div className="ki-container">
+        <div className="container mx-auto">
           <p className="section-subtitle" data-reveal>CONSIGNMENT SERVICES</p>
           <h1 className="section-title-main" data-reveal data-reveal-delay="100">
             Sell Your Collection
@@ -36,7 +36,7 @@ export default function SellPage() {
 
       {/* Animated Timeline Section */}
       <section className="ki-section">
-        <div className="ki-container">
+        <div className="container mx-auto">
           <h2 className="section-subtitle text-center mb-12">
             HOW IT WORKS
           </h2>
@@ -89,7 +89,7 @@ export default function SellPage() {
 
       {/* Benefits Section */}
       <section className="ki-section bg-[var(--color-cream)]">
-        <div className="ki-container">
+        <div className="container mx-auto">
           <h2 className="section-subtitle text-center mb-12">
             WHY CONSIGN WITH US
           </h2>
@@ -118,7 +118,7 @@ export default function SellPage() {
 
       {/* CTA Section with Shimmer */}
       <section className="ki-section">
-        <div className="ki-container text-center">
+        <div className="container mx-auto text-center">
           <h2 className="section-title mb-8">
             Ready to Consign?
           </h2>
@@ -130,6 +130,6 @@ export default function SellPage() {
           </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

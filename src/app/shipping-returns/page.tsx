@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function ShippingReturnsPage() {
   return (
     <>
-      <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
+      <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
         <h1 className="ki-heading-xl text-center">Shipping & Returns</h1>
 
         <section className="mt-12 space-y-6">

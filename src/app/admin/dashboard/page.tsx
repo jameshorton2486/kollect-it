@@ -175,7 +175,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-surface-2">
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
-        <div className="ki-container px-4 md:px-6 lg:px-8 py-4">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-serif font-bold text-ink">
@@ -210,8 +210,8 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      {/* Stats */}
-      <div className="ki-container px-4 md:px-6 lg:px-8 py-8">
+      {/* Main Content */}
+      <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-8" role="main">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <StatCard icon={<Package className="text-ink" size={20} />} label="Total Products" value={products.length.toString()} />
           <StatCard icon={<CheckCircle2 className="text-green-700" size={20} />} label="Active Products" value={products.filter((p) => p.status === 'active').length.toString()} highlight="green" />
@@ -442,7 +442,7 @@ export default function AdminDashboard() {
             </table>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

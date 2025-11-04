@@ -41,7 +41,7 @@ export default function CartPage() {
 
   if (itemCount === 0) {
     return (
-      <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
+      <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
         <div className="mx-auto max-w-xl text-center">
           <div className="mx-auto mb-4 h-24 w-24 text-[var(--color-charcoal)]">
             <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto">
@@ -59,7 +59,7 @@ export default function CartPage() {
   }
 
   return (
-    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
+    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--color-border)] pb-4">
         <div>

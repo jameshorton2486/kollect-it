@@ -64,7 +64,7 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
+    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12">
       {/* Header Section */}
       <div className="text-center mb-[clamp(3rem,6vw,5rem)]">
         <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal">HELP CENTER</p>

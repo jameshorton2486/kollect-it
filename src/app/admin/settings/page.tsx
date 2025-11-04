@@ -62,7 +62,7 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="min-h-screen bg-surface-2">
-      <div className="ki-container px-4 md:px-6 lg:px-8 py-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-serif font-bold text-ink mb-2">Admin Settings</h1>

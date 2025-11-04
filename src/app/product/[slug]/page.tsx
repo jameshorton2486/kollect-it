@@ -181,8 +181,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         />
 
         {/* Main Product Section */}
-        <div className="product-main ki-section">
-          <div className="ki-container">
+        <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
+          <div className="container mx-auto">
             <div className="product-layout">
               {/* Image Gallery */}
               <ImageGallery images={product.images} title={product.title} />
@@ -191,7 +191,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <ProductInfo product={product} sku={sku} />
             </div>
           </div>
-        </div>
+        </main>
 
         {/* Product Tabs */}
         <ProductTabs product={product} />
