@@ -3,31 +3,31 @@ import { Star } from "lucide-react";
 export default function Testimonials() {
   const testimonials = [
     {
-      quote: "Every piece arrived exactly as described—impeccable curation and professionalism. I've built my entire collection with Kollect-It.",
-      author: "Margaret Davenport",
-      title: "Collector • Chicago, IL",
-      rating: 5,
+      quote: "Every piece arrived exactly as described.",
+      author: "Margaret",
+      title: "Collector",
+      rating: 0,
       image: "https://ik.imagekit.io/kollectit/testimonial-1.jpg",
     },
     {
-      quote: "The provenance documentation was incredibly thorough. I felt completely confident in my purchase. Best marketplace for serious collectors.",
-      author: "Luis Marquez",
-      title: "Estate Buyer • Miami, FL",
-      rating: 5,
+      quote: "The provenance documentation was incredibly thorough. I felt completely confident in my purchase.",
+      author: "Luis",
+      title: "Estate Buyer",
+      rating: 0,
       image: "https://ik.imagekit.io/kollectit/testimonial-2.jpg",
     },
     {
-      quote: "White-glove shipping for a delicate 18th-century mirror—they handled it with museum-quality care. Absolutely flawless experience.",
-      author: "Michiko Ito",
-      title: "Interior Designer • San Francisco, CA",
-      rating: 5,
+      quote: "Professional shipping, wonderful experience.",
+      author: "Michiko",
+      title: "Interior Designer",
+      rating: 0,
       image: "https://ik.imagekit.io/kollectit/testimonial-3.jpg",
     },
     {
-      quote: "Their expertise in authentication is unmatched. They helped me verify pieces in my grandfather's collection. Invaluable knowledge.",
-      author: "James Chen",
-      title: "Private Collector • New York, NY",
-      rating: 5,
+      quote: "Providing a third-party appraisal for items over $1,000 is very comforting",
+      author: "James",
+      title: "Private Collector",
+      rating: 0,
       image: "https://ik.imagekit.io/kollectit/testimonial-4.jpg",
     },
   ];
@@ -43,7 +43,7 @@ export default function Testimonials() {
             What Our Customers Say
           </h2>
           <p className="text-lg text-ink-light max-w-2xl mx-auto">
-            Join hundreds of collectors who have found their perfect pieces through Kollect-It.
+            Join other collectors who have found their perfect pieces through Kollect-It.
           </p>
         </div>
 
@@ -53,16 +53,6 @@ export default function Testimonials() {
               key={idx}
               className="bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
             >
-              {/* Star Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 fill-accent-gold text-accent-gold"
-                  />
-                ))}
-              </div>
-
               {/* Quote */}
               <p className="font-serif text-lg text-ink mb-6 leading-relaxed flex-grow">
                 "{testimonial.quote}"

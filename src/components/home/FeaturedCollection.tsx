@@ -21,24 +21,12 @@ export default function FeaturedCollection() {
             </h2>
 
             <p className="text-lg text-ink-light leading-relaxed mb-4">
-              From leather-bound 17th-century volumes to coveted first editions and signed manuscripts, our rare book collection represents centuries of literary heritage. Each volume has been authenticated, professionally conserved, and documented with complete provenance.
+              From leather-bound 17th-century volumes to coveted first editions and signed manuscripts, our rare book collection represents centuries of literary heritage. Each volume has been authenticated, and documented with complete available provenance.
             </p>
 
             <p className="text-lg text-ink-light leading-relaxed mb-8">
-              Whether you're building a distinguished library or seeking that elusive title to complete your collection, our specialists curate exceptional editions for discerning bibliophiles.
+              Whether you're building a distinguished library or seeking that special book for your collection, Kollect-It offers exceptional editions for discerning bibliophiles.
             </p>
-
-            {/* Quick facts */}
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              <div>
-                <p className="text-3xl font-bold text-accent-gold">500+</p>
-                <p className="text-sm text-ink-light">Authenticated Volumes</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-accent-gold">1600s</p>
-                <p className="text-sm text-ink-light">Earliest Editions</p>
-              </div>
-            </div>
 
             <Link
               href="/category/antique-books"
