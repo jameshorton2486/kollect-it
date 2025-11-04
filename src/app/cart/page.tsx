@@ -4,7 +4,6 @@ import { useCart } from '@/contexts/CartContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLUR_DATA_URL, transformCloudinary } from '@/lib/image';
-import { formatUSD0 } from '@/lib/currency';
 import { formatUSD } from '@/lib/currency';
 import { useEffect, useState } from 'react';
 
@@ -42,8 +41,7 @@ export default function CartPage() {
 
   if (itemCount === 0) {
     return (
-      <div className="ki-section">
-        <div className="ki-container py-16">
+      <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
         <div className="mx-auto max-w-xl text-center">
           <div className="mx-auto mb-4 h-24 w-24 text-[var(--color-charcoal)]">
             <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto">
@@ -56,14 +54,12 @@ export default function CartPage() {
           <p className="mt-2 text-[var(--color-charcoal)]">Discover new arrivals and curated picks.</p>
           <Link href="/shop" className="ki-btn-primary mt-4 inline-block">Discover New Arrivals →</Link>
         </div>
-        </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="ki-section">
-      <div className="ki-container py-10">
+    <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--color-border)] pb-4">
         <div>
@@ -89,7 +85,6 @@ export default function CartPage() {
                     <p className="text-[12px] uppercase tracking-wider text-brand-gold">{item.categoryName}</p>
                     <Link href={`/product/${item.slug}`} className="font-serif text-[18px] leading-snug text-brand-navy no-underline hover:underline">{item.title}</Link>
                     <p className="text-brand-gold">{formatUSD(item.price)}</p>
-                      <p className="text-brand-gold">{formatUSD0(item.price)}</p>
                   </div>
 
                   <div className="text-right">
@@ -148,14 +143,14 @@ export default function CartPage() {
                 <div className="mt-2">
                   <h3 className="line-clamp-2 min-h-[3rem] text-sm">{p.title}</h3>
                   <p className="text-brand-gold font-medium">{formatUSD(p.price)}</p>
-                    <p className="text-brand-gold font-medium">{formatUSD0(p.price)}</p>
                 </div>
               </Link>
             ))}
           </div>
         </div>
       )}
-      </div>
-    </div>
+    </main>
   );
 }
+
+```

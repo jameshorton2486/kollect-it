@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Shipping & Returns',
   description: 'Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.',
   openGraph: {

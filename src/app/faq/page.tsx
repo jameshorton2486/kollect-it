@@ -1,4 +1,6 @@
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
   description: 'Find answers to common questions about authentication, shipping, returns, consignments, and collecting with Kollect-It.',
   openGraph: {

@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Authentication Guarantee',
   description: 'Our specialists rigorously authenticate every item we sell. Learn what we verify and our guarantee of authenticity for all purchases.',
   openGraph: {
@@ -21,7 +22,7 @@ export default function AuthenticationPage() {
   return (
     <>
       {/* Main Content */}
-  <main className="ki-section ki-container px-4 sm:px-6 lg:px-8 py-12" role="main">
+  <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12" role="main">
         <h1 className="ki-heading-xl text-center">Authentication Guarantee</h1>
 
         <section className="mt-12 space-y-6">

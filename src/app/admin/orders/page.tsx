@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { Download } from 'lucide-react';
 
 interface Order {
   id: string;
@@ -100,6 +101,32 @@ export default function AdminOrdersPage() {
 
     setFilteredOrders(filtered);
   }, [orders, statusFilter, searchQuery, dateFilter]);
+
+  const handleExportCSV = () => {
+    const csvContent = [
+      ['Order #', 'Customer', 'Email', 'Date', 'Items', 'Total', 'Payment', 'Status'],
+      ...filteredOrders.map((order) => [
+        order.orderNumber,
+        order.customerName || 'Guest',
+        order.customerEmail || '',
+        new Date(order.createdAt).toLocaleDateString(),
+        order.items.reduce((sum, item) => sum + item.quantity, 0),
+        `$${order.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
+        order.paymentStatus,
+        order.status,
+      ]),
+    ]
+      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+
+    const element = document.createElement('a');
+    element.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`);
+    element.setAttribute('download', `orders-${new Date().toISOString().split('T')[0]}.csv`);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
 
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
@@ -271,6 +298,15 @@ export default function AdminOrdersPage() {
                 <option value="month">Last 30 Days</option>
               </select>
             </div>
+
+            <button
+              onClick={handleExportCSV}
+              className="btn-secondary flex items-center gap-2 whitespace-nowrap"
+              title="Export filtered orders as CSV"
+            >
+              <Download width={18} height={18} />
+              Export CSV
+            </button>
           </div>
 
           {/* Orders Table */}

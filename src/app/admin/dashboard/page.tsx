@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import ImageUpload from '@/components/admin/ImageUpload';
-import { Package, CheckCircle2, ShoppingBag, DollarSign, Plus, Settings, Users, Home } from 'lucide-react';
+import { Package, CheckCircle2, ShoppingBag, DollarSign, Plus, Settings, Users, Home, Download } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -136,6 +136,29 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleExportProducts = () => {
+    const csvContent = [
+      ['Title', 'Category', 'Price', 'Status', 'Date Added'],
+      ...filteredProducts.map((product) => [
+        product.title,
+        product.category.name,
+        `$${product.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
+        product.status,
+        new Date(product.createdAt).toLocaleDateString(),
+      ]),
+    ]
+      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+
+    const element = document.createElement('a');
+    element.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`);
+    element.setAttribute('download', `products-${new Date().toISOString().split('T')[0]}.csv`);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -221,6 +244,13 @@ export default function AdminDashboard() {
             className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
           >
             <Settings size={18} /> Settings
+          </button>
+          <button
+            onClick={handleExportProducts}
+            className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
+            title="Export filtered products as CSV"
+          >
+            <Download size={18} /> Export CSV
           </button>
         </div>
 
