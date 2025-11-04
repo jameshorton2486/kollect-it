@@ -48,9 +48,11 @@
 ## 🎨 WHAT EACH PAGE NEEDS
 
 ### Tier 1: CRITICAL (Do First)
+
 **Estimated: 5 hours**
 
 **Admin Pages (6 pages)**
+
 - [ ] Replace `max-w-7xl` with `ki-container`
 - [ ] Add standard padding: `px-4 md:px-6 lg:px-8`
 - [ ] Add loading states
@@ -59,6 +61,7 @@
 - [ ] Add search/filter
 
 **Auth Pages (3 pages)**
+
 - [ ] Standardize form styling
 - [ ] Add validation (client-side)
 - [ ] Add error/success messages
@@ -67,6 +70,7 @@
 - [ ] Add loading states
 
 **Checkout Pages (4 pages)**
+
 - [ ] Review Stripe integration
 - [ ] Verify cart works
 - [ ] Verify payment flow
@@ -74,6 +78,7 @@
 - [ ] Send confirmation email
 
 **All Pages Metadata**
+
 - [ ] Add title to every page
 - [ ] Add description (120-160 chars)
 - [ ] Add OpenGraph image
@@ -83,9 +88,11 @@
 ---
 
 ### Tier 2: HIGH PRIORITY (Do Second)
+
 **Estimated: 6 hours**
 
 **Account Dashboard (1 page)**
+
 - [ ] User profile section
 - [ ] Order history table
 - [ ] Wishlist management
@@ -94,6 +101,7 @@
 - [ ] Payment methods
 
 **Cart Page (1 page)**
+
 - [ ] Product list in cart
 - [ ] Update quantities
 - [ ] Remove items
@@ -102,6 +110,7 @@
 - [ ] Checkout button
 
 **Product Pages (2 pages)**
+
 - [ ] Verify metadata complete
 - [ ] Check responsive design
 - [ ] Add breadcrumbs
@@ -110,6 +119,7 @@
 - [ ] Check add-to-cart
 
 **Admin Tables (3 pages)**
+
 - [ ] Add sorting
 - [ ] Add filtering
 - [ ] Add search
@@ -119,9 +129,11 @@
 ---
 
 ### Tier 3: MEDIUM PRIORITY (Do Third)
+
 **Estimated: 5 hours**
 
 **Sell Page (1 page)**
+
 - [ ] Complete design
 - [ ] Consignment information
 - [ ] Form for submissions
@@ -129,16 +141,19 @@
 - [ ] Responsive layout
 
 **Loading States (All pages)**
+
 - [ ] Add skeleton screens
 - [ ] Add spinners
 - [ ] Add progress indicators
 
 **Error Handling (All pages)**
+
 - [ ] Error boundaries
 - [ ] Retry buttons
 - [ ] User-friendly messages
 
 **Schema.org Data (All pages)**
+
 - [ ] Organization on home
 - [ ] Product on product pages
 - [ ] BreadcrumbList on category/product
@@ -151,7 +166,8 @@
 ### Admin Page Fix
 
 **BEFORE:**
-```tsx
+
+```typescript
 <div className="max-w-7xl mx-auto p-8">
   <h1>Dashboard</h1>
   {/* Content */}
@@ -159,7 +175,8 @@
 ```
 
 **AFTER:**
-```tsx
+
+```typescript
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -182,7 +199,8 @@ export default function AdminDashboard() {
 ### Auth Page Fix
 
 **BEFORE:**
-```tsx
+
+```typescript
 export default function LoginPage() {
   return (
     <div>
