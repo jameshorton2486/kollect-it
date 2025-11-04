@@ -16,7 +16,8 @@
 - Malformed closing tags at EOF
 
 **Solution Applied:**
-```tsx
+
+```typescript
 // BEFORE (broken)
 import { formatUSD0 } from '@/lib/currency';
 import { formatUSD } from '@/lib/currency';
@@ -36,7 +37,8 @@ import { formatUSD } from '@/lib/currency';
 
 ### 2. **Contact Form - ARIA Validation** ✅ ALREADY COMPLIANT
 **Status:** No changes needed - properly implemented
-```tsx
+
+```typescript
 // Correct implementation (already in place)
 aria-invalid={!!errors[id]}  // Boolean, not string
 aria-describedby={errors[id] ? `${id}-error` : undefined}
@@ -49,7 +51,8 @@ aria-describedby={errors[id] ? `${id}-error` : undefined}
 
 ### 3. **ImageUpload - Inline Styles** ✅ ALREADY COMPLIANT
 **Status:** No changes needed - linter ignores properly configured
-```tsx
+
+```typescript
 // biome-ignore lint/style/noInlineStyles: dnd-kit requires inline transforms
 // eslint-disable-next-line no-inline-styles
 <div ref={setNodeRef} style={style} className={`...`}>
@@ -88,7 +91,8 @@ aria-describedby={errors[id] ? `${id}-error` : undefined}
 ### Pages Updated with Type Imports:
 
 ✅ `src/app/authentication/page.tsx`
-```tsx
+
+```typescript
 // BEFORE
 export const metadata = { ... };
 
@@ -111,7 +115,7 @@ export const metadata: Metadata = { ... };
 
 ## 🏗️ Build Status
 
-```
+```txt
 ✅ Build: SUCCESS (0 syntax errors)
 ✅ TypeScript: PASSING
 ✅ No new linting errors introduced
@@ -119,7 +123,8 @@ export const metadata: Metadata = { ... };
 ```
 
 **Last Build Output:**
-```
+
+```bash
  *  Executing task: bun run build 
 The task succeeded with no problems.
 ```
