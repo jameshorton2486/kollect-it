@@ -1,4 +1,4 @@
-"use client";"use client";"use client";
+"use client";"use client";"use client";"use client";
 
 
 
@@ -6,15 +6,15 @@ import { motion } from "framer-motion";
 
 import Image from "next/image";
 
-import Link from "next/link";import { motion } from "framer-motion";import { motion } from "framer-motion";
+import Link from "next/link";import { motion } from "framer-motion";
 
 import { ArrowRight } from "lucide-react";
 
-import Image from "next/image";import Image from "next/image";
+import Image from "next/image";
 
 export default function ShopByCategories() {
 
-  const categories = [import Link from "next/link";import Link from "next/link";
+  const categories = [import Link from "next/link";import { motion } from "framer-motion";import { motion } from "framer-motion";
 
     {
 
@@ -22,111 +22,111 @@ export default function ShopByCategories() {
 
       desc: "Rare first editions and beautifully bound volumes from across centuries.",
 
-      items: "500+ items",export default function ShopByCategories() {
+      items: "500+ items",import Image from "next/image";import Image from "next/image";
 
       img: "https://ik.imagekit.io/kollectit/cat-books.jpg",
 
-      href: "/category/antique-books",export default function ShopByCategories() {  const categories = [
+      href: "/category/antique-books",export default function ShopByCategories() {
 
     },
 
-    {  const categories = [    {
+    {  const categories = [import Link from "next/link";import Link from "next/link";
 
       title: "Fine Art",
 
-      desc: "Original paintings, drawings, and sculptures from documented artists.",    {      title: "Antique Books",
+      desc: "Original paintings, drawings, and sculptures from documented artists.",    {
 
       items: "300+ items",
 
-      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",      title: "Antique Books",      desc: "Scarce first editions and beautifully bound volumes.",
+      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",      title: "Antique Books",import { ArrowRight } from "lucide-react";
 
       href: "/category/fine-art",
 
-    },      desc: "Rare first editions and beautifully bound volumes from across centuries.",      img: "https://ik.imagekit.io/kollectit/cat-books.jpg",
+    },      desc: "Rare first editions and beautifully bound volumes from across centuries.",
 
     {
 
-      title: "Collectibles",      items: "500+ items",      href: "/category/antique-books",
+      title: "Collectibles",      items: "500+ items",export default function ShopByCategories() {
 
       desc: "Vintage timepieces, memorabilia, and ephemera with verified authenticity.",
 
-      items: "1000+ items",      img: "https://ik.imagekit.io/kollectit/cat-books.jpg",    },
+      items: "1000+ items",      img: "https://ik.imagekit.io/kollectit/cat-books.jpg",
 
       img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",
 
-      href: "/category/collectibles",      href: "/category/antique-books",    {
+      href: "/category/collectibles",      href: "/category/antique-books",export default function ShopByCategories() {  const categories = [
 
     },
 
-    {    },      title: "Fine Art",
+    {    },
 
       title: "Furniture",
 
-      desc: "Museum-quality pieces from Art Deco to Mid-Century Modern and beyond.",    {      desc: "Paintings, drawings, and sculpture from documented artists.",
+      desc: "Museum-quality pieces from Art Deco to Mid-Century Modern and beyond.",    {  const categories = [    {
 
       items: "200+ items",
 
-      img: "https://ik.imagekit.io/kollectit/cat-furniture.jpg",      title: "Fine Art",      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",
+      img: "https://ik.imagekit.io/kollectit/cat-furniture.jpg",      title: "Fine Art",
 
       href: "/category/furniture",
 
-    },      desc: "Original paintings, drawings, and sculptures from documented artists.",      href: "/category/fine-art",
+    },      desc: "Original paintings, drawings, and sculptures from documented artists.",    {      title: "Antique Books",
 
     {
 
-      title: "Decorative Arts",      items: "300+ items",    },
+      title: "Decorative Arts",      items: "300+ items",
 
       desc: "Ceramics, glass, textiles, and metalwork from around the world.",
 
-      items: "400+ items",      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",    {
+      items: "400+ items",      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",      title: "Antique Books",      desc: "Scarce first editions and beautifully bound volumes.",
 
       img: "https://ik.imagekit.io/kollectit/cat-decorative.jpg",
 
-      href: "/category/decorative-arts",      href: "/category/fine-art",      title: "Collectibles",
+      href: "/category/decorative-arts",      href: "/category/fine-art",
 
     },
 
-    {    },      desc: "Rare memorabilia, vintage timepieces, and ephemera.",
+    {    },      desc: "Rare first editions and beautifully bound volumes from across centuries.",      img: "https://ik.imagekit.io/kollectit/cat-books.jpg",
 
       title: "Militaria",
 
-      desc: "Historical artifacts with verified provenance and documented authenticity.",    {      img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",
+      desc: "Historical artifacts with verified provenance and documented authenticity.",    {
 
       items: "150+ items",
 
-      img: "https://ik.imagekit.io/kollectit/cat-militaria.jpg",      title: "Collectibles",      href: "/category/collectibles",
+      img: "https://ik.imagekit.io/kollectit/cat-militaria.jpg",      title: "Collectibles",      items: "500+ items",      href: "/category/antique-books",
 
       href: "/category/militaria",
 
-    },      desc: "Vintage timepieces, memorabilia, and ephemera with verified authenticity.",    },
+    },      desc: "Vintage timepieces, memorabilia, and ephemera with verified authenticity.",
 
   ];
 
-      items: "1000+ items",    {
+      items: "1000+ items",      img: "https://ik.imagekit.io/kollectit/cat-books.jpg",    },
 
   return (
 
-    <section className="py-16 md:py-24 bg-white">      img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",      title: "Militaria",
+    <section className="py-16 md:py-24 bg-white">      img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
 
-        <motion.div      href: "/category/collectibles",      desc: "Artifacts with verified provenance and historical importance.",
+        <motion.div      href: "/category/collectibles",      href: "/category/antique-books",    {
 
           className="text-center mb-14"
 
-          initial={{ opacity: 0, y: 20 }}    },      img: "https://ik.imagekit.io/kollectit/cat-militaria.jpg",
+          initial={{ opacity: 0, y: 20 }}    },
 
           whileInView={{ opacity: 1, y: 0 }}
 
-          viewport={{ once: true }}    {      href: "/category/militaria",
+          viewport={{ once: true }}    {    },      title: "Fine Art",
 
           transition={{ duration: 0.6 }}
 
-        >      title: "Furniture",    },
+        >      title: "Furniture",
 
           <p className="text-sm md:text-base font-semibold text-accent-gold uppercase tracking-widest mb-3">
 
-            Explore Collections      desc: "Museum-quality pieces from Art Deco to Mid-Century Modern and beyond.",  ];
+            Explore Collections      desc: "Museum-quality pieces from Art Deco to Mid-Century Modern and beyond.",    {      desc: "Paintings, drawings, and sculpture from documented artists.",
 
           </p>
 
@@ -134,9 +134,148 @@ export default function ShopByCategories() {
 
             Shop by Category
 
-          </h2>      img: "https://ik.imagekit.io/kollectit/cat-furniture.jpg",  return (
+          </h2>      img: "https://ik.imagekit.io/kollectit/cat-furniture.jpg",      title: "Fine Art",      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",
 
           <p className="text-lg text-ink-light max-w-2xl mx-auto">
+
+            Browse our carefully curated categories. Every piece has been authenticated and documented for your confidence.      href: "/category/furniture",
+
+          </p>
+
+        </motion.div>    },      desc: "Original paintings, drawings, and sculptures from documented artists.",      href: "/category/fine-art",
+
+
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">    {
+
+          {categories.map((cat, i) => (
+
+            <motion.div      title: "Decorative Arts",      items: "300+ items",    },
+
+              key={i}
+
+              initial={{ opacity: 0, y: 40 }}      desc: "Ceramics, glass, textiles, and metalwork from around the world.",
+
+              whileInView={{ opacity: 1, y: 0 }}
+
+              viewport={{ once: true }}      items: "400+ items",      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",    {
+
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+
+            >      img: "https://ik.imagekit.io/kollectit/cat-decorative.jpg",
+
+              <Link
+
+                href={cat.href}      href: "/category/decorative-arts",      href: "/category/fine-art",      title: "Collectibles",
+
+                className="flex flex-col h-full bg-white rounded-lg overflow-hidden border border-surface-2 hover:border-accent-gold transition-all duration-300 hover:shadow-lg group"
+
+              >    },
+
+                <div className="relative overflow-hidden h-56 bg-surface-2">
+
+                  <Image    {    },      desc: "Rare memorabilia, vintage timepieces, and ephemera.",
+
+                    src={cat.img}
+
+                    alt={cat.title}      title: "Militaria",
+
+                    width={600}
+
+                    height={400}      desc: "Historical artifacts with verified provenance and documented authenticity.",    {      img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",
+
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+
+                  />      items: "150+ items",
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                </div>      img: "https://ik.imagekit.io/kollectit/cat-militaria.jpg",      title: "Collectibles",      href: "/category/collectibles",
+
+
+
+                <div className="p-6 flex flex-col flex-grow">      href: "/category/militaria",
+
+                  <h3 className="font-serif text-2xl text-ink mb-2 group-hover:text-accent-gold transition-colors">
+
+                    {cat.title}    },      desc: "Vintage timepieces, memorabilia, and ephemera with verified authenticity.",    },
+
+                  </h3>
+
+                  <p className="text-ink-light text-sm leading-relaxed mb-4 flex-grow">  ];
+
+                    {cat.desc}
+
+                  </p>      items: "1000+ items",    {
+
+
+
+                  <div className="flex items-center justify-between pt-4 border-t border-surface-2">  return (
+
+                    <span className="text-xs text-accent-gold font-semibold uppercase tracking-wider">
+
+                      {cat.items}    <section className="py-16 md:py-24 bg-white">      img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",      title: "Militaria",
+
+                    </span>
+
+                    <ArrowRight className="h-4 w-4 text-accent-gold group-hover:translate-x-1 transition-transform" />      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
+
+                  </div>
+
+                </div>        <motion.div      href: "/category/collectibles",      desc: "Artifacts with verified provenance and historical importance.",
+
+              </Link>
+
+            </motion.div>          className="text-center mb-14"
+
+          ))}
+
+        </div>          initial={{ opacity: 0, y: 20 }}    },      img: "https://ik.imagekit.io/kollectit/cat-militaria.jpg",
+
+
+
+        <motion.div          whileInView={{ opacity: 1, y: 0 }}
+
+          className="mt-16 text-center"
+
+          initial={{ opacity: 0, y: 20 }}          viewport={{ once: true }}    {      href: "/category/militaria",
+
+          whileInView={{ opacity: 1, y: 0 }}
+
+          viewport={{ once: true }}          transition={{ duration: 0.6 }}
+
+          transition={{ duration: 0.8 }}
+
+        >        >      title: "Furniture",    },
+
+          <p className="text-ink-light text-lg mb-8 max-w-2xl mx-auto">
+
+            Whether you're curating a personal gallery or completing a collection, discover treasures across every category. With over 2,500 authenticated pieces, your next acquisition is just a click away.          <p className="text-sm md:text-base font-semibold text-accent-gold uppercase tracking-widest mb-3">
+
+          </p>
+
+          <Link            Explore Collections      desc: "Museum-quality pieces from Art Deco to Mid-Century Modern and beyond.",  ];
+
+            href="/shop"
+
+            className="inline-block bg-accent-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity text-lg"          </p>
+
+          >
+
+            Browse Full Inventory          <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4">      items: "200+ items",
+
+          </Link>
+
+        </motion.div>            Shop by Category
+
+      </div>
+
+    </section>          </h2>      img: "https://ik.imagekit.io/kollectit/cat-furniture.jpg",  return (
+
+  );
+
+}          <p className="text-lg text-ink-light max-w-2xl mx-auto">
+
 
             Browse our carefully curated categories. Every piece has been authenticated and documented for your confidence.      href: "/category/furniture",    <section className="section-spacing bg-cream">
 
