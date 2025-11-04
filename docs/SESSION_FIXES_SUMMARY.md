@@ -99,7 +99,7 @@ These pages serve customers and directly impact revenue:
 
 ## 📈 Build Verification
 
-```
+```txt
 ✅ bun run build
   ✓ No TypeScript errors
   ✓ No compilation errors
@@ -137,7 +137,7 @@ Created comprehensive documentation:
 
 **19 total files changed**:
 
-```
+```txt
 Core App Pages:
   ✅ src/app/page.tsx
   ✅ src/app/about/page.tsx
@@ -232,7 +232,8 @@ Documentation:
 ---
 
 **Commit History**:
-```
+
+```txt
 0225d17 - docs: add layout standardization completion report
 1c2839a - fix: replace ki-container with proper Tailwind container mx-auto across all pages
 af3d481 - docs: add Tier 2 fixes summary
