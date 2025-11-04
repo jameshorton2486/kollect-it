@@ -50,7 +50,7 @@ export default function ContactForm() {
         value={form[id]}
         onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}
         className={`w-full rounded border px-3 py-2 outline-none ${errors[id] ? 'border-red-500' : 'border-[var(--color-border)]'}`}
-        aria-invalid={!!errors[id]}
+        aria-invalid={errors[id] ? 'true' : 'false'}
         aria-describedby={errors[id] ? `${id}-error` : undefined}
       />
       {errors[id] && <p id={`${id}-error`} className="mt-1 text-sm text-red-600">{errors[id]}</p>}
@@ -78,7 +78,7 @@ export default function ContactForm() {
               value={form.message}
               onChange={(ev) => setForm((s) => ({ ...s, message: ev.target.value }))}
               className={`w-full rounded border px-3 py-2 outline-none ${errors.message ? 'border-red-500' : 'border-[var(--color-border)]'}`}
-              aria-invalid={!!errors.message}
+              aria-invalid={errors.message ? 'true' : 'false'}
               aria-describedby={errors.message ? 'message-error' : undefined}
             />
             <div className="mt-1 text-right text-xs text-[var(--color-gray-dark)]">{form.message.length} / 500</div>

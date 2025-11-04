@@ -335,3 +335,5 @@ export default function CartPage() {
         </section>
       )}
     </main>
+  );
+}
