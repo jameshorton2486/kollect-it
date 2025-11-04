@@ -17,6 +17,7 @@ You're here! ✅
 - ✅ Ready to test features
 
 **What to do:**
+
 ```bash
 bun run dev           # Start development
 # Test your app locally
@@ -29,6 +30,7 @@ bun run dev           # Start development
 ### Phase 2: Before Migrating to kollect-it.com
 
 **1. Test Supabase Thoroughly**
+
 - [ ] Create test user accounts
 - [ ] Test database queries work
 - [ ] Verify authentication flows
@@ -36,6 +38,7 @@ bun run dev           # Start development
 - [ ] Check RLS policies work correctly
 
 **2. Prepare Production Environment**
+
 ```bash
 # Create production build
 bun run build
@@ -45,6 +48,7 @@ bun run start
 ```
 
 **3. Set up Environment for Production**
+
 - [ ] Create `.env.production` file with production values
 - [ ] Update Supabase settings for production domain
 - [ ] Configure CORS if needed
@@ -56,14 +60,17 @@ bun run start
 You have **2 options:**
 
 #### **OPTION A: Move to Modern Hosting (RECOMMENDED)**
+
 Better for Next.js apps than Bluehost
 
 **Recommended Platforms:**
+
 - **Vercel** (NextAuth.js + Supabase work seamlessly)
 - **Netlify** (good Next.js support)
 - **AWS** (most control, more complex)
 
 **Why?**
+
 - ✅ Better performance for Next.js
 - ✅ Better Supabase integration
 - ✅ Automatic environment management
@@ -75,15 +82,18 @@ Better for Next.js apps than Bluehost
 ---
 
 #### **OPTION B: Keep Bluehost (Possible but Not Ideal)**
+
 If you must stay on Bluehost
 
 **Challenges:**
+
 - ❌ Bluehost uses traditional hosting (not optimized for Next.js)
 - ❌ May need custom configuration
 - ❌ Slower deployments
 - ❌ More manual setup
 
 **If you choose this:**
+
 1. Build Next.js app: `bun run build`
 2. Create standalone deployment package
 3. Upload to Bluehost
