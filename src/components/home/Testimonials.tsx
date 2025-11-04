@@ -1,21 +1,101 @@
+import { Star } from "lucide-react";
+
 export default function Testimonials() {
-  const items = [
+  const testimonials = [
     {
-      q: "Every piece arrived exactly as described—impeccable curation.",
-      a: "— M. Davenport",
+      quote: "Every piece arrived exactly as described—impeccable curation and professionalism. I've built my entire collection with Kollect-It.",
+      author: "Margaret Davenport",
+      title: "Collector • Chicago, IL",
+      rating: 5,
+      image: "https://ik.imagekit.io/kollectit/testimonial-1.jpg",
     },
-    { q: "Provenance documents were thorough. Trusted source.", a: "— L. Marquez" },
-    { q: "White-glove shipping for a delicate frame—flawless.", a: "— M. Ito" },
+    {
+      quote: "The provenance documentation was incredibly thorough. I felt completely confident in my purchase. Best marketplace for serious collectors.",
+      author: "Luis Marquez",
+      title: "Estate Buyer • Miami, FL",
+      rating: 5,
+      image: "https://ik.imagekit.io/kollectit/testimonial-2.jpg",
+    },
+    {
+      quote: "White-glove shipping for a delicate 18th-century mirror—they handled it with museum-quality care. Absolutely flawless experience.",
+      author: "Michiko Ito",
+      title: "Interior Designer • San Francisco, CA",
+      rating: 5,
+      image: "https://ik.imagekit.io/kollectit/testimonial-3.jpg",
+    },
+    {
+      quote: "Their expertise in authentication is unmatched. They helped me verify pieces in my grandfather's collection. Invaluable knowledge.",
+      author: "James Chen",
+      title: "Private Collector • New York, NY",
+      rating: 5,
+      image: "https://ik.imagekit.io/kollectit/testimonial-4.jpg",
+    },
   ];
+
   return (
-    <section className="ki-section ki-parchment">
-      <div className="ki-container ki-grid ki-grid-3">
-        {items.map((t) => (
-          <div key={t.a} className="ki-card p-5">
-            <p className="font-serif text-[18px] leading-7 text-brand-navy ki-quote">{t.q}</p>
-            <p className="mt-2 text-[14px] ki-muted ki-smallcaps">{t.a}</p>
-          </div>
-        ))}
+    <section className="py-16 md:py-24 bg-surface-1 border-y border-surface-2">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="text-sm md:text-base font-semibold text-accent-gold uppercase tracking-widest mb-3">
+            Trusted by Collectors
+          </p>
+          <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4">
+            What Our Customers Say
+          </h2>
+          <p className="text-lg text-ink-light max-w-2xl mx-auto">
+            Join hundreds of collectors who have found their perfect pieces through Kollect-It.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {testimonials.map((testimonial, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
+            >
+              {/* Star Rating */}
+              <div className="flex gap-1 mb-4">
+                {Array.from({ length: testimonial.rating }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-4 w-4 fill-accent-gold text-accent-gold"
+                  />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p className="font-serif text-lg text-ink mb-6 leading-relaxed flex-grow">
+                "{testimonial.quote}"
+              </p>
+
+              {/* Divider */}
+              <div className="w-8 h-1 bg-accent-gold/30 mb-4" />
+
+              {/* Author Info */}
+              <div>
+                <p className="font-semibold text-ink">
+                  {testimonial.author}
+                </p>
+                <p className="text-sm text-ink-light">
+                  {testimonial.title}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-14 text-center bg-white rounded-lg p-10 border-2 border-accent-gold/20">
+          <h3 className="font-serif text-3xl text-ink mb-3">
+            Join Our Collector Community
+          </h3>
+          <p className="text-ink-light text-lg mb-6 max-w-xl mx-auto">
+            Over 2,000 satisfied collectors trust Kollect-It for authenticated pieces and expert curation.
+          </p>
+          <button className="inline-block bg-accent-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity">
+            Start Collecting Today
+          </button>
+        </div>
       </div>
     </section>
   );
