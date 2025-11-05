@@ -8,29 +8,26 @@ export default function Footer() {
     <footer className="bg-[#1a1a1a]">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-36">
           
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            <div className="font-serif text-2xl leading-tight tracking-wide text-[#B1874C] mb-4">
+            <div className="font-serif text-2xl leading-tight tracking-wide text-[#D3AF37] mb-4">
               KOLLECT—IT
             </div>
-            <p className="text-white text-sm leading-relaxed mb-2">
-              Timeless antiques and collectibles curated with care.
-            </p>
             <p className="text-white text-sm leading-relaxed">
-              Authenticity and provenance come first.
+              Timeless antiques and collectibles curated with care.
             </p>
           </div>
 
           {/* About Section */}
-          <div className="md:pl-4 lg:pl-8">
+          <div>
             <h3 className="text-lg font-semibold mb-6 text-white">About</h3>
             <ul className="space-y-3">
               <li>
                 <Link 
                   href="/about" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Our Story
                 </Link>
@@ -38,7 +35,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/contact" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Contact
                 </Link>
@@ -47,13 +44,13 @@ export default function Footer() {
           </div>
 
           {/* Support Section */}
-          <div className="md:pl-4 lg:pl-8">
+          <div>
             <h3 className="text-lg font-semibold mb-6 text-white">Support</h3>
             <ul className="space-y-3">
               <li>
                 <Link 
                   href="/faq" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   FAQ
                 </Link>
@@ -61,7 +58,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/shipping-returns" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Shipping & Returns
                 </Link>
@@ -69,7 +66,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/contact" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Contact Support
                 </Link>
@@ -84,7 +81,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/category/fine-art" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Fine Art
                 </Link>
@@ -92,7 +89,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/category/antiques" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Antiques
                 </Link>
@@ -100,7 +97,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/category/collectibles" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Collectibles
                 </Link>
@@ -108,7 +105,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/category/militaria" 
-                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Militaria
                 </Link>
@@ -125,7 +122,7 @@ export default function Footer() {
               href="https://instagram.com/kollectit"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
+              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#D3AF37] transition-colors duration-200"
               aria-label="Instagram"
             >
               <Instagram className="w-5 h-5 text-white" />
@@ -134,7 +131,7 @@ export default function Footer() {
               href="https://youtube.com/kollectit"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
+              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#D3AF37] transition-colors duration-200"
               aria-label="YouTube"
             >
               <Youtube className="w-5 h-5 text-white" />
@@ -143,7 +140,7 @@ export default function Footer() {
               href="https://facebook.com/kollectit"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
+              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#D3AF37] transition-colors duration-200"
               aria-label="Facebook"
             >
               <Facebook className="w-5 h-5 text-white" />
