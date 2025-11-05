@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-36">
           
-          {/* Brand Section - Takes flexible space on left */}
+          {/* Brand Section */}
           <div className="lg:col-span-1">
             <div className="font-serif text-2xl leading-tight tracking-wide text-[#D3AF37] mb-4">
               KOLLECT—IT
@@ -74,8 +74,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Categories Section - Pushed 1" to the right */}
-          <div className="pr-24">
+          {/* Categories Section */}
+          <div>
             <h3 className="text-lg font-semibold mb-6 text-white">Categories</h3>
             <ul className="space-y-3">
               <li>

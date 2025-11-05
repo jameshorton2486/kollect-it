@@ -103,7 +103,6 @@ export default function Header({ categories = [] }: HeaderProps) {
       <div className="hidden md:block border-b border-gray-800">
         <div className="container flex items-center justify-between py-2 text-[13px]">
           <div className="text-white">
-            {/* Optional announcement if AnnouncementBar not used */}
             <span>Timeless objects, curated with care.</span>
           </div>
           <div className="flex items-center gap-4">
@@ -161,37 +160,37 @@ export default function Header({ categories = [] }: HeaderProps) {
                 onMouseEnter={() => setCatOpen(true)}
                 onMouseLeave={() => setCatOpen(false)}
               >
-                <button className="inline-flex items-center gap-1 text-white hover:text-[#D3AF37] transition-colors">
+                <button className="inline-flex items-center gap-1 hover:text-[#D3AF37] transition-colors">
                   Shop by Category <ChevronDown size={16} />
                 </button>
                 {catOpen && (
                   <div className="absolute left-0 mt-2 w-[280px] rounded border border-gray-700 bg-[#2a2a2a] shadow-md">
                     <div className="max-h-[60vh] overflow-auto py-2">
                       {categories.map((cat) => (
-                        <Link key={cat.id} href={`/category/${cat.slug}`} className="flex items-center gap-2 px-4 py-2 text-white hover:bg-[#3a3a3a]">
+                        <Link key={cat.id} href={`/category/${cat.slug}`} className="flex items-center gap-2 px-4 py-2 text-white hover:bg-[#3a3a3a] transition-colors">
                           <span aria-hidden>{getCategoryIcon(cat.slug, cat.name)}</span>
                           <span>{cat.name}</span>
                         </Link>
                       ))}
                     </div>
                     <div className="border-t border-gray-700 p-2 text-right">
-                      <Link href="/shop" className="text-[13px] text-[#D3AF37] hover:text-white underline">View All</Link>
+                      <Link href="/shop" className="text-[13px] text-[#D3AF37] hover:underline">View All</Link>
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <Link href="/shop" className="text-white hover:text-[#D3AF37] transition-colors">Shop</Link>
+              <Link href="/shop" className="hover:text-[#D3AF37] transition-colors">Shop</Link>
             )}
-            <Link href="/shop?sort=new" className="text-white hover:text-[#D3AF37] transition-colors">Latest Arrivals</Link>
-            <Link href="/authentication" className="text-white hover:text-[#D3AF37] transition-colors">Authentication Services</Link>
-            <Link href="/about" className="text-white hover:text-[#D3AF37] transition-colors">About Us</Link>
-            <Link href="/contact" className="text-white hover:text-[#D3AF37] transition-colors">Contact</Link>
+            <Link href="/shop?sort=new" className="hover:text-[#D3AF37] transition-colors">Latest Arrivals</Link>
+            <Link href="/authentication" className="hover:text-[#D3AF37] transition-colors">Authentication Services</Link>
+            <Link href="/about" className="hover:text-[#D3AF37] transition-colors">About Us</Link>
+            <Link href="/contact" className="hover:text-[#D3AF37] transition-colors">Contact</Link>
           </nav>
 
           {/* Search */}
           <div className="relative" ref={searchRef}>
-            <div className={`flex items-center gap-2 border border-gray-600 rounded px-2 py-1 bg-[#2a2a2a] transition-all ${searchOpen ? 'w-[360px]' : 'w-[220px]'}`}>
+            <div className={`flex items-center gap-2 bg-[#2a2a2a] border border-gray-600 rounded px-2 py-1 transition-all ${searchOpen ? 'w-[360px]' : 'w-[220px]'}`}>
               <SearchIcon size={18} className="text-white" />
               <input
                 type="search"
@@ -213,11 +212,11 @@ export default function Header({ categories = [] }: HeaderProps) {
                     <div className="p-3 text-[14px] text-gray-400">No results</div>
                   )}
                   {!loading && results.map((p) => (
-                    <Link key={p.id} href={`/product/${p.slug}`} className="flex items-center gap-3 p-3 text-white hover:bg-[#3a3a3a]">
+                    <Link key={p.id} href={`/product/${p.slug}`} className="flex items-center gap-3 p-3 text-white hover:bg-[#3a3a3a] transition-colors">
                       {p.images?.[0]?.url ? (
                         <Image src={transformCloudinary(p.images[0].url, { width: 80, height: 80, crop: 'fill', quality: 85 })} alt={p.title} width={40} height={40} className="w-10 h-10 object-cover rounded" quality={85} loading="lazy" />
                       ) : (
-                        <div className="w-10 h-10 bg-gray-700 rounded" />
+                        <div className="w-10 h-10 bg-[#3a3a3a] rounded" />
                       )}
                       <span className="text-[14px]">{p.title}</span>
                     </Link>
@@ -225,7 +224,7 @@ export default function Header({ categories = [] }: HeaderProps) {
                 </div>
                 {results.length > 0 && (
                   <div className="border-t border-gray-700 p-2 text-right">
-                    <Link href={`/shop?q=${encodeURIComponent(query)}`} className="text-[13px] text-[#D3AF37] hover:text-white underline">View all results</Link>
+                    <Link href={`/shop?q=${encodeURIComponent(query)}`} className="text-[13px] text-[#D3AF37] hover:underline">View all results</Link>
                   </div>
                 )}
               </div>
@@ -236,9 +235,9 @@ export default function Header({ categories = [] }: HeaderProps) {
 
       {/* Mobile search bar */}
       {searchOpen && (
-        <div className="md:hidden border-t border-gray-800 bg-[#1a1a1a]">
+        <div className="md:hidden border-t border-gray-800">
           <div className="container py-2">
-            <div className="flex items-center gap-2 border border-gray-600 rounded px-2 py-1 bg-[#2a2a2a]" ref={searchRef}>
+            <div className="flex items-center gap-2 bg-[#2a2a2a] border border-gray-600 rounded px-2 py-1" ref={searchRef}>
               <SearchIcon size={18} className="text-white" />
               <input
                 type="search"
@@ -258,11 +257,11 @@ export default function Header({ categories = [] }: HeaderProps) {
                 {loading && <div className="p-3 text-[14px] text-gray-400">Searching…</div>}
                 {!loading && results.length === 0 && <div className="p-3 text-[14px] text-gray-400">No results</div>}
                 {!loading && results.map((p) => (
-                  <Link key={p.id} href={`/product/${p.slug}`} className="flex items-center gap-3 p-3 text-white border-t border-gray-700">
+                  <Link key={p.id} href={`/product/${p.slug}`} className="flex items-center gap-3 p-3 border-t border-gray-700 text-white hover:bg-[#3a3a3a]">
                     {p.images?.[0]?.url ? (
                       <Image src={transformCloudinary(p.images[0].url, { width: 80, height: 80, crop: 'fill', quality: 85 })} alt={p.title} width={40} height={40} className="w-10 h-10 object-cover rounded" quality={85} loading="lazy" />
                     ) : (
-                      <div className="w-10 h-10 bg-gray-700 rounded" />
+                      <div className="w-10 h-10 bg-[#3a3a3a] rounded" />
                     )}
                     <span className="text-[14px]">{p.title}</span>
                   </Link>
@@ -276,8 +275,8 @@ export default function Header({ categories = [] }: HeaderProps) {
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-50">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 w-[82%] max-w-[340px] bg-[#1a1a1a] p-4 overflow-y-auto text-white">
+          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
+          <aside className="absolute inset-y-0 left-0 w-[82%] max-w-[340px] bg-[#1a1a1a] p-4 overflow-y-auto">
             <div className="flex items-center justify-between mb-2">
               <span className="font-serif text-[22px] text-[#D3AF37]">Menu</span>
               <button className="p-2 text-white" aria-label="Close menu" onClick={() => setMobileOpen(false)}>
@@ -290,7 +289,7 @@ export default function Header({ categories = [] }: HeaderProps) {
                 <div className="flex flex-col">
                   {categories.length > 0 ? (
                     categories.map((cat) => (
-                      <Link key={cat.id} href={`/category/${cat.slug}`} className="flex items-center gap-2 px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>
+                      <Link key={cat.id} href={`/category/${cat.slug}`} className="flex items-center gap-2 px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>
                         <span aria-hidden>{getCategoryIcon(cat.slug, cat.name)}</span>
                         <span>{cat.name}</span>
                       </Link>
@@ -303,17 +302,16 @@ export default function Header({ categories = [] }: HeaderProps) {
                 </div>
               </div>
               <div className="pt-2">
-                <Link href="/shop?sort=new" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>Latest Arrivals</Link>
-                <Link href="/authentication" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>Authentication Services</Link>
-                <Link href="/about" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>About Us</Link>
-                <Link href="/contact" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>Contact</Link>
+                <Link href="/shop?sort=new" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>Latest Arrivals</Link>
+                <Link href="/authentication" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>Authentication Services</Link>
+                <Link href="/about" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>About Us</Link>
+                <Link href="/contact" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>Contact</Link>
               </div>
-              <div className="pt-2 border-t border-gray-700 mt-2">
+              <div className="pt-2 border-t border-gray-800 mt-2">
                 <div className="text-[12px] uppercase tracking-wide text-gray-400 mb-1">Account</div>
-                {/* Reuse account dropdown link target patterns */}
-                <Link href="/account" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>My Account</Link>
-                <Link href="/login" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>Login</Link>
-                <Link href="/register" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a]" onClick={() => setMobileOpen(false)}>Register</Link>
+                <Link href="/account" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>My Account</Link>
+                <Link href="/login" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>Login</Link>
+                <Link href="/register" className="block px-2 py-2 rounded text-white hover:bg-[#2a2a2a] transition-colors" onClick={() => setMobileOpen(false)}>Register</Link>
               </div>
             </nav>
           </aside>
