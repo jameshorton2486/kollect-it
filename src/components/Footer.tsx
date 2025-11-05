@@ -1,55 +1,44 @@
-import Link from 'next/link';
-import { Instagram, Youtube, Facebook } from 'lucide-react';
+'use client'
 
-interface FooterProps {
-  categories?: Array<{ id?: string; name: string; slug: string }>; // optional override
-}
+import Link from 'next/link'
+import { Instagram, Youtube, Facebook } from 'lucide-react'
 
-export default function Footer({ categories }: FooterProps) {
-  const year = new Date().getFullYear();
-  const defaultCategories = [
-    { name: 'Fine Art', slug: 'fine-art' },
-    { name: 'Antique Books', slug: 'antique-books' },
-    { name: 'Collectibles', slug: 'collectibles' },
-    { name: 'Militaria', slug: 'militaria' },
-  ];
-  const cats = categories && categories.length > 0 ? categories : defaultCategories;
-
+export default function Footer() {
   return (
-    <footer className="bg-neutral-900 text-neutral-200">
+    <footer className="bg-[#1a1a1a]">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
           
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            <div className="font-serif text-2xl leading-tight tracking-wide text-neutral-100 mb-4">
+            <div className="font-serif text-2xl leading-tight tracking-wide text-[#B1874C] mb-4">
               KOLLECT—IT
             </div>
-            <p className="text-sm leading-relaxed text-neutral-300 mb-3">
+            <p className="text-white text-sm leading-relaxed mb-2">
               Timeless antiques and collectibles curated with care.
             </p>
-            <p className="text-sm leading-relaxed text-neutral-400">
+            <p className="text-white text-sm leading-relaxed">
               Authenticity and provenance come first.
             </p>
           </div>
 
           {/* About Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6 text-neutral-100">About</h3>
-            <ul className="space-y-3 text-left">
+          <div className="md:pl-4 lg:pl-8">
+            <h3 className="text-lg font-semibold mb-6 text-white">About</h3>
+            <ul className="space-y-3">
               <li>
                 <Link 
-                  href="/about"
-                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                  href="/about" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
                 >
                   Our Story
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/contact"
-                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                  href="/contact" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
                 >
                   Contact
                 </Link>
@@ -58,29 +47,29 @@ export default function Footer({ categories }: FooterProps) {
           </div>
 
           {/* Support Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6 text-neutral-100">Support</h3>
-            <ul className="space-y-3 text-left">
+          <div className="md:pl-4 lg:pl-8">
+            <h3 className="text-lg font-semibold mb-6 text-white">Support</h3>
+            <ul className="space-y-3">
               <li>
                 <Link 
-                  href="/faq"
-                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                  href="/faq" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
                 >
                   FAQ
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/shipping-returns"
-                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                  href="/shipping-returns" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
                 >
                   Shipping & Returns
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/contact"
-                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                  href="/contact" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
                 >
                   Contact Support
                 </Link>
@@ -88,61 +77,89 @@ export default function Footer({ categories }: FooterProps) {
             </ul>
           </div>
 
-          {/* Our Categories Section */}
+          {/* Categories Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-neutral-100">Our Categories</h3>
-            <ul className="space-y-3 text-left">
-              {cats.map((c) => (
-                <li key={c.slug}>
-                  <Link 
-                    href={`/category/${c.slug}`}
-                    className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
-                  >
-                    {c.name}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="text-lg font-semibold mb-6 text-white">Categories</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link 
+                  href="/category/fine-art" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                >
+                  Fine Art
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/category/antiques" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                >
+                  Antiques
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/category/collectibles" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                >
+                  Collectibles
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/category/militaria" 
+                  className="text-white hover:text-[#B1874C] transition-colors duration-200 text-sm"
+                >
+                  Militaria
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         {/* Connect Section */}
-        <div className="mt-16 pt-8 border-t border-neutral-800">
-          <h3 className="text-lg font-semibold mb-6 text-neutral-100 text-left">Connect</h3>
-          <div className="flex gap-4 justify-start">
-            <Link 
+        <div className="mt-12 pt-8 border-t border-gray-700">
+          <h3 className="text-lg font-semibold mb-4 text-white">Connect</h3>
+          <div className="flex gap-4">
+            <a
+              href="https://instagram.com/kollectit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
               aria-label="Instagram"
-              href="#"
-              className="inline-flex items-center justify-center rounded border border-neutral-700 p-3 text-neutral-300 transition-all hover:border-amber-600 hover:text-amber-600 hover:bg-neutral-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
             >
-              <Instagram size={20} />
-            </Link>
-            <Link 
+              <Instagram className="w-5 h-5 text-white" />
+            </a>
+            <a
+              href="https://youtube.com/kollectit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
               aria-label="YouTube"
-              href="#"
-              className="inline-flex items-center justify-center rounded border border-neutral-700 p-3 text-neutral-300 transition-all hover:border-amber-600 hover:text-amber-600 hover:bg-neutral-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
             >
-              <Youtube size={20} />
-            </Link>
-            <Link 
+              <Youtube className="w-5 h-5 text-white" />
+            </a>
+            <a
+              href="https://facebook.com/kollectit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
               aria-label="Facebook"
-              href="#"
-              className="inline-flex items-center justify-center rounded border border-neutral-700 p-3 text-neutral-300 transition-all hover:border-amber-600 hover:text-amber-600 hover:bg-neutral-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
             >
-              <Facebook size={20} />
-            </Link>
+              <Facebook className="w-5 h-5 text-white" />
+            </a>
           </div>
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-neutral-800">
+      <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-8">
-          <p className="text-xs text-neutral-500 text-left md:text-center">
-            © {year} Kollect-It. All rights reserved.
+          <p className="text-sm text-white text-center md:text-left">
+            © 2025 Kollect-It. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }
