@@ -51,6 +51,12 @@ prisma/dev.db-journal
 # Bun
 .bun
 
+# ImageKit & Google Drive Sync
+google-credentials.json
+google-service-account.json
+sync-results.json
+.imagekit/
+
 # IDE
 .vscode/
 .idea/
