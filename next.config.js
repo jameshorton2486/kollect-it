@@ -18,7 +18,6 @@ if (process.env.ANALYZE === 'true') {
 
 const nextConfig = {
   // Build optimizations
-  swcMinify: true,
   productionBrowserSourceMaps: false,
   reactStrictMode: true,
   
