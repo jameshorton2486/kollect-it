@@ -125,7 +125,7 @@ export default function Footer() {
               href="https://instagram.com/kollectit"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
+              className="inline-flex p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
               aria-label="Instagram"
             >
               <Instagram className="w-5 h-5 text-white" />
@@ -134,7 +134,7 @@ export default function Footer() {
               href="https://youtube.com/kollectit"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
+              className="inline-flex p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
               aria-label="YouTube"
             >
               <Youtube className="w-5 h-5 text-white" />
@@ -143,7 +143,7 @@ export default function Footer() {
               href="https://facebook.com/kollectit"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
+              className="inline-flex p-2 border-2 border-gray-600 rounded-lg hover:border-[#B1874C] transition-colors duration-200"
               aria-label="Facebook"
             >
               <Facebook className="w-5 h-5 text-white" />
