@@ -16,70 +16,131 @@ export default function Footer({ categories }: FooterProps) {
   const cats = categories && categories.length > 0 ? categories : defaultCategories;
 
   return (
-    <footer className="mt-16 bg-neutral-900 text-neutral-200">
-  <div className="ki-container pl-4 md:pl-6 lg:pl-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-4 md:gap-8 lg:gap-12">
-          {/* Logo / About intro */}
-          <div>
-            <div className="mb-3 font-serif text-2xl leading-none tracking-wide text-neutral-100">KOLLECT — IT</div>
-            <p className="ki-text-sm leading-7 text-neutral-300">
-              Timeless antiques and collectibles curated with care. Authenticity and provenance come first.
+    <footer className="bg-neutral-900 text-neutral-200">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          
+          {/* Brand Section */}
+          <div className="lg:col-span-1">
+            <div className="font-serif text-2xl leading-tight tracking-wide text-neutral-100 mb-4">
+              KOLLECT—IT
+            </div>
+            <p className="text-sm leading-relaxed text-neutral-300 mb-3">
+              Timeless antiques and collectibles curated with care.
+            </p>
+            <p className="text-sm leading-relaxed text-neutral-400">
+              Authenticity and provenance come first.
             </p>
           </div>
 
-          {/* About + Connect */}
-          <div className="md:text-right">
-            <h3 className="ki-heading-sm mb-3 text-neutral-100">About</h3>
-            <ul className="space-y-2 ki-text-sm">
+          {/* About Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-6 text-neutral-100">About</h3>
+            <ul className="space-y-3 text-left">
               <li>
-                <Link className="rounded-sm transition-colors hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900" href="/about">Our Story</Link>
+                <Link 
+                  href="/about"
+                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                >
+                  Our Story
+                </Link>
               </li>
               <li>
-                <Link className="rounded-sm transition-colors hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900" href="/contact">Contact</Link>
+                <Link 
+                  href="/contact"
+                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                >
+                  Contact
+                </Link>
               </li>
-            </ul>
-
-            <h3 className="ki-heading-sm mb-3 mt-4 md:mt-6 text-neutral-100">Connect</h3>
-            <div className="mb-1 flex items-center gap-3 md:justify-end">
-              <Link aria-label="Instagram" href="#" className="inline-flex items-center justify-center rounded border border-neutral-700 p-2 text-neutral-300 transition-colors hover:border-[var(--color-muted-gold)] hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
-                <Instagram size={18} />
-              </Link>
-              <Link aria-label="YouTube" href="#" className="inline-flex items-center justify-center rounded border border-neutral-700 p-2 text-neutral-300 transition-colors hover:border-[var(--color-muted-gold)] hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
-                <Youtube size={18} />
-              </Link>
-              <Link aria-label="Facebook" href="#" className="inline-flex items-center justify-center rounded border border-neutral-700 p-2 text-neutral-300 transition-colors hover:border-[var(--color-muted-gold)] hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
-                <Facebook size={18} />
-              </Link>
-            </div>
-          </div>
-
-          {/* Support */}
-          <div className="md:text-right">
-            <h3 className="ki-heading-sm mb-3 text-neutral-100">Support</h3>
-            <ul className="space-y-2 ki-text-sm">
-              <li><Link className="rounded-sm transition-colors hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900" href="/faq">FAQ</Link></li>
-              <li><Link className="rounded-sm transition-colors hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900" href="/shipping-returns">Shipping & Returns</Link></li>
-              <li><Link className="rounded-sm transition-colors hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900" href="/contact">Contact Support</Link></li>
             </ul>
           </div>
 
-          {/* Our Categories */}
-          <div className="md:text-right">
-            <h3 className="ki-heading-sm mb-3 text-neutral-100">Our Categories</h3>
-            <ul className="space-y-2 ki-text-sm">
+          {/* Support Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-6 text-neutral-100">Support</h3>
+            <ul className="space-y-3 text-left">
+              <li>
+                <Link 
+                  href="/faq"
+                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                >
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/shipping-returns"
+                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                >
+                  Shipping & Returns
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/contact"
+                  className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                >
+                  Contact Support
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Our Categories Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-6 text-neutral-100">Our Categories</h3>
+            <ul className="space-y-3 text-left">
               {cats.map((c) => (
                 <li key={c.slug}>
-                  <Link className="rounded-sm transition-colors hover:text-[var(--color-muted-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-muted-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900" href={`/category/${c.slug}`}>{c.name}</Link>
+                  <Link 
+                    href={`/category/${c.slug}`}
+                    className="text-sm text-neutral-300 transition-colors hover:text-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded"
+                  >
+                    {c.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
         </div>
+
+        {/* Connect Section */}
+        <div className="mt-16 pt-8 border-t border-neutral-800">
+          <h3 className="text-lg font-semibold mb-6 text-neutral-100 text-left">Connect</h3>
+          <div className="flex gap-4 justify-start">
+            <Link 
+              aria-label="Instagram"
+              href="#"
+              className="inline-flex items-center justify-center rounded border border-neutral-700 p-3 text-neutral-300 transition-all hover:border-amber-600 hover:text-amber-600 hover:bg-neutral-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
+            >
+              <Instagram size={20} />
+            </Link>
+            <Link 
+              aria-label="YouTube"
+              href="#"
+              className="inline-flex items-center justify-center rounded border border-neutral-700 p-3 text-neutral-300 transition-all hover:border-amber-600 hover:text-amber-600 hover:bg-neutral-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
+            >
+              <Youtube size={20} />
+            </Link>
+            <Link 
+              aria-label="Facebook"
+              href="#"
+              className="inline-flex items-center justify-center rounded border border-neutral-700 p-3 text-neutral-300 transition-all hover:border-amber-600 hover:text-amber-600 hover:bg-neutral-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
+            >
+              <Facebook size={20} />
+            </Link>
+          </div>
+        </div>
       </div>
 
+      {/* Copyright */}
       <div className="border-t border-neutral-800">
-        <div className="ki-container pl-4 md:pl-6 lg:pl-8 py-4 text-center">
-          <p className="text-xs text-neutral-400">© {year} Kollect-It. All rights reserved.</p>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-8">
+          <p className="text-xs text-neutral-500 text-left md:text-center">
+            © {year} Kollect-It. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
