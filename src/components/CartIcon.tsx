@@ -7,7 +7,7 @@ export default function CartIcon() {
   const { itemCount } = useCart();
 
   return (
-    <Link href="/cart" className="cart-icon-link" aria-label="Shopping cart">
+    <Link href="/cart" className="cart-icon-link text-white" aria-label="Shopping cart">
       <div className="cart-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="9" cy="21" r="1" />

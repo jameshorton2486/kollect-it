@@ -22,7 +22,7 @@ export default function UserAccountDropdown() {
 
   if (status === 'loading') {
     return (
-      <div className="user-account-loading">
+      <div className="user-account-loading text-white">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
@@ -33,7 +33,7 @@ export default function UserAccountDropdown() {
 
   if (!session?.user) {
     return (
-      <Link href="/login" aria-label="Account" className="header-account-link">
+      <Link href="/login" aria-label="Account" className="header-account-link text-white">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
@@ -46,7 +46,7 @@ export default function UserAccountDropdown() {
     <div className="account-dropdown" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="account-dropdown-trigger"
+        className="account-dropdown-trigger text-white"
         aria-label="Account menu"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

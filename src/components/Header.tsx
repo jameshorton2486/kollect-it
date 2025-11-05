@@ -111,7 +111,9 @@ export default function Header({ categories = [] }: HeaderProps) {
               <option>EUR</option>
               <option>GBP</option>
             </select>
-            <UserAccountDropdown />
+            <div className="text-white">
+              <UserAccountDropdown />
+            </div>
             <CartIcon />
           </div>
         </div>
@@ -147,20 +149,22 @@ export default function Header({ categories = [] }: HeaderProps) {
             <SearchIcon size={20} />
           </button>
           <CartIcon />
-          <UserAccountDropdown />
+          <div className="text-white">
+            <UserAccountDropdown />
+          </div>
         </div>
 
         {/* Desktop nav and search */}
         <div className="hidden md:flex items-center gap-6">
           {/* Nav */}
-          <nav className="flex items-stretch gap-6 text-[14px] text-white">
+          <nav className="flex items-stretch gap-6 text-[14px]">
             {categories.length > 0 ? (
               <div
                 className="relative"
                 onMouseEnter={() => setCatOpen(true)}
                 onMouseLeave={() => setCatOpen(false)}
               >
-                <button className="inline-flex items-center gap-1 hover:text-[#D3AF37] transition-colors">
+                <button className="inline-flex items-center gap-1 text-white hover:text-[#D3AF37] transition-colors">
                   Shop by Category <ChevronDown size={16} />
                 </button>
                 {catOpen && (
@@ -180,12 +184,12 @@ export default function Header({ categories = [] }: HeaderProps) {
                 )}
               </div>
             ) : (
-              <Link href="/shop" className="hover:text-[#D3AF37] transition-colors">Shop</Link>
+              <Link href="/shop" className="text-white hover:text-[#D3AF37] transition-colors">Shop</Link>
             )}
-            <Link href="/shop?sort=new" className="hover:text-[#D3AF37] transition-colors">Latest Arrivals</Link>
-            <Link href="/authentication" className="hover:text-[#D3AF37] transition-colors">Authentication Services</Link>
-            <Link href="/about" className="hover:text-[#D3AF37] transition-colors">About Us</Link>
-            <Link href="/contact" className="hover:text-[#D3AF37] transition-colors">Contact</Link>
+            <Link href="/shop?sort=new" className="text-white hover:text-[#D3AF37] transition-colors">Latest Arrivals</Link>
+            <Link href="/authentication" className="text-white hover:text-[#D3AF37] transition-colors">Authentication Services</Link>
+            <Link href="/about" className="text-white hover:text-[#D3AF37] transition-colors">About Us</Link>
+            <Link href="/contact" className="text-white hover:text-[#D3AF37] transition-colors">Contact</Link>
           </nav>
 
           {/* Search */}
@@ -195,7 +199,7 @@ export default function Header({ categories = [] }: HeaderProps) {
               <input
                 type="search"
                 placeholder="Search products..."
-                className="w-full outline-none text-[14px] bg-transparent text-white placeholder:text-gray-400"
+                className="w-full outline-none text-[14px] bg-transparent text-white placeholder:text-gray-300"
                 onFocus={() => setSearchOpen(true)}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -241,7 +245,7 @@ export default function Header({ categories = [] }: HeaderProps) {
               <SearchIcon size={18} className="text-white" />
               <input
                 type="search"
-                className="w-full outline-none text-[14px] bg-transparent text-white placeholder:text-gray-400"
+                className="w-full outline-none text-[14px] bg-transparent text-white placeholder:text-gray-300"
                 placeholder="Search products..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
