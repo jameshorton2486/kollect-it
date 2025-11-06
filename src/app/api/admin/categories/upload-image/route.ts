@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
-import { v4 as uuidv4 } from 'uuid';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
+import { randomBytes } from 'crypto';
 
 export async function POST(req: NextRequest) {
   try {
@@ -42,7 +42,9 @@ export async function POST(req: NextRequest) {
 
     // Create unique filename
     const ext = file.name.split('.').pop();
-    const filename = `category-${categoryId}-${uuidv4()}.${ext}`;
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(7);
+    const filename = `category-${categoryId}-${timestamp}-${random}.${ext}`;
 
     // Save to public/images directory
     const uploadDir = join(process.cwd(), 'public', 'images');
