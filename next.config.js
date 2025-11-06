@@ -20,6 +20,8 @@ const nextConfig = {
   // Build optimizations
   productionBrowserSourceMaps: false,
   reactStrictMode: true,
+  poweredByHeader: false, // Remove X-Powered-By header
+  swcMinify: true, // Use SWC for faster minification
   
   // Type/lint enforcement
   eslint: {
@@ -38,14 +40,16 @@ const nextConfig = {
     removeConsole: isProduction ? {
       exclude: ['error', 'warn'],
     } : false,
+    // Remove unused React imports for faster builds
+    reactRemoveProperties: isProduction,
   },
   
-  // Image optimization
+  // Image optimization - aggressive settings
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/avif', 'image/webp', 'image/jpeg'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year for static images
     remotePatterns: [
       { protocol: 'https', hostname: 'ik.imagekit.io', pathname: '/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
@@ -54,9 +58,11 @@ const nextConfig = {
       { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
     ],
     unoptimized: false,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
-  // Caching headers
+  // Caching headers with aggressive static caching
   async headers() {
     return [
       {
@@ -71,15 +77,66 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+      {
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Content-Type', value: 'image/*' },
+        ],
+      },
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
     ];
+  },
+  
+  // Redirects for cache optimization
+  async redirects() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: '/api/:path*',
+        permanent: false,
+      },
+    ];
+  },
+  
+  // Rewrites for API optimization
+  async rewrites() {
+    return {
+      beforeFiles: [],
+      afterFiles: [],
+      fallback: [],
+    };
   },
   
   // Experimental optimizations
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'clsx', 'tailwind-merge'],
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    // Enable modern JavaScript for modern browsers
+    modern: true,
+    // Optimize SSG static generation
+    staticGenerationRetryCount: 3,
+  },
+  
+  // Webpack configuration for better tree-shaking
+  webpack: (config, { isServer }) => {
+    config.optimization = {
+      ...config.optimization,
+      usedExports: true,
+      sideEffects: false,
+      minimize: isProduction,
+    };
+    return config;
   },
 };
 
