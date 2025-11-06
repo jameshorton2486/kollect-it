@@ -21,7 +21,6 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   reactStrictMode: true,
   poweredByHeader: false, // Remove X-Powered-By header
-  swcMinify: true, // Use SWC for faster minification
   
   // Type/lint enforcement
   eslint: {
@@ -46,7 +45,7 @@ const nextConfig = {
   
   // Image optimization - aggressive settings
   images: {
-    formats: ['image/avif', 'image/webp', 'image/jpeg'],
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year for static images
@@ -122,8 +121,6 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
-    // Enable modern JavaScript for modern browsers
-    modern: true,
     // Optimize SSG static generation
     staticGenerationRetryCount: 3,
   },
