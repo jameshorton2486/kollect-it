@@ -69,3 +69,4 @@ logs
 *.log
 /tmp
 test-results/
+cred*.json
