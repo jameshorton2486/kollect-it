@@ -44,7 +44,7 @@ const config = {
   driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || '',
   imagekit: {
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
+    privateKey: (process.env.IMAGEKIT_PRIVATE_KEY || '').replace(/^private_/, ''),
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || '',
   },
 };
