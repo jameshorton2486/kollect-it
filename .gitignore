@@ -75,3 +75,8 @@ cred*.json
 # Google Cloud Credentials - NEVER COMMIT
 *.json
 .env.local
+
+
+# Google Cloud Credentials - NEVER COMMIT
+*.json
+.env.local
