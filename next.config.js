@@ -125,16 +125,8 @@ const nextConfig = {
     staticGenerationRetryCount: 3,
   },
   
-  // Webpack configuration for better tree-shaking
-  webpack: (config, { isServer }) => {
-    config.optimization = {
-      ...config.optimization,
-      usedExports: true,
-      sideEffects: false,
-      minimize: isProduction,
-    };
-    return config;
-  },
+  // Note: Webpack config removed for Next.js 15 + Turbopack compatibility
+  // Tree-shaking and optimization handled automatically by Turbopack
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
