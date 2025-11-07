@@ -70,3 +70,8 @@ logs
 /tmp
 test-results/
 cred*.json
+
+
+# Google Cloud Credentials - NEVER COMMIT
+*.json
+.env.local
