@@ -80,3 +80,6 @@ cred*.json
 # Google Cloud Credentials - NEVER COMMIT
 *.json
 .env.local
+.git-rewrite/
+
+# Git temporary files
