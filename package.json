@@ -22,8 +22,15 @@
     "setup:imagekit": "bun run setup-imagekit-sync.ts",
     "sync-images": "bun run scripts/sync-drive-to-imagekit.ts",
     "sync-images:watch": "bun run --watch scripts/sync-drive-to-imagekit.ts",
+    "sync-images:rest": "bun run scripts/upload-to-imagekit-rest.ts",
     "sync-status": "bun run scripts/sync-status.ts",
-    "sync-help": "bun run scripts/sync-help.ts"
+    "sync-help": "bun run scripts/sync-help.ts",
+    "watch-google-drive": "bun run scripts/watch-google-drive.ts",
+    "sync-from-google-drive": "curl -X POST http://localhost:3000/api/products/sync-from-google-drive",
+    "process-batch": "bun run scripts/process-batch.ts",
+    "validate-product": "bun run scripts/validate-product.ts",
+    "test-imagekit": "bun run scripts/test-imagekit.ts",
+    "test-google-drive": "bun run scripts/test-google-drive.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.0",
