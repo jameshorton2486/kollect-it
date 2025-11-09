@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { ProductUploadForm } from '@/components/admin/ProductUploadForm';
 import { Package, CheckCircle2, ShoppingBag, DollarSign, Plus, Settings, Users, Home, Download } from 'lucide-react';
 
 interface Product {
@@ -43,6 +44,7 @@ export default function AdminDashboard() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showAIUpload, setShowAIUpload] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'sold' | 'draft'>('all');
@@ -228,6 +230,12 @@ export default function AdminDashboard() {
             <Plus size={18} /> {showAddForm ? 'Cancel' : 'Add New Product'}
           </button>
           <button
+            onClick={() => setShowAIUpload(!showAIUpload)}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-semibold"
+          >
+            <Plus size={18} /> {showAIUpload ? 'Cancel' : 'AI Create Product'}
+          </button>
+          <button
             onClick={() => router.push('/admin/orders')}
             className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
           >
@@ -264,6 +272,17 @@ export default function AdminDashboard() {
             }}
             onCancel={() => setShowAddForm(false)}
           />
+        )}
+
+        {/* AI Product Upload Form */}
+        {showAIUpload && (
+          <div className="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 className="text-xl font-semibold mb-4 text-amber-600">AI-Powered Product Creation</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Upload a photo and let Claude + GPT-4V analyze it to create a professional product listing.
+            </p>
+            <ProductUploadForm />
+          </div>
         )}
 
         {/* Products Table */}
