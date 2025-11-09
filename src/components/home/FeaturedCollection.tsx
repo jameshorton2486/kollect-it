@@ -21,11 +21,11 @@ export default function FeaturedCollection() {
             </h2>
 
             <p className="text-lg text-ink-light leading-relaxed mb-4">
-              From leather-bound 17th-century volumes to coveted first editions and signed manuscripts, our rare book collection represents centuries of literary heritage. Each volume has been authenticated, and documented with complete available provenance.
+              From leather-bound volumes dating back to the 17th century to first editions and manuscripts, our rare book collection represents centuries of literary heritage. Each volume has been authenticated and documented with the utmost in care.
             </p>
 
             <p className="text-lg text-ink-light leading-relaxed mb-8">
-              Whether you're building a distinguished library or seeking that special book for your collection, Kollect-It offers exceptional editions for discerning bibliophiles.
+              If you are seeking a special book for your collection, Kollect-It offers exceptional options for discerning bibliophiles.
             </p>
 
             <Link
@@ -37,10 +37,10 @@ export default function FeaturedCollection() {
           </div>
 
           {/* Right Image */}
-          <div className="relative rounded-lg overflow-hidden shadow-xl">
+          <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
             <Image
-              src="https://ik.imagekit.io/kollectit/feature-rare-books-17th-modern.jpg"
-              alt="Shelf mix of 17th-century leather-bound volumes alongside notable 20th-century editions"
+              src="https://drive.google.com/file/d/1y-yQJTU8hi-ApuPrNo3CXU5s9vbUXPXn/view?usp=sharing"
+              alt="Collection of rare and historical Virgil volumes, 16th–19th century leather-bound books."
               width={1200}
               height={900}
               className="w-full h-96 md:h-full object-cover hover:scale-105 transition-transform duration-500"
