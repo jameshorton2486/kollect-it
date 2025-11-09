@@ -527,6 +527,475 @@ bun run build → ✅ 0 errors, 47+ pages generated
 
 ---
 
+## ROBUST ERROR HANDLING & LOGGING STRATEGY
+
+### Error Handling Architecture
+
+**Global Error Handler (`src/lib/errors/handler.ts`)**
+```typescript
+export class ApprovalError extends Error {
+  constructor(
+    public code: string,
+    public statusCode: number,
+    message: string,
+    public context?: Record<string, any>
+  ) {
+    super(message)
+    this.name = 'ApprovalError'
+  }
+}
+
+export function handleApiError(error: unknown) {
+  if (error instanceof ApprovalError) {
+    return {
+      status: error.statusCode,
+      body: {
+        error: error.code,
+        message: error.message,
+        context: error.context,
+      }
+    }
+  }
+  
+  // Unexpected error
+  return {
+    status: 500,
+    body: {
+      error: 'INTERNAL_SERVER_ERROR',
+      message: 'An unexpected error occurred',
+    }
+  }
+}
+```
+
+**Logger Service (`src/lib/logging/logger.ts`)**
+```typescript
+import fs from 'fs/promises'
+import path from 'path'
+
+interface LogEntry {
+  timestamp: string
+  level: 'INFO' | 'WARN' | 'ERROR' | 'DEBUG'
+  service: string
+  message: string
+  error?: string
+  stack?: string
+  context?: Record<string, any>
+}
+
+export class Logger {
+  private logsDir = 'logs'
+  
+  async ensureLogsDir() {
+    try {
+      await fs.mkdir(this.logsDir, { recursive: true })
+    } catch (e) {
+      console.error('Failed to create logs directory', e)
+    }
+  }
+  
+  async log(entry: LogEntry) {
+    await this.ensureLogsDir()
+    
+    // Console output
+    const prefix = `[${entry.timestamp}] [${entry.level}] [${entry.service}]`
+    console.log(`${prefix} ${entry.message}`, entry.context || '')
+    
+    // File output
+    const date = entry.timestamp.split('T')[0]
+    const filename = path.join(this.logsDir, `${entry.level.toLowerCase()}-${date}.log`)
+    
+    const logLine = JSON.stringify(entry) + '\n'
+    try {
+      await fs.appendFile(filename, logLine)
+    } catch (e) {
+      console.error(`Failed to write to ${filename}:`, e)
+    }
+  }
+  
+  info(service: string, message: string, context?: Record<string, any>) {
+    return this.log({
+      timestamp: new Date().toISOString(),
+      level: 'INFO',
+      service,
+      message,
+      context,
+    })
+  }
+  
+  warn(service: string, message: string, context?: Record<string, any>) {
+    return this.log({
+      timestamp: new Date().toISOString(),
+      level: 'WARN',
+      service,
+      message,
+      context,
+    })
+  }
+  
+  error(service: string, message: string, error?: Error, context?: Record<string, any>) {
+    return this.log({
+      timestamp: new Date().toISOString(),
+      level: 'ERROR',
+      service,
+      message,
+      error: error?.message,
+      stack: error?.stack,
+      context,
+    })
+  }
+  
+  debug(service: string, message: string, context?: Record<string, any>) {
+    if (process.env.DEBUG === 'true') {
+      return this.log({
+        timestamp: new Date().toISOString(),
+        level: 'DEBUG',
+        service,
+        message,
+        context,
+      })
+    }
+  }
+}
+
+export const logger = new Logger()
+```
+
+### API Route Error Handling Example
+
+**`src/app/api/admin/approvals/[id]/approve/route.ts` (with error handling)**
+```typescript
+import { logger } from '@/lib/logging/logger'
+import { ApprovalError, handleApiError } from '@/lib/errors/handler'
+import { NextRequest, NextResponse } from 'next/server'
+import prisma from '@/lib/prisma'
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const requestId = crypto.randomUUID()
+  
+  try {
+    await logger.info('ApprovalService', 'Approve request started', {
+      requestId,
+      approvalId: params.id,
+    })
+    
+    // Validate input
+    const body = await request.json()
+    if (!body.finalPrice || body.finalPrice <= 0) {
+      throw new ApprovalError(
+        'INVALID_PRICE',
+        400,
+        'Final price must be greater than 0',
+        { finalPrice: body.finalPrice }
+      )
+    }
+    
+    // Check admin authorization
+    const session = await getSession()
+    if (!session?.user?.isAdmin) {
+      await logger.warn('ApprovalService', 'Unauthorized approval attempt', {
+        requestId,
+        userId: session?.user?.id,
+      })
+      throw new ApprovalError(
+        'UNAUTHORIZED',
+        403,
+        'Only admins can approve products'
+      )
+    }
+    
+    // Fetch approval
+    const approval = await prisma.productApproval.findUnique({
+      where: { id: params.id },
+      include: { product: true },
+    })
+    
+    if (!approval) {
+      throw new ApprovalError(
+        'NOT_FOUND',
+        404,
+        'Approval not found',
+        { approvalId: params.id }
+      )
+    }
+    
+    if (approval.status !== 'pending') {
+      throw new ApprovalError(
+        'INVALID_STATE',
+        400,
+        `Cannot approve product with status: ${approval.status}`,
+        { currentStatus: approval.status }
+      )
+    }
+    
+    // Update approval and product
+    const updatedApproval = await prisma.productApproval.update({
+      where: { id: params.id },
+      data: {
+        status: 'approved',
+        finalPrice: body.finalPrice,
+        approverNotes: body.notes,
+        reviewedAt: new Date(),
+        reviewedBy: session.user.email,
+        changeHistory: approval.changeHistory && Array.isArray(approval.changeHistory)
+          ? [...(approval.changeHistory as any[]), {
+              timestamp: new Date().toISOString(),
+              change: 'approved',
+              by: session.user.email,
+              finalPrice: body.finalPrice,
+            }]
+          : [{
+              timestamp: new Date().toISOString(),
+              change: 'approved',
+              by: session.user.email,
+              finalPrice: body.finalPrice,
+            }],
+      },
+    })
+    
+    await prisma.product.update({
+      where: { id: approval.productId },
+      data: {
+        isDraft: false,
+        publishedAt: new Date(),
+        price: body.finalPrice,
+      },
+    })
+    
+    await logger.info('ApprovalService', 'Product approved successfully', {
+      requestId,
+      approvalId: params.id,
+      productId: approval.productId,
+      finalPrice: body.finalPrice,
+    })
+    
+    return NextResponse.json(updatedApproval, { status: 200 })
+    
+  } catch (error) {
+    const errorInfo = {
+      requestId,
+      approvalId: params.id,
+      timestamp: new Date().toISOString(),
+      errorType: error instanceof ApprovalError ? error.code : 'UNKNOWN_ERROR',
+    }
+    
+    await logger.error(
+      'ApprovalService',
+      'Approve request failed',
+      error instanceof Error ? error : new Error(String(error)),
+      errorInfo
+    )
+    
+    const { status, body } = handleApiError(error)
+    return NextResponse.json(body, { status })
+  }
+}
+```
+
+### Component Error Boundary
+
+**`src/components/admin/ApprovalErrorBoundary.tsx`**
+```typescript
+'use client'
+
+import React, { ReactNode } from 'react'
+import { logger } from '@/lib/logging/logger'
+
+interface Props {
+  children: ReactNode
+  fallback?: ReactNode
+}
+
+interface State {
+  hasError: boolean
+  error?: Error
+}
+
+export class ApprovalErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    logger.error('ApprovalErrorBoundary', 'Component error caught', error, {
+      componentStack: errorInfo.componentStack,
+    })
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        this.props.fallback || (
+          <div className="p-6 rounded-lg bg-red-50 border border-red-200">
+            <h2 className="text-lg font-semibold text-red-900">
+              Something went wrong
+            </h2>
+            <p className="text-red-700 mt-2">
+              {this.state.error?.message || 'An unexpected error occurred'}
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Reload Page
+            </button>
+          </div>
+        )
+      )
+    }
+
+    return this.props.children
+  }
+}
+```
+
+### Pricing Engine Error Handling
+
+**`src/lib/pricing/pricing-engine.ts` (with error handling)**
+```typescript
+import { logger } from '@/lib/logging/logger'
+import { ApprovalError } from '@/lib/errors/handler'
+
+export async function calculateThreeSourcePrice(
+  product: Product & { aiAnalysis?: any }
+): Promise<PricingResult> {
+  const requestId = crypto.randomUUID()
+  
+  try {
+    await logger.info('PricingEngine', 'Price calculation started', {
+      requestId,
+      productId: product.id,
+      category: product.category,
+    })
+
+    // Validate inputs
+    if (!product.id) {
+      throw new ApprovalError(
+        'INVALID_PRODUCT',
+        400,
+        'Product ID is required for pricing'
+      )
+    }
+
+    if (!product.aiAnalysis) {
+      await logger.warn('PricingEngine', 'No AI analysis found', {
+        requestId,
+        productId: product.id,
+      })
+      throw new ApprovalError(
+        'NO_AI_DATA',
+        400,
+        'Product must have AI analysis before pricing'
+      )
+    }
+
+    // Source 1: AI Suggested Price
+    const aiPrice = product.aiAnalysis.suggestedPrice || 0
+    if (aiPrice <= 0) {
+      throw new ApprovalError(
+        'INVALID_AI_PRICE',
+        400,
+        'AI suggested price must be greater than 0',
+        { aiPrice }
+      )
+    }
+
+    // Source 2: Historical Data (with error handling)
+    let historicalPrice: number | undefined
+    try {
+      historicalPrice = await getHistoricalPrice(product.category, product.id)
+      await logger.debug('PricingEngine', 'Historical price retrieved', {
+        requestId,
+        category: product.category,
+        historicalPrice,
+      })
+    } catch (error) {
+      await logger.warn('PricingEngine', 'Failed to fetch historical data', {
+        requestId,
+        error: error instanceof Error ? error.message : String(error),
+      })
+      // Don't fail; continue with other sources
+    }
+
+    // Source 3: Market Data (with fallback)
+    let marketPrice: number | undefined
+    try {
+      marketPrice = await fetchMarketData(
+        product.category,
+        product.estimatedEra || 'Unknown',
+        product.rarity || 'Common'
+      )
+      await logger.debug('PricingEngine', 'Market data retrieved', {
+        requestId,
+        marketPrice,
+      })
+    } catch (error) {
+      await logger.warn('PricingEngine', 'Failed to fetch market data', {
+        requestId,
+        error: error instanceof Error ? error.message : String(error),
+      })
+      // Use mock fallback
+      marketPrice = getMockMarketPrice(product.category, product.rarity || 'Common')
+    }
+
+    // Calculate confidence
+    const confidence = calculateConfidence(
+      !!historicalPrice,
+      historicalPrice ? 30 : 0,
+      marketPrice ? 1 : 0,
+      product.rarity || 'Common'
+    )
+
+    // Determine final price
+    const prices = [aiPrice, historicalPrice, marketPrice].filter(Boolean)
+    const finalPrice = prices.reduce((a, b) => a + b, 0) / prices.length
+
+    const result: PricingResult = {
+      finalPrice,
+      aiSuggestedPrice: aiPrice,
+      historicalAvgPrice: historicalPrice,
+      marketPrice,
+      confidence,
+      reasoning: buildPricingReasoning(aiPrice, historicalPrice, marketPrice),
+      breakdown: [
+        { source: 'AI Analysis', price: aiPrice, weight: 0.5 },
+        ...(historicalPrice ? [{ source: 'Historical Data', price: historicalPrice, weight: 0.3 }] : []),
+        ...(marketPrice ? [{ source: 'Market Data', price: marketPrice, weight: 0.2 }] : []),
+      ],
+      appliedRules: [],
+    }
+
+    await logger.info('PricingEngine', 'Price calculation completed', {
+      requestId,
+      productId: product.id,
+      finalPrice,
+      confidence,
+    })
+
+    return result
+
+  } catch (error) {
+    await logger.error(
+      'PricingEngine',
+      'Price calculation failed',
+      error instanceof Error ? error : new Error(String(error)),
+      { requestId, productId: product.id }
+    )
+    throw error
+  }
+}
+```
+
+---
+
 ## EMERGENCY SHORTCUTS
 
 If you get stuck:
