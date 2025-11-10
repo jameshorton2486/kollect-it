@@ -12,7 +12,10 @@ interface ReportEmailOptions {
 
 /**
  * Generate HTML email template for reports
+ * Reserved for Google Workspace SMTP implementation
+ * @internal
  */
+// @ts-ignore - Reserved for future email implementation
 function generateEmailTemplate(reportName: string, data: string, format: string): string {
   const timestamp = new Date().toLocaleString();
 
@@ -103,7 +106,10 @@ function escapeHtml(text: string): string {
 
 /**
  * Get filename for report attachment
+ * Reserved for Google Workspace SMTP implementation
+ * @internal
  */
+// @ts-ignore - Reserved for future email implementation
 function getReportFilename(reportName: string, format: string): string {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
   const sanitized = reportName.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_-]/g, '');
@@ -116,7 +122,8 @@ function getReportFilename(reportName: string, format: string): string {
  * NOTE: Email service disabled during Google Workspace migration
  */
 export async function sendReportEmail(options: ReportEmailOptions): Promise<void> {
-  const { recipients, reportName, data, format } = options;
+  const { recipients, reportName, format } = options;
+  // data parameter available but unused until email service is implemented
 
   // Email service disabled during Google Workspace migration
   console.log('[Report Email] Service disabled - Google Workspace migration pending');
@@ -125,6 +132,7 @@ export async function sendReportEmail(options: ReportEmailOptions): Promise<void
   console.log('[Report Email] Format:', format);
   
   // TODO: Implement Google Workspace SMTP when ready
+  // TODO: Use generateEmailTemplate() and getReportFilename() helper functions
   return;
 }
 

@@ -11,6 +11,7 @@ import type { SubscriptionOptions, MetricsCache } from '@/lib/websocket/types';
 
 interface UseWebSocketOptions extends SubscriptionOptions {
   enabled?: boolean;
+  subscribeToMetrics?: boolean;
 }
 
 export function useWebSocket(options: UseWebSocketOptions = {}) {
@@ -21,7 +22,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
 
   useEffect(() => {
     if (!options.enabled && options.enabled !== undefined) {
-      return;
+      return undefined;
     }
 
     try {
@@ -76,6 +77,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     } catch (err) {
       console.error('Error initializing WebSocket:', err);
       setError(err instanceof Error ? err.message : 'Failed to initialize WebSocket');
+      return undefined;
     }
   }, [options.enabled, options.metrics, options.approvalTrends, options.revenue, options.pricing, options.products, options.alerts, options.updateInterval]);
 

@@ -71,6 +71,7 @@ export function AnalyticsDashboardWebSocket() {
             min: metricsCache.minPrice || 0,
             max: metricsCache.maxPrice || 0,
           },
+          categoryBreakdown: [], // Will be populated by API call if needed
         },
       };
       setMetrics(transformedMetrics);

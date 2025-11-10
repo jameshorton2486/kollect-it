@@ -121,27 +121,54 @@ export interface WebSocketClient {
 // Real-time metrics cache
 export interface MetricsCache {
   timestamp: Date;
+  
+  // Approval metrics
   approvalRate: number;
+  approvedCount: number;
+  rejectedCount: number;
+  pendingCount: number;
+  avgTimeToApprove: number;
+  
+  // Revenue metrics
   totalRevenue: number;
   averageOrderValue: number;
-  pendingCount: number;
+  totalOrders: number;
+  
+  // Category revenue
   revenueByCategory: Array<{
     category: string;
     revenue: number;
     percentage: number;
+    itemsSold: number;
   }>;
+  
+  // Trend data
   approvalTrend: Array<{
     date: string;
     approved: number;
     rejected: number;
     pending: number;
   }>;
+  
+  // Pricing metrics
   pricingMetrics: {
     averagePricingAccuracy: number;
     avgConfidenceScore: number;
   };
+  avgPriceConfidence: number;
+  autoApprovedCount: number;
+  manualReviewCount: number;
+  lowConfidenceCount: number;
+  priceAccuracy: number;
+  
+  // Product metrics
   productMetrics: {
     totalProducts: number;
     categoriesCount: number;
   };
+  totalProducts: number;
+  activeProducts: number;
+  averagePrice: number;
+  minPrice: number;
+  maxPrice: number;
 }

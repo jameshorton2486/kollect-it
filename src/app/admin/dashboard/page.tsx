@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import ImageUpload from '@/components/admin/ImageUpload';
 import { ProductUploadForm } from '@/components/admin/ProductUploadForm';
-import { Package, CheckCircle2, ShoppingBag, DollarSign, Plus, Settings, Users, Home, Download } from 'lucide-react';
+import { Package, CheckCircle2, ShoppingBag, DollarSign, Plus, Settings, Users, Download } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -45,7 +45,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showAIUpload, setShowAIUpload] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'sold' | 'draft'>('all');
   const [page, setPage] = useState(1);
