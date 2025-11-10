@@ -5,7 +5,7 @@
 // in your product pages and listings throughout Kollect-It
 // ============================================================
 
-import { ProductImage, ProductImageGrid, ResponsiveProductImage } from '@/components/ProductImage';
+import ProductImage, { ProductImageGrid, ResponsiveProductImage } from '@/components/ProductImage';
 
 // ============================================================
 // Example 1: Simple Product Detail Page

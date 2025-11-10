@@ -199,7 +199,7 @@ export function ProductUploadForm() {
         throw new Error(data.error || 'Creation failed');
       }
 
-      const product = await res.json();
+      await res.json();
       setStep('success');
 
       // Reset form
@@ -374,10 +374,11 @@ export function ProductUploadForm() {
             <h3 className="font-semibold text-amber-500">Product Details</h3>
 
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label htmlFor="title-input" className="block text-sm text-gray-400 mb-2">
                 Title
               </label>
               <input
+                id="title-input"
                 type="text"
                 value={formData.title}
                 onChange={(e) =>
@@ -388,10 +389,11 @@ export function ProductUploadForm() {
             </div>
 
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label htmlFor="description-input" className="block text-sm text-gray-400 mb-2">
                 Description (300-400 words)
               </label>
               <textarea
+                id="description-input"
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({
@@ -405,10 +407,11 @@ export function ProductUploadForm() {
             </div>
 
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label htmlFor="short-desc-input" className="block text-sm text-gray-400 mb-2">
                 Short Description (50-75 words)
               </label>
               <textarea
+                id="short-desc-input"
                 value={formData.shortDescription}
                 onChange={(e) =>
                   setFormData({
@@ -423,8 +426,9 @@ export function ProductUploadForm() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Era</label>
+                <label htmlFor="era-input" className="block text-sm text-gray-400 mb-2">Era</label>
                 <input
+                  id="era-input"
                   type="text"
                   value={formData.estimatedEra}
                   onChange={(e) =>
@@ -438,10 +442,11 @@ export function ProductUploadForm() {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label htmlFor="price-input" className="block text-sm text-gray-400 mb-2">
                   Price
                 </label>
                 <input
+                  id="price-input"
                   type="number"
                   value={formData.suggestedPrice}
                   onChange={(e) =>
@@ -457,10 +462,11 @@ export function ProductUploadForm() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label htmlFor="rarity-select" className="block text-sm text-gray-400 mb-2">
                   Rarity
                 </label>
                 <select
+                  id="rarity-select"
                   value={formData.rarity}
                   onChange={(e) =>
                     setFormData({ ...formData, rarity: e.target.value })
@@ -476,10 +482,11 @@ export function ProductUploadForm() {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label htmlFor="authenticity-select" className="block text-sm text-gray-400 mb-2">
                   Authenticity
                 </label>
                 <select
+                  id="authenticity-select"
                   value={formData.authenticity}
                   onChange={(e) =>
                     setFormData({
@@ -498,10 +505,11 @@ export function ProductUploadForm() {
             </div>
 
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label htmlFor="seo-title-input" className="block text-sm text-gray-400 mb-2">
                 SEO Title (max 60 chars)
               </label>
               <input
+                id="seo-title-input"
                 type="text"
                 value={formData.seoTitle}
                 onChange={(e) =>
