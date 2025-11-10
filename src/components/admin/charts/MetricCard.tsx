@@ -15,8 +15,8 @@ export function MetricCard({
   prefix = '',
   trend,
   trendLabel,
-  color = 'bg-gray-50',
-  borderColor = 'border-gray-200',
+  color = 'bg-gray-900',
+  borderColor = 'border-[#D3AF37]',
 }: MetricCardProps) {
   // Determine trend direction and styling
   let trendDirection: 'up' | 'down' | 'neutral' = 'neutral';
@@ -32,10 +32,10 @@ export function MetricCard({
 
   const trendColor =
     trendDirection === 'up'
-      ? 'text-green-600'
+      ? 'text-green-400'
       : trendDirection === 'down'
-        ? 'text-red-600'
-        : 'text-gray-600';
+        ? 'text-red-400'
+        : 'text-gray-400';
 
   const trendIcon =
     trendDirection === 'up'
@@ -46,10 +46,10 @@ export function MetricCard({
 
   return (
     <div className={`${color} border ${borderColor} rounded-lg p-6`}>
-      <p className="text-sm font-medium text-gray-600">{title}</p>
+      <p className="text-sm font-medium text-gray-400">{title}</p>
       <div className="mt-2 flex items-end justify-between">
         <div>
-          <p className="text-3xl font-bold text-gray-900">
+          <p className="text-3xl font-bold text-white">
             {prefix}
             {typeof value === 'number' ? value.toLocaleString('en-US', {
               maximumFractionDigits: value > 100 ? 0 : 2,

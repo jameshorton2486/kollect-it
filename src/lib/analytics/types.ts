@@ -3,16 +3,29 @@
  * Phase 4 - Admin Analytics Dashboard
  */
 
+// Enhanced Approval Metrics with trend data
 export interface ApprovalMetrics {
-  totalApprovals: number;
-  totalRejections: number;
-  pendingCount: number;
-  approvalRate: number; // Percentage (0-100)
-  averageTimeToApprove: number; // In minutes
-  averageTimeToReject: number; // In minutes
-  todayApprovals: number;
-  thisWeekApprovals: number;
-  thisMonthApprovals: number;
+  totalSubmitted: number;
+  approved: number;
+  rejected: number;
+  pending: number;
+  approvalRate: number; // percentage
+  averageTimeToApprove: number; // minutes
+  trend: ApprovalTrend[];
+  totalApprovals?: number;
+  totalRejections?: number;
+  pendingCount?: number;
+  averageTimeToReject?: number; // In minutes
+  todayApprovals?: number;
+  thisWeekApprovals?: number;
+  thisMonthApprovals?: number;
+}
+
+export interface ApprovalTrend {
+  date: string;
+  approved: number;
+  rejected: number;
+  pending: number;
 }
 
 export interface PricingAnalysis {
@@ -25,6 +38,61 @@ export interface PricingAnalysis {
     count: number;
   }>;
   priceOverridesPercentage: number; // % of products where admin changed price
+}
+
+// Enhanced Revenue Metrics
+export interface RevenueMetrics {
+  totalRevenue: number;
+  averageOrderValue: number;
+  revenueByCategory: CategoryRevenue[];
+  revenueByMonth: MonthlyRevenue[];
+}
+
+export interface CategoryRevenue {
+  category: string;
+  revenue: number;
+  percentage: number;
+  itemsSold: number;
+}
+
+export interface MonthlyRevenue {
+  month: string;
+  revenue: number;
+  orders: number;
+}
+
+// Enhanced Pricing Metrics
+export interface PricingMetrics {
+  averageConfidence: number;
+  autoApprovedCount: number;
+  manualReviewCount: number;
+  lowConfidenceCount: number;
+  priceAccuracy: number; // % of prices within expected range
+}
+
+// Enhanced Product Metrics
+export interface ProductMetrics {
+  totalProducts: number;
+  activeProducts: number;
+  averagePrice: number;
+  priceRange: { min: number; max: number };
+  categoryBreakdown: CategoryProduct[];
+}
+
+export interface CategoryProduct {
+  category: string;
+  count: number;
+  averagePrice: number;
+  revenue: number;
+}
+
+// Dashboard Summary
+export interface DashboardMetrics {
+  approval: ApprovalMetrics;
+  revenue: RevenueMetrics;
+  pricing: PricingMetrics;
+  products: ProductMetrics;
+  generatedAt: Date;
 }
 
 export interface ProductPerformance {

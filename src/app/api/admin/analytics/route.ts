@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { getAnalyticsSummary } from '@/lib/analytics/queries';
+import { getAnalyticsSummary, getDashboardMetrics } from '@/lib/analytics/queries';
 import { authOptions } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -25,10 +25,11 @@ export async function GET(request: NextRequest) {
 
     // Extract query parameters
     const searchParams = request.nextUrl.searchParams;
-    const startDate = searchParams.get('startDate') || undefined;
-    const endDate = searchParams.get('endDate') || undefined;
+    const startDateStr = searchParams.get('startDate');
+    const endDateStr = searchParams.get('endDate');
     const category = searchParams.get('category') || undefined;
     const statusParam = searchParams.get('status');
+    const format = searchParams.get('format') || 'dashboard'; // 'dashboard' or 'summary'
     
     // Validate status parameter
     let status: 'APPROVED' | 'REJECTED' | 'ALL' | undefined;
@@ -36,13 +37,26 @@ export async function GET(request: NextRequest) {
       status = statusParam;
     }
 
-    // Get analytics summary
-    const analytics = await getAnalyticsSummary({
-      startDate,
-      endDate,
-      category,
-      status,
-    });
+    let analytics;
+
+    // Return new dashboard metrics format or legacy summary format
+    if (format === 'dashboard') {
+      // Default to last 30 days
+      const endDate = endDateStr ? new Date(endDateStr) : new Date();
+      const startDate = startDateStr
+        ? new Date(startDateStr)
+        : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+      analytics = await getDashboardMetrics(startDate, endDate);
+    } else {
+      // Legacy format
+      analytics = await getAnalyticsSummary({
+        startDate: startDateStr || undefined,
+        endDate: endDateStr || undefined,
+        category,
+        status,
+      });
+    }
 
     return NextResponse.json(analytics, {
       headers: {

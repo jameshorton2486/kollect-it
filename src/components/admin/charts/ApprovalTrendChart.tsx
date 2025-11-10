@@ -1,14 +1,30 @@
 'use client';
 
-/* eslint-disable jsx-a11y/no-style-target-blank */
 /**
  * Approval Trend Chart Component
  */
 
-import { ApprovalTrends } from '@/lib/analytics/types';
+import React from 'react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+
+interface TrendData {
+  date: string;
+  approved: number;
+  rejected: number;
+  pending: number;
+}
 
 interface ApprovalTrendChartProps {
-  data: ApprovalTrends[];
+  data: TrendData[];
 }
 
 export function ApprovalTrendChart({ data }: ApprovalTrendChartProps) {
@@ -20,64 +36,47 @@ export function ApprovalTrendChart({ data }: ApprovalTrendChartProps) {
     );
   }
 
-  // Show last 14 days
-  const chartData = data.slice(-14);
-
   return (
-    <div className="space-y-4">
-      {/* Text-based summary */}
-      <div className="space-y-2">
-        {chartData.slice(-7).map((item) => (
-          <div key={item.date} className="flex items-center justify-between text-sm">
-            <span className="text-gray-600 w-20">
-              {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-            </span>
-            <div className="flex gap-4 flex-1">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-green-700 font-medium w-8">{item.approvalsCount}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-red-700 font-medium w-8">{item.rejectionsCount}</span>
-              </div>
-              <div className="flex-1 text-right">
-                <span className="text-gray-500 text-xs">
-                  Conf: {item.averageConfidence.toFixed(0)}%
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
+      <h3 className="text-white text-lg font-bold mb-4">Approval Trends</h3>
 
-      {/* Legend and stats */}
-      <div className="grid grid-cols-3 gap-4 pt-4 border-t">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-3 h-3 bg-green-500 rounded"></div>
-            <span className="text-sm text-gray-600">Approvals</span>
-          </div>
-          <p className="text-lg font-semibold text-gray-900">
-            {chartData.reduce((sum, d) => sum + d.approvalsCount, 0)}
-          </p>
-        </div>
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-3 h-3 bg-red-500 rounded"></div>
-            <span className="text-sm text-gray-600">Rejections</span>
-          </div>
-          <p className="text-lg font-semibold text-gray-900">
-            {chartData.reduce((sum, d) => sum + d.rejectionsCount, 0)}
-          </p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-600 mb-1">Avg Confidence</p>
-          <p className="text-lg font-semibold text-gray-900">
-            {(chartData.reduce((sum, d) => sum + d.averageConfidence, 0) / chartData.length).toFixed(1)}
-          </p>
-        </div>
-      </div>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+          <XAxis dataKey="date" stroke="#999" />
+          <YAxis stroke="#999" />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: '#1a1a1a',
+              border: '1px solid #D3AF37',
+              borderRadius: '8px',
+              color: '#fff',
+            }}
+          />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="approved"
+            stroke="#10B981"
+            strokeWidth={2}
+            dot={{ fill: '#10B981', r: 4 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="rejected"
+            stroke="#EF4444"
+            strokeWidth={2}
+            dot={{ fill: '#EF4444', r: 4 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="pending"
+            stroke="#F59E0B"
+            strokeWidth={2}
+            dot={{ fill: '#F59E0B', r: 4 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }

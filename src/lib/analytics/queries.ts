@@ -398,6 +398,308 @@ export async function getCategoryMetrics(_params: AnalyticsQueryParams): Promise
 }
 
 /**
+ * Get revenue metrics for new DashboardMetrics
+ */
+export async function getRevenueMetrics(
+  startDate: Date,
+  endDate: Date
+): Promise<any> {
+  try {
+    const orders = await prisma.order.findMany({
+      where: {
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+        paymentStatus: 'COMPLETED',
+      },
+      include: {
+        items: {
+          include: {
+            product: {
+              include: { category: true },
+            },
+          },
+        },
+      },
+    });
+
+    const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+    const avgOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0;
+
+    // Revenue by category
+    const categoryMap = new Map();
+    orders.forEach(order => {
+      order.items.forEach(item => {
+        const categoryName = item.product.category.name;
+        if (!categoryMap.has(categoryName)) {
+          categoryMap.set(categoryName, {
+            category: categoryName,
+            revenue: 0,
+            itemsSold: 0,
+          });
+        }
+        const entry = categoryMap.get(categoryName);
+        entry.revenue += item.price * item.quantity;
+        entry.itemsSold += item.quantity;
+      });
+    });
+
+    const revenueByCategory = Array.from(categoryMap.values()).map(cat => ({
+      ...cat,
+      percentage: totalRevenue > 0 ? (cat.revenue / totalRevenue) * 100 : 0,
+    }));
+
+    // Revenue by month
+    const monthMap = new Map();
+    orders.forEach(order => {
+      const monthStr = order.createdAt.toISOString().substring(0, 7);
+      if (!monthMap.has(monthStr)) {
+        monthMap.set(monthStr, { month: monthStr, revenue: 0, orders: 0 });
+      }
+      const entry = monthMap.get(monthStr);
+      entry.revenue += order.total;
+      entry.orders++;
+    });
+
+    const revenueByMonth = Array.from(monthMap.values()).sort(
+      (a, b) => new Date(`${a.month}-01`).getTime() - new Date(`${b.month}-01`).getTime()
+    );
+
+    return {
+      totalRevenue,
+      averageOrderValue: avgOrderValue,
+      revenueByCategory,
+      revenueByMonth,
+    };
+  } catch (error) {
+    console.error('Error getting revenue metrics:', error);
+    return {
+      totalRevenue: 0,
+      averageOrderValue: 0,
+      revenueByCategory: [],
+      revenueByMonth: [],
+    };
+  }
+}
+
+/**
+ * Get pricing metrics for new DashboardMetrics
+ */
+export async function getPricingMetrics(
+  startDate: Date,
+  endDate: Date
+): Promise<any> {
+  try {
+    const products = await (prisma as any).aIGeneratedProduct.findMany({
+      where: {
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      select: {
+        priceConfidence: true,
+        status: true,
+      },
+    });
+
+    const autoApproved = products.filter((p: any) => p.priceConfidence > 85).length;
+    const manualReview = products.filter((p: any) => p.priceConfidence >= 70 && p.priceConfidence <= 85).length;
+    const lowConfidence = products.filter((p: any) => p.priceConfidence < 70).length;
+
+    const avgConfidence =
+      products.length > 0
+        ? products.reduce((sum: number, p: any) => sum + p.priceConfidence, 0) / products.length
+        : 0;
+
+    return {
+      averageConfidence: Math.round(avgConfidence * 100) / 100,
+      autoApprovedCount: autoApproved,
+      manualReviewCount: manualReview,
+      lowConfidenceCount: lowConfidence,
+      priceAccuracy: products.length > 0 ? (autoApproved / products.length) * 100 : 0,
+    };
+  } catch (error) {
+    console.error('Error getting pricing metrics:', error);
+    return {
+      averageConfidence: 0,
+      autoApprovedCount: 0,
+      manualReviewCount: 0,
+      lowConfidenceCount: 0,
+      priceAccuracy: 0,
+    };
+  }
+}
+
+/**
+ * Get product metrics for new DashboardMetrics
+ */
+export async function getProductMetrics(): Promise<any> {
+  try {
+    const products = await prisma.product.findMany({
+      include: { category: true },
+    });
+
+    const totalProducts = products.length;
+    const prices = products.map(p => p.price);
+    const avgPrice = prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
+
+    const categoryMap = new Map();
+    products.forEach(p => {
+      if (!categoryMap.has(p.category.name)) {
+        categoryMap.set(p.category.name, {
+          category: p.category.name,
+          count: 0,
+          totalPrice: 0,
+          revenue: 0,
+        });
+      }
+      const entry = categoryMap.get(p.category.name);
+      entry.count++;
+      entry.totalPrice += p.price;
+    });
+
+    const categoryBreakdown = Array.from(categoryMap.values()).map(cat => ({
+      category: cat.category,
+      count: cat.count,
+      averagePrice: cat.totalPrice / cat.count,
+      revenue: cat.totalPrice,
+    }));
+
+    return {
+      totalProducts,
+      activeProducts: products.filter((p: any) => !p.archived).length,
+      averagePrice: Math.round(avgPrice * 100) / 100,
+      priceRange: {
+        min: prices.length > 0 ? Math.min(...prices) : 0,
+        max: prices.length > 0 ? Math.max(...prices) : 0,
+      },
+      categoryBreakdown,
+    };
+  } catch (error) {
+    console.error('Error getting product metrics:', error);
+    return {
+      totalProducts: 0,
+      activeProducts: 0,
+      averagePrice: 0,
+      priceRange: { min: 0, max: 0 },
+      categoryBreakdown: [],
+    };
+  }
+}
+
+/**
+ * Get complete dashboard metrics
+ */
+export async function getDashboardMetrics(
+  startDate: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+  endDate: Date = new Date()
+): Promise<any> {
+  try {
+    console.log(`Getting dashboard metrics from ${startDate} to ${endDate}`);
+
+    const [approval, revenue, pricing, products] = await Promise.all([
+      getApprovalMetricsNew(startDate, endDate),
+      getRevenueMetrics(startDate, endDate),
+      getPricingMetrics(startDate, endDate),
+      getProductMetrics(),
+    ]);
+
+    return {
+      approval,
+      revenue,
+      pricing,
+      products,
+      generatedAt: new Date(),
+    };
+  } catch (error) {
+    console.error('Error getting dashboard metrics:', error);
+    throw error;
+  }
+}
+
+/**
+ * New approval metrics function for DashboardMetrics
+ */
+async function getApprovalMetricsNew(
+  startDate: Date,
+  endDate: Date
+): Promise<any> {
+  try {
+    const products = await (prisma as any).aIGeneratedProduct.findMany({
+      where: {
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      select: {
+        status: true,
+        createdAt: true,
+        approvedAt: true,
+      },
+    });
+
+    const total = products.length;
+    const approved = products.filter((p: any) => p.status === 'APPROVED').length;
+    const rejected = products.filter((p: any) => p.status === 'REJECTED').length;
+    const pending = products.filter((p: any) => p.status === 'PENDING').length;
+
+    // Calculate average time to approve
+    const approvedProducts = products.filter(
+      (p: any) => p.status === 'APPROVED' && p.approvedAt
+    );
+    const avgTimeToApprove =
+      approvedProducts.length > 0
+        ? approvedProducts.reduce((sum: number, p: any) => {
+            const time =
+              (p.approvedAt!.getTime() - p.createdAt.getTime()) / 1000 / 60;
+            return sum + time;
+          }, 0) / approvedProducts.length
+        : 0;
+
+    // Build trend data (daily)
+    const trendMap = new Map();
+    products.forEach((p: any) => {
+      const dateStr = p.createdAt.toISOString().split('T')[0];
+      if (!trendMap.has(dateStr)) {
+        trendMap.set(dateStr, { date: dateStr, approved: 0, rejected: 0, pending: 0 });
+      }
+      const entry = trendMap.get(dateStr);
+      if (p.status === 'APPROVED') entry.approved++;
+      else if (p.status === 'REJECTED') entry.rejected++;
+      else entry.pending++;
+    });
+
+    const trend = Array.from(trendMap.values()).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    return {
+      totalSubmitted: total,
+      approved,
+      rejected,
+      pending,
+      approvalRate: total > 0 ? (approved / total) * 100 : 0,
+      averageTimeToApprove: avgTimeToApprove,
+      trend,
+    };
+  } catch (error) {
+    console.error('Error getting approval metrics:', error);
+    return {
+      totalSubmitted: 0,
+      approved: 0,
+      rejected: 0,
+      pending: 0,
+      approvalRate: 0,
+      averageTimeToApprove: 0,
+      trend: [],
+    };
+  }
+}
+
+/**
  * Get complete analytics summary
  */
 export async function getAnalyticsSummary(
