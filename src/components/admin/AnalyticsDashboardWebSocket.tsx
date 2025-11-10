@@ -1,29 +1,84 @@
 'use client';
 
 /**
- * Admin Analytics Dashboard
- * Phase 4 - Main dashboard component
+ * WebSocket-Enhanced Analytics Dashboard
+ * Phase 5 - Real-time metrics with auto-refresh via WebSocket
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { DashboardMetrics } from '@/lib/analytics/types';
+import { useWebSocket } from '@/hooks/useWebSocket';
 import { MetricCard } from './charts/MetricCard';
 import { ApprovalTrendChart } from './charts/ApprovalTrendChart';
 import { RevenueByCategory } from './charts/RevenueByCategory';
 
-export function AnalyticsDashboard() {
+export function AnalyticsDashboardWebSocket() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState(
     new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
   );
   const [endDate, setEndDate] = useState(new Date());
+  const [autoRefresh, setAutoRefresh] = useState(true);
 
+  // WebSocket connection
+  const { connected, metricsCache } = useWebSocket({
+    enabled: autoRefresh,
+    subscribeToMetrics: true,
+  });
+
+  // Update metrics from WebSocket cache when available
   useEffect(() => {
-    fetchMetrics();
-  }, [startDate, endDate]);
+    if (metricsCache) {
+      // Transform WebSocket cache to match DashboardMetrics format
+      const transformedMetrics: DashboardMetrics = {
+        approval: {
+          approved: metricsCache.approvedCount || 0,
+          rejected: metricsCache.rejectedCount || 0,
+          pending: metricsCache.pendingCount || 0,
+          totalSubmitted:
+            (metricsCache.approvedCount || 0) +
+            (metricsCache.rejectedCount || 0) +
+            (metricsCache.pendingCount || 0),
+          approvalRate:
+            ((metricsCache.approvedCount || 0) /
+              ((metricsCache.approvedCount || 0) +
+                (metricsCache.rejectedCount || 0) +
+                (metricsCache.pendingCount || 0)) *
+              100) ||
+            0,
+          trend: metricsCache.approvalTrend || [],
+          averageTimeToApprove: metricsCache.avgTimeToApprove || 0,
+        },
+        revenue: {
+          totalRevenue: metricsCache.totalRevenue || 0,
+          totalOrders: metricsCache.totalOrders || 0,
+          averageOrderValue: metricsCache.averageOrderValue || 0,
+          revenueByCategory: metricsCache.revenueByCategory || [],
+        },
+        pricing: {
+          averageConfidence: metricsCache.avgPriceConfidence || 0,
+          autoApprovedCount: metricsCache.autoApprovedCount || 0,
+          manualReviewCount: metricsCache.manualReviewCount || 0,
+          lowConfidenceCount: metricsCache.lowConfidenceCount || 0,
+          priceAccuracy: metricsCache.priceAccuracy || 0,
+        },
+        products: {
+          totalProducts: metricsCache.totalProducts || 0,
+          activeProducts: metricsCache.activeProducts || 0,
+          averagePrice: metricsCache.averagePrice || 0,
+          priceRange: {
+            min: metricsCache.minPrice || 0,
+            max: metricsCache.maxPrice || 0,
+          },
+        },
+      };
+      setMetrics(transformedMetrics);
+    }
+  }, [metricsCache]);
 
-  const fetchMetrics = async () => {
+  // Fetch metrics when dates change or WebSocket is disabled
+  const fetchMetrics = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -42,7 +97,14 @@ export function AnalyticsDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [startDate, endDate]);
+
+  // Fetch on date change or when WebSocket is disabled
+  useEffect(() => {
+    if (!autoRefresh) {
+      fetchMetrics();
+    }
+  }, [startDate, endDate, autoRefresh, fetchMetrics]);
 
   if (loading) return <div className="text-center text-gray-400">Loading analytics...</div>;
   if (!metrics) return <div className="text-center text-gray-400">No data available</div>;
@@ -50,21 +112,43 @@ export function AnalyticsDashboard() {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-white">Analytics Dashboard</h1>
+        <div>
+          <h1 className="text-3xl font-bold text-white">Analytics Dashboard</h1>
+          <div className="flex gap-4 items-center mt-2">
+            <span className="text-sm text-gray-400">
+              {connected ? (
+                <span className="text-green-400">🟢 Real-time Connected</span>
+              ) : (
+                <span className="text-yellow-400">🟡 Fetching Data</span>
+              )}
+            </span>
+            <label className="flex items-center gap-2 text-sm text-gray-300">
+              <input
+                type="checkbox"
+                checked={autoRefresh}
+                onChange={(e) => setAutoRefresh(e.target.checked)}
+                className="w-4 h-4"
+              />
+              Auto-refresh
+            </label>
+          </div>
+        </div>
         <div className="flex gap-4">
           <input
             type="date"
             title="Start Date"
             value={startDate.toISOString().split('T')[0]}
-            onChange={e => setStartDate(new Date(e.target.value))}
+            onChange={(e) => setStartDate(new Date(e.target.value))}
             className="bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]"
+            disabled={autoRefresh}
           />
           <input
             type="date"
             title="End Date"
             value={endDate.toISOString().split('T')[0]}
-            onChange={e => setEndDate(new Date(e.target.value))}
+            onChange={(e) => setEndDate(new Date(e.target.value))}
             className="bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]"
+            disabled={autoRefresh}
           />
         </div>
       </div>
@@ -198,8 +282,11 @@ export function AnalyticsDashboard() {
       <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
         <h3 className="text-white text-lg font-bold mb-4">Revenue by Category Breakdown</h3>
         <div className="space-y-2">
-          {metrics.revenue.revenueByCategory.map(cat => (
-            <div key={cat.category} className="flex justify-between text-gray-300 pb-2 border-b border-gray-700">
+          {metrics.revenue.revenueByCategory.map((cat) => (
+            <div
+              key={cat.category}
+              className="flex justify-between text-gray-300 pb-2 border-b border-gray-700"
+            >
               <span>{cat.category}</span>
               <span className="text-[#D3AF37] font-semibold">
                 ${cat.revenue.toFixed(2)} ({cat.percentage.toFixed(1)}%)

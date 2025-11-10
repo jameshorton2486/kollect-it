@@ -27,6 +27,7 @@ model User {
   country       String?        @default("United States")
   wishlistItems WishlistItem[]
   orders        Order[]
+  scheduledReports ScheduledReport[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -215,4 +216,42 @@ model AIGeneratedProduct {
   @@index([reviewedBy])
   @@index([productId])
   @@index([status, createdAt])
+}
+
+model ScheduledReport {
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  name          String   // User-friendly report name
+  frequency     String   // DAILY, WEEKLY, MONTHLY
+  format        String   @default("JSON") // JSON, CSV, HTML
+  recipients    String   // Comma-separated email addresses
+  lastSent      DateTime?
+  nextScheduled DateTime
+  enabled       Boolean  @default(true)
+  
+  // Audit trail
+  auditLogs     ReportAuditLog[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+  @@index([nextScheduled])
+  @@index([enabled])
+  @@index([frequency])
+}
+
+model ReportAuditLog {
+  id            String   @id @default(cuid())
+  report        ScheduledReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId      String
+  recipients    String   // Who received it
+  status        String   @default("PENDING") // SUCCESS, FAILED, PENDING
+  error         String?  // Error message if failed
+  sentAt        DateTime @default(now())
+
+  @@index([reportId])
+  @@index([sentAt])
+  @@index([status])
 }

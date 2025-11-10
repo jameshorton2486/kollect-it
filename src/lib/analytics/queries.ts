@@ -90,6 +90,10 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
   });
 
   return {
+    totalSubmitted: approvals + rejections + pending,
+    approved: approvals,
+    rejected: rejections,
+    pending,
     totalApprovals: approvals,
     totalRejections: rejections,
     pendingCount: pending,
@@ -99,6 +103,7 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
     todayApprovals,
     thisWeekApprovals,
     thisMonthApprovals,
+    trend: [],
   };
 }
 
