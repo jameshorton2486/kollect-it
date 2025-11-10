@@ -1,70 +1,69 @@
-#!/usr/bin/env python3
-"""Fix all markdown linting errors in the workspace"""
+#!/usr/bin/env python
+"""
+Small utility to apply targeted regex fixes to specific Markdown files
+(e.g., fixing the first ``` fence to use ```text).
+"""
 
 import re
-import os
 from pathlib import Path
 
-def fix_markdown_files():
-    root = Path(".")
-    
-    # List of fixes to apply
-    fixes = []
-    
-    # 1. Fix MD040 - Add language specifiers to code blocks
-    for md_file in root.glob("**/*.md"):
-        content = md_file.read_text(encoding='utf-8')
+
+REPO_ROOT = Path(__file__).parent
+
+# Map: filename -> list of (pattern, replacement, occurrence_index)
+files_to_fix = {
+    # Fix the first bare ``` in PHASE 1 so it becomes ```text
+    "PHASE-1-COMPLETION-SUMMARY.md": [
+        (r"^```\n", "```text\n", 0),
+    ],
+    # Add any PHASE 3 tweaks here as needed
+    "PHASE-3-ADVANCED-FEATURES-GUIDE.md": [
+        # Example: also fix the first bare fence
+        (r"^```\n", "```text\n", 0),
+        # You can add more tuples like:
+        # (r"kollect-it website", "Kollect-It website", 0),
+    ],
+}
+
+
+def apply_fixes() -> None:
+    for relative_path, patterns in files_to_fix.items():
+        filepath = REPO_ROOT / relative_path
+
+        if not filepath.exists():
+            print(f"[skip] File not found: {filepath}")
+            continue
+
+        try:
+            content = filepath.read_text(encoding="utf-8")
+        except Exception as e:
+            print(f"[error] Could not read {filepath}: {e}")
+            continue
+
         original = content
-        
-        # Fix empty code blocks
-        content = re.sub(r'^```\n(Phase|src/|###)', r'```text\n\1', content, flags=re.MULTILINE)
-        content = re.sub(r'^```\n([A-Za-z])', r'```text\n\1', content, flags=re.MULTILINE)
-        
-        # Fix code blocks in specific files
-        if "PHASE-1-COMPLETION-SUMMARY.md" in str(md_file):
-            content = re.sub(r'```\nPhase 1:', '```text\nPhase 1:', content)
-            content = re.sub(r'```\nPhase 2:', '```text\nPhase 2:', content)
-            content = re.sub(r'```\nPhase 3:', '```text\nPhase 3:', content)
-        
-        if "PHASE-3-ADVANCED-FEATURES-GUIDE.md" in str(md_file):
-            content = re.sub(r'```\nPhase 3:', '```text\nPhase 3:', content)
-            content = re.sub(r'```\nsrc/', '```text\nsrc/', content)
-        
-        # 2. Fix MD022 - Add blank lines before headings
-        content = re.sub(r'([^\n])\n(##+ )', r'\1\n\n\2', content)
-        
-        # 3. Fix MD032 - Add blank lines around lists
-        content = re.sub(r'([^\n])\n(- )', r'\1\n\n\2', content)
-        content = re.sub(r'(- [^\n]*)\n([^\n-])', r'\1\n\n\2', content)
-        
-        # 4. Fix MD036 - Convert **File: xxx** to proper headings
-        content = re.sub(r'\n\*\*File: ([^*]+)\*\*', r'\n\n### File: \1', content)
-        
-        # 5. Fix MD029 - Ordered list numbering
-        # For numbered lists, fix prefix
-        lines = content.split('\n')
-        in_list = False
-        expected_num = 1
-        for i, line in enumerate(lines):
-            if re.match(r'^\d+\. ', line):
-                if not in_list:
-                    in_list = True
-                    expected_num = 1
-                match = re.match(r'^(\d+)\. (.+)$', line)
-                if match:
-                    lines[i] = f'{expected_num}. {match.group(2)}'
-                    expected_num += 1
-            elif line.strip() and not re.match(r'^\d+\. ', line) and not line.startswith(' '):
-                in_list = False
-        
-        content = '\n'.join(lines)
-        
+
+        for pattern, replacement, occurrence in patterns:
+            matches = list(re.finditer(pattern, content, re.MULTILINE))
+            if not matches:
+                # Nothing to replace for this pattern
+                continue
+            if occurrence < 0 or occurrence >= len(matches):
+                # Occurrence index out of range, skip safely
+                continue
+
+            start = matches[occurrence].start()
+            end = matches[occurrence].end()
+            content = content[:start] + replacement + content[end:]
+
         if content != original:
-            md_file.write_text(content, encoding='utf-8')
-            print(f"✓ Fixed: {md_file}")
+            try:
+                filepath.write_text(content, encoding="utf-8")
+                print(f"[fix] Updated: {filepath}")
+            except Exception as e:
+                print(f"[error] Could not write {filepath}: {e}")
         else:
-            print(f"~ Skipped: {md_file}")
+            print(f"[ok] No changes needed: {filepath}")
+
 
 if __name__ == "__main__":
-    fix_markdown_files()
-    print("\n✅ All markdown files processed!")
+    apply_fixes()
