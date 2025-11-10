@@ -33,8 +33,7 @@ interface EnvironmentVariables {
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
 
-  // Email
-  RESEND_API_KEY: string;
+  // Email (removed RESEND_API_KEY - migrating to Google Workspace)
   NEXT_PUBLIC_APP_EMAIL: string;
 
   // Google Analytics (optional)
@@ -143,8 +142,7 @@ export function getEnv(): Partial<EnvironmentVariables> {
         process.env.GOOGLE_CLIENT_SECRET
       ),
 
-      // Email
-      RESEND_API_KEY: validateEnvVar('RESEND_API_KEY', process.env.RESEND_API_KEY),
+      // Email (RESEND_API_KEY removed - migrating to Google Workspace)
       NEXT_PUBLIC_APP_EMAIL: validateEnvVar(
         'NEXT_PUBLIC_APP_EMAIL',
         process.env.NEXT_PUBLIC_APP_EMAIL

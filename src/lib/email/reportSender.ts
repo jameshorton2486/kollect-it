@@ -1,6 +1,6 @@
 /**
  * Report Email Sender
- * Phase 5 - Send reports via Resend email service
+ * Phase 5 - Send reports via email (Google Workspace migration pending)
  */
 
 interface ReportEmailOptions {
@@ -112,96 +112,36 @@ function getReportFilename(reportName: string, format: string): string {
 }
 
 /**
- * Send report via email using Resend
+ * Send report via email
+ * NOTE: Email service disabled during Google Workspace migration
  */
 export async function sendReportEmail(options: ReportEmailOptions): Promise<void> {
   const { recipients, reportName, data, format } = options;
 
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('Resend API key not configured, skipping email send');
-    return;
-  }
-
-  // Try to import Resend, but don't fail if not installed
-  try {
-    const { Resend } = await import('resend');
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    const emailHtml = generateEmailTemplate(reportName, data, format);
-    const filename = getReportFilename(reportName, format);
-
-    // Send email with attachment
-    // Note: Resend SDK attachment handling varies - this is a template
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'reports@kollect-it.com',
-      to: recipients,
-      subject: `📊 ${reportName} - ${new Date().toLocaleDateString()}`,
-      html: emailHtml,
-      attachments: [
-        {
-          filename,
-          content: Buffer.from(data),
-        },
-      ],
-    });
-
-    console.log(`Report email sent to: ${recipients.join(', ')}`);
-  } catch (error) {
-    // Resend not installed or error occurred
-    console.log(`Report email skipped (Resend not configured): ${recipients.join(', ')}`);
-  }
+  // Email service disabled during Google Workspace migration
+  console.log('[Report Email] Service disabled - Google Workspace migration pending');
+  console.log('[Report Email] Would send to:', recipients);
+  console.log('[Report Email] Report:', reportName);
+  console.log('[Report Email] Format:', format);
+  
+  // TODO: Implement Google Workspace SMTP when ready
+  return;
 }
 
 /**
  * Send alert email
+ * NOTE: Email service disabled during Google Workspace migration
  */
 export async function sendAlertEmail(
   recipients: string[],
   subject: string,
   content: string
 ): Promise<void> {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('Resend API key not configured, skipping alert email');
-    return;
-  }
-
-  try {
-    const { Resend } = await import('resend');
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body { font-family: Arial, sans-serif; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .alert { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 4px; }
-    .header { background: #ffc107; color: white; padding: 15px; border-radius: 4px 4px 0 0; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h2 style="margin: 0;">⚠️ ${subject}</h2>
-    </div>
-    <div class="alert">
-      <p>${content}</p>
-    </div>
-  </div>
-</body>
-</html>
-    `;
-
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'alerts@kollect-it.com',
-      to: recipients,
-      subject: `⚠️ ${subject}`,
-      html,
-    });
-
-    console.log(`Alert email sent to: ${recipients.join(', ')}`);
-  } catch (error) {
-    console.log(`Alert email skipped: ${recipients.join(', ')}`);
-  }
+  console.log('[Alert Email] Service disabled - Google Workspace migration pending');
+  console.log('[Alert Email] Would send to:', recipients);
+  console.log('[Alert Email] Subject:', subject);
+  console.log('[Alert Email] Content:', content);
+  
+  // TODO: Implement Google Workspace SMTP when ready
+  return;
 }
