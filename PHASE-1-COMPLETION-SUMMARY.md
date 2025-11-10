@@ -50,7 +50,7 @@ Phase 2 focuses on fixing navigation throughout the entire site:
 
 ## 📊 PROJECT PROGRESSION
 
-```
+```text
 Phase 1: Critical Fixes        ✅ COMPLETE
   ├─ TypeScript errors         ✅
   ├─ Environment validation    ✅

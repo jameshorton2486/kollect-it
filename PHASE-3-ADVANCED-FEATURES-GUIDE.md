@@ -7,6 +7,7 @@ Phase 3 covers four major advanced feature areas:
 ### 1. 📧 EMAIL INTEGRATION (Resend)
 
 **What you'll build:**
+
 - Welcome email template for new users
 - Order confirmation email with details
 - Shipment notification with tracking
@@ -17,6 +18,7 @@ Phase 3 covers four major advanced feature areas:
 ### 2. ❤️ WISHLIST FUNCTIONALITY
 
 **What you'll build:**
+
 - Wishlist database schema (many-to-many relationship)
 - API routes: add, remove, list wishlist items
 - WishlistButton component with heart icon
@@ -27,6 +29,7 @@ Phase 3 covers four major advanced feature areas:
 ### 3. 🔍 ADVANCED SEARCH
 
 **What you'll build:**
+
 - Full-text search API with filters
 - Price range filtering
 - Category filtering
@@ -38,6 +41,7 @@ Phase 3 covers four major advanced feature areas:
 ### 4. ⚡ PERFORMANCE OPTIMIZATION
 
 **What you'll build:**
+
 - Image optimization with Next.js Image component
 - Code splitting with dynamic imports
 - Caching headers configuration
@@ -49,7 +53,7 @@ Phase 3 covers four major advanced feature areas:
 
 ## 📊 IMPLEMENTATION BREAKDOWN
 
-```
+```text
 Phase 3: Advanced Features     ⏳ READY TO START
   ├─ Email Integration         ⏳
   │  ├─ Welcome email         ⏳
@@ -79,7 +83,8 @@ Phase 3: Advanced Features     ⏳ READY TO START
 ## 🎯 KEY FILES YOU'LL CREATE
 
 ### Email Templates (3 files)
-```
+
+```text
 src/emails/
 ├─ welcome.tsx
 ├─ order-confirmation.tsx
@@ -87,13 +92,15 @@ src/emails/
 ```
 
 ### Email Service (1 file)
-```
+
+```text
 src/lib/
 └─ email-service.ts
 ```
 
 ### Wishlist (4 files)
-```
+
+```text
 src/app/api/wishlist/
 ├─ add/route.ts
 ├─ remove/route.ts
@@ -104,7 +111,8 @@ src/components/
 ```
 
 ### Search (2 files)
-```
+
+```text
 src/app/api/
 └─ search/route.ts
 
@@ -113,7 +121,8 @@ src/components/
 ```
 
 ### Database (1 update)
-```
+
+```text
 prisma/
 └─ schema.prisma (add Wishlist model)
 ```
@@ -149,6 +158,7 @@ Press Enter and let the AI guide you through implementation
 **3-4 hours** for complete Phase 3 execution
 
 **Breakdown:**
+
 - Email integration: 30 minutes
 - Wishlist functionality: 45 minutes
 - Advanced search: 45 minutes
@@ -174,7 +184,7 @@ After Phase 3, you'll have:
 
 ## 📈 OVERALL PROGRESS
 
-```
+```text
 PHASE 1: Critical Fixes         ✅ COMPLETE
 PHASE 2: Navigation Audit       ⏳ (In Progress or Complete)
 PHASE 3: Advanced Features      ⏳ READY NOW

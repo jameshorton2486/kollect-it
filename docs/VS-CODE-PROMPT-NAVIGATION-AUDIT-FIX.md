@@ -105,8 +105,8 @@ export const footerNavigation = [
 ))}
 ```
 
-3. Ensure all links use Next.js `<Link>` (not `<a>` tags)
-4. Check mobile menu has same links as desktop
+1. Ensure all links use Next.js `<Link>` (not `<a>` tags)
+2. Check mobile menu has same links as desktop
 
 ### Step 3: Update Footer.tsx
 

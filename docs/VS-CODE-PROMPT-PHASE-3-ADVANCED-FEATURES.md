@@ -12,7 +12,7 @@ Implement advanced features: Email integration, Wishlist functionality, Advanced
 
 Create `src/emails/` directory with these files:
 
-**File: src/emails/welcome.tsx**
+### File: src/emails/welcome.tsx
 
 ```typescript
 import { Html, Body, Container, Text, Heading, Link, Button } from '@react-email/components';
@@ -42,7 +42,7 @@ export default function WelcomeEmail({ userFirstName }: WelcomeEmailProps) {
 }
 ```
 
-**File: src/emails/order-confirmation.tsx**
+### File: src/emails/order-confirmation.tsx**
 
 ```typescript
 import { Html, Body, Container, Text, Heading, Button } from '@react-email/components';
@@ -76,7 +76,7 @@ export default function OrderConfirmationEmail({
 }
 ```
 
-**File: src/emails/shipment-notification.tsx**
+### File: src/emails/shipment-notification.tsx**
 
 ```typescript
 import { Html, Body, Container, Text, Heading, Button, Link } from '@react-email/components';
@@ -112,7 +112,7 @@ export default function ShipmentNotificationEmail({
 
 ### Step 2: Create Email Service
 
-**File: src/lib/email-service.ts**
+### File: src/lib/email-service.ts**
 
 ```typescript
 import { Resend } from 'resend';
@@ -222,7 +222,7 @@ wishlistItems Wishlist[]
 
 ### Step 2: Create Wishlist API Routes
 
-**File: src/app/api/wishlist/add/route.ts**
+### File: src/app/api/wishlist/add/route.ts**
 
 ```typescript
 import { auth } from '@/auth';
@@ -260,7 +260,7 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-**File: src/app/api/wishlist/remove/route.ts**
+### File: src/app/api/wishlist/remove/route.ts**
 
 ```typescript
 import { auth } from '@/auth';
@@ -293,7 +293,7 @@ export async function DELETE(req: NextRequest) {
 }
 ```
 
-**File: src/app/api/wishlist/list/route.ts**
+### File: src/app/api/wishlist/list/route.ts**
 
 ```typescript
 import { auth } from '@/auth';
@@ -323,7 +323,7 @@ export async function GET() {
 
 ### Step 3: Create Wishlist UI Component
 
-**File: src/components/WishlistButton.tsx**
+### File: src/components/WishlistButton.tsx**
 
 ```typescript
 'use client';
@@ -396,7 +396,7 @@ export function WishlistButton({ productId, isWishlisted = false }: WishlistButt
 
 ### Step 1: Create Search API Route
 
-**File: src/app/api/search/route.ts**
+### File: src/app/api/search/route.ts**
 
 ```typescript
 import { prisma } from '@/lib/prisma';
@@ -471,7 +471,7 @@ export async function GET(req: NextRequest) {
 
 ### Step 2: Create Search Component
 
-**File: src/components/AdvancedSearch.tsx**
+### File: src/components/AdvancedSearch.tsx**
 
 ```typescript
 'use client';
@@ -768,3 +768,4 @@ After completing Phase 3:
 2. Test all features end-to-end
 3. Verify performance metrics
 4. Consider Phase 4: Analytics, Admin Panel, Advanced Features
+

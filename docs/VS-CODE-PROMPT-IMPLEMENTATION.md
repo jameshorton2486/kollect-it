@@ -1,6 +1,7 @@
 # VS CODE AI AGENT PROMPT – KOLLECT-IT PHASE 1 FIXES
 
 ## MISSION
+
 Fix all critical TypeScript errors and blockers preventing build.
 
 ## TASKS
