@@ -10,8 +10,8 @@ import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recha
 interface RevenueByCategory {
   category: string;
   revenue: number;
-  productsSold: number;
   percentage: number;
+  productsSold?: number;
 }
 
 interface RevenueByCategoryProps {
