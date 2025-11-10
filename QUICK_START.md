@@ -58,11 +58,6 @@ NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_key
 STRIPE_SECRET_KEY=sk_test_your_key
 
-# Resend (Email)
-RESEND_API_KEY=re_your_key
-EMAIL_FROM=Kollect-It <noreply@yourdomain.com>
-ADMIN_EMAIL=admin@yourdomain.com
-
 # ImageKit (Images)
 NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/YOUR_ID/
 NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=public_your_key
@@ -85,12 +80,6 @@ NODE_ENV=development
 1. Go to **https://dashboard.stripe.com/test/apikeys**
 2. Copy **Publishable key** → `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 3. Reveal and copy **Secret key** → `STRIPE_SECRET_KEY`
-
-#### Resend (Email):
-1. Go to **https://resend.com/api-keys**
-2. Create API key
-3. Copy to `RESEND_API_KEY`
-4. For testing, use: `EMAIL_FROM=Kollect-It <onboarding@resend.dev>`
 
 #### ImageKit (Images):
 1. Go to **https://imagekit.io/dashboard**
@@ -369,13 +358,11 @@ Once setup is complete:
 
 3. **Test Everything**
    - Complete a test purchase
-   - Verify emails are sent
    - Check order in admin dashboard
    - Test on mobile devices
 
 4. **Go Live**
    - Switch Stripe to live keys
-   - Verify domain in Resend
    - Configure webhooks
    - Deploy to production
 
@@ -386,7 +373,6 @@ Once setup is complete:
 - **Use Prisma Studio** to view database: `bun run db:studio`
 - **Monitor health endpoint** in production: `/api/health`
 - **Check build locally** before deploying: `bun run build`
-- **Test emails** thoroughly before going live
 - **Use test mode** in Stripe until ready for real payments
 
 ---

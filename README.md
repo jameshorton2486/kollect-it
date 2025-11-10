@@ -88,7 +88,7 @@ A full-stack Next.js application for Kollect-It antiques and collectibles market
 
 1. **Email Notification System** 🆕
 
-- Powered by Resend with React Email components
+- Email notifications (Google Workspace integration pending)
 - Order confirmation emails to customers
 - Order status update notifications with tracking
 - Admin new order alerts
@@ -159,7 +159,7 @@ This project requires several API keys and configurations. See [ENVIRONMENT_VARI
 
 - Complete list of all required variables
 - Where to get each API key
-- How to set variables locally and on Netlify
+- How to set variables locally and on Vercel
 - Security best practices
 
 **Quick setup:**
@@ -379,22 +379,11 @@ Edit `src/app/kollect-it-styles.css`:
    ```
 5. Deploy!
 
-### **Option 2: Netlify**
-
-This Next.js app can be deployed to Netlify as a dynamic site:
-
-```bash
-# Update netlify.toml if needed
-bun run build
-```
-
-Follow Netlify's Next.js deployment guide.
-
 ### **Database for Production:**
 
-For production, migrate from SQLite to PostgreSQL:
+For production, ensure PostgreSQL is configured:
 
-1. Get a PostgreSQL database (Railway.app, Supabase, Neon, etc.)
+1. Get a PostgreSQL database (Supabase, Neon, Railway, etc.)
 2. Update `.env`:
 
    ```env
@@ -420,7 +409,7 @@ For production, migrate from SQLite to PostgreSQL:
    - Generate: `openssl rand -base64 32`
    - Add to `.env`
 
-3. **Enable HTTPS** (Vercel/Netlify handle this automatically)
+3. **Enable HTTPS** (Vercel handles this automatically)
 
 ## 📖 API Documentation
 
@@ -488,7 +477,7 @@ If you need help with deployment, you can:
 4. ~~User Authentication~~ ✅ **Login, register, accounts, wishlist**
 5. ~~Checkout Flow~~ ✅ **Stripe payment integration with order tracking**
 6. ~~Order Management~~ ✅ **Admin order dashboard with status updates**
-7. ~~Email Notifications~~ ✅ **Automated emails with Resend**
+7. ~~Email Notifications~~ ✅ **Email stubs (Google Workspace integration pending)**
 
 ### **🚀 Ready to Add Next:**
 

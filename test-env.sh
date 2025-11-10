@@ -123,20 +123,14 @@ fi
 
 echo ""
 
-# Test 5: Optional Services (Stripe, Resend, ImageKit)
-echo -e "${YELLOW}TEST 5: Optional Services (Stripe, Resend, ImageKit)${NC}"
+# Test 5: Optional Services (Stripe, ImageKit)
+echo -e "${YELLOW}TEST 5: Optional Services (Stripe, ImageKit)${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 if [ -z "$STRIPE_SECRET_KEY" ] || [ "$STRIPE_SECRET_KEY" = "sk_test_your_secret_key_here" ]; then
     echo -e "${YELLOW}⚠️  STRIPE_SECRET_KEY not configured (optional)${NC}"
 else
     echo -e "${GREEN}✅ STRIPE_SECRET_KEY: Configured${NC}"
-fi
-
-if [ -z "$RESEND_API_KEY" ] || [ "$RESEND_API_KEY" = "re_your_api_key_here" ]; then
-    echo -e "${YELLOW}⚠️  RESEND_API_KEY not configured (optional)${NC}"
-else
-    echo -e "${GREEN}✅ RESEND_API_KEY: Configured${NC}"
 fi
 
 if [ -z "$NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY" ] || [ "$NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY" = "public_your_public_key_here" ]; then
