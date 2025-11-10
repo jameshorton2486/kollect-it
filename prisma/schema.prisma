@@ -82,6 +82,9 @@ model Product {
   isDraft             Boolean     @default(true)   // Not visible until published
   publishedAt         DateTime?
 
+  // AI GENERATED PRODUCTS RELATION
+  aiGeneratedProducts AIGeneratedProduct[]
+
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
@@ -165,4 +168,51 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
+}
+
+// AI-Generated Product Model - Phase 3
+model AIGeneratedProduct {
+  id                String    @id @default(cuid())
+  googleDriveId     String?
+  imageUrl          String?
+  
+  // AI Generated Content
+  aiTitle           String    @db.VarChar(500)
+  aiDescription     String    @db.Text
+  aiCategory        String
+  aiCondition       String    @default("GOOD")
+  aiEstimatedAge    String?
+  aiRarity          String?
+  
+  // Image Analysis
+  imageQualityScore Float?    // 0-100
+  authenticityScore Float?    // 0-100
+  imageAnalysis     Json?     // GPT-4V analysis result
+  
+  // Pricing Data
+  suggestedPrice    Float
+  priceLowRange     Float
+  priceHighRange    Float
+  priceConfidence   Float     // 0-100
+  pricingAnalysis   Json      // {aiSource, historicalSource, marketSource, weights}
+  
+  // Review Status
+  status            String    @default("PENDING") // PENDING, APPROVED, REJECTED, PUBLISHED
+  reviewedBy        String?   // Admin user ID
+  reviewedAt        DateTime?
+  rejectionReason   String?
+  
+  // Product Link (after approval)
+  productId         String?
+  product           Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  
+  // Metadata
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([reviewedBy])
+  @@index([productId])
+  @@index([status, createdAt])
 }
