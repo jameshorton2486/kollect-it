@@ -27,14 +27,14 @@ export default function ShippingReturnsPage() {
         <section className="mt-12 space-y-6">
           <h2 className="ki-heading-md">Shipping</h2>
           <p className="ki-text-base">
-            We handle every item with museum-quality care. Your order will be securely packaged, insured, and shipped with full tracking and delivery confirmation. Shipping times vary based on item size and destination, but most orders ship within 3–5 business days.
+            Your order will be securely packaged, insured, and shipped with full tracking and delivery confirmation. Shipping times vary based on item size and destination, but most orders ship within 3–5 business days. Professional packaging ensures items arrive in the condition described.
           </p>
         </section>
 
         <section className="mt-8 space-y-6">
           <h2 className="ki-heading-md">Returns & Exchanges</h2>
           <p className="ki-text-base">
-            If you're not satisfied with your purchase, we accept returns within 30 days of delivery. Items must be returned in original condition with all documentation. Contact our team to begin a return or exchange.
+            We encourage careful review of all photos and descriptions before purchasing. Returns are possible but discouraged. If you're not satisfied with your purchase, contact us within 30 days of delivery to discuss. Items must be returned in original condition with all documentation.
           </p>
         </section>
 

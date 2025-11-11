@@ -116,7 +116,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
                   <ul className="space-y-2 text-sm text-ink-secondary">
                     <li className="flex gap-3">
                       <span className="text-brand-gold flex-shrink-0">→</span>
-                      <span>Museum-quality materials ensure safe transit</span>
+                      <span>Quality materials ensure safe transit</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-brand-gold flex-shrink-0">→</span>

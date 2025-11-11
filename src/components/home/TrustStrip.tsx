@@ -9,9 +9,9 @@ export default function TrustStrip() {
             <div className="flex justify-center mb-4">
               <Shield className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
             </div>
-            <h3 className="font-semibold text-ink mb-2 text-lg">Authentication Guaranteed</h3>
+            <h3 className="font-semibold text-ink mb-2 text-lg">Professional Authentication</h3>
             <p className="text-ink-light text-sm leading-relaxed">
-              Expert-vetted items with detailed descriptions, provenance documentation, and certification where applicable.
+              We authenticate items using professional resources and valuation tools. If you believe we've made an error, contact us and we'll review and adjust. Honesty is our foundation.
             </p>
           </div>
           
@@ -29,9 +29,9 @@ export default function TrustStrip() {
             <div className="flex justify-center mb-4">
               <Award className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
             </div>
-            <h3 className="font-semibold text-ink mb-2 text-lg">Expert Curated</h3>
+            <h3 className="font-semibold text-ink mb-2 text-lg">Personally Curated</h3>
             <p className="text-ink-light text-sm leading-relaxed">
-              Every piece selected for historical significance, aesthetic merit, and investment potential.
+              Every item photographed from multiple angles with honest, detailed descriptions. Questions? We'll send more photos or clarify anything.
             </p>
           </div>
           
@@ -39,9 +39,9 @@ export default function TrustStrip() {
             <div className="flex justify-center mb-4">
               <Undo2 className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
             </div>
-            <h3 className="font-semibold text-ink mb-2 text-lg">30-Day Returns</h3>
+            <h3 className="font-semibold text-ink mb-2 text-lg">Returns Available</h3>
             <p className="text-ink-light text-sm leading-relaxed">
-              Not quite right? Full refunds within 30 days, no questions asked. Your satisfaction is guaranteed.
+              We encourage careful review of all photos and descriptions before purchasing. Returns are possible but discouraged. Contact us to discuss any concerns.
             </p>
           </div>
           
@@ -49,9 +49,9 @@ export default function TrustStrip() {
             <div className="flex justify-center mb-4">
               <Zap className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
             </div>
-            <h3 className="font-semibold text-ink mb-2 text-lg">Fast Processing</h3>
+            <h3 className="font-semibold text-ink mb-2 text-lg">Fast Shipping</h3>
             <p className="text-ink-light text-sm leading-relaxed">
-              Orders ship within 2 business days. Premium items get white-glove handling and priority service.
+              Ships within 3-4 business days. Professional packaging to ensure items arrive in condition described.
             </p>
           </div>
           
@@ -61,7 +61,7 @@ export default function TrustStrip() {
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">Secure Checkout</h3>
             <p className="text-ink-light text-sm leading-relaxed">
-              Bank-level encryption. Your payment information is protected by industry-leading security standards.
+              Your payment information is protected by industry-leading security standards.
             </p>
           </div>
         </div>

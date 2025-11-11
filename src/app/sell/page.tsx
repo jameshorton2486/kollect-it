@@ -2,18 +2,18 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Sell Your Collection - Kollect-It',
-  description: 'Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.',
+  title: 'Sell Your Items - Kollect-It',
+  description: 'Sell your collectibles with Kollect-It. Professional valuation, fair pricing, and transparent service. Skip the 25-50% auction house fees.',
   openGraph: {
-    title: 'Sell Your Collection - Kollect-It',
-    description: 'Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.',
+    title: 'Sell Your Items - Kollect-It',
+    description: 'Sell your collectibles with Kollect-It. Professional valuation, fair pricing, and transparent service. Skip the 25-50% auction house fees.',
     images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sell Your Collection - Kollect-It',
-    description: 'Consign your rare pieces with Kollect-It. Expert authentication, fair pricing, and white-glove service for discerning collectors.',
+    title: 'Sell Your Items - Kollect-It',
+    description: 'Sell your collectibles with Kollect-It. Professional valuation, fair pricing, and transparent service. Skip the 25-50% auction house fees.',
     images: ['https://ext.same-assets.com/kollect-it/og-home.jpg'],
   },
 };
@@ -26,16 +26,16 @@ export default function SellPage() {
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
-              CONSIGNMENT SERVICES
+              HAVE ITEMS TO SELL?
             </p>
             <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
-              Turn Your Treasures<br />Into Revenue
+              Sell Your Items<br />Directly to Collectors
             </h1>
             <p className="text-xl md:text-2xl text-ink-light font-serif mb-8 leading-relaxed">
-              Join our curated marketplace and reach serious collectors nationwide. Expert authentication, professional photography, and white glove service included.
+              Whether you have a single valuable piece or a collection, we're interested in working with you. Fair valuations, transparent process, no 25-50% auction house commissions.
             </p>
             <a href="#consignment-form" className="inline-block bg-accent-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity">
-              Start Selling Today
+              Tell Us About Your Items
             </a>
           </div>
         </div>

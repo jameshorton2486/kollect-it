@@ -23,13 +23,13 @@ const LazyProcessOverview = dynamic(() => import("@/components/home/ProcessOverv
 });
 
 export const metadata: Metadata = {
-  title: "Kollect-It • Curated Antiques & Collectibles",
+  title: "Kollect-It • Collectibles Worth Collecting",
   description:
-    "Discover authenticated antiques and collectibles curated by specialists. Explore latest arrivals and shop by category with confidence.",
+    "Professionally described, fairly priced, personally curated. Browse rare books, fine art, collectibles, and militaria from $500-$15,000.",
   openGraph: {
-    title: "Kollect-It • Curated Antiques & Collectibles",
+    title: "Kollect-It • Collectibles Worth Collecting",
     description:
-      "Discover authenticated antiques and collectibles curated by specialists. Explore latest arrivals and shop by category with confidence.",
+      "Professionally described, fairly priced, personally curated. Browse rare books, fine art, collectibles, and militaria from $500-$15,000.",
     url: "https://kollect-it.com/",
     siteName: "Kollect-It",
     images: [
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kollect-It • Curated Antiques & Collectibles",
+    title: "Kollect-It • Collectibles Worth Collecting",
     description:
-      "Discover authenticated antiques and collectibles curated by specialists.",
+      "Professionally described, fairly priced, personally curated collectibles.",
     images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
   },
 };

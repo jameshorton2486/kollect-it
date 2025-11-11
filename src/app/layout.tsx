@@ -32,18 +32,18 @@ const archivoBlack = Archivo_Black({
 
 export const metadata: Metadata = {
   title: {
-    default: "Kollect-It – Curated Antiques & Collectibles",
+    default: "Kollect-It – Collectibles Worth Collecting",
     template: "%s – Kollect-It",
   },
   description:
-    "Authenticated art, antique books, collectibles, and militaria—curated with provenance for discerning collectors.",
+    "Professionally described, fairly priced, personally curated. Rare books, fine art, collectibles, and militaria from $500-$15,000.",
   metadataBase: new URL('https://kollect-it.com'),
   openGraph: {
     type: 'website',
     siteName: 'Kollect-It',
-    title: 'Kollect-It – Curated Antiques & Collectibles',
+    title: 'Kollect-It – Collectibles Worth Collecting',
     description:
-      'Explore authenticated fine art, rare books, collectibles, and militaria with trusted provenance.',
+      'Professionally described, fairly priced, personally curated. Items from $500-$15,000 that deserve expert attention.',
     url: 'https://kollect-it.com',
     images: [
       {

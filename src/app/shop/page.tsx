@@ -162,11 +162,11 @@ export default async function ShopPage({ searchParams }: { searchParams?: Promis
 
           {/* Animated Headline */}
           <div className="shop-intro text-center mb-[clamp(3rem,6vw,5rem)]">
-            <p className="section-subtitle" data-reveal>EXPERTLY CURATED COLLECTIONS</p>
+            <p className="section-subtitle" data-reveal>PROFESSIONALLY CURATED COLLECTIONS</p>
             <h1 className="section-title-main" data-reveal data-reveal-delay="100">Shop by Category</h1>
             <p className="max-w-[700px] mx-auto text-base leading-[1.7] text-[var(--color-gray-dark)]" data-reveal data-reveal-delay="200">
-              Discover authenticated art pieces, rare books, collectibles, and historical artifacts
-              curated for discerning collectors who insist on quality and character.
+              Browse rare books, fine art, collectibles, and historical artifacts.
+              Professionally described, fairly priced, personally curated.
             </p>
           </div>
 

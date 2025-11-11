@@ -35,49 +35,49 @@ export default function Hero() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
         {/* Tagline */}
         <p className="text-sm tracking-[0.2em] uppercase text-[#D3AF37] mb-6 font-light will-change-transform">
-          Curated for the Discerning Collector
+          Professionally Curated Collectibles
         </p>
 
         {/* Main Headline */}
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-light mb-6 leading-tight will-change-transform">
-          Authenticated Antiques,
+          Collectibles Worth
           <br />
-          Curated with Care
+          Collecting
         </h1>
 
         {/* Subheading */}
         <p className="text-lg md:text-xl text-gray-200 mb-4 max-w-3xl mx-auto font-light leading-relaxed">
-          Discover museum-quality antiques and rare collectibles handpicked by specialists.
+          Professionally described, fairly priced, personally curated.
           <br />
-          Each piece is authenticated, documented, and arrives ready to treasure.
+          Items from $500-$15,000 that deserve expert attention.
         </p>
 
         {/* Feature Bullets */}
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-gray-300 mb-10">
-          <span>Fine Art to Rare Books</span>
+          <span>Rare Books to Fine Art</span>
           <span className="hidden md:inline">•</span>
-          <span>Furniture to Collectibles</span>
+          <span>Collectibles to Militaria</span>
           <span className="hidden md:inline">•</span>
-          <span>Expert Authentication</span>
+          <span>Professionally Authenticated</span>
           <span className="hidden md:inline">•</span>
-          <span>Insured Shipping</span>
+          <span>Insured & Tracked Shipping</span>
         </div>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <Link
-            href="/collections"
+            href="/shop"
             className="px-8 py-4 bg-[#D3AF37] text-[#1a1a1a] font-medium hover:bg-[#c9a532] transition-colors duration-300 min-w-[200px] rounded-sm"
-            onMouseEnter={() => handleLinkHover('/collections')}
+            onMouseEnter={() => handleLinkHover('/shop')}
           >
-            Browse Collections
+            Browse Collectibles
           </Link>
           <Link
-            href="/authentication"
+            href="/about"
             className="px-8 py-4 border-2 border-white text-white font-medium hover:bg-white hover:text-[#1a1a1a] transition-colors duration-300 min-w-[200px] rounded-sm"
-            onMouseEnter={() => handleLinkHover('/authentication')}
+            onMouseEnter={() => handleLinkHover('/about')}
           >
-            How We Authenticate
+            How We Work
           </Link>
         </div>
 
@@ -85,7 +85,7 @@ export default function Hero() {
         <div className="text-sm text-gray-300">
           <p className="flex items-center justify-center gap-2">
             <span className="text-[#D3AF37]">★★★★★</span>
-            <span>Trusted by museums and private collectors</span>
+            <span>Honest descriptions, fair pricing, real communication</span>
           </p>
         </div>
       </div>

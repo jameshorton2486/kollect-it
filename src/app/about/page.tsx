@@ -33,16 +33,16 @@ async function getCategories() {
         id: '1',
         name: 'Fine Art',
         slug: 'fine-art',
-        description: 'Authenticated art pieces spanning various periods and mediums, from paintings to prints and sculptures',
+        description: 'Paintings, prints, photography, sculptures. Price range: $500-$15,000',
         image: '',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: '2',
-        name: 'Antique Books',
-        slug: 'antique-books',
-        description: 'Scarce first editions, beautifully bound volumes, and literary treasures for discerning bibliophiles',
+        name: 'Rare Books',
+        slug: 'rare-books',
+        description: 'First editions, signed copies, historical texts, vintage finds. Price range: $200-$8,000',
         image: '',
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -51,7 +51,7 @@ async function getCategories() {
         id: '3',
         name: 'Collectibles',
         slug: 'collectibles',
-        description: 'Rare memorabilia, unique ephemera, vintage timepieces, and authenticated collectible items',
+        description: 'Vintage items, memorabilia, limited editions, sought-after finds. Price range: $300-$10,000',
         image: '',
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -60,7 +60,7 @@ async function getCategories() {
         id: '4',
         name: 'Militaria',
         slug: 'militaria',
-        description: 'Historical artifacts with documented provenance and significance, from military medals to period documents',
+        description: 'Historical uniforms, medals, patches, insignia, documents. Price range: $200-$5,000',
         image: '',
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -102,13 +102,13 @@ export default async function AboutPage() {
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
-              ABOUT US
+              ABOUT KOLLECT-IT
             </p>
             <h1 className="font-display text-5xl md:text-6xl mb-6 leading-tight text-ink">
-              Preserving History,<br />One Treasure at a Time
+              The Best Collectibles<br />Deserve Careful Attention
             </h1>
             <p className="text-xl md:text-2xl text-ink-light font-serif mb-8 leading-relaxed">
-              Since 2020, Kollect-It has connected passionate collectors with authenticated antiques and the stories behind them. We believe every piece deserves expert care and appreciation.
+              We fill the gap for items worth $500-$15,000. Professionally valued, fairly priced, personally curated by someone who cares.
             </p>
           </div>
         </div>
@@ -122,28 +122,32 @@ export default async function AboutPage() {
               OUR STORY
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-8 leading-tight">
-              Expertise Meets Passion
+              Filling the Gap
             </h2>
             
             <div className="prose prose-lg max-w-none space-y-6 text-ink-light leading-relaxed">
               <p className="text-lg md:text-xl font-serif italic mb-6">
-                Kollect-It began with a simple belief: every antique deserves to be appreciated, preserved, and passed down with its story intact. Founded by a collective of historians, appraisers, and passionate collectors, we saw a gap in the marketplace for a platform that combined expertise, transparency, and genuine care for fine items.
+                We started with a passion for collectibles and a frustration: items worth $500-$15,000 fall through the cracks.
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                Our founders spent years working in auction houses, museums, and private collections. They witnessed incredible treasures find their way to underappreciated settings—beautiful pieces whose histories went untold, whose authenticity was questioned, whose value was misunderstood. They also saw collectors struggling to find trustworthy sources for significant acquisitions, constantly worrying about authenticity and fair pricing.
+                Auction houses have minimums around $10,000. Online marketplaces feel risky and impersonal. Private sales are hit-or-miss.
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                The vision for Kollect-It emerged from these experiences: create a curated marketplace where authentication is rigorous, provenance is documented, pricing is fair, and every transaction is a relationship built on trust. We wanted to build something different—not a transaction platform, but a community dedicated to preservation and appreciation of fine objects.
+                We built Kollect-It to fill that gap.
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                Today, Kollect-It represents thousands of hours of expert curation, a network of trusted dealers and consignors, and a growing community of collectors who share our passion for quality and authenticity. We've authenticated pieces ranging from Victorian furniture to contemporary art, rare first editions to historical militaria. Each acquisition tells a story; our job is to help you understand and appreciate it.
+                Our collection is personally curated. Every item is accurately described, professionally valued, and fairly priced—typically between auction value and retail price, so you get a better deal than traditional auctions.
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                Looking ahead, we're committed to deepening our expertise, expanding our community, and setting new standards for how authenticated antiques are bought and sold online. We're building the marketplace we wish existed when we started—professional, transparent, and genuinely invested in your success as a collector.
+                We're a one-person operation committed to honesty. If you have questions, want additional photos, or disagree with our valuation, reach out. We'll listen and adjust if we're wrong.
+              </p>
+
+              <p className="text-base md:text-lg leading-8">
+                Because the best collectibles deserve careful attention.
               </p>
             </div>
           </div>
@@ -155,52 +159,52 @@ export default async function AboutPage() {
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
-              OUR VALUES
+              WHY COLLECTORS CHOOSE KOLLECT-IT
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
-              What Guides Our Work
+              What Makes Us Different
             </h2>
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Authenticity First</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">Accurate Descriptions</h3>
                 <p className="text-ink-light leading-relaxed">
-                  Every item is rigorously verified by our team of experts with comprehensive documentation of materials, methods, and provenance. We stand behind every authentication.
+                  Every item photographed from multiple angles with honest, detailed descriptions. Questions? We'll send more photos or clarify anything.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Complete Transparency</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">Fair Pricing</h3>
                 <p className="text-ink-light leading-relaxed">
-                  Full disclosure of condition, including detailed photographs, restoration history, and known issues. You see exactly what you're purchasing.
+                  We price between what auctions get and what retail costs. You save compared to traditional auction houses.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Continuous Education</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">Professional Valuation</h3>
                 <p className="text-ink-light leading-relaxed">
-                  Sharing knowledge to help collectors make informed decisions. Our buying guides, authentication articles, and expert insights are freely available.
+                  We use industry-standard resources to value items accurately. If you disagree, we'll review it.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Respectful Preservation</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">Real Communication</h3>
                 <p className="text-ink-light leading-relaxed">
-                  Treating each piece with the care, respect, and reverence it deserves. Conservation, proper handling, and security are non-negotiable.
+                  Direct contact with the owner. Real person, real answers. No corporate run-around.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Community Building</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">Careful Shipping</h3>
                 <p className="text-ink-light leading-relaxed">
-                  Connecting collectors, dealers, historians, and enthusiasts. We're stronger together, sharing expertise and appreciation for our shared passion.
+                  Insured and tracked. Professional packaging to ensure your items arrive the way they should.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Excellence Always</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">Transparency</h3>
                 <p className="text-ink-light leading-relaxed">
-                  From expert photography to white glove service, we approach every detail with professionalism and attention to quality. Excellence isn't optional.
+                  Full disclosure of condition, including known issues and restoration history. You see exactly what you're purchasing.
                 </p>
               </div>
             </div>
@@ -297,9 +301,9 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Sale & White Glove Fulfillment</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">Sale & Careful Fulfillment</h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    When an item sells, we handle everything: secure payment processing, professional packaging with archival materials, full insurance, and tracking. Your piece arrives as beautifully as it left our hands.
+                    When an item sells, we handle everything: secure payment processing, professional packaging, full insurance, and tracking. Your piece arrives as beautifully as it left our hands.
                   </p>
                 </div>
               </div>
@@ -323,7 +327,7 @@ export default async function AboutPage() {
               <div className="team-member bg-white p-8 rounded-lg">
                 <h3 className="font-serif text-2xl text-ink mb-2">Fine Art & Paintings</h3>
                 <p className="text-ink-light leading-relaxed mb-4">
-                  Our fine art specialists bring credentials from major museums and auction houses. With expertise spanning Old Masters to contemporary works, they verify authenticity through technical analysis, provenance research, and comparison with institutional records.
+                  We authenticate art using professional valuation resources and technical analysis. Provenance research and comparison with documented sales records inform every listing.
                 </p>
               </div>
 
