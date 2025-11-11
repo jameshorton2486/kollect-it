@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 /**
  * Dashboard Metrics API
@@ -47,8 +47,8 @@ export async function GET(request: NextRequest) {
     });
 
     // Calculate revenue
-    const totalRevenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
-    const previousRevenue = previousOrders.reduce((sum, order) => sum + (order.total || 0), 0);
+    const totalRevenue = orders.reduce((sum: number, order: any) => sum + (order.total || 0), 0);
+    const previousRevenue = previousOrders.reduce((sum: number, order: any) => sum + (order.total || 0), 0);
     const revenueTrend = previousRevenue > 0 
       ? ((totalRevenue - previousRevenue) / previousRevenue) * 100 
       : 0;
@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const completedOrders = orders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
+    const completedOrders = orders.filter((o: any) => o.status === 'delivered' || o.status === 'completed').length;
     const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
     // Daily revenue for chart
@@ -80,9 +80,9 @@ export async function GET(request: NextRequest) {
       const dayEnd = new Date(date.setHours(23, 59, 59, 999));
 
       const dayOrders = orders.filter(
-        (o) => o.createdAt >= dayStart && o.createdAt <= dayEnd
+        (o: any) => o.createdAt >= dayStart && o.createdAt <= dayEnd
       );
-      const dayRevenue = dayOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+      const dayRevenue = dayOrders.reduce((sum: number, o: any) => sum + (o.total || 0), 0);
 
       dailyRevenue.push({
         date: dayStart.toISOString().split('T')[0],
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const productsByCategory = categories.map((cat) => ({
+    const productsByCategory = categories.map((cat: any) => ({
       name: cat.name,
       count: cat._count.products,
     }));
@@ -144,7 +144,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const returningCustomers = customersWithOrders.filter(u => u._count.orders > 1).length;
+    const returningCustomers = customersWithOrders.filter((u: any) => u._count.orders > 1).length;
     const returningRate = customersWithOrders.length > 0 
       ? (returningCustomers / customersWithOrders.length) * 100 
       : 0;
@@ -152,8 +152,8 @@ export async function GET(request: NextRequest) {
     // Top products by revenue
     const productSales = new Map<string, { title: string; sales: number; revenue: number }>();
 
-    orders.forEach((order) => {
-      order.items.forEach((item) => {
+    orders.forEach((order: any) => {
+      order.items.forEach((item: any) => {
         if (item.product) {
           const existing = productSales.get(item.product.id) || {
             title: item.product.title,

@@ -162,6 +162,56 @@ export async function GET(request: NextRequest) {
       ? ((totalOrders - previousOrders.length) / previousOrders.length) * 100
       : 0;
 
+    // Enhanced analytics: Payment methods
+    const paymentMethodsMap = orders.reduce((acc: any, order: any) => {
+      const method = order.paymentMethod || 'card';
+      if (!acc[method]) {
+        acc[method] = { method, count: 0, revenue: 0 };
+      }
+      acc[method].count += 1;
+      acc[method].revenue += order.total;
+      return acc;
+    }, {});
+    const paymentMethods = Object.values(paymentMethodsMap);
+
+    // Enhanced analytics: Hourly distribution
+    const hourlyMap = orders.reduce((acc: any, order: any) => {
+      const hour = new Date(order.createdAt).getHours();
+      if (!acc[hour]) {
+        acc[hour] = { hour, orders: 0 };
+      }
+      acc[hour].orders += 1;
+      return acc;
+    }, {});
+    const hourlyDistribution = Array.from({ length: 24 }, (_, i) => ({
+      hour: i,
+      orders: hourlyMap[i]?.orders || 0,
+    }));
+
+    // Enhanced analytics: Shipping status
+    const shippingStatusMap = orders.reduce((acc: any, order: any) => {
+      const status = order.status || 'pending';
+      if (!acc[status]) {
+        acc[status] = { status, count: 0 };
+      }
+      acc[status].count += 1;
+      return acc;
+    }, {});
+    const shippingStatus = Object.values(shippingStatusMap);
+
+    // Enhanced analytics: Daily orders count
+    const ordersByDay = orders.reduce((acc: any, order: any) => {
+      const date = order.createdAt.toISOString().split('T')[0];
+      acc[date] = (acc[date] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Merge daily revenue with order counts
+    const enhancedDailyRevenue = dailyRevenue.map((day: any) => ({
+      ...day,
+      orders: ordersByDay[day.date] || 0,
+    }));
+
     // Sales analytics response
     const analytics = {
       period: `Last ${period} days`,
@@ -174,9 +224,13 @@ export async function GET(request: NextRequest) {
         revenueGrowth,
         orderGrowth,
       },
-      dailyRevenue,
+      dailyRevenue: enhancedDailyRevenue,
       categoryData,
       topProducts,
+      // Enhanced analytics
+      paymentMethods,
+      hourlyDistribution,
+      shippingStatus,
       generatedAt: new Date().toISOString(),
     };
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { exportSalesCSV, exportProductsCSV } from '@/lib/csv-export';
+import { EnhancedSalesAnalytics } from '@/components/admin/EnhancedSalesAnalytics';
 
 interface SalesData {
   period: string;
@@ -16,7 +17,7 @@ interface SalesData {
     revenueGrowth: number;
     orderGrowth: number;
   };
-  dailyRevenue: Array<{ date: string; revenue: number }>;
+  dailyRevenue: Array<{ date: string; revenue: number; orders: number }>;
   categoryData: Array<{ name: string; revenue: number; orders: number }>;
   topProducts: Array<{
     id: string;
@@ -25,6 +26,9 @@ interface SalesData {
     quantity: number;
     orders: number;
   }>;
+  paymentMethods: Array<{ method: string; count: number; revenue: number }>;
+  hourlyDistribution: Array<{ hour: number; orders: number }>;
+  shippingStatus: Array<{ status: string; count: number }>;
 }
 
 export default function SalesAnalyticsPage() {
@@ -107,7 +111,9 @@ export default function SalesAnalyticsPage() {
           
           {/* Period Selector */}
           <div className="flex gap-2">
+            <label htmlFor="period-select" className="sr-only">Select time period</label>
             <select
+              id="period-select"
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
@@ -174,6 +180,19 @@ export default function SalesAnalyticsPage() {
               </div>
             </div>
 
+            {/* Enhanced Analytics Charts */}
+            <div className="mb-8">
+              <EnhancedSalesAnalytics 
+                data={{
+                  dailyRevenue: salesData.dailyRevenue,
+                  paymentMethods: salesData.paymentMethods,
+                  hourlyDistribution: salesData.hourlyDistribution,
+                  shippingStatus: salesData.shippingStatus,
+                }}
+                period={period}
+              />
+            </div>
+
             {/* Revenue by Category */}
             <div className="bg-white rounded-lg shadow p-6 mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Revenue by Category</h2>
@@ -189,7 +208,7 @@ export default function SalesAnalyticsPage() {
                         className="bg-amber-600 h-2 rounded-full"
                         style={{
                           width: `${(category.revenue / salesData.summary.totalRevenue) * 100}%`,
-                        }}
+                        } as React.CSSProperties}
                       ></div>
                     </div>
                   </div>
