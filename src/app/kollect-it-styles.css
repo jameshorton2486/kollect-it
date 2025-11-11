@@ -4714,3 +4714,493 @@ input[type="search"].search-input {
   background: var(--card);
   border-color: var(--border);
 }
+
+/* ===================================
+   TRUST & SECURITY VISUALS - PHASE 5 STEP 10
+   =================================== */
+
+/* Trust Strip Section */
+.trust-strip {
+  padding: 48px 0;
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-gray-light);
+  border-bottom: 1px solid var(--color-gray-light);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (min-width: 768px) {
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .trust-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.trust-item {
+  text-align: center;
+  padding: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.trust-item:hover {
+  transform: translateY(-4px);
+}
+
+.trust-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(177, 135, 76, 0.2);
+}
+
+.trust-icon {
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+
+.trust-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.trust-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Trust Badges (Checkout, Product Pages) */
+.trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  transition: all var(--transition-fast);
+}
+
+.trust-badge:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(177, 135, 76, 0.15);
+}
+
+.trust-badge-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.trust-badge-text {
+  font-weight: 500;
+}
+
+/* Security Icons (Payment Methods) */
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.payment-method-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 32px;
+  padding: 4px 8px;
+  background: white;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.payment-method-icon:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.payment-method-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Security Badge (SSL, PCI) */
+.security-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-success);
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.security-badge-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Product Trust Indicators */
+.product-trust-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.trust-indicator {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.trust-indicator-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.trust-indicator-content {
+  flex: 1;
+}
+
+.trust-indicator-title {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.trust-indicator-description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+/* Footer Trust Elements */
+.footer-trust {
+  padding: 32px 0;
+  border-top: 1px solid var(--color-gray-light);
+  text-align: center;
+}
+
+.footer-trust-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.footer-trust-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-trust-icon {
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  filter: grayscale(1);
+}
+
+.footer-trust-icon:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+/* About Page Trust Enhancements */
+.about-trust-section {
+  padding: 48px 0;
+  background: var(--color-bg-alt);
+  border-radius: 16px;
+  margin: 48px 0;
+}
+
+.about-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .about-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.about-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  background: white;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 12px;
+  transition: all var(--transition-fast);
+}
+
+.about-trust-item:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+.about-trust-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.about-trust-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.about-trust-value {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Shipping & Returns Link Highlight */
+.policy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: 2px solid var(--color-accent);
+  border-radius: 8px;
+  transition: all var(--transition-fast);
+}
+
+.policy-link:hover {
+  background: var(--color-accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(177, 135, 76, 0.25);
+}
+
+.policy-link-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Checkout Trust Summary */
+.checkout-trust-summary {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(177, 135, 76, 0.05) 0%, rgba(177, 135, 76, 0.1) 100%);
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.checkout-trust-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.checkout-trust-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkout-trust-point {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.checkout-trust-check {
+  width: 20px;
+  height: 20px;
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+/* Stripe Badge Enhancement */
+.stripe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: white;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.stripe-badge:hover {
+  border-color: #635BFF;
+  box-shadow: 0 2px 8px rgba(99, 91, 255, 0.15);
+}
+
+.stripe-logo {
+  height: 18px;
+  width: auto;
+}
+
+/* Authentication Badge (Product Detail) */
+.authentication-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(177, 135, 76, 0.25);
+}
+
+.authentication-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Mobile Optimization for Trust Elements */
+@media (max-width: 767px) {
+  .trust-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .trust-badges {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .trust-badge {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .payment-methods {
+    gap: 8px;
+  }
+  
+  .payment-method-icon {
+    width: 42px;
+    height: 28px;
+  }
+}
+
+/* Dark Theme Trust & Security Styles */
+.dark .trust-strip {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .trust-badges {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .trust-badge {
+  background: var(--muted);
+  border-color: var(--border);
+}
+
+.dark .payment-method-icon {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .product-trust-indicators {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .about-trust-section {
+  background: var(--card);
+}
+
+.dark .about-trust-item {
+  background: var(--muted);
+  border-color: var(--border);
+}
+
+.dark .checkout-trust-summary {
+  background: rgba(211, 175, 55, 0.1);
+  border-color: var(--accent);
+}
+
+.dark .stripe-badge {
+  background: var(--card);
+  border-color: var(--border);
+}
