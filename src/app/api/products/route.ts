@@ -5,51 +5,35 @@ import { Prisma } from '@prisma/client';
 import { logger } from '@/lib/logger';
 import { getRequestId } from '@/lib/request-context';
 import { respondError } from '@/lib/api-error';
+import { rateLimiters } from '@/lib/rate-limit';
+import { applySecurityHeaders } from '@/lib/security';
+import { cache, cacheKeys, cacheTTL } from '@/lib/cache';
 
 // GET /api/products - Get all products
-// Lightweight in-memory rate limiter (per-instance). For multi-instance, use Redis.
-const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
-const RATE_LIMIT_MAX = 60; // 60 req/min per ip
-const ipHits = new Map<string, { count: number; resetAt: number }>();
-
-function isRateLimited(ip: string) {
-  const now = Date.now();
-  const rec = ipHits.get(ip);
-  if (!rec || rec.resetAt < now) {
-    ipHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return { limited: false, remaining: RATE_LIMIT_MAX - 1, reset: RATE_LIMIT_WINDOW_MS };
-  }
-  if (rec.count >= RATE_LIMIT_MAX) {
-    return { limited: true, remaining: 0, reset: rec.resetAt - now };
-  }
-  rec.count += 1;
-  return { limited: false, remaining: RATE_LIMIT_MAX - rec.count, reset: rec.resetAt - now };
-}
-
 export async function GET(request: NextRequest) {
   try {
-    // Rate limit by IP (best-effort). Use proxy headers in route handlers.
-    const xfwd = request.headers.get('x-forwarded-for') || '';
-    const realIp = request.headers.get('x-real-ip') || '';
-    const ip = (xfwd.split(',')[0]?.trim() || realIp || 'anonymous');
-    const rl = isRateLimited(ip);
-    if (rl.limited) {
-      return new NextResponse(JSON.stringify({ error: 'Too many requests' }), {
-        status: 429,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-RateLimit-Limit': String(RATE_LIMIT_MAX),
-          'X-RateLimit-Remaining': String(rl.remaining),
-          'Retry-After': Math.ceil(rl.reset / 1000).toString(),
-        },
-      });
-    }
+    // Apply relaxed rate limiting for public product listing
+    const rateLimitCheck = await rateLimiters.relaxed(request);
+    if (rateLimitCheck) return rateLimitCheck;
 
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category') ?? undefined;
     const limitStr = searchParams.get('limit');
     const featured = searchParams.get('featured');
     const q = searchParams.get('q') ?? undefined;
+    
+    // Generate cache key for this query
+    const cacheKey = cacheKeys.products({ category, limit: limitStr, featured, q });
+    
+    // Check cache first
+    const cached = cache.get<any>(cacheKey);
+    if (cached) {
+      logger.info('[Cache] Product list cache hit', { requestId: getRequestId(request) });
+      const response = NextResponse.json(cached);
+      response.headers.set('X-Request-ID', getRequestId(request));
+      response.headers.set('X-Cache', 'HIT');
+      return applySecurityHeaders(response);
+    }
 
     const where: Prisma.ProductWhereInput = {
       status: 'active',
@@ -77,13 +61,15 @@ export async function GET(request: NextRequest) {
       take,
     });
 
+    // Cache the product list results
+    cache.set(cacheKey, products, cacheTTL.medium); // 5-minute cache
+    
     const res = NextResponse.json(products);
     res.headers.set('X-Request-ID', getRequestId(request));
     // Cache for 60s at the edge/CDN and allow stale while revalidate
     res.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
-    res.headers.set('X-RateLimit-Limit', String(RATE_LIMIT_MAX));
-    res.headers.set('X-RateLimit-Remaining', String(rl.remaining));
-    return res;
+    // Rate limit headers are now set by rateLimiters.relaxed()
+    return applySecurityHeaders(res);
   } catch (error) {
     logger.error('Error fetching products', { requestId: getRequestId(request) }, error);
     return respondError(request, error, { status: 500, code: 'products_fetch_failed' });
