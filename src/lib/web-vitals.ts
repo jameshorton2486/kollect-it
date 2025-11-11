@@ -42,7 +42,9 @@ function sendMetricToAnalytics(metricName: string, value: number) {
 
 /**
  * Determine if a metric is "good", "needs improvement", or "poor"
+ * TODO: Use this in analytics dashboard for metric status indicators
  */
+// @ts-ignore - Reserved for future dashboard feature
 function getMetricStatus(metricName: string, value: number): 'good' | 'needs-improvement' | 'poor' {
   const threshold = THRESHOLDS[metricName as keyof typeof THRESHOLDS];
   

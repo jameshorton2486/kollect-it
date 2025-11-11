@@ -1,6 +1,6 @@
 'use client';
 
-import ProductCard, { ProductCardData } from './ProductCard';
+import ProductCard from './ProductCard';
 
 interface ProductGridProps {
   products: Array<{

@@ -9,7 +9,7 @@ interface RouteParams {
   }>;
 }
 
-export async function GET(request: Request, { params }: RouteParams) {
+export async function GET(_request: Request, { params }: RouteParams) {
   try {
     const { id } = await params;
     const session = await getServerSession(authOptions);

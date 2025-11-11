@@ -18,8 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-import CTA from '@/components/CTA';
-
 const faqCategories = [
   {
     id: 'buying',

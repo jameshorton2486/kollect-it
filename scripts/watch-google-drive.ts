@@ -10,7 +10,6 @@
 
 import { google } from 'googleapis';
 import * as fs from 'fs';
-import * as path from 'path';
 
 interface ProductJson {
   product_id: string;
@@ -208,7 +207,7 @@ class GoogleDriveWatcher {
         throw new Error(`API returned ${response.status}`);
       }
 
-      const result = await response.json();
+      await response.json(); // Consume response
       console.log(`   📤 ImageKit sync queued: ${product.product_id}`);
     } catch (error) {
       console.error(`   ⚠️  ImageKit sync failed for ${product.product_id}:`, error);

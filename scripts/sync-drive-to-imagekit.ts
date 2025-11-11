@@ -162,11 +162,10 @@ async function uploadToImageKit(
       file: buffer,
       fileName: fileName,
       folder: folderPath,
-      overwrite: false,
       tags: ['drive-sync', 'auto-imported'],
     });
 
-    return result as ImageKitUploadResult;
+    return result as unknown as ImageKitUploadResult;
   } catch (error) {
     console.error(`❌ Failed to upload file to ImageKit: ${fileName}`, error);
     throw error;
@@ -347,6 +346,7 @@ async function syncDriveToImageKit(
 /**
  * Run sync if called directly
  */
+// @ts-ignore - Bun-specific property
 if (import.meta.main) {
   const driveFolderId = config.driveFolderId;
 

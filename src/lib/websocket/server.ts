@@ -177,11 +177,25 @@ async function updateMetricsCache(): Promise<MetricsCache> {
     const cache: MetricsCache = {
       timestamp: new Date(),
       approvalRate: Math.round(approvalRate * 100) / 100,
-      totalRevenue,
-      averageOrderValue: Math.round(averageOrderValue * 100) / 100,
+      approvedCount: approvals,
+      rejectedCount: rejections,
       pendingCount: pending,
+      avgTimeToApprove: 0, // TODO: Calculate from order data
+      totalRevenue,
+      totalOrders: orders.length,
+      averageOrderValue: Math.round(averageOrderValue * 100) / 100,
       revenueByCategory,
       approvalTrend: [], // Updated separately by polling service
+      avgPriceConfidence: 0, // TODO: Calculate from pricing data
+      autoApprovedCount: 0, // TODO: Track auto-approvals
+      manualReviewCount: 0, // TODO: Track manual reviews
+      lowConfidenceCount: 0, // TODO: Track low confidence items
+      priceAccuracy: 0, // TODO: Calculate accuracy
+      totalProducts,
+      activeProducts: totalProducts, // TODO: Filter active only
+      averagePrice: 0, // TODO: Calculate from products
+      minPrice: 0, // TODO: Get min price
+      maxPrice: 0, // TODO: Get max price
       pricingMetrics: {
         averagePricingAccuracy: 0, // Updated separately
         avgConfidenceScore: 0,
@@ -196,15 +210,30 @@ async function updateMetricsCache(): Promise<MetricsCache> {
     return cache;
   } catch (error) {
     console.error('Error updating metrics cache:', error);
+    // Return cached value or minimal valid MetricsCache
     return (
       metricsCache || {
         timestamp: new Date(),
         approvalRate: 0,
-        totalRevenue: 0,
-        averageOrderValue: 0,
+        approvedCount: 0,
+        rejectedCount: 0,
         pendingCount: 0,
+        avgTimeToApprove: 0,
+        totalRevenue: 0,
+        totalOrders: 0,
+        averageOrderValue: 0,
         revenueByCategory: [],
         approvalTrend: [],
+        avgPriceConfidence: 0,
+        autoApprovedCount: 0,
+        manualReviewCount: 0,
+        lowConfidenceCount: 0,
+        priceAccuracy: 0,
+        totalProducts: 0,
+        activeProducts: 0,
+        averagePrice: 0,
+        minPrice: 0,
+        maxPrice: 0,
         pricingMetrics: {
           averagePricingAccuracy: 0,
           avgConfidenceScore: 0,

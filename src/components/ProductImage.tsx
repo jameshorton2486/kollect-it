@@ -28,7 +28,7 @@
 
 import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
-import { ProductImageProps } from '@/types/imagekit';
+import type { ProductImageProps } from '../../types/imagekit';
 
 /**
  * Get ImageKit transformation URL
@@ -80,7 +80,6 @@ export default function ProductImage({
   className = '',
   priority = false,
   quality = 80,
-  transformation = [],
   onLoad,
   onError,
 }: ProductImageProps): React.ReactElement {

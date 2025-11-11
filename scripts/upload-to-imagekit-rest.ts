@@ -9,7 +9,6 @@
 
 import { google } from 'googleapis';
 import fs from 'fs/promises';
-import path from 'path';
 
 const config = {
   googleCredentialsPath: process.env.GOOGLE_APPLICATION_CREDENTIALS || './google-credentials.json',
@@ -107,6 +106,7 @@ async function uploadToImageKitREST(
     const auth = Buffer.from(`${config.imagekit.privateKey}:`).toString('base64');
 
     const formData = new FormData();
+    // @ts-ignore - Buffer to Blob conversion works at runtime
     const blob = new Blob([buffer]);
     formData.append('file', blob);
     formData.append('fileName', fileName);

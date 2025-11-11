@@ -32,6 +32,7 @@ export function AnalyticsDashboardWebSocket() {
     if (metricsCache) {
       // Transform WebSocket cache to match DashboardMetrics format
       const transformedMetrics: DashboardMetrics = {
+        generatedAt: new Date(),
         approval: {
           approved: metricsCache.approvedCount || 0,
           rejected: metricsCache.rejectedCount || 0,
@@ -55,6 +56,7 @@ export function AnalyticsDashboardWebSocket() {
           totalOrders: metricsCache.totalOrders || 0,
           averageOrderValue: metricsCache.averageOrderValue || 0,
           revenueByCategory: metricsCache.revenueByCategory || [],
+          revenueByMonth: [], // TODO: Add monthly revenue tracking
         },
         pricing: {
           averageConfidence: metricsCache.avgPriceConfidence || 0,

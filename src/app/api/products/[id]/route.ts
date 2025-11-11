@@ -9,7 +9,7 @@ interface ImageInput {
 
 // GET /api/products/[id] - Get single product
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -116,7 +116,7 @@ export async function PUT(
 
 // DELETE /api/products/[id] - Delete product (admin only)
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const authCheck = await checkAdminAuth();

@@ -66,7 +66,7 @@ async function testImageKitConnection() {
     try {
       const files = await imageKit.listFiles({ limit: 1 });
       console.log(`   ✅ Connection successful`);
-      console.log(`   📊 Total files in account: ${files.data?.length || 0}\n`);
+      console.log(`   📊 Total files in account: ${Array.isArray(files) ? files.length : 0}\n`);
     } catch (error) {
       console.error(`   ❌ Failed: ${error instanceof Error ? error.message : String(error)}\n`);
       throw error;

@@ -16,7 +16,7 @@ interface ValidatedCartItem {
  */
 export async function POST(request: Request) {
   try {
-    const { items, shippingInfo, billingInfo } = await request.json();
+    const { items, shippingInfo } = await request.json();
 
     if (!items || items.length === 0) {
       return NextResponse.json(

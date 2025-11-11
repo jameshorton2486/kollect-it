@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { MoreVertical, TrendingUp } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 
 interface Customer {
   id: string;

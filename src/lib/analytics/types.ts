@@ -43,6 +43,7 @@ export interface PricingAnalysis {
 // Enhanced Revenue Metrics
 export interface RevenueMetrics {
   totalRevenue: number;
+  totalOrders: number;
   averageOrderValue: number;
   revenueByCategory: CategoryRevenue[];
   revenueByMonth: MonthlyRevenue[];

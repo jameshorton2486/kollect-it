@@ -4,7 +4,7 @@
  * Handles Google Drive to ImageKit configuration with interactive prompts
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { writeFileSync, existsSync } from 'fs';
 import { execSync } from 'child_process';
 import * as readline from 'readline';
 

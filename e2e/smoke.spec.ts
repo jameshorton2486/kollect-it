@@ -15,7 +15,7 @@ test('cart shows empty state when no items', async ({ page }) => {
   await expect(page.getByRole('heading', { name: /Your Cart is Empty/i })).toBeVisible();
 });
 
-test('optional: product page exists when SMOKE_PRODUCT_SLUG provided', async ({ page }, testInfo) => {
+test('optional: product page exists when SMOKE_PRODUCT_SLUG provided', async ({ page }) => {
   const slug = process.env.SMOKE_PRODUCT_SLUG;
   test.skip(!slug, 'No SMOKE_PRODUCT_SLUG provided; skipping product page smoke.');
 

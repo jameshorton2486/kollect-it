@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { prisma } from '@/lib/prisma';
-import CTA from '@/components/CTA';
 
 export const metadata: Metadata = {
   title: "About Us",

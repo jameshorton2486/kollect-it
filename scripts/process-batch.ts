@@ -195,7 +195,7 @@ async function main() {
 
   try {
     const processor = new BatchProcessor();
-    const result = await processor.processBatchFile(batchFile);
+    await processor.processBatchFile(batchFile);
     console.log('✅ Batch processing complete!');
     process.exit(0);
   } catch (error) {

@@ -1,5 +1,3 @@
-import { Star } from "lucide-react";
-
 export default function Testimonials() {
   const testimonials = [
     {

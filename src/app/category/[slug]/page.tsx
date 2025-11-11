@@ -100,7 +100,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     };
   }
 
-  const { category, products } = data;
+  const { category } = data;
 
   return {
     title: `${category.name} - Kollect-It`,
