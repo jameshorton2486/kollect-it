@@ -77,62 +77,72 @@ export default function ProductCard({ product, variant = 'grid' }: { product: Pr
   // grid variant
   return (
     <div
-      className="group rounded-lg border border-[var(--color-gray-light)] bg-white p-3 transition-transform duration-200 hover:-translate-y-1 hover:shadow-sm"
+      className="group rounded-lg border-2 border-[var(--color-gray-light)] bg-white overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-[var(--color-accent)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative overflow-hidden rounded">
-        <Link href={`/product/${product.slug}`} className="block">
+      {/* Image Section - 70% of card height */}
+      <div className="relative overflow-hidden aspect-[4/5]">
+        <Link href={`/product/${product.slug}`} className="block h-full">
           <Image
             src={imgSrc}
             alt={`${product.title} - ${product.category || 'Product'} image`}
             width={400}
-            height={400}
-            className={`aspect-square w-full object-cover transition-transform duration-200 ${hovered ? 'scale-[1.02]' : ''}`}
-            quality={85}
+            height={500}
+            className={`h-full w-full object-cover transition-transform duration-500 ${hovered ? 'scale-110' : 'scale-100'}`}
+            quality={90}
             loading="lazy"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
           />
-          {/* Category tag */}
+          {/* Category badge - top left */}
           {product.category && (
-            <span className="absolute left-2 top-2 rounded bg-white/90 px-2 py-1 text-[11px] uppercase tracking-wide text-brand-gold">
+            <span className="absolute left-3 top-3 rounded bg-white/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent)] shadow-md backdrop-blur-sm border-2 border-[var(--color-accent)]">
               {product.category}
             </span>
           )}
         </Link>
-        {/* Wishlist button */}
+        {/* Wishlist button - top right */}
         <button
-          className="absolute right-2 top-2 inline-flex items-center justify-center rounded border border-[var(--color-gray-light)] bg-white/90 p-2 hover:text-brand-gold"
+          className="absolute right-3 top-3 inline-flex items-center justify-center rounded-full border-2 border-white bg-white/95 p-2.5 backdrop-blur-sm transition-all hover:scale-110 hover:bg-[var(--color-accent)] hover:border-[var(--color-accent)] hover:text-white shadow-md"
           aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           onClick={async (e) => { e.preventDefault(); await toggleWishlist(product.id); }}
           disabled={loading}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill={wishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
           </svg>
         </button>
       </div>
 
-      <Link href={`/product/${product.slug}`} className="mt-3 block no-underline">
-        <h3 className="font-serif text-[20px] leading-snug text-brand-navy line-clamp-2">{product.title}</h3>
-      </Link>
-      <div className="text-[20px] font-semibold text-brand-gold">{formatUSDWhole(product.price)}</div>
+      {/* Content Section - 30% of card height */}
+      <div className="p-4 flex flex-col gap-2">
+        <Link href={`/product/${product.slug}`} className="no-underline">
+          <h3 className="font-serif text-[22px] leading-tight text-[var(--color-charcoal)] line-clamp-2 transition-colors hover:text-[var(--color-accent)]">
+            {product.title}
+          </h3>
+        </Link>
+        
+        {/* Large, scannable price */}
+        <div className="text-[28px] font-bold text-[var(--color-accent)] mt-1">
+          {formatUSDWhole(product.price)}
+        </div>
 
-      {/* Add to cart on hover */}
-      <div className="mt-3 hidden items-center justify-between gap-2 group-hover:flex">
-        <AddToCartButton
-          variant="card"
-          product={{
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            slug: product.slug,
-            image: imgSrc,
-            categoryName: product.category || 'General',
-          }}
-          quantity={1}
-        />
+        {/* Add to cart button - shows on hover */}
+        <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <AddToCartButton
+            variant="card"
+            product={{
+              id: product.id,
+              title: product.title,
+              price: product.price,
+              slug: product.slug,
+              image: imgSrc,
+              categoryName: product.category || 'General',
+            }}
+            quantity={1}
+          />
+        </div>
       </div>
     </div>
   );
