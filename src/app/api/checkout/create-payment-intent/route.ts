@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { stripe, formatAmountForStripe } from '@/lib/stripe';
+import { rateLimiters } from '@/lib/rate-limit';
+import { securityMiddleware, applySecurityHeaders } from '@/lib/security';
 
 interface ValidatedCartItem {
   productId: string;
@@ -13,9 +15,20 @@ interface ValidatedCartItem {
  * Create Stripe Payment Intent
  *
  * SECURITY: Validates cart server-side before creating payment
+ * Rate limited strictly to prevent abuse (5 requests per 15 minutes)
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    // Apply enhanced security for payment endpoint
+    const securityCheck = await securityMiddleware(request, {
+      maxBodySize: 1024 * 1024, // 1MB max
+      allowedContentTypes: ['application/json'],
+    });
+    if (securityCheck) return securityCheck;
+
+    // Apply strict rate limiting for payment operations
+    const rateLimitCheck = await rateLimiters.strict(request);
+    if (rateLimitCheck) return rateLimitCheck;
     const { items, shippingInfo } = await request.json();
 
     if (!items || items.length === 0) {
@@ -90,16 +103,18 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       clientSecret: paymentIntent.client_secret,
       paymentIntentId: paymentIntent.id,
       validatedTotal: validatedCart.total, // Return validated total to client
     });
+    return applySecurityHeaders(response);
   } catch (error) {
     console.error('Error creating payment intent:', error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to create payment intent' },
       { status: 500 }
     );
+    return applySecurityHeaders(errorResponse);
   }
 }

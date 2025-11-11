@@ -2,16 +2,30 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimiters } from '@/lib/rate-limit';
+import { securityMiddleware, applySecurityHeaders } from '@/lib/security';
 
 export async function POST(req: NextRequest) {
   try {
+    // Apply security middleware with 5MB body limit for product creation
+    const securityCheck = await securityMiddleware(req, {
+      maxBodySize: 5 * 1024 * 1024, // 5MB
+      allowedContentTypes: ['application/json'],
+    });
+    if (securityCheck) return securityCheck;
+
+    // Apply standard rate limiting for admin operations
+    const rateLimitCheck = await rateLimiters.standard(req);
+    if (rateLimitCheck) return rateLimitCheck;
+
     // Check admin authorization
     const session = await getServerSession(authOptions);
     if (!session?.user || (session.user as any).role !== 'admin') {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { error: 'Unauthorized - admin access required' },
         { status: 403 }
       );
+      return applySecurityHeaders(errorResponse);
     }
 
     const body = await req.json();
@@ -108,18 +122,20 @@ export async function POST(req: NextRequest) {
     });
 
     console.log(`✅ [API] Product created: ${product.id}`);
-    return NextResponse.json({
+    const response = NextResponse.json({
       ...product,
       message: 'Product created successfully as draft',
     });
+    return applySecurityHeaders(response);
   } catch (error) {
     console.error('❌ [API] Create product error:', error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       {
         error:
           error instanceof Error ? error.message : 'Failed to create product',
       },
       { status: 500 }
     );
+    return applySecurityHeaders(errorResponse);
   }
 }

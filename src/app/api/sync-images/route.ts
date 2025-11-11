@@ -30,6 +30,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimiters } from '@/lib/rate-limit';
+import { applySecurityHeaders } from '@/lib/security';
 
 // Simple in-memory sync tracking (use Redis in production)
 const syncHistory = new Map<string, { status: string; startTime: Date }>();
@@ -125,16 +127,21 @@ async function runSyncInBackground(
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Apply upload rate limiting (10 requests per minute)
+    const rateLimitCheck = await rateLimiters.upload(request);
+    if (rateLimitCheck) return rateLimitCheck;
+
     // Parse request body
     const body = await request.json();
     const { secret, driveFolderId, skipExisting } = body;
 
     // Validate secret
     if (!validateSecret(secret)) {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { error: 'Unauthorized: Invalid webhook secret' },
         { status: 401 }
       );
+      return applySecurityHeaders(errorResponse);
     }
 
     // Generate sync ID
@@ -146,7 +153,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
 
     // Return immediate response
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         status: 'syncing',
         message: 'Image sync started in background',
@@ -155,17 +162,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
       { status: 202 } // Accepted
     );
+    return applySecurityHeaders(response);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('❌ Sync API error:', error);
 
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       {
         error: 'Failed to start sync',
         message: errorMessage,
       },
       { status: 500 }
     );
+    return applySecurityHeaders(errorResponse);
   }
 }
 
@@ -208,13 +217,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('❌ Sync status error:', error);
 
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       {
         error: 'Failed to get sync status',
         message: errorMessage,
       },
       { status: 500 }
     );
+    return applySecurityHeaders(errorResponse);
   }
 }
 
