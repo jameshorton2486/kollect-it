@@ -179,6 +179,118 @@
     color: var(--color-text-primary);
   }
 
+  /* =============================================================================
+     DARK THEME REFINEMENT - PHASE 5 STEP 8
+     ============================================================================= */
+  .dark {
+    /* Dark Theme Color Overrides */
+    --background: 0 0% 12%;           /* Dark gray, not pure black */
+    --foreground: 0 0% 90%;           /* High contrast text */
+    
+    --card: 0 0% 14%;                 /* Slightly lighter than bg */
+    --card-foreground: 0 0% 90%;
+    
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 90%;
+    
+    --primary: 39 48% 56%;            /* Gold accent maintained */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 0 0% 20%;            /* Subtle surface */
+    --secondary-foreground: 0 0% 90%;
+    
+    --muted: 0 0% 18%;                /* Muted elements */
+    --muted-foreground: 0 0% 65%;     /* De-emphasized text */
+    
+    --accent: 39 48% 56%;             /* Gold accent */
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;         /* Error red */
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 25%;               /* Subtle visible borders */
+    --input: 0 0% 22%;                /* Form input background */
+    --ring: 39 48% 56%;               /* Gold focus ring */
+    
+    /* Dark Theme Design Tokens */
+    --color-text-primary: #E5E5E5;    /* High contrast */
+    --color-text-secondary: #B3B3B3;  /* Secondary text */
+    --color-text-tertiary: #8C8C8C;   /* Tertiary/muted */
+    
+    --color-bg: #1E1E1E;              /* Main background - dark gray */
+    --color-bg-alt: #252525;          /* Section alternation */
+    --color-bg-elevated: #2A2A2A;     /* Cards, modals */
+    
+    --color-accent: #D3AF37;          /* Gold accent (brighter in dark) */
+    --color-accent-light: #E5C65A;    /* Gold hover */
+    --color-accent-dark: #B1874C;     /* Gold pressed */
+    
+    --color-cta: #3A5A8A;             /* Navy CTA (lighter in dark) */
+    --color-cta-hover: #4B6B9B;       /* CTA hover */
+    
+    --color-link: #7BA0C8;            /* Link blue (lighter) */
+    --color-link-hover: #8FB3D6;      /* Link hover */
+    
+    --color-border-token: #333333;    /* Subtle borders */
+    --color-charcoal: #E5E5E5;        /* Inverted for text */
+    --color-gray-light: #333333;      /* Borders */
+    --color-gray-medium: #666666;     /* Secondary elements */
+    --color-gray-dark: #999999;       /* Lighter in dark mode */
+    
+    /* Dark Theme Shadows (deeper, more prominent) */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+    --shadow-focus: 0 0 0 3px rgba(211, 175, 55, 0.25);
+  }
+  
+  .dark body {
+    @apply bg-[#1E1E1E];
+    color: var(--color-text-primary);
+  }
+  
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: var(--color-text-primary);
+  }
+  
+  .dark p {
+    color: var(--color-text-secondary);
+  }
+  
+  .dark a {
+    color: var(--color-link);
+  }
+  
+  .dark a:hover {
+    color: var(--color-link-hover);
+  }
+  
+  /* Dark theme form inputs */
+  .dark input, .dark select, .dark textarea {
+    background: var(--input);
+    border-color: var(--border);
+    color: var(--foreground);
+  }
+  
+  .dark input:focus, .dark select:focus, .dark textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(211, 175, 55, 0.15);
+  }
+  
+  .dark label {
+    color: var(--foreground);
+  }
+  
+  /* Dark theme card borders */
+  .dark .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  
+  .dark .card:hover {
+    border-color: var(--accent);
+  }
+
   /* Global Enhancements - Parallax, Counters, Lightbox */
   [data-parallax] {
     transform: translateY(0);
@@ -345,6 +457,138 @@
   }
   .card:hover {
     @apply shadow-elevation-lg;
+  }
+  
+  /* =============================================================================
+     DARK THEME COMPONENT ENHANCEMENTS - PHASE 5 STEP 8
+     ============================================================================= */
+  
+  /* Dark theme product cards with subtle borders */
+  .dark .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  
+  .dark .product-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  /* Dark theme buttons with gold accent */
+  .dark .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border: 2px solid var(--accent);
+  }
+  
+  .dark .btn-primary:hover {
+    background: var(--color-accent-light);
+    border-color: var(--color-accent-light);
+  }
+  
+  .dark .btn-secondary {
+    background: var(--secondary);
+    color: var(--foreground);
+    border: 2px solid var(--border);
+  }
+  
+  .dark .btn-secondary:hover {
+    background: var(--muted);
+    border-color: var(--accent);
+  }
+  
+  /* Dark theme navigation */
+  .dark nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  /* Dark theme footer */
+  .dark footer {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+  }
+  
+  /* Dark theme section backgrounds */
+  .dark .section-alt {
+    background: var(--color-bg-alt);
+  }
+  
+  /* Dark theme tables */
+  .dark table {
+    border-color: var(--border);
+  }
+  
+  .dark th {
+    background: var(--card);
+    color: var(--foreground);
+    border-bottom: 2px solid var(--border);
+  }
+  
+  .dark td {
+    border-color: var(--border);
+    color: var(--color-text-secondary);
+  }
+  
+  .dark tr:hover {
+    background: var(--muted);
+  }
+  
+  /* Dark theme modals */
+  .dark .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  
+  /* Dark theme badges */
+  .dark .badge {
+    background: var(--muted);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+  }
+  
+  .dark .badge-success {
+    background: rgba(45, 106, 79, 0.2);
+    color: #4ADE80;
+    border-color: rgba(74, 222, 128, 0.3);
+  }
+  
+  .dark .badge-warning {
+    background: rgba(212, 163, 115, 0.2);
+    color: #FBBF24;
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+  
+  .dark .badge-error {
+    background: rgba(184, 84, 80, 0.2);
+    color: #F87171;
+    border-color: rgba(248, 113, 113, 0.3);
+  }
+  
+  /* Dark theme breadcrumbs */
+  .dark .breadcrumb {
+    color: var(--color-text-secondary);
+  }
+  
+  .dark .breadcrumb a:hover {
+    color: var(--accent);
+  }
+  
+  /* Dark theme dividers */
+  .dark hr {
+    border-color: var(--border);
+  }
+  
+  /* Dark theme code blocks */
+  .dark code {
+    background: var(--muted);
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+  
+  .dark pre {
+    background: var(--card);
+    border: 1px solid var(--border);
   }
 }
 
