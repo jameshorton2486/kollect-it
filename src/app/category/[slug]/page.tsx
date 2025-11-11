@@ -227,17 +227,21 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
 
-  <div className="category-page">
-        {/* Breadcrumbs */}
-        <Breadcrumbs
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Shop', href: '/shop' },
-            { label: category.name, href: `/category/${category.slug}` },
-          ]}
-        />
+      <div className="category-page min-h-screen bg-white">
+        {/* Breadcrumbs with better spacing */}
+        <div className="border-b border-[var(--color-gray-light)] bg-[var(--color-cream)]">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
+            <Breadcrumbs
+              items={[
+                { label: 'Home', href: '/' },
+                { label: 'Shop', href: '/shop' },
+                { label: category.name, href: `/category/${category.slug}` },
+              ]}
+            />
+          </div>
+        </div>
 
-        {/* Hero Section */}
+        {/* Enhanced Hero Section */}
         <CategoryHero
           title={category.name}
           description={category.description}
@@ -245,52 +249,96 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           productCount={products.length}
         />
 
-        {/* Main Content */}
-        <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="flex gap-6">
-              {/* Filtering Sidebar (desktop) */}
-              <CategoryFilters minPrice={minPriceVal} maxPrice={maxPriceVal} />
-
-              <div className="flex-1">
-                {/* Sorting Bar */}
-                <SortingBar showing={pagedProducts.length} total={totalFiltered} currentSort={sort} currentView={currView} />
-
-                {/* Product Grid */}
-                {pagedProducts.length > 0 ? (
-                  <ProductGrid products={pagedProducts} view={currView} />
-                ) : (
-                  <div className="no-products text-center py-16">
-                    <h3 className="font-serif text-brand-navy text-2xl">Nothing found here</h3>
-                    <p className="mt-2 text-[var(--color-charcoal)]">Try adjusting filters or browse all products.</p>
-                    <Link href="/" className="btn-cta mt-4 inline-block">Browse All Products</Link>
-                  </div>
-                )}
-
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <div className="mt-6 flex items-center justify-center gap-2">
-                    {Array.from({ length: totalPages }).map((_, i) => {
-                      const params = new URLSearchParams();
-                      if (sort) params.set('sort', sort);
-                      if (currView) params.set('view', currView);
-                      if (priceMinNum != null) params.set('priceMin', String(priceMinNum));
-                      if (priceMaxNum != null) params.set('priceMax', String(priceMaxNum));
-                      if (yearMinNum != null) params.set('yearMin', String(yearMinNum));
-                      if (yearMaxNum != null) params.set('yearMax', String(yearMaxNum));
-                      condArr.forEach((c) => params.append('cond', c));
-                      params.set('page', String(i + 1));
-                      const href = `?${params.toString()}`;
-                      const isActive = i + 1 === currentPage;
-                      return (
-                        <Link key={i} href={href} className={`rounded border px-3 py-2 text-sm ${isActive ? 'border-brand-gold text-brand-navy' : 'border-[var(--color-border)]'}`}>
-                          {i + 1}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
+        {/* Main Content with improved spacing */}
+        <main className="container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Filtering Sidebar (desktop) - sticky positioning */}
+            <div className="lg:w-64 flex-shrink-0">
+              <div className="lg:sticky lg:top-24">
+                <CategoryFilters minPrice={minPriceVal} maxPrice={maxPriceVal} />
               </div>
+            </div>
+
+            {/* Products Section */}
+            <div className="flex-1 min-w-0">
+              {/* Sorting Bar with improved styling */}
+              <div className="mb-8">
+                <SortingBar 
+                  showing={pagedProducts.length} 
+                  total={totalFiltered} 
+                  currentSort={sort} 
+                  currentView={currView} 
+                />
+              </div>
+
+              {/* Product Grid with better gap spacing */}
+              {pagedProducts.length > 0 ? (
+                <ProductGrid products={pagedProducts} view={currView} />
+              ) : (
+                <div className="no-products text-center py-24 px-4 border-2 border-dashed border-[var(--color-gray-light)] rounded-lg">
+                  <svg className="w-16 h-16 mx-auto mb-4 text-[var(--color-gray-medium)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                  <h3 className="font-serif text-[var(--color-charcoal)] text-2xl mb-3">No products found</h3>
+                  <p className="text-[var(--color-gray-dark)] mb-6">Try adjusting your filters or browse all products.</p>
+                  <Link href="/shop" className="btn-primary inline-flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    Browse All Products
+                  </Link>
+                </div>
+              )}
+
+              {/* Enhanced Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-12 flex items-center justify-center gap-2">
+                  {currentPage > 1 && (
+                    <Link 
+                      href={`?${new URLSearchParams({ ...Object.fromEntries(new URLSearchParams()), page: String(currentPage - 1) }).toString()}`}
+                      className="btn-secondary px-4 py-2 text-sm"
+                    >
+                      ← Previous
+                    </Link>
+                  )}
+                  
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    const params = new URLSearchParams();
+                    if (sort) params.set('sort', sort);
+                    if (currView) params.set('view', currView);
+                    if (priceMinNum != null) params.set('priceMin', String(priceMinNum));
+                    if (priceMaxNum != null) params.set('priceMax', String(priceMaxNum));
+                    if (yearMinNum != null) params.set('yearMin', String(yearMinNum));
+                    if (yearMaxNum != null) params.set('yearMax', String(yearMaxNum));
+                    condArr.forEach((c) => params.append('cond', c));
+                    params.set('page', String(i + 1));
+                    const href = `?${params.toString()}`;
+                    const isActive = i + 1 === currentPage;
+                    return (
+                      <Link 
+                        key={i} 
+                        href={href} 
+                        className={`min-w-[40px] h-10 flex items-center justify-center rounded-lg border-2 font-semibold text-sm transition-all ${
+                          isActive 
+                            ? 'border-[var(--color-accent)] bg-[var(--color-accent)] text-white' 
+                            : 'border-[var(--color-gray-light)] text-[var(--color-charcoal)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]'
+                        }`}
+                      >
+                        {i + 1}
+                      </Link>
+                    );
+                  })}
+
+                  {currentPage < totalPages && (
+                    <Link 
+                      href={`?${new URLSearchParams({ ...Object.fromEntries(new URLSearchParams()), page: String(currentPage + 1) }).toString()}`}
+                      className="btn-secondary px-4 py-2 text-sm"
+                    >
+                      Next →
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </main>
