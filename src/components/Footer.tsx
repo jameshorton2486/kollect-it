@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { Instagram, Youtube, Facebook } from 'lucide-react'
+import Link from "next/link";
+import { Instagram, Youtube, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -9,7 +9,6 @@ export default function Footer() {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-36">
-          
           {/* Brand Section - Takes flexible space on left */}
           <div className="lg:col-span-1">
             <div className="font-serif text-2xl leading-tight tracking-wide text-[#D3AF37] mb-4">
@@ -25,16 +24,16 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6 text-white">About</h3>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  href="/about" 
+                <Link
+                  href="/about"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/contact" 
+                <Link
+                  href="/contact"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Contact
@@ -48,24 +47,24 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6 text-white">Support</h3>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  href="/faq" 
+                <Link
+                  href="/faq"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/shipping-returns" 
+                <Link
+                  href="/shipping-returns"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Shipping & Returns
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/contact" 
+                <Link
+                  href="/contact"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Contact Support
@@ -76,35 +75,37 @@ export default function Footer() {
 
           {/* Categories Section - Pushed 1" to the right */}
           <div className="pr-24">
-            <h3 className="text-lg font-semibold mb-6 text-white">Categories</h3>
+            <h3 className="text-lg font-semibold mb-6 text-white">
+              Categories
+            </h3>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  href="/category/fine-art" 
+                <Link
+                  href="/category/fine-art"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Fine Art
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/category/antiques" 
+                <Link
+                  href="/category/antiques"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Antiques
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/category/collectibles" 
+                <Link
+                  href="/category/collectibles"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Collectibles
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/category/militaria" 
+                <Link
+                  href="/category/militaria"
                   className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
                 >
                   Militaria
@@ -158,5 +159,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

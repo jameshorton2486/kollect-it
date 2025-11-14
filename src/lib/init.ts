@@ -3,7 +3,7 @@
  * Phase 5 - Initialize background services on app startup
  */
 
-import { startJobScheduler } from '@/lib/jobs/reportScheduler';
+import { startJobScheduler } from "@/lib/jobs/reportScheduler";
 
 /**
  * Initialize all background services
@@ -13,9 +13,9 @@ export function initializeBackgroundServices() {
   try {
     // Start the report scheduler
     startJobScheduler();
-    console.log('✅ Background services initialized');
+    console.log("✅ Background services initialized");
   } catch (error) {
-    console.error('❌ Error initializing background services:', error);
+    console.error("❌ Error initializing background services:", error);
   }
 }
 
@@ -24,7 +24,7 @@ export function initializeBackgroundServices() {
  * Export for initialization
  */
 export const backgroundServicesInitialized = (() => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     // Server-side only
     initializeBackgroundServices();
     return true;

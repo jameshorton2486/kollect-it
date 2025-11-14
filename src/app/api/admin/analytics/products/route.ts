@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 /**
  * GET /api/admin/analytics/products
- * 
+ *
  * Product performance analytics and inventory insights
  * Admin only
  */
@@ -13,15 +13,15 @@ export async function GET(request: NextRequest) {
   try {
     // Check admin authorization
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
+    if (!session?.user || (session.user as any).role !== "admin") {
       return NextResponse.json(
-        { error: 'Unauthorized - admin access required' },
-        { status: 403 }
+        { error: "Unauthorized - admin access required" },
+        { status: 403 },
       );
     }
 
     const { searchParams } = new URL(request.url);
-    const period = parseInt(searchParams.get('period') || '30');
+    const period = parseInt(searchParams.get("period") || "30");
 
     const now = new Date();
     const startDate = new Date(now);
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         orderItems: {
           where: {
             order: {
-              paymentStatus: 'paid',
+              paymentStatus: "paid",
               createdAt: {
                 gte: startDate,
               },
@@ -54,11 +54,11 @@ export async function GET(request: NextRequest) {
 
     // Overview metrics
     const totalProducts = products.length;
-    const activeProducts = products.filter((p) => p.status === 'active').length;
-    const soldProducts = products.filter((p) => p.status === 'sold').length;
-    const draftProducts = products.filter((p) => p.status === 'draft').length;
+    const activeProducts = products.filter((p) => p.status === "active").length;
+    const soldProducts = products.filter((p) => p.status === "sold").length;
+    const draftProducts = products.filter((p) => p.status === "draft").length;
     const totalValue = products
-      .filter((p) => p.status === 'active' || p.status === 'draft')
+      .filter((p) => p.status === "active" || p.status === "draft")
       .reduce((sum, p) => sum + p.price, 0);
     const averagePrice = totalProducts > 0 ? totalValue / totalProducts : 0;
 
@@ -68,11 +68,12 @@ export async function GET(request: NextRequest) {
         const sales = product.orderItems.length;
         const revenue = product.orderItems.reduce(
           (sum: number, item: any) => sum + item.price * item.quantity,
-          0
+          0,
         );
         const views = 0; // TODO: Implement view tracking
         const daysListed = Math.floor(
-          (now.getTime() - new Date(product.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+          (now.getTime() - new Date(product.createdAt).getTime()) /
+            (1000 * 60 * 60 * 24),
         );
         const conversionRate = views > 0 ? (sales / views) * 100 : 0;
 
@@ -90,16 +91,19 @@ export async function GET(request: NextRequest) {
       .sort((a, b) => b.revenue - a.revenue);
 
     // Category performance
-    const categoryMap = new Map<string, {
-      category: string;
-      productCount: number;
-      sales: number;
-      revenue: number;
-      totalPrice: number;
-    }>();
+    const categoryMap = new Map<
+      string,
+      {
+        category: string;
+        productCount: number;
+        sales: number;
+        revenue: number;
+        totalPrice: number;
+      }
+    >();
 
     products.forEach((product) => {
-      const categoryName = product.category?.name || 'Uncategorized';
+      const categoryName = product.category?.name || "Uncategorized";
       const existing = categoryMap.get(categoryName) || {
         category: categoryName,
         productCount: 0,
@@ -113,7 +117,7 @@ export async function GET(request: NextRequest) {
       existing.sales += product.orderItems.length;
       existing.revenue += product.orderItems.reduce(
         (sum: number, item: any) => sum + item.price * item.quantity,
-        0
+        0,
       );
 
       categoryMap.set(categoryName, existing);
@@ -130,30 +134,32 @@ export async function GET(request: NextRequest) {
     const inventoryAlerts = products
       .filter((product) => {
         const daysListed = Math.floor(
-          (now.getTime() - new Date(product.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+          (now.getTime() - new Date(product.createdAt).getTime()) /
+            (1000 * 60 * 60 * 24),
         );
         return (
-          product.status === 'active' &&
+          product.status === "active" &&
           (daysListed > 90 || product.orderItems.length === 0)
         );
       })
       .map((product) => {
         const daysListed = Math.floor(
-          (now.getTime() - new Date(product.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+          (now.getTime() - new Date(product.createdAt).getTime()) /
+            (1000 * 60 * 60 * 24),
         );
-        
-        let issue = '';
-        let severity: 'high' | 'medium' | 'low' = 'low';
+
+        let issue = "";
+        let severity: "high" | "medium" | "low" = "low";
 
         if (daysListed > 180 && product.orderItems.length === 0) {
-          issue = 'No sales in 180+ days - consider repricing or promotion';
-          severity = 'high';
+          issue = "No sales in 180+ days - consider repricing or promotion";
+          severity = "high";
         } else if (daysListed > 90 && product.orderItems.length === 0) {
-          issue = 'No sales in 90+ days - review pricing strategy';
-          severity = 'medium';
+          issue = "No sales in 90+ days - review pricing strategy";
+          severity = "medium";
         } else if (product.orderItems.length === 0) {
-          issue = 'No sales yet - monitor performance';
-          severity = 'low';
+          issue = "No sales yet - monitor performance";
+          severity = "low";
         }
 
         return {
@@ -180,9 +186,7 @@ export async function GET(request: NextRequest) {
       const sold = products.filter((p) => {
         const soldDate = p.updatedAt;
         return (
-          p.status === 'sold' &&
-          soldDate >= weekStart &&
-          soldDate < weekEnd
+          p.status === "sold" && soldDate >= weekStart && soldDate < weekEnd
         );
       }).length;
 
@@ -200,19 +204,18 @@ export async function GET(request: NextRequest) {
 
     // Price distribution
     const priceRanges = [
-      { range: '$0-$50', min: 0, max: 50 },
-      { range: '$50-$100', min: 50, max: 100 },
-      { range: '$100-$250', min: 100, max: 250 },
-      { range: '$250-$500', min: 250, max: 500 },
-      { range: '$500-$1000', min: 500, max: 1000 },
-      { range: '$1000+', min: 1000, max: Number.POSITIVE_INFINITY },
+      { range: "$0-$50", min: 0, max: 50 },
+      { range: "$50-$100", min: 50, max: 100 },
+      { range: "$100-$250", min: 100, max: 250 },
+      { range: "$250-$500", min: 250, max: 500 },
+      { range: "$500-$1000", min: 500, max: 1000 },
+      { range: "$1000+", min: 1000, max: Number.POSITIVE_INFINITY },
     ];
 
     const priceDistribution = priceRanges.map((range) => ({
       range: range.range,
-      count: products.filter(
-        (p) => p.price >= range.min && p.price < range.max
-      ).length,
+      count: products.filter((p) => p.price >= range.min && p.price < range.max)
+        .length,
     }));
 
     const metrics = {
@@ -233,10 +236,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(metrics);
   } catch (error) {
-    console.error('Error fetching product analytics:', error);
+    console.error("Error fetching product analytics:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch product analytics' },
-      { status: 500 }
+      { error: "Failed to fetch product analytics" },
+      { status: 500 },
     );
   }
 }

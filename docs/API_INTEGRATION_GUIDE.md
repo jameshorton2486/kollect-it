@@ -43,6 +43,7 @@ curl http://localhost:3000/api/imagekit-auth
 ```
 
 Expected response:
+
 ```json
 {
   "token": "uuid-here",
@@ -54,6 +55,7 @@ Expected response:
 ### Step 5: Upload Test Image
 
 From admin dashboard:
+
 1. Go to `/admin/products/new`
 2. Upload an image
 3. Verify it appears in ImageKit media library under `/Kollect-it/products/`
@@ -63,17 +65,24 @@ From admin dashboard:
 Use the helper functions in `src/lib/imagekit.ts`:
 
 ```typescript
-import { getImageKitUrl, imageTransformations } from '@/lib/imagekit';
+import { getImageKitUrl, imageTransformations } from "@/lib/imagekit";
 
 // Get thumbnail
-const thumb = getImageKitUrl('/products/image.jpg', imageTransformations.thumbnail);
+const thumb = getImageKitUrl(
+  "/products/image.jpg",
+  imageTransformations.thumbnail,
+);
 // Result: https://ik.imagekit.io/xxx/tr:w-400,h-400,fo-auto,q-80/products/image.jpg
 
 // Get product card image
-const card = getImageKitUrl('/products/image.jpg', imageTransformations.productCard);
+const card = getImageKitUrl(
+  "/products/image.jpg",
+  imageTransformations.productCard,
+);
 ```
 
 Available transformations:
+
 - `thumbnail`: 400x400, auto-focus, 80% quality
 - `productCard`: 600x600, auto-focus, 85% quality
 - `productDetail`: 1200x1200, auto-focus, 90% quality
@@ -100,6 +109,7 @@ For production, verify your domain:
 4. Wait for verification (up to 48 hours)
 
 For development, use Resend's sandbox domain:
+
 ```bash
 EMAIL_FROM="Kollect-It <onboarding@resend.dev>"
 ```
@@ -115,6 +125,7 @@ ADMIN_EMAIL=admin@yourdomain.com
 ```
 
 **Important**:
+
 - `EMAIL_FROM` must use a verified domain (or resend.dev for testing)
 - `ADMIN_EMAIL` receives admin notifications
 
@@ -129,6 +140,7 @@ curl http://localhost:3000/api/email/test
 ```
 
 Expected response:
+
 ```json
 {
   "success": true,
@@ -144,6 +156,7 @@ Expected response:
 Check your `ADMIN_EMAIL` inbox for the test email.
 
 **If email doesn't arrive**:
+
 1. Check spam folder
 2. Verify RESEND_API_KEY is correct
 3. Verify EMAIL_FROM uses verified domain
@@ -182,6 +195,7 @@ STRIPE_SECRET_KEY=sk_test_your_key_here
 ### Step 3: Verify Configuration
 
 Stripe is already configured in `src/lib/stripe.ts` with:
+
 - ✅ API key validation
 - ✅ TypeScript support
 - ✅ Amount formatting helpers
@@ -211,10 +225,10 @@ Stripe is already configured in `src/lib/stripe.ts` with:
 
 Stripe provides test cards for different scenarios:
 
-| Card Number | Scenario |
-|-------------|----------|
-| `4242 4242 4242 4242` | Successful payment |
-| `4000 0000 0000 9995` | Declined (insufficient funds) |
+| Card Number           | Scenario                            |
+| --------------------- | ----------------------------------- |
+| `4242 4242 4242 4242` | Successful payment                  |
+| `4000 0000 0000 9995` | Declined (insufficient funds)       |
 | `4000 0025 0000 3155` | Requires authentication (3D Secure) |
 
 See more: https://stripe.com/docs/testing
@@ -230,6 +244,7 @@ curl http://localhost:3000/api/health
 ```
 
 Expected response:
+
 ```json
 {
   "status": "healthy",
@@ -249,6 +264,7 @@ Expected response:
 ```
 
 **Status Codes**:
+
 - `200`: All systems healthy
 - `503`: Degraded (some services unavailable)
 
@@ -259,6 +275,7 @@ Expected response:
 Before deploying to production, verify:
 
 ### ImageKit:
+
 - [ ] API keys added to environment variables
 - [ ] `/api/imagekit-auth` returns valid auth params
 - [ ] Test image upload from admin dashboard
@@ -266,6 +283,7 @@ Before deploying to production, verify:
 - [ ] Images display on product pages with transformations
 
 ### Resend:
+
 - [ ] API key added to environment variables
 - [ ] Domain verified (production only)
 - [ ] Test email endpoint returns success
@@ -273,6 +291,7 @@ Before deploying to production, verify:
 - [ ] All email templates exist and render correctly
 
 ### Stripe:
+
 - [ ] API keys added to environment variables (test mode)
 - [ ] Test checkout flow completes successfully
 - [ ] Payment appears in Stripe dashboard
@@ -280,6 +299,7 @@ Before deploying to production, verify:
 - [ ] For production: Switch to live keys
 
 ### Overall:
+
 - [ ] `/api/health` returns healthy status
 - [ ] All environment variables set in Netlify
 - [ ] Production domains/keys configured
@@ -292,10 +312,12 @@ Before deploying to production, verify:
 ### ImageKit Issues
 
 **Error**: "Failed to generate authentication parameters"
+
 - Check `IMAGEKIT_PRIVATE_KEY` is set correctly
 - Verify private key has no extra spaces/newlines
 
 **Error**: Upload fails
+
 - Check public key matches private key
 - Verify URL endpoint is correct (must end with `/`)
 - Check ImageKit dashboard for upload limits
@@ -303,16 +325,19 @@ Before deploying to production, verify:
 ### Resend Issues
 
 **Error**: "Email test endpoint is not available in production"
+
 - Test endpoint only works in development
 - Set `NODE_ENV=development` for testing
 
 **Error**: Email not received
+
 - Check spam folder
 - Verify `EMAIL_FROM` uses verified domain
 - Check Resend dashboard for delivery status
 - Verify `RESEND_API_KEY` is correct
 
 **Error**: "Domain not verified"
+
 - Add DNS records in your domain registrar
 - Wait up to 48 hours for propagation
 - Use `onboarding@resend.dev` for testing
@@ -320,11 +345,13 @@ Before deploying to production, verify:
 ### Stripe Issues
 
 **Error**: "Missing STRIPE_SECRET_KEY"
+
 - Verify key is set in `.env`
 - Restart dev server after adding key
 - Check key starts with `sk_test_` or `sk_live_`
 
 **Error**: Payment fails
+
 - Use Stripe test card numbers
 - Check Stripe dashboard for declined reasons
 - Verify webhook configuration (if using)
@@ -340,4 +367,4 @@ Before deploying to production, verify:
 
 ---
 
-*For additional help, check the health endpoint or contact support.*
+_For additional help, check the health endpoint or contact support._

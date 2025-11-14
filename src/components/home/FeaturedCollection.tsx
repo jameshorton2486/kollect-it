@@ -10,7 +10,10 @@ export default function FeaturedCollection() {
           {/* Left Content */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <BookOpen className="h-5 w-5 text-accent-gold" strokeWidth={1.5} />
+              <BookOpen
+                className="h-5 w-5 text-accent-gold"
+                strokeWidth={1.5}
+              />
               <p className="text-sm font-semibold text-accent-gold uppercase tracking-widest">
                 Featured Collection
               </p>
@@ -21,11 +24,15 @@ export default function FeaturedCollection() {
             </h2>
 
             <p className="text-lg text-ink-light leading-relaxed mb-4">
-              From leather-bound volumes dating back to the 17th century to first editions and manuscripts, our rare book collection represents centuries of literary heritage. Each volume has been authenticated and documented with care.
+              From leather-bound volumes dating back to the 17th century to
+              first editions and manuscripts, our rare book collection
+              represents centuries of literary heritage. Each volume has been
+              authenticated and documented with care.
             </p>
 
             <p className="text-lg text-ink-light leading-relaxed mb-8">
-              If you are seeking a special book for your collection, Kollect-It offers exceptional options for serious collectors.
+              If you are seeking a special book for your collection, Kollect-It
+              offers exceptional options for serious collectors.
             </p>
 
             <Link

@@ -3,9 +3,9 @@
  * Phase 6 Step 9 - Touch-friendly action menu
  */
 
-'use client';
+"use client";
 
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
 
 interface Action {
   label: string;
@@ -22,7 +22,12 @@ interface MobileActionSheetProps {
   actions: Action[];
 }
 
-export function MobileActionSheet({ isOpen, onClose, title, actions }: MobileActionSheetProps) {
+export function MobileActionSheet({
+  isOpen,
+  onClose,
+  title,
+  actions,
+}: MobileActionSheetProps) {
   if (!isOpen) return null;
 
   return (
@@ -63,9 +68,9 @@ export function MobileActionSheet({ isOpen, onClose, title, actions }: MobileAct
                 disabled={action.disabled}
                 className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg text-left transition-colors ${
                   action.destructive
-                    ? 'text-red-600 hover:bg-red-50'
-                    : 'text-gray-900 hover:bg-gray-100'
-                } ${action.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    ? "text-red-600 hover:bg-red-50"
+                    : "text-gray-900 hover:bg-gray-100"
+                } ${action.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
               >
                 {Icon && <Icon className="w-5 h-5" />}
                 <span className="font-medium">{action.label}</span>

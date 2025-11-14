@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
 /**
  * Admin Analytics Dashboard
  * Phase 4 - Main dashboard component
  */
 
-import { useEffect, useState } from 'react';
-import { DashboardMetrics } from '@/lib/analytics/types';
-import { MetricCard } from './charts/MetricCard';
-import { ApprovalTrendChart } from './charts/ApprovalTrendChart';
-import { RevenueByCategory } from './charts/RevenueByCategory';
+import { useEffect, useState } from "react";
+import { DashboardMetrics } from "@/lib/analytics/types";
+import { MetricCard } from "./charts/MetricCard";
+import { ApprovalTrendChart } from "./charts/ApprovalTrendChart";
+import { RevenueByCategory } from "./charts/RevenueByCategory";
 
 export function AnalyticsDashboard() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState(
-    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
   );
   const [endDate, setEndDate] = useState(new Date());
 
@@ -29,7 +29,7 @@ export function AnalyticsDashboard() {
       const params = new URLSearchParams({
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        format: 'dashboard',
+        format: "dashboard",
       });
 
       const res = await fetch(`/api/admin/analytics?${params}`);
@@ -38,14 +38,18 @@ export function AnalyticsDashboard() {
         setMetrics(data.data || data);
       }
     } catch (error) {
-      console.error('Analytics fetch error:', error);
+      console.error("Analytics fetch error:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) return <div className="text-center text-gray-400">Loading analytics...</div>;
-  if (!metrics) return <div className="text-center text-gray-400">No data available</div>;
+  if (loading)
+    return (
+      <div className="text-center text-gray-400">Loading analytics...</div>
+    );
+  if (!metrics)
+    return <div className="text-center text-gray-400">No data available</div>;
 
   return (
     <div className="space-y-8">
@@ -55,15 +59,15 @@ export function AnalyticsDashboard() {
           <input
             type="date"
             title="Start Date"
-            value={startDate.toISOString().split('T')[0]}
-            onChange={e => setStartDate(new Date(e.target.value))}
+            value={startDate.toISOString().split("T")[0]}
+            onChange={(e) => setStartDate(new Date(e.target.value))}
             className="bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]"
           />
           <input
             type="date"
             title="End Date"
-            value={endDate.toISOString().split('T')[0]}
-            onChange={e => setEndDate(new Date(e.target.value))}
+            value={endDate.toISOString().split("T")[0]}
+            onChange={(e) => setEndDate(new Date(e.target.value))}
             className="bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]"
           />
         </div>
@@ -75,26 +79,26 @@ export function AnalyticsDashboard() {
           title="Total Products Approved"
           value={metrics.approval.approved}
           unit="items"
-          trend={{ direction: 'up', percentage: 5 }}
+          trend={{ direction: "up", percentage: 5 }}
         />
         <MetricCard
           title="Approval Rate"
           value={Math.round(metrics.approval.approvalRate)}
           unit="%"
-          trend={{ direction: 'up', percentage: 2 }}
+          trend={{ direction: "up", percentage: 2 }}
         />
         <MetricCard
           title="Total Revenue"
           value={Math.round(metrics.revenue.totalRevenue)}
           unit="$"
           prefix="$"
-          trend={{ direction: 'up', percentage: 8 }}
+          trend={{ direction: "up", percentage: 8 }}
         />
         <MetricCard
           title="Avg Price Confidence"
           value={Math.round(metrics.pricing.averageConfidence)}
           unit="%"
-          trend={{ direction: 'neutral', percentage: 0 }}
+          trend={{ direction: "neutral", percentage: 0 }}
         />
       </div>
 
@@ -107,23 +111,33 @@ export function AnalyticsDashboard() {
       {/* Detailed Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
-          <h3 className="text-white text-lg font-bold mb-4">Approval Metrics</h3>
+          <h3 className="text-white text-lg font-bold mb-4">
+            Approval Metrics
+          </h3>
           <div className="space-y-3 text-gray-300">
             <div className="flex justify-between">
               <span>Submitted:</span>
-              <span className="text-[#D3AF37] font-semibold">{metrics.approval.totalSubmitted}</span>
+              <span className="text-[#D3AF37] font-semibold">
+                {metrics.approval.totalSubmitted}
+              </span>
             </div>
             <div className="flex justify-between">
               <span>Approved:</span>
-              <span className="text-green-400 font-semibold">{metrics.approval.approved}</span>
+              <span className="text-green-400 font-semibold">
+                {metrics.approval.approved}
+              </span>
             </div>
             <div className="flex justify-between">
               <span>Rejected:</span>
-              <span className="text-red-400 font-semibold">{metrics.approval.rejected}</span>
+              <span className="text-red-400 font-semibold">
+                {metrics.approval.rejected}
+              </span>
             </div>
             <div className="flex justify-between">
               <span>Pending:</span>
-              <span className="text-yellow-400 font-semibold">{metrics.approval.pending}</span>
+              <span className="text-yellow-400 font-semibold">
+                {metrics.approval.pending}
+              </span>
             </div>
             <div className="pt-3 border-t border-[#D3AF37] flex justify-between">
               <span>Avg Time to Approve:</span>
@@ -169,7 +183,9 @@ export function AnalyticsDashboard() {
           <div className="space-y-3 text-gray-300">
             <div className="flex justify-between">
               <span>Total Products:</span>
-              <span className="text-[#D3AF37] font-semibold">{metrics.products.totalProducts}</span>
+              <span className="text-[#D3AF37] font-semibold">
+                {metrics.products.totalProducts}
+              </span>
             </div>
             <div className="flex justify-between">
               <span>Active Products:</span>
@@ -186,8 +202,8 @@ export function AnalyticsDashboard() {
             <div className="pt-3 border-t border-[#D3AF37] text-sm">
               <p>Price Range:</p>
               <p className="text-[#D3AF37] font-semibold mt-1">
-                ${metrics.products.priceRange.min.toFixed(2)} -
-                ${metrics.products.priceRange.max.toFixed(2)}
+                ${metrics.products.priceRange.min.toFixed(2)} - $
+                {metrics.products.priceRange.max.toFixed(2)}
               </p>
             </div>
           </div>
@@ -196,10 +212,15 @@ export function AnalyticsDashboard() {
 
       {/* Revenue by Category Details */}
       <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
-        <h3 className="text-white text-lg font-bold mb-4">Revenue by Category Breakdown</h3>
+        <h3 className="text-white text-lg font-bold mb-4">
+          Revenue by Category Breakdown
+        </h3>
         <div className="space-y-2">
-          {metrics.revenue.revenueByCategory.map(cat => (
-            <div key={cat.category} className="flex justify-between text-gray-300 pb-2 border-b border-gray-700">
+          {metrics.revenue.revenueByCategory.map((cat) => (
+            <div
+              key={cat.category}
+              className="flex justify-between text-gray-300 pb-2 border-b border-gray-700"
+            >
               <span>{cat.category}</span>
               <span className="text-[#D3AF37] font-semibold">
                 ${cat.revenue.toFixed(2)} ({cat.percentage.toFixed(1)}%)

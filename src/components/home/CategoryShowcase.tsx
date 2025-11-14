@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 
 interface Category {
   id: string;
@@ -15,7 +15,9 @@ interface CategoryShowcaseProps {
   categories: Category[];
 }
 
-export default function CategoryShowcase({ categories }: CategoryShowcaseProps) {
+export default function CategoryShowcase({
+  categories,
+}: CategoryShowcaseProps) {
   return (
     <section className="py-12 bg-muted/30">
       <div className="container mx-auto px-4">

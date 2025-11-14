@@ -51,13 +51,13 @@ class PerformanceMonitor {
   async measure<T>(
     name: string,
     fn: () => Promise<T>,
-    metadata?: Record<string, any>
+    metadata?: Record<string, any>,
   ): Promise<T> {
     const startTime = Date.now();
     try {
       const result = await fn();
       const duration = Date.now() - startTime;
-      
+
       this.recordMetric({
         name,
         duration,
@@ -67,13 +67,16 @@ class PerformanceMonitor {
 
       // Log slow operations (>1s)
       if (duration > 1000) {
-        console.warn(`Slow operation detected: ${name} took ${duration}ms`, metadata);
+        console.warn(
+          `Slow operation detected: ${name} took ${duration}ms`,
+          metadata,
+        );
       }
 
       return result;
     } catch (error) {
       const duration = Date.now() - startTime;
-      
+
       this.recordMetric({
         name,
         duration,
@@ -97,8 +100,11 @@ class PerformanceMonitor {
     }
 
     // Log to console in development
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[Performance] ${metric.name}: ${metric.duration}ms`, metric.metadata);
+    if (process.env.NODE_ENV === "development") {
+      console.log(
+        `[Performance] ${metric.name}: ${metric.duration}ms`,
+        metric.metadata,
+      );
     }
   }
 
@@ -114,13 +120,15 @@ class PerformanceMonitor {
     p95: number;
     p99: number;
   } | null {
-    const operationMetrics = this.metrics.filter(m => m.name === name);
-    
+    const operationMetrics = this.metrics.filter((m) => m.name === name);
+
     if (operationMetrics.length === 0) {
       return null;
     }
 
-    const durations = operationMetrics.map(m => m.duration).sort((a, b) => a - b);
+    const durations = operationMetrics
+      .map((m) => m.duration)
+      .sort((a, b) => a - b);
     const sum = durations.reduce((acc, d) => acc + d, 0);
 
     return {
@@ -138,10 +146,10 @@ class PerformanceMonitor {
    * Get all metrics summary
    */
   getAllStats(): Record<string, ReturnType<typeof this.getStats>> {
-    const names = [...new Set(this.metrics.map(m => m.name))];
+    const names = [...new Set(this.metrics.map((m) => m.name))];
     const stats: Record<string, any> = {};
 
-    names.forEach(name => {
+    names.forEach((name) => {
       stats[name] = this.getStats(name);
     });
 
@@ -151,9 +159,12 @@ class PerformanceMonitor {
   /**
    * Get recent slow operations
    */
-  getSlowOperations(thresholdMs: number = 1000, limit: number = 10): PerformanceMetric[] {
+  getSlowOperations(
+    thresholdMs: number = 1000,
+    limit: number = 10,
+  ): PerformanceMetric[] {
     return this.metrics
-      .filter(m => m.duration > thresholdMs)
+      .filter((m) => m.duration > thresholdMs)
       .sort((a, b) => b.duration - a.duration)
       .slice(0, limit);
   }
@@ -184,7 +195,7 @@ export function monitored(name?: string) {
   return function (
     target: any,
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
   ) {
     const originalMethod = descriptor.value;
     const operationName = name || `${target.constructor.name}.${propertyKey}`;
@@ -193,7 +204,7 @@ export function monitored(name?: string) {
       return performanceMonitor.measure(
         operationName,
         () => originalMethod.apply(this, args),
-        { args: args.length }
+        { args: args.length },
       );
     };
 
@@ -206,7 +217,7 @@ export function monitored(name?: string) {
  */
 export async function withMonitoring<T>(
   name: string,
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): Promise<T> {
   return performanceMonitor.measure(name, fn);
 }
@@ -217,13 +228,12 @@ export async function withMonitoring<T>(
 export async function withApiMonitoring<T>(
   route: string,
   method: string,
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): Promise<T> {
-  return performanceMonitor.measure(
-    `API:${method}:${route}`,
-    fn,
-    { route, method }
-  );
+  return performanceMonitor.measure(`API:${method}:${route}`, fn, {
+    route,
+    method,
+  });
 }
 
 /**
@@ -231,13 +241,9 @@ export async function withApiMonitoring<T>(
  */
 export async function withDbMonitoring<T>(
   operation: string,
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): Promise<T> {
-  return performanceMonitor.measure(
-    `DB:${operation}`,
-    fn,
-    { operation }
-  );
+  return performanceMonitor.measure(`DB:${operation}`, fn, { operation });
 }
 
 /**

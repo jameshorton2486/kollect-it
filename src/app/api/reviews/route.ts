@@ -1,16 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const productId = searchParams.get('productId');
-    const rating = searchParams.get('rating');
+    const productId = searchParams.get("productId");
+    const rating = searchParams.get("rating");
 
     if (!productId) {
-      return NextResponse.json({ error: 'Product ID required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Product ID required" },
+        { status: 400 },
+      );
     }
 
     const where: any = { productId };
@@ -25,28 +28,31 @@ export async function GET(request: NextRequest) {
           user: {
             select: {
               name: true,
-              image: true
-            }
-          }
+              image: true,
+            },
+          },
         },
-        orderBy: [
-          { helpful: 'desc' },
-          { createdAt: 'desc' }
-        ]
+        orderBy: [{ helpful: "desc" }, { createdAt: "desc" }],
       }),
       prisma.review.groupBy({
-        by: ['rating'],
+        by: ["rating"],
         where: { productId },
-        _count: true
-      })
+        _count: true,
+      }),
     ]);
 
     const totalReviews = reviews.length;
-  const averageRating = reviews.reduce((sum: number, r: { rating: number }) => sum + r.rating, 0) / (totalReviews || 1);
+    const averageRating =
+      reviews.reduce(
+        (sum: number, r: { rating: number }) => sum + r.rating,
+        0,
+      ) / (totalReviews || 1);
 
-    const ratingBreakdown = [1, 2, 3, 4, 5].map(star => ({
+    const ratingBreakdown = [1, 2, 3, 4, 5].map((star) => ({
       rating: star,
-  count: stats.find((s: { rating: number, _count: number }) => s.rating === star)?._count || 0
+      count:
+        stats.find((s: { rating: number; _count: number }) => s.rating === star)
+          ?._count || 0,
     }));
 
     return NextResponse.json({
@@ -54,12 +60,15 @@ export async function GET(request: NextRequest) {
       stats: {
         average: averageRating,
         total: totalReviews,
-        breakdown: ratingBreakdown
-      }
+        breakdown: ratingBreakdown,
+      },
     });
   } catch (error) {
-    console.error('Fetch reviews error:', error);
-    return NextResponse.json({ error: 'Failed to fetch reviews' }, { status: 500 });
+    console.error("Fetch reviews error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch reviews" },
+      { status: 500 },
+    );
   }
 }
 
@@ -67,26 +76,32 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { productId, rating, title, comment, images } = await request.json();
 
     // Validate rating
     if (!rating || rating < 1 || rating > 5) {
-      return NextResponse.json({ error: 'Rating must be between 1 and 5' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Rating must be between 1 and 5" },
+        { status: 400 },
+      );
     }
 
     // Check if user already reviewed this product
     const existing = await prisma.review.findFirst({
       where: {
         userId: session.user.id,
-        productId
-      }
+        productId,
+      },
     });
 
     if (existing) {
-      return NextResponse.json({ error: 'You already reviewed this product' }, { status: 400 });
+      return NextResponse.json(
+        { error: "You already reviewed this product" },
+        { status: 400 },
+      );
     }
 
     // Check if user purchased this product (optional - for verified badge)
@@ -95,9 +110,9 @@ export async function POST(request: NextRequest) {
         productId,
         order: {
           userId: session.user.id,
-          status: 'COMPLETED'
-        }
-      }
+          status: "COMPLETED",
+        },
+      },
     });
 
     const review = await prisma.review.create({
@@ -108,14 +123,17 @@ export async function POST(request: NextRequest) {
         title,
         comment,
         images: images || [],
-        verified: !!hasPurchased
-      }
+        verified: !!hasPurchased,
+      },
     });
 
     return NextResponse.json(review);
   } catch (error) {
-    console.error('Create review error:', error);
-    return NextResponse.json({ error: 'Failed to create review' }, { status: 500 });
+    console.error("Create review error:", error);
+    return NextResponse.json(
+      { error: "Failed to create review" },
+      { status: 500 },
+    );
   }
 }
 
@@ -123,19 +141,22 @@ export async function PATCH(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { reviewId, helpful } = await request.json();
 
     const review = await prisma.review.update({
       where: { id: reviewId },
-      data: { helpful: { increment: helpful ? 1 : -1 } }
+      data: { helpful: { increment: helpful ? 1 : -1 } },
     });
 
     return NextResponse.json(review);
   } catch (error) {
-    console.error('Update review error:', error);
-    return NextResponse.json({ error: 'Failed to update review' }, { status: 500 });
+    console.error("Update review error:", error);
+    return NextResponse.json(
+      { error: "Failed to update review" },
+      { status: 500 },
+    );
   }
 }

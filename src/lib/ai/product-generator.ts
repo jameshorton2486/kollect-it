@@ -1,12 +1,12 @@
-import { analyzeProductImageWithClaude } from './claude-product-analyzer';
-import { analyzeImageQualityWithGPT4V } from './gpt4v-image-analyzer';
+import { analyzeProductImageWithClaude } from "./claude-product-analyzer";
+import { analyzeImageQualityWithGPT4V } from "./gpt4v-image-analyzer";
 
 /**
  * Master function: orchestrates both AI services for complete product analysis
  */
 export async function generateProductAnalysis(
   imageUrl: string,
-  category: string
+  category: string,
 ) {
   console.log(`\n📦 Starting product analysis...`);
   console.log(`   Category: ${category}`);
@@ -14,7 +14,7 @@ export async function generateProductAnalysis(
 
   try {
     // Run both AI analyses in parallel for speed
-    console.log('\n🤖 Running AI analysis (Claude + GPT-4V in parallel)...');
+    console.log("\n🤖 Running AI analysis (Claude + GPT-4V in parallel)...");
     const [claudeAnalysis, gpt4vAnalysis] = await Promise.all([
       analyzeProductImageWithClaude(imageUrl, category),
       analyzeImageQualityWithGPT4V(imageUrl),
@@ -37,7 +37,7 @@ export async function generateProductAnalysis(
 
     return combined;
   } catch (error) {
-    console.error('\n❌ Analysis failed:', error);
+    console.error("\n❌ Analysis failed:", error);
     throw error;
   }
 }

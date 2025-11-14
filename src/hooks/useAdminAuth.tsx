@@ -6,15 +6,15 @@
  * consistent authentication handling
  */
 
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface UseAdminAuthReturn {
   session: any;
-  status: 'authenticated' | 'loading' | 'unauthenticated';
+  status: "authenticated" | "loading" | "unauthenticated";
   isLoading: boolean;
   isAuthenticated: boolean;
 }
@@ -40,14 +40,14 @@ interface UseAdminAuthReturn {
 export function useAdminAuth(): UseAdminAuthReturn {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const isLoading = status === 'loading';
-  const isAuthenticated = status === 'authenticated';
+  const isLoading = status === "loading";
+  const isAuthenticated = status === "authenticated";
 
   useEffect(() => {
     // Redirect to login if unauthenticated
-    if (status === 'unauthenticated') {
-      console.warn('Unauthenticated access attempt to admin area');
-      router.push('/api/auth/signin?callbackUrl=/admin/dashboard');
+    if (status === "unauthenticated") {
+      console.warn("Unauthenticated access attempt to admin area");
+      router.push("/api/auth/signin?callbackUrl=/admin/dashboard");
     }
   }, [status, router]);
 
@@ -64,13 +64,17 @@ export function useAdminAuth(): UseAdminAuthReturn {
  * Usage: export default withAdminAuth(AdminPage);
  */
 export function withAdminAuth<P extends object>(
-  Component: React.ComponentType<P>
+  Component: React.ComponentType<P>,
 ): React.ComponentType<P> {
   return function ProtectedComponent(props: P) {
     const { session, isLoading } = useAdminAuth();
 
     if (isLoading) {
-      return <div className="flex items-center justify-center h-screen">Loading...</div>;
+      return (
+        <div className="flex items-center justify-center h-screen">
+          Loading...
+        </div>
+      );
     }
 
     if (!session) {

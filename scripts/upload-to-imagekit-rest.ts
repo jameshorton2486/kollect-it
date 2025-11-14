@@ -3,28 +3,29 @@
 /**
  * ImageKit Direct REST API Upload Script
  * Uses ImageKit REST API directly instead of SDK (bypasses SDK authentication issues)
- * 
+ *
  * Usage: bun run scripts/upload-to-imagekit-rest.ts
  */
 
-import { google } from 'googleapis';
-import fs from 'fs/promises';
+import { google } from "googleapis";
+import fs from "fs/promises";
 
 const config = {
-  googleCredentialsPath: process.env.GOOGLE_APPLICATION_CREDENTIALS || './google-credentials.json',
-  driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || '',
+  googleCredentialsPath:
+    process.env.GOOGLE_APPLICATION_CREDENTIALS || "./google-credentials.json",
+  driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || "",
   imagekit: {
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || '',
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "",
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "",
   },
 };
 
 const SUPPORTED_MIME_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/gif',
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
 ];
 
 interface DriveFile {
@@ -37,34 +38,34 @@ interface DriveFile {
 async function initializeDriveApi() {
   try {
     const credentials = JSON.parse(
-      await fs.readFile(config.googleCredentialsPath, 'utf-8')
+      await fs.readFile(config.googleCredentialsPath, "utf-8"),
     );
 
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
     });
 
-    return google.drive({ version: 'v3', auth });
+    return google.drive({ version: "v3", auth });
   } catch (error) {
-    console.error('❌ Failed to initialize Google Drive API:', error);
+    console.error("❌ Failed to initialize Google Drive API:", error);
     throw error;
   }
 }
 
 async function getImagesFromDrive(
   drive: ReturnType<typeof google.drive>,
-  folderId: string
+  folderId: string,
 ): Promise<DriveFile[]> {
   try {
-    console.log('📂 Fetching images from Google Drive folder...');
+    console.log("📂 Fetching images from Google Drive folder...");
 
     const response = await drive.files.list({
       q: `'${folderId}' in parents and trashed=false and (${SUPPORTED_MIME_TYPES.map(
-        (mime) => `mimeType='${mime}'`
-      ).join(' or ')})`,
-      spaces: 'drive',
-      fields: 'files(id, name, mimeType, size)',
+        (mime) => `mimeType='${mime}'`,
+      ).join(" or ")})`,
+      spaces: "drive",
+      fields: "files(id, name, mimeType, size)",
       pageSize: 100,
     });
 
@@ -73,7 +74,7 @@ async function getImagesFromDrive(
 
     return files as DriveFile[];
   } catch (error) {
-    console.error('❌ Failed to fetch images from Google Drive:', error);
+    console.error("❌ Failed to fetch images from Google Drive:", error);
     throw error;
   }
 }
@@ -81,17 +82,20 @@ async function getImagesFromDrive(
 async function downloadFromDrive(
   drive: ReturnType<typeof google.drive>,
   fileId: string,
-  fileName: string
+  fileName: string,
 ): Promise<Buffer> {
   try {
     const response = await drive.files.get(
-      { fileId, alt: 'media' },
-      { responseType: 'arraybuffer' }
+      { fileId, alt: "media" },
+      { responseType: "arraybuffer" },
     );
 
     return Buffer.from(response.data as ArrayBuffer);
   } catch (error) {
-    console.error(`❌ Failed to download file from Google Drive: ${fileName}`, error);
+    console.error(
+      `❌ Failed to download file from Google Drive: ${fileName}`,
+      error,
+    );
     throw error;
   }
 }
@@ -99,36 +103,43 @@ async function downloadFromDrive(
 async function uploadToImageKitREST(
   buffer: Buffer,
   fileName: string,
-  folder: string = '/products'
+  folder: string = "/products",
 ): Promise<{ fileId: string; filePath: string; url: string }> {
   try {
     // Create auth header: base64 of privateKey:
-    const auth = Buffer.from(`${config.imagekit.privateKey}:`).toString('base64');
+    const auth = Buffer.from(`${config.imagekit.privateKey}:`).toString(
+      "base64",
+    );
 
     const formData = new FormData();
     // @ts-ignore - Buffer to Blob conversion works at runtime
     const blob = new Blob([buffer]);
-    formData.append('file', blob);
-    formData.append('fileName', fileName);
-    formData.append('folder', folder);
-    formData.append('overwrite', 'false');
-    formData.append('tags', 'drive-sync,auto-imported');
+    formData.append("file", blob);
+    formData.append("fileName", fileName);
+    formData.append("folder", folder);
+    formData.append("overwrite", "false");
+    formData.append("tags", "drive-sync,auto-imported");
 
-    const response = await fetch('https://upload.imagekit.io/api/v1/files/upload', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${auth}`,
+    const response = await fetch(
+      "https://upload.imagekit.io/api/v1/files/upload",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${auth}`,
+        },
+        body: formData,
       },
-      body: formData,
-    });
+    );
 
     if (!response.ok) {
       const errorData = await response.text();
       console.error(`❌ ImageKit upload failed: ${response.status}`, errorData);
-      throw new Error(`ImageKit upload failed: ${response.status} - ${errorData}`);
+      throw new Error(
+        `ImageKit upload failed: ${response.status} - ${errorData}`,
+      );
     }
 
-    const result = await response.json() as {
+    const result = (await response.json()) as {
       fileId: string;
       filePath: string;
       url: string;
@@ -144,18 +155,18 @@ async function uploadToImageKitREST(
 async function main() {
   const startTime = new Date();
 
-  console.log('\n🚀 Starting Google Drive to ImageKit Upload (REST API)');
+  console.log("\n🚀 Starting Google Drive to ImageKit Upload (REST API)");
   console.log(`📁 Drive Folder ID: ${config.driveFolderId}`);
   console.log(`🖼️  ImageKit Folder: /products\n`);
 
   try {
     // Validate config
     if (!config.imagekit.privateKey) {
-      throw new Error('IMAGEKIT_PRIVATE_KEY not set in environment');
+      throw new Error("IMAGEKIT_PRIVATE_KEY not set in environment");
     }
 
     if (!config.driveFolderId) {
-      throw new Error('GOOGLE_DRIVE_FOLDER_ID not set in environment');
+      throw new Error("GOOGLE_DRIVE_FOLDER_ID not set in environment");
     }
 
     // Initialize Drive API
@@ -165,7 +176,7 @@ async function main() {
     const driveFiles = await getImagesFromDrive(drive, config.driveFolderId);
 
     if (driveFiles.length === 0) {
-      console.log('⚠️  No images found in Google Drive folder');
+      console.log("⚠️  No images found in Google Drive folder");
       return;
     }
 
@@ -206,29 +217,33 @@ async function main() {
 
     // Summary
     const endTime = new Date();
-    const duration = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2);
+    const duration = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(
+      2,
+    );
 
-    console.log('='.repeat(60));
-    console.log('📊 UPLOAD SUMMARY');
-    console.log('='.repeat(60));
+    console.log("=".repeat(60));
+    console.log("📊 UPLOAD SUMMARY");
+    console.log("=".repeat(60));
     console.log(`📁 Files Found:     ${driveFiles.length}`);
     console.log(`✅ Uploaded:        ${uploaded}`);
     console.log(`❌ Failed:          ${failed}`);
     console.log(`⏱️  Duration:        ${duration}s`);
-    console.log('='.repeat(60));
+    console.log("=".repeat(60));
 
     if (failed === 0) {
-      console.log(`\n🎉 SUCCESS: All ${uploaded} files uploaded to ImageKit!\n`);
+      console.log(
+        `\n🎉 SUCCESS: All ${uploaded} files uploaded to ImageKit!\n`,
+      );
     } else {
       console.log(`\n⚠️  COMPLETED WITH ${failed} ERRORS\n`);
     }
   } catch (error) {
-    console.error('\n❌ Upload process failed:', error);
+    console.error("\n❌ Upload process failed:", error);
     process.exit(1);
   }
 }
 
 main().catch((error) => {
-  console.error('❌ Fatal error:', error);
+  console.error("❌ Fatal error:", error);
   process.exit(1);
 });

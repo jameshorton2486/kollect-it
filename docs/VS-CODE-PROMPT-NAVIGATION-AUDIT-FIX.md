@@ -36,7 +36,7 @@ Scan these files to find navigation issues:
 ### Step 1: Create src/lib/navigation.ts
 
 ```typescript
-import { Palette, Gem, Book, Shield, Home, ShoppingBag } from 'lucide-react';
+import { Palette, Gem, Book, Shield, Home, ShoppingBag } from "lucide-react";
 
 export interface NavLink {
   href: string;
@@ -46,43 +46,51 @@ export interface NavLink {
 
 // Main navigation
 export const mainNavigation: NavLink[] = [
-  { href: '/', label: 'Home', icon: Home },
-  { href: '/shop', label: 'Shop All', icon: ShoppingBag },
+  { href: "/", label: "Home", icon: Home },
+  { href: "/shop", label: "Shop All", icon: ShoppingBag },
 ];
 
 // Categories
 export const categoryNavigation: NavLink[] = [
-  { href: '/category/fine_art', label: 'Fine Art', icon: Palette },
-  { href: '/category/collectibles', label: 'Collectibles', icon: Gem },
-  { href: '/category/books_and_manuscripts', label: 'Books & Manuscripts', icon: Book },
-  { href: '/category/militaria_and_historical', label: 'Militaria & Historical', icon: Shield },
+  { href: "/category/fine_art", label: "Fine Art", icon: Palette },
+  { href: "/category/collectibles", label: "Collectibles", icon: Gem },
+  {
+    href: "/category/books_and_manuscripts",
+    label: "Books & Manuscripts",
+    icon: Book,
+  },
+  {
+    href: "/category/militaria_and_historical",
+    label: "Militaria & Historical",
+    icon: Shield,
+  },
 ];
 
 // Footer navigation
 export const footerNavigation = [
   {
-    title: 'Shop',
+    title: "Shop",
     links: [
-      { href: '/shop', label: 'Browse All' },
-      { href: '/category/fine_art', label: 'Fine Art' },
-      { href: '/category/collectibles', label: 'Collectibles' },
-      { href: '/category/books_and_manuscripts', label: 'Books & Manuscripts' },
-      { href: '/category/militaria_and_historical', label: 'Militaria' },
+      { href: "/shop", label: "Browse All" },
+      { href: "/category/fine_art", label: "Fine Art" },
+      { href: "/category/collectibles", label: "Collectibles" },
+      { href: "/category/books_and_manuscripts", label: "Books & Manuscripts" },
+      { href: "/category/militaria_and_historical", label: "Militaria" },
     ],
   },
   {
-    title: 'Support',
+    title: "Support",
     links: [
-      { href: '/faq', label: 'FAQ' },
-      { href: '/contact', label: 'Contact' },
-      { href: '/shipping-returns', label: 'Shipping & Returns' },
+      { href: "/faq", label: "FAQ" },
+      { href: "/contact", label: "Contact" },
+      { href: "/shipping-returns", label: "Shipping & Returns" },
     ],
   },
   {
-    title: 'About',
+    title: "About",
     links: [
-      { href: '/about', label: 'About Us' },
-      { href: '/sell', label: 'Sell With Us' },
+      { href: "/about", label: "About Us" },
+      { href: "/sell", label: "Sell With Us" },
     ],
   },
 ];

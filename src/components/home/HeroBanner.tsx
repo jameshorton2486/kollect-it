@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface HeroBanner {
   id: string;
@@ -92,7 +92,7 @@ export default function HeroBanner({ banners }: HeroBannerProps) {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentIndex ? 'bg-white' : 'bg-white/50'
+                  index === currentIndex ? "bg-white" : "bg-white/50"
                 }`}
               />
             ))}

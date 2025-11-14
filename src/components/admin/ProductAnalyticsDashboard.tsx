@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
 /**
  * Product Analytics Dashboard Component
  * Phase 6 Step 3 - Product performance tracking and inventory management
  */
 
-import { useEffect, useState } from 'react';
-import { 
-  Package, 
-  Eye, 
+import { useEffect, useState } from "react";
+import {
+  Package,
+  Eye,
   ShoppingCart,
   AlertTriangle,
   Clock,
-  DollarSign
-} from 'lucide-react';
-import { 
-  BarChart, 
-  Bar, 
-  LineChart, 
+  DollarSign,
+} from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  LineChart,
   Line,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer 
-} from 'recharts';
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 interface ProductMetrics {
   overview: {
@@ -56,7 +56,7 @@ interface ProductMetrics {
     id: string;
     title: string;
     issue: string;
-    severity: 'high' | 'medium' | 'low';
+    severity: "high" | "medium" | "low";
     daysListed: number;
   }>;
   salesVelocity: Array<{
@@ -73,7 +73,7 @@ interface ProductMetrics {
 export function ProductAnalyticsDashboard() {
   const [metrics, setMetrics] = useState<ProductMetrics | null>(null);
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState('30');
+  const [period, setPeriod] = useState("30");
 
   useEffect(() => {
     fetchMetrics();
@@ -82,13 +82,15 @@ export function ProductAnalyticsDashboard() {
   const fetchMetrics = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/analytics/products?period=${period}`);
+      const response = await fetch(
+        `/api/admin/analytics/products?period=${period}`,
+      );
       if (response.ok) {
         const data = await response.json();
         setMetrics(data);
       }
     } catch (error) {
-      console.error('Error fetching product metrics:', error);
+      console.error("Error fetching product metrics:", error);
     } finally {
       setLoading(false);
     }
@@ -112,11 +114,17 @@ export function ProductAnalyticsDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Product Analytics</h1>
-          <p className="text-gray-600 mt-2">Performance tracking and inventory insights</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Product Analytics
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Performance tracking and inventory insights
+          </p>
         </div>
         <div>
-          <label htmlFor="product-period-select" className="sr-only">Select time period</label>
+          <label htmlFor="product-period-select" className="sr-only">
+            Select time period
+          </label>
           <select
             id="product-period-select"
             value={period}
@@ -155,7 +163,7 @@ export function ProductAnalyticsDashboard() {
           icon={<AlertTriangle className="text-red-600" size={24} />}
           label="Inventory Alerts"
           value={metrics.inventoryAlerts.length.toString()}
-          subtitle={`${metrics.inventoryAlerts.filter(a => a.severity === 'high').length} high priority`}
+          subtitle={`${metrics.inventoryAlerts.filter((a) => a.severity === "high").length} high priority`}
         />
       </div>
 
@@ -163,25 +171,29 @@ export function ProductAnalyticsDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Sales Velocity */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Sales Velocity</h2>
-          <p className="text-sm text-gray-500 mb-4">Products sold vs listed over time</p>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Sales Velocity
+          </h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Products sold vs listed over time
+          </p>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={metrics.salesVelocity}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis dataKey="period" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Line 
-                type="monotone" 
-                dataKey="sold" 
-                stroke="#10B981" 
+              <Line
+                type="monotone"
+                dataKey="sold"
+                stroke="#10B981"
                 strokeWidth={2}
                 name="Sold"
               />
-              <Line 
-                type="monotone" 
-                dataKey="listed" 
-                stroke="#D3AF37" 
+              <Line
+                type="monotone"
+                dataKey="listed"
+                stroke="#D3AF37"
                 strokeWidth={2}
                 name="Listed"
               />
@@ -191,7 +203,9 @@ export function ProductAnalyticsDashboard() {
 
         {/* Price Distribution */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Price Distribution</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Price Distribution
+          </h2>
           <p className="text-sm text-gray-500 mb-4">Products by price range</p>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={metrics.priceDistribution}>
@@ -207,7 +221,9 @@ export function ProductAnalyticsDashboard() {
 
       {/* Category Performance */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Category Performance</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Category Performance
+        </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -251,10 +267,13 @@ export function ProductAnalyticsDashboard() {
                     ${category.avgPrice.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {category.productCount > 0 
-                      ? ((category.sales / category.productCount) * 100).toFixed(1)
-                      : '0.0'
-                    }%
+                    {category.productCount > 0
+                      ? (
+                          (category.sales / category.productCount) *
+                          100
+                        ).toFixed(1)
+                      : "0.0"}
+                    %
                   </td>
                 </tr>
               ))}
@@ -265,7 +284,9 @@ export function ProductAnalyticsDashboard() {
 
       {/* Top Performing Products */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Top Performing Products</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Top Performing Products
+        </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -309,11 +330,15 @@ export function ProductAnalyticsDashboard() {
                     ${product.revenue.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className={`${
-                      product.conversionRate > 5 ? 'text-green-600' : 
-                      product.conversionRate > 2 ? 'text-yellow-600' : 
-                      'text-gray-500'
-                    }`}>
+                    <span
+                      className={`${
+                        product.conversionRate > 5
+                          ? "text-green-600"
+                          : product.conversionRate > 2
+                            ? "text-yellow-600"
+                            : "text-gray-500"
+                      }`}
+                    >
                       {product.conversionRate.toFixed(1)}%
                     </span>
                   </td>
@@ -330,29 +355,37 @@ export function ProductAnalyticsDashboard() {
       {/* Inventory Alerts */}
       {metrics.inventoryAlerts.length > 0 && (
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Inventory Alerts</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Inventory Alerts
+          </h2>
           <div className="space-y-3">
             {metrics.inventoryAlerts.map((alert) => (
               <div
                 key={alert.id}
                 className={`p-4 rounded-lg border-l-4 ${
-                  alert.severity === 'high' ? 'border-red-500 bg-red-50' :
-                  alert.severity === 'medium' ? 'border-yellow-500 bg-yellow-50' :
-                  'border-blue-500 bg-blue-50'
+                  alert.severity === "high"
+                    ? "border-red-500 bg-red-50"
+                    : alert.severity === "medium"
+                      ? "border-yellow-500 bg-yellow-50"
+                      : "border-blue-500 bg-blue-50"
                 }`}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <AlertTriangle 
-                        size={18} 
+                      <AlertTriangle
+                        size={18}
                         className={
-                          alert.severity === 'high' ? 'text-red-600' :
-                          alert.severity === 'medium' ? 'text-yellow-600' :
-                          'text-blue-600'
+                          alert.severity === "high"
+                            ? "text-red-600"
+                            : alert.severity === "medium"
+                              ? "text-yellow-600"
+                              : "text-blue-600"
                         }
                       />
-                      <h3 className="font-medium text-gray-900">{alert.title}</h3>
+                      <h3 className="font-medium text-gray-900">
+                        {alert.title}
+                      </h3>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">{alert.issue}</p>
                   </div>
@@ -370,15 +403,15 @@ export function ProductAnalyticsDashboard() {
   );
 }
 
-function MetricCard({ 
-  icon, 
-  label, 
-  value, 
-  subtitle 
-}: { 
-  icon: React.ReactNode; 
-  label: string; 
-  value: string; 
+function MetricCard({
+  icon,
+  label,
+  value,
+  subtitle,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
   subtitle?: string;
 }) {
   return (
@@ -388,9 +421,7 @@ function MetricCard({
         {icon}
       </div>
       <div className="text-3xl font-bold text-gray-900">{value}</div>
-      {subtitle && (
-        <div className="text-sm text-gray-500 mt-2">{subtitle}</div>
-      )}
+      {subtitle && <div className="text-sm text-gray-500 mt-2">{subtitle}</div>}
     </div>
   );
 }

@@ -10,11 +10,13 @@
 ### 1. Environment Variables Normalized
 
 **Updated `.env.example`:**
+
 - Clean format with variable names only (no placeholder values)
 - Added `DIRECT_URL` for direct database connection
 - Total: 13 required variables (12 + NODE_ENV)
 
 **Format:**
+
 ```bash
 DATABASE_URL=
 DIRECT_URL=
@@ -27,12 +29,14 @@ NEXTAUTH_SECRET=
 **New Route:** `/api/diagnostics/env`
 
 **Features:**
+
 - Returns status 200 if all variables present
 - Returns status 206 if some variables missing
 - Lists missing variable **names** only (never values)
 - Safe for production use
 
 **Response:**
+
 ```json
 {
   "status": "complete" | "incomplete",
@@ -50,6 +54,7 @@ NEXTAUTH_SECRET=
 ### 3. Prisma Schema Updated
 
 **Added `directUrl` support:**
+
 ```prisma
 datasource db {
   provider  = "postgresql"
@@ -59,6 +64,7 @@ datasource db {
 ```
 
 **Why Two URLs?**
+
 - `DATABASE_URL`: Pooled connection (PgBouncer, port 6543) for app queries
 - `DIRECT_URL`: Direct connection (port 5432) for migrations
 
@@ -67,10 +73,11 @@ datasource db {
 ### 4. Seed File Enhanced
 
 **Added Production Guard:**
+
 ```typescript
 /**
  * Database Seeding Script
- * 
+ *
  * WARNING: DEV/TEST ONLY!
  * - Contains sample data including default admin account
  * - NEVER run in production (blocked by environment check)
@@ -82,6 +89,7 @@ datasource db {
 ### 5. Package.json Scripts Verified
 
 All database commands properly configured:
+
 ```json
 {
   "db:generate": "prisma generate",
@@ -101,6 +109,7 @@ All database commands properly configured:
 ### 1. ENV_SETUP.md
 
 **Complete environment variable guide:**
+
 - All 12 required variables explained
 - Where to get each API key
 - How to configure each service
@@ -109,6 +118,7 @@ All database commands properly configured:
 - Troubleshooting guide
 
 **Sections:**
+
 - Database (Supabase/Neon)
 - Authentication (NextAuth)
 - Payments (Stripe)
@@ -120,6 +130,7 @@ All database commands properly configured:
 ### 2. DATABASE_SETUP.md
 
 **Comprehensive database configuration:**
+
 - Pooled vs Direct connections explained
 - Supabase setup (step-by-step)
 - Neon setup (step-by-step)
@@ -130,6 +141,7 @@ All database commands properly configured:
 - Troubleshooting guide
 
 **Key Topics:**
+
 - Why use two connection types
 - Port differences (6543 vs 5432)
 - PgBouncer configuration
@@ -152,6 +164,7 @@ curl http://localhost:3000/api/diagnostics/env
 ```
 
 **Expected Response (with empty .env):**
+
 ```json
 {
   "status": "incomplete",
@@ -233,23 +246,28 @@ NODE_ENV=production bun run db:seed
 **Total: 12 variables**
 
 ### Database (2)
+
 - `DATABASE_URL` - Pooled connection (port 6543)
 - `DIRECT_URL` - Direct connection (port 5432)
 
 ### Authentication (2)
+
 - `NEXTAUTH_SECRET` - Session encryption key
 - `NEXTAUTH_URL` - Site URL
 
 ### Payments (2)
+
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Stripe public key
 - `STRIPE_SECRET_KEY` - Stripe secret key
 
 ### Email (3)
+
 - `RESEND_API_KEY` - Resend API key
 - `EMAIL_FROM` - Sender email address
 - `ADMIN_EMAIL` - Admin notification email
 
 ### Images (3)
+
 - `NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT` - ImageKit URL
 - `NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY` - ImageKit public key
 - `IMAGEKIT_PRIVATE_KEY` - ImageKit private key
@@ -276,6 +294,7 @@ curl http://localhost:3000/api/diagnostics/env
 ### 2. Set Up Database
 
 **For Supabase:**
+
 ```bash
 # Get pooled connection (port 6543) → DATABASE_URL
 # Get direct connection (port 5432) → DIRECT_URL
@@ -315,14 +334,17 @@ bun run db:studio
 ## 📖 Related Documentation
 
 **Primary Guides:**
+
 - `docs/ENV_SETUP.md` - Complete variable setup (400+ lines)
 - `docs/DATABASE_SETUP.md` - Database configuration (500+ lines)
 
 **Security:**
+
 - `docs/SECURITY.md` - Security best practices
 - `docs/CREDENTIAL_ROTATION_CHECKLIST.md` - Rotation procedures
 
 **Deployment:**
+
 - `DEPLOYMENT_STATUS.md` - Deployment guide
 - `QUICK_START.md` - Quick start guide
 
@@ -369,6 +391,7 @@ bun run db:studio
 ### Diagnostics Security
 
 The `/api/diagnostics/env` endpoint is production-safe:
+
 - Only returns variable **names**
 - Never exposes actual **values**
 - Helps identify missing configuration
@@ -378,15 +401,15 @@ The `/api/diagnostics/env` endpoint is production-safe:
 
 ## 📊 Changes Summary
 
-| File | Change | Purpose |
-|------|--------|---------|
-| `.env.example` | Normalized format | Clean variable names only |
-| `prisma/schema.prisma` | Added `directUrl` | Support pooled + direct connections |
-| `prisma/seed.ts` | Added warning comment | Clarify DEV ONLY usage |
-| `src/app/api/diagnostics/env/route.ts` | Created endpoint | Safe env variable checking |
-| `docs/ENV_SETUP.md` | Created (400+ lines) | Complete setup guide |
-| `docs/DATABASE_SETUP.md` | Replaced (500+ lines) | Pooled/direct explanation |
-| `package.json` | Verified scripts | All DB commands present |
+| File                                   | Change                | Purpose                             |
+| -------------------------------------- | --------------------- | ----------------------------------- |
+| `.env.example`                         | Normalized format     | Clean variable names only           |
+| `prisma/schema.prisma`                 | Added `directUrl`     | Support pooled + direct connections |
+| `prisma/seed.ts`                       | Added warning comment | Clarify DEV ONLY usage              |
+| `src/app/api/diagnostics/env/route.ts` | Created endpoint      | Safe env variable checking          |
+| `docs/ENV_SETUP.md`                    | Created (400+ lines)  | Complete setup guide                |
+| `docs/DATABASE_SETUP.md`               | Replaced (500+ lines) | Pooled/direct explanation           |
+| `package.json`                         | Verified scripts      | All DB commands present             |
 
 ---
 
@@ -394,13 +417,14 @@ The `/api/diagnostics/env` endpoint is production-safe:
 
 **Environment baseline complete!**
 
- All variables normalized and documented
- Diagnostics endpoint for safe checking
- Database configured for pooled + direct connections
- Production safety guards in place
- Comprehensive documentation created
+All variables normalized and documented
+Diagnostics endpoint for safe checking
+Database configured for pooled + direct connections
+Production safety guards in place
+Comprehensive documentation created
 
 **Next steps:**
+
 1. Fill in `.env` with real values
 2. Set up database (Supabase/Neon)
 3. Run diagnostics to verify

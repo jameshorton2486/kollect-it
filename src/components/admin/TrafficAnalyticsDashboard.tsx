@@ -1,24 +1,37 @@
-'use client';
+"use client";
 
 /**
  * Traffic Analytics Dashboard Component
  * Phase 6 Step 6 - Google Analytics integration and traffic metrics
  */
 
-import { useState, useEffect } from 'react';
-import { 
-  Users, 
-  TrendingUp, 
-  MousePointerClick, 
+import { useState, useEffect } from "react";
+import {
+  Users,
+  TrendingUp,
+  MousePointerClick,
   Eye,
   Globe,
   Smartphone,
   Monitor,
   Clock,
   Target,
-  BarChart3
-} from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+  BarChart3,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 interface TrafficMetrics {
   overview: {
@@ -37,19 +50,31 @@ interface TrafficMetrics {
     sources: Array<{ source: string; visitors: number; percentage: number }>;
   };
   devices: Array<{ device: string; count: number; percentage: number }>;
-  topPages: Array<{ page: string; views: number; avgTime: number; bounceRate: number }>;
+  topPages: Array<{
+    page: string;
+    views: number;
+    avgTime: number;
+    bounceRate: number;
+  }>;
   conversions: {
     funnelSteps: Array<{ step: string; users: number; dropOff: number }>;
     goals: Array<{ name: string; completions: number; value: number }>;
   };
 }
 
-const COLORS = ['#D3AF37', '#B1874C', '#8B6937', '#C7A85E', '#E5C65A', '#F4E4A6'];
+const COLORS = [
+  "#D3AF37",
+  "#B1874C",
+  "#8B6937",
+  "#C7A85E",
+  "#E5C65A",
+  "#F4E4A6",
+];
 
 export function TrafficAnalyticsDashboard() {
   const [metrics, setMetrics] = useState<TrafficMetrics | null>(null);
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState('7');
+  const [period, setPeriod] = useState("7");
 
   useEffect(() => {
     fetchMetrics();
@@ -58,13 +83,15 @@ export function TrafficAnalyticsDashboard() {
   const fetchMetrics = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/analytics/traffic?period=${period}`);
+      const response = await fetch(
+        `/api/admin/analytics/traffic?period=${period}`,
+      );
       if (response.ok) {
         const data = await response.json();
         setMetrics(data);
       }
     } catch (error) {
-      console.error('Error fetching traffic metrics:', error);
+      console.error("Error fetching traffic metrics:", error);
     } finally {
       setLoading(false);
     }
@@ -91,11 +118,17 @@ export function TrafficAnalyticsDashboard() {
       {/* Header with Period Selector */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Traffic & Analytics</h2>
-          <p className="text-gray-500 mt-1">Real-time visitor metrics and traffic sources</p>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Traffic & Analytics
+          </h2>
+          <p className="text-gray-500 mt-1">
+            Real-time visitor metrics and traffic sources
+          </p>
         </div>
         <div>
-          <label htmlFor="traffic-period-select" className="sr-only">Select time period</label>
+          <label htmlFor="traffic-period-select" className="sr-only">
+            Select time period
+          </label>
           <select
             id="traffic-period-select"
             value={period}
@@ -121,7 +154,9 @@ export function TrafficAnalyticsDashboard() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <div className="text-4xl font-bold">{metrics.realTime.activeUsers}</div>
+            <div className="text-4xl font-bold">
+              {metrics.realTime.activeUsers}
+            </div>
             <div className="text-amber-100 mt-1">Active users right now</div>
           </div>
           <div>
@@ -145,7 +180,9 @@ export function TrafficAnalyticsDashboard() {
             <Users className="text-blue-600" size={24} />
             <TrendingUp className="text-green-600" size={16} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">{metrics.overview.totalVisitors.toLocaleString()}</div>
+          <div className="text-2xl font-bold text-gray-900">
+            {metrics.overview.totalVisitors.toLocaleString()}
+          </div>
           <div className="text-sm text-gray-500 mt-1">Total Visitors</div>
         </div>
 
@@ -153,7 +190,9 @@ export function TrafficAnalyticsDashboard() {
           <div className="flex items-center justify-between mb-2">
             <Eye className="text-purple-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">{metrics.overview.pageViews.toLocaleString()}</div>
+          <div className="text-2xl font-bold text-gray-900">
+            {metrics.overview.pageViews.toLocaleString()}
+          </div>
           <div className="text-sm text-gray-500 mt-1">Page Views</div>
         </div>
 
@@ -161,7 +200,9 @@ export function TrafficAnalyticsDashboard() {
           <div className="flex items-center justify-between mb-2">
             <MousePointerClick className="text-amber-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">{metrics.overview.bounceRate}%</div>
+          <div className="text-2xl font-bold text-gray-900">
+            {metrics.overview.bounceRate}%
+          </div>
           <div className="text-sm text-gray-500 mt-1">Bounce Rate</div>
         </div>
 
@@ -169,7 +210,10 @@ export function TrafficAnalyticsDashboard() {
           <div className="flex items-center justify-between mb-2">
             <Clock className="text-indigo-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">{Math.floor(metrics.overview.avgSessionDuration / 60)}m {metrics.overview.avgSessionDuration % 60}s</div>
+          <div className="text-2xl font-bold text-gray-900">
+            {Math.floor(metrics.overview.avgSessionDuration / 60)}m{" "}
+            {metrics.overview.avgSessionDuration % 60}s
+          </div>
           <div className="text-sm text-gray-500 mt-1">Avg. Session</div>
         </div>
 
@@ -177,19 +221,23 @@ export function TrafficAnalyticsDashboard() {
           <div className="flex items-center justify-between mb-2">
             <Target className="text-green-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">{metrics.overview.conversionRate}%</div>
+          <div className="text-2xl font-bold text-gray-900">
+            {metrics.overview.conversionRate}%
+          </div>
           <div className="text-sm text-gray-500 mt-1">Conversion Rate</div>
         </div>
       </div>
 
       {/* Traffic Trend Chart */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Traffic Trend</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Traffic Trend
+        </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={metrics.traffic.daily}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis 
-              dataKey="date" 
+            <XAxis
+              dataKey="date"
               tick={{ fontSize: 12 }}
               tickFormatter={(value) => {
                 const date = new Date(value);
@@ -197,25 +245,25 @@ export function TrafficAnalyticsDashboard() {
               }}
             />
             <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip 
-              formatter={(value: number) => [value, '']}
+            <Tooltip
+              formatter={(value: number) => [value, ""]}
               labelFormatter={(label) => new Date(label).toLocaleDateString()}
             />
-            <Line 
-              type="monotone" 
-              dataKey="visitors" 
-              stroke="#D3AF37" 
+            <Line
+              type="monotone"
+              dataKey="visitors"
+              stroke="#D3AF37"
               strokeWidth={2}
               name="Visitors"
-              dot={{ fill: '#D3AF37' }}
+              dot={{ fill: "#D3AF37" }}
             />
-            <Line 
-              type="monotone" 
-              dataKey="pageViews" 
-              stroke="#B1874C" 
+            <Line
+              type="monotone"
+              dataKey="pageViews"
+              stroke="#B1874C"
               strokeWidth={2}
               name="Page Views"
-              dot={{ fill: '#B1874C' }}
+              dot={{ fill: "#B1874C" }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -227,7 +275,9 @@ export function TrafficAnalyticsDashboard() {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center gap-2 mb-4">
             <Globe className="text-amber-600" size={24} />
-            <h3 className="text-xl font-semibold text-gray-900">Traffic Sources</h3>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Traffic Sources
+            </h3>
           </div>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -242,7 +292,10 @@ export function TrafficAnalyticsDashboard() {
                 dataKey="visitors"
               >
                 {metrics.traffic.sources.map((_entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -250,16 +303,25 @@ export function TrafficAnalyticsDashboard() {
           </ResponsiveContainer>
           <div className="mt-4 space-y-2">
             {metrics.traffic.sources.map((source, index) => (
-              <div key={source.source} className="flex items-center justify-between text-sm">
+              <div
+                key={source.source}
+                className="flex items-center justify-between text-sm"
+              >
                 <div className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded-full" 
+                  <div
+                    className="w-3 h-3 rounded-full"
                     // eslint-disable-next-line @next/next/no-inline-styles
-                    style={{ backgroundColor: COLORS[index % COLORS.length] } as React.CSSProperties}
+                    style={
+                      {
+                        backgroundColor: COLORS[index % COLORS.length],
+                      } as React.CSSProperties
+                    }
                   />
                   <span className="text-gray-700">{source.source}</span>
                 </div>
-                <span className="font-medium text-gray-900">{source.visitors.toLocaleString()}</span>
+                <span className="font-medium text-gray-900">
+                  {source.visitors.toLocaleString()}
+                </span>
               </div>
             ))}
           </div>
@@ -269,7 +331,9 @@ export function TrafficAnalyticsDashboard() {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center gap-2 mb-4">
             <Smartphone className="text-amber-600" size={24} />
-            <h3 className="text-xl font-semibold text-gray-900">Device Breakdown</h3>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Device Breakdown
+            </h3>
           </div>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={metrics.devices}>
@@ -283,10 +347,21 @@ export function TrafficAnalyticsDashboard() {
           <div className="mt-4 grid grid-cols-3 gap-4">
             {metrics.devices.map((device) => (
               <div key={device.device} className="text-center">
-                {device.device === 'Mobile' && <Smartphone className="mx-auto text-gray-400 mb-1" size={24} />}
-                {device.device === 'Desktop' && <Monitor className="mx-auto text-gray-400 mb-1" size={24} />}
-                {device.device === 'Tablet' && <BarChart3 className="mx-auto text-gray-400 mb-1" size={24} />}
-                <div className="text-lg font-bold text-gray-900">{device.percentage}%</div>
+                {device.device === "Mobile" && (
+                  <Smartphone
+                    className="mx-auto text-gray-400 mb-1"
+                    size={24}
+                  />
+                )}
+                {device.device === "Desktop" && (
+                  <Monitor className="mx-auto text-gray-400 mb-1" size={24} />
+                )}
+                {device.device === "Tablet" && (
+                  <BarChart3 className="mx-auto text-gray-400 mb-1" size={24} />
+                )}
+                <div className="text-lg font-bold text-gray-900">
+                  {device.percentage}%
+                </div>
                 <div className="text-xs text-gray-500">{device.device}</div>
               </div>
             ))}
@@ -296,24 +371,42 @@ export function TrafficAnalyticsDashboard() {
 
       {/* Top Pages */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Top Performing Pages</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Top Performing Pages
+        </h3>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Views</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Time</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bounce Rate</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Page
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Views
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Avg. Time
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Bounce Rate
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {metrics.topPages.map((page, index) => (
                 <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{page.page}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{page.views.toLocaleString()}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{Math.floor(page.avgTime / 60)}m {page.avgTime % 60}s</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{page.bounceRate}%</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {page.page}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {page.views.toLocaleString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    {Math.floor(page.avgTime / 60)}m {page.avgTime % 60}s
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    {page.bounceRate}%
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -323,18 +416,30 @@ export function TrafficAnalyticsDashboard() {
 
       {/* Conversion Funnel */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Conversion Funnel</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+          Conversion Funnel
+        </h3>
         <div className="space-y-4">
           {metrics.conversions.funnelSteps.map((step, index) => {
-            const percentage = index === 0 ? 100 : Math.round((step.users / metrics.conversions.funnelSteps[0].users) * 100);
+            const percentage =
+              index === 0
+                ? 100
+                : Math.round(
+                    (step.users / metrics.conversions.funnelSteps[0].users) *
+                      100,
+                  );
             return (
               <div key={step.step}>
                 <div className="flex justify-between text-sm mb-1">
                   <span className="font-medium text-gray-700">{step.step}</span>
                   <div className="flex gap-4">
-                    <span className="text-gray-900">{step.users.toLocaleString()} users ({percentage}%)</span>
+                    <span className="text-gray-900">
+                      {step.users.toLocaleString()} users ({percentage}%)
+                    </span>
                     {step.dropOff > 0 && (
-                      <span className="text-red-600">-{step.dropOff} drop-off</span>
+                      <span className="text-red-600">
+                        -{step.dropOff} drop-off
+                      </span>
                     )}
                   </div>
                 </div>
@@ -344,7 +449,9 @@ export function TrafficAnalyticsDashboard() {
                     // eslint-disable-next-line @next/next/no-inline-styles
                     style={{ width: `${percentage}%` } as React.CSSProperties}
                   >
-                    <span className="text-xs text-white font-medium">{percentage}%</span>
+                    <span className="text-xs text-white font-medium">
+                      {percentage}%
+                    </span>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,9 @@
 # =====================================================
+
 # Kollect-It Testing Checklist & Verification Guide
+
 # =====================================================
+
 # Complete testing before marking deployment as successful
 
 ## 🎯 TESTING OVERVIEW
@@ -25,6 +28,7 @@ npm run build
 ```
 
 **Checklist:**
+
 - [ ] Build completes without errors
 - [ ] No TypeScript warnings
 - [ ] All pages compile successfully
@@ -38,6 +42,7 @@ npm run dev
 ```
 
 **Checklist:**
+
 - [ ] Server starts without errors
 - [ ] Port 3000 available
 - [ ] Hot reload working
@@ -47,6 +52,7 @@ npm run dev
 ### ✅ Phase 2: Core Functionality (10 minutes)
 
 #### Homepage Tests
+
 1. Open: http://localhost:3000
    - [ ] Page loads in <3 seconds
    - [ ] No console errors (F12 → Console tab)
@@ -55,6 +61,7 @@ npm run dev
    - [ ] Footer visible
 
 #### Authentication Tests
+
 2. Navigate to: /auth/signin
    - [ ] Login form displays
    - [ ] Google OAuth button present
@@ -74,6 +81,7 @@ npm run dev
    - [ ] Can logout
 
 #### Product Listing Tests
+
 5. Navigate to: /products
    - [ ] Products display in grid
    - [ ] Images load from ImageKit
@@ -88,6 +96,7 @@ npm run dev
    - [ ] Add to cart button works
 
 #### Shopping Cart Tests
+
 7. Add products to cart
    - [ ] Item added confirmation
    - [ ] Cart icon updates
@@ -97,6 +106,7 @@ npm run dev
    - [ ] Subtotal calculates correctly
 
 #### Checkout Process
+
 8. Navigate to checkout
    - [ ] Shipping form displays
    - [ ] Payment options available
@@ -110,12 +120,14 @@ npm run dev
 **Note:** Must be logged in as admin user
 
 #### Dashboard Access
+
 1. Navigate to: /admin
    - [ ] Admin login required
    - [ ] Non-admin users blocked
    - [ ] Dashboard loads
 
 #### Metrics Display
+
 2. Admin Dashboard: /admin/dashboard
    - [ ] Revenue card displays
    - [ ] Orders count shows
@@ -125,6 +137,7 @@ npm run dev
    - [ ] No loading errors
 
 #### Sales Analytics
+
 3. Sales Analytics: /admin/sales
    - [ ] Sales chart renders
    - [ ] Date filters work
@@ -132,6 +145,7 @@ npm run dev
    - [ ] Sales data accurate
 
 #### Product Analytics
+
 4. Product Analytics: /admin/products/analytics
    - [ ] Product performance data
    - [ ] Category breakdown
@@ -139,6 +153,7 @@ npm run dev
    - [ ] Charts interactive
 
 #### Order Management
+
 5. Orders: /admin/orders
    - [ ] Orders list displays
    - [ ] Can filter by status
@@ -147,6 +162,7 @@ npm run dev
    - [ ] Can update order status
 
 #### Product Management
+
 6. Products: /admin/products
    - [ ] Products list displays
    - [ ] Can create new product
@@ -155,6 +171,7 @@ npm run dev
    - [ ] Image upload works
 
 #### Settings Panel
+
 7. Settings: /admin/settings
    - [ ] All tabs accessible
    - [ ] Store settings editable
@@ -169,12 +186,14 @@ npm run dev
 **Test on mobile device or use browser DevTools (F12 → Device Toolbar)**
 
 #### Breakpoints to Test:
+
 - Mobile: 375px (iPhone SE)
 - Mobile Large: 414px (iPhone Plus)
 - Tablet: 768px (iPad)
 - Desktop: 1920px (Full HD)
 
 #### Mobile Checks:
+
 1. Homepage
    - [ ] Hamburger menu works
    - [ ] Text readable (not too small)
@@ -204,6 +223,7 @@ npm run dev
 ### ✅ Phase 5: Deployment Verification (10 minutes)
 
 #### Vercel Deployment
+
 1. Check Vercel Dashboard
    - [ ] Build completed successfully
    - [ ] No build errors
@@ -211,6 +231,7 @@ npm run dev
    - [ ] Domain configured (if custom)
 
 #### Health Checks
+
 ```powershell
 # Replace YOUR-APP with your Vercel URL
 
@@ -221,6 +242,7 @@ curl https://YOUR-APP.vercel.app/api/health
 ```
 
 **Checklist:**
+
 - [ ] API responds
 - [ ] Status = "ok"
 - [ ] Response time <500ms
@@ -234,6 +256,7 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 ```
 
 **Checklist:**
+
 - [ ] Database connection works
 - [ ] Metrics return or auth required
 - [ ] No 500 errors
@@ -245,6 +268,7 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 **Repeat all Phase 2 & 3 tests on production URL**
 
 Critical Production Tests:
+
 1. Homepage loads
    - [ ] https://YOUR-APP.vercel.app
    - [ ] No errors in browser console
@@ -279,17 +303,20 @@ Critical Production Tests:
 ### ✅ Phase 7: Performance Testing (10 minutes)
 
 #### Page Speed Test
+
 1. Go to: https://pagespeed.web.dev/
 2. Enter your production URL
 3. Run test
 
 **Target Scores:**
+
 - [ ] Performance: >80
 - [ ] Accessibility: >90
 - [ ] Best Practices: >90
 - [ ] SEO: >80
 
 #### Load Time Monitoring
+
 ```powershell
 # Measure page load time
 curl -w "@curl-format.txt" -o /dev/null -s https://YOUR-APP.vercel.app
@@ -302,13 +329,16 @@ curl -w "@curl-format.txt" -o /dev/null -s https://YOUR-APP.vercel.app
 ```
 
 **Target Times:**
+
 - [ ] Homepage: <2 seconds
 - [ ] Product page: <2.5 seconds
 - [ ] Admin dashboard: <3 seconds
 - [ ] API responses: <500ms
 
 #### Database Query Performance
+
 Check in Supabase Dashboard:
+
 - [ ] Query time <200ms (p95)
 - [ ] No slow queries (>1s)
 - [ ] Indexes being used
@@ -318,17 +348,20 @@ Check in Supabase Dashboard:
 ## 🔍 ANALYTICS VERIFICATION
 
 ### Google Analytics Setup
+
 1. Go to: https://analytics.google.com/
 2. Select your property
 3. Real-Time report
 
 **Test:**
+
 - [ ] Visit your site in incognito window
 - [ ] Should see 1 active user in GA
 - [ ] Page views tracked
 - [ ] Events tracked (if configured)
 
 ### Vercel Analytics
+
 1. Vercel Dashboard → Analytics
 2. Check:
    - [ ] Page views tracked
@@ -340,17 +373,21 @@ Check in Supabase Dashboard:
 ## 🚨 ERROR MONITORING
 
 ### Check Logs
+
 1. Vercel Dashboard → Deployments → Your deployment
 2. Click "View Function Logs"
 
 **Look for:**
+
 - [ ] No 500 errors
 - [ ] No database connection errors
 - [ ] No authentication errors
 - [ ] API response times normal
 
 ### Error Boundaries
+
 Test error handling:
+
 1. Navigate to non-existent page
    - [ ] 404 page displays
    - [ ] Not generic Vercel error
@@ -365,7 +402,9 @@ Test error handling:
 ## 📊 MONITORING SETUP (Post-Launch)
 
 ### Week 1 Monitoring
+
 Daily checks:
+
 - [ ] Uptime (should be >99%)
 - [ ] Error rate (should be <1%)
 - [ ] Page load times
@@ -373,7 +412,9 @@ Daily checks:
 - [ ] Order conversions
 
 ### Alerts to Set Up
+
 Configure in Vercel:
+
 - [ ] Deployment failures
 - [ ] High error rate (>5%)
 - [ ] Slow response times (>2s)
@@ -441,7 +482,7 @@ foreach ($endpoint in $endpoints) {
     try {
         $response = Invoke-WebRequest -Uri "$Url$endpoint" -Method GET -UseBasicParsing
         $status = $response.StatusCode
-        
+
         if ($status -eq 200 -or $status -eq 401) {
             Write-Host "✓ $endpoint - OK" -ForegroundColor Green
         } else {
@@ -458,6 +499,7 @@ foreach ($endpoint in $endpoints) {
 ## ✅ DEPLOYMENT SIGN-OFF
 
 Before marking deployment complete, ensure:
+
 - [ ] All critical tests pass
 - [ ] Performance meets targets
 - [ ] Analytics tracking
@@ -466,8 +508,8 @@ Before marking deployment complete, ensure:
 - [ ] Documentation updated
 - [ ] Backup plan in place
 
-**Deployment approved by:** _______________  
-**Date:** _______________
+**Deployment approved by:** ******\_\_\_******  
+**Date:** ******\_\_\_******
 
 ---
 

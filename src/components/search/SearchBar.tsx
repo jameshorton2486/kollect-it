@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { Search, X, Filter, TrendingUp } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect, useRef } from "react";
+import { Search, X, Filter, TrendingUp } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface SearchSuggestion {
   id: string;
@@ -17,14 +17,14 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export default function SearchBar({ 
-  onSearch, 
+export default function SearchBar({
+  onSearch,
   showFilters = true,
-  placeholder = "Search for collectibles..."
+  placeholder = "Search for collectibles...",
 }: SearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get('q') || '');
+  const [query, setQuery] = useState(searchParams.get("q") || "");
   const [isOpen, setIsOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
@@ -32,7 +32,7 @@ export default function SearchBar({
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('recentSearches');
+    const saved = localStorage.getItem("recentSearches");
     if (saved) {
       setRecentSearches(JSON.parse(saved));
     }
@@ -40,13 +40,16 @@ export default function SearchBar({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -58,11 +61,13 @@ export default function SearchBar({
     const timer = setTimeout(async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`/api/search/suggestions?q=${encodeURIComponent(query)}`);
+        const response = await fetch(
+          `/api/search/suggestions?q=${encodeURIComponent(query)}`,
+        );
         const data = await response.json();
         setSuggestions(data.suggestions || []);
       } catch (error) {
-        console.error('Failed to fetch suggestions:', error);
+        console.error("Failed to fetch suggestions:", error);
       } finally {
         setIsLoading(false);
       }
@@ -75,9 +80,12 @@ export default function SearchBar({
     if (!searchQuery.trim()) return;
 
     // Save to recent searches
-    const updated = [searchQuery, ...recentSearches.filter(s => s !== searchQuery)].slice(0, 5);
+    const updated = [
+      searchQuery,
+      ...recentSearches.filter((s) => s !== searchQuery),
+    ].slice(0, 5);
     setRecentSearches(updated);
-    localStorage.setItem('recentSearches', JSON.stringify(updated));
+    localStorage.setItem("recentSearches", JSON.stringify(updated));
 
     // Navigate to search results
     router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
@@ -89,13 +97,13 @@ export default function SearchBar({
   };
 
   const handleClear = () => {
-    setQuery('');
+    setQuery("");
     setSuggestions([]);
   };
 
   const clearRecentSearches = () => {
     setRecentSearches([]);
-    localStorage.removeItem('recentSearches');
+    localStorage.removeItem("recentSearches");
   };
 
   return (
@@ -108,7 +116,7 @@ export default function SearchBar({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsOpen(true)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               handleSearch(query);
             }
           }}
@@ -126,7 +134,7 @@ export default function SearchBar({
           )}
           {showFilters && (
             <button
-              onClick={() => router.push('/search?filters=open')}
+              onClick={() => router.push("/search?filters=open")}
               className="p-2 hover:bg-muted rounded-lg transition-colors"
             >
               <Filter className="h-4 w-4" />
@@ -188,7 +196,9 @@ export default function SearchBar({
                     />
                     <div className="flex-1 text-left">
                       <p className="text-sm font-medium">{suggestion.name}</p>
-                      <p className="text-xs text-muted-foreground">{suggestion.category}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {suggestion.category}
+                      </p>
                     </div>
                   </button>
                 ))}

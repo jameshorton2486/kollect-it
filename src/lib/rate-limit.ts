@@ -4,7 +4,7 @@
  * TODO: Replace with Redis for production multi-instance deployments
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 interface RateLimitConfig {
   interval: number; // Time window in milliseconds
@@ -20,14 +20,17 @@ interface RateLimitEntry {
 const rateLimitStore = new Map<string, RateLimitEntry>();
 
 // Cleanup old entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of rateLimitStore.entries()) {
-    if (entry.resetTime < now) {
-      rateLimitStore.delete(key);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, entry] of rateLimitStore.entries()) {
+      if (entry.resetTime < now) {
+        rateLimitStore.delete(key);
+      }
     }
-  }
-}, 5 * 60 * 1000);
+  },
+  5 * 60 * 1000,
+);
 
 /**
  * Rate limit middleware
@@ -40,12 +43,12 @@ export async function rateLimit(
   config: RateLimitConfig = {
     interval: 60 * 1000, // 1 minute
     uniqueTokenPerInterval: 10, // 10 requests per minute
-  }
+  },
 ): Promise<NextResponse | null> {
   // Get client identifier (IP address)
-  const forwarded = request.headers.get('x-forwarded-for');
-  const realIp = request.headers.get('x-real-ip');
-  const ip = forwarded?.split(',')[0] || realIp || 'anonymous';
+  const forwarded = request.headers.get("x-forwarded-for");
+  const realIp = request.headers.get("x-real-ip");
+  const ip = forwarded?.split(",")[0] || realIp || "anonymous";
 
   const now = Date.now();
   const key = `rate-limit:${ip}`;
@@ -69,22 +72,22 @@ export async function rateLimit(
   // Check if limit exceeded
   if (entry.count > config.uniqueTokenPerInterval) {
     const retryAfter = Math.ceil((entry.resetTime - now) / 1000);
-    
+
     return NextResponse.json(
       {
-        error: 'Too many requests',
+        error: "Too many requests",
         message: `Rate limit exceeded. Try again in ${retryAfter} seconds.`,
         retryAfter,
       },
       {
         status: 429,
         headers: {
-          'Retry-After': retryAfter.toString(),
-          'X-RateLimit-Limit': config.uniqueTokenPerInterval.toString(),
-          'X-RateLimit-Remaining': '0',
-          'X-RateLimit-Reset': Math.ceil(entry.resetTime / 1000).toString(),
+          "Retry-After": retryAfter.toString(),
+          "X-RateLimit-Limit": config.uniqueTokenPerInterval.toString(),
+          "X-RateLimit-Remaining": "0",
+          "X-RateLimit-Reset": Math.ceil(entry.resetTime / 1000).toString(),
         },
-      }
+      },
     );
   }
 
@@ -156,7 +159,7 @@ export function getRateLimitStats() {
   return {
     totalKeys: rateLimitStore.size,
     entries: Array.from(rateLimitStore.entries()).map(([key, entry]) => ({
-      key: key.replace('rate-limit:', ''),
+      key: key.replace("rate-limit:", ""),
       count: entry.count,
       resetTime: new Date(entry.resetTime).toISOString(),
     })),

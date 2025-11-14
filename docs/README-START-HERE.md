@@ -42,7 +42,7 @@ You have **4 comprehensive documents** that comprehensively audit your project. 
 
 **Purpose:** AI-ready prompt for navigation fixes  
 **Use:** Copy into VS Code AI Agent  
-**Time:** 2-3 hours  
+**Time:** 2-3 hours
 
 ---
 

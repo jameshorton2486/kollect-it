@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
 /**
  * WebSocket Client Hook
  * Phase 5 - Real-time metrics subscription
  */
 
-import { useEffect, useState, useCallback } from 'react';
-import { io, Socket } from 'socket.io-client';
-import type { SubscriptionOptions, MetricsCache } from '@/lib/websocket/types';
+import { useEffect, useState, useCallback } from "react";
+import { io, Socket } from "socket.io-client";
+import type { SubscriptionOptions, MetricsCache } from "@/lib/websocket/types";
 
 interface UseWebSocketOptions extends SubscriptionOptions {
   enabled?: boolean;
@@ -27,20 +27,23 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
 
     try {
       // Connect to WebSocket server
-      const newSocket = io(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000', {
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
-        reconnectionAttempts: 10,
-      });
+      const newSocket = io(
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+        {
+          reconnection: true,
+          reconnectionDelay: 1000,
+          reconnectionDelayMax: 5000,
+          reconnectionAttempts: 10,
+        },
+      );
 
-      newSocket.on('connect', () => {
-        console.log('WebSocket connected');
+      newSocket.on("connect", () => {
+        console.log("WebSocket connected");
         setConnected(true);
         setError(null);
 
         // Subscribe to metrics
-        newSocket.emit('subscribe', {
+        newSocket.emit("subscribe", {
           metrics: options.metrics !== false,
           approvalTrends: options.approvalTrends !== false,
           revenue: options.revenue !== false,
@@ -51,22 +54,22 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
         });
       });
 
-      newSocket.on('disconnect', () => {
-        console.log('WebSocket disconnected');
+      newSocket.on("disconnect", () => {
+        console.log("WebSocket disconnected");
         setConnected(false);
       });
 
-      newSocket.on('metrics-cache-update', (data: MetricsCache) => {
+      newSocket.on("metrics-cache-update", (data: MetricsCache) => {
         setMetricsCache(data);
       });
 
-      newSocket.on('metrics-update', (data: MetricsCache) => {
+      newSocket.on("metrics-update", (data: MetricsCache) => {
         setMetricsCache(data);
       });
 
-      newSocket.on('error', (errorData: any) => {
-        console.error('WebSocket error:', errorData);
-        setError(errorData.message || 'WebSocket error occurred');
+      newSocket.on("error", (errorData: any) => {
+        console.error("WebSocket error:", errorData);
+        setError(errorData.message || "WebSocket error occurred");
       });
 
       setSocket(newSocket);
@@ -75,15 +78,26 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
         newSocket.disconnect();
       };
     } catch (err) {
-      console.error('Error initializing WebSocket:', err);
-      setError(err instanceof Error ? err.message : 'Failed to initialize WebSocket');
+      console.error("Error initializing WebSocket:", err);
+      setError(
+        err instanceof Error ? err.message : "Failed to initialize WebSocket",
+      );
       return undefined;
     }
-  }, [options.enabled, options.metrics, options.approvalTrends, options.revenue, options.pricing, options.products, options.alerts, options.updateInterval]);
+  }, [
+    options.enabled,
+    options.metrics,
+    options.approvalTrends,
+    options.revenue,
+    options.pricing,
+    options.products,
+    options.alerts,
+    options.updateInterval,
+  ]);
 
   const requestMetrics = useCallback(() => {
     if (socket?.connected) {
-      socket.emit('request-metrics');
+      socket.emit("request-metrics");
     }
   }, [socket]);
 

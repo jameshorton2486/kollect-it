@@ -6,37 +6,37 @@ export default function ProcessOverview() {
       n: 1,
       title: "Source",
       text: "We identify exceptional pieces from reputable collections, estates, and international specialists. Every potential acquisition undergoes initial assessment for authenticity and condition.",
-      icon: "🔍"
+      icon: "🔍",
     },
     {
       n: 2,
       title: "Authenticate",
       text: "Specialists vet and document provenance with transparent condition notes. We research materials, techniques, and historical context to ensure absolute accuracy.",
-      icon: "✓"
+      icon: "✓",
     },
     {
       n: 3,
       title: "Catalog",
       text: "Professional photography, detailed descriptions, and conservation-grade documentation. Each piece includes historical background and care recommendations.",
-      icon: "📋"
+      icon: "📋",
     },
     {
       n: 4,
       title: "Ship",
       text: "Insured, secure shipping with archival-grade packing. White-glove handling for premium items. Full tracking and insurance provided.",
-      icon: "📦"
+      icon: "📦",
     },
     {
       n: 5,
       title: "Support",
       text: "Post-sale care guidance and lifetime authentication support. Our specialists are available for questions about your collection.",
-      icon: "💬"
+      icon: "💬",
     },
     {
       n: 6,
       title: "Grow",
       text: "Build your collection with confidence. We offer acquisition consulting and help you discover pieces that match your vision and interests.",
-      icon: "⭐"
+      icon: "⭐",
     },
   ];
 
@@ -51,7 +51,8 @@ export default function ProcessOverview() {
             How We Work
           </h2>
           <p className="text-lg text-ink-light max-w-2xl mx-auto">
-            From discovery to delivery, every step is designed to ensure authenticity, quality, and your complete satisfaction.
+            From discovery to delivery, every step is designed to ensure
+            authenticity, quality, and your complete satisfaction.
           </p>
         </div>
 
@@ -74,16 +75,15 @@ export default function ProcessOverview() {
                   </h3>
                 </div>
               </div>
-              <p className="text-ink-light leading-relaxed">
-                {s.text}
-              </p>
+              <p className="text-ink-light leading-relaxed">{s.text}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
           <p className="text-ink-light text-lg mb-8 max-w-2xl mx-auto">
-            Ready to start collecting? Whether you're a seasoned collector or just beginning, we're here to guide you through every step.
+            Ready to start collecting? Whether you're a seasoned collector or
+            just beginning, we're here to guide you through every step.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

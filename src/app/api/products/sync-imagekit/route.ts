@@ -1,14 +1,14 @@
 /**
  * KOLLECT-IT: ImageKit Sync API Route
- * 
+ *
  * POST /api/products/sync-imagekit
- * 
+ *
  * Receives product.json with photos and uploads to ImageKit CDN
  * Updates metadata with ImageKit URLs and returns results
  */
 
-import { NextResponse, NextRequest } from 'next/server';
-import ImageKitSyncService from '@/lib/imagekit-sync';
+import { NextResponse, NextRequest } from "next/server";
+import ImageKitSyncService from "@/lib/imagekit-sync";
 
 interface ProductJson {
   product_id: string;
@@ -35,9 +35,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Missing product_id or product_json in request body'
+          error: "Missing product_id or product_json in request body",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Product has no photos to sync'
+          error: "Product has no photos to sync",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -63,9 +63,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Cannot connect to ImageKit. Check credentials in .env.local'
+          error: "Cannot connect to ImageKit. Check credentials in .env.local",
         },
-        { status: 503 }
+        { status: 503 },
       );
     }
 
@@ -80,19 +80,19 @@ export async function POST(request: NextRequest) {
         total_photos: syncResult.total_photos,
         uploaded: syncResult.uploaded,
         failed: syncResult.failed,
-        photos: syncResult.synced_photos.map(photo => ({
+        photos: syncResult.synced_photos.map((photo) => ({
           original: photo.original_url,
           imagekit_url: photo.imagekit_url,
           sequence: photo.sequence_order,
-          status: photo.status
-        }))
+          status: photo.status,
+        })),
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     if (syncResult.errors.length > 0) {
       Object.assign(response, {
-        errors: syncResult.errors
+        errors: syncResult.errors,
       });
     }
 
@@ -100,15 +100,16 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(response, { status: statusCode });
   } catch (error) {
-    console.error('ImageKit sync API error:', error);
+    console.error("ImageKit sync API error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
-        timestamp: new Date().toISOString()
+        error:
+          error instanceof Error ? error.message : "Unknown error occurred",
+        timestamp: new Date().toISOString(),
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

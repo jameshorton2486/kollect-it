@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { prisma } from "@/lib/prisma";
 
 /**
  * Require admin authentication
@@ -8,7 +8,7 @@ import { prisma } from '@/lib/prisma';
 async function requireAdminAuth() {
   const session = await getServerSession();
   if (!session?.user?.email) {
-    throw new Error('Unauthorized');
+    throw new Error("Unauthorized");
   }
   return session;
 }
@@ -20,7 +20,7 @@ async function requireAdminAuth() {
 export async function GET() {
   try {
     const categories = await prisma.category.findMany({
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
       select: {
         id: true,
         name: true,
@@ -36,22 +36,21 @@ export async function GET() {
       count: categories.length,
     });
   } catch (error) {
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const isDevelopment = process.env.NODE_ENV === "development";
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
 
-    console.error('[Category Fetch Error]', {
+    console.error("[Category Fetch Error]", {
       error: errorMessage,
       timestamp: new Date().toISOString(),
     });
 
     return NextResponse.json(
       {
-        error: isDevelopment
-          ? errorMessage
-          : 'Failed to fetch categories',
-        code: 'FETCH_ERROR',
+        error: isDevelopment ? errorMessage : "Failed to fetch categories",
+        code: "FETCH_ERROR",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -69,28 +68,31 @@ export async function POST(req: NextRequest) {
     const { name, slug, description } = body;
 
     // Validate required fields
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+    if (!name || typeof name !== "string" || name.trim().length === 0) {
       return NextResponse.json(
-        { error: 'Category name is required', code: 'MISSING_NAME' },
-        { status: 400 }
+        { error: "Category name is required", code: "MISSING_NAME" },
+        { status: 400 },
       );
     }
 
-    if (!slug || typeof slug !== 'string' || slug.trim().length === 0) {
+    if (!slug || typeof slug !== "string" || slug.trim().length === 0) {
       return NextResponse.json(
-        { error: 'Category slug is required', code: 'MISSING_SLUG' },
-        { status: 400 }
+        { error: "Category slug is required", code: "MISSING_SLUG" },
+        { status: 400 },
       );
     }
 
     if (
       !description ||
-      typeof description !== 'string' ||
+      typeof description !== "string" ||
       description.trim().length === 0
     ) {
       return NextResponse.json(
-        { error: 'Category description is required', code: 'MISSING_DESCRIPTION' },
-        { status: 400 }
+        {
+          error: "Category description is required",
+          code: "MISSING_DESCRIPTION",
+        },
+        { status: 400 },
       );
     }
 
@@ -104,10 +106,10 @@ export async function POST(req: NextRequest) {
     if (existing) {
       return NextResponse.json(
         {
-          error: 'Category with this name or slug already exists',
-          code: 'DUPLICATE_CATEGORY',
+          error: "Category with this name or slug already exists",
+          code: "DUPLICATE_CATEGORY",
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -116,38 +118,37 @@ export async function POST(req: NextRequest) {
         name: name.trim(),
         slug: slug.toLowerCase().trim(),
         description: description.trim(),
-        image: '',
+        image: "",
       },
     });
 
     return NextResponse.json(
-      { data: category, message: 'Category created successfully' },
-      { status: 201 }
+      { data: category, message: "Category created successfully" },
+      { status: 201 },
     );
   } catch (error) {
-    if (error instanceof Error && error.message === 'Unauthorized') {
+    if (error instanceof Error && error.message === "Unauthorized") {
       return NextResponse.json(
-        { error: 'Unauthorized', code: 'AUTH_REQUIRED' },
-        { status: 401 }
+        { error: "Unauthorized", code: "AUTH_REQUIRED" },
+        { status: 401 },
       );
     }
 
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const isDevelopment = process.env.NODE_ENV === "development";
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
 
-    console.error('[Category Create Error]', {
+    console.error("[Category Create Error]", {
       error: errorMessage,
       timestamp: new Date().toISOString(),
     });
 
     return NextResponse.json(
       {
-        error: isDevelopment
-          ? errorMessage
-          : 'Failed to create category',
-        code: 'CREATE_ERROR',
+        error: isDevelopment ? errorMessage : "Failed to create category",
+        code: "CREATE_ERROR",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

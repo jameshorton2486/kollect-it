@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
@@ -10,7 +10,7 @@ const client = new Anthropic({
  */
 export async function analyzeProductImageWithClaude(
   imageUrl: string,
-  category: string
+  category: string,
 ) {
   console.log(`[Claude] Analyzing ${category} item from: ${imageUrl}`);
 
@@ -53,23 +53,23 @@ Return ONLY this JSON structure (all fields required):
 
   try {
     const response = await client.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: "claude-3-5-sonnet-20241022",
       max_tokens: 2000,
       temperature: 0.7,
       system: systemPrompt,
       messages: [
         {
-          role: 'user',
+          role: "user",
           content: [
             {
-              type: 'image',
+              type: "image",
               source: {
-                type: 'url',
+                type: "url",
                 url: imageUrl,
               },
             },
             {
-              type: 'text',
+              type: "text",
               text: userPrompt,
             },
           ],
@@ -79,11 +79,11 @@ Return ONLY this JSON structure (all fields required):
 
     // Extract text response
     const content = response.content[0];
-    if (content.type !== 'text') {
-      throw new Error('Claude did not return text response');
+    if (content.type !== "text") {
+      throw new Error("Claude did not return text response");
     }
 
-    console.log('[Claude] Received response, parsing JSON...');
+    console.log("[Claude] Received response, parsing JSON...");
 
     // Parse JSON carefully
     let analysis;
@@ -101,23 +101,23 @@ Return ONLY this JSON structure (all fields required):
         if (objectMatch) {
           analysis = JSON.parse(objectMatch[0]);
         } else {
-          throw new Error('Could not extract JSON from Claude response');
+          throw new Error("Could not extract JSON from Claude response");
         }
       }
     }
 
     // Validate required fields
     const requiredFields = [
-      'title',
-      'description',
-      'shortDescription',
-      'estimatedEra',
-      'rarity',
-      'authenticity',
-      'suggestedPrice',
-      'keywords',
-      'seoTitle',
-      'seoDescription',
+      "title",
+      "description",
+      "shortDescription",
+      "estimatedEra",
+      "rarity",
+      "authenticity",
+      "suggestedPrice",
+      "keywords",
+      "seoTitle",
+      "seoDescription",
     ];
 
     for (const field of requiredFields) {
@@ -129,9 +129,9 @@ Return ONLY this JSON structure (all fields required):
     console.log(`[Claude] Analysis complete: "${analysis.title}"`);
     return analysis;
   } catch (error) {
-    console.error('[Claude] Analysis failed:', error);
+    console.error("[Claude] Analysis failed:", error);
     throw new Error(
-      `Claude analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      `Claude analysis failed: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }

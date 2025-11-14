@@ -1,6 +1,7 @@
 # ✅ PHASE 4: DETAILED PAGE-BY-PAGE CLEANUP CHECKLIST
 
 **How to use this:**
+
 1. Go through each page section below
 2. Open that page file in VS Code
 3. Execute each specific task
@@ -93,8 +94,12 @@
   - If filters are broken: hide them for now
   - Command: Disable broken filters:
     ```tsx
-    {/* Filter section - disable if broken */}
-    {/* <FilterPanel /> */}
+    {
+      /* Filter section - disable if broken */
+    }
+    {
+      /* <FilterPanel /> */
+    }
     ```
 
 - [ ] **2.4 - Verify sorting works (if implemented)**
@@ -106,7 +111,7 @@
 - [ ] **2.5 - Remove placeholder products**
   - If you have "Sample Product 1", "Test Item", etc: delete from database
   - Keep only real products for launch
-  - Command: 
+  - Command:
     ```sql
     DELETE FROM "Product" WHERE title LIKE '%test%' OR title LIKE '%sample%';
     ```
@@ -187,8 +192,12 @@
 - [ ] **3.6 - Remove incomplete sections**
   - If "Related Products" section exists but is empty: hide it
     ```tsx
-    {/* Related products - disabled for now */}
-    {/* <RelatedProducts /> */}
+    {
+      /* Related products - disabled for now */
+    }
+    {
+      /* <RelatedProducts /> */
+    }
     ```
   - If "Customer Reviews" section incomplete: hide it
   - If "Offer/Bid" section not ready: hide it
@@ -719,8 +728,12 @@
   - Charts should display real data, not empty
   - If charts are broken: disable them for now
     ```tsx
-    {/* Charts - disabled for now */}
-    {/* <RevenueChart /> */}
+    {
+      /* Charts - disabled for now */
+    }
+    {
+      /* <RevenueChart /> */
+    }
     ```
 
 - [ ] **10.7 - Check navigation to admin sections**
@@ -864,8 +877,12 @@
   - Hide it for now
   - Keep only what's functional
     ```tsx
-    {/* Category creation - disabled for now */}
-    {/* <CreateCategory /> */}
+    {
+      /* Category creation - disabled for now */
+    }
+    {
+      /* <CreateCategory /> */
+    }
     ```
 
 - [ ] **12.8 - Product analytics (if exists)**
@@ -997,7 +1014,11 @@
     // Email disabled for Phase 4
     // TODO: Enable when Google Workspace configured
     // await sendProductApproved(productId);
-    console.log('Product approval email disabled (would send to:', product.seller.email, ')');
+    console.log(
+      "Product approval email disabled (would send to:",
+      product.seller.email,
+      ")",
+    );
     ```
 
 - [ ] **15.3 - Disable email on order completion**
@@ -1008,7 +1029,11 @@
     // Email disabled for Phase 4
     // TODO: Enable when Google Workspace configured
     // await sendOrderConfirmation(orderId);
-    console.log('Order confirmation email disabled (would send to:', order.user.email, ')');
+    console.log(
+      "Order confirmation email disabled (would send to:",
+      order.user.email,
+      ")",
+    );
     ```
 
 - [ ] **15.4 - Verify no email endpoints are exposed**
@@ -1045,8 +1070,12 @@
   - Find: `<AdvancedCharts />` or similar
   - Replace with comment:
     ```tsx
-    {/* Advanced analytics disabled for Phase 4 */}
-    {/* <AdvancedCharts /> */}
+    {
+      /* Advanced analytics disabled for Phase 4 */
+    }
+    {
+      /* <AdvancedCharts /> */
+    }
     ```
 
 - [ ] **16.3 - Keep basic metrics visible**
@@ -1061,8 +1090,8 @@
     ```typescript
     export async function GET(req: Request) {
       return NextResponse.json({
-        status: 'disabled',
-        message: 'Advanced analytics disabled for Phase 4'
+        status: "disabled",
+        message: "Advanced analytics disabled for Phase 4",
       });
     }
     ```
@@ -1085,10 +1114,14 @@
   - Replace with stub:
     ```typescript
     export async function GET(req: Request) {
-      return NextResponse.json({
-        status: 'disabled',
-        message: 'Google Drive sync disabled. Use manual image upload in admin panel.'
-      }, { status: 501 });
+      return NextResponse.json(
+        {
+          status: "disabled",
+          message:
+            "Google Drive sync disabled. Use manual image upload in admin panel.",
+        },
+        { status: 501 },
+      );
     }
     ```
 
@@ -1439,7 +1472,7 @@
 - [ ] **23.2 - Verify admin user exists**
   - Should have at least one user with role = 'ADMIN'
   - Admin email and password should be secure
-  - Command: 
+  - Command:
     ```sql
     SELECT email, role FROM "User" WHERE role = 'ADMIN';
     ```
@@ -1627,35 +1660,35 @@
 
 **Track your progress:**
 
-| Section | Total Items | Completed | Status |
-|---------|-------------|-----------|--------|
-| 1. Homepage | 8 | | ☐ |
-| 2. Product Catalog | 10 | | ☐ |
-| 3. Product Detail | 10 | | ☐ |
-| 4. Shopping Cart | 10 | | ☐ |
-| 5. Checkout | 11 | | ☐ |
-| 6. Register | 10 | | ☐ |
-| 7. Login | 10 | | ☐ |
-| 8. Account | 10 | | ☐ |
-| 9. Static Pages | 17 | | ☐ |
-| 10. Admin Dashboard | 10 | | ☐ |
-| 11. Approval Queue | 10 | | ☐ |
-| 12. Product Management | 10 | | ☐ |
-| 13. Orders | 10 | | ☐ |
-| 14. Admin Settings | 4 | | ☐ |
-| 15. Disable Email | 5 | | ☐ |
-| 16. Disable Analytics | 5 | | ☐ |
-| 17. Disable Image Sync | 4 | | ☐ |
-| 18. Remove Incomplete | 8 | | ☐ |
-| 19. E2E Testing | 20 | | ☐ |
-| 20. Device Testing | 5 | | ☐ |
-| 21. Console Errors | 7 | | ☐ |
-| 22. Performance | 5 | | ☐ |
-| 23. Database Cleanup | 4 | | ☐ |
-| 24. Environment Vars | 5 | | ☐ |
-| 25. Build & Commit | 7 | | ☐ |
-| 26. Pre-Deploy | 26 | | ☐ |
-| **TOTAL** | **242** | | |
+| Section                | Total Items | Completed | Status |
+| ---------------------- | ----------- | --------- | ------ |
+| 1. Homepage            | 8           |           | ☐      |
+| 2. Product Catalog     | 10          |           | ☐      |
+| 3. Product Detail      | 10          |           | ☐      |
+| 4. Shopping Cart       | 10          |           | ☐      |
+| 5. Checkout            | 11          |           | ☐      |
+| 6. Register            | 10          |           | ☐      |
+| 7. Login               | 10          |           | ☐      |
+| 8. Account             | 10          |           | ☐      |
+| 9. Static Pages        | 17          |           | ☐      |
+| 10. Admin Dashboard    | 10          |           | ☐      |
+| 11. Approval Queue     | 10          |           | ☐      |
+| 12. Product Management | 10          |           | ☐      |
+| 13. Orders             | 10          |           | ☐      |
+| 14. Admin Settings     | 4           |           | ☐      |
+| 15. Disable Email      | 5           |           | ☐      |
+| 16. Disable Analytics  | 5           |           | ☐      |
+| 17. Disable Image Sync | 4           |           | ☐      |
+| 18. Remove Incomplete  | 8           |           | ☐      |
+| 19. E2E Testing        | 20          |           | ☐      |
+| 20. Device Testing     | 5           |           | ☐      |
+| 21. Console Errors     | 7           |           | ☐      |
+| 22. Performance        | 5           |           | ☐      |
+| 23. Database Cleanup   | 4           |           | ☐      |
+| 24. Environment Vars   | 5           |           | ☐      |
+| 25. Build & Commit     | 7           |           | ☐      |
+| 26. Pre-Deploy         | 26          |           | ☐      |
+| **TOTAL**              | **242**     |           |        |
 
 **Estimated completion time: 1-2 weeks part-time (20-30 hours)**
 

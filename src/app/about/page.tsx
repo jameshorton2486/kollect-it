@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
+  description:
+    "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
   openGraph: {
     title: "About Us",
-    description: "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
+    description:
+      "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
     images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "About Us",
-    description: "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
+    description:
+      "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
     images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
   },
 };
@@ -24,44 +27,48 @@ export const revalidate = 3600;
 async function getCategories() {
   try {
     return await prisma.category.findMany({
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
     });
   } catch (error) {
-    console.log('Database not available, using fallback categories');
+    console.log("Database not available, using fallback categories");
     return [
       {
-        id: '1',
-        name: 'Fine Art',
-        slug: 'fine-art',
-        description: 'Paintings, prints, photography, sculptures. Price range: $500-$15,000',
-        image: '',
+        id: "1",
+        name: "Fine Art",
+        slug: "fine-art",
+        description:
+          "Paintings, prints, photography, sculptures. Price range: $500-$15,000",
+        image: "",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: '2',
-        name: 'Rare Books',
-        slug: 'rare-books',
-        description: 'First editions, signed copies, historical texts, vintage finds. Price range: $200-$8,000',
-        image: '',
+        id: "2",
+        name: "Rare Books",
+        slug: "rare-books",
+        description:
+          "First editions, signed copies, historical texts, vintage finds. Price range: $200-$8,000",
+        image: "",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: '3',
-        name: 'Collectibles',
-        slug: 'collectibles',
-        description: 'Vintage items, memorabilia, limited editions, sought-after finds. Price range: $300-$10,000',
-        image: '',
+        id: "3",
+        name: "Collectibles",
+        slug: "collectibles",
+        description:
+          "Vintage items, memorabilia, limited editions, sought-after finds. Price range: $300-$10,000",
+        image: "",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: '4',
-        name: 'Militaria',
-        slug: 'militaria',
-        description: 'Historical uniforms, medals, patches, insignia, documents. Price range: $200-$5,000',
-        image: '',
+        id: "4",
+        name: "Militaria",
+        slug: "militaria",
+        description:
+          "Historical uniforms, medals, patches, insignia, documents. Price range: $200-$5,000",
+        image: "",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -76,25 +83,28 @@ export default async function AboutPage() {
     <main className="bg-white" role="main">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Kollect-It",
-          url: "https://kollect-it.com",
-          description: "Authenticated antiques, collectibles, and fine art curated by specialists",
-          logo: "https://ext.same-assets.com/kollect-it/logo.png",
-          foundingDate: "2020",
-          contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "Customer Service",
-            url: "https://kollect-it.com/contact",
-          },
-          sameAs: [
-            "https://www.instagram.com/",
-            "https://www.facebook.com/",
-            "https://www.youtube.com/",
-          ],
-        }) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Kollect-It",
+            url: "https://kollect-it.com",
+            description:
+              "Authenticated antiques, collectibles, and fine art curated by specialists",
+            logo: "https://ext.same-assets.com/kollect-it/logo.png",
+            foundingDate: "2020",
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "Customer Service",
+              url: "https://kollect-it.com/contact",
+            },
+            sameAs: [
+              "https://www.instagram.com/",
+              "https://www.facebook.com/",
+              "https://www.youtube.com/",
+            ],
+          }),
+        }}
       />
 
       {/* HERO SECTION */}
@@ -105,10 +115,13 @@ export default async function AboutPage() {
               ABOUT KOLLECT-IT
             </p>
             <h1 className="font-display text-5xl md:text-6xl mb-6 leading-tight text-ink">
-              The Best Collectibles<br />Deserve Careful Attention
+              The Best Collectibles
+              <br />
+              Deserve Careful Attention
             </h1>
             <p className="text-xl md:text-2xl text-ink-light font-serif mb-8 leading-relaxed">
-              We fill the gap for items worth $500-$15,000. Professionally valued, fairly priced, personally curated by someone who cares.
+              We fill the gap for items worth $500-$15,000. Professionally
+              valued, fairly priced, personally curated by someone who cares.
             </p>
           </div>
         </div>
@@ -124,14 +137,16 @@ export default async function AboutPage() {
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-8 leading-tight">
               Filling the Gap
             </h2>
-            
+
             <div className="prose prose-lg max-w-none space-y-6 text-ink-light leading-relaxed">
               <p className="text-lg md:text-xl font-serif italic mb-6">
-                We started with a passion for collectibles and a frustration: items worth $500-$15,000 fall through the cracks.
+                We started with a passion for collectibles and a frustration:
+                items worth $500-$15,000 fall through the cracks.
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                Auction houses have minimums around $10,000. Online marketplaces feel risky and impersonal. Private sales are hit-or-miss.
+                Auction houses have minimums around $10,000. Online marketplaces
+                feel risky and impersonal. Private sales are hit-or-miss.
               </p>
 
               <p className="text-base md:text-lg leading-8">
@@ -139,11 +154,16 @@ export default async function AboutPage() {
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                Our collection is personally curated. Every item is accurately described, professionally valued, and fairly priced—typically between auction value and retail price, so you get a better deal than traditional auctions.
+                Our collection is personally curated. Every item is accurately
+                described, professionally valued, and fairly priced—typically
+                between auction value and retail price, so you get a better deal
+                than traditional auctions.
               </p>
 
               <p className="text-base md:text-lg leading-8">
-                We're a one-person operation committed to honesty. If you have questions, want additional photos, or disagree with our valuation, reach out. We'll listen and adjust if we're wrong.
+                We're a one-person operation committed to honesty. If you have
+                questions, want additional photos, or disagree with our
+                valuation, reach out. We'll listen and adjust if we're wrong.
               </p>
 
               <p className="text-base md:text-lg leading-8">
@@ -167,44 +187,63 @@ export default async function AboutPage() {
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Accurate Descriptions</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">
+                  Accurate Descriptions
+                </h3>
                 <p className="text-ink-light leading-relaxed">
-                  Every item photographed from multiple angles with honest, detailed descriptions. Questions? We'll send more photos or clarify anything.
+                  Every item photographed from multiple angles with honest,
+                  detailed descriptions. Questions? We'll send more photos or
+                  clarify anything.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Fair Pricing</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">
+                  Fair Pricing
+                </h3>
                 <p className="text-ink-light leading-relaxed">
-                  We price between what auctions get and what retail costs. You save compared to traditional auction houses.
+                  We price between what auctions get and what retail costs. You
+                  save compared to traditional auction houses.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Professional Valuation</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">
+                  Professional Valuation
+                </h3>
                 <p className="text-ink-light leading-relaxed">
-                  We use industry-standard resources to value items accurately. If you disagree, we'll review it.
+                  We use industry-standard resources to value items accurately.
+                  If you disagree, we'll review it.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Real Communication</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">
+                  Real Communication
+                </h3>
                 <p className="text-ink-light leading-relaxed">
-                  Direct contact with the owner. Real person, real answers. No corporate run-around.
+                  Direct contact with the owner. Real person, real answers. No
+                  corporate run-around.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Careful Shipping</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">
+                  Careful Shipping
+                </h3>
                 <p className="text-ink-light leading-relaxed">
-                  Insured and tracked. Professional packaging to ensure your items arrive the way they should.
+                  Insured and tracked. Professional packaging to ensure your
+                  items arrive the way they should.
                 </p>
               </div>
 
               <div className="value-card bg-white p-8 rounded-lg shadow-sm">
-                <h3 className="font-serif text-2xl text-ink mb-4">Transparency</h3>
+                <h3 className="font-serif text-2xl text-ink mb-4">
+                  Transparency
+                </h3>
                 <p className="text-ink-light leading-relaxed">
-                  Full disclosure of condition, including known issues and restoration history. You see exactly what you're purchasing.
+                  Full disclosure of condition, including known issues and
+                  restoration history. You see exactly what you're purchasing.
                 </p>
               </div>
             </div>
@@ -231,9 +270,15 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Sourcing & Discovery</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">
+                    Sourcing & Discovery
+                  </h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    We develop relationships with estate liquidators, auction houses, private consignors, and collectors worldwide. We're selective—only 1 in 10 pieces we evaluate make it to our platform. Each potential acquisition is assessed for quality, rarity, and fit with our community.
+                    We develop relationships with estate liquidators, auction
+                    houses, private consignors, and collectors worldwide. We're
+                    selective—only 1 in 10 pieces we evaluate make it to our
+                    platform. Each potential acquisition is assessed for
+                    quality, rarity, and fit with our community.
                   </p>
                 </div>
               </div>
@@ -245,9 +290,15 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Initial Assessment</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">
+                    Initial Assessment
+                  </h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Our specialists conduct a thorough preliminary examination, documenting all visible characteristics: materials, construction methods, signs of wear, repairs, and marks. We photograph items from multiple angles under professional lighting.
+                    Our specialists conduct a thorough preliminary examination,
+                    documenting all visible characteristics: materials,
+                    construction methods, signs of wear, repairs, and marks. We
+                    photograph items from multiple angles under professional
+                    lighting.
                   </p>
                 </div>
               </div>
@@ -259,9 +310,15 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Expert Authentication</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">
+                    Expert Authentication
+                  </h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Category specialists with decades of experience conduct in-depth authentication. This includes comparison with known examples, technical analysis when needed, documentation review, and cross-reference with auction records and scholarly databases.
+                    Category specialists with decades of experience conduct
+                    in-depth authentication. This includes comparison with known
+                    examples, technical analysis when needed, documentation
+                    review, and cross-reference with auction records and
+                    scholarly databases.
                   </p>
                 </div>
               </div>
@@ -273,9 +330,15 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Research & Documentation</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">
+                    Research & Documentation
+                  </h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    We research provenance, historical context, maker information, and market comparables. Each item receives a detailed description that tells its story: where it comes from, how it was made, why it matters, and how to care for it.
+                    We research provenance, historical context, maker
+                    information, and market comparables. Each item receives a
+                    detailed description that tells its story: where it comes
+                    from, how it was made, why it matters, and how to care for
+                    it.
                   </p>
                 </div>
               </div>
@@ -287,9 +350,14 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Professional Photography & Listing</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">
+                    Professional Photography & Listing
+                  </h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Studio photography captures every detail. Condition notes are precise and honest. Pricing is based on comparable sales, rarity, condition, and market demand. Each listing is crafted to educate and inspire.
+                    Studio photography captures every detail. Condition notes
+                    are precise and honest. Pricing is based on comparable
+                    sales, rarity, condition, and market demand. Each listing is
+                    crafted to educate and inspire.
                   </p>
                 </div>
               </div>
@@ -301,9 +369,14 @@ export default async function AboutPage() {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">Sale & Careful Fulfillment</h3>
+                  <h3 className="font-serif text-2xl text-ink mb-3">
+                    Sale & Careful Fulfillment
+                  </h3>
                   <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    When an item sells, we handle everything: secure payment processing, professional packaging, full insurance, and tracking. Your piece arrives as beautifully as it left our hands.
+                    When an item sells, we handle everything: secure payment
+                    processing, professional packaging, full insurance, and
+                    tracking. Your piece arrives as beautifully as it left our
+                    hands.
                   </p>
                 </div>
               </div>
@@ -325,45 +398,74 @@ export default async function AboutPage() {
 
             <div className="grid md:grid-cols-2 gap-8">
               <div className="team-member bg-white p-8 rounded-lg">
-                <h3 className="font-serif text-2xl text-ink mb-2">Fine Art & Paintings</h3>
+                <h3 className="font-serif text-2xl text-ink mb-2">
+                  Fine Art & Paintings
+                </h3>
                 <p className="text-ink-light leading-relaxed mb-4">
-                  We authenticate art using professional valuation resources and technical analysis. Provenance research and comparison with documented sales records inform every listing.
+                  We authenticate art using professional valuation resources and
+                  technical analysis. Provenance research and comparison with
+                  documented sales records inform every listing.
                 </p>
               </div>
 
               <div className="team-member bg-white p-8 rounded-lg">
-                <h3 className="font-serif text-2xl text-ink mb-2">Rare Books & Manuscripts</h3>
+                <h3 className="font-serif text-2xl text-ink mb-2">
+                  Rare Books & Manuscripts
+                </h3>
                 <p className="text-ink-light leading-relaxed mb-4">
-                  Our bibliophile specialists examine binding, printing, typography, and paper aging. They consult rare book databases, track first edition records, and assess condition with respect to academic standards. Every book is cataloged with full bibliographic information.
+                  Our bibliophile specialists examine binding, printing,
+                  typography, and paper aging. They consult rare book databases,
+                  track first edition records, and assess condition with respect
+                  to academic standards. Every book is cataloged with full
+                  bibliographic information.
                 </p>
               </div>
 
               <div className="team-member bg-white p-8 rounded-lg">
-                <h3 className="font-serif text-2xl text-ink mb-2">Furniture & Decorative Arts</h3>
+                <h3 className="font-serif text-2xl text-ink mb-2">
+                  Furniture & Decorative Arts
+                </h3>
                 <p className="text-ink-light leading-relaxed mb-4">
-                  Our furniture experts evaluate construction methods, wood types, hardware, and design elements. They identify makers through labels and stylistic analysis, assess structural integrity, and determine appropriate restoration or conservation approaches.
+                  Our furniture experts evaluate construction methods, wood
+                  types, hardware, and design elements. They identify makers
+                  through labels and stylistic analysis, assess structural
+                  integrity, and determine appropriate restoration or
+                  conservation approaches.
                 </p>
               </div>
 
               <div className="team-member bg-white p-8 rounded-lg">
-                <h3 className="font-serif text-2xl text-ink mb-2">Collectibles & Militaria</h3>
+                <h3 className="font-serif text-2xl text-ink mb-2">
+                  Collectibles & Militaria
+                </h3>
                 <p className="text-ink-light leading-relaxed mb-4">
-                  Specialized knowledge in military history, medals, insignia, and period collectibles. Our team verifies authenticity through manufacturing records, cross-references historical documentation, and consults with military historians when needed.
+                  Specialized knowledge in military history, medals, insignia,
+                  and period collectibles. Our team verifies authenticity
+                  through manufacturing records, cross-references historical
+                  documentation, and consults with military historians when
+                  needed.
                 </p>
               </div>
             </div>
 
             <div className="mt-12 bg-white p-8 rounded-lg border border-surface-2">
-              <h3 className="font-serif text-2xl text-ink mb-4">Credentials & Affiliations</h3>
+              <h3 className="font-serif text-2xl text-ink mb-4">
+                Credentials & Affiliations
+              </h3>
               <p className="text-ink-light leading-relaxed mb-4">
                 Our team members hold credentials from:
               </p>
               <ul className="space-y-2 text-ink-light">
                 <li>• Certified Appraisers (American Society of Appraisers)</li>
                 <li>• Certified Collections Specialists (Collections Trust)</li>
-                <li>• Published authors and contributors to academic journals</li>
+                <li>
+                  • Published authors and contributors to academic journals
+                </li>
                 <li>• Former museum curators and auction house specialists</li>
-                <li>• Members of professional dealer associations and ethics boards</li>
+                <li>
+                  • Members of professional dealer associations and ethics
+                  boards
+                </li>
               </ul>
             </div>
           </div>
@@ -412,7 +514,9 @@ export default async function AboutPage() {
               Begin Your Collection
             </h2>
             <p className="text-xl mb-8 opacity-95">
-              Explore our curated selection of authenticated antiques, rare books, fine art, and collectibles. Every piece has been carefully selected and verified by our experts.
+              Explore our curated selection of authenticated antiques, rare
+              books, fine art, and collectibles. Every piece has been carefully
+              selected and verified by our experts.
             </p>
             <Link
               href="/shop"

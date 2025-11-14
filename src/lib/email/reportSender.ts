@@ -7,7 +7,7 @@ interface ReportEmailOptions {
   recipients: string[];
   reportName: string;
   data: string;
-  format: 'JSON' | 'CSV' | 'HTML';
+  format: "JSON" | "CSV" | "HTML";
 }
 
 /**
@@ -16,7 +16,11 @@ interface ReportEmailOptions {
  * @internal
  */
 // @ts-ignore - Reserved for future email implementation
-function generateEmailTemplate(reportName: string, data: string, format: string): string {
+function generateEmailTemplate(
+  reportName: string,
+  data: string,
+  format: string,
+): string {
   const timestamp = new Date().toLocaleString();
 
   return `
@@ -67,7 +71,7 @@ function generateEmailTemplate(reportName: string, data: string, format: string)
 
       <div class="metrics">
         <h3>Data Preview</h3>
-        <div class="data-preview">${escapeHtml(data.substring(0, 500))}${data.length > 500 ? '...' : ''}</div>
+        <div class="data-preview">${escapeHtml(data.substring(0, 500))}${data.length > 500 ? "..." : ""}</div>
       </div>
 
       <p>The complete report has been attached to this email.</p>
@@ -94,11 +98,11 @@ function generateEmailTemplate(reportName: string, data: string, format: string)
  */
 function escapeHtml(text: string): string {
   const htmlEscapeMap: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;',
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
   };
 
   return text.replace(/[&<>"']/g, (char) => htmlEscapeMap[char] || char);
@@ -111,9 +115,20 @@ function escapeHtml(text: string): string {
  */
 // @ts-ignore - Reserved for future email implementation
 function getReportFilename(reportName: string, format: string): string {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
-  const sanitized = reportName.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_-]/g, '');
-  const ext = format.toLowerCase() === 'json' ? 'json' : format.toLowerCase() === 'csv' ? 'csv' : 'html';
+  const timestamp = new Date()
+    .toISOString()
+    .replace(/[:.]/g, "-")
+    .split("T")[0];
+  const sanitized = reportName
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_-]/g, "");
+  const ext =
+    format.toLowerCase() === "json"
+      ? "json"
+      : format.toLowerCase() === "csv"
+        ? "csv"
+        : "html";
   return `${sanitized}_${timestamp}.${ext}`;
 }
 
@@ -121,16 +136,20 @@ function getReportFilename(reportName: string, format: string): string {
  * Send report via email
  * NOTE: Email service disabled during Google Workspace migration
  */
-export async function sendReportEmail(options: ReportEmailOptions): Promise<void> {
+export async function sendReportEmail(
+  options: ReportEmailOptions,
+): Promise<void> {
   const { recipients, reportName, format } = options;
   // data parameter available but unused until email service is implemented
 
   // Email service disabled during Google Workspace migration
-  console.log('[Report Email] Service disabled - Google Workspace migration pending');
-  console.log('[Report Email] Would send to:', recipients);
-  console.log('[Report Email] Report:', reportName);
-  console.log('[Report Email] Format:', format);
-  
+  console.log(
+    "[Report Email] Service disabled - Google Workspace migration pending",
+  );
+  console.log("[Report Email] Would send to:", recipients);
+  console.log("[Report Email] Report:", reportName);
+  console.log("[Report Email] Format:", format);
+
   // TODO: Implement Google Workspace SMTP when ready
   // TODO: Use generateEmailTemplate() and getReportFilename() helper functions
   return;
@@ -143,13 +162,15 @@ export async function sendReportEmail(options: ReportEmailOptions): Promise<void
 export async function sendAlertEmail(
   recipients: string[],
   subject: string,
-  content: string
+  content: string,
 ): Promise<void> {
-  console.log('[Alert Email] Service disabled - Google Workspace migration pending');
-  console.log('[Alert Email] Would send to:', recipients);
-  console.log('[Alert Email] Subject:', subject);
-  console.log('[Alert Email] Content:', content);
-  
+  console.log(
+    "[Alert Email] Service disabled - Google Workspace migration pending",
+  );
+  console.log("[Alert Email] Would send to:", recipients);
+  console.log("[Alert Email] Subject:", subject);
+  console.log("[Alert Email] Content:", content);
+
   // TODO: Implement Google Workspace SMTP when ready
   return;
 }

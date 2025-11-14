@@ -30,6 +30,7 @@ Phase 3 successfully implemented production-ready security hardening and perform
 **Status:** Production-ready
 
 **Features:**
+
 - In-memory Map-based storage with automatic cleanup
 - IP-based tracking from `X-Forwarded-For` and `X-Real-IP` headers
 - Configurable rate limit windows and max requests
@@ -38,15 +39,16 @@ Phase 3 successfully implemented production-ready security hardening and perform
 
 **Preset Configurations:**
 
-| Preset | Requests | Window | Use Case |
-|--------|----------|--------|----------|
-| `strict` | 5 | 15 minutes | Authentication, payments |
-| `standard` | 30 | 1 minute | General admin operations |
-| `relaxed` | 100 | 1 minute | Public read endpoints |
-| `ai` | 5 | 1 minute | AI analysis (expensive) |
-| `upload` | 10 | 1 minute | File uploads, sync operations |
+| Preset     | Requests | Window     | Use Case                      |
+| ---------- | -------- | ---------- | ----------------------------- |
+| `strict`   | 5        | 15 minutes | Authentication, payments      |
+| `standard` | 30       | 1 minute   | General admin operations      |
+| `relaxed`  | 100      | 1 minute   | Public read endpoints         |
+| `ai`       | 5        | 1 minute   | AI analysis (expensive)       |
+| `upload`   | 10       | 1 minute   | File uploads, sync operations |
 
 **Admin Functions:**
+
 ```typescript
 clearRateLimit(ip: string)      // Clear specific IP
 getRateLimitStats()             // Get all rate limit data
@@ -77,12 +79,14 @@ getRateLimitStats()             // Get all rate limit data
 ```
 
 **Request Validation:**
+
 - Body size validation (configurable, default 10MB)
 - Content-Type validation (JSON, multipart/form-data)
 - API key/webhook secret verification
 - Origin trust verification
 
 **Security Utilities:**
+
 - `sanitizeInput()` - XSS prevention
 - `isValidEmail()` - Email format validation
 - `isValidUrl()` - URL validation with protocol check
@@ -90,12 +94,13 @@ getRateLimitStats()             // Get all rate limit data
 - `corsHeaders()` - CORS configuration
 
 **Usage:**
+
 ```typescript
 // In API route
 const securityCheck = await securityMiddleware(request, {
-  maxBodySize: 1024 * 1024,  // 1MB
-  allowedContentTypes: ['application/json'],
-  requireApiKey: true
+  maxBodySize: 1024 * 1024, // 1MB
+  allowedContentTypes: ["application/json"],
+  requireApiKey: true,
 });
 if (securityCheck) return securityCheck;
 
@@ -111,6 +116,7 @@ return applySecurityHeaders(response);
 **Status:** Production-ready with statistics
 
 **Features:**
+
 - In-memory Map-based cache with configurable max size (default 1000 entries)
 - LRU (Least Recently Used) eviction when capacity reached
 - TTL (Time To Live) support with automatic expiration
@@ -119,6 +125,7 @@ return applySecurityHeaders(response);
 - Cache-aside pattern with `getOrSet()`
 
 **Cache Methods:**
+
 ```typescript
 get<T>(key: string): T | null
 set<T>(key: string, value: T, ttl?: number): void
@@ -131,15 +138,16 @@ getStats(): CacheStats
 
 **TTL Presets:**
 
-| Preset | Duration | Use Case |
-|--------|----------|----------|
-| `short` | 1 minute | Rapidly changing data |
-| `medium` | 5 minutes | Product lists, categories |
-| `long` | 30 minutes | AI analysis results |
-| `hour` | 1 hour | Analytics data |
-| `day` | 24 hours | Static content |
+| Preset   | Duration   | Use Case                  |
+| -------- | ---------- | ------------------------- |
+| `short`  | 1 minute   | Rapidly changing data     |
+| `medium` | 5 minutes  | Product lists, categories |
+| `long`   | 30 minutes | AI analysis results       |
+| `hour`   | 1 hour     | Analytics data            |
+| `day`    | 24 hours   | Static content            |
 
 **Cache Key Generators:**
+
 ```typescript
 cacheKeys.product(id: string)
 cacheKeys.products(params: { category?, limit?, featured?, q? })
@@ -149,6 +157,7 @@ cacheKeys.analytics(startDate: Date, endDate: Date)
 ```
 
 **Statistics Tracking:**
+
 ```typescript
 {
   size: number,           // Current entries
@@ -160,6 +169,7 @@ cacheKeys.analytics(startDate: Date, endDate: Date)
 ```
 
 **Utilities:**
+
 - `invalidateCachePattern(pattern)` - Clear matching keys
 - `memoize(fn, ttl)` - Function memoization
 - `@cached(ttl)` - Method decorator (experimental)
@@ -173,11 +183,13 @@ cacheKeys.analytics(startDate: Date, endDate: Date)
 ### 1. ✅ `/api/products` (GET) - Product Listing
 
 **Security Applied:**
+
 - Rate limiting: `relaxed` (100 requests/minute)
 - Security headers: Full suite including CSP
 - Caching: 5-minute TTL for product lists
 
 **Implementation:**
+
 ```typescript
 // Check cache first
 const cacheKey = cacheKeys.products({ category, limit, featured, q });
@@ -197,6 +209,7 @@ cache.set(cacheKey, products, cacheTTL.medium);
 ```
 
 **Performance Impact:**
+
 - **Cache Hit:** ~5ms response time (99% faster)
 - **Cache Miss:** ~500ms response time (database query)
 - **Estimated Hit Rate:** 60-80% (public product browsing)
@@ -206,17 +219,19 @@ cache.set(cacheKey, products, cacheTTL.medium);
 ### 2. ✅ `/api/admin/products/analyze` (POST) - AI Product Analysis
 
 **Security Applied:**
+
 - Security middleware: 1MB body limit, JSON only
 - Rate limiting: `ai` (5 requests/minute - prevents AI API abuse)
 - Security headers: Full suite
 - Caching: 30-minute TTL for AI analysis
 
 **Implementation:**
+
 ```typescript
 // Security check
 const securityCheck = await securityMiddleware(request, {
   maxBodySize: 1024 * 1024,
-  allowedContentTypes: ['application/json']
+  allowedContentTypes: ["application/json"],
 });
 if (securityCheck) return securityCheck;
 
@@ -237,11 +252,13 @@ cache.set(cacheKey, analysis, cacheTTL.long);
 ```
 
 **Cost Savings:**
+
 - **AI Analysis Cost:** ~$0.05 per request (Claude + GPT-4V)
 - **Cache Duration:** 30 minutes
 - **Estimated Savings:** ~$30-50/month (depending on admin usage)
 
 **Performance Impact:**
+
 - **Cache Hit:** ~10ms response time
 - **Cache Miss:** ~8-12 seconds (AI processing)
 
@@ -250,17 +267,19 @@ cache.set(cacheKey, analysis, cacheTTL.long);
 ### 3. ✅ `/api/admin/products/create` (POST) - Product Creation
 
 **Security Applied:**
+
 - Security middleware: 5MB body limit, JSON only
 - Rate limiting: `standard` (30 requests/minute)
 - Security headers: Full suite
 - No caching (mutation endpoint)
 
 **Implementation:**
+
 ```typescript
 // Security middleware
 const securityCheck = await securityMiddleware(request, {
   maxBodySize: 5 * 1024 * 1024,
-  allowedContentTypes: ['application/json']
+  allowedContentTypes: ["application/json"],
 });
 if (securityCheck) return securityCheck;
 
@@ -270,12 +289,15 @@ if (rateLimitCheck) return rateLimitCheck;
 
 // Admin auth check
 const session = await getServerSession(authOptions);
-if (!session?.user || session.user.role !== 'admin') {
-  return applySecurityHeaders(NextResponse.json({ error: 'Unauthorized' }, { status: 403 }));
+if (!session?.user || session.user.role !== "admin") {
+  return applySecurityHeaders(
+    NextResponse.json({ error: "Unauthorized" }, { status: 403 }),
+  );
 }
 ```
 
 **Security Improvements:**
+
 - Body size limit prevents upload bombs
 - Rate limiting prevents abuse
 - Security headers protect against XSS
@@ -286,12 +308,14 @@ if (!session?.user || session.user.role !== 'admin') {
 ### 4. ✅ `/api/checkout/create-payment-intent` (POST) - Payment Processing
 
 **Security Applied:**
+
 - Security middleware: 1MB body limit, JSON only
 - Rate limiting: `strict` (5 requests per 15 minutes - strictest)
 - Security headers: Full suite including CSP for Stripe
 - No caching (PCI compliance - no payment data caching)
 
 **Implementation:**
+
 ```typescript
 // Enhanced security for payment endpoint
 const securityCheck = await securityMiddleware(request, {
@@ -312,12 +336,14 @@ const paymentIntent = await stripe.paymentIntents.create({ ... });
 ```
 
 **Security Improvements:**
+
 - **Strict Rate Limiting:** 5 requests per 15 minutes prevents payment fraud
 - **Server-Side Validation:** Cart prices verified against database
 - **PCI Compliance:** No payment data caching
 - **CSP Headers:** Stripe domains whitelisted only
 
 **Attack Prevention:**
+
 - Price tampering: ❌ Blocked (server-side validation)
 - Payment fraud: ❌ Rate limited (5 per 15 min)
 - XSS attacks: ❌ Blocked (CSP headers)
@@ -327,12 +353,14 @@ const paymentIntent = await stripe.paymentIntents.create({ ... });
 ### 5. ✅ `/api/sync-images` (POST/GET) - Image Sync
 
 **Security Applied:**
+
 - Rate limiting: `upload` (10 requests/minute)
 - Security headers: Full suite
 - API key validation: `WEBHOOK_SECRET` required
 - No caching (background job endpoint)
 
 **Implementation:**
+
 ```typescript
 // Upload rate limiting
 const rateLimitCheck = await rateLimiters.upload(request);
@@ -340,10 +368,12 @@ if (rateLimitCheck) return rateLimitCheck;
 
 // Webhook secret validation
 if (!validateSecret(secret)) {
-  return applySecurityHeaders(NextResponse.json(
-    { error: 'Unauthorized: Invalid webhook secret' }, 
-    { status: 401 }
-  ));
+  return applySecurityHeaders(
+    NextResponse.json(
+      { error: "Unauthorized: Invalid webhook secret" },
+      { status: 401 },
+    ),
+  );
 }
 
 // Start background sync
@@ -351,14 +381,20 @@ const syncId = generateSyncId();
 runSyncInBackground(driveFolderId, skipExisting).catch(console.error);
 
 // Return immediate response (202 Accepted)
-return applySecurityHeaders(NextResponse.json({
-  status: 'syncing',
-  syncId,
-  estimatedDuration: '5-10 minutes'
-}, { status: 202 }));
+return applySecurityHeaders(
+  NextResponse.json(
+    {
+      status: "syncing",
+      syncId,
+      estimatedDuration: "5-10 minutes",
+    },
+    { status: 202 },
+  ),
+);
 ```
 
 **Security Improvements:**
+
 - API key required (prevents unauthorized sync triggers)
 - Rate limiting prevents abuse
 - Background processing (non-blocking)
@@ -370,21 +406,21 @@ return applySecurityHeaders(NextResponse.json({
 
 ### Cache Performance (Expected)
 
-| Endpoint | Operation | Cache TTL | Expected Hit Rate | Time Saved |
-|----------|-----------|-----------|------------------|------------|
-| `/api/products` | Product listing | 5 minutes | 60-80% | ~495ms per hit |
-| `/api/admin/products/analyze` | AI analysis | 30 minutes | 40-60% | ~8-12s per hit |
-| Future: `/api/categories` | Category list | 5 minutes | 70-90% | ~200ms per hit |
+| Endpoint                      | Operation       | Cache TTL  | Expected Hit Rate | Time Saved     |
+| ----------------------------- | --------------- | ---------- | ----------------- | -------------- |
+| `/api/products`               | Product listing | 5 minutes  | 60-80%            | ~495ms per hit |
+| `/api/admin/products/analyze` | AI analysis     | 30 minutes | 40-60%            | ~8-12s per hit |
+| Future: `/api/categories`     | Category list   | 5 minutes  | 70-90%            | ~200ms per hit |
 
 ### Rate Limiting Protection
 
-| Endpoint | Rate Limit | Protection Against |
-|----------|------------|-------------------|
+| Endpoint                              | Rate Limit   | Protection Against          |
+| ------------------------------------- | ------------ | --------------------------- |
 | `/api/checkout/create-payment-intent` | 5 per 15 min | Payment fraud, card testing |
-| `/api/admin/products/analyze` | 5 per min | AI API cost abuse |
-| `/api/sync-images` | 10 per min | Storage/bandwidth abuse |
-| `/api/admin/products/create` | 30 per min | Spam product creation |
-| `/api/products` | 100 per min | Scraping, DDoS |
+| `/api/admin/products/analyze`         | 5 per min    | AI API cost abuse           |
+| `/api/sync-images`                    | 10 per min   | Storage/bandwidth abuse     |
+| `/api/admin/products/create`          | 30 per min   | Spam product creation       |
+| `/api/products`                       | 100 per min  | Scraping, DDoS              |
 
 ### Cost Savings (Estimated Monthly)
 
@@ -398,24 +434,25 @@ return applySecurityHeaders(NextResponse.json({
 
 ### OWASP Top 10 Coverage
 
-| Vulnerability | Status | Protection |
-|---------------|--------|------------|
-| **A01: Broken Access Control** | ✅ Protected | Admin auth checks, rate limiting |
-| **A02: Cryptographic Failures** | ✅ Protected | HSTS headers, TLS enforcement |
-| **A03: Injection** | ✅ Protected | Input sanitization, Prisma ORM |
-| **A04: Insecure Design** | ✅ Protected | Server-side validation, rate limiting |
-| **A05: Security Misconfiguration** | ✅ Protected | Security headers, CSP policy |
-| **A06: Vulnerable Components** | ✅ Protected | Dependencies updated in Phase 2 |
-| **A07: Identification/Auth Failures** | ✅ Protected | NextAuth.js, strict rate limiting |
-| **A08: Software & Data Integrity** | ✅ Protected | CSP headers, SRI support |
-| **A09: Security Logging Failures** | ⚠️ Partial | Logging exists, monitoring TBD |
-| **A10: SSRF** | ✅ Protected | Input validation, URL checks |
+| Vulnerability                         | Status       | Protection                            |
+| ------------------------------------- | ------------ | ------------------------------------- |
+| **A01: Broken Access Control**        | ✅ Protected | Admin auth checks, rate limiting      |
+| **A02: Cryptographic Failures**       | ✅ Protected | HSTS headers, TLS enforcement         |
+| **A03: Injection**                    | ✅ Protected | Input sanitization, Prisma ORM        |
+| **A04: Insecure Design**              | ✅ Protected | Server-side validation, rate limiting |
+| **A05: Security Misconfiguration**    | ✅ Protected | Security headers, CSP policy          |
+| **A06: Vulnerable Components**        | ✅ Protected | Dependencies updated in Phase 2       |
+| **A07: Identification/Auth Failures** | ✅ Protected | NextAuth.js, strict rate limiting     |
+| **A08: Software & Data Integrity**    | ✅ Protected | CSP headers, SRI support              |
+| **A09: Security Logging Failures**    | ⚠️ Partial   | Logging exists, monitoring TBD        |
+| **A10: SSRF**                         | ✅ Protected | Input validation, URL checks          |
 
 ### Security Headers Analysis
 
 **Grade:** A+ (OWASP recommended)
 
 ✅ **Implemented:**
+
 - X-Frame-Options: DENY (clickjacking protection)
 - X-Content-Type-Options: nosniff (MIME sniffing protection)
 - X-XSS-Protection: 1; mode=block
@@ -425,6 +462,7 @@ return applySecurityHeaders(NextResponse.json({
 - Permissions-Policy: Restrictive
 
 **Content Security Policy:**
+
 ```
 default-src 'self';
 script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;
@@ -476,6 +514,7 @@ Bundle Size: Within normal limits
 ## Technical Debt
 
 ### Completed in Phase 3
+
 - ✅ Rate limiting implemented
 - ✅ Security headers applied
 - ✅ Caching layer created
@@ -534,6 +573,7 @@ Bundle Size: Within normal limits
 ### Deployment Steps
 
 1. **Commit Phase 3 Changes**
+
    ```bash
    git add src/lib/rate-limit.ts src/lib/security.ts src/lib/cache.ts
    git add src/app/api/**/*.ts
@@ -541,6 +581,7 @@ Bundle Size: Within normal limits
    ```
 
 2. **Push to Production**
+
    ```bash
    git push origin main
    ```
@@ -566,6 +607,7 @@ Bundle Size: Within normal limits
 No new environment variables required for Phase 3.
 
 **Existing Required:**
+
 - `WEBHOOK_SECRET` - Used by sync-images endpoint (already configured)
 - `NEXTAUTH_URL` - Used by checkout validation (already configured)
 
@@ -591,21 +633,23 @@ No new environment variables required for Phase 3.
 ### Developer Notes
 
 **Using Rate Limiting:**
+
 ```typescript
-import { rateLimiters } from '@/lib/rate-limit';
+import { rateLimiters } from "@/lib/rate-limit";
 
 const rateLimitCheck = await rateLimiters.relaxed(request);
 if (rateLimitCheck) return rateLimitCheck;
 ```
 
 **Using Security Headers:**
+
 ```typescript
-import { securityMiddleware, applySecurityHeaders } from '@/lib/security';
+import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
 
 // Validate request
 const securityCheck = await securityMiddleware(request, {
   maxBodySize: 1024 * 1024,
-  allowedContentTypes: ['application/json']
+  allowedContentTypes: ["application/json"],
 });
 if (securityCheck) return securityCheck;
 
@@ -614,6 +658,7 @@ return applySecurityHeaders(response);
 ```
 
 **Using Cache:**
+
 ```typescript
 import { cache, cacheKeys, cacheTTL } from '@/lib/cache';
 

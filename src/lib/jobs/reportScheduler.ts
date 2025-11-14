@@ -3,9 +3,13 @@
  * Phase 5 - Execute scheduled reports on cron schedule
  */
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 // import { sendReportEmail } from '@/lib/email/reportSender';
-import { getReportsDue, markReportAsSent, logReportSent } from '@/lib/analytics/scheduler';
+import {
+  getReportsDue,
+  markReportAsSent,
+  logReportSent,
+} from "@/lib/analytics/scheduler";
 
 interface ScheduledJob {
   id: string;
@@ -23,7 +27,7 @@ const activeJobs = new Map<string, NodeJS.Timeout>();
  * Simplified version - supports basic patterns like "0 9 * * MON"
  */
 export function getNextRunMs(cronExpression: string): number {
-  const parts = cronExpression.split(' ');
+  const parts = cronExpression.split(" ");
   const [minute, hour] = parts;
 
   const now = new Date();
@@ -70,7 +74,9 @@ async function executeReport(reportId: string): Promise<void> {
     // const reportData = await generateReportData(report.format);
 
     // Send emails (commented out - requires email service setup)
-    const recipients = report.recipients.split(',').map((r: string) => r.trim());
+    const recipients = report.recipients
+      .split(",")
+      .map((r: string) => r.trim());
     // await sendReportEmail({
     //   recipients,
     //   reportName: report.name,
@@ -80,14 +86,14 @@ async function executeReport(reportId: string): Promise<void> {
 
     // Mark as sent and log
     await markReportAsSent(reportId);
-    await logReportSent(reportId, recipients, 'SUCCESS');
+    await logReportSent(reportId, recipients, "SUCCESS");
 
     console.log(`Report executed successfully: ${report.name} (${reportId})`);
   } catch (error) {
     console.error(`Error executing report ${reportId}:`, error);
 
     // Log error
-    await logReportSent(reportId, [], 'FAILED');
+    await logReportSent(reportId, [], "FAILED");
   }
 }
 
@@ -106,7 +112,7 @@ async function pollDueReports(): Promise<void> {
       console.log(`Processed ${dueReports.length} due reports`);
     }
   } catch (error) {
-    console.error('Error polling due reports:', error);
+    console.error("Error polling due reports:", error);
   }
 }
 
@@ -114,26 +120,28 @@ async function pollDueReports(): Promise<void> {
  * Start background job scheduler
  */
 export function startJobScheduler(): void {
-  console.log('Starting background job scheduler...');
+  console.log("Starting background job scheduler...");
 
   // Poll for due reports every minute
   const pollInterval = setInterval(() => {
-    pollDueReports().catch((error) => console.error('Poll error:', error));
+    pollDueReports().catch((error) => console.error("Poll error:", error));
   }, 60000); // 60 seconds
 
-  activeJobs.set('report-poller', pollInterval);
+  activeJobs.set("report-poller", pollInterval);
 
   // Also run once at startup
-  pollDueReports().catch((error) => console.error('Initial poll error:', error));
+  pollDueReports().catch((error) =>
+    console.error("Initial poll error:", error),
+  );
 
-  console.log('Background job scheduler started');
+  console.log("Background job scheduler started");
 }
 
 /**
  * Stop background job scheduler
  */
 export function stopJobScheduler(): void {
-  console.log('Stopping background job scheduler...');
+  console.log("Stopping background job scheduler...");
 
   for (const [name, timeout] of activeJobs) {
     clearInterval(timeout);
@@ -150,7 +158,7 @@ export function getActiveJobs(): ScheduledJob[] {
   return Array.from(activeJobs.entries()).map(([name]) => ({
     id: name,
     name,
-    schedule: 'every minute',
+    schedule: "every minute",
     enabled: true,
   }));
 }
@@ -173,12 +181,16 @@ export async function getSchedulerHealth() {
         gte: new Date(Date.now() - 24 * 60 * 60 * 1000), // Last 24 hours
       },
     },
-    orderBy: { sentAt: 'desc' },
+    orderBy: { sentAt: "desc" },
     take: 10,
   });
 
-  const successCount = recentReports.filter((r: any) => r.status === 'SUCCESS').length;
-  const errorCount = recentReports.filter((r: any) => r.status === 'ERROR').length;
+  const successCount = recentReports.filter(
+    (r: any) => r.status === "SUCCESS",
+  ).length;
+  const errorCount = recentReports.filter(
+    (r: any) => r.status === "ERROR",
+  ).length;
 
   return {
     isRunning: activeCount > 0,
@@ -186,6 +198,9 @@ export async function getSchedulerHealth() {
     lastReports: recentReports.length,
     successCount,
     errorCount,
-    successRate: recentReports.length > 0 ? Math.round((successCount / recentReports.length) * 100) : 0,
+    successRate:
+      recentReports.length > 0
+        ? Math.round((successCount / recentReports.length) * 100)
+        : 0,
   };
 }

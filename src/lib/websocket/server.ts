@@ -3,14 +3,14 @@
  * Phase 5 - Real-time analytics streaming
  */
 
-import { Server as HTTPServer } from 'http';
-import { Server as SocketIOServer, Socket } from 'socket.io';
-import { prisma } from '@/lib/prisma';
+import { Server as HTTPServer } from "http";
+import { Server as SocketIOServer, Socket } from "socket.io";
+import { prisma } from "@/lib/prisma";
 import type {
   WebSocketEvent,
   SubscriptionOptions,
   MetricsCache,
-} from './types';
+} from "./types";
 
 let io: SocketIOServer | null = null;
 let metricsCache: MetricsCache | null = null;
@@ -19,45 +19,47 @@ let cacheUpdateInterval: NodeJS.Timeout | null = null;
 /**
  * Initialize WebSocket server
  */
-export function initializeWebSocketServer(httpServer: HTTPServer): SocketIOServer {
+export function initializeWebSocketServer(
+  httpServer: HTTPServer,
+): SocketIOServer {
   if (io) return io;
 
   io = new SocketIOServer(httpServer, {
     cors: {
-      origin: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-      methods: ['GET', 'POST'],
+      origin: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+      methods: ["GET", "POST"],
     },
-    transports: ['websocket', 'polling'],
+    transports: ["websocket", "polling"],
   });
 
   // Connection handler
-  io.on('connection', (socket: Socket) => {
+  io.on("connection", (socket: Socket) => {
     console.log(`WebSocket client connected: ${socket.id}`);
 
     // Subscribe to real-time updates
-    socket.on('subscribe', (options: SubscriptionOptions) => {
+    socket.on("subscribe", (options: SubscriptionOptions) => {
       socket.data.subscriptions = options;
-      socket.data.userId = socket.handshake.auth.userId || 'anonymous';
-      socket.emit('subscribed', {
+      socket.data.userId = socket.handshake.auth.userId || "anonymous";
+      socket.emit("subscribed", {
         success: true,
         subscriptions: options,
       });
     });
 
     // Request metrics update
-    socket.on('request-metrics', async () => {
+    socket.on("request-metrics", async () => {
       if (metricsCache) {
-        socket.emit('metrics-update', metricsCache);
+        socket.emit("metrics-update", metricsCache);
       }
     });
 
     // Handle disconnection
-    socket.on('disconnect', () => {
+    socket.on("disconnect", () => {
       console.log(`WebSocket client disconnected: ${socket.id}`);
     });
 
     // Error handling
-    socket.on('error', (error) => {
+    socket.on("error", (error) => {
       console.error(`WebSocket error for ${socket.id}:`, error);
     });
   });
@@ -73,7 +75,7 @@ export function initializeWebSocketServer(httpServer: HTTPServer): SocketIOServe
  */
 export function getWebSocketServer(): SocketIOServer {
   if (!io) {
-    throw new Error('WebSocket server not initialized');
+    throw new Error("WebSocket server not initialized");
   }
   return io;
 }
@@ -86,9 +88,9 @@ export async function broadcastMetricsUpdate() {
 
   try {
     const cache = await updateMetricsCache();
-    io.emit('metrics-update', cache);
+    io.emit("metrics-update", cache);
   } catch (error) {
-    console.error('Error broadcasting metrics update:', error);
+    console.error("Error broadcasting metrics update:", error);
   }
 }
 
@@ -97,7 +99,7 @@ export async function broadcastMetricsUpdate() {
  */
 export function broadcastApprovalTrend(event: WebSocketEvent) {
   if (!io) return;
-  io.emit('approval-trend', event);
+  io.emit("approval-trend", event);
 }
 
 /**
@@ -105,24 +107,21 @@ export function broadcastApprovalTrend(event: WebSocketEvent) {
  */
 export function broadcastRevenueUpdate(event: WebSocketEvent) {
   if (!io) return;
-  io.emit('revenue-update', event);
+  io.emit("revenue-update", event);
 }
 
 /**
  * Broadcast alert to specific user or all users
  */
-export function broadcastAlert(
-  event: WebSocketEvent,
-  userId?: string
-) {
+export function broadcastAlert(event: WebSocketEvent, userId?: string) {
   if (!io) return;
 
   if (userId) {
     // Send to specific user
-    io.to(`user-${userId}`).emit('alert', event);
+    io.to(`user-${userId}`).emit("alert", event);
   } else {
     // Broadcast to all
-    io.emit('alert', event);
+    io.emit("alert", event);
   }
 }
 
@@ -133,13 +132,13 @@ async function updateMetricsCache(): Promise<MetricsCache> {
   try {
     // Get approval metrics
     const approvals = await (prisma as any).aIGeneratedProduct.count({
-      where: { status: 'APPROVED' },
+      where: { status: "APPROVED" },
     });
     const rejections = await (prisma as any).aIGeneratedProduct.count({
-      where: { status: 'REJECTED' },
+      where: { status: "REJECTED" },
     });
     const pending = await (prisma as any).aIGeneratedProduct.count({
-      where: { status: 'PENDING' },
+      where: { status: "PENDING" },
     });
 
     const total = approvals + rejections + pending;
@@ -147,26 +146,28 @@ async function updateMetricsCache(): Promise<MetricsCache> {
 
     // Get revenue metrics
     const orders = await (prisma as any).order.groupBy({
-      by: ['categoryId'],
+      by: ["categoryId"],
       _sum: {
         total: true,
       },
       where: {
-        status: 'COMPLETED',
+        status: "COMPLETED",
       },
     });
 
     const totalRevenue = orders.reduce(
       (sum: number, order: any) => sum + (order._sum.total || 0),
-      0
+      0,
     );
-    const averageOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0;
+    const averageOrderValue =
+      orders.length > 0 ? totalRevenue / orders.length : 0;
 
     // Get revenue by category
     const revenueByCategory = orders.map((order: any) => ({
-      category: order.categoryId || 'Unknown',
+      category: order.categoryId || "Unknown",
       revenue: order._sum.total || 0,
-      percentage: totalRevenue > 0 ? ((order._sum.total || 0) / totalRevenue) * 100 : 0,
+      percentage:
+        totalRevenue > 0 ? ((order._sum.total || 0) / totalRevenue) * 100 : 0,
     }));
 
     // Get product metrics
@@ -209,7 +210,7 @@ async function updateMetricsCache(): Promise<MetricsCache> {
     metricsCache = cache;
     return cache;
   } catch (error) {
-    console.error('Error updating metrics cache:', error);
+    console.error("Error updating metrics cache:", error);
     // Return cached value or minimal valid MetricsCache
     return (
       metricsCache || {
@@ -260,9 +261,9 @@ function startMetricsCacheUpdate() {
 
     try {
       const cache = await updateMetricsCache();
-      io.emit('metrics-cache-update', cache);
+      io.emit("metrics-cache-update", cache);
     } catch (error) {
-      console.error('Error in metrics cache update interval:', error);
+      console.error("Error in metrics cache update interval:", error);
     }
   }, 5000);
 }

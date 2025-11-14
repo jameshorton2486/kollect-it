@@ -111,6 +111,7 @@ Before you begin, ensure you have:
    - **URL Endpoint** (looks like `https://ik.imagekit.io/[subdomain]`)
 
 **Note:** For Kollect-It, we already have:
+
 - URL Endpoint: `https://ik.imagekit.io/kollectit`
 - Public Key: `public_1MwR2t3I95qAJXc72h1DzbbLLZU=`
 - Private Key: Get from ImageKit console
@@ -164,6 +165,7 @@ bun run sync-images
 ```
 
 This will:
+
 1. ✅ Connect to Google Drive
 2. ✅ List all images in the specified folder
 3. ✅ Check if each image already exists in ImageKit
@@ -261,7 +263,7 @@ curl http://localhost:3000/api/sync-images?syncId=sync_1730750000000_abc123
 ### Basic Usage
 
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 export default function ProductPage() {
   return (
@@ -278,12 +280,12 @@ export default function ProductPage() {
 ### Image Grid
 
 ```tsx
-import { ProductImageGrid } from '@/components/ProductImage';
+import { ProductImageGrid } from "@/components/ProductImage";
 
 const images = [
-  { path: '/products/vase-1.jpg', alt: 'Vase angle 1' },
-  { path: '/products/vase-2.jpg', alt: 'Vase angle 2' },
-  { path: '/products/vase-3.jpg', alt: 'Vase angle 3' },
+  { path: "/products/vase-1.jpg", alt: "Vase angle 1" },
+  { path: "/products/vase-2.jpg", alt: "Vase angle 2" },
+  { path: "/products/vase-3.jpg", alt: "Vase angle 3" },
 ];
 
 export default function ProductGallery() {
@@ -300,7 +302,7 @@ export default function ProductGallery() {
 ### Responsive Image
 
 ```tsx
-import { ResponsiveProductImage } from '@/components/ProductImage';
+import { ResponsiveProductImage } from "@/components/ProductImage";
 
 export default function HeroImage() {
   return (
@@ -334,6 +336,7 @@ export default function HeroImage() {
 **Problem:** Script can't find the service account JSON file
 
 **Solution:**
+
 ```bash
 # Make sure google-credentials.json is in project root
 ls google-credentials.json
@@ -347,6 +350,7 @@ cat .env.local | grep GOOGLE_APPLICATION_CREDENTIALS
 **Problem:** "403 Forbidden" when accessing Google Drive
 
 **Solution:**
+
 1. Open `google-credentials.json`
 2. Copy the `client_email` field
 3. Go to your Drive folder
@@ -358,6 +362,7 @@ cat .env.local | grep GOOGLE_APPLICATION_CREDENTIALS
 **Problem:** Wrong public/private keys
 
 **Solution:**
+
 ```bash
 # Double-check credentials in ImageKit console
 # Settings → API Keys
@@ -371,6 +376,7 @@ cat .env.local | grep IMAGEKIT
 **Problem:** Too many uploads too fast
 
 **Solution:**
+
 - Script already includes 500ms delays between uploads
 - For large migrations, increase delay in sync script
 - Check `sync-results.json` for failed uploads
@@ -381,6 +387,7 @@ cat .env.local | grep IMAGEKIT
 **Problem:** Image uploaded but not visible
 
 **Solution:**
+
 1. Check `sync-results.json` for upload status
 2. Wait 60 seconds (CDN propagation)
 3. Clear browser cache (Ctrl+Shift+Delete)
@@ -392,6 +399,7 @@ cat .env.local | grep IMAGEKIT
 **Problem:** TypeScript/module resolution issues
 
 **Solution:**
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules .bun
@@ -406,6 +414,7 @@ bun run scripts/sync-drive-to-imagekit.ts
 **Problem:** File watching issues
 
 **Solution:**
+
 ```bash
 # Kill existing processes
 lsof -ti :3000 | xargs kill -9

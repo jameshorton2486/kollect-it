@@ -32,6 +32,7 @@
 - [ ] Verify clipboard has all 10 steps (scroll through to check)
 
 **What you should NOT copy:**
+
 - ❌ The backticks themselves (just the text inside)
 - ❌ Any text before "You are an autonomous coding agent..."
 - ❌ The section title or instructions above the backticks
@@ -68,6 +69,7 @@
   - [ ] "COMPLETION STATUS"
 
 **If paste failed or looks incomplete:**
+
 - [ ] Clear the input (Ctrl+A, Delete)
 - [ ] Re-copy from REBRAND-MASTER-PROMPT.md
 - [ ] Try again
@@ -79,6 +81,7 @@
 ### STEP 4: Agent Execution (30-60 min - HANDS OFF)
 
 **What happens:**
+
 - Agent will start with "I understand the task..."
 - Will work through 10 steps systematically
 - Will modify files in your project
@@ -86,6 +89,7 @@
 - Will provide progress updates in chat
 
 **What you do:**
+
 - [ ] Watch Copilot Chat (optional - can minimize)
 - [ ] Let it run without interrupting
 - [ ] Resist the urge to "help" or click around
@@ -113,6 +117,7 @@ while ($true) { Clear-Host; git status; Start-Sleep 10 }
 ```
 
 **Agent completion indicators:**
+
 - [ ] Chat shows "All steps completed"
 - [ ] Chat suggests committing changes
 - [ ] No red errors in the chat (warnings OK)
@@ -137,6 +142,7 @@ bun run dev
 - [ ] Open browser to **http://localhost:3000**
 
 **Check homepage:**
+
 - [ ] Page loads without 404 or errors
 - [ ] Hero section reads: "Collectibles Worth Collecting"
 - [ ] Subheadline is about "professionally valued, fairly priced"
@@ -145,6 +151,7 @@ bun run dev
 - [ ] Layout looks correct (no broken text or styling)
 
 **Check categories:**
+
 ```
 - [ ] /category/rare-books loads
 - [ ] Description mentions "First editions, signed copies"
@@ -154,6 +161,7 @@ bun run dev
 ```
 
 **Check mobile view:**
+
 - [ ] Ctrl+Shift+M (toggle device toolbar)
 - [ ] Text is readable (not cramped)
 - [ ] Hero doesn't overflow
@@ -161,12 +169,14 @@ bun run dev
 - [ ] No weird line breaks
 
 **Check console for errors:**
+
 - [ ] F12 (open DevTools)
 - [ ] Click "Console" tab
 - [ ] Should see NO red errors
 - [ ] Warnings are OK (ignore them)
 
 **If something is wrong:**
+
 - [ ] Take a screenshot
 - [ ] Note which page and section
 - [ ] Don't panic—most issues are minor
@@ -194,6 +204,7 @@ bun run build
 - [ ] No TypeScript errors reported
 
 **If build fails:**
+
 - [ ] Read the error message carefully
 - [ ] Usually it's a syntax error in updated copy (missing quote, etc.)
 - [ ] Find the file mentioned in the error
@@ -238,6 +249,7 @@ git status
 ```
 
 **Expected final output:**
+
 ```
 On branch main
 Your branch is ahead of 'origin/main' by 1 commit.
@@ -266,6 +278,7 @@ git push origin main
 - [ ] No errors about authentication
 
 **What happens next:**
+
 - [ ] Vercel automatically builds from GitHub
 - [ ] Takes 2-5 minutes to deploy
 - [ ] Your site will be live with new copy
@@ -287,12 +300,14 @@ git push origin main
 - [ ] Wait for green checkmark and "Ready"
 
 **Timeline:**
+
 - Pushing code: 30 seconds
 - Vercel building: 2-3 minutes
 - Deployment: 1-2 minutes
 - Total: ~5 minutes
 
 **During this time:**
+
 - [ ] Grab a snack
 - [ ] Check your phone
 - [ ] Celebrate a bit (you're almost done!)
@@ -352,15 +367,15 @@ git push origin main
 
 ## 🆘 TROUBLESHOOTING QUICK REFERENCE
 
-| Problem | Solution | Time |
-|---------|----------|------|
-| **Copilot Chat won't open** | Ctrl+Shift+I, or click Copilot icon in sidebar | 1 min |
-| **Agent gets stuck** | Wait 5+ min, check git status, try refreshing VS Code | 5 min |
-| **Build fails** | Read error, find file, fix syntax (usually quotes), retry | 5-10 min |
-| **Wrong copy on page** | Reference REBRAND-COPY-PAGES.md, manually fix if needed | 5 min |
-| **Category not updated** | Check if route exists, may need manual update | 10 min |
-| **Vercel deployment stuck** | Refresh Vercel dashboard, check GitHub status | 2 min |
-| **Mobile view broken** | Check browser console (F12), may be CSS issue | 10 min |
+| Problem                     | Solution                                                  | Time     |
+| --------------------------- | --------------------------------------------------------- | -------- |
+| **Copilot Chat won't open** | Ctrl+Shift+I, or click Copilot icon in sidebar            | 1 min    |
+| **Agent gets stuck**        | Wait 5+ min, check git status, try refreshing VS Code     | 5 min    |
+| **Build fails**             | Read error, find file, fix syntax (usually quotes), retry | 5-10 min |
+| **Wrong copy on page**      | Reference REBRAND-COPY-PAGES.md, manually fix if needed   | 5 min    |
+| **Category not updated**    | Check if route exists, may need manual update             | 10 min   |
+| **Vercel deployment stuck** | Refresh Vercel dashboard, check GitHub status             | 2 min    |
+| **Mobile view broken**      | Check browser console (F12), may be CSS issue             | 10 min   |
 
 **For any other issues:** Check REBRAND-IMPLEMENTATION-GUIDE.md for detailed troubleshooting.
 
@@ -425,6 +440,7 @@ STATUS: REBRAND LIVE ✅
 This is a straightforward execution of a well-tested process.
 
 **You're:**
+
 - Copying a proven prompt ✓
 - Letting an agent do the work ✓
 - Verifying it worked ✓
@@ -433,6 +449,7 @@ This is a straightforward execution of a well-tested process.
 **Common concern:** "What if something goes wrong?"
 
 **Answer:** Worst case, you rollback one commit:
+
 ```powershell
 git revert HEAD
 git push origin main
@@ -448,9 +465,9 @@ git push origin main
 **Jot down any issues during execution below:**
 
 ```
-Issue #1: 
-Description: 
-Solution: 
+Issue #1:
+Description:
+Solution:
 
 Issue #2:
 Description:

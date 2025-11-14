@@ -20,7 +20,7 @@ Complete examples showing how to use the ProductImage component in your Kollect-
 ### Single Product Image
 
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 export default function SingleImageExample() {
   return (
@@ -39,7 +39,7 @@ export default function SingleImageExample() {
 ### With Custom Styling
 
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 export default function StyledImageExample() {
   return (
@@ -61,10 +61,10 @@ export default function StyledImageExample() {
 ## Product Detail Page Example
 
 ```tsx
-'use client';
+"use client";
 
-import { ProductImage, ProductImageGrid } from '@/components/ProductImage';
-import { useState } from 'react';
+import { ProductImage, ProductImageGrid } from "@/components/ProductImage";
+import { useState } from "react";
 
 interface Product {
   id: string;
@@ -102,8 +102,8 @@ export default function ProductDetailPage({ product }: { product: Product }) {
               onClick={() => setSelectedImage(image)}
               className={`flex-shrink-0 w-20 h-20 rounded border-2 transition-colors ${
                 selectedImage === image
-                  ? 'border-[#D3AF37]'
-                  : 'border-[#3a3a3a] hover:border-[#D3AF37]'
+                  ? "border-[#D3AF37]"
+                  : "border-[#3a3a3a] hover:border-[#D3AF37]"
               }`}
               aria-label={`View image ${idx + 1}`}
             >
@@ -156,10 +156,10 @@ export default function ProductDetailPage({ product }: { product: Product }) {
 ## Product Grid Example
 
 ```tsx
-'use client';
+"use client";
 
-import { ProductImageGrid } from '@/components/ProductImage';
-import Link from 'next/link';
+import { ProductImageGrid } from "@/components/ProductImage";
+import Link from "next/link";
 
 interface GridProduct {
   id: string;
@@ -235,11 +235,11 @@ export default function ProductGridPage({
 ## Image Gallery Example
 
 ```tsx
-'use client';
+"use client";
 
-import { ProductImage } from '@/components/ProductImage';
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ProductImage } from "@/components/ProductImage";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface GalleryImage {
   id: string;
@@ -256,17 +256,13 @@ export default function ImageGalleryExample({
 
   const goToPrevious = () => {
     if (selectedIdx !== null) {
-      setSelectedIdx(
-        selectedIdx === 0 ? images.length - 1 : selectedIdx - 1
-      );
+      setSelectedIdx(selectedIdx === 0 ? images.length - 1 : selectedIdx - 1);
     }
   };
 
   const goToNext = () => {
     if (selectedIdx !== null) {
-      setSelectedIdx(
-        selectedIdx === images.length - 1 ? 0 : selectedIdx + 1
-      );
+      setSelectedIdx(selectedIdx === images.length - 1 ? 0 : selectedIdx + 1);
     }
   };
 
@@ -362,7 +358,7 @@ export default function ImageGalleryExample({
 ### Different Sizes for Different Viewports
 
 ```tsx
-import { ResponsiveProductImage } from '@/components/ProductImage';
+import { ResponsiveProductImage } from "@/components/ProductImage";
 
 export default function ResponsiveImageExample() {
   return (
@@ -414,11 +410,11 @@ export default function ResponsiveImageExample() {
 ### Handling Missing Images Gracefully
 
 ```tsx
-'use client';
+"use client";
 
-import { ProductImage } from '@/components/ProductImage';
-import { useState } from 'react';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { ProductImage } from "@/components/ProductImage";
+import { useState } from "react";
+import { AlertTriangle, RefreshCw } from "lucide-react";
 
 export default function ErrorHandlingExample() {
   const [retryKey, setRetryKey] = useState(0);
@@ -491,7 +487,7 @@ export default function ErrorHandlingExample() {
 ### Complete Dark Theme Product Page
 
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 interface Product {
   id: string;
@@ -513,7 +509,7 @@ export default function DarkThemeProductPage({
   product: Product;
 }) {
   const discountPercent = Math.round(
-    ((product.originalPrice - product.price) / product.originalPrice) * 100
+    ((product.originalPrice - product.price) / product.originalPrice) * 100,
   );
 
   return (
@@ -521,7 +517,8 @@ export default function DarkThemeProductPage({
       {/* Breadcrumb */}
       <div className="bg-[#2a2a2a] border-b border-[#3a3a3a] px-8 py-3">
         <nav className="text-gray-400 text-sm">
-          Home / Products / <span className="text-[#D3AF37]">{product.name}</span>
+          Home / Products /{" "}
+          <span className="text-[#D3AF37]">{product.name}</span>
         </nav>
       </div>
 
@@ -569,7 +566,7 @@ export default function DarkThemeProductPage({
             </div>
             <div className="text-center">
               <div className="flex gap-1 justify-center mb-1">
-                {'⭐'.repeat(Math.floor(product.rating))}
+                {"⭐".repeat(Math.floor(product.rating))}
               </div>
               <p className="text-gray-400 text-xs">
                 ({product.reviews} reviews)
@@ -583,7 +580,9 @@ export default function DarkThemeProductPage({
           <div className="space-y-3 mb-6 pb-6 border-b border-[#3a3a3a]">
             <div className="flex justify-between">
               <span className="text-gray-400">Condition:</span>
-              <span className="text-[#D3AF37] font-semibold">{product.condition}</span>
+              <span className="text-[#D3AF37] font-semibold">
+                {product.condition}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Era:</span>
@@ -647,20 +646,22 @@ export default function DarkThemeProductPage({
   alt="Main product view"
   width={600}
   height={700}
-  priority  // This disables lazy loading
-/>
+  priority // This disables lazy loading
+/>;
 
 // Gallery thumbnails - lazy load
-{galleryImages.map((img) => (
-  <ProductImage
-    key={img}
-    path={img}
-    alt="Product detail"
-    width={150}
-    height={150}
-    // No priority - uses lazy loading
-  />
-))}
+{
+  galleryImages.map((img) => (
+    <ProductImage
+      key={img}
+      path={img}
+      alt="Product detail"
+      width={150}
+      height={150}
+      // No priority - uses lazy loading
+    />
+  ));
+}
 ```
 
 ### 2. Optimize Image Quality
@@ -715,10 +716,10 @@ bun run sync-images:watch
 ```typescript
 // In your Next.js API route or client-side function
 async function triggerImageSync() {
-  const response = await fetch('/api/sync-images', {
-    method: 'POST',
+  const response = await fetch("/api/sync-images", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       secret: process.env.WEBHOOK_SECRET,
@@ -727,15 +728,15 @@ async function triggerImageSync() {
   });
 
   const data = await response.json();
-  console.log('Sync started:', data.syncId);
-  
+  console.log("Sync started:", data.syncId);
+
   // Poll for status
   const checkStatus = async () => {
     const statusResponse = await fetch(
-      `/api/sync-images?syncId=${data.syncId}`
+      `/api/sync-images?syncId=${data.syncId}`,
     );
     const status = await statusResponse.json();
-    console.log('Sync status:', status);
+    console.log("Sync status:", status);
   };
 
   checkStatus();
@@ -746,13 +747,13 @@ async function triggerImageSync() {
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Image not loading | Check image path in ImageKit dashboard |
-| Sync not running | Verify `GOOGLE_APPLICATION_CREDENTIALS` path |
+| Issue                 | Solution                                         |
+| --------------------- | ------------------------------------------------ |
+| Image not loading     | Check image path in ImageKit dashboard           |
+| Sync not running      | Verify `GOOGLE_APPLICATION_CREDENTIALS` path     |
 | Service account error | Re-share Drive folder with service account email |
-| Rate limiting | Increase delay in sync script (already 500ms) |
-| Build errors | Run `bun install` to install dependencies |
+| Rate limiting         | Increase delay in sync script (already 500ms)    |
+| Build errors          | Run `bun install` to install dependencies        |
 
 ---
 

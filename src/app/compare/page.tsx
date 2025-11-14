@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { X } from "lucide-react";
 
 interface CompareProduct {
   id: string;
@@ -27,26 +27,32 @@ export default function ComparisonPage() {
 
   const fetchComparison = async () => {
     try {
-      const compareIds = JSON.parse(localStorage.getItem('compareProducts') || '[]');
+      const compareIds = JSON.parse(
+        localStorage.getItem("compareProducts") || "[]",
+      );
       if (compareIds.length === 0) {
         setIsLoading(false);
         return;
       }
 
-      const response = await fetch(`/api/products/compare?ids=${compareIds.join(',')}`);
+      const response = await fetch(
+        `/api/products/compare?ids=${compareIds.join(",")}`,
+      );
       const data = await response.json();
       setProducts(data.products || []);
     } catch (error) {
-      console.error('Failed to fetch comparison:', error);
+      console.error("Failed to fetch comparison:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const removeProduct = (productId: string) => {
-    const compareIds = JSON.parse(localStorage.getItem('compareProducts') || '[]');
+    const compareIds = JSON.parse(
+      localStorage.getItem("compareProducts") || "[]",
+    );
     const updated = compareIds.filter((id: string) => id !== productId);
-    localStorage.setItem('compareProducts', JSON.stringify(updated));
+    localStorage.setItem("compareProducts", JSON.stringify(updated));
     fetchComparison();
   };
 
@@ -76,12 +82,12 @@ export default function ComparisonPage() {
   }
 
   const specs = [
-    { label: 'Price', key: 'price' },
-    { label: 'Category', key: 'category' },
-    { label: 'Condition', key: 'condition' },
-    { label: 'Year', key: 'year' },
-    { label: 'Artist', key: 'artist' },
-    { label: 'Rarity', key: 'rarity' },
+    { label: "Price", key: "price" },
+    { label: "Category", key: "category" },
+    { label: "Condition", key: "condition" },
+    { label: "Year", key: "year" },
+    { label: "Artist", key: "artist" },
+    { label: "Rarity", key: "rarity" },
   ];
 
   return (
@@ -92,7 +98,9 @@ export default function ComparisonPage() {
         <table className="w-full border">
           <thead>
             <tr className="bg-muted">
-              <th className="p-4 text-left font-semibold border-r">Specification</th>
+              <th className="p-4 text-left font-semibold border-r">
+                Specification
+              </th>
               {products.map((product) => (
                 <th key={product.id} className="p-4 border-r min-w-[250px]">
                   <div className="relative">
@@ -105,7 +113,7 @@ export default function ComparisonPage() {
                     <Link href={`/products/${product.id}`}>
                       <div className="relative aspect-square bg-muted rounded mb-3">
                         <Image
-                          src={product.images[0]?.url || '/placeholder.jpg'}
+                          src={product.images[0]?.url || "/placeholder.jpg"}
                           alt={product.title}
                           fill
                           className="object-cover rounded"
@@ -128,17 +136,19 @@ export default function ComparisonPage() {
                 </td>
                 {products.map((product) => (
                   <td key={product.id} className="p-4 border-r text-center">
-                    {spec.key === 'price'
+                    {spec.key === "price"
                       ? `$${product.price.toFixed(2)}`
-                      : spec.key === 'category'
-                      ? product.category.name
-                      : (product as any)[spec.key] || '—'}
+                      : spec.key === "category"
+                        ? product.category.name
+                        : (product as any)[spec.key] || "—"}
                   </td>
                 ))}
               </tr>
             ))}
             <tr className="border-t">
-              <td className="p-4 font-semibold border-r bg-muted/30">Actions</td>
+              <td className="p-4 font-semibold border-r bg-muted/30">
+                Actions
+              </td>
               {products.map((product) => (
                 <td key={product.id} className="p-4 border-r">
                   <div className="space-y-2">

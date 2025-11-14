@@ -7,16 +7,19 @@
 ## ⚡ The Fastest Way to Start
 
 ### 1️⃣ Install Dependencies (1 minute)
+
 ```bash
 bun add imagekit googleapis dotenv
 ```
 
 ### 2️⃣ Run Interactive Setup (15 minutes)
+
 ```bash
 bun run setup:imagekit
 ```
 
 This wizard will:
+
 - ✅ Check dependencies
 - ✅ Guide you through Google Cloud setup
 - ✅ Collect your ImageKit credentials
@@ -25,15 +28,16 @@ This wizard will:
 - ✅ Verify everything works
 
 ### 3️⃣ Done! Start Using Images (5 minutes)
+
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 <ProductImage
   path="/products/item.jpg"
   alt="Product"
   width={400}
   height={300}
-/>
+/>;
 ```
 
 ---
@@ -41,10 +45,12 @@ import { ProductImage } from '@/components/ProductImage';
 ## 📋 What You Need
 
 **Google Cloud:**
+
 - Google account
 - Google Drive folder with product images
 
 **ImageKit:**
+
 - ImageKit account (free tier works)
 - Your API keys
 
@@ -74,6 +80,7 @@ bun run sync-help
 ## 🔧 Manual Setup (If You Prefer)
 
 ### Step 1: Google Cloud Setup
+
 1. Go to https://console.cloud.google.com/
 2. Create new project: `Kollect-It ImageKit Sync`
 3. Enable Google Drive API (APIs & Services > Library)
@@ -82,11 +89,13 @@ bun run sync-help
 6. Share your Drive folder with the service account email
 
 ### Step 2: Get Your IDs
+
 - **Google Drive Folder ID:** From URL after `/folders/`
 - **ImageKit Public Key:** Settings > API Keys
 - **ImageKit Private Key:** Settings > API Keys
 
 ### Step 3: Create `.env.local`
+
 ```env
 IMAGEKIT_PUBLIC_KEY=public_xxx
 IMAGEKIT_PRIVATE_KEY=private_xxx
@@ -97,6 +106,7 @@ WEBHOOK_SECRET=generate_random_32_chars
 ```
 
 ### Step 4: Run Sync
+
 ```bash
 bun run sync-images
 ```
@@ -106,15 +116,19 @@ bun run sync-images
 ## ❌ Common Issues
 
 **Problem:** `google-credentials.json not found`
+
 - **Fix:** Download from Google Cloud Console and save in project root
 
 **Problem:** `Service account doesn't have access`
+
 - **Fix:** Share your Drive folder with the service account email
 
 **Problem:** `ImageKit authentication failed`
+
 - **Fix:** Verify private key in `.env.local` (no extra spaces)
 
 **Problem:** `Module not found`
+
 - **Fix:** Run `bun install` and `bun run build`
 
 ---

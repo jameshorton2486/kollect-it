@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface CategoryFiltersProps {
   minPrice?: number;
@@ -10,21 +10,34 @@ interface CategoryFiltersProps {
 
 const CONDITIONS = ["Fine", "Very Good", "Good", "Fair"] as const;
 
-type Condition = typeof CONDITIONS[number];
+type Condition = (typeof CONDITIONS)[number];
 
-export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: CategoryFiltersProps) {
+export default function CategoryFilters({
+  minPrice = 0,
+  maxPrice = 10000,
+}: CategoryFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   // Local UI state sourced from URL
-  const [priceMin, setPriceMin] = useState<number>(Number(searchParams.get("priceMin")) || minPrice);
-  const [priceMax, setPriceMax] = useState<number>(Number(searchParams.get("priceMax")) || maxPrice);
-  const [yearMin, setYearMin] = useState<number | "">(Number(searchParams.get("yearMin")) || "");
-  const [yearMax, setYearMax] = useState<number | "">(Number(searchParams.get("yearMax")) || "");
+  const [priceMin, setPriceMin] = useState<number>(
+    Number(searchParams.get("priceMin")) || minPrice,
+  );
+  const [priceMax, setPriceMax] = useState<number>(
+    Number(searchParams.get("priceMax")) || maxPrice,
+  );
+  const [yearMin, setYearMin] = useState<number | "">(
+    Number(searchParams.get("yearMin")) || "",
+  );
+  const [yearMax, setYearMax] = useState<number | "">(
+    Number(searchParams.get("yearMax")) || "",
+  );
   const selectedConds = useMemo<Set<Condition>>(() => {
     const raw = searchParams.getAll("cond");
-    return new Set(raw.filter((v): v is Condition => CONDITIONS.includes(v as Condition)));
+    return new Set(
+      raw.filter((v): v is Condition => CONDITIONS.includes(v as Condition)),
+    );
   }, [searchParams]);
   const [conds, setConds] = useState<Set<Condition>>(selectedConds);
 
@@ -40,11 +53,17 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
   const apply = () => {
     const params = new URLSearchParams(searchParams.toString());
     // Price
-    if (priceMin && priceMin !== minPrice) params.set("priceMin", String(priceMin)); else params.delete("priceMin");
-    if (priceMax && priceMax !== maxPrice) params.set("priceMax", String(priceMax)); else params.delete("priceMax");
+    if (priceMin && priceMin !== minPrice)
+      params.set("priceMin", String(priceMin));
+    else params.delete("priceMin");
+    if (priceMax && priceMax !== maxPrice)
+      params.set("priceMax", String(priceMax));
+    else params.delete("priceMax");
     // Year range
-    if (yearMin !== "" ) params.set("yearMin", String(yearMin)); else params.delete("yearMin");
-    if (yearMax !== "" ) params.set("yearMax", String(yearMax)); else params.delete("yearMax");
+    if (yearMin !== "") params.set("yearMin", String(yearMin));
+    else params.delete("yearMin");
+    if (yearMax !== "") params.set("yearMax", String(yearMax));
+    else params.delete("yearMax");
     // Conditions (multiple)
     params.delete("cond");
     Array.from(conds).forEach((c) => params.append("cond", c));
@@ -57,37 +76,62 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
 
   const clearAll = () => {
     const params = new URLSearchParams(searchParams.toString());
-    ["priceMin","priceMax","yearMin","yearMax","cond","page"].forEach((k) => params.delete(k));
+    ["priceMin", "priceMax", "yearMin", "yearMax", "cond", "page"].forEach(
+      (k) => params.delete(k),
+    );
     router.push(`${pathname}?${params.toString()}`);
   };
 
   return (
-    <aside className="hidden lg:block w-64 shrink-0" role="region" aria-label="Filters">
+    <aside
+      className="hidden lg:block w-64 shrink-0"
+      role="region"
+      aria-label="Filters"
+    >
       <div className="sticky top-24 space-y-6">
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Price</legend>
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">
+            Price
+          </legend>
           <div className="flex items-center gap-2">
-            <input type="number" className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm" value={priceMin}
-                   min={0}
-                   onChange={(e)=> setPriceMin(Math.max(0, Number(e.target.value) || 0))} aria-label="Min price" />
+            <input
+              type="number"
+              className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm"
+              value={priceMin}
+              min={0}
+              onChange={(e) =>
+                setPriceMin(Math.max(0, Number(e.target.value) || 0))
+              }
+              aria-label="Min price"
+            />
             <span>–</span>
-            <input type="number" className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm" value={priceMax}
-                   min={0}
-                   onChange={(e)=> setPriceMax(Math.max(0, Number(e.target.value) || 0))} aria-label="Max price" />
+            <input
+              type="number"
+              className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm"
+              value={priceMax}
+              min={0}
+              onChange={(e) =>
+                setPriceMax(Math.max(0, Number(e.target.value) || 0))
+              }
+              aria-label="Max price"
+            />
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Condition</legend>
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">
+            Condition
+          </legend>
           <div className="space-y-1">
             {CONDITIONS.map((c) => (
               <label key={c} className="flex items-center gap-2 text-sm">
                 <input
                   type="checkbox"
                   checked={conds.has(c)}
-                  onChange={(e)=>{
+                  onChange={(e) => {
                     const next = new Set(conds);
-                    if (e.target.checked) next.add(c); else next.delete(c);
+                    if (e.target.checked) next.add(c);
+                    else next.delete(c);
                     setConds(next);
                   }}
                 />
@@ -98,21 +142,40 @@ export default function CategoryFilters({ minPrice = 0, maxPrice = 10000 }: Cate
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">Year</legend>
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">
+            Year
+          </legend>
           <div className="flex items-center gap-2">
-            <input type="number" className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm" value={yearMin as number | ""}
-                   min={0}
-                   onChange={(e)=> setYearMin(Number(e.target.value) || "")} aria-label="Min year" />
+            <input
+              type="number"
+              className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm"
+              value={yearMin as number | ""}
+              min={0}
+              onChange={(e) => setYearMin(Number(e.target.value) || "")}
+              aria-label="Min year"
+            />
             <span>–</span>
-            <input type="number" className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm" value={yearMax as number | ""}
-                   min={0}
-                   onChange={(e)=> setYearMax(Number(e.target.value) || "")} aria-label="Max year" />
+            <input
+              type="number"
+              className="w-20 rounded border border-[var(--color-border)] px-2 py-1 text-sm"
+              value={yearMax as number | ""}
+              min={0}
+              onChange={(e) => setYearMax(Number(e.target.value) || "")}
+              aria-label="Max year"
+            />
           </div>
         </fieldset>
 
         <div className="flex gap-2">
-          <button onClick={apply} className="ki-btn-primary">Apply Filters</button>
-          <button onClick={clearAll} className="rounded border border-[var(--color-border)] px-3 py-2 text-sm">Clear All</button>
+          <button onClick={apply} className="ki-btn-primary">
+            Apply Filters
+          </button>
+          <button
+            onClick={clearAll}
+            className="rounded border border-[var(--color-border)] px-3 py-2 text-sm"
+          >
+            Clear All
+          </button>
         </div>
       </div>
     </aside>

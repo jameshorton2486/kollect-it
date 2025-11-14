@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { exportSalesCSV, exportProductsCSV } from '@/lib/csv-export';
-import { EnhancedSalesAnalytics } from '@/components/admin/EnhancedSalesAnalytics';
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { exportSalesCSV, exportProductsCSV } from "@/lib/csv-export";
+import { EnhancedSalesAnalytics } from "@/components/admin/EnhancedSalesAnalytics";
 
 interface SalesData {
   period: string;
@@ -36,13 +36,13 @@ export default function SalesAnalyticsPage() {
   const router = useRouter();
   const [salesData, setSalesData] = useState<SalesData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState('30');
+  const [period, setPeriod] = useState("30");
 
   // Redirect if not admin
   useEffect(() => {
-    if (status === 'loading') return;
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      router.push('/admin/login');
+    if (status === "loading") return;
+    if (!session?.user || (session.user as any).role !== "admin") {
+      router.push("/admin/login");
     }
   }, [session, status, router]);
 
@@ -54,13 +54,15 @@ export default function SalesAnalyticsPage() {
   const fetchSalesData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/analytics/sales?period=${period}`);
+      const response = await fetch(
+        `/api/admin/analytics/sales?period=${period}`,
+      );
       if (response.ok) {
         const data = await response.json();
         setSalesData(data);
       }
     } catch (error) {
-      console.error('Error fetching sales data:', error);
+      console.error("Error fetching sales data:", error);
     } finally {
       setLoading(false);
     }
@@ -68,7 +70,7 @@ export default function SalesAnalyticsPage() {
 
   const handleExportSales = () => {
     if (!salesData) return;
-    const exportData = salesData.dailyRevenue.map(day => ({
+    const exportData = salesData.dailyRevenue.map((day) => ({
       date: day.date,
       revenue: day.revenue,
       orders: 0, // TODO: Add orders per day
@@ -82,7 +84,7 @@ export default function SalesAnalyticsPage() {
     exportProductsCSV(salesData.topProducts);
   };
 
-  if (status === 'loading' || loading) {
+  if (status === "loading" || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -93,7 +95,7 @@ export default function SalesAnalyticsPage() {
     );
   }
 
-  if (!session?.user || (session.user as any).role !== 'admin') {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return null;
   }
 
@@ -103,15 +105,19 @@ export default function SalesAnalyticsPage() {
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Sales Analytics</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Sales Analytics
+            </h1>
             <p className="mt-2 text-gray-600">
               Revenue trends, top products, and category performance
             </p>
           </div>
-          
+
           {/* Period Selector */}
           <div className="flex gap-2">
-            <label htmlFor="period-select" className="sr-only">Select time period</label>
+            <label htmlFor="period-select" className="sr-only">
+              Select time period
+            </label>
             <select
               id="period-select"
               value={period}
@@ -131,38 +137,58 @@ export default function SalesAnalyticsPage() {
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Total Revenue</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Total Revenue
+                </div>
                 <div className="mt-2 text-3xl font-bold text-gray-900">
-                  ${salesData.summary.totalRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  $
+                  {salesData.summary.totalRevenue.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </div>
                 {salesData.summary.revenueGrowth !== 0 && (
-                  <div className={`mt-2 text-sm ${salesData.summary.revenueGrowth > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    {salesData.summary.revenueGrowth > 0 ? '+' : ''}{salesData.summary.revenueGrowth.toFixed(1)}% from previous period
+                  <div
+                    className={`mt-2 text-sm ${salesData.summary.revenueGrowth > 0 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {salesData.summary.revenueGrowth > 0 ? "+" : ""}
+                    {salesData.summary.revenueGrowth.toFixed(1)}% from previous
+                    period
                   </div>
                 )}
               </div>
 
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Total Orders</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Total Orders
+                </div>
                 <div className="mt-2 text-3xl font-bold text-gray-900">
                   {salesData.summary.totalOrders}
                 </div>
                 {salesData.summary.orderGrowth !== 0 && (
-                  <div className={`mt-2 text-sm ${salesData.summary.orderGrowth > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    {salesData.summary.orderGrowth > 0 ? '+' : ''}{salesData.summary.orderGrowth.toFixed(1)}% from previous period
+                  <div
+                    className={`mt-2 text-sm ${salesData.summary.orderGrowth > 0 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {salesData.summary.orderGrowth > 0 ? "+" : ""}
+                    {salesData.summary.orderGrowth.toFixed(1)}% from previous
+                    period
                   </div>
                 )}
               </div>
 
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Average Order Value</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Average Order Value
+                </div>
                 <div className="mt-2 text-3xl font-bold text-gray-900">
                   ${salesData.summary.averageOrderValue.toFixed(2)}
                 </div>
               </div>
 
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Export Data</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Export Data
+                </div>
                 <div className="mt-2 space-y-2">
                   <button
                     onClick={handleExportSales}
@@ -182,7 +208,7 @@ export default function SalesAnalyticsPage() {
 
             {/* Enhanced Analytics Charts */}
             <div className="mb-8">
-              <EnhancedSalesAnalytics 
+              <EnhancedSalesAnalytics
                 data={{
                   dailyRevenue: salesData.dailyRevenue,
                   paymentMethods: salesData.paymentMethods,
@@ -195,20 +221,29 @@ export default function SalesAnalyticsPage() {
 
             {/* Revenue by Category */}
             <div className="bg-white rounded-lg shadow p-6 mb-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Revenue by Category</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Revenue by Category
+              </h2>
               <div className="space-y-4">
                 {salesData.categoryData.slice(0, 10).map((category, index) => (
                   <div key={index}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium text-gray-700">{category.name}</span>
-                      <span className="text-gray-900">${category.revenue.toFixed(2)} ({category.orders} orders)</span>
+                      <span className="font-medium text-gray-700">
+                        {category.name}
+                      </span>
+                      <span className="text-gray-900">
+                        ${category.revenue.toFixed(2)} ({category.orders}{" "}
+                        orders)
+                      </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-amber-600 h-2 rounded-full"
-                        style={{
-                          width: `${(category.revenue / salesData.summary.totalRevenue) * 100}%`,
-                        } as React.CSSProperties}
+                        style={
+                          {
+                            width: `${(category.revenue / salesData.summary.totalRevenue) * 100}%`,
+                          } as React.CSSProperties
+                        }
                       ></div>
                     </div>
                   </div>
@@ -218,7 +253,9 @@ export default function SalesAnalyticsPage() {
 
             {/* Top Products */}
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Top 10 Products by Revenue</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Top 10 Products by Revenue
+              </h2>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">

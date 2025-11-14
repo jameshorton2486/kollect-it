@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface ScheduledReport {
   id: string;
@@ -27,17 +27,19 @@ interface AuditLog {
  */
 export default function ReportScheduler() {
   const [reports, setReports] = useState<ScheduledReport[]>([]);
-  const [selectedReport, setSelectedReport] = useState<ScheduledReport | null>(null);
+  const [selectedReport, setSelectedReport] = useState<ScheduledReport | null>(
+    null,
+  );
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Form state
   const [formData, setFormData] = useState({
-    name: '',
-    frequency: 'DAILY',
-    recipients: '',
-    format: 'JSON',
+    name: "",
+    frequency: "DAILY",
+    recipients: "",
+    format: "JSON",
   });
 
   // Load reports on mount
@@ -48,13 +50,13 @@ export default function ReportScheduler() {
   async function loadReports() {
     try {
       setLoading(true);
-      const response = await fetch('/api/admin/reports');
+      const response = await fetch("/api/admin/reports");
       if (response.ok) {
         const data = await response.json();
         setReports(data);
       }
     } catch (error) {
-      console.error('Error loading reports:', error);
+      console.error("Error loading reports:", error);
     } finally {
       setLoading(false);
     }
@@ -68,47 +70,54 @@ export default function ReportScheduler() {
         setAuditLogs(data);
       }
     } catch (error) {
-      console.error('Error loading audit logs:', error);
+      console.error("Error loading audit logs:", error);
     }
   }
 
   async function handleCreateReport(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const response = await fetch('/api/admin/reports', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setFormData({ name: '', frequency: 'DAILY', recipients: '', format: 'JSON' });
+        setFormData({
+          name: "",
+          frequency: "DAILY",
+          recipients: "",
+          format: "JSON",
+        });
         setIsCreating(false);
         await loadReports();
       }
     } catch (error) {
-      console.error('Error creating report:', error);
+      console.error("Error creating report:", error);
     }
   }
 
   async function handleDeleteReport(id: string) {
-    if (!confirm('Delete this report?')) return;
+    if (!confirm("Delete this report?")) return;
     try {
-      const response = await fetch(`/api/admin/reports/${id}`, { method: 'DELETE' });
+      const response = await fetch(`/api/admin/reports/${id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         await loadReports();
         setSelectedReport(null);
       }
     } catch (error) {
-      console.error('Error deleting report:', error);
+      console.error("Error deleting report:", error);
     }
   }
 
   async function handleToggleReport(id: string, enabled: boolean) {
     try {
       const response = await fetch(`/api/admin/reports/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ enabled: !enabled }),
       });
 
@@ -116,18 +125,20 @@ export default function ReportScheduler() {
         await loadReports();
       }
     } catch (error) {
-      console.error('Error updating report:', error);
+      console.error("Error updating report:", error);
     }
   }
 
   async function handleTriggerReport(id: string) {
     try {
-      const response = await fetch(`/api/admin/reports/${id}/trigger`, { method: 'POST' });
+      const response = await fetch(`/api/admin/reports/${id}/trigger`, {
+        method: "POST",
+      });
       if (response.ok) {
         await loadAuditLogs(id);
       }
     } catch (error) {
-      console.error('Error triggering report:', error);
+      console.error("Error triggering report:", error);
     }
   }
 
@@ -140,14 +151,16 @@ export default function ReportScheduler() {
           onClick={() => setIsCreating(!isCreating)}
           className="px-4 py-2 bg-[#D3AF37] text-[#1a1a1a] rounded-lg font-semibold hover:bg-[#e4c44d] transition"
         >
-          {isCreating ? 'Cancel' : '+ New Report'}
+          {isCreating ? "Cancel" : "+ New Report"}
         </button>
       </div>
 
       {/* Create Form */}
       {isCreating && (
         <div className="bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]">
-          <h2 className="text-xl font-semibold text-white mb-4">Create New Report</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">
+            Create New Report
+          </h2>
           <form onSubmit={handleCreateReport} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -157,7 +170,9 @@ export default function ReportScheduler() {
                 type="text"
                 required
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
                 placeholder="e.g., Weekly Analytics"
               />
@@ -171,7 +186,9 @@ export default function ReportScheduler() {
                 <select
                   title="Report frequency"
                   value={formData.frequency}
-                  onChange={(e) => setFormData({ ...formData, frequency: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, frequency: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
                 >
                   <option value="DAILY">Daily</option>
@@ -187,7 +204,9 @@ export default function ReportScheduler() {
                 <select
                   title="Report format"
                   value={formData.format}
-                  onChange={(e) => setFormData({ ...formData, format: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, format: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
                 >
                   <option value="JSON">JSON</option>
@@ -204,7 +223,9 @@ export default function ReportScheduler() {
                   type="text"
                   required
                   value={formData.recipients}
-                  onChange={(e) => setFormData({ ...formData, recipients: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, recipients: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
                   placeholder="email@example.com"
                 />
@@ -240,13 +261,15 @@ export default function ReportScheduler() {
                 }}
                 className={`p-4 rounded-lg border cursor-pointer transition ${
                   selectedReport?.id === report.id
-                    ? 'bg-[#2a2a2a] border-[#D3AF37]'
-                    : 'bg-[#1a1a1a] border-[#444] hover:border-[#D3AF37]'
+                    ? "bg-[#2a2a2a] border-[#D3AF37]"
+                    : "bg-[#1a1a1a] border-[#444] hover:border-[#D3AF37]"
                 }`}
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-lg font-semibold text-white">{report.name}</h3>
+                    <h3 className="text-lg font-semibold text-white">
+                      {report.name}
+                    </h3>
                     <p className="text-sm text-gray-400 mt-1">
                       {report.frequency} • {report.format} • {report.recipients}
                     </p>
@@ -273,11 +296,11 @@ export default function ReportScheduler() {
                       }}
                       className={`px-3 py-1 text-sm rounded transition ${
                         report.enabled
-                          ? 'bg-green-600 text-white hover:bg-green-700'
-                          : 'bg-gray-600 text-white hover:bg-gray-700'
+                          ? "bg-green-600 text-white hover:bg-green-700"
+                          : "bg-gray-600 text-white hover:bg-gray-700"
                       }`}
                     >
-                      {report.enabled ? 'Enabled' : 'Disabled'}
+                      {report.enabled ? "Enabled" : "Disabled"}
                     </button>
 
                     <button
@@ -312,20 +335,24 @@ export default function ReportScheduler() {
                 <div
                   key={log.id}
                   className={`p-3 rounded text-sm ${
-                    log.status === 'SUCCESS'
-                      ? 'bg-green-900/20 border border-green-600'
-                      : log.status === 'FAILED'
-                        ? 'bg-red-900/20 border border-red-600'
-                        : 'bg-gray-900/20 border border-gray-600'
+                    log.status === "SUCCESS"
+                      ? "bg-green-900/20 border border-green-600"
+                      : log.status === "FAILED"
+                        ? "bg-red-900/20 border border-red-600"
+                        : "bg-gray-900/20 border border-gray-600"
                   }`}
                 >
                   <div className="flex justify-between">
                     <span className="text-gray-300">
                       {log.status} • {log.recipients}
                     </span>
-                    <span className="text-gray-500">{new Date(log.sentAt).toLocaleString()}</span>
+                    <span className="text-gray-500">
+                      {new Date(log.sentAt).toLocaleString()}
+                    </span>
                   </div>
-                  {log.error && <p className="text-red-400 mt-1 text-xs">{log.error}</p>}
+                  {log.error && (
+                    <p className="text-red-400 mt-1 text-xs">{log.error}</p>
+                  )}
                 </div>
               ))}
             </div>

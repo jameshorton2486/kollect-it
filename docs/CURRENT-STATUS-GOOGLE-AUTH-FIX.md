@@ -4,10 +4,12 @@
 
 **Issue:** ImageKit API returning "Your account cannot be authenticated"  
 **Root Cause:** Two problems:
+
 1. Using standard keys instead of restricted keys
 2. Not stripping `private_` prefix when passing to SDK
 
 **Solution Applied:**
+
 - ✅ Updated to use restricted ImageKit keys:
   - Public: `public_f7aDQ+DioNz2ydjLet68cx5UvCE=`
   - Private: `private_Qu+/G9prTYbq0FvAOV+nB2e/kUA=`
@@ -37,6 +39,7 @@
 ### Why This Happens
 
 Google service account keys can fail JWT validation if:
+
 1. ✅ Service account is disabled in Google Cloud Console
 2. ✅ Keys have been revoked
 3. ✅ Service account doesn't have permission to the Drive folder
@@ -47,6 +50,7 @@ Google service account keys can fail JWT validation if:
 ## 🔧 Next Steps to Fix Google Auth
 
 ### Option A: Check if Service Account is Still Active
+
 1. Go to: https://console.cloud.google.com/
 2. Select: kollect-it-imagekit project
 3. Go to: APIs & Services → Credentials
@@ -55,6 +59,7 @@ Google service account keys can fail JWT validation if:
 6. If disabled, click to enable it
 
 ### Option B: Regenerate Google Service Account Keys (If Option A Doesn't Work)
+
 1. Go to: https://console.cloud.google.com/
 2. Select: kollect-it-imagekit project
 3. Go to: APIs & Services → Credentials
@@ -67,6 +72,7 @@ Google service account keys can fail JWT validation if:
 10. Run: `bun run sync-images`
 
 ### Option C: Grant Permissions to Service Account (If Keys Are Valid)
+
 1. Open Google Drive folder: https://drive.google.com/drive/folders/1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
 2. Right-click → Share
 3. Add email: `imagekit-sync@kollect-it-imagekit.iam.gserviceaccount.com`
@@ -77,15 +83,15 @@ Google service account keys can fail JWT validation if:
 
 ## 📊 Complete Status
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| **ImageKit Keys** | ✅ FIXED | Using restricted keys now |
-| **ImageKit SDK Integration** | ✅ FIXED | Removed `private_` prefix in sync script |
-| **Google Drive Auth** | ❌ FAILING | Invalid JWT Signature - service account issue |
-| **Sync Script Code** | ✅ READY | All logic correct, waiting for auth to work |
-| **Hero Component** | ✅ COMPLETE | On homepage, building successfully |
-| **Build Status** | ✅ PASSING | Zero errors |
-| **Project Ready** | 🟡 ALMOST | Just need to fix Google service account auth |
+| Component                    | Status      | Notes                                         |
+| ---------------------------- | ----------- | --------------------------------------------- |
+| **ImageKit Keys**            | ✅ FIXED    | Using restricted keys now                     |
+| **ImageKit SDK Integration** | ✅ FIXED    | Removed `private_` prefix in sync script      |
+| **Google Drive Auth**        | ❌ FAILING  | Invalid JWT Signature - service account issue |
+| **Sync Script Code**         | ✅ READY    | All logic correct, waiting for auth to work   |
+| **Hero Component**           | ✅ COMPLETE | On homepage, building successfully            |
+| **Build Status**             | ✅ PASSING  | Zero errors                                   |
+| **Project Ready**            | 🟡 ALMOST   | Just need to fix Google service account auth  |
 
 ---
 
@@ -98,6 +104,7 @@ bun run sync-images
 ```
 
 **Expected successful output:**
+
 ```
 🚀 Starting Google Drive to ImageKit Sync
 📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
@@ -124,11 +131,9 @@ bun run sync-images
 1. **Try Option A first** (check if service account is enabled)
    - Takes 2 minutes
    - Might fix the issue immediately
-   
 2. **If that doesn't work, try Option B** (regenerate keys)
    - Takes 5 minutes
    - Most reliable solution
-   
 3. **Let me know** what error you see after trying, and I'll help debug further
 
 Your marketplace is **99% ready** - just need this Google auth working!

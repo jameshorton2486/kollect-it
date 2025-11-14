@@ -5,15 +5,15 @@
 
 // WebSocket event types
 export enum WebSocketEventType {
-  METRICS_UPDATE = 'METRICS_UPDATE',
-  APPROVAL_TREND = 'APPROVAL_TREND',
-  REVENUE_UPDATE = 'REVENUE_UPDATE',
-  PRICING_UPDATE = 'PRICING_UPDATE',
-  PRODUCT_UPDATE = 'PRODUCT_UPDATE',
-  ALERT = 'ALERT',
-  CONNECTION = 'CONNECTION',
-  DISCONNECTION = 'DISCONNECTION',
-  ERROR = 'ERROR',
+  METRICS_UPDATE = "METRICS_UPDATE",
+  APPROVAL_TREND = "APPROVAL_TREND",
+  REVENUE_UPDATE = "REVENUE_UPDATE",
+  PRICING_UPDATE = "PRICING_UPDATE",
+  PRODUCT_UPDATE = "PRODUCT_UPDATE",
+  ALERT = "ALERT",
+  CONNECTION = "CONNECTION",
+  DISCONNECTION = "DISCONNECTION",
+  ERROR = "ERROR",
 }
 
 // Real-time metric update payload
@@ -75,7 +75,7 @@ export interface ProductUpdateEvent {
 export interface AlertEvent {
   type: WebSocketEventType.ALERT;
   timestamp: Date;
-  severity: 'info' | 'warning' | 'error';
+  severity: "info" | "warning" | "error";
   title: string;
   message: string;
 }
@@ -85,7 +85,7 @@ export interface ConnectionEvent {
   type: WebSocketEventType.CONNECTION;
   timestamp: Date;
   clientId: string;
-  status: 'connected';
+  status: "connected";
 }
 
 // Union type for all events
@@ -121,19 +121,19 @@ export interface WebSocketClient {
 // Real-time metrics cache
 export interface MetricsCache {
   timestamp: Date;
-  
+
   // Approval metrics
   approvalRate: number;
   approvedCount: number;
   rejectedCount: number;
   pendingCount: number;
   avgTimeToApprove: number;
-  
+
   // Revenue metrics
   totalRevenue: number;
   averageOrderValue: number;
   totalOrders: number;
-  
+
   // Category revenue
   revenueByCategory: Array<{
     category: string;
@@ -141,7 +141,7 @@ export interface MetricsCache {
     percentage: number;
     itemsSold: number;
   }>;
-  
+
   // Trend data
   approvalTrend: Array<{
     date: string;
@@ -149,7 +149,7 @@ export interface MetricsCache {
     rejected: number;
     pending: number;
   }>;
-  
+
   // Pricing metrics
   pricingMetrics: {
     averagePricingAccuracy: number;
@@ -160,7 +160,7 @@ export interface MetricsCache {
   manualReviewCount: number;
   lowConfidenceCount: number;
   priceAccuracy: number;
-  
+
   // Product metrics
   productMetrics: {
     totalProducts: number;

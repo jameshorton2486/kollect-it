@@ -21,6 +21,7 @@
 ## ✅ What We've Successfully Completed
 
 ### Configuration Files (Ready)
+
 - ✅ `.env.local` - All ImageKit credentials configured correctly
 - ✅ `google-credentials.json` - File created and in place
 - ✅ `scripts/sync-drive-to-imagekit.ts` - Sync script ready to run
@@ -28,6 +29,7 @@
 - ✅ All dependencies installed: `imagekit`, `googleapis`, `dotenv`
 
 ### Code & Infrastructure (Ready)
+
 - ✅ Hero component integrated on homepage
 - ✅ Sync script built and tested (can run when auth is fixed)
 - ✅ API endpoint ready at `/api/sync-images`
@@ -40,6 +42,7 @@
 You need to **regenerate and update the service account key**. Here's how:
 
 ### Step 1: Delete the Old Key
+
 1. Go to **Google Cloud Console**
 2. Navigate to **APIs & Services** → **Credentials**
 3. Find your service account: `imagekit-sync@kollect-it-imagekit.iam.gserviceaccount.com`
@@ -50,6 +53,7 @@ You need to **regenerate and update the service account key**. Here's how:
 8. Confirm deletion
 
 ### Step 2: Create a New Key
+
 1. Still in the service account's **KEYS** tab
 2. Click **Add Key** → **Create new key**
 3. Choose **JSON** format
@@ -57,6 +61,7 @@ You need to **regenerate and update the service account key**. Here's how:
 5. A new JSON file downloads automatically
 
 ### Step 3: Update google-credentials.json
+
 1. Open the downloaded JSON file in your text editor
 2. Copy all the contents
 3. Open `google-credentials.json` in your project
@@ -64,6 +69,7 @@ You need to **regenerate and update the service account key**. Here's how:
 5. **Save the file**
 
 ### Step 4: Verify & Test
+
 ```bash
 # Verify the file syntax is valid JSON
 bun run sync-images
@@ -95,13 +101,13 @@ WEBHOOK_SECRET=kollect-it-sync-webhook-secret-2025-secure-random-key-min-32-char
 
 ## 📁 Files Status
 
-| File | Status | Purpose |
-|------|--------|---------|
-| `.env.local` | ✅ CONFIGURED | Environment credentials |
-| `google-credentials.json` | ⚠️ INVALID KEY | Service account auth (needs update) |
-| `scripts/sync-drive-to-imagekit.ts` | ✅ READY | Sync logic (won't work until credentials fixed) |
-| `src/components/Hero.tsx` | ✅ READY | Hero component (needs image) |
-| `package.json` | ✅ UPDATED | Scripts configured |
+| File                                | Status         | Purpose                                         |
+| ----------------------------------- | -------------- | ----------------------------------------------- |
+| `.env.local`                        | ✅ CONFIGURED  | Environment credentials                         |
+| `google-credentials.json`           | ⚠️ INVALID KEY | Service account auth (needs update)             |
+| `scripts/sync-drive-to-imagekit.ts` | ✅ READY       | Sync logic (won't work until credentials fixed) |
+| `src/components/Hero.tsx`           | ✅ READY       | Hero component (needs image)                    |
+| `package.json`                      | ✅ UPDATED     | Scripts configured                              |
 
 ---
 
@@ -123,15 +129,15 @@ bun run sync-images
 # 📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
 # 🖼️  ImageKit Folder: /products
 # ⏭️  Skip Existing: true
-# 
+#
 # 📂 Fetching images from Google Drive folder...
 # ✅ Found [N] images in Google Drive
-# 
+#
 # [1/N] Processing: [image-name].jpg
 # ⬇️  Downloading from Google Drive...
 # ⬆️  Uploading to ImageKit...
 # ✅ Successfully uploaded: [image-name].jpg
-# 
+#
 # ... (continues for all images)
 ```
 
@@ -140,37 +146,43 @@ bun run sync-images
 ## 🐛 Common Issues & Solutions
 
 ### "Invalid JWT Signature"
+
 → **Solution:** Regenerate the service account key (see steps above)
 
 ### "Service account doesn't have access to folder" (403)
-→ **Solution:** 
+
+→ **Solution:**
+
 1. Copy the `client_email` from the new `google-credentials.json`
 2. Share the Drive folder with that email (Viewer permission)
 3. Wait 30 seconds
 4. Retry sync
 
 ### "GOOGLE_APPLICATION_CREDENTIALS not found"
+
 → **Solution:** Verify `google-credentials.json` exists in project root:
+
 ```bash
 ls google-credentials.json
 ```
 
 ### "Rate limit exceeded"
+
 → **Solution:** Wait 5 minutes, the script has built-in 500ms delays between uploads
 
 ---
 
 ## 📊 Setup Progress
 
-| Phase | Status | Completion |
-|-------|--------|-----------|
-| Hero Component | ✅ COMPLETE | 100% |
-| Environment Setup | ✅ COMPLETE | 100% |
-| Sync Script | ✅ READY | 100% |
-| Google Drive Credentials | ⚠️ INVALID | Needs Update |
-| First Sync Test | ⏳ BLOCKED | Waiting for credentials |
-| Product Images Upload | ⏳ PENDING | After credentials fixed |
-| Homepage Integration | ✅ READY | 100% |
+| Phase                    | Status      | Completion              |
+| ------------------------ | ----------- | ----------------------- |
+| Hero Component           | ✅ COMPLETE | 100%                    |
+| Environment Setup        | ✅ COMPLETE | 100%                    |
+| Sync Script              | ✅ READY    | 100%                    |
+| Google Drive Credentials | ⚠️ INVALID  | Needs Update            |
+| First Sync Test          | ⏳ BLOCKED  | Waiting for credentials |
+| Product Images Upload    | ⏳ PENDING  | After credentials fixed |
+| Homepage Integration     | ✅ READY    | 100%                    |
 
 ---
 
@@ -179,13 +191,14 @@ ls google-credentials.json
 ✅ `google-credentials.json` is in `.gitignore` - safe from git  
 ✅ `.env.local` is in `.gitignore` - safe from git  
 ✅ Private keys never visible in commit history  
-⚠️ After updating credentials, NEVER share the JSON file publicly  
+⚠️ After updating credentials, NEVER share the JSON file publicly
 
 ---
 
 ## 📞 What to Do Right Now
 
 **Action Required:**
+
 1. Go to Google Cloud Console
 2. Delete the old service account key
 3. Create a new key (JSON format)
@@ -195,7 +208,7 @@ ls google-credentials.json
 **Expected Result After Fix:**
 ✅ All images sync from Google Drive to ImageKit  
 ✅ ImageKit dashboard shows `/products` folder with images  
-✅ `sync-results.json` contains upload details  
+✅ `sync-results.json` contains upload details
 
 ---
 
@@ -212,4 +225,3 @@ ls google-credentials.json
 **Status:** Awaiting service account key regeneration  
 **Time Estimate:** 5-10 minutes to fix credentials and rerun sync  
 **Build Status:** ✅ PASSING (no build errors)
-

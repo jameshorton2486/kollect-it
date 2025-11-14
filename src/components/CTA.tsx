@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 interface CTAProps {
   /**
@@ -45,14 +45,16 @@ interface CTAProps {
 export default function CTA({
   title,
   description,
-  buttonText = 'Get Started',
-  buttonHref = '/contact',
-  bgClass = 'bg-[var(--color-navy)]',
-  textClass = 'text-white',
+  buttonText = "Get Started",
+  buttonHref = "/contact",
+  bgClass = "bg-[var(--color-navy)]",
+  textClass = "text-white",
   className,
 }: CTAProps) {
   return (
-    <section className={`${bgClass} ${textClass} text-center py-12 px-4 md:px-6 lg:px-8 ${className || ''}`}>
+    <section
+      className={`${bgClass} ${textClass} text-center py-12 px-4 md:px-6 lg:px-8 ${className || ""}`}
+    >
       <div className="max-w-[700px] mx-auto">
         <h2 className="text-[clamp(28px,4vw,36px)] font-serif font-normal mb-4 leading-[1.3]">
           {title}
@@ -67,7 +69,9 @@ export default function CTA({
         <Link
           href={buttonHref}
           className={`ki-btn-primary inline-block px-8 py-3 border-2 border-current rounded-sm font-medium tracking-[0.1em] uppercase text-[14px] transition-all hover:opacity-90 ${
-            bgClass.includes('navy') ? 'border-[var(--color-gold)] text-[var(--color-gold)]' : ''
+            bgClass.includes("navy")
+              ? "border-[var(--color-gold)] text-[var(--color-gold)]"
+              : ""
           }`}
         >
           {buttonText}

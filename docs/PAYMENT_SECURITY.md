@@ -11,12 +11,14 @@ The Kollect-It checkout system implements **server-side validation** to prevent 
 ### Why This Matters
 
 **Without server-side validation:**
+
 - Malicious users can modify JavaScript to change prices
 - $1000 product could be purchased for $1
 - Inactive products could be purchased
 - Invalid quantities could cause inventory issues
 
 **With server-side validation (our implementation):**
+
 - ✅ All prices verified against database
 - ✅ Product availability checked in real-time
 - ✅ Quantities validated before payment
@@ -35,7 +37,7 @@ sequenceDiagram
     participant API
     participant Database
     participant Stripe
-    
+
     Customer->>Frontend: Add items to cart
     Customer->>Frontend: Proceed to checkout
     Frontend->>API: POST /api/checkout/validate-cart
@@ -65,19 +67,21 @@ sequenceDiagram
 **Purpose**: Validates cart items against database
 
 **Request:**
+
 ```json
 {
   "items": [
     {
       "productId": "clx123abc",
       "quantity": 2,
-      "price": 1500.00  // ❌ This is IGNORED!
+      "price": 1500.0 // ❌ This is IGNORED!
     }
   ]
 }
 ```
 
 **Response (Success):**
+
 ```json
 {
   "valid": true,
@@ -85,19 +89,20 @@ sequenceDiagram
     {
       "productId": "clx123abc",
       "title": "Vintage Map",
-      "price": 1500.00,  // ✅ Database price used
+      "price": 1500.0, // ✅ Database price used
       "quantity": 2,
-      "lineTotal": 3000.00
+      "lineTotal": 3000.0
     }
   ],
-  "subtotal": 3000.00,
-  "tax": 240.00,
-  "shipping": 0.00,
-  "total": 3240.00
+  "subtotal": 3000.0,
+  "tax": 240.0,
+  "shipping": 0.0,
+  "total": 3240.0
 }
 ```
 
 **Response (Error):**
+
 ```json
 {
   "error": "Product is no longer available"
@@ -106,12 +111,12 @@ sequenceDiagram
 
 ### What Gets Validated
 
-| Check | Description | Error if... |
-|-------|-------------|-------------|
-| **Product Exists** | Verifies product ID in database | Product not found |
-| **Product Active** | Checks `status === 'active'` | Product deleted/inactive |
-| **Quantity Valid** | Ensures 1 ≤ quantity ≤ 99 | Invalid quantity |
-| **Price Match** | Fetches current price from DB | Always uses DB price |
+| Check              | Description                     | Error if...              |
+| ------------------ | ------------------------------- | ------------------------ |
+| **Product Exists** | Verifies product ID in database | Product not found        |
+| **Product Active** | Checks `status === 'active'`    | Product deleted/inactive |
+| **Quantity Valid** | Ensures 1 ≤ quantity ≤ 99       | Invalid quantity         |
+| **Price Match**    | Fetches current price from DB   | Always uses DB price     |
 
 ### 2. Payment Intent Creation
 
@@ -121,20 +126,21 @@ sequenceDiagram
 
 ```typescript
 // Step 1: Validate cart (get database prices)
-const validatedCart = await fetch('/api/checkout/validate-cart', {
-  method: 'POST',
-  body: JSON.stringify({ items })
+const validatedCart = await fetch("/api/checkout/validate-cart", {
+  method: "POST",
+  body: JSON.stringify({ items }),
 });
 
 // Step 2: Create Stripe payment intent with VALIDATED amount
 const paymentIntent = await stripe.paymentIntents.create({
   amount: formatAmountForStripe(validatedCart.total), // ✅ DB price
-  currency: 'usd',
+  currency: "usd",
   // ... other options
 });
 ```
 
 **Key Points:**
+
 - Client-provided prices are **never** used
 - Cart is validated **every time** before charging
 - Payment amount comes from database, not client
@@ -149,8 +155,8 @@ const paymentIntent = await stripe.paymentIntents.create({
 // Verify payment succeeded
 const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
-if (paymentIntent.status !== 'succeeded') {
-  return error('Payment not completed');
+if (paymentIntent.status !== "succeeded") {
+  return error("Payment not completed");
 }
 
 // Create order only after payment confirmed
@@ -225,13 +231,16 @@ curl -X POST http://localhost:3000/api/checkout/validate-cart \
 ```
 
 **Expected Result:**
+
 ```json
 {
   "valid": true,
-  "items": [{
-    "price": 1000.00  // ✅ Database price used, not $1
-  }],
-  "total": 1080.00  // $1000 + 8% tax
+  "items": [
+    {
+      "price": 1000.0 // ✅ Database price used, not $1
+    }
+  ],
+  "total": 1080.0 // $1000 + 8% tax
 }
 ```
 
@@ -250,6 +259,7 @@ curl -X POST http://localhost:3000/api/checkout/validate-cart \
 ```
 
 **Expected Result:**
+
 ```json
 {
   "error": "Product not found"
@@ -271,6 +281,7 @@ curl -X POST http://localhost:3000/api/checkout/validate-cart \
 ```
 
 **Expected Result:**
+
 ```json
 {
   "error": "Invalid quantity for \"Product Name\""
@@ -286,11 +297,10 @@ curl -X POST http://localhost:3000/api/checkout/validate-cart \
 **Attack:** User modifies JavaScript to change prices in cart
 
 **Prevention:**
+
 ```typescript
 // ❌ VULNERABLE CODE (don't do this)
-const total = items.reduce((sum, item) => 
-  sum + item.price * item.quantity, 0
-);
+const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
 // ✅ SECURE CODE (what we do)
 const validatedCart = await validateCartServerSide(items);
@@ -302,9 +312,10 @@ const total = validatedCart.total; // From database
 **Attack:** User saves product URL, product gets deleted, user tries to buy
 
 **Prevention:**
+
 ```typescript
-if (product.status !== 'active') {
-  return error('Product no longer available');
+if (product.status !== "active") {
+  return error("Product no longer available");
 }
 ```
 
@@ -313,9 +324,10 @@ if (product.status !== 'active') {
 **Attack:** User sets quantity to -1000 to get refund
 
 **Prevention:**
+
 ```typescript
 if (quantity < 1 || quantity > 99) {
-  return error('Invalid quantity');
+  return error("Invalid quantity");
 }
 ```
 
@@ -324,10 +336,11 @@ if (quantity < 1 || quantity > 99) {
 **Attack:** User calls create-order API directly without paying
 
 **Prevention:**
+
 ```typescript
 const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-if (paymentIntent.status !== 'succeeded') {
-  return error('Payment not completed');
+if (paymentIntent.status !== "succeeded") {
+  return error("Payment not completed");
 }
 ```
 
@@ -338,18 +351,19 @@ if (paymentIntent.status !== 'succeeded') {
 ### What Gets Logged
 
 ```typescript
-console.log('Cart validation:', {
+console.log("Cart validation:", {
   itemCount: items.length,
   clientTotal: clientCalculatedTotal, // What client claimed
-  serverTotal: validatedTotal,        // What database says
+  serverTotal: validatedTotal, // What database says
   difference: Math.abs(clientTotal - serverTotal),
-  tampered: difference > 0.01 ? 'YES' : 'NO'
+  tampered: difference > 0.01 ? "YES" : "NO",
 });
 ```
 
 ### Monitoring for Fraud
 
 Watch for:
+
 - Multiple validation failures from same IP
 - Large price discrepancies (client vs server)
 - Attempts to purchase inactive products
@@ -365,6 +379,7 @@ Watch for:
 Current: 8% sales tax (hardcoded)
 
 To change:
+
 ```typescript
 // src/app/api/checkout/validate-cart/route.ts
 const tax = subtotal * 0.08; // Change 0.08 to your rate
@@ -375,6 +390,7 @@ const tax = subtotal * 0.08; // Change 0.08 to your rate
 Current: Free shipping
 
 To add shipping costs:
+
 ```typescript
 // Calculate shipping based on cart value or weight
 const shipping = calculateShipping(validatedCart);
@@ -385,9 +401,11 @@ const shipping = calculateShipping(validatedCart);
 Current: 1-99 items per product
 
 To change:
+
 ```typescript
-if (quantity < 1 || quantity > 99) { // Change 99 to your max
-  return error('Invalid quantity');
+if (quantity < 1 || quantity > 99) {
+  // Change 99 to your max
+  return error("Invalid quantity");
 }
 ```
 

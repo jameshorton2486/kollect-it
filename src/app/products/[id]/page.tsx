@@ -1,8 +1,8 @@
-import { notFound } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
-import ProductGallery from '@/components/product/ProductGallery';
-import ProductDetails from '@/components/product/ProductDetails';
-import RelatedProducts from '@/components/product/RelatedProducts';
+import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import ProductGallery from "@/components/product/ProductGallery";
+import ProductDetails from "@/components/product/ProductDetails";
+import RelatedProducts from "@/components/product/RelatedProducts";
 
 interface ProductPageProps {
   params: {
@@ -18,26 +18,29 @@ async function getProduct(id: string) {
         select: {
           name: true,
           id: true,
-        }
+        },
       },
       images: {
         select: {
           url: true,
           alt: true,
-        }
-      }
-    }
+        },
+      },
+    },
   });
 
   return product;
 }
 
-async function getRelatedProducts(categoryId: string, currentProductId: string) {
+async function getRelatedProducts(
+  categoryId: string,
+  currentProductId: string,
+) {
   const related = await prisma.product.findMany({
     where: {
       categoryId,
       id: { not: currentProductId },
-      status: 'active'
+      status: "active",
     },
     take: 4,
     include: {
@@ -45,9 +48,9 @@ async function getRelatedProducts(categoryId: string, currentProductId: string) 
         take: 1,
         select: {
           url: true,
-        }
-      }
-    }
+        },
+      },
+    },
   });
 
   return related;
@@ -60,16 +63,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const relatedProducts = await getRelatedProducts(product.categoryId, product.id);
+  const relatedProducts = await getRelatedProducts(
+    product.categoryId,
+    product.id,
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {/* Gallery */}
-        <ProductGallery
-          images={product.images}
-          productName={product.title}
-        />
+        <ProductGallery images={product.images} productName={product.title} />
 
         {/* Details */}
         <ProductDetails product={product} />
@@ -77,7 +80,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-  <RelatedProducts products={relatedProducts} categoryName={product.categoryName} />
+        <RelatedProducts
+          products={relatedProducts}
+          categoryName={product.categoryName}
+        />
       )}
     </div>
   );

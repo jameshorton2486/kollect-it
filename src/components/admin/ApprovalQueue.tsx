@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 /**
  * Approval Queue Dashboard
  * Phase 3 - Admin interface for reviewing AI-generated products
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface AIProduct {
   id: string;
@@ -36,8 +36,12 @@ export function ApprovalQueue() {
     limit: 10,
     total: 0,
   });
-  const [filter, setFilter] = useState<'PENDING' | 'APPROVED' | 'REJECTED' | 'ALL'>('PENDING');
-  const [selectedProduct, setSelectedProduct] = useState<AIProduct | null>(null);
+  const [filter, setFilter] = useState<
+    "PENDING" | "APPROVED" | "REJECTED" | "ALL"
+  >("PENDING");
+  const [selectedProduct, setSelectedProduct] = useState<AIProduct | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
 
   // Fetch products from API
@@ -53,7 +57,7 @@ export function ApprovalQueue() {
       const params = new URLSearchParams({
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
-        ...(filter !== 'ALL' && { status: filter }),
+        ...(filter !== "ALL" && { status: filter }),
       });
 
       const response = await fetch(`/api/admin/products/queue?${params}`);
@@ -69,7 +73,7 @@ export function ApprovalQueue() {
         total: data.total || 0,
       }));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch products');
+      setError(err instanceof Error ? err.message : "Failed to fetch products");
       setProducts([]);
     } finally {
       setLoading(false);
@@ -78,40 +82,42 @@ export function ApprovalQueue() {
 
   async function approveProduct(productId: string, finalPrice: number) {
     try {
-      const response = await fetch('/api/admin/products/approve', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/products/approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId, finalPrice }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to approve product');
+        throw new Error("Failed to approve product");
       }
 
       // Refresh list
       await fetchProducts();
       setSelectedProduct(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to approve product');
+      setError(
+        err instanceof Error ? err.message : "Failed to approve product",
+      );
     }
   }
 
   async function rejectProduct(productId: string, reason: string) {
     try {
-      const response = await fetch('/api/admin/products/reject', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/products/reject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId, reason }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to reject product');
+        throw new Error("Failed to reject product");
       }
 
       await fetchProducts();
       setSelectedProduct(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to reject product');
+      setError(err instanceof Error ? err.message : "Failed to reject product");
     }
   }
 
@@ -122,7 +128,9 @@ export function ApprovalQueue() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[#D3AF37] mb-2">Product Approval Queue</h1>
+          <h1 className="text-4xl font-bold text-[#D3AF37] mb-2">
+            Product Approval Queue
+          </h1>
           <p className="text-gray-400">
             Review and approve AI-generated products for the marketplace
           </p>
@@ -137,22 +145,24 @@ export function ApprovalQueue() {
 
         {/* Filter Buttons */}
         <div className="mb-6 flex gap-4">
-          {(['PENDING', 'APPROVED', 'REJECTED', 'ALL'] as const).map((status) => (
-            <button
-              key={status}
-              onClick={() => {
-                setFilter(status);
-                setPagination((prev) => ({ ...prev, page: 1 }));
-              }}
-              className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                filter === status
-                  ? 'bg-[#D3AF37] text-[#1a1a1a]'
-                  : 'bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]'
-              }`}
-            >
-              {status}
-            </button>
-          ))}
+          {(["PENDING", "APPROVED", "REJECTED", "ALL"] as const).map(
+            (status) => (
+              <button
+                key={status}
+                onClick={() => {
+                  setFilter(status);
+                  setPagination((prev) => ({ ...prev, page: 1 }));
+                }}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all ${
+                  filter === status
+                    ? "bg-[#D3AF37] text-[#1a1a1a]"
+                    : "bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]"
+                }`}
+              >
+                {status}
+              </button>
+            ),
+          )}
         </div>
 
         {/* Main Content */}
@@ -176,8 +186,8 @@ export function ApprovalQueue() {
                       onClick={() => setSelectedProduct(product)}
                       className={`p-6 cursor-pointer transition-colors ${
                         selectedProduct?.id === product.id
-                          ? 'bg-[#3a3a3a] border-l-4 border-[#D3AF37]'
-                          : 'hover:bg-[#3a3a3a]'
+                          ? "bg-[#3a3a3a] border-l-4 border-[#D3AF37]"
+                          : "hover:bg-[#3a3a3a]"
                       }`}
                     >
                       <div className="flex justify-between items-start">
@@ -189,19 +199,25 @@ export function ApprovalQueue() {
                             {product.aiDescription.substring(0, 100)}...
                           </p>
                           <div className="flex gap-4 text-sm">
-                            <span className="text-[#D3AF37]">${product.suggestedPrice}</span>
-                            <span className="text-gray-400">{product.aiCategory}</span>
-                            <span className="text-gray-400">{product.aiCondition}</span>
+                            <span className="text-[#D3AF37]">
+                              ${product.suggestedPrice}
+                            </span>
+                            <span className="text-gray-400">
+                              {product.aiCategory}
+                            </span>
+                            <span className="text-gray-400">
+                              {product.aiCondition}
+                            </span>
                           </div>
                         </div>
                         <div className="text-right">
                           <div
                             className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                              product.status === 'PENDING'
-                                ? 'bg-yellow-900/30 text-yellow-200'
-                                : product.status === 'APPROVED'
-                                  ? 'bg-green-900/30 text-green-200'
-                                  : 'bg-red-900/30 text-red-200'
+                              product.status === "PENDING"
+                                ? "bg-yellow-900/30 text-yellow-200"
+                                : product.status === "APPROVED"
+                                  ? "bg-green-900/30 text-green-200"
+                                  : "bg-red-900/30 text-red-200"
                             }`}
                           >
                             {product.status}
@@ -251,7 +267,9 @@ export function ApprovalQueue() {
           {/* Detail Panel */}
           {selectedProduct && (
             <div className="bg-[#2a2a2a] rounded-lg p-6 h-fit">
-              <h2 className="text-2xl font-bold text-[#D3AF37] mb-4">Product Details</h2>
+              <h2 className="text-2xl font-bold text-[#D3AF37] mb-4">
+                Product Details
+              </h2>
 
               {selectedProduct.imageUrl && (
                 <img
@@ -264,7 +282,9 @@ export function ApprovalQueue() {
               <div className="space-y-4">
                 <div>
                   <label className="text-sm text-gray-400">Title</label>
-                  <p className="text-white font-semibold">{selectedProduct.aiTitle}</p>
+                  <p className="text-white font-semibold">
+                    {selectedProduct.aiTitle}
+                  </p>
                 </div>
 
                 <div>
@@ -278,12 +298,15 @@ export function ApprovalQueue() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-400">Suggested Price</label>
+                  <label className="text-sm text-gray-400">
+                    Suggested Price
+                  </label>
                   <p className="text-[#D3AF37] text-2xl font-bold">
                     ${selectedProduct.suggestedPrice}
                   </p>
                   <p className="text-sm text-gray-400">
-                    Range: ${selectedProduct.priceLowRange} - ${selectedProduct.priceHighRange}
+                    Range: ${selectedProduct.priceLowRange} - $
+                    {selectedProduct.priceHighRange}
                   </p>
                   <p className="text-sm text-gray-400">
                     Confidence: {selectedProduct.priceConfidence}%
@@ -299,7 +322,7 @@ export function ApprovalQueue() {
               </div>
 
               {/* Action Buttons */}
-              {selectedProduct.status === 'PENDING' && (
+              {selectedProduct.status === "PENDING" && (
                 <PriceReviewPanel
                   product={selectedProduct}
                   onApprove={approveProduct}
@@ -320,9 +343,13 @@ interface PriceReviewPanelProps {
   onReject: (productId: string, reason: string) => Promise<void>;
 }
 
-function PriceReviewPanel({ product, onApprove, onReject }: PriceReviewPanelProps) {
+function PriceReviewPanel({
+  product,
+  onApprove,
+  onReject,
+}: PriceReviewPanelProps) {
   const [finalPrice, setFinalPrice] = useState(product.suggestedPrice);
-  const [rejectionReason, setRejectionReason] = useState('');
+  const [rejectionReason, setRejectionReason] = useState("");
   const [isApproving, setIsApproving] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
 
@@ -338,7 +365,7 @@ function PriceReviewPanel({ product, onApprove, onReject }: PriceReviewPanelProp
   async function handleReject() {
     setIsRejecting(true);
     try {
-      await onReject(product.id, rejectionReason || 'No reason provided');
+      await onReject(product.id, rejectionReason || "No reason provided");
     } finally {
       setIsRejecting(false);
     }
@@ -347,7 +374,9 @@ function PriceReviewPanel({ product, onApprove, onReject }: PriceReviewPanelProp
   return (
     <div className="mt-6 space-y-4 border-t border-[#3a3a3a] pt-6">
       <div>
-        <label htmlFor="final-price" className="text-sm text-gray-400">Final Price</label>
+        <label htmlFor="final-price" className="text-sm text-gray-400">
+          Final Price
+        </label>
         <div className="flex gap-2">
           <span className="text-[#D3AF37] self-center">$</span>
           <input
@@ -366,11 +395,13 @@ function PriceReviewPanel({ product, onApprove, onReject }: PriceReviewPanelProp
         disabled={isApproving}
         className="w-full py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
       >
-        {isApproving ? 'Approving...' : 'Approve Product'}
+        {isApproving ? "Approving..." : "Approve Product"}
       </button>
 
       <div>
-        <label className="text-sm text-gray-400">Rejection Reason (optional)</label>
+        <label className="text-sm text-gray-400">
+          Rejection Reason (optional)
+        </label>
         <textarea
           value={rejectionReason}
           onChange={(e) => setRejectionReason(e.target.value)}
@@ -384,7 +415,7 @@ function PriceReviewPanel({ product, onApprove, onReject }: PriceReviewPanelProp
         disabled={isRejecting}
         className="w-full py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
       >
-        {isRejecting ? 'Rejecting...' : 'Reject Product'}
+        {isRejecting ? "Rejecting..." : "Reject Product"}
       </button>
     </div>
   );

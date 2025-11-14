@@ -3,10 +3,10 @@
  * Phase 6 Step 9 - Touch-friendly filter controls
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Filter, X, Check } from 'lucide-react';
+import { useState } from "react";
+import { Filter, X, Check } from "lucide-react";
 
 interface FilterOption {
   label: string;
@@ -16,7 +16,7 @@ interface FilterOption {
 interface FilterConfig {
   id: string;
   label: string;
-  type: 'select' | 'multiselect' | 'date' | 'range';
+  type: "select" | "multiselect" | "date" | "range";
   options?: FilterOption[];
   placeholder?: string;
 }
@@ -29,16 +29,16 @@ interface MobileFilterPanelProps {
   onReset: () => void;
 }
 
-export function MobileFilterPanel({ 
-  filters, 
-  values, 
-  onChange, 
-  onApply, 
-  onReset 
+export function MobileFilterPanel({
+  filters,
+  values,
+  onChange,
+  onApply,
+  onReset,
 }: MobileFilterPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const activeFilterCount = Object.keys(values).filter(key => {
+  const activeFilterCount = Object.keys(values).filter((key) => {
     const value = values[key];
     return value && (Array.isArray(value) ? value.length > 0 : true);
   }).length;
@@ -87,13 +87,15 @@ export function MobileFilterPanel({
                     {filter.label}
                   </label>
 
-                  {filter.type === 'select' && (
+                  {filter.type === "select" && (
                     <select
-                      value={values[filter.id] || ''}
+                      value={values[filter.id] || ""}
                       onChange={(e) => onChange(filter.id, e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
                     >
-                      <option value="">{filter.placeholder || 'Select...'}</option>
+                      <option value="">
+                        {filter.placeholder || "Select..."}
+                      </option>
                       {filter.options?.map((option) => (
                         <option key={option.value} value={option.value}>
                           {option.label}
@@ -102,19 +104,27 @@ export function MobileFilterPanel({
                     </select>
                   )}
 
-                  {filter.type === 'multiselect' && (
+                  {filter.type === "multiselect" && (
                     <div className="space-y-2 border border-gray-300 rounded-lg p-3 max-h-48 overflow-y-auto">
                       {filter.options?.map((option) => {
-                        const selected = (values[filter.id] || []).includes(option.value);
+                        const selected = (values[filter.id] || []).includes(
+                          option.value,
+                        );
                         return (
                           <label
                             key={option.value}
                             className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded cursor-pointer"
                           >
-                            <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${
-                              selected ? 'bg-blue-600 border-blue-600' : 'border-gray-300'
-                            }`}>
-                              {selected && <Check className="w-4 h-4 text-white" />}
+                            <div
+                              className={`w-5 h-5 border-2 rounded flex items-center justify-center ${
+                                selected
+                                  ? "bg-blue-600 border-blue-600"
+                                  : "border-gray-300"
+                              }`}
+                            >
+                              {selected && (
+                                <Check className="w-4 h-4 text-white" />
+                              )}
                             </div>
                             <span className="text-sm">{option.label}</span>
                           </label>
@@ -123,35 +133,39 @@ export function MobileFilterPanel({
                     </div>
                   )}
 
-                  {filter.type === 'date' && (
+                  {filter.type === "date" && (
                     <input
                       type="date"
-                      value={values[filter.id] || ''}
+                      value={values[filter.id] || ""}
                       onChange={(e) => onChange(filter.id, e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
                     />
                   )}
 
-                  {filter.type === 'range' && (
+                  {filter.type === "range" && (
                     <div className="grid grid-cols-2 gap-3">
                       <input
                         type="number"
                         placeholder="Min"
-                        value={values[filter.id]?.min || ''}
-                        onChange={(e) => onChange(filter.id, { 
-                          ...values[filter.id], 
-                          min: e.target.value 
-                        })}
+                        value={values[filter.id]?.min || ""}
+                        onChange={(e) =>
+                          onChange(filter.id, {
+                            ...values[filter.id],
+                            min: e.target.value,
+                          })
+                        }
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
                       />
                       <input
                         type="number"
                         placeholder="Max"
-                        value={values[filter.id]?.max || ''}
-                        onChange={(e) => onChange(filter.id, { 
-                          ...values[filter.id], 
-                          max: e.target.value 
-                        })}
+                        value={values[filter.id]?.max || ""}
+                        onChange={(e) =>
+                          onChange(filter.id, {
+                            ...values[filter.id],
+                            max: e.target.value,
+                          })
+                        }
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
                       />
                     </div>

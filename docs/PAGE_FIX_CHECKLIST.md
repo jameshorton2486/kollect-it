@@ -3,6 +3,7 @@
 ## ALL 44 PAGES INVENTORY
 
 ### ✅ ALREADY FIXED (7 pages)
+
 1. Home (/)
 2. About (/about)
 3. Contact (/contact)
@@ -14,25 +15,30 @@
 ### 🔴 NEED FIXING (37 pages)
 
 #### Auth Pages (3)
+
 - [ ] Login (/login)
 - [ ] Register (/register)
 - [ ] Admin Login (/admin/login)
 
 #### Shopping Pages (3)
+
 - [ ] Category (/category/[slug])
 - [ ] Product Detail (/product/[slug])
 - [ ] Sell (/sell)
 
 #### Cart & Checkout (4)
+
 - [ ] Cart (/cart)
 - [ ] Checkout (/checkout)
 - [ ] Checkout Success (/checkout/success)
 - [ ] Order Confirmation Email
 
 #### User Pages (1)
+
 - [ ] Account Dashboard (/account)
 
 #### Admin Pages (6)
+
 - [ ] Admin Dashboard (/admin/dashboard)
 - [ ] Manage Customers (/admin/customers)
 - [ ] Manage Orders (/admin/orders)
@@ -41,6 +47,7 @@
 - [ ] Admin Settings (/admin/settings)
 
 #### API Routes (18)
+
 - [ ] All API routes (documentation/testing)
 
 ---
@@ -214,8 +221,9 @@ export default function LoginPage() {
 ```
 
 **AFTER:**
+
 ```tsx
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Login to Your Account",
@@ -227,9 +235,7 @@ export default function LoginPage() {
     <main className="ki-section ki-container px-4 md:px-6 lg:px-8 py-12">
       <div className="max-w-md mx-auto">
         <h1 className="text-2xl font-bold mb-6">Sign In</h1>
-        <form className="space-y-4">
-          {/* Styled form with validation */}
-        </form>
+        <form className="space-y-4">{/* Styled form with validation */}</form>
       </div>
     </main>
   );
@@ -258,6 +264,7 @@ LOW     └─────┴─────┘
 ## 🚀 QUICK START - DO THIS NOW
 
 ### 5 Minutes
+
 ```bash
 # Quick wins - admin spacing
 # File: src/app/admin/dashboard/page.tsx
@@ -267,6 +274,7 @@ LOW     └─────┴─────┘
 ```
 
 ### 30 Minutes
+
 ```bash
 # Metadata on all pages
 # Add to each page.tsx:
@@ -277,6 +285,7 @@ export const metadata: Metadata = {
 ```
 
 ### 2 Hours
+
 ```bash
 # Standardize auth pages
 # src/app/login/page.tsx
@@ -286,6 +295,7 @@ export const metadata: Metadata = {
 ```
 
 ### 1.5 Hours
+
 ```bash
 # Complete checkout flow
 # src/app/checkout/page.tsx
@@ -298,6 +308,7 @@ export const metadata: Metadata = {
 ## ✅ HOW TO VERIFY YOUR FIXES
 
 After each fix:
+
 ```bash
 # Build and check for errors
 bun run build

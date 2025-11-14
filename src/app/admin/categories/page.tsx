@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { Upload, Loader2, Check, X } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Upload, Loader2, Check, X } from "lucide-react";
 
 interface Category {
   id: string;
@@ -31,8 +31,8 @@ export default function CategoriesPage() {
 
   // Redirect if not authenticated
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/admin/login');
+    if (status === "unauthenticated") {
+      router.push("/admin/login");
     }
   }, [status, router]);
 
@@ -40,23 +40,23 @@ export default function CategoriesPage() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('/api/admin/categories');
-        if (!res.ok) throw new Error('Failed to fetch categories');
+        const res = await fetch("/api/admin/categories");
+        if (!res.ok) throw new Error("Failed to fetch categories");
         const data = await res.json();
         setCategories(data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       fetchCategories();
     }
   }, [status]);
 
-  if (status === 'loading' || loading) {
+  if (status === "loading" || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="animate-spin" size={40} />
@@ -64,7 +64,7 @@ export default function CategoriesPage() {
     );
   }
 
-  if (status !== 'authenticated') {
+  if (status !== "authenticated") {
     return null;
   }
 
@@ -72,27 +72,27 @@ export default function CategoriesPage() {
     setUploadingId(categoryId);
     try {
       const formData = new FormData();
-      formData.append('file', file);
-      formData.append('categoryId', categoryId);
+      formData.append("file", file);
+      formData.append("categoryId", categoryId);
 
-      const res = await fetch('/api/admin/categories/upload-image', {
-        method: 'POST',
+      const res = await fetch("/api/admin/categories/upload-image", {
+        method: "POST",
         body: formData,
       });
 
-      if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) throw new Error("Upload failed");
 
       const result = await res.json();
 
       // Update local state
       setCategories(
         categories.map((cat) =>
-          cat.id === categoryId ? { ...cat, image: result.imageUrl } : cat
-        )
+          cat.id === categoryId ? { ...cat, image: result.imageUrl } : cat,
+        ),
       );
     } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('Failed to upload image. Please try again.');
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image. Please try again.");
     } finally {
       setUploadingId(null);
     }
@@ -101,22 +101,22 @@ export default function CategoriesPage() {
   const handleSaveEdits = async (categoryId: string) => {
     try {
       const res = await fetch(`/api/admin/categories/${categoryId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editValues[categoryId] || {}),
       });
 
-      if (!res.ok) throw new Error('Save failed');
+      if (!res.ok) throw new Error("Save failed");
 
       const updated = await res.json();
       setCategories(
-        categories.map((cat) => (cat.id === categoryId ? updated : cat))
+        categories.map((cat) => (cat.id === categoryId ? updated : cat)),
       );
       setEditingId(null);
       setEditValues({});
     } catch (error) {
-      console.error('Error saving changes:', error);
-      alert('Failed to save changes. Please try again.');
+      console.error("Error saving changes:", error);
+      alert("Failed to save changes. Please try again.");
     }
   };
 
@@ -125,7 +125,9 @@ export default function CategoriesPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Category Management</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Category Management
+          </h1>
           <p className="text-gray-600">
             Upload and manage category images for your galleries
           </p>
@@ -157,7 +159,10 @@ export default function CategoriesPage() {
                   <div className="flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     {uploadingId === category.id ? (
                       <>
-                        <Loader2 className="animate-spin text-white" size={32} />
+                        <Loader2
+                          className="animate-spin text-white"
+                          size={32}
+                        />
                         <span className="text-white text-sm">Uploading...</span>
                       </>
                     ) : (
@@ -191,7 +196,10 @@ export default function CategoriesPage() {
                     {category.name}
                   </h3>
                   <p className="text-sm text-gray-500 mb-3">
-                    Slug: <code className="bg-gray-100 px-2 py-1">{category.slug}</code>
+                    Slug:{" "}
+                    <code className="bg-gray-100 px-2 py-1">
+                      {category.slug}
+                    </code>
                   </p>
 
                   {editingId === category.id ? (
@@ -199,7 +207,8 @@ export default function CategoriesPage() {
                       title="Edit category description"
                       placeholder="Enter category description"
                       value={
-                        editValues[category.id]?.description || category.description
+                        editValues[category.id]?.description ||
+                        category.description
                       }
                       onChange={(e) =>
                         setEditValues({
@@ -260,7 +269,9 @@ export default function CategoriesPage() {
 
                 {/* Info */}
                 <div className="mt-4 text-xs text-gray-500">
-                  <p>Created: {new Date(category.createdAt).toLocaleDateString()}</p>
+                  <p>
+                    Created: {new Date(category.createdAt).toLocaleDateString()}
+                  </p>
                   {category.image && (
                     <p className="text-green-600 font-medium mt-1">
                       ✓ Image uploaded

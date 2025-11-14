@@ -8,7 +8,9 @@
 ## ✅ What's Working
 
 ### Google Drive Authentication
+
 From your sync output, we can see:
+
 ```
 📂 Fetching images from Google Drive folder...
 ✅ Found 4 images in Google Drive
@@ -20,6 +22,7 @@ From your sync output, we can see:
 ✅ Successfully downloaded images
 
 ### Hero Component & Build
+
 ✅ Hero component created and integrated
 ✅ Build passing with zero errors
 ✅ All infrastructure in place
@@ -29,7 +32,9 @@ From your sync output, we can see:
 ## ❌ What's Not Working
 
 ### ImageKit Authentication Failure
+
 From your sync output:
+
 ```
 ❌ Failed to upload file to ImageKit: categories_collectibles.png {
   message: "Your account cannot be authenticated.",
@@ -38,6 +43,7 @@ From your sync output:
 **The ImageKit private key doesn't match the ImageKit account.**
 
 Current credentials provided:
+
 ```
 Public Key:  public_1MwR2t3I95qAJXc72h1DzbbLLZU=
 Private Key: private_C5l6XYj7keSe1uBHlCedLI2/F9s=
@@ -59,9 +65,11 @@ ImageKit requires a **public/private key pair** that matches. The error "Your ac
 ## ✅ Solution: Get Correct ImageKit Keys
 
 ### Step 1: Go to ImageKit Dashboard
+
 https://imagekit.io/dashboard/
 
 ### Step 2: Get Your API Keys
+
 1. Click on **Settings** (top right, gear icon)
 2. Click on **API Keys** in left sidebar
 3. You'll see:
@@ -69,6 +77,7 @@ https://imagekit.io/dashboard/
    - **Private Key** (long string, used with `private_` prefix)
 
 ### Step 3: Update .env.local
+
 Replace the keys in `.env.local`:
 
 ```bash
@@ -77,6 +86,7 @@ IMAGEKIT_PRIVATE_KEY=private_your_private_key_here
 ```
 
 ### Step 4: Test Again
+
 ```bash
 bun run sync-images
 ```
@@ -86,6 +96,7 @@ bun run sync-images
 ## 📋 Current .env.local Configuration
 
 **Verified Current Keys:**
+
 ```
 NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=public_1MwR2t3I95qAJXc72h1DzbbLLZU=
 NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/kollectit
@@ -94,7 +105,7 @@ IMAGEKIT_PRIVATE_KEY=private_C5l6XYj7keSe1uBHlCedLI2/F9s=
 IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/kollectit
 ```
 
-**Question:** Are these keys from your actual ImageKit account at https://imagekit.io/dashboard/? 
+**Question:** Are these keys from your actual ImageKit account at https://imagekit.io/dashboard/?
 
 If yes: The account might have authentication issues (API key disabled)
 If no: You need to get the correct keys from your ImageKit dashboard
@@ -107,11 +118,9 @@ If no: You need to get the correct keys from your ImageKit dashboard
    - Go to: https://imagekit.io/dashboard/
    - Sign in with your account
    - Check Settings → API Keys
-   
 2. **Confirm These Are Your Keys:**
    - Public key starts with `public_`
    - Private key is a long string
-   
 3. **If Keys Are Different:**
    - Update `.env.local` with the correct keys
    - Run: `bun run sync-images`
@@ -125,13 +134,13 @@ If no: You need to get the correct keys from your ImageKit dashboard
 
 ## 💡 What We Know
 
-| Component | Status | Details |
-|-----------|--------|---------|
-| Google Drive Sync | ✅ | 4 images found and downloaded |
-| ImageKit SDK | ✅ | Installed and configured |
-| Sync Script | ✅ | Running without errors |
-| ImageKit Auth | ❌ | "Your account cannot be authenticated" |
-| Google Auth | ✅ | Working perfectly |
-| Build | ✅ | Zero errors |
+| Component         | Status | Details                                |
+| ----------------- | ------ | -------------------------------------- |
+| Google Drive Sync | ✅     | 4 images found and downloaded          |
+| ImageKit SDK      | ✅     | Installed and configured               |
+| Sync Script       | ✅     | Running without errors                 |
+| ImageKit Auth     | ❌     | "Your account cannot be authenticated" |
+| Google Auth       | ✅     | Working perfectly                      |
+| Build             | ✅     | Zero errors                            |
 
 The infrastructure is **100% correct**. We just need the **correct ImageKit credentials**.

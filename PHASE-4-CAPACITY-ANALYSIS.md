@@ -33,12 +33,14 @@ External Services
 ## 📈 CAPACITY BY COMPONENT
 
 ### 1. Vercel Edge/Next.js
+
 - **Concurrent instances:** 50-100 (auto-scaling)
 - **Requests per instance:** 100-200 req/sec (theoretical max)
 - **Total capacity:** ~5,000-10,000 req/sec
 - **Bottleneck:** Request processing speed (your code execution)
 
 ### 2. In-Memory Rate Limiting (Phase 3)
+
 - **Issue:** Each instance maintains **separate** rate limit state
 - **Example:** If rate limit is "5 requests per 15 min per user"
   - Instance 1 sees requests 1-3 from User A → allows all
@@ -49,6 +51,7 @@ External Services
 **Effective concurrency before rate limiting breaks:** 1,000-2,000 users
 
 ### 3. In-Memory Caching (Phase 3)
+
 - **Issue:** Each instance maintains **separate** cache
 - **Example:** Product cache on Instance 1, different cache on Instance 2
   - Cache hit rate: ~20-30% (instead of 60-80% with Redis)
@@ -57,6 +60,7 @@ External Services
 **Effective concurrency before cache thrashing:** 2,000-3,000 users
 
 ### 4. Supabase Connection Pool
+
 - **Default pool:** 10-20 concurrent connections per instance
 - **With 50 instances:** 500-1,000 concurrent database connections
 - **PostgreSQL connection limit:** ~200 typically (varies by plan)
@@ -65,6 +69,7 @@ External Services
 **Critical point:** 3,000-5,000 concurrent users
 
 ### 5. NextAuth Sessions
+
 - **Storage:** Database-backed (default) or JWT
 - **Issue:** No session cache, every request queries database for auth
 - **Database overhead:** 1 query per authenticated request
@@ -119,21 +124,25 @@ As traffic increases without Redis:
 ### Typical Marketplace Traffic Patterns
 
 **Peak hours** (evening/weekend):
+
 - Browse traffic: 10-50% of users
-- Active checkout: 5-15% of users  
+- Active checkout: 5-15% of users
 - Admin operations: 1-2% of users
 
 **Example:** 10,000 registered users
+
 - Peak concurrent: ~100-500 users (2-5% simultaneous)
 - Peak requests: 500-1,000 req/sec (mix of pages, API, static)
 - **Your current setup handles this easily ✓**
 
 **Example:** 50,000 registered users
+
 - Peak concurrent: ~500-2,500 users (2-5% simultaneous)
 - Peak requests: 2,500-5,000 req/sec
 - **Your current setup reaches strain point** ⚠️
 
 **Example:** 200,000+ registered users
+
 - Peak concurrent: 2,000-10,000 users
 - Peak requests: 10,000-50,000 req/sec
 - **Your current setup fails** ❌ (need Redis)
@@ -143,46 +152,57 @@ As traffic increases without Redis:
 ## 🎯 WHEN YOU NEED REDIS (Absolute Triggers)
 
 ### Trigger 1: Rate Limiting Accuracy Matters
+
 **Current state:** Rate limiting is ~30% effective (distributed across instances)
 
 **If you care about:**
+
 - Preventing abuse/scraping
 - Fair API usage
 - Protection during traffic spikes
 - **→ NEED REDIS now** (Week 0)
 
 **If you don't care:**
+
 - Marketplace is closed/invitation-only
 - Minimal abuse risk
 - **→ CAN SKIP Redis** (for now)
 
 ### Trigger 2: Database Load
+
 **Monitor this query:**
+
 ```sql
-SELECT count(*) FROM pg_stat_statements 
-WHERE query LIKE '%SELECT%' 
+SELECT count(*) FROM pg_stat_statements
+WHERE query LIKE '%SELECT%'
 AND mean_exec_time > 100;  -- queries taking >100ms
 ```
 
 **If you see:**
-- >100 slow queries regularly: **NEED REDIS** (cache product data, categories, etc.)
+
+- > 100 slow queries regularly: **NEED REDIS** (cache product data, categories, etc.)
 - <50 slow queries: **CAN SKIP Redis** (for now)
 
 ### Trigger 3: Session Performance
+
 **Monitor Vercel dashboard:**
 
 **If you see:**
+
 - Database connection pool at >80% capacity: **NEED REDIS** (session store)
 - Database connection pool at <50% capacity: **CAN SKIP Redis** (for now)
 
 ### Trigger 4: User Complaints
+
 **If users report:**
+
 - "Slow login" → Session cache needed
 - "Checkout is slow" → Cart/product cache needed
 - "Getting rate limited incorrectly" → Distributed rate limiting needed
 - **→ NEED REDIS**
 
 **If no complaints:**
+
 - **→ CAN SKIP Redis** (for now)
 
 ---
@@ -190,6 +210,7 @@ AND mean_exec_time > 100;  -- queries taking >100ms
 ## 💰 COST ANALYSIS (Current vs With Redis)
 
 ### Current Setup (without Redis)
+
 - **Vercel:** $20/month (Pro) + overage
 - **Supabase:** $25/month (Pro) + overage
 - **Stripe:** 2.9% + $0.30 per transaction
@@ -199,6 +220,7 @@ AND mean_exec_time > 100;  -- queries taking >100ms
 **At 3,000 concurrent users (peak), Supabase overage kicks in:** +$50-100/month
 
 ### With Redis Added
+
 - **Redis (Upstash/Heroku):** $30-50/month
 - **New total:** ~$200-220/month
 
@@ -209,6 +231,7 @@ AND mean_exec_time > 100;  -- queries taking >100ms
 ## ✅ HONEST ASSESSMENT: WHAT YOU SHOULD DO
 
 ### Do SKIP Redis Right Now If:
+
 - ✅ You're in soft launch phase (<500 users)
 - ✅ You're invitation-only (controlled growth)
 - ✅ You're testing product-market fit
@@ -219,6 +242,7 @@ AND mean_exec_time > 100;  -- queries taking >100ms
 **Recommendation:** Spend Phase 4 on **Email System + Monitoring** instead. Focus on user experience.
 
 ### Do IMPLEMENT Redis Now If:
+
 - 🔴 You already have 5,000+ registered users
 - 🔴 You're seeing database connection pool warnings
 - 🔴 Users complaining about slow checkouts
@@ -261,6 +285,7 @@ Eventual: Full CDN + regional database replicas
 ## 🎯 MY RECOMMENDATION FOR YOU
 
 **Current situation:**
+
 - You're in Phase 3 (security, caching, rate limiting working)
 - You're probably <1,000 registered users
 - You're likely in soft launch or early beta
@@ -288,11 +313,13 @@ Eventual: Full CDN + regional database replicas
    - Data-driven Redis decision
 
 **Why this order?**
+
 - Email system → High ROI, improves product
 - Monitoring → Tells you when you need Redis (vs guessing)
 - Load testing → Proves infrastructure limits scientifically
 
 **When you hit monitoring alerts showing:**
+
 - "Database at 80% connection pool"
 - "Cache hit rate <30%"
 - "Response time >1s"
@@ -303,23 +330,24 @@ Eventual: Full CDN + regional database replicas
 
 ## 📋 SUMMARY TABLE
 
-| Metric | Current (No Redis) | With Redis |
-|--------|-------------------|-----------|
-| Concurrent users | 1,000-2,000 comfortably | 5,000-10,000+ |
-| Cache hit rate | 20-30% | 60-80% |
-| Rate limit effectiveness | ~30% (breaks) | 100% (works) |
-| Session queries | 1 per request | Cached (1 per session) |
-| Response time @ 2k users | 200-500ms | 50-200ms |
-| Response time @ 5k users | 2-5s (degraded) | 200-500ms (good) |
-| Cost | $170-220/month | $200-270/month |
-| Implementation time | 0 | 4-6 hours |
-| Risk | None | Low (standard service) |
+| Metric                   | Current (No Redis)      | With Redis             |
+| ------------------------ | ----------------------- | ---------------------- |
+| Concurrent users         | 1,000-2,000 comfortably | 5,000-10,000+          |
+| Cache hit rate           | 20-30%                  | 60-80%                 |
+| Rate limit effectiveness | ~30% (breaks)           | 100% (works)           |
+| Session queries          | 1 per request           | Cached (1 per session) |
+| Response time @ 2k users | 200-500ms               | 50-200ms               |
+| Response time @ 5k users | 2-5s (degraded)         | 200-500ms (good)       |
+| Cost                     | $170-220/month          | $200-270/month         |
+| Implementation time      | 0                       | 4-6 hours              |
+| Risk                     | None                    | Low (standard service) |
 
 ---
 
 ## ✨ FINAL ANSWER
 
 **Your current setup (without Redis) handles:**
+
 - ✅ **1,000-2,000 concurrent users comfortably** (you're here now)
 - ⚠️ **Up to 5,000 with degradation** (could work short-term)
 - ❌ **5,000+ reliably** (needs Redis)

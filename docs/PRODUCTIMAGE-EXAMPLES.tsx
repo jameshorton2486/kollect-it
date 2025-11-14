@@ -5,7 +5,10 @@
 // in your product pages and listings throughout Kollect-It
 // ============================================================
 
-import ProductImage, { ProductImageGrid, ResponsiveProductImage } from '@/components/ProductImage';
+import ProductImage, {
+  ProductImageGrid,
+  ResponsiveProductImage,
+} from "@/components/ProductImage";
 
 // ============================================================
 // Example 1: Simple Product Detail Page
@@ -32,8 +35,8 @@ export function ProductDetailPage() {
           <div>
             <h2 className="text-2xl font-semibold mb-4">Description</h2>
             <p className="text-gray-300 leading-relaxed">
-              Beautiful hand-painted Victorian vase with gold leaf accents.
-              In excellent condition, no chips or cracks.
+              Beautiful hand-painted Victorian vase with gold leaf accents. In
+              excellent condition, no chips or cracks.
             </p>
 
             <div className="mt-6">
@@ -71,20 +74,20 @@ export function ProductDetailPage() {
 export function ProductGalleryPage() {
   const productImages = [
     {
-      path: '/products/antique-vase-001.jpg',
-      alt: 'Vase Front View - Full Body',
+      path: "/products/antique-vase-001.jpg",
+      alt: "Vase Front View - Full Body",
     },
     {
-      path: '/products/antique-vase-002.jpg',
-      alt: 'Vase Detail - Painted Design',
+      path: "/products/antique-vase-002.jpg",
+      alt: "Vase Detail - Painted Design",
     },
     {
-      path: '/products/antique-vase-003.jpg',
-      alt: 'Vase Base - Maker Mark',
+      path: "/products/antique-vase-003.jpg",
+      alt: "Vase Base - Maker Mark",
     },
     {
-      path: '/products/antique-vase-004.jpg',
-      alt: 'Vase Angle View - Side Profile',
+      path: "/products/antique-vase-004.jpg",
+      alt: "Vase Angle View - Side Profile",
     },
   ];
 
@@ -139,27 +142,27 @@ export function ProductListingGrid() {
   const products = [
     {
       id: 1,
-      name: 'Victorian Vase',
-      price: '$1,250',
-      image: '/products/antique-vase-001.jpg',
+      name: "Victorian Vase",
+      price: "$1,250",
+      image: "/products/antique-vase-001.jpg",
     },
     {
       id: 2,
-      name: 'Vintage Watch',
-      price: '$850',
-      image: '/products/vintage-watch-001.jpg',
+      name: "Vintage Watch",
+      price: "$850",
+      image: "/products/vintage-watch-001.jpg",
     },
     {
       id: 3,
-      name: 'Porcelain Figurine',
-      price: '$450',
-      image: '/products/porcelain-figurine-001.jpg',
+      name: "Porcelain Figurine",
+      price: "$450",
+      image: "/products/porcelain-figurine-001.jpg",
     },
     {
       id: 4,
-      name: 'Rare Book',
-      price: '$2,100',
-      image: '/products/rare-book-001.jpg',
+      name: "Rare Book",
+      price: "$2,100",
+      image: "/products/rare-book-001.jpg",
     },
   ];
 

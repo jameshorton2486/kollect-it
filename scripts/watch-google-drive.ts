@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
  * KOLLECT-IT: Google Drive Watcher
- * 
+ *
  * Monitors /Kollect-It/Products/ folder for new product.json files
  * Validates JSON, triggers ImageKit sync, and logs results
- * 
+ *
  * Usage: bun run watch-google-drive
  */
 
-import { google } from 'googleapis';
-import * as fs from 'fs';
+import { google } from "googleapis";
+import * as fs from "fs";
 
 interface ProductJson {
   product_id: string;
@@ -29,14 +29,14 @@ interface ProductJson {
 interface SyncLog {
   timestamp: string;
   product_id: string;
-  status: 'success' | 'error' | 'skipped';
+  status: "success" | "error" | "skipped";
   message: string;
   imagekit_triggered: boolean;
 }
 
 const GOOGLE_DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 const CHECK_INTERVAL = 30000; // 30 seconds
-const SYNC_LOG_FILE = './logs/google-drive-sync.log';
+const SYNC_LOG_FILE = "./logs/google-drive-sync.log";
 
 class GoogleDriveWatcher {
   private drive: ReturnType<typeof google.drive>;
@@ -45,23 +45,23 @@ class GoogleDriveWatcher {
 
   constructor() {
     if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-      throw new Error('GOOGLE_APPLICATION_CREDENTIALS not set in .env.local');
+      throw new Error("GOOGLE_APPLICATION_CREDENTIALS not set in .env.local");
     }
 
     const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-    const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf-8'));
+    const credentials = JSON.parse(fs.readFileSync(credentialsPath, "utf-8"));
 
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/drive.readonly']
+      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
     });
 
-    this.drive = google.drive({ version: 'v3', auth });
+    this.drive = google.drive({ version: "v3", auth });
     this.setupLogging();
   }
 
   private setupLogging() {
-    const logsDir = './logs';
+    const logsDir = "./logs";
     if (!fs.existsSync(logsDir)) {
       fs.mkdirSync(logsDir, { recursive: true });
     }
@@ -70,21 +70,24 @@ class GoogleDriveWatcher {
   private log(entry: SyncLog) {
     this.syncLogs.push(entry);
     console.log(
-      `[${entry.timestamp}] ${entry.status.toUpperCase()}: ${entry.product_id} - ${entry.message}`
+      `[${entry.timestamp}] ${entry.status.toUpperCase()}: ${entry.product_id} - ${entry.message}`,
     );
-    
+
     // Append to log file
     const logLine = JSON.stringify(entry);
-    fs.appendFileSync(SYNC_LOG_FILE, logLine + '\n');
+    fs.appendFileSync(SYNC_LOG_FILE, logLine + "\n");
   }
 
   async watch() {
-    console.log('🔍 Starting Google Drive watcher...');
+    console.log("🔍 Starting Google Drive watcher...");
     console.log(`📁 Monitoring folder: ${GOOGLE_DRIVE_FOLDER_ID}`);
     console.log(`⏱️  Check interval: ${CHECK_INTERVAL / 1000}s\n`);
 
-    setInterval(() => this.checkForNewProducts().catch(console.error), CHECK_INTERVAL);
-    
+    setInterval(
+      () => this.checkForNewProducts().catch(console.error),
+      CHECK_INTERVAL,
+    );
+
     // Run immediately on start
     await this.checkForNewProducts();
   }
@@ -93,10 +96,10 @@ class GoogleDriveWatcher {
     try {
       const response = await this.drive.files.list({
         q: `'${GOOGLE_DRIVE_FOLDER_ID}' in parents and mimeType='application/json' and name contains '2025_' and trashed=false`,
-        spaces: 'drive',
+        spaces: "drive",
         pageSize: 50,
-        fields: 'files(id, name, createdTime, modifiedTime, size)',
-        orderBy: 'modifiedTime desc'
+        fields: "files(id, name, createdTime, modifiedTime, size)",
+        orderBy: "modifiedTime desc",
       });
 
       const files = response.data.files || [];
@@ -120,33 +123,36 @@ class GoogleDriveWatcher {
         } catch (error) {
           this.log({
             timestamp: new Date().toISOString(),
-            product_id: file.name.split('_')[0] || 'unknown',
-            status: 'error',
+            product_id: file.name.split("_")[0] || "unknown",
+            status: "error",
             message: `Failed to process: ${error instanceof Error ? error.message : String(error)}`,
-            imagekit_triggered: false
+            imagekit_triggered: false,
           });
         }
       }
     } catch (error) {
-      console.error('❌ Error checking for new products:', error);
+      console.error("❌ Error checking for new products:", error);
     }
   }
 
-  private async processProductFile(fileId: string, fileName: string): Promise<void> {
+  private async processProductFile(
+    fileId: string,
+    fileName: string,
+  ): Promise<void> {
     try {
       // Download file
       const response = await this.drive.files.get(
-        { fileId, alt: 'media' },
-        { responseType: 'stream' }
+        { fileId, alt: "media" },
+        { responseType: "stream" },
       );
 
       const chunks: Buffer[] = [];
-      
+
       return new Promise((resolve, reject) => {
-        response.data.on('data', (chunk: Buffer) => chunks.push(chunk));
-        response.data.on('end', async () => {
+        response.data.on("data", (chunk: Buffer) => chunks.push(chunk));
+        response.data.on("end", async () => {
           try {
-            const jsonContent = Buffer.concat(chunks).toString('utf-8');
+            const jsonContent = Buffer.concat(chunks).toString("utf-8");
             const product: ProductJson = JSON.parse(jsonContent);
 
             // Validate
@@ -154,9 +160,9 @@ class GoogleDriveWatcher {
               this.log({
                 timestamp: new Date().toISOString(),
                 product_id: product.product_id || fileName,
-                status: 'skipped',
-                message: 'Validation not passed',
-                imagekit_triggered: false
+                status: "skipped",
+                message: "Validation not passed",
+                imagekit_triggered: false,
               });
               resolve();
               return;
@@ -168,9 +174,9 @@ class GoogleDriveWatcher {
             this.log({
               timestamp: new Date().toISOString(),
               product_id: product.product_id,
-              status: 'success',
+              status: "success",
               message: `Loaded from Google Drive: ${product.name}`,
-              imagekit_triggered: imagekitReady
+              imagekit_triggered: imagekitReady,
             });
 
             // Trigger ImageKit sync if needed
@@ -183,24 +189,26 @@ class GoogleDriveWatcher {
             reject(error);
           }
         });
-        response.data.on('error', reject);
+        response.data.on("error", reject);
       });
     } catch (error) {
-      throw new Error(`Failed to download ${fileName}: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to download ${fileName}: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
   private async triggerImageKitSync(product: ProductJson): Promise<void> {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-      
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
       const response = await fetch(`${apiUrl}/api/products/sync-imagekit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           product_id: product.product_id,
-          product_json: product
-        })
+          product_json: product,
+        }),
       });
 
       if (!response.ok) {
@@ -210,12 +218,15 @@ class GoogleDriveWatcher {
       await response.json(); // Consume response
       console.log(`   📤 ImageKit sync queued: ${product.product_id}`);
     } catch (error) {
-      console.error(`   ⚠️  ImageKit sync failed for ${product.product_id}:`, error);
+      console.error(
+        `   ⚠️  ImageKit sync failed for ${product.product_id}:`,
+        error,
+      );
     }
   }
 
   async stop() {
-    console.log('\n👋 Stopping watcher...');
+    console.log("\n👋 Stopping watcher...");
     process.exit(0);
   }
 }
@@ -225,5 +236,5 @@ const watcher = new GoogleDriveWatcher();
 watcher.watch().catch(console.error);
 
 // Graceful shutdown
-process.on('SIGINT', () => watcher.stop());
-process.on('SIGTERM', () => watcher.stop());
+process.on("SIGINT", () => watcher.stop());
+process.on("SIGTERM", () => watcher.stop());

@@ -3,7 +3,7 @@
 **Status:** Production Ready  
 **Date:** November 7, 2025  
 **Total Scripts:** 8 files + 2 API routes + 1 utility module  
-**Lines of Code:** 1,470+  
+**Lines of Code:** 1,470+
 
 ---
 
@@ -11,25 +11,25 @@
 
 ### Scripts (in `scripts/`)
 
-| Script | Purpose | Command |
-|--------|---------|---------|
-| `watch-google-drive.ts` | Monitor folder every 30s for new products | `bun run watch-google-drive` |
-| `process-batch.ts` | Validate and manifest batch products | `bun run process-batch file.json` |
-| `validate-product.ts` | Check product.json against full schema | `bun run validate-product file.json` |
-| `test-imagekit.ts` | Verify ImageKit credentials work | `bun run test-imagekit` |
-| `test-google-drive.ts` | Verify Google Drive access works | `bun run test-google-drive` |
+| Script                  | Purpose                                   | Command                              |
+| ----------------------- | ----------------------------------------- | ------------------------------------ |
+| `watch-google-drive.ts` | Monitor folder every 30s for new products | `bun run watch-google-drive`         |
+| `process-batch.ts`      | Validate and manifest batch products      | `bun run process-batch file.json`    |
+| `validate-product.ts`   | Check product.json against full schema    | `bun run validate-product file.json` |
+| `test-imagekit.ts`      | Verify ImageKit credentials work          | `bun run test-imagekit`              |
+| `test-google-drive.ts`  | Verify Google Drive access works          | `bun run test-google-drive`          |
 
 ### API Routes (in `src/app/api/products/`)
 
-| Route | Method | Purpose |
-|-------|--------|---------|
-| `/sync-from-google-drive` | POST | Fetch products from Google Drive folder |
-| `/sync-imagekit` | POST | Upload photos to ImageKit CDN |
+| Route                     | Method | Purpose                                 |
+| ------------------------- | ------ | --------------------------------------- |
+| `/sync-from-google-drive` | POST   | Fetch products from Google Drive folder |
+| `/sync-imagekit`          | POST   | Upload photos to ImageKit CDN           |
 
 ### Modules (in `src/lib/`)
 
-| Module | Purpose |
-|--------|---------|
+| Module             | Purpose                                     |
+| ------------------ | ------------------------------------------- |
 | `imagekit-sync.ts` | Handles retries, folder structure, metadata |
 
 ---
@@ -37,6 +37,7 @@
 ## 🚀 Quick Start (3 Steps)
 
 ### Step 1: Test Connections
+
 ```bash
 bun run test-imagekit
 bun run test-google-drive
@@ -45,6 +46,7 @@ bun run test-google-drive
 **Expected:** Both show ✅ all tests passed
 
 ### Step 2: Start Watcher
+
 ```bash
 bun run watch-google-drive
 ```
@@ -52,6 +54,7 @@ bun run watch-google-drive
 **Runs forever:** Checks Google Drive every 30 seconds
 
 ### Step 3: Generate Products
+
 - Use **Kollect-It AI Agent v3** in VS Code (separate prompt)
 - Save output to `/Kollect-It/Products/` folder in Google Drive
 - Watcher auto-detects and syncs to ImageKit
@@ -128,6 +131,7 @@ bun run validate-product product-2025-0001.json    # Full schema check
 ## 🧪 Testing Scenarios
 
 ### Test 1: Connection Diagnostics
+
 ```bash
 # Verify everything works before bulk operations
 bun run test-imagekit
@@ -139,6 +143,7 @@ bun run test-google-drive
 ```
 
 ### Test 2: Single Product End-to-End
+
 ```bash
 # 1. Generate in AI Agent v3
 # (Paste test product data)
@@ -153,6 +158,7 @@ bun run validate-product product-test-001.json
 ```
 
 ### Test 3: Batch Processing
+
 ```bash
 # Create test batch
 cat > test-batch.json << 'EOF'
@@ -173,6 +179,7 @@ bun run process-batch test-batch.json
 ```
 
 ### Test 4: Continuous Monitoring
+
 ```bash
 # Terminal 1: Start app
 bun run dev
@@ -197,11 +204,13 @@ bun run sync-from-google-drive
 Fetches recent product JSON files and validates them.
 
 **Request:**
+
 ```bash
 curl -X POST http://localhost:3000/api/products/sync-from-google-drive
 ```
 
 **Response (200 - Success):**
+
 ```json
 {
   "success": true,
@@ -234,6 +243,7 @@ curl -X POST http://localhost:3000/api/products/sync-from-google-drive
 Uploads product photos to ImageKit CDN.
 
 **Request:**
+
 ```bash
 curl -X POST http://localhost:3000/api/products/sync-imagekit \
   -H "Content-Type: application/json" \
@@ -244,6 +254,7 @@ curl -X POST http://localhost:3000/api/products/sync-imagekit \
 ```
 
 **Response (200 - All Success):**
+
 ```json
 {
   "success": true,
@@ -272,6 +283,7 @@ curl -X POST http://localhost:3000/api/products/sync-imagekit \
 ```
 
 **Response (207 - Partial Success):**
+
 ```json
 {
   "success": false,
@@ -303,11 +315,13 @@ curl -X POST http://localhost:3000/api/products/sync-imagekit \
 Located in: `./logs/google-drive-sync.log`
 
 **View live:**
+
 ```bash
 tail -f logs/google-drive-sync.log
 ```
 
 **Log format (JSON):**
+
 ```json
 {
   "timestamp": "2025-11-07T12:00:15.000Z",
@@ -319,6 +333,7 @@ tail -f logs/google-drive-sync.log
 ```
 
 **Filter by status:**
+
 ```bash
 grep "SUCCESS" logs/google-drive-sync.log
 grep "ERROR" logs/google-drive-sync.log
@@ -330,11 +345,13 @@ grep "SKIPPED" logs/google-drive-sync.log
 Located in: `./batches/`
 
 **View manifest:**
+
 ```bash
 cat batches/batch_1731000000_abc1234-manifest.json
 ```
 
 **Example manifest:**
+
 ```json
 {
   "batch_id": "batch_1731000000_abc1234",
@@ -363,11 +380,13 @@ cat batches/batch_1731000000_abc1234-manifest.json
 ### Issue: ImageKit Connection Fails
 
 **Test:**
+
 ```bash
 bun run test-imagekit
 ```
 
 **Solution:**
+
 1. Check `.env.local` has all 3 vars:
    - `IMAGEKIT_PUBLIC_KEY`
    - `IMAGEKIT_PRIVATE_KEY`
@@ -379,11 +398,13 @@ bun run test-imagekit
 ### Issue: Google Drive Watcher Not Finding Files
 
 **Test:**
+
 ```bash
 bun run test-google-drive
 ```
 
 **Solution:**
+
 1. Verify `GOOGLE_DRIVE_FOLDER_ID` in `.env.local`
 2. Confirm service account email has folder access
 3. Check credentials file exists at path
@@ -392,11 +413,13 @@ bun run test-google-drive
 ### Issue: Product Validation Fails
 
 **Test:**
+
 ```bash
 bun run validate-product product.json
 ```
 
 **Common errors:**
+
 - Description word count < 250 or > 350
 - Pricing: low >= suggested or suggested >= high
 - Missing required fields (category, name, condition, photos)
@@ -407,12 +430,14 @@ bun run validate-product product.json
 ### Issue: Photos Won't Upload to ImageKit
 
 **Causes:**
+
 1. File path incorrect (check relative path in product.json)
 2. File doesn't exist in `public/` folder
 3. ImageKit quota exceeded (check dashboard)
 4. File too large (ImageKit has size limits)
 
 **Solution:**
+
 - Check: Does file exist at `public/[photo.url]`?
 - Retry: `bun run sync-from-google-drive`
 - Check logs: `tail -f logs/google-drive-sync.log`
@@ -472,12 +497,14 @@ kollect-it-marketplace/
 ### Immediate (Today)
 
 1. **Test connections:**
+
    ```bash
    bun run test-imagekit
    bun run test-google-drive
    ```
 
 2. **Start watcher in background:**
+
    ```bash
    bun run watch-google-drive &
    ```
@@ -564,14 +591,14 @@ grep SUCCESS logs/google-drive-sync.log | wc -l
 ✅ **2 API routes** — 300+ lines  
 ✅ **1 module** — 200+ lines  
 ✅ **package.json** — 6 new commands  
-✅ **Documentation** — This file  
+✅ **Documentation** — This file
 
 ### Total Implementation
 
 **1,470+ lines** of production-ready TypeScript  
 **0 external dependencies added** (uses existing: googleapis, imagekit)  
 **Full error handling** — Retries, logging, validation  
-**Ready for:** Single products, batch processing, continuous monitoring  
+**Ready for:** Single products, batch processing, continuous monitoring
 
 ---
 

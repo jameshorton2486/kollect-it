@@ -1,12 +1,12 @@
 /**
  * Email Service with Google Workspace SMTP
- * 
+ *
  * Features:
  * - Nodemailer with connection pooling
  * - React Email template rendering
  * - Automatic retry with exponential backoff
  * - Error logging and monitoring
- * 
+ *
  * Setup Instructions:
  * 1. Create Google Workspace account ($6/month)
  * 2. Enable 2FA on your account
@@ -19,12 +19,12 @@
  *    EMAIL_PASSWORD="your-app-password"
  */
 
-import nodemailer from 'nodemailer';
-import { render } from '@react-email/components';
-import { OrderConfirmationEmail } from '@/emails/OrderConfirmationEmail';
-import { OrderStatusUpdateEmail } from '@/emails/OrderStatusUpdateEmail';
-import { AdminNewOrderEmail } from '@/emails/AdminNewOrderEmail';
-import { WelcomeEmail } from '@/emails/WelcomeEmail';
+import nodemailer from "nodemailer";
+import { render } from "@react-email/components";
+import { OrderConfirmationEmail } from "@/emails/OrderConfirmationEmail";
+import { OrderStatusUpdateEmail } from "@/emails/OrderStatusUpdateEmail";
+import { AdminNewOrderEmail } from "@/emails/AdminNewOrderEmail";
+import { WelcomeEmail } from "@/emails/WelcomeEmail";
 
 // Email data interfaces
 interface OrderEmailData {
@@ -36,12 +36,12 @@ interface OrderEmailData {
   tax: number;
   shipping: number;
   items: Array<{ title: string; price: number; quantity: number }>;
-  shippingAddress: { 
-    address: string; 
-    city: string; 
-    state: string; 
-    zipCode: string; 
-    country: string; 
+  shippingAddress: {
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
   };
 }
 
@@ -60,24 +60,21 @@ interface WelcomeEmailData {
 }
 
 // Email configuration
-const EMAIL_ENABLED = !!(
-  process.env.EMAIL_USER && 
-  process.env.EMAIL_PASSWORD
-);
+const EMAIL_ENABLED = !!(process.env.EMAIL_USER && process.env.EMAIL_PASSWORD);
 
 // Create reusable transporter with connection pooling
 let transporter: nodemailer.Transporter | null = null;
 
 function getTransporter() {
   if (!EMAIL_ENABLED) {
-    console.warn('[Email] Email not configured - emails will be logged only');
+    console.warn("[Email] Email not configured - emails will be logged only");
     return null;
   }
 
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.EMAIL_PORT || '587'),
+      host: process.env.EMAIL_HOST || "smtp.gmail.com",
+      port: parseInt(process.env.EMAIL_PORT || "587"),
       secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.EMAIL_USER,
@@ -91,9 +88,9 @@ function getTransporter() {
     // Verify connection on startup
     transporter.verify((error) => {
       if (error) {
-        console.error('[Email] SMTP connection failed:', error);
+        console.error("[Email] SMTP connection failed:", error);
       } else {
-        console.log('[Email] SMTP connection established');
+        console.log("[Email] SMTP connection established");
       }
     });
   }
@@ -106,13 +103,13 @@ async function sendEmail(
   to: string,
   subject: string,
   html: string,
-  retries = 3
+  retries = 3,
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   const transport = getTransporter();
 
   if (!transport) {
     console.log(`[Email Disabled] To: ${to}, Subject: ${subject}`);
-    return { success: true, messageId: 'disabled' };
+    return { success: true, messageId: "disabled" };
   }
 
   for (let attempt = 1; attempt <= retries; attempt++) {
@@ -132,16 +129,18 @@ async function sendEmail(
       if (attempt === retries) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : 'Unknown error',
+          error: error instanceof Error ? error.message : "Unknown error",
         };
       }
 
       // Exponential backoff: 1s, 2s, 4s
-      await new Promise((resolve) => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+      await new Promise((resolve) =>
+        setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)),
+      );
     }
   }
 
-  return { success: false, error: 'Max retries exceeded' };
+  return { success: false, error: "Max retries exceeded" };
 }
 
 // Get site URL based on environment
@@ -152,7 +151,7 @@ function getSiteUrl(): string {
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
-  return 'http://localhost:3000';
+  return "http://localhost:3000";
 }
 
 /**
@@ -170,13 +169,13 @@ export async function sendOrderConfirmationEmail(data: OrderEmailData) {
       items: data.items,
       shippingAddress: data.shippingAddress,
       siteUrl: getSiteUrl(),
-    })
+    }),
   );
 
   return sendEmail(
     data.customerEmail,
     `Order Confirmation - ${data.orderNumber}`,
-    html
+    html,
   );
 }
 
@@ -192,14 +191,14 @@ export async function sendOrderStatusUpdateEmail(data: StatusUpdateEmailData) {
       trackingNumber: data.trackingNumber,
       carrier: data.carrier,
       siteUrl: getSiteUrl(),
-    })
+    }),
   );
 
   const statusText = data.status.charAt(0).toUpperCase() + data.status.slice(1);
   return sendEmail(
     data.customerEmail,
     `Order ${statusText} - ${data.orderNumber}`,
-    html
+    html,
   );
 }
 
@@ -211,14 +210,10 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
     WelcomeEmail({
       name: data.name,
       siteUrl: getSiteUrl(),
-    })
+    }),
   );
 
-  return sendEmail(
-    data.email,
-    'Welcome to Kollect-It!',
-    html
-  );
+  return sendEmail(data.email, "Welcome to Kollect-It!", html);
 }
 
 /**
@@ -228,8 +223,10 @@ export async function sendAdminNewOrderEmail(data: OrderEmailData) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
 
   if (!adminEmail) {
-    console.warn('[Email] No admin email configured - skipping admin notification');
-    return { success: false, error: 'No admin email configured' };
+    console.warn(
+      "[Email] No admin email configured - skipping admin notification",
+    );
+    return { success: false, error: "No admin email configured" };
   }
 
   const html = await render(
@@ -240,13 +237,13 @@ export async function sendAdminNewOrderEmail(data: OrderEmailData) {
       total: data.total,
       items: data.items,
       siteUrl: getSiteUrl(),
-    })
+    }),
   );
 
   return sendEmail(
     adminEmail,
     `New Order Received - ${data.orderNumber}`,
-    html
+    html,
   );
 }
 
@@ -256,12 +253,12 @@ export async function sendAdminNewOrderEmail(data: OrderEmailData) {
 export async function sendTestEmail(to: string) {
   const html = await render(
     WelcomeEmail({
-      name: 'Test User',
+      name: "Test User",
       siteUrl: getSiteUrl(),
-    })
+    }),
   );
 
-  return sendEmail(to, 'Test Email from Kollect-It', html);
+  return sendEmail(to, "Test Email from Kollect-It", html);
 }
 
 /**
@@ -277,8 +274,10 @@ export function isEmailConfigured(): boolean {
 export function getEmailStatus() {
   return {
     enabled: EMAIL_ENABLED,
-    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-    user: process.env.EMAIL_USER ? `${process.env.EMAIL_USER.substring(0, 3)}***` : 'Not configured',
-    from: process.env.EMAIL_FROM || 'Not configured',
+    host: process.env.EMAIL_HOST || "smtp.gmail.com",
+    user: process.env.EMAIL_USER
+      ? `${process.env.EMAIL_USER.substring(0, 3)}***`
+      : "Not configured",
+    from: process.env.EMAIL_FROM || "Not configured",
   };
 }

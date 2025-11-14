@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { formatUSD0 } from '@/lib/currency';
+import { formatUSD0 } from "@/lib/currency";
 
 interface Product {
   title: string;
@@ -20,9 +20,14 @@ export default function StickyCartBar({ product }: StickyCartBarProps) {
     <div className="sticky-cart-bar">
       <div className="sticky-cart-content">
         <div className="sticky-cart-info">
-            <p className="sticky-cart-price text-brand-gold font-semibold">{formatUSD0(product.price)}</p>
+          <p className="sticky-cart-price text-brand-gold font-semibold">
+            {formatUSD0(product.price)}
+          </p>
         </div>
-        <button className="sticky-cart-button btn-cta" onClick={handleAddToCart}>
+        <button
+          className="sticky-cart-button btn-cta"
+          onClick={handleAddToCart}
+        >
           Add to Cart
         </button>
       </div>

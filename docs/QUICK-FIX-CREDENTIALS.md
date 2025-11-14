@@ -1,9 +1,11 @@
 # Quick Reference: Fix Google Cloud Service Account Keys
 
 ## The Problem
+
 ```
 error: invalid_grant: Invalid JWT Signature
 ```
+
 This means your service account keys are **disabled or revoked**.
 
 ---
@@ -25,12 +27,14 @@ https://console.cloud.google.com/
 ### 2️⃣ Update Your Project
 
 **Option A: Automatic (Recommended)**
+
 ```powershell
 cd c:\Users\james\kollect-it-marketplace-1
 .\scripts\update-credentials.ps1
 ```
 
 **Option B: Manual**
+
 ```powershell
 Copy-Item -Path "c:\Users\james\Downloads\kollect-it-imagekit-*.json" `
           -Destination "c:\Users\james\kollect-it-marketplace-1\google-credentials.json" -Force
@@ -63,12 +67,14 @@ bun run sync-images
 ## If Still Getting Error
 
 **Check these:**
+
 - [ ] Service account is **ENABLED** (not grayed out)
 - [ ] You downloaded the **NEW** key (not old one)
 - [ ] File is **valid JSON** (no markdown code blocks)
 - [ ] Service account has **access** to Drive folder
 
 **To grant access:**
+
 1. Open: https://drive.google.com/drive/folders/1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
 2. Right-click → Share
 3. Add: `imagekit-sync@kollect-it-imagekit.iam.gserviceaccount.com`
@@ -79,11 +85,11 @@ bun run sync-images
 
 ## Files Involved
 
-| File | Purpose |
-|------|---------|
-| `google-credentials.json` | Service account key (in project root) |
-| `scripts/update-credentials.ps1` | Helper script to update credentials |
-| `.env.local` | Already has GOOGLE_APPLICATION_CREDENTIALS set |
+| File                             | Purpose                                        |
+| -------------------------------- | ---------------------------------------------- |
+| `google-credentials.json`        | Service account key (in project root)          |
+| `scripts/update-credentials.ps1` | Helper script to update credentials            |
+| `.env.local`                     | Already has GOOGLE_APPLICATION_CREDENTIALS set |
 
 ---
 

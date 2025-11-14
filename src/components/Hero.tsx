@@ -1,14 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
-
   // Prefetch links on hover to reduce navigation latency
   const handleLinkHover = (href: string) => {
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
+    const link = document.createElement("link");
+    link.rel = "prefetch";
     link.href = href;
     document.head.appendChild(link);
   };
@@ -68,14 +67,14 @@ export default function Hero() {
           <Link
             href="/shop"
             className="px-8 py-4 bg-[#D3AF37] text-[#1a1a1a] font-medium hover:bg-[#c9a532] transition-colors duration-300 min-w-[200px] rounded-sm"
-            onMouseEnter={() => handleLinkHover('/shop')}
+            onMouseEnter={() => handleLinkHover("/shop")}
           >
             Browse Collectibles
           </Link>
           <Link
             href="/about"
             className="px-8 py-4 border-2 border-white text-white font-medium hover:bg-white hover:text-[#1a1a1a] transition-colors duration-300 min-w-[200px] rounded-sm"
-            onMouseEnter={() => handleLinkHover('/about')}
+            onMouseEnter={() => handleLinkHover("/about")}
           >
             How We Work
           </Link>

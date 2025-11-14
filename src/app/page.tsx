@@ -7,20 +7,29 @@ import dynamic from "next/dynamic";
 
 // Lazy load heavy components for faster initial page load
 // These components are below the fold and don't need to be in the initial bundle
-const LazyFeaturedCollection = dynamic(() => import("@/components/home/FeaturedCollection"), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
-  ssr: true,
-});
+const LazyFeaturedCollection = dynamic(
+  () => import("@/components/home/FeaturedCollection"),
+  {
+    loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+    ssr: true,
+  },
+);
 
-const LazyTestimonials = dynamic(() => import("@/components/home/Testimonials"), {
-  loading: () => <div className="h-64 bg-gray-100 animate-pulse" />,
-  ssr: true,
-});
+const LazyTestimonials = dynamic(
+  () => import("@/components/home/Testimonials"),
+  {
+    loading: () => <div className="h-64 bg-gray-100 animate-pulse" />,
+    ssr: true,
+  },
+);
 
-const LazyProcessOverview = dynamic(() => import("@/components/home/ProcessOverview"), {
-  loading: () => <div className="h-80 bg-gray-100 animate-pulse" />,
-  ssr: true,
-});
+const LazyProcessOverview = dynamic(
+  () => import("@/components/home/ProcessOverview"),
+  {
+    loading: () => <div className="h-80 bg-gray-100 animate-pulse" />,
+    ssr: true,
+  },
+);
 
 export const metadata: Metadata = {
   title: "Kollect-It • Collectibles Worth Collecting",
@@ -55,18 +64,20 @@ export default function HomePage() {
     <main className="bg-white" role="main">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Kollect-It",
-          url: "https://kollect-it.com",
-          logo: "https://ext.same-assets.com/kollect-it/logo.png",
-          sameAs: [
-            "https://www.instagram.com/",
-            "https://www.facebook.com/",
-            "https://www.youtube.com/",
-          ],
-        }) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Kollect-It",
+            url: "https://kollect-it.com",
+            logo: "https://ext.same-assets.com/kollect-it/logo.png",
+            sameAs: [
+              "https://www.instagram.com/",
+              "https://www.facebook.com/",
+              "https://www.youtube.com/",
+            ],
+          }),
+        }}
       />
       <Hero />
       <TrustStrip />

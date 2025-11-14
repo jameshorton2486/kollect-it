@@ -29,20 +29,17 @@ interface EnvironmentConfig {
 
 const ENV_CONFIG: EnvironmentConfig = {
   required: [
-    'DATABASE_URL',
-    'NEXTAUTH_URL',
-    'NEXTAUTH_SECRET',
-    'STRIPE_SECRET_KEY',
-    'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY',
-    'IMAGEKIT_PRIVATE_KEY',
-    'NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY',
-    'NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT',
-    'RESEND_API_KEY',
+    "DATABASE_URL",
+    "NEXTAUTH_URL",
+    "NEXTAUTH_SECRET",
+    "STRIPE_SECRET_KEY",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+    "IMAGEKIT_PRIVATE_KEY",
+    "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
+    "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
+    "RESEND_API_KEY",
   ],
-  optional: [
-    'NEXT_PUBLIC_GA_ID',
-    'GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY',
-  ],
+  optional: ["NEXT_PUBLIC_GA_ID", "GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY"],
 };
 
 export function validateEnvironment() {
@@ -66,18 +63,18 @@ export function validateEnvironment() {
 
 export function logValidationResults(result: any) {
   if (result.warnings.length > 0) {
-    console.warn('⚠️  Environment Warnings:');
+    console.warn("⚠️  Environment Warnings:");
     result.warnings.forEach((w: string) => console.warn(`   ${w}`));
   }
 
   if (result.errors.length > 0) {
-    console.error('❌ Environment Configuration Errors:');
+    console.error("❌ Environment Configuration Errors:");
     result.errors.forEach((e: string) => console.error(`   ${e}`));
-    throw new Error('Environment validation failed.');
+    throw new Error("Environment validation failed.");
   }
 
   if (result.valid && result.warnings.length === 0) {
-    console.log('✅ All environment variables validated');
+    console.log("✅ All environment variables validated");
   }
 }
 ```
@@ -91,18 +88,21 @@ export function logValidationResults(result: any) {
 
 ```javascript
 // Environment validation at build time
-const isCI = process.env.CI === 'true';
+const isCI = process.env.CI === "true";
 
 if (isProduction || isCI) {
   try {
-    const { validateEnvironment, logValidationResults } = require('./src/lib/env-validation.ts');
+    const {
+      validateEnvironment,
+      logValidationResults,
+    } = require("./src/lib/env-validation.ts");
     const result = validateEnvironment();
     logValidationResults(result);
   } catch (error) {
     if (isProduction) {
       throw error;
     }
-    console.warn('Environment validation warning:', error.message);
+    console.warn("Environment validation warning:", error.message);
   }
 }
 ```
@@ -133,38 +133,38 @@ RESEND_API_KEY=re_your_key
 **FILE:** Create `src/middleware.ts`
 
 ```typescript
-import { withAuth } from 'next-auth/middleware';
-import { NextRequest, NextResponse } from 'next/server';
+import { withAuth } from "next-auth/middleware";
+import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = withAuth(
   async function middleware(req: NextRequest & { nextauth: any }) {
-    if (req.nextUrl.pathname.startsWith('/admin')) {
+    if (req.nextUrl.pathname.startsWith("/admin")) {
       const token = req.nextauth.token;
       if (!token) {
-        return NextResponse.redirect(new URL('/admin/login', req.url));
+        return NextResponse.redirect(new URL("/admin/login", req.url));
       }
-      if (token.role !== 'admin') {
-        return NextResponse.redirect(new URL('/', req.url));
+      if (token.role !== "admin") {
+        return NextResponse.redirect(new URL("/", req.url));
       }
     }
-    
-    if (req.nextUrl.pathname.startsWith('/account')) {
+
+    if (req.nextUrl.pathname.startsWith("/account")) {
       const token = req.nextauth.token;
       if (!token) {
-        return NextResponse.redirect(new URL('/login', req.url));
+        return NextResponse.redirect(new URL("/login", req.url));
       }
     }
 
     return NextResponse.next();
   },
   {
-    pages: { signIn: '/admin/login' },
+    pages: { signIn: "/admin/login" },
     callbacks: { authorized: ({ token }) => true },
-  }
+  },
 );
 
 export const config = {
-  matcher: ['/admin/:path*', '/account/:path*', '/api/admin/:path*'],
+  matcher: ["/admin/:path*", "/account/:path*", "/api/admin/:path*"],
 };
 ```
 

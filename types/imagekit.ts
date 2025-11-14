@@ -19,12 +19,12 @@ export interface ImageTransformation {
   width?: number;
   height?: number;
   quality?: number;
-  format?: 'webp' | 'jpg' | 'jpeg' | 'png' | 'gif';
-  crop?: 'maintain_ratio' | 'force' | 'at_least' | 'at_max';
-  cropMode?: 'resize' | 'extract';
+  format?: "webp" | "jpg" | "jpeg" | "png" | "gif";
+  crop?: "maintain_ratio" | "force" | "at_least" | "at_max";
+  cropMode?: "resize" | "extract";
   x?: number;
   y?: number;
-  focus?: 'auto' | 'face' | 'center';
+  focus?: "auto" | "face" | "center";
   bg?: string;
   border?: string;
   radius?: number;
@@ -193,6 +193,6 @@ export interface ImageSyncProgress {
   total: number;
   percentage: number;
   currentFileName: string;
-  status: 'idle' | 'syncing' | 'completed' | 'failed';
+  status: "idle" | "syncing" | "completed" | "failed";
   message: string;
 }

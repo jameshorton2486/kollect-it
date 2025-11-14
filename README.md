@@ -74,7 +74,7 @@ A full-stack Next.js application for Kollect-It antiques and collectibles market
    - PCI-compliant payment processing
    - [📘 Full Stripe Setup Guide](./STRIPE_SETUP.md)
 
-1. **Admin Order Management** ✅
+10. **Admin Order Management** ✅
 
 - Complete order dashboard with real-time stats
 - Search and filter orders (status, date, customer)
@@ -211,12 +211,12 @@ Before you can accept payments, you need to configure Stripe:
    - Create a free Stripe account at [stripe.com](https://stripe.com)
    - Get your test API keys from the Stripe Dashboard
    - Update your `.env` file with the keys:
-     
+
      ```env
      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_your-key"
      STRIPE_SECRET_KEY="sk_test_your-key"
      ```
-     
+
    - Restart the dev server
    - Test checkout with card: `4242 4242 4242 4242`
 
@@ -310,26 +310,28 @@ kollect-it-dynamic/
 This project centralizes styling in `src/app/globals.css` and exposes a set of token-driven utilities and components to keep typography, color, spacing, and CTAs consistent across pages.
 
 - Typography (global)
-   - Headings: font-family uses `--font-serif` via base styles
-   - Body text: font-family uses `--font-sans` via base styles
+  - Headings: font-family uses `--font-serif` via base styles
+  - Body text: font-family uses `--font-sans` via base styles
 
 - Color tokens (defined on :root)
-   - `--color-deep-navy`, `--color-muted-gold`, `--color-cream`, `--color-charcoal`, plus gray scales
+  - `--color-deep-navy`, `--color-muted-gold`, `--color-cream`, `--color-charcoal`, plus gray scales
 
 - Utility classes (in @layer components of globals.css)
-   - Text: `.text-navy`, `.text-gold`
-   - Background: `.bg-cream`, `.bg-navy`
-   - Border: `.border-gold`
-   - Spacing: `.section-spacing` (vertical spacing for sections)
-   - CTA: `.btn-cta` (uppercased, gold border/text; hover: gold bg + navy text)
+  - Text: `.text-navy`, `.text-gold`
+  - Background: `.bg-cream`, `.bg-navy`
+  - Border: `.border-gold`
+  - Spacing: `.section-spacing` (vertical spacing for sections)
+  - CTA: `.btn-cta` (uppercased, gold border/text; hover: gold bg + navy text)
 
 Usage example:
 
 ```tsx
 <section className="section-spacing bg-cream">
-   <h2 className="text-4xl text-navy font-semibold mb-6">Section Title</h2>
-   <p className="text-gray-700">Body copy inherits the global font and sizes.</p>
-   <a className="btn-cta" href="/shop">Browse</a>
+  <h2 className="text-4xl text-navy font-semibold mb-6">Section Title</h2>
+  <p className="text-gray-700">Body copy inherits the global font and sizes.</p>
+  <a className="btn-cta" href="/shop">
+    Browse
+  </a>
 </section>
 ```
 
@@ -346,8 +348,8 @@ Edit `src/app/kollect-it-styles.css`:
 
 ```css
 :root {
-   --color-gold: #B1874C;      /* Richer gold accent */
-   --color-primary: #2C2C2C;   /* Neutral dark for text/background */
+  --color-gold: #b1874c; /* Richer gold accent */
+  --color-primary: #2c2c2c; /* Neutral dark for text/background */
   /* ... other colors ... */
 }
 ```
@@ -377,6 +379,7 @@ Edit `src/app/kollect-it-styles.css`:
    NEXTAUTH_SECRET=your-random-secret
    NEXTAUTH_URL=https://your-domain.com
    ```
+
 5. Deploy!
 
 ### **Database for Production:**
@@ -389,6 +392,7 @@ For production, ensure PostgreSQL is configured:
    ```env
    DATABASE_URL="postgresql://user:password@host:5432/database"
    ```
+
 3. Run migrations:
 
    ```bash
@@ -496,4 +500,4 @@ If you need help with deployment, you can:
 
 ### Built with ❤️ for Kollect-It
 
-*This is a fully functional, production-ready application. The latest 6 products feature works automatically - just add products through the admin panel and they'll appear on the homepage!*
+_This is a fully functional, production-ready application. The latest 6 products feature works automatically - just add products through the admin panel and they'll appear on the homepage!_

@@ -1,15 +1,15 @@
 /**
  * API Route: Image Sync Endpoint
- * 
+ *
  * POST /api/sync-images
- * 
+ *
  * Triggers a Google Drive to ImageKit sync operation.
  * Runs in the background and returns immediately.
- * 
+ *
  * Security:
  * - Validates webhook secret for API access
  * - Rate limited to prevent abuse
- * 
+ *
  * Request body:
  * ```json
  * {
@@ -18,7 +18,7 @@
  *   "skipExisting": true
  * }
  * ```
- * 
+ *
  * Response:
  * ```json
  * {
@@ -29,9 +29,9 @@
  * ```
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { rateLimiters } from '@/lib/rate-limit';
-import { applySecurityHeaders } from '@/lib/security';
+import { NextRequest, NextResponse } from "next/server";
+import { rateLimiters } from "@/lib/rate-limit";
+import { applySecurityHeaders } from "@/lib/security";
 
 // Simple in-memory sync tracking (use Redis in production)
 const syncHistory = new Map<string, { status: string; startTime: Date }>();
@@ -48,12 +48,12 @@ function generateSyncId(): string {
  */
 function validateSecret(providedSecret: string): boolean {
   const expectedSecret = process.env.WEBHOOK_SECRET;
-  
+
   if (!expectedSecret) {
-    console.warn('⚠️  WEBHOOK_SECRET is not configured');
+    console.warn("⚠️  WEBHOOK_SECRET is not configured");
     return false;
   }
-  
+
   return providedSecret === expectedSecret;
 }
 
@@ -62,28 +62,30 @@ function validateSecret(providedSecret: string): boolean {
  */
 async function runSyncInBackground(
   syncId: string,
-  _driveFolderId?: string
+  _driveFolderId?: string,
 ): Promise<void> {
   try {
     // Update sync history
     syncHistory.set(syncId, {
-      status: 'running',
+      status: "running",
       startTime: new Date(),
     });
 
     // NOTE: Direct import of ../../../scripts not supported in Next.js build
     // Use CLI instead: bun run scripts/sync-drive-to-imagekit.ts
     // Or use child_process.exec to run the script
-    
+
     // TODO: Refactor sync logic into @/lib/imagekit-sync for proper imports
-    console.log('[Sync] To run sync, use: bun run scripts/sync-drive-to-imagekit.ts');
-    
+    console.log(
+      "[Sync] To run sync, use: bun run scripts/sync-drive-to-imagekit.ts",
+    );
+
     // Simulate sync completion for now
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     // Update sync history
     syncHistory.set(syncId, {
-      status: 'completed',
+      status: "completed",
       startTime: new Date(),
     });
 
@@ -114,7 +116,7 @@ async function runSyncInBackground(
   } catch (error) {
     // Update sync history with error
     syncHistory.set(syncId, {
-      status: 'failed',
+      status: "failed",
       startTime: new Date(),
     });
 
@@ -138,8 +140,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Validate secret
     if (!validateSecret(secret)) {
       const errorResponse = NextResponse.json(
-        { error: 'Unauthorized: Invalid webhook secret' },
-        { status: 401 }
+        { error: "Unauthorized: Invalid webhook secret" },
+        { status: 401 },
       );
       return applySecurityHeaders(errorResponse);
     }
@@ -155,24 +157,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Return immediate response
     const response = NextResponse.json(
       {
-        status: 'syncing',
-        message: 'Image sync started in background',
+        status: "syncing",
+        message: "Image sync started in background",
         syncId,
-        estimatedDuration: '5-10 minutes',
+        estimatedDuration: "5-10 minutes",
       },
-      { status: 202 } // Accepted
+      { status: 202 }, // Accepted
     );
     return applySecurityHeaders(response);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error('❌ Sync API error:', error);
+    console.error("❌ Sync API error:", error);
 
     const errorResponse = NextResponse.json(
       {
-        error: 'Failed to start sync',
+        error: "Failed to start sync",
         message: errorMessage,
       },
-      { status: 500 }
+      { status: 500 },
     );
     return applySecurityHeaders(errorResponse);
   }
@@ -184,12 +186,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Get sync ID from query params
-    const syncId = request.nextUrl.searchParams.get('syncId');
+    const syncId = request.nextUrl.searchParams.get("syncId");
 
     if (!syncId) {
       return NextResponse.json(
-        { error: 'Missing syncId query parameter' },
-        { status: 400 }
+        { error: "Missing syncId query parameter" },
+        { status: 400 },
       );
     }
 
@@ -198,8 +200,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (!syncInfo) {
       return NextResponse.json(
-        { error: 'Sync not found', syncId },
-        { status: 404 }
+        { error: "Sync not found", syncId },
+        { status: 404 },
       );
     }
 
@@ -215,14 +217,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error('❌ Sync status error:', error);
+    console.error("❌ Sync status error:", error);
 
     const errorResponse = NextResponse.json(
       {
-        error: 'Failed to get sync status',
+        error: "Failed to get sync status",
         message: errorMessage,
       },
-      { status: 500 }
+      { status: 500 },
     );
     return applySecurityHeaders(errorResponse);
   }
@@ -235,9 +237,9 @@ export async function OPTIONS(): Promise<NextResponse> {
   return new NextResponse(null, {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
     },
   });
 }

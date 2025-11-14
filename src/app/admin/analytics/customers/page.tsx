@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { exportCustomersCSV } from '@/lib/csv-export';
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { exportCustomersCSV } from "@/lib/csv-export";
 
 interface CustomerData {
   period: string;
@@ -29,13 +29,13 @@ export default function CustomerAnalyticsPage() {
   const router = useRouter();
   const [customerData, setCustomerData] = useState<CustomerData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState('30');
+  const [period, setPeriod] = useState("30");
 
   // Redirect if not admin
   useEffect(() => {
-    if (status === 'loading') return;
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      router.push('/admin/login');
+    if (status === "loading") return;
+    if (!session?.user || (session.user as any).role !== "admin") {
+      router.push("/admin/login");
     }
   }, [session, status, router]);
 
@@ -47,13 +47,15 @@ export default function CustomerAnalyticsPage() {
   const fetchCustomerData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/analytics/customers?period=${period}`);
+      const response = await fetch(
+        `/api/admin/analytics/customers?period=${period}`,
+      );
       if (response.ok) {
         const data = await response.json();
         setCustomerData(data);
       }
     } catch (error) {
-      console.error('Error fetching customer data:', error);
+      console.error("Error fetching customer data:", error);
     } finally {
       setLoading(false);
     }
@@ -64,7 +66,7 @@ export default function CustomerAnalyticsPage() {
     exportCustomersCSV(customerData.topCustomers);
   };
 
-  if (status === 'loading' || loading) {
+  if (status === "loading" || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -75,7 +77,7 @@ export default function CustomerAnalyticsPage() {
     );
   }
 
-  if (!session?.user || (session.user as any).role !== 'admin') {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return null;
   }
 
@@ -85,12 +87,14 @@ export default function CustomerAnalyticsPage() {
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Customer Analytics</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Customer Analytics
+            </h1>
             <p className="mt-2 text-gray-600">
               Customer lifetime value, retention, and purchase behavior
             </p>
           </div>
-          
+
           {/* Period Selector */}
           <div className="flex gap-2">
             <select
@@ -111,7 +115,9 @@ export default function CustomerAnalyticsPage() {
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Total Customers</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Total Customers
+                </div>
                 <div className="mt-2 text-3xl font-bold text-gray-900">
                   {customerData.summary.totalCustomers}
                 </div>
@@ -121,7 +127,9 @@ export default function CustomerAnalyticsPage() {
               </div>
 
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Retention Rate</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Retention Rate
+                </div>
                 <div className="mt-2 text-3xl font-bold text-gray-900">
                   {customerData.summary.retentionRate.toFixed(1)}%
                 </div>
@@ -131,29 +139,42 @@ export default function CustomerAnalyticsPage() {
               </div>
 
               <div className="bg-white rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-gray-500">Average Lifetime Value</div>
+                <div className="text-sm font-medium text-gray-500">
+                  Average Lifetime Value
+                </div>
                 <div className="mt-2 text-3xl font-bold text-gray-900">
                   ${customerData.summary.averageLifetimeValue.toFixed(2)}
                 </div>
                 <div className="mt-2 text-sm text-gray-600">
-                  {customerData.summary.avgOrdersPerCustomer.toFixed(1)} avg orders per customer
+                  {customerData.summary.avgOrdersPerCustomer.toFixed(1)} avg
+                  orders per customer
                 </div>
               </div>
             </div>
 
             {/* Customer Segments */}
             <div className="bg-white rounded-lg shadow p-6 mb-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Customer Segments</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Customer Segments
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* New vs Returning */}
                 <div>
-                  <h3 className="text-sm font-medium text-gray-700 mb-3">New vs Returning</h3>
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">
+                    New vs Returning
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-sm mb-1">
                         <span className="text-gray-600">New Customers</span>
                         <span className="font-medium text-gray-900">
-                          {customerData.summary.newCustomers} ({((customerData.summary.newCustomers / customerData.summary.totalCustomers) * 100).toFixed(1)}%)
+                          {customerData.summary.newCustomers} (
+                          {(
+                            (customerData.summary.newCustomers /
+                              customerData.summary.totalCustomers) *
+                            100
+                          ).toFixed(1)}
+                          %)
                         </span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
@@ -167,9 +188,17 @@ export default function CustomerAnalyticsPage() {
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-1">
-                        <span className="text-gray-600">Returning Customers</span>
+                        <span className="text-gray-600">
+                          Returning Customers
+                        </span>
                         <span className="font-medium text-gray-900">
-                          {customerData.summary.returningCustomers} ({((customerData.summary.returningCustomers / customerData.summary.totalCustomers) * 100).toFixed(1)}%)
+                          {customerData.summary.returningCustomers} (
+                          {(
+                            (customerData.summary.returningCustomers /
+                              customerData.summary.totalCustomers) *
+                            100
+                          ).toFixed(1)}
+                          %)
                         </span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
@@ -193,7 +222,8 @@ export default function CustomerAnalyticsPage() {
                     Export Top Customers CSV
                   </button>
                   <p className="mt-2 text-sm text-gray-500 text-center">
-                    Export top {customerData.topCustomers.length} customers by lifetime value
+                    Export top {customerData.topCustomers.length} customers by
+                    lifetime value
                   </p>
                 </div>
               </div>
@@ -201,7 +231,9 @@ export default function CustomerAnalyticsPage() {
 
             {/* Top Customers */}
             <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Top Customers by Lifetime Value</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Top Customers by Lifetime Value
+              </h2>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">

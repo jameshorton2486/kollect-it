@@ -1,15 +1,15 @@
 /**
  * KOLLECT-IT: Google Drive Sync API Route
- * 
+ *
  * POST /api/products/sync-from-google-drive
- * 
+ *
  * Fetches recently created/updated product.json files from Google Drive
  * Validates them, and queues for ImageKit sync
  */
 
-import { google } from 'googleapis';
-import { NextResponse } from 'next/server';
-import * as fs from 'fs';
+import { google } from "googleapis";
+import { NextResponse } from "next/server";
+import * as fs from "fs";
 
 interface ProductJson {
   product_id: string;
@@ -29,49 +29,53 @@ interface ProductJson {
 interface SyncResult {
   product_id: string;
   name: string;
-  status: 'ready_for_imagekit' | 'validation_failed' | 'error';
+  status: "ready_for_imagekit" | "validation_failed" | "error";
   message: string;
   imagekit_queued?: boolean;
 }
 
 async function getGoogleDriveAuth() {
   const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-  
+
   if (!credentialsPath) {
-    throw new Error('GOOGLE_APPLICATION_CREDENTIALS not configured');
+    throw new Error("GOOGLE_APPLICATION_CREDENTIALS not configured");
   }
 
-  const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf-8'));
+  const credentials = JSON.parse(fs.readFileSync(credentialsPath, "utf-8"));
 
   return new google.auth.GoogleAuth({
     credentials,
-    scopes: ['https://www.googleapis.com/auth/drive.readonly']
+    scopes: ["https://www.googleapis.com/auth/drive.readonly"],
   });
 }
 
 async function downloadProductJson(
   drive: ReturnType<typeof google.drive>,
-  fileId: string
+  fileId: string,
 ): Promise<ProductJson> {
   const response = await drive.files.get(
-    { fileId, alt: 'media' },
-    { responseType: 'stream' }
+    { fileId, alt: "media" },
+    { responseType: "stream" },
   );
 
   const chunks: Buffer[] = [];
 
   return new Promise((resolve, reject) => {
-    response.data.on('data', (chunk: Buffer) => chunks.push(chunk));
-    response.data.on('end', () => {
+    response.data.on("data", (chunk: Buffer) => chunks.push(chunk));
+    response.data.on("end", () => {
       try {
-        const jsonContent = Buffer.concat(chunks).toString('utf-8');
+        const jsonContent = Buffer.concat(chunks).toString("utf-8");
         const product = JSON.parse(jsonContent) as ProductJson;
         resolve(product);
       } catch (error) {
-        reject(new Error(`Failed to parse JSON: ${error instanceof Error ? error.message : String(error)}`));
+        reject(
+          new Error(
+            `Failed to parse JSON: ${error instanceof Error ? error.message : String(error)}`,
+          ),
+        );
       }
     });
-    response.data.on('error', reject);
+    response.data.on("error", reject);
   });
 }
 
@@ -81,21 +85,21 @@ export async function POST() {
 
     if (!folderIdtoSync) {
       return NextResponse.json(
-        { error: 'GOOGLE_DRIVE_FOLDER_ID not configured' },
-        { status: 400 }
+        { error: "GOOGLE_DRIVE_FOLDER_ID not configured" },
+        { status: 400 },
       );
     }
 
     const auth = await getGoogleDriveAuth();
-    const drive = google.drive({ version: 'v3', auth });
+    const drive = google.drive({ version: "v3", auth });
 
     // Query for recently modified product JSONs
     const response = await drive.files.list({
       q: `'${folderIdtoSync}' in parents and mimeType='application/json' and name contains '2025_' and trashed=false`,
-      spaces: 'drive',
+      spaces: "drive",
       pageSize: 10,
-      fields: 'files(id, name, createdTime, modifiedTime)',
-      orderBy: 'modifiedTime desc'
+      fields: "files(id, name, createdTime, modifiedTime)",
+      orderBy: "modifiedTime desc",
     });
 
     const files = response.data.files || [];
@@ -110,9 +114,9 @@ export async function POST() {
         if (!product.metadata?.validation_passed) {
           syncResults.push({
             product_id: product.product_id || file.name,
-            name: product.name || 'Unknown',
-            status: 'validation_failed',
-            message: 'Product validation failed'
+            name: product.name || "Unknown",
+            status: "validation_failed",
+            message: "Product validation failed",
           });
           continue;
         }
@@ -122,42 +126,48 @@ export async function POST() {
         syncResults.push({
           product_id: product.product_id,
           name: product.name,
-          status: imagekitReady ? 'ready_for_imagekit' : 'validation_failed',
+          status: imagekitReady ? "ready_for_imagekit" : "validation_failed",
           message: imagekitReady
             ? `Ready for ImageKit: ${product.photos?.length || 0} photos`
-            : 'Not marked for ImageKit sync',
-          imagekit_queued: imagekitReady
+            : "Not marked for ImageKit sync",
+          imagekit_queued: imagekitReady,
         });
 
         // If ImageKit ready, queue for sync
         if (imagekitReady && product.photos && product.photos.length > 0) {
           try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+            const apiUrl =
+              process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
             await fetch(`${apiUrl}/api/products/sync-imagekit`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 product_id: product.product_id,
-                product_json: product
-              })
+                product_json: product,
+              }),
             });
 
             console.log(`✅ ImageKit sync queued: ${product.product_id}`);
           } catch (error) {
-            console.error(`⚠️  ImageKit queue failed for ${product.product_id}:`, error);
+            console.error(
+              `⚠️  ImageKit queue failed for ${product.product_id}:`,
+              error,
+            );
           }
         }
       } catch (error) {
         syncResults.push({
-          product_id: file.name.split('_')[0] || 'unknown',
+          product_id: file.name.split("_")[0] || "unknown",
           name: file.name,
-          status: 'error',
-          message: `Processing error: ${error instanceof Error ? error.message : String(error)}`
+          status: "error",
+          message: `Processing error: ${error instanceof Error ? error.message : String(error)}`,
         });
       }
     }
 
-    const successCount = syncResults.filter(r => r.status === 'ready_for_imagekit').length;
+    const successCount = syncResults.filter(
+      (r) => r.status === "ready_for_imagekit",
+    ).length;
 
     return NextResponse.json(
       {
@@ -165,20 +175,20 @@ export async function POST() {
         timestamp: new Date().toISOString(),
         products_checked: files.length,
         products_valid: successCount,
-        results: syncResults
+        results: syncResults,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
-    console.error('Google Drive sync error:', error);
+    console.error("Google Drive sync error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: new Date().toISOString()
+        error: error instanceof Error ? error.message : "Unknown error",
+        timestamp: new Date().toISOString(),
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

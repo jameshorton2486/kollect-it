@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 /**
  * Report Schedules API
@@ -10,18 +10,18 @@ import { authOptions } from '@/lib/auth';
 export async function GET(_request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     // For now, return mock data (implement database storage later)
     const schedules = [
       {
-        id: '1',
-        name: 'Daily Sales Summary',
-        frequency: 'daily' as const,
-        recipients: ['admin@kollect-it.com'],
-        format: 'pdf' as const,
+        id: "1",
+        name: "Daily Sales Summary",
+        frequency: "daily" as const,
+        recipients: ["admin@kollect-it.com"],
+        format: "pdf" as const,
         includeCharts: true,
         active: true,
         lastRun: new Date(Date.now() - 86400000).toISOString(),
@@ -31,10 +31,10 @@ export async function GET(_request: NextRequest) {
 
     return NextResponse.json(schedules);
   } catch (error) {
-    console.error('Error fetching schedules:', error);
+    console.error("Error fetching schedules:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch schedules' },
-      { status: 500 }
+      { error: "Failed to fetch schedules" },
+      { status: 500 },
     );
   }
 }
@@ -42,8 +42,8 @@ export async function GET(_request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     const body = await request.json();
@@ -52,15 +52,15 @@ export async function POST(request: NextRequest) {
     // Calculate next run time based on frequency
     const now = new Date();
     let nextRun = new Date(now);
-    
+
     switch (frequency) {
-      case 'daily':
+      case "daily":
         nextRun.setDate(nextRun.getDate() + 1);
         break;
-      case 'weekly':
+      case "weekly":
         nextRun.setDate(nextRun.getDate() + 7);
         break;
-      case 'monthly':
+      case "monthly":
         nextRun.setMonth(nextRun.getMonth() + 1);
         break;
     }
@@ -80,10 +80,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newSchedule, { status: 201 });
   } catch (error) {
-    console.error('Error creating schedule:', error);
+    console.error("Error creating schedule:", error);
     return NextResponse.json(
-      { error: 'Failed to create schedule' },
-      { status: 500 }
+      { error: "Failed to create schedule" },
+      { status: 500 },
     );
   }
 }

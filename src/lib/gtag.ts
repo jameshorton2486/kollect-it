@@ -1,18 +1,22 @@
 /**
  * GA4 Analytics Event Tracking Utility
- * 
+ *
  * Usage:
  *   gtag('event', 'view_item', {
  *     items: [{ item_id: '123', item_name: 'Product Name', price: 99.99 }]
  *   });
- * 
+ *
  * Documentation:
  *   - Google Analytics 4 Events: https://developers.google.com/analytics/devguides/collection/ga4/events
  *   - Event Schema: https://support.google.com/analytics/answer/12229021
  */
 
-export const gtag = (command: string, action: string, data?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
+export const gtag = (
+  command: string,
+  action: string,
+  data?: Record<string, any>,
+) => {
+  if (typeof window !== "undefined" && (window as any).gtag) {
     (window as any).gtag(command, action, data);
   }
 };
@@ -28,10 +32,10 @@ export const trackViewItem = (
   productId: string,
   productName: string,
   category: string,
-  price: number
+  price: number,
 ) => {
-  gtag('event', 'view_item', {
-    currency: 'USD',
+  gtag("event", "view_item", {
+    currency: "USD",
     items: [
       {
         item_id: productId,
@@ -56,10 +60,10 @@ export const trackAddToCart = (
   productName: string,
   category: string,
   price: number,
-  quantity: number = 1
+  quantity: number = 1,
 ) => {
-  gtag('event', 'add_to_cart', {
-    currency: 'USD',
+  gtag("event", "add_to_cart", {
+    currency: "USD",
     items: [
       {
         item_id: productId,
@@ -85,10 +89,10 @@ export const trackRemoveFromCart = (
   productName: string,
   category: string,
   price: number,
-  quantity: number = 1
+  quantity: number = 1,
 ) => {
-  gtag('event', 'remove_from_cart', {
-    currency: 'USD',
+  gtag("event", "remove_from_cart", {
+    currency: "USD",
     items: [
       {
         item_id: productId,
@@ -114,10 +118,10 @@ export const trackBeginCheckout = (
     price: number;
     quantity: number;
   }>,
-  cartValue: number
+  cartValue: number,
 ) => {
-  gtag('event', 'begin_checkout', {
-    currency: 'USD',
+  gtag("event", "begin_checkout", {
+    currency: "USD",
     value: cartValue,
     items,
   });
@@ -142,12 +146,12 @@ export const trackPurchase = (
   }>,
   totalValue: number,
   tax?: number,
-  shipping?: number
+  shipping?: number,
 ) => {
-  gtag('event', 'purchase', {
+  gtag("event", "purchase", {
     transaction_id: transactionId,
     value: totalValue,
-    currency: 'USD',
+    currency: "USD",
     tax: tax || 0,
     shipping: shipping || 0,
     items,
@@ -160,7 +164,7 @@ export const trackPurchase = (
  * @param pageTitle - Page title
  */
 export const trackPageView = (pagePath: string, pageTitle?: string) => {
-  gtag('event', 'page_view', {
+  gtag("event", "page_view", {
     page_path: pagePath,
     page_title: pageTitle || document.title,
   });
@@ -171,7 +175,7 @@ export const trackPageView = (pagePath: string, pageTitle?: string) => {
  * @param searchQuery - What the user searched for
  */
 export const trackSearch = (searchQuery: string) => {
-  gtag('event', 'search', {
+  gtag("event", "search", {
     search_term: searchQuery,
   });
 };
@@ -181,8 +185,8 @@ export const trackSearch = (searchQuery: string) => {
  * @param signupMethod - Method used (email, google, etc.)
  */
 export const trackSignUp = (signupMethod?: string) => {
-  gtag('event', 'sign_up', {
-    method: signupMethod || 'email',
+  gtag("event", "sign_up", {
+    method: signupMethod || "email",
   });
 };
 
@@ -191,8 +195,8 @@ export const trackSignUp = (signupMethod?: string) => {
  * @param loginMethod - Method used (email, google, etc.)
  */
 export const trackLogin = (loginMethod?: string) => {
-  gtag('event', 'login', {
-    method: loginMethod || 'email',
+  gtag("event", "login", {
+    method: loginMethod || "email",
   });
 };
 
@@ -201,6 +205,9 @@ export const trackLogin = (loginMethod?: string) => {
  * @param eventName - Event name (should follow GA4 naming conventions: snake_case)
  * @param data - Event data/parameters
  */
-export const trackCustomEvent = (eventName: string, data?: Record<string, any>) => {
-  gtag('event', eventName, data);
+export const trackCustomEvent = (
+  eventName: string,
+  data?: Record<string, any>,
+) => {
+  gtag("event", eventName, data);
 };

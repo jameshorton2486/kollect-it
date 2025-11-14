@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { checkAdminAuth } from '@/lib/auth-helpers';
-import { Prisma } from '@prisma/client';
-import { logger } from '@/lib/logger';
-import { getRequestId } from '@/lib/request-context';
-import { respondError } from '@/lib/api-error';
-import { rateLimiters } from '@/lib/rate-limit';
-import { applySecurityHeaders } from '@/lib/security';
-import { cache, cacheKeys, cacheTTL } from '@/lib/cache';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { checkAdminAuth } from "@/lib/auth-helpers";
+import { Prisma } from "@prisma/client";
+import { logger } from "@/lib/logger";
+import { getRequestId } from "@/lib/request-context";
+import { respondError } from "@/lib/api-error";
+import { rateLimiters } from "@/lib/rate-limit";
+import { applySecurityHeaders } from "@/lib/security";
+import { cache, cacheKeys, cacheTTL } from "@/lib/cache";
 
 // GET /api/products - Get all products
 export async function GET(request: NextRequest) {
@@ -17,36 +17,43 @@ export async function GET(request: NextRequest) {
     if (rateLimitCheck) return rateLimitCheck;
 
     const searchParams = request.nextUrl.searchParams;
-    const category = searchParams.get('category') ?? undefined;
-    const limitStr = searchParams.get('limit');
-    const featured = searchParams.get('featured');
-    const q = searchParams.get('q') ?? undefined;
-    
+    const category = searchParams.get("category") ?? undefined;
+    const limitStr = searchParams.get("limit");
+    const featured = searchParams.get("featured");
+    const q = searchParams.get("q") ?? undefined;
+
     // Generate cache key for this query
-    const cacheKey = cacheKeys.products({ category, limit: limitStr, featured, q });
-    
+    const cacheKey = cacheKeys.products({
+      category,
+      limit: limitStr,
+      featured,
+      q,
+    });
+
     // Check cache first
     const cached = cache.get<any>(cacheKey);
     if (cached) {
-      logger.info('[Cache] Product list cache hit', { requestId: getRequestId(request) });
+      logger.info("[Cache] Product list cache hit", {
+        requestId: getRequestId(request),
+      });
       const response = NextResponse.json(cached);
-      response.headers.set('X-Request-ID', getRequestId(request));
-      response.headers.set('X-Cache', 'HIT');
+      response.headers.set("X-Request-ID", getRequestId(request));
+      response.headers.set("X-Cache", "HIT");
       return applySecurityHeaders(response);
     }
 
     const where: Prisma.ProductWhereInput = {
-      status: 'active',
+      status: "active",
     };
 
     if (category) {
       where.category = { slug: category };
     }
-    if (featured === 'true') {
+    if (featured === "true") {
       where.featured = true;
     }
     if (q) {
-      where.title = { contains: q, mode: 'insensitive' };
+      where.title = { contains: q, mode: "insensitive" };
     }
 
     const take = limitStr ? parseInt(limitStr, 10) : undefined;
@@ -54,25 +61,35 @@ export async function GET(request: NextRequest) {
     const products = await prisma.product.findMany({
       where,
       include: {
-        images: { orderBy: { order: 'asc' } },
+        images: { orderBy: { order: "asc" } },
         category: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       take,
     });
 
     // Cache the product list results
     cache.set(cacheKey, products, cacheTTL.medium); // 5-minute cache
-    
+
     const res = NextResponse.json(products);
-    res.headers.set('X-Request-ID', getRequestId(request));
+    res.headers.set("X-Request-ID", getRequestId(request));
     // Cache for 60s at the edge/CDN and allow stale while revalidate
-    res.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    res.headers.set(
+      "Cache-Control",
+      "public, s-maxage=60, stale-while-revalidate=300",
+    );
     // Rate limit headers are now set by rateLimiters.relaxed()
     return applySecurityHeaders(res);
   } catch (error) {
-    logger.error('Error fetching products', { requestId: getRequestId(request) }, error);
-    return respondError(request, error, { status: 500, code: 'products_fetch_failed' });
+    logger.error(
+      "Error fetching products",
+      { requestId: getRequestId(request) },
+      error,
+    );
+    return respondError(request, error, {
+      status: 500,
+      code: "products_fetch_failed",
+    });
   }
 }
 
@@ -107,8 +124,8 @@ export async function POST(request: NextRequest) {
     // Generate slug from title
     const slug = title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
 
     const product = await prisma.product.create({
       data: {
@@ -124,11 +141,12 @@ export async function POST(request: NextRequest) {
         period,
         featured: featured || false,
         images: {
-          create: (images as ImageInput[] | undefined)?.map((img, index) => ({
-            url: img.url,
-            alt: img.alt || title,
-            order: index,
-          })) || [],
+          create:
+            (images as ImageInput[] | undefined)?.map((img, index) => ({
+              url: img.url,
+              alt: img.alt || title,
+              order: index,
+            })) || [],
         },
       },
       include: {
@@ -138,10 +156,17 @@ export async function POST(request: NextRequest) {
     });
 
     const res = NextResponse.json(product, { status: 201 });
-    res.headers.set('X-Request-ID', getRequestId(request));
+    res.headers.set("X-Request-ID", getRequestId(request));
     return res;
   } catch (error) {
-    logger.error('Error creating product', { requestId: getRequestId(request) }, error);
-    return respondError(request, error, { status: 500, code: 'products_create_failed' });
+    logger.error(
+      "Error creating product",
+      { requestId: getRequestId(request) },
+      error,
+    );
+    return respondError(request, error, {
+      status: 500,
+      code: "products_create_failed",
+    });
   }
 }

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Upload, Loader, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useState } from "react";
+import { Upload, Loader, AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface AnalysisResult {
   title: string;
@@ -21,63 +21,63 @@ interface AnalysisResult {
 }
 
 export function ProductUploadForm() {
-  const [step, setStep] = useState<'upload' | 'analyze' | 'edit' | 'success'>(
-    'upload'
+  const [step, setStep] = useState<"upload" | "analyze" | "edit" | "success">(
+    "upload",
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [category, setCategory] = useState('Collectibles');
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [category, setCategory] = useState("Collectibles");
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [creating, setCreating] = useState(false);
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
-  const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState<string>('');
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
 
   // Form state for editing AI suggestions
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    shortDescription: '',
-    estimatedEra: '',
-    rarity: '',
-    authenticity: '',
+    title: "",
+    description: "",
+    shortDescription: "",
+    estimatedEra: "",
+    rarity: "",
+    authenticity: "",
     suggestedPrice: 0,
-    seoTitle: '',
-    seoDescription: '',
+    seoTitle: "",
+    seoDescription: "",
   });
 
   async function uploadToImageKit(file: File): Promise<string> {
     try {
-      console.log('Getting ImageKit auth...');
-      const authRes = await fetch('/api/imagekit-auth');
-      if (!authRes.ok) throw new Error('Failed to get auth');
+      console.log("Getting ImageKit auth...");
+      const authRes = await fetch("/api/imagekit-auth");
+      if (!authRes.ok) throw new Error("Failed to get auth");
       const auth = await authRes.json();
 
-      console.log('Uploading to ImageKit...');
+      console.log("Uploading to ImageKit...");
       const uploadForm = new FormData();
-      uploadForm.append('file', file);
-      uploadForm.append('fileName', file.name);
-      uploadForm.append('publicKey', auth.publicKey);
-      uploadForm.append('token', auth.token);
-      uploadForm.append('expire', auth.expire.toString());
-      uploadForm.append('signature', auth.signature);
+      uploadForm.append("file", file);
+      uploadForm.append("fileName", file.name);
+      uploadForm.append("publicKey", auth.publicKey);
+      uploadForm.append("token", auth.token);
+      uploadForm.append("expire", auth.expire.toString());
+      uploadForm.append("signature", auth.signature);
 
       const uploadRes = await fetch(
-        'https://upload.imagekit.io/api/v1/files/upload',
+        "https://upload.imagekit.io/api/v1/files/upload",
         {
-          method: 'POST',
+          method: "POST",
           body: uploadForm,
-        }
+        },
       );
 
-      if (!uploadRes.ok) throw new Error('Upload failed');
+      if (!uploadRes.ok) throw new Error("Upload failed");
       const uploadData = await uploadRes.json();
-      console.log('Upload complete:', uploadData.url);
+      console.log("Upload complete:", uploadData.url);
       return uploadData.url;
     } catch (err) {
       throw new Error(
-        `ImageKit upload failed: ${err instanceof Error ? err.message : 'Unknown'}`
+        `ImageKit upload failed: ${err instanceof Error ? err.message : "Unknown"}`,
       );
     }
   }
@@ -87,37 +87,37 @@ export function ProductUploadForm() {
     if (!file) return;
 
     // Validate file
-    if (!file.type.startsWith('image/')) {
-      setError('Please select an image file');
+    if (!file.type.startsWith("image/")) {
+      setError("Please select an image file");
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      setError('Image must be less than 10MB');
+      setError("Image must be less than 10MB");
       return;
     }
 
     setImageFile(file);
-    setError('');
-    setStep('upload');
+    setError("");
+    setStep("upload");
   }
 
   async function handleUpload() {
     if (!imageFile) {
-      setError('No image selected');
+      setError("No image selected");
       return;
     }
 
     setUploading(true);
-    setError('');
+    setError("");
     try {
       const url = await uploadToImageKit(imageFile);
       setImageUrl(url);
-      setSuccess('Image uploaded successfully!');
-      setTimeout(() => setSuccess(''), 3000);
-      setStep('analyze');
+      setSuccess("Image uploaded successfully!");
+      setTimeout(() => setSuccess(""), 3000);
+      setStep("analyze");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : 'Upload failed - try again'
+        err instanceof Error ? err.message : "Upload failed - try again",
       );
     } finally {
       setUploading(false);
@@ -126,28 +126,28 @@ export function ProductUploadForm() {
 
   async function handleAnalyze() {
     if (!imageUrl) {
-      setError('Please upload an image first');
+      setError("Please upload an image first");
       return;
     }
 
     setAnalyzing(true);
-    setError('');
-    console.log('Starting AI analysis...');
+    setError("");
+    console.log("Starting AI analysis...");
 
     try {
-      const res = await fetch('/api/admin/products/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/admin/products/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageUrl, category }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Analysis failed');
+        throw new Error(data.error || "Analysis failed");
       }
 
       const data = await res.json();
-      console.log('Analysis complete:', data);
+      console.log("Analysis complete:", data);
 
       setAnalysis(data);
       setFormData({
@@ -161,12 +161,12 @@ export function ProductUploadForm() {
         seoTitle: data.seoTitle,
         seoDescription: data.seoDescription,
       });
-      setStep('edit');
+      setStep("edit");
     } catch (err) {
       setError(
-        `Analysis failed: ${err instanceof Error ? err.message : 'Try again'}`
+        `Analysis failed: ${err instanceof Error ? err.message : "Try again"}`,
       );
-      console.error('Analysis error:', err);
+      console.error("Analysis error:", err);
     } finally {
       setAnalyzing(false);
     }
@@ -174,17 +174,17 @@ export function ProductUploadForm() {
 
   async function handleCreateProduct() {
     if (!imageUrl || !analysis) {
-      setError('Missing required data');
+      setError("Missing required data");
       return;
     }
 
     setCreating(true);
-    setError('');
+    setError("");
 
     try {
-      const res = await fetch('/api/admin/products/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/admin/products/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           imageUrl,
           category,
@@ -196,35 +196,35 @@ export function ProductUploadForm() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Creation failed');
+        throw new Error(data.error || "Creation failed");
       }
 
       await res.json();
-      setStep('success');
+      setStep("success");
 
       // Reset form
       setTimeout(() => {
         setImageFile(null);
-        setImageUrl('');
+        setImageUrl("");
         setAnalysis(null);
         setFormData({
-          title: '',
-          description: '',
-          shortDescription: '',
-          estimatedEra: '',
-          rarity: '',
-          authenticity: '',
+          title: "",
+          description: "",
+          shortDescription: "",
+          estimatedEra: "",
+          rarity: "",
+          authenticity: "",
           suggestedPrice: 0,
-          seoTitle: '',
-          seoDescription: '',
+          seoTitle: "",
+          seoDescription: "",
         });
-        setStep('upload');
+        setStep("upload");
       }, 3000);
     } catch (err) {
       setError(
-        `Creation failed: ${err instanceof Error ? err.message : 'Try again'}`
+        `Creation failed: ${err instanceof Error ? err.message : "Try again"}`,
       );
-      console.error('Creation error:', err);
+      console.error("Creation error:", err);
     } finally {
       setCreating(false);
     }
@@ -249,9 +249,11 @@ export function ProductUploadForm() {
       )}
 
       {/* STEP 1: UPLOAD */}
-      {step === 'upload' && (
+      {step === "upload" && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-amber-500">Upload Product Photo</h2>
+          <h2 className="text-2xl font-bold text-amber-500">
+            Upload Product Photo
+          </h2>
 
           <div className="border-2 border-dashed border-amber-500/50 rounded-lg p-12 text-center hover:border-amber-500 hover:bg-amber-500/5 transition">
             <input
@@ -268,9 +270,7 @@ export function ProductUploadForm() {
             >
               <Upload className="w-12 h-12 text-amber-500" />
               <div>
-                <p className="font-semibold text-lg">
-                  Drop your photo here
-                </p>
+                <p className="font-semibold text-lg">Drop your photo here</p>
                 <p className="text-sm text-gray-400">
                   or click to browse (JPG, PNG up to 10MB)
                 </p>
@@ -318,10 +318,8 @@ export function ProductUploadForm() {
                   disabled={uploading}
                   className="w-full px-6 py-3 bg-amber-500 text-black font-semibold rounded hover:bg-amber-600 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {uploading && (
-                    <Loader className="w-4 h-4 animate-spin" />
-                  )}
-                  {uploading ? 'Uploading...' : 'Upload to ImageKit'}
+                  {uploading && <Loader className="w-4 h-4 animate-spin" />}
+                  {uploading ? "Uploading..." : "Upload to ImageKit"}
                 </button>
               </div>
             </div>
@@ -330,7 +328,7 @@ export function ProductUploadForm() {
       )}
 
       {/* STEP 2: ANALYZE (Loading) */}
-      {step === 'analyze' && (
+      {step === "analyze" && (
         <div className="flex flex-col items-center justify-center py-12 gap-4">
           <Loader className="w-12 h-12 text-amber-500 animate-spin" />
           <p className="text-lg text-gray-300">
@@ -341,7 +339,7 @@ export function ProductUploadForm() {
       )}
 
       {/* STEP 3: EDIT */}
-      {step === 'edit' && (
+      {step === "edit" && (
         <div className="space-y-6">
           <h2 className="text-2xl font-bold text-amber-500">Review & Edit</h2>
 
@@ -374,7 +372,10 @@ export function ProductUploadForm() {
             <h3 className="font-semibold text-amber-500">Product Details</h3>
 
             <div>
-              <label htmlFor="title-input" className="block text-sm text-gray-400 mb-2">
+              <label
+                htmlFor="title-input"
+                className="block text-sm text-gray-400 mb-2"
+              >
                 Title
               </label>
               <input
@@ -389,7 +390,10 @@ export function ProductUploadForm() {
             </div>
 
             <div>
-              <label htmlFor="description-input" className="block text-sm text-gray-400 mb-2">
+              <label
+                htmlFor="description-input"
+                className="block text-sm text-gray-400 mb-2"
+              >
                 Description (300-400 words)
               </label>
               <textarea
@@ -407,7 +411,10 @@ export function ProductUploadForm() {
             </div>
 
             <div>
-              <label htmlFor="short-desc-input" className="block text-sm text-gray-400 mb-2">
+              <label
+                htmlFor="short-desc-input"
+                className="block text-sm text-gray-400 mb-2"
+              >
                 Short Description (50-75 words)
               </label>
               <textarea
@@ -426,7 +433,12 @@ export function ProductUploadForm() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="era-input" className="block text-sm text-gray-400 mb-2">Era</label>
+                <label
+                  htmlFor="era-input"
+                  className="block text-sm text-gray-400 mb-2"
+                >
+                  Era
+                </label>
                 <input
                   id="era-input"
                   type="text"
@@ -442,7 +454,10 @@ export function ProductUploadForm() {
               </div>
 
               <div>
-                <label htmlFor="price-input" className="block text-sm text-gray-400 mb-2">
+                <label
+                  htmlFor="price-input"
+                  className="block text-sm text-gray-400 mb-2"
+                >
                   Price
                 </label>
                 <input
@@ -462,7 +477,10 @@ export function ProductUploadForm() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="rarity-select" className="block text-sm text-gray-400 mb-2">
+                <label
+                  htmlFor="rarity-select"
+                  className="block text-sm text-gray-400 mb-2"
+                >
                   Rarity
                 </label>
                 <select
@@ -482,7 +500,10 @@ export function ProductUploadForm() {
               </div>
 
               <div>
-                <label htmlFor="authenticity-select" className="block text-sm text-gray-400 mb-2">
+                <label
+                  htmlFor="authenticity-select"
+                  className="block text-sm text-gray-400 mb-2"
+                >
                   Authenticity
                 </label>
                 <select
@@ -505,7 +526,10 @@ export function ProductUploadForm() {
             </div>
 
             <div>
-              <label htmlFor="seo-title-input" className="block text-sm text-gray-400 mb-2">
+              <label
+                htmlFor="seo-title-input"
+                className="block text-sm text-gray-400 mb-2"
+              >
                 SEO Title (max 60 chars)
               </label>
               <input
@@ -551,7 +575,7 @@ export function ProductUploadForm() {
           {/* Action Buttons */}
           <div className="flex gap-3">
             <button
-              onClick={() => setStep('upload')}
+              onClick={() => setStep("upload")}
               className="flex-1 px-6 py-3 border border-amber-500/50 text-amber-500 font-semibold rounded hover:border-amber-500"
             >
               Back to Upload
@@ -562,7 +586,7 @@ export function ProductUploadForm() {
               disabled={analyzing}
               className="flex-1 px-6 py-3 border border-amber-500/50 text-amber-500 font-semibold rounded hover:border-amber-500 disabled:opacity-50"
             >
-              {analyzing ? 'Re-analyzing...' : 'Re-analyze with AI'}
+              {analyzing ? "Re-analyzing..." : "Re-analyze with AI"}
             </button>
 
             <button
@@ -571,21 +595,22 @@ export function ProductUploadForm() {
               className="flex-1 px-6 py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {creating && <Loader className="w-4 h-4 animate-spin" />}
-              {creating ? 'Creating...' : 'Create Draft Product'}
+              {creating ? "Creating..." : "Create Draft Product"}
             </button>
           </div>
         </div>
       )}
 
       {/* STEP 4: SUCCESS */}
-      {step === 'success' && (
+      {step === "success" && (
         <div className="flex flex-col items-center justify-center py-12 gap-4 text-center">
           <CheckCircle2 className="w-16 h-16 text-green-500" />
           <h3 className="text-2xl font-bold text-amber-500">
             Product Created!
           </h3>
           <p className="text-gray-300">
-            Your product has been saved as a draft. Go to the Products tab to publish it.
+            Your product has been saved as a draft. Go to the Products tab to
+            publish it.
           </p>
         </div>
       )}

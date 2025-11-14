@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const query = searchParams.get('q') || '';
+    const query = searchParams.get("q") || "";
 
     if (query.length < 2) {
       return NextResponse.json({ suggestions: [] });
@@ -13,11 +13,11 @@ export async function GET(request: NextRequest) {
     // Search for products matching the query
     const products = await prisma.product.findMany({
       where: {
-        status: 'active',
+        status: "active",
         OR: [
-          { title: { contains: query, mode: 'insensitive' } },
-          { description: { contains: query, mode: 'insensitive' } },
-        ]
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } },
+        ],
       },
       take: 5,
       select: {
@@ -27,24 +27,23 @@ export async function GET(request: NextRequest) {
         images: true,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: "desc",
+      },
     });
 
     const suggestions = products.map((product: any) => ({
       id: product.id,
       name: product.title,
       category: product.categoryId,
-      image: product.images[0] || '/placeholder.jpg'
+      image: product.images[0] || "/placeholder.jpg",
     }));
 
     return NextResponse.json({ suggestions });
-
   } catch (error) {
-    console.error('Suggestions error:', error);
+    console.error("Suggestions error:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch suggestions' },
-      { status: 500 }
+      { error: "Failed to fetch suggestions" },
+      { status: 500 },
     );
   }
 }

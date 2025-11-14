@@ -49,6 +49,7 @@ Before you start, verify:
 **What happens:**
 
 Agent will systematically update each page:
+
 - Step 1: Homepage hero (reads/updates text)
 - Step 2: Four-pillar tagline (finds and replaces)
 - Step 3-10: Continues through all sections
@@ -102,6 +103,7 @@ bun run dev
 ```
 
 **If something looks wrong:**
+
 - Take a screenshot
 - Note which page/section
 - Check REBRAND-COPY-PAGES.md for expected copy
@@ -123,6 +125,7 @@ bun run build
 ```
 
 **If build fails:**
+
 - Check error message
 - Usually it's a syntax error in updated copy (extra quotes, etc.)
 - Find and fix the problematic text
@@ -219,34 +222,40 @@ git push origin main
 ## ⚠️ TROUBLESHOOTING
 
 ### **Agent doesn't start**
+
 - Verify Copilot Chat is open (Ctrl+Shift+I)
 - Verify you pasted ENTIRE prompt (all 10 steps)
 - Try refreshing VS Code (Ctrl+K Ctrl+Q)
 
 ### **Agent gets stuck (no messages for 10+ min)**
+
 - Close Copilot Chat
 - Check if files were modified: `git diff --name-only`
 - If yes, agent is working slowly (continue waiting or restart)
 - If no, agent failed (check for error)
 
 ### **Build fails after rebranding**
+
 - Error message will show file and line
 - Usually: mismatched quotes or syntax error in updated copy
 - Fix: Open file in VS Code, find line, correct syntax
 - Retry: `bun run build`
 
 ### **Wrong copy on a page**
+
 - Compare to REBRAND-COPY-PAGES.md
 - If copy is wrong, manually find and replace
 - Simplest: Find old phrase, replace with new
 - Test: `bun run dev`, check page, then commit
 
 ### **Categories not updated**
+
 - Check: Does /category/[slug] route exist?
 - May need to update multiple component files
 - If stuck, email/contact me with specific file names
 
 ### **Need to rollback**
+
 ```powershell
 # Undo last commit (keeps changes in files)
 git reset --soft HEAD~1
@@ -262,17 +271,17 @@ git checkout HEAD~1 -- <filename>
 
 ## 📊 TYPICAL TIMELINE
 
-| Task | Typical Time |
-|------|---|
-| Copy prompt | ~2 min |
-| Paste into Copilot | ~2 min |
-| Agent runs | ~30-60 min (hands-off) |
-| Verify locally | ~15 min |
-| Build test | ~5 min |
-| Commit + push | ~5 min |
-| Wait for Vercel | ~2-5 min |
-| Test production | ~5 min |
-| **TOTAL** | **~1.5-2 hours** |
+| Task               | Typical Time           |
+| ------------------ | ---------------------- |
+| Copy prompt        | ~2 min                 |
+| Paste into Copilot | ~2 min                 |
+| Agent runs         | ~30-60 min (hands-off) |
+| Verify locally     | ~15 min                |
+| Build test         | ~5 min                 |
+| Commit + push      | ~5 min                 |
+| Wait for Vercel    | ~2-5 min               |
+| Test production    | ~5 min                 |
+| **TOTAL**          | **~1.5-2 hours**       |
 
 **This is hands-off time mostly.** You don't need to watch it all.
 
@@ -293,20 +302,23 @@ Once production shows new copy:
 ## 🎯 YOUR MOVE
 
 **1. Review REBRAND-COPY-PAGES.md** (optional but helpful)
-   - Read through all the new copy
-   - Make any small tweaks you want
-   - Or approve as-is
+
+- Read through all the new copy
+- Make any small tweaks you want
+- Or approve as-is
 
 **2. When ready: Execute**
-   - Copy REBRAND-MASTER-PROMPT.md
-   - Paste into Copilot Chat
-   - Let it run
-   - Follow this guide
+
+- Copy REBRAND-MASTER-PROMPT.md
+- Paste into Copilot Chat
+- Let it run
+- Follow this guide
 
 **3. Questions?**
-   - Check REBRAND-COPY-PAGES.md for exact copy
-   - Check this guide for troubleshooting
-   - Most issues are minor and fixable
+
+- Check REBRAND-COPY-PAGES.md for exact copy
+- Check this guide for troubleshooting
+- Most issues are minor and fixable
 
 ---
 

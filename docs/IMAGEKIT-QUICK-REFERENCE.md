@@ -5,6 +5,7 @@
 ## ⚡ Quick Start (2 minutes)
 
 ### 1. Copy & Update Env File
+
 ```bash
 # Download google-credentials.json from Google Cloud Console
 # Place in project root
@@ -16,12 +17,14 @@ WEBHOOK_SECRET=generate_strong_random_string
 ```
 
 ### 2. Install & Run
+
 ```bash
 bun add imagekit googleapis dotenv
 bun run sync-images
 ```
 
 ### 3. Done! ✅
+
 Results saved to `sync-results.json`
 
 ---
@@ -49,14 +52,14 @@ curl http://localhost:3000/api/sync-images?syncId=sync_123456
 ## 🖼️ Using ProductImage Component
 
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 <ProductImage
   path="/products/item.jpg"
   alt="Product description"
   width={400}
   height={300}
-/>
+/>;
 ```
 
 ---
@@ -87,26 +90,26 @@ docs/
 
 ## 🔐 Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `IMAGEKIT_PRIVATE_KEY` | ✅ | From ImageKit dashboard |
-| `IMAGEKIT_PUBLIC_KEY` | ✅ | From ImageKit dashboard |
-| `IMAGEKIT_URL_ENDPOINT` | ✅ | `https://ik.imagekit.io/kollectit` |
-| `GOOGLE_DRIVE_FOLDER_ID` | ✅ | From Google Drive URL |
-| `GOOGLE_APPLICATION_CREDENTIALS` | ✅ | Path to `google-credentials.json` |
-| `WEBHOOK_SECRET` | ⚠️ | For API security (recommended) |
+| Variable                         | Required | Description                        |
+| -------------------------------- | -------- | ---------------------------------- |
+| `IMAGEKIT_PRIVATE_KEY`           | ✅       | From ImageKit dashboard            |
+| `IMAGEKIT_PUBLIC_KEY`            | ✅       | From ImageKit dashboard            |
+| `IMAGEKIT_URL_ENDPOINT`          | ✅       | `https://ik.imagekit.io/kollectit` |
+| `GOOGLE_DRIVE_FOLDER_ID`         | ✅       | From Google Drive URL              |
+| `GOOGLE_APPLICATION_CREDENTIALS` | ✅       | Path to `google-credentials.json`  |
+| `WEBHOOK_SECRET`                 | ⚠️       | For API security (recommended)     |
 
 ---
 
 ## 🚨 Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Credentials not found | Check files in project root |
-| Access denied (403) | Share Drive folder with service account |
-| Auth failed | Verify private key in .env.local |
-| Rate limit | Wait 5 min, script includes delays |
-| Build errors | Run `bun install && bun run build` |
+| Issue                 | Solution                                |
+| --------------------- | --------------------------------------- |
+| Credentials not found | Check files in project root             |
+| Access denied (403)   | Share Drive folder with service account |
+| Auth failed           | Verify private key in .env.local        |
+| Rate limit            | Wait 5 min, script includes delays      |
+| Build errors          | Run `bun install && bun run build`      |
 
 See `docs/IMAGEKIT-SETUP.md` for detailed troubleshooting.
 
@@ -125,6 +128,7 @@ See `docs/IMAGEKIT-SETUP.md` for detailed troubleshooting.
 ## 📝 Output Files
 
 **sync-results.json** - Created after each sync:
+
 ```json
 {
   "summary": {

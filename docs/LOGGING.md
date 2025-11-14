@@ -32,19 +32,26 @@ This project uses a lightweight, structured logger (no external deps) to standar
 ## Usage pattern (example)
 
 ```ts
-import { logger } from '@/lib/logger';
-import { getRequestId } from '@/lib/request-context';
-import { respondError } from '@/lib/api-error';
+import { logger } from "@/lib/logger";
+import { getRequestId } from "@/lib/request-context";
+import { respondError } from "@/lib/api-error";
 
 export async function GET(request: NextRequest) {
   try {
     // ...work
     const res = NextResponse.json(data);
-    res.headers.set('X-Request-ID', getRequestId(request));
+    res.headers.set("X-Request-ID", getRequestId(request));
     return res;
   } catch (err) {
-    logger.error('Error fetching things', { requestId: getRequestId(request) }, err);
-    return respondError(request, err, { status: 500, code: 'things_fetch_failed' });
+    logger.error(
+      "Error fetching things",
+      { requestId: getRequestId(request) },
+      err,
+    );
+    return respondError(request, err, {
+      status: 500,
+      code: "things_fetch_failed",
+    });
   }
 }
 ```

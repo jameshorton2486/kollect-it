@@ -33,13 +33,13 @@ NODE_ENV=production
 
 ## Where to Get API Keys
 
-| Service | Dashboard URL | What to Get |
-|---------|--------------|-------------|
-| **PostgreSQL** | [Supabase](https://supabase.com) or [Neon](https://neon.tech) | Connection string |
-| **NextAuth** | Generate locally | `openssl rand -base64 32` |
-| **Stripe** | [dashboard.stripe.com/test/apikeys](https://dashboard.stripe.com/test/apikeys) | Publishable & Secret keys |
-| **ImageKit** | [imagekit.io/dashboard](https://imagekit.io/dashboard) | URL Endpoint, Public & Private keys |
-| **Resend** | [resend.com/api-keys](https://resend.com/api-keys) | API key |
+| Service        | Dashboard URL                                                                  | What to Get                         |
+| -------------- | ------------------------------------------------------------------------------ | ----------------------------------- |
+| **PostgreSQL** | [Supabase](https://supabase.com) or [Neon](https://neon.tech)                  | Connection string                   |
+| **NextAuth**   | Generate locally                                                               | `openssl rand -base64 32`           |
+| **Stripe**     | [dashboard.stripe.com/test/apikeys](https://dashboard.stripe.com/test/apikeys) | Publishable & Secret keys           |
+| **ImageKit**   | [imagekit.io/dashboard](https://imagekit.io/dashboard)                         | URL Endpoint, Public & Private keys |
+| **Resend**     | [resend.com/api-keys](https://resend.com/api-keys)                             | API key                             |
 
 ## Setting Variables Locally
 
@@ -52,6 +52,7 @@ bun run dev
 ## Setting Variables on Netlify
 
 ### Option 1: Netlify Dashboard
+
 1. Go to **Site settings** → **Environment variables**
 2. Click **Add a variable** for each
 3. Paste key and value

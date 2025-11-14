@@ -1,4 +1,5 @@
 # Phase 7 Planning Document
+
 ## User Experience & Frontend Polish
 
 ---
@@ -10,6 +11,7 @@
 **Priority:** High - Improve conversion and user satisfaction
 
 **Why Phase 7:**
+
 - Phase 6 completed comprehensive admin/analytics system
 - Foundation ready for enhanced buyer experience
 - Focus on features that drive sales and engagement
@@ -20,9 +22,11 @@
 ## 📋 Phase 7 Scope - 10 Key Features
 
 ### 1. Advanced Product Search & Filtering
+
 **Goal:** Help users find products quickly and intuitively
 
 **Features:**
+
 - Full-text search with autocomplete
 - Multi-criteria filtering (price, category, condition, era)
 - Sort options (price, date, popularity, relevance)
@@ -31,6 +35,7 @@
 - "Similar items" recommendations
 
 **Components:**
+
 - AdvancedSearchBar component
 - SearchFilters component
 - SearchResults component with pagination
@@ -43,9 +48,11 @@
 ---
 
 ### 2. Enhanced Product Detail Page
+
 **Goal:** Provide comprehensive product information and drive conversions
 
 **Features:**
+
 - High-quality image gallery with zoom
 - 360° product views (optional)
 - Detailed specifications accordion
@@ -57,6 +64,7 @@
 - Print product details
 
 **Components:**
+
 - ProductImageGallery component (with lightbox)
 - ProductSpecifications component
 - SellerInfo component
@@ -70,9 +78,11 @@
 ---
 
 ### 3. Shopping Cart Enhancements
+
 **Goal:** Reduce cart abandonment and improve checkout flow
 
 **Features:**
+
 - Persistent cart (localStorage + database)
 - Cart drawer (slide-in from right)
 - Quick add to cart (no page reload)
@@ -83,6 +93,7 @@
 - Cart abandonment email (if not checked out)
 
 **Components:**
+
 - CartDrawer component
 - CartItem component
 - SavedItems component
@@ -95,9 +106,11 @@
 ---
 
 ### 4. Wishlist & Favorites
+
 **Goal:** Allow users to save and track desired items
 
 **Features:**
+
 - Add/remove favorites (heart icon)
 - Favorites page with grid/list view
 - Share wishlist with others
@@ -106,6 +119,7 @@
 - Wishlist collections/folders
 
 **Components:**
+
 - FavoriteButton component
 - WishlistPage component
 - WishlistShare component
@@ -119,9 +133,11 @@
 ---
 
 ### 5. User Reviews & Ratings
+
 **Goal:** Build trust and provide social proof
 
 **Features:**
+
 - 5-star rating system
 - Written reviews with photos
 - Verified purchase badge
@@ -131,6 +147,7 @@
 - Review images lightbox
 
 **Components:**
+
 - ProductRating component
 - ReviewList component
 - ReviewForm component
@@ -143,9 +160,11 @@
 ---
 
 ### 6. Improved Homepage
+
 **Goal:** Engage visitors and guide them to products
 
 **Features:**
+
 - Hero section with featured products/collections
 - Category showcase with images
 - Featured sellers section
@@ -156,6 +175,7 @@
 - Trust badges (secure payment, authenticity guarantee)
 
 **Components:**
+
 - HeroSection component
 - CategoryShowcase component
 - ProductCarousel component
@@ -168,9 +188,11 @@
 ---
 
 ### 7. Product Comparison Tool
+
 **Goal:** Help users make informed decisions
 
 **Features:**
+
 - Compare up to 4 products side-by-side
 - Comparison table with key specs
 - Highlight differences
@@ -179,6 +201,7 @@
 - Share comparison with others
 
 **Components:**
+
 - ComparisonTable component
 - CompareBar (sticky bottom bar)
 - ComparisonSelector component
@@ -189,9 +212,11 @@
 ---
 
 ### 8. Smart Product Recommendations
+
 **Goal:** Increase average order value through personalization
 
 **Features:**
+
 - "Frequently bought together" bundles
 - "Customers also viewed" section
 - Personalized recommendations based on:
@@ -202,6 +227,7 @@
 - Upsell higher-end alternatives
 
 **Components:**
+
 - RecommendationsCarousel component
 - FrequentlyBoughtTogether component
 - PersonalizedFeed component
@@ -209,6 +235,7 @@
 - API: `/api/recommendations/product/[id]`
 
 **Algorithms:**
+
 - Collaborative filtering
 - Content-based filtering
 - Popular items fallback
@@ -218,9 +245,11 @@
 ---
 
 ### 9. Enhanced Checkout Experience
+
 **Goal:** Streamline checkout and reduce abandonment
 
 **Features:**
+
 - Multi-step checkout with progress indicator
 - Guest checkout option
 - Address autocomplete (Google Places API)
@@ -234,6 +263,7 @@
 - One-click checkout (returning customers)
 
 **Components:**
+
 - CheckoutProgress component
 - AddressForm component (with autocomplete)
 - PaymentMethodSelector component
@@ -245,9 +275,11 @@
 ---
 
 ### 10. User Account Dashboard
+
 **Goal:** Provide comprehensive account management
 
 **Features:**
+
 - Order history with tracking
 - Saved addresses
 - Payment methods management
@@ -259,6 +291,7 @@
 - Delete account option
 
 **Components:**
+
 - UserDashboard component
 - OrderHistory component
 - AddressBook component
@@ -409,6 +442,7 @@ PUT  /api/admin/reviews/[id]/moderate
 ## 📊 Success Metrics
 
 ### Track These KPIs After Phase 7
+
 - **Conversion Rate:** Target +15-20% improvement
 - **Average Order Value:** Target +10-15% increase
 - **Cart Abandonment:** Target 10-15% reduction
@@ -425,6 +459,7 @@ PUT  /api/admin/reviews/[id]/moderate
 ### AI Agent Execution Plan
 
 **Session Structure:**
+
 1. **Setup Phase (15 min):**
    - Review requirements
    - Set up database models
@@ -449,6 +484,7 @@ PUT  /api/admin/reviews/[id]/moderate
 ### Master Automation Prompts
 
 **Prompt Template:**
+
 ```
 Execute Phase 7 Step [X]: [Feature Name]
 
@@ -482,6 +518,7 @@ Continue to next step when complete.
 ## 📅 Recommended Timeline
 
 ### Week 1: Deployment & Configuration (Current)
+
 - ✅ Deploy Phase 6 to Vercel
 - ✅ Configure email (Google Workspace)
 - ✅ Set up Google Analytics
@@ -489,11 +526,13 @@ Continue to next step when complete.
 - ✅ Test admin dashboard
 
 ### Week 2: Phase 7 Execution
+
 - **Day 1-2:** Steps 1-5 (Search, Product Detail, Cart, Wishlist, Reviews)
 - **Day 3-4:** Steps 6-10 (Homepage, Comparison, Recommendations, Checkout, Account)
 - **Day 5:** Integration testing and bug fixes
 
 ### Week 3: Launch & Monitor
+
 - Deploy Phase 7 to production
 - Monitor metrics and user feedback
 - Hot fixes if needed
@@ -506,6 +545,7 @@ Continue to next step when complete.
 **Potential Focus Areas:**
 
 **Option A: Marketplace Expansion**
+
 - Seller onboarding portal
 - Commission structure automation
 - Payout system
@@ -513,6 +553,7 @@ Continue to next step when complete.
 - Multi-seller messaging
 
 **Option B: Advanced Features**
+
 - Auction functionality
 - Make offer/counter-offer system
 - Appraisal requests (full workflow)
@@ -520,6 +561,7 @@ Continue to next step when complete.
 - Consignment automation
 
 **Option C: Growth & Marketing**
+
 - Email marketing campaigns
 - Abandoned cart recovery emails
 - Referral program
@@ -531,12 +573,14 @@ Continue to next step when complete.
 ## ✅ Ready to Execute Phase 7?
 
 **Prerequisites:**
+
 - [ ] Phase 6 deployed and tested
 - [ ] Email system configured
 - [ ] Database indexed
 - [ ] Analytics tracking
 
 **To Begin Phase 7:**
+
 1. Review this document
 2. Confirm scope and priorities
 3. Prepare automation prompts
@@ -544,6 +588,7 @@ Continue to next step when complete.
 5. Test and deploy
 
 **Questions for User:**
+
 1. Do you want to proceed with this Phase 7 scope?
 2. Any features to add/remove/prioritize?
 3. Ready to start automation execution?

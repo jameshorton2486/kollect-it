@@ -8,6 +8,7 @@
 ## Problem
 
 Both existing service account keys are failing with:
+
 ```
 error: invalid_grant: Invalid JWT Signature
 ```
@@ -108,6 +109,7 @@ bun run sync-images
 ```
 
 **Expected output:**
+
 ```
 🚀 Starting Google Drive to ImageKit Sync
 📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
@@ -125,6 +127,7 @@ If you see this, the new key is working! ✅
 **Still getting "Invalid JWT Signature"?**
 
 Check:
+
 1. ✅ Service account is ENABLED in Google Cloud Console
 2. ✅ Service account has access to the Google Drive folder
 3. ✅ You copied the NEWEST key (not an old one)
@@ -142,16 +145,16 @@ Check:
 
 ## Summary
 
-| Step | Action |
-|------|--------|
-| 1 | Go to Google Cloud Console |
-| 2 | Select kollect-it-imagekit project |
-| 3 | Go to APIs & Services → Credentials |
-| 4 | Click on imagekit-sync service account |
-| 5 | Verify it's ENABLED |
-| 6 | Delete old keys |
-| 7 | Create new JSON key |
-| 8 | Copy new key to google-credentials.json |
-| 9 | Run `bun run sync-images` to test |
+| Step | Action                                  |
+| ---- | --------------------------------------- |
+| 1    | Go to Google Cloud Console              |
+| 2    | Select kollect-it-imagekit project      |
+| 3    | Go to APIs & Services → Credentials     |
+| 4    | Click on imagekit-sync service account  |
+| 5    | Verify it's ENABLED                     |
+| 6    | Delete old keys                         |
+| 7    | Create new JSON key                     |
+| 8    | Copy new key to google-credentials.json |
+| 9    | Run `bun run sync-images` to test       |
 
 Once the new key is working, the sync will upload all images from Google Drive to ImageKit! 🎉

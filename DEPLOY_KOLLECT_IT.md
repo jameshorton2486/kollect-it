@@ -1,4 +1,5 @@
 # 🚀 Kollect-It Complete Deployment Guide
+
 ## Phase 6: Analytics & Dashboards - Production Ready
 
 ---
@@ -8,6 +9,7 @@
 ### **CRITICAL: Complete These BEFORE Deployment**
 
 #### 1. LOCAL TESTING (Do This First!)
+
 ```powershell
 # In your project directory: C:\Users\james\kollect-it-marketplace-1
 
@@ -26,6 +28,7 @@ npm run dev
 ```
 
 **✅ Verify Locally:**
+
 - [ ] Homepage loads
 - [ ] Login/signup works
 - [ ] Product pages display
@@ -37,6 +40,7 @@ npm run dev
 ## 🔧 AUTOMATED DEPLOYMENT SCRIPTS
 
 ### **Script 1: Pre-Flight Check**
+
 Save as: `scripts/pre-deploy-check.ps1`
 
 ```powershell
@@ -114,6 +118,7 @@ Write-Host "If all checks passed, proceed to deployment.`n" -ForegroundColor Gre
 ---
 
 ### **Script 2: Vercel Deployment**
+
 Save as: `scripts/deploy-to-vercel.ps1`
 
 ```powershell
@@ -149,6 +154,7 @@ Write-Host "4. Check deployment logs if errors occur`n" -ForegroundColor White
 ---
 
 ### **Script 3: Environment Variables Setup**
+
 Save as: `scripts/setup-env-vars.ps1`
 
 ```powershell
@@ -207,6 +213,7 @@ Write-Host "4. DO NOT commit .env.production to Git!`n" -ForegroundColor Yellow
 ---
 
 ### **Script 4: Database Setup**
+
 Save as: `scripts/setup-database.ps1`
 
 ```powershell
@@ -271,6 +278,7 @@ Write-Host "3. Paste and run in SQL Editor`n" -ForegroundColor White
 ### **PHASE 1: Pre-Deployment (15 minutes)**
 
 #### Step 1.1: Fix Node Module Error
+
 ```powershell
 cd C:\Users\james\kollect-it-marketplace-1
 
@@ -282,6 +290,7 @@ npm install
 ```
 
 #### Step 1.2: Local Testing
+
 ```powershell
 # Build to verify no errors
 npm run build
@@ -291,12 +300,14 @@ npm run dev
 ```
 
 **Test these pages locally:**
+
 - [ ] http://localhost:3000 (Homepage)
 - [ ] http://localhost:3000/products (Product listings)
 - [ ] http://localhost:3000/admin (Admin dashboard - requires login)
 - [ ] http://localhost:3000/api/health (API health check)
 
 #### Step 1.3: Run Pre-Flight Check
+
 ```powershell
 # Save the script above, then run:
 .\scripts\pre-deploy-check.ps1
@@ -307,6 +318,7 @@ npm run dev
 ### **PHASE 2: Vercel Setup (20 minutes)**
 
 #### Step 2.1: Create Vercel Account/Project
+
 1. Go to: https://vercel.com/signup
 2. Sign up with GitHub
 3. Click "Add New..." → "Project"
@@ -314,15 +326,18 @@ npm run dev
 5. **STOP! Don't click Deploy yet**
 
 #### Step 2.2: Configure Build Settings
+
 **Framework Preset:** Next.js
 **Build Command:** `npm run build`
 **Output Directory:** `.next`
 **Install Command:** `npm install`
 
 #### Step 2.3: Add Environment Variables
+
 Click "Environment Variables" and add ALL from `.env.production`
 
 **Quick copy format (one per line):**
+
 ```
 DATABASE_URL=postgresql://...
 NEXTAUTH_URL=https://your-app.vercel.app
@@ -330,11 +345,13 @@ NEXTAUTH_SECRET=your-secret-here
 ... (all others)
 ```
 
-**Important:** 
+**Important:**
+
 - Select "Production, Preview, Development" for all variables
 - Click "Add" after each one
 
 #### Step 2.4: Deploy
+
 1. Click "Deploy"
 2. Wait 2-3 minutes
 3. Check build logs for errors
@@ -345,12 +362,14 @@ NEXTAUTH_SECRET=your-secret-here
 ### **PHASE 3: Database Configuration (10 minutes)**
 
 #### Step 3.1: Update Database Connection
+
 1. Go to Supabase Dashboard
 2. Settings → Database
 3. Copy connection string
 4. Update in Vercel: Settings → Environment Variables → `DATABASE_URL`
 
 #### Step 3.2: Run Migrations
+
 ```powershell
 # Ensure DATABASE_URL in .env.local points to production
 npx prisma migrate deploy
@@ -358,6 +377,7 @@ npx prisma generate
 ```
 
 #### Step 3.3: Apply Performance Indexes
+
 ```powershell
 # Generate SQL file
 .\scripts\setup-database.ps1
@@ -373,6 +393,7 @@ npx prisma generate
 ### **PHASE 4: Third-Party Services (30 minutes)**
 
 #### Step 4.1: Google Analytics
+
 1. Go to: https://analytics.google.com/
 2. Admin → Create Property
 3. Property name: "Kollect-It Marketplace"
@@ -382,6 +403,7 @@ npx prisma generate
    - `GA_MEASUREMENT_ID`
 
 #### Step 4.2: Google Workspace Email
+
 1. Go to: https://myaccount.google.com/apppasswords
 2. Enable 2-Step Verification (if not enabled)
 3. Create app password:
@@ -392,6 +414,7 @@ npx prisma generate
    - `EMAIL_SERVER_PASSWORD=your-app-password`
 
 **Test email:**
+
 ```powershell
 curl -X POST https://your-app.vercel.app/api/admin/emails/test `
   -H "Content-Type: application/json" `
@@ -399,6 +422,7 @@ curl -X POST https://your-app.vercel.app/api/admin/emails/test `
 ```
 
 #### Step 4.3: Stripe Webhooks
+
 1. Go to: https://dashboard.stripe.com/webhooks
 2. Click "+ Add endpoint"
 3. Endpoint URL: `https://your-app.vercel.app/api/webhooks/stripe`
@@ -414,6 +438,7 @@ curl -X POST https://your-app.vercel.app/api/admin/emails/test `
 ### **PHASE 5: Post-Deployment Testing (20 minutes)**
 
 #### Step 5.1: Health Checks
+
 ```powershell
 # Replace YOUR-APP with your Vercel URL
 
@@ -425,6 +450,7 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 ```
 
 #### Step 5.2: Admin Dashboard Testing
+
 1. Go to: `https://YOUR-APP.vercel.app/admin`
 2. Login as admin
 3. Test each page:
@@ -436,6 +462,7 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
    - [ ] Settings (save works)
 
 #### Step 5.3: Mobile Testing
+
 1. Open on mobile device
 2. Test admin dashboard responsiveness
 3. Verify hamburger menu works
@@ -446,11 +473,13 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 ### **PHASE 6: Monitoring Setup (10 minutes)**
 
 #### Step 6.1: Enable Vercel Analytics
+
 1. Vercel Dashboard → Project → Analytics
 2. Enable Speed Insights (free)
 3. Enable Web Analytics (free)
 
 #### Step 6.2: Set Up Alerts
+
 1. Vercel → Settings → Notifications
 2. Enable:
    - [ ] Deployment failed
@@ -462,6 +491,7 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 ## 🔍 TESTING CHECKLIST
 
 ### **Critical Functionality**
+
 - [ ] User registration works
 - [ ] User login works
 - [ ] Products display correctly
@@ -474,6 +504,7 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 - [ ] Email notifications send
 
 ### **Performance Metrics**
+
 - [ ] Homepage loads < 2 seconds
 - [ ] API responses < 500ms
 - [ ] No console errors
@@ -486,7 +517,9 @@ curl https://YOUR-APP.vercel.app/api/admin/dashboard/metrics
 ## 🚨 TROUBLESHOOTING COMMON ISSUES
 
 ### Issue 1: Build Fails on Vercel
+
 **Solution:**
+
 ```powershell
 # Check build locally first
 npm run build
@@ -498,13 +531,17 @@ npm run build
 ```
 
 ### Issue 2: Database Connection Fails
+
 **Solution:**
+
 1. Verify DATABASE_URL format
 2. Check Supabase is using port 5432 (not 6543)
 3. Ensure IP allowlist includes Vercel
 
 ### Issue 3: Module Not Found Errors
+
 **Solution:**
+
 ```powershell
 # Clean reinstall
 Remove-Item -Recurse -Force node_modules
@@ -512,16 +549,21 @@ npm install
 ```
 
 ### Issue 4: Images Don't Load
+
 **Solution:**
+
 1. Verify ImageKit credentials in environment variables
 2. Check ImageKit dashboard for API limits
 3. Regenerate API keys if needed
 
 ### Issue 5: Email Doesn't Send
+
 **Solution:**
+
 1. Verify Google App Password (not regular password)
 2. Check 2-Step Verification enabled
 3. Test SMTP settings:
+
 ```
 Host: smtp.gmail.com
 Port: 587
@@ -532,18 +574,21 @@ Port: 587
 ## 📊 SUCCESS METRICS
 
 ### Day 1 (Immediate)
+
 - [ ] All pages load without errors
 - [ ] Admin can login and access dashboard
 - [ ] Analytics show initial data
 - [ ] Error rate < 1%
 
 ### Week 1
+
 - [ ] Uptime > 99.5%
 - [ ] Average page load < 2s
 - [ ] No critical bugs reported
 - [ ] Email notifications working
 
 ### Month 1
+
 - [ ] Google Analytics tracking users
 - [ ] Performance metrics stable
 - [ ] Database optimized
@@ -591,6 +636,7 @@ vercel logs            # View deployment logs
 Once all phases are complete, your Kollect-It marketplace is live!
 
 **Final Steps:**
+
 1. Monitor for 24-48 hours
 2. Gather user feedback
 3. Address any issues

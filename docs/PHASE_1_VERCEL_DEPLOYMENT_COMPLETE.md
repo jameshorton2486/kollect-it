@@ -2,13 +2,14 @@
 
 **Date:** November 9, 2025  
 **Estimated Time:** 2-3 hours  
-**Outcome:** Live marketplace with custom domain  
+**Outcome:** Live marketplace with custom domain
 
 ---
 
 ## 🎯 Quick Overview
 
 What you're doing:
+
 1. ✅ Choose PostgreSQL provider (Neon recommended)
 2. ✅ Create Vercel account and connect GitHub
 3. ✅ Deploy marketplace live
@@ -25,6 +26,7 @@ What you're doing:
 ### Option A: Neon (RECOMMENDED) - Free tier is perfect
 
 **Why Neon?**
+
 - Free tier: 10 GB storage, unlimited queries
 - No credit card for free tier
 - Instant setup (< 5 minutes)
@@ -99,6 +101,7 @@ git log --oneline -5
 ```
 
 **If NOT pushed yet:**
+
 ```powershell
 git add -A
 git commit -m "feat: complete marketplace setup ready for deployment
@@ -141,22 +144,22 @@ On the import screen, you'll see "Environment Variables" section.
 
 **Click to expand it and add these variables:**
 
-| Variable | Value | Where from |
-|----------|-------|-----------|
-| `DATABASE_URL` | postgresql://user:password@host/dbname | From Neon (pooled connection) |
-| `DIRECT_URL` | postgresql://user:password@host/dbname | From Neon (direct connection) |
-| `NEXTAUTH_SECRET` | (generate below) | Generate new |
-| `NEXTAUTH_URL` | https://yourdomain.com | Your actual domain (after DNS update) |
-| `NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT` | https://ik.imagekit.io/your_id | From .env.local |
-| `NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY` | public_xxxxx | From .env.local |
-| `IMAGEKIT_PRIVATE_KEY` | private_xxxxx | From .env.local |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | pk_live_xxxxx | From .env.local |
-| `STRIPE_SECRET_KEY` | sk_live_xxxxx | From .env.local |
-| `STRIPE_WEBHOOK_SECRET` | whsec_xxxxx | From .env.local |
-| `RESEND_API_KEY` | re_xxxxx | From .env.local |
-| `EMAIL_FROM` | Kollect-It <noreply@yourdomain.com> | From .env.local |
-| `ADMIN_EMAIL` | your-email@gmail.com | Your admin email |
-| `NODE_ENV` | production | Leave as is |
+| Variable                             | Value                                  | Where from                            |
+| ------------------------------------ | -------------------------------------- | ------------------------------------- |
+| `DATABASE_URL`                       | postgresql://user:password@host/dbname | From Neon (pooled connection)         |
+| `DIRECT_URL`                         | postgresql://user:password@host/dbname | From Neon (direct connection)         |
+| `NEXTAUTH_SECRET`                    | (generate below)                       | Generate new                          |
+| `NEXTAUTH_URL`                       | https://yourdomain.com                 | Your actual domain (after DNS update) |
+| `NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT`  | https://ik.imagekit.io/your_id         | From .env.local                       |
+| `NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY`    | public_xxxxx                           | From .env.local                       |
+| `IMAGEKIT_PRIVATE_KEY`               | private_xxxxx                          | From .env.local                       |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | pk_live_xxxxx                          | From .env.local                       |
+| `STRIPE_SECRET_KEY`                  | sk_live_xxxxx                          | From .env.local                       |
+| `STRIPE_WEBHOOK_SECRET`              | whsec_xxxxx                            | From .env.local                       |
+| `RESEND_API_KEY`                     | re_xxxxx                               | From .env.local                       |
+| `EMAIL_FROM`                         | Kollect-It <noreply@yourdomain.com>    | From .env.local                       |
+| `ADMIN_EMAIL`                        | your-email@gmail.com                   | Your admin email                      |
+| `NODE_ENV`                           | production                             | Leave as is                           |
 
 **Generate NEXTAUTH_SECRET:**
 
@@ -184,6 +187,7 @@ openssl rand -hex 32
 3. Watch the build progress (takes 2-5 minutes)
 
 **Expected output:**
+
 ```
 ✓ Deployment complete
 ✓ Your production URL: https://kollect-it-marketplace.vercel.app
@@ -210,6 +214,7 @@ openssl rand -hex 32
 ### 4.2 Test Core Features
 
 **Test 1: Login**
+
 ```
 URL: https://your-vercel-url/login
 Email: admin@example.com
@@ -218,6 +223,7 @@ Should redirect to admin dashboard
 ```
 
 **Test 2: Browse Products**
+
 ```
 URL: https://your-vercel-url/shop
 Should see all products
@@ -226,6 +232,7 @@ Search should work
 ```
 
 **Test 3: Cart Functionality**
+
 ```
 Click on a product
 Click "Add to Cart"
@@ -236,6 +243,7 @@ Can remove items
 ```
 
 **Test 4: Images Loading**
+
 ```
 Right-click on product image → Open DevTools (F12)
 Network tab → filter by "img"
@@ -251,6 +259,7 @@ Images should be optimized (usually < 50KB)
 4. Check for any red error messages
 
 **If you see errors:**
+
 - Note the error message
 - Go to Step 5.3 (Troubleshooting)
 
@@ -299,6 +308,7 @@ Images should be optimized (usually < 50KB)
 6. Click "Save"
 
 **DNS Propagation Timeline:**
+
 - Immediate: Changes registered
 - 15-30 minutes: Most DNS resolvers updated
 - 24-48 hours: 100% propagated (worst case)
@@ -318,6 +328,7 @@ nslookup yourdomain.com
 ```
 
 **Or use online tool:**
+
 - https://whatsmydns.net
 - Enter your domain
 - Should show Vercel nameservers globally
@@ -331,6 +342,7 @@ nslookup yourdomain.com
 5. You'll see a green lock icon 🔒
 
 **Access your domain:**
+
 ```
 https://yourdomain.com ✅
 https://www.yourdomain.com ✅
@@ -359,6 +371,7 @@ bun run db:seed
 ```
 
 **Expected output:**
+
 ```
 ✓ Database migrated successfully
 ✓ Seed data created:
@@ -385,11 +398,13 @@ bun run db:studio
 ### 7.1 Email Service (Resend)
 
 **Test endpoint:**
+
 1. Go to: `https://yourdomain.com/api/email/test`
 2. You should see: `{"success": true, "messageId": "..."}`
 3. Check your email inbox for test email
 
 **If email doesn't arrive:**
+
 - Check spam folder
 - Verify RESEND_API_KEY in Vercel
 - Check that ADMIN_EMAIL is correct
@@ -397,6 +412,7 @@ bun run db:studio
 ### 7.2 Payment Processing (Stripe)
 
 **Test checkout (test mode):**
+
 1. Go to product page
 2. Click "Add to Cart"
 3. Go to `/cart`
@@ -413,6 +429,7 @@ bun run db:studio
 ### 7.3 Images (ImageKit CDN)
 
 **Verify images load fast:**
+
 1. Go to any product page
 2. Right-click on product image → "Inspect"
 3. DevTools opens → Network tab
@@ -424,6 +441,7 @@ bun run db:studio
 ### 7.4 Authentication (NextAuth)
 
 **Test login/logout:**
+
 1. Go to `/login`
 2. Try admin credentials:
    ```
@@ -440,6 +458,7 @@ bun run db:studio
 ## ✅ PRE-LAUNCH CHECKLIST
 
 ### Infrastructure (Required)
+
 - [ ] Vercel deployment successful (no errors)
 - [ ] Domain pointing to Vercel
 - [ ] SSL certificate active (green lock 🔒)
@@ -447,6 +466,7 @@ bun run db:studio
 - [ ] All environment variables set in Vercel
 
 ### Core Features (Required)
+
 - [ ] Homepage loads correctly
 - [ ] Category pages display
 - [ ] Product pages work
@@ -455,24 +475,28 @@ bun run db:studio
 - [ ] Order confirmation email received
 
 ### Admin Features (Required)
+
 - [ ] Can login to admin dashboard
 - [ ] Can view products
 - [ ] Can view orders
 - [ ] Can view analytics
 
 ### Security (Critical)
+
 - [ ] HTTPS working (https://yourdomain.com)
 - [ ] No red errors in browser console
 - [ ] No database errors in Vercel logs
 - [ ] Admin routes protected (can't access /admin without login)
 
 ### Performance (Recommended)
+
 - [ ] Pages load in < 3 seconds
 - [ ] Images load from ImageKit CDN
 - [ ] No console errors
 - [ ] Mobile responsive (test on phone)
 
 ### Content (Recommended)
+
 - [ ] 4 categories created
 - [ ] Products display in each category
 - [ ] Product descriptions are professional
@@ -496,6 +520,7 @@ bun run db:studio
 ### Monitor in Real-Time
 
 Watch the first week:
+
 - Peak traffic times
 - Error patterns
 - Performance issues
@@ -508,14 +533,17 @@ Watch the first week:
 ### Build Failed on Vercel
 
 **Error: "Module not found"**
+
 - Cause: Missing environment variable
 - Fix: Go to Vercel project → Settings → Environment Variables → Add missing variable
 
 **Error: "TypeScript error"**
+
 - Cause: Code error in your files
 - Fix: Run `bun run lint` locally, fix errors, commit, and Vercel will rebuild
 
 **Error: "Database connection failed"**
+
 - Cause: DATABASE_URL is wrong or whitelist missing
 - Fix:
   1. Test connection locally: `bun run db:studio`
@@ -525,6 +553,7 @@ Watch the first week:
 ### Domain Not Working
 
 **Domain doesn't resolve:**
+
 ```powershell
 # Check DNS propagation
 nslookup yourdomain.com
@@ -534,17 +563,20 @@ nslookup yourdomain.com
 ```
 
 **Issue: "This domain is not configured"**
+
 - Solution: Go to Vercel project → Settings → Domains
 - Verify domain shows "Valid Configuration"
 - If not, add it again and select "Use Vercel Nameservers"
 
 **HTTPS not working:**
+
 - Solution: Wait 10 minutes for SSL certificate to generate
 - Then refresh browser
 
 ### Slow Performance
 
 **Pages loading slowly:**
+
 1. Check Vercel Analytics for bottlenecks
 2. Images might be too large:
    - Use ImageKit image transformation: `?tr=w:400,q:80`
@@ -555,6 +587,7 @@ nslookup yourdomain.com
 ### Email Not Arriving
 
 **Resend email not working:**
+
 1. Verify RESEND_API_KEY in Vercel
 2. Check ADMIN_EMAIL is correct
 3. Go to Resend dashboard: https://resend.com/emails
@@ -565,6 +598,7 @@ nslookup yourdomain.com
 ### Stripe Payment Failing
 
 **Payment processing error:**
+
 1. Verify you're using TEST keys (starts with `pk_test_` not `pk_live_`)
 2. Use test card: 4242 4242 4242 4242
 3. Check STRIPE_SECRET_KEY in Vercel
@@ -579,12 +613,13 @@ When everything passes verification:
 ### 1. Announce Launch
 
 **Email existing customers:**
+
 ```
 Subject: Introducing Kollect-It Marketplace
 
 Dear Collectors,
 
-We're thrilled to announce the launch of Kollect-It - 
+We're thrilled to announce the launch of Kollect-It -
 a luxury marketplace for authenticated antiques and collectibles.
 
 Browse our curated collections:
@@ -643,6 +678,7 @@ Happy collecting!
 ## ✨ You're Deployed! 🎉
 
 **What you've accomplished:**
+
 - ✅ Production database in the cloud
 - ✅ Marketplace live on Vercel
 - ✅ Custom domain pointing to site
@@ -651,6 +687,7 @@ Happy collecting!
 - ✅ Ready for customers!
 
 **Next Phase (Optional):**
+
 - Phase 2: Add AI-powered product creation system
 - See: `PHASE_2_DETAILED_IMPLEMENTATION_GUIDE.md`
 
@@ -659,6 +696,7 @@ Happy collecting!
 ## 📞 GETTING HELP
 
 ### Service Support
+
 - **Vercel Issues:** https://vercel.com/support
 - **Neon (Database):** https://neon.tech/docs
 - **Stripe Issues:** https://support.stripe.com
@@ -666,6 +704,7 @@ Happy collecting!
 - **Resend:** https://resend.com/support
 
 ### Documentation
+
 - **Next.js:** https://nextjs.org/docs
 - **Prisma:** https://www.prisma.io/docs
 - **NextAuth:** https://next-auth.js.org
@@ -686,7 +725,7 @@ Your deployment is successful when:
 ✅ Email notifications arrive  
 ✅ Admin dashboard accessible  
 ✅ No console errors  
-✅ Mobile responsive  
+✅ Mobile responsive
 
 ---
 
@@ -700,6 +739,7 @@ You've got this!
 ---
 
 **Questions?** Refer to:
+
 - This guide's troubleshooting section
 - Service documentation (links above)
 - Vercel deployment logs (most helpful!)

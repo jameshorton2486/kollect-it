@@ -1,4 +1,5 @@
 # 🔍 COMPREHENSIVE CODEBASE REVIEW & ANALYSIS
+
 ## Kollect-It Marketplace - Current State Assessment
 
 **Date:** November 9, 2025  
@@ -10,10 +11,13 @@
 ## CRITICAL ISSUES IDENTIFIED
 
 ### 1. ❌ Broken Module Import
+
 **Issue:** `src/app/api/sync-images/route.ts`
+
 ```
 Module not found: Can't resolve '../../../scripts/sync-drive-to-imagekit'
 ```
+
 **Problem:** The file `scripts/sync-drive-to-imagekit.ts` doesn't exist, causing build warning.
 **Impact:** Non-critical (API endpoint unused), but creates build noise.
 **Fix:** Either create the missing module OR disable/remove the endpoint.
@@ -23,15 +27,18 @@ Module not found: Can't resolve '../../../scripts/sync-drive-to-imagekit'
 ---
 
 ### 2. ⚠️ Image Domain Configuration Issues
+
 **Current State:**
+
 ```javascript
 // next.config.mjs has partial domain list
 images: {
-  domains: ["ik.imagekit.io", "drive.google.com"]
+  domains: ["ik.imagekit.io", "drive.google.com"];
 }
 ```
 
 **Problems:**
+
 - `drive.google.com` URLs break when used with Next.js Image component
 - Missing domains: `images.unsplash.com`, `cdn.pixabay.com`, etc.
 - No fallback for broken images
@@ -42,7 +49,9 @@ images: {
 ---
 
 ### 3. 🗑️ Unused/Dead Code
+
 **Files to Review:**
+
 - `src/app/api/sync-images/route.ts` - references missing module
 - `src/app/api/products/sync-from-google-drive/route.ts` - May be redundant with Google Drive API integration
 - `src/scripts/` directory - likely empty or unused
@@ -51,7 +60,9 @@ images: {
 ---
 
 ### 4. 🔐 Environment Variable Incomplete Configuration
+
 **Current Issues:**
+
 ```
 ✓ NEXTAUTH_URL needed for production
 ✓ ImageKit credentials might have conflicts
@@ -63,7 +74,9 @@ images: {
 ---
 
 ### 5. 📦 Package Dependencies Review
+
 **Potential cleanup candidates:**
+
 - Unused AI SDKs (if API keys never set)
 - Duplicate polyfills
 - Peer dependency warnings
@@ -74,7 +87,9 @@ images: {
 ---
 
 ### 6. 🎨 UI/Component Issues
+
 **From console logs:**
+
 ```
 - FeaturedCollection still using Google Drive images (404s)
 - Some image URLs in components hardcoded
@@ -84,7 +99,9 @@ images: {
 ---
 
 ### 7. ⚡ Performance Issues
+
 **Observed:**
+
 - Build time: 27-45 seconds (could be optimized)
 - No image optimization for External URLs
 - Static pages regeneration might be heavy
@@ -92,7 +109,9 @@ images: {
 ---
 
 ### 8. 🚀 Missing Error Boundaries
+
 **Critical:** No global error handling for:
+
 - Failed image loads
 - API timeouts
 - NextAuth failures
@@ -103,6 +122,7 @@ images: {
 ## RECOMMENDATIONS (Priority Order)
 
 ### High Priority (Fix Now)
+
 1. ✅ Remove or fix `src/app/api/sync-images/route.ts` broken import
 2. ✅ Audit and remove unused API endpoints
 3. ✅ Fix image domain configuration (whitelist or convert to local)
@@ -110,12 +130,14 @@ images: {
 5. ✅ Validate .env configuration
 
 ### Medium Priority (Optimize)
+
 6. ⚡ Audit npm packages, remove unused dependencies
 7. 🎨 Replace external image URLs with local assets or CDN
 8. 📦 Optimize build configuration (remove webpack config)
 9. 🔍 Add logging/monitoring for errors
 
 ### Low Priority (Future)
+
 10. 📊 Add performance monitoring
 11. 🧪 Add unit tests for critical paths
 12. 📈 Implement caching strategy
@@ -149,6 +171,7 @@ REVIEW:
 ## BUILD METRICS
 
 **Current Status:**
+
 - ✅ Build: Passes (27-45 seconds)
 - ⚠️ Warnings: 1 (module not found)
 - ✅ Routes: 47 (all prerendered)
@@ -157,6 +180,7 @@ REVIEW:
 - ❌ Linting: Skipped
 
 **Improvements Needed:**
+
 - Enable type checking (`tsc --noEmit`)
 - Enable linting (`eslint .`)
 - Reduce build time (target: <20 seconds)
@@ -166,6 +190,7 @@ REVIEW:
 ## ENVIRONMENT VARIABLES AUDIT
 
 **Status:**
+
 ```
 ✅ NEXTAUTH_SECRET - Set
 ✅ NEXTAUTH_URL - Set (for dev)
@@ -187,6 +212,7 @@ REVIEW:
 ## PHASE 3 READINESS
 
 **Status:** 90% Ready
+
 ```
 ✅ AI services configured
 ✅ Database schema prepared
@@ -223,18 +249,18 @@ REVIEW:
 
 ## HEALTH CHECK SUMMARY
 
-| Component | Status | Priority |
-|-----------|--------|----------|
-| Build | ✅ Passing | ✓ |
-| Type Safety | ⚠️ Skipped | Medium |
-| Image Loading | ⚠️ Warnings | High |
-| API Endpoints | ⚠️ Has unused | High |
-| Dependencies | ⚠️ Unaudited | Medium |
-| Error Handling | ❌ Missing | High |
-| .env Configuration | ⚠️ Partial validation | Medium |
-| Phase 3 Ready | ✅ Yes | Ready |
+| Component          | Status                | Priority |
+| ------------------ | --------------------- | -------- |
+| Build              | ✅ Passing            | ✓        |
+| Type Safety        | ⚠️ Skipped            | Medium   |
+| Image Loading      | ⚠️ Warnings           | High     |
+| API Endpoints      | ⚠️ Has unused         | High     |
+| Dependencies       | ⚠️ Unaudited          | Medium   |
+| Error Handling     | ❌ Missing            | High     |
+| .env Configuration | ⚠️ Partial validation | Medium   |
+| Phase 3 Ready      | ✅ Yes                | Ready    |
 
 ---
 
-*Last updated: November 9, 2025*
-*Comprehensive Codebase Review*
+_Last updated: November 9, 2025_
+_Comprehensive Codebase Review_

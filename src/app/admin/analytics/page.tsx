@@ -3,9 +3,9 @@
  * Phase 5 - Route for analytics dashboard with WebSocket support
  */
 
-import { AnalyticsDashboardWebSocket } from '@/components/admin/AnalyticsDashboardWebSocket';
+import { AnalyticsDashboardWebSocket } from "@/components/admin/AnalyticsDashboardWebSocket";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default function AnalyticsPage() {
   return (

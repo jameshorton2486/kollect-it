@@ -61,7 +61,8 @@ export default function LatestArrivals() {
             Latest Arrivals
           </h2>
           <p className="text-lg text-ink-light max-w-2xl mx-auto">
-            Newly authenticated pieces added to our collection. Each item is documented, certified, and ready to join your collection.
+            Newly authenticated pieces added to our collection. Each item is
+            documented, certified, and ready to join your collection.
           </p>
         </motion.div>
 
@@ -88,25 +89,23 @@ export default function LatestArrivals() {
                   <div className="absolute top-3 right-3 bg-accent-gold text-white px-3 py-1 rounded-full text-xs font-semibold">
                     Authenticated
                   </div>
-                  
+
                   {/* Condition badge */}
                   <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur text-ink px-3 py-1 rounded-full text-xs font-medium">
                     {item.condition}
                   </div>
                 </div>
               </Link>
-              
+
               <p className="text-xs text-accent-gold font-semibold uppercase tracking-wide mb-2">
                 {item.category}
               </p>
               <h3 className="font-serif text-lg text-ink mb-1 group-hover:text-accent-gold transition-colors line-clamp-2">
                 {item.title}
               </h3>
-              <p className="text-sm text-ink-light mb-3">
-                {item.desc}
-              </p>
-              
-              <Link 
+              <p className="text-sm text-ink-light mb-3">{item.desc}</p>
+
+              <Link
                 href={`/product/${item.slug}`}
                 className="text-accent-gold text-sm font-semibold hover:text-accent-gold-dark transition-colors inline-flex items-center gap-2"
               >
@@ -124,7 +123,9 @@ export default function LatestArrivals() {
           transition={{ duration: 0.8 }}
         >
           <p className="text-ink-light text-lg mb-6 max-w-2xl mx-auto">
-            Each piece tells a story of craftsmanship and heritage. Our specialists continually source exceptional treasures to elevate your personal collection.
+            Each piece tells a story of craftsmanship and heritage. Our
+            specialists continually source exceptional treasures to elevate your
+            personal collection.
           </p>
           <Link
             href="/shop"

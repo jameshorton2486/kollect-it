@@ -1,0 +1,294 @@
+name: Kollect-It Automated Code Audit
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      skip_auto_fix:
+        description: 'Skip automated fixes'
+        required: false
+        type: boolean
+        default: false
+      
+  # Scheduled - Run weekly on Sundays at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * 0'
+  
+  # Run on pull requests (audit only, no auto-fix)
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  audit:
+    name: Comprehensive Codebase Audit
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    
+    steps:
+      # Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git analysis
+      
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+      
+      # Configure Git
+      - name: Configure Git
+        run: |
+          git config user.name "Kollect-It Audit Bot"
+          git config user.email "audit-bot@kollect-it.com"
+      
+      # Create audit branch
+      - name: Create Audit Branch
+        if: github.event_name != 'pull_request'
+        run: |
+          AUDIT_BRANCH="automated-audit-$(date +%Y%m%d-%H%M%S)"
+          echo "AUDIT_BRANCH=$AUDIT_BRANCH" >> $GITHUB_ENV
+          git checkout -b $AUDIT_BRANCH
+      
+      # Run npm audit
+      - name: Security Audit
+        id: npm-audit
+        continue-on-error: true
+        run: |
+          npm audit --json > audit-npm.json
+          echo "NPM audit completed"
+      
+      # Run ESLint
+      - name: ESLint Analysis
+        continue-on-error: true
+        run: |
+          npx eslint . --ext .ts,.tsx,.js,.jsx --format json --output-file audit-eslint.json || true
+          echo "ESLint completed"
+      
+      # Run TypeScript Check
+      - name: TypeScript Check
+        continue-on-error: true
+        run: |
+          npx tsc --noEmit --pretty false > audit-typescript.txt 2>&1 || true
+          echo "TypeScript check completed"
+      
+      # Apply automated fixes (only if not PR and not disabled)
+      - name: Apply Automated Fixes
+        if: github.event_name != 'pull_request' && !inputs.skip_auto_fix
+        run: |
+          # Dependency cleanup
+          npm prune
+          npm dedupe
+          git add package-lock.json
+          git diff --staged --quiet || git commit -m "chore(deps): prune and dedupe dependencies"
+          
+          # Code formatting
+          npx prettier --write "**/*.{ts,tsx,js,jsx,json,md,css}" --log-level silent || true
+          git add -A
+          git diff --staged --quiet || git commit -m "style: format code with Prettier"
+          
+          # ESLint auto-fixes
+          npx eslint . --ext .ts,.tsx,.js,.jsx --fix || true
+          git add -A
+          git diff --staged --quiet || git commit -m "style: apply ESLint auto-fixes"
+      
+      # Generate audit reports
+      - name: Generate Audit Reports
+        run: |
+          mkdir -p audit-output/reports/{CRITICAL,HIGH,MEDIUM,LOW}
+          
+          # Create summary
+          cat > audit-output/AUDIT_SUMMARY.md << 'EOF'
+          # Kollect-It Code Audit Summary
+          
+          **Run Date:** $(date)
+          **Triggered By:** ${{ github.event_name }}
+          **Branch:** ${{ github.ref }}
+          
+          ## Quick Stats
+          
+          - Workflow: ${{ github.workflow }}
+          - Run Number: ${{ github.run_number }}
+          - Commit: ${{ github.sha }}
+          
+          ## Reports Generated
+          
+          See attached artifacts for detailed analysis:
+          - npm audit results
+          - ESLint analysis
+          - TypeScript errors
+          - Automated fix commits
+          
+          ## Next Steps
+          
+          1. Review critical issues first
+          2. Address high-priority items
+          3. Plan for medium/low improvements
+          4. Re-run audit after fixes
+          EOF
+          
+          echo "Audit summary generated"
+      
+      # Upload audit results as artifacts
+      - name: Upload Audit Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-results-${{ github.run_number }}
+          path: |
+            audit-output/
+            audit-*.json
+            audit-*.txt
+          retention-days: 30
+      
+      # Create pull request with fixes (if on schedule or manual, and fixes were applied)
+      - name: Create Pull Request
+        if: github.event_name != 'pull_request' && !inputs.skip_auto_fix
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: automated audit fixes'
+          branch: ${{ env.AUDIT_BRANCH }}
+          title: '🤖 Automated Code Audit Fixes - ${{ github.run_number }}'
+          body: |
+            ## 🤖 Automated Audit Results
+            
+            This PR contains automated fixes from the comprehensive code audit.
+            
+            ### Changes Applied
+            
+            - ✅ Dependencies pruned and deduped
+            - ✅ Code formatted with Prettier
+            - ✅ ESLint auto-fixes applied
+            
+            ### Review Instructions
+            
+            1. Download audit artifacts from workflow run
+            2. Review `AUDIT_SUMMARY.md`
+            3. Check critical issues first
+            4. Test the application locally
+            5. Merge if all checks pass
+            
+            ### Audit Details
+            
+            - **Run Number:** ${{ github.run_number }}
+            - **Triggered:** ${{ github.event_name }}
+            - **Date:** $(date)
+            
+            ### Artifacts
+            
+            - [View Audit Reports](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            ---
+            
+            **Note:** This is an automated PR. Review carefully before merging.
+          labels: |
+            automated
+            audit
+            maintenance
+          assignees: jameshorton2486
+      
+      # Comment on PR (if triggered by PR)
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            let comment = '## 🔍 Audit Results\n\n';
+            comment += '**Status:** Analysis complete\n\n';
+            
+            // Add npm audit results
+            if (fs.existsSync('audit-npm.json')) {
+              const npmAudit = JSON.parse(fs.readFileSync('audit-npm.json', 'utf8'));
+              if (npmAudit.metadata) {
+                const vulns = npmAudit.metadata.vulnerabilities;
+                comment += '### Security Vulnerabilities\n\n';
+                comment += `- Critical: ${vulns.critical}\n`;
+                comment += `- High: ${vulns.high}\n`;
+                comment += `- Moderate: ${vulns.moderate}\n`;
+                comment += `- Low: ${vulns.low}\n\n`;
+              }
+            }
+            
+            comment += '### Next Steps\n\n';
+            comment += '1. Download artifacts for detailed reports\n';
+            comment += '2. Address any critical/high issues\n';
+            comment += '3. Run tests locally\n\n';
+            comment += '---\n';
+            comment += '*Automated audit by Kollect-It Audit System*';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+      
+      # Create GitHub issue for critical findings
+      - name: Create Issue for Critical Findings
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Check for critical vulnerabilities
+            let hasCritical = false;
+            let issueBody = '## 🚨 Critical Issues Found\n\n';
+            issueBody += `**Audit Run:** ${{ github.run_number }}\n`;
+            issueBody += `**Date:** ${new Date().toISOString()}\n\n`;
+            
+            if (fs.existsSync('audit-npm.json')) {
+              const npmAudit = JSON.parse(fs.readFileSync('audit-npm.json', 'utf8'));
+              if (npmAudit.metadata && npmAudit.metadata.vulnerabilities.critical > 0) {
+                hasCritical = true;
+                issueBody += `### Security Vulnerabilities\n\n`;
+                issueBody += `- **Critical:** ${npmAudit.metadata.vulnerabilities.critical}\n`;
+                issueBody += `- **High:** ${npmAudit.metadata.vulnerabilities.high}\n\n`;
+                issueBody += '**Action Required:** Run `npm audit fix` immediately.\n\n';
+              }
+            }
+            
+            if (hasCritical) {
+              issueBody += '---\n';
+              issueBody += `[View Full Audit Results](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n`;
+              
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🚨 Critical Issues Found - Audit #${{ github.run_number }}`,
+                body: issueBody,
+                labels: ['critical', 'security', 'automated']
+              });
+            }
+      
+      # Cleanup
+      - name: Cleanup
+        if: always()
+        run: |
+          echo "Audit workflow completed"
+          echo "View artifacts for detailed reports"
+
+# Optional: Add status check
+  status-check:
+    name: Audit Status Check
+    needs: audit
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Check Audit Status
+        run: |
+          echo "Code audit completed successfully"
+          echo "Review artifacts before merging"

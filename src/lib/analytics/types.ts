@@ -166,7 +166,7 @@ export interface AnalyticsQueryParams {
   startDate?: string; // YYYY-MM-DD
   endDate?: string; // YYYY-MM-DD
   category?: string;
-  status?: 'APPROVED' | 'REJECTED' | 'ALL';
+  status?: "APPROVED" | "REJECTED" | "ALL";
   limit?: number;
 }
 
@@ -188,7 +188,7 @@ export interface MetricCardData {
   unit: string;
   prefix?: string;
   trendLabel?: string;
-  trend?: { direction: 'up' | 'down' | 'neutral'; percentage: number } | number;
+  trend?: { direction: "up" | "down" | "neutral"; percentage: number } | number;
   comparison?: string;
   color?: string;
   borderColor?: string;
@@ -196,7 +196,14 @@ export interface MetricCardData {
 
 export interface DashboardConfig {
   refreshInterval: number; // In seconds
-  defaultDateRange: 'day' | 'week' | 'month' | 'year';
-  metricsToDisplay: ('approval' | 'pricing' | 'performance' | 'revenue' | 'trends' | 'categories')[];
+  defaultDateRange: "day" | "week" | "month" | "year";
+  metricsToDisplay: (
+    | "approval"
+    | "pricing"
+    | "performance"
+    | "revenue"
+    | "trends"
+    | "categories"
+  )[];
   chartsPerRow: number;
 }

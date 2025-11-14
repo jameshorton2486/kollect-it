@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Heart, ShoppingCart, Trash2 } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useEffect, useState } from "react";
+import { Heart, ShoppingCart, Trash2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface WishlistItem {
   id: string;
@@ -26,11 +26,11 @@ export default function WishlistPage() {
 
   const fetchWishlist = async () => {
     try {
-      const response = await fetch('/api/wishlist');
+      const response = await fetch("/api/wishlist");
       const data = await response.json();
       setItems(data.items || []);
     } catch (error) {
-      console.error('Failed to fetch wishlist:', error);
+      console.error("Failed to fetch wishlist:", error);
     } finally {
       setIsLoading(false);
     }
@@ -38,23 +38,23 @@ export default function WishlistPage() {
 
   const removeFromWishlist = async (productId: string) => {
     try {
-      await fetch(`/api/wishlist?productId=${productId}`, { method: 'DELETE' });
+      await fetch(`/api/wishlist?productId=${productId}`, { method: "DELETE" });
       fetchWishlist();
     } catch (error) {
-      console.error('Failed to remove from wishlist:', error);
+      console.error("Failed to remove from wishlist:", error);
     }
   };
 
   const addToCart = async (productId: string) => {
     try {
-      await fetch('/api/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, quantity: 1 })
+      await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, quantity: 1 }),
       });
-      alert('Added to cart!');
+      alert("Added to cart!");
     } catch (error) {
-      console.error('Failed to add to cart:', error);
+      console.error("Failed to add to cart:", error);
     }
   };
 
@@ -93,10 +93,16 @@ export default function WishlistPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {items.map((item) => (
-          <div key={item.id} className="border rounded-lg overflow-hidden group">
-            <Link href={`/products/${item.product.id}`} className="relative aspect-square bg-muted block">
+          <div
+            key={item.id}
+            className="border rounded-lg overflow-hidden group"
+          >
+            <Link
+              href={`/products/${item.product.id}`}
+              className="relative aspect-square bg-muted block"
+            >
               <Image
-                src={item.product.images[0]?.url || '/placeholder.jpg'}
+                src={item.product.images[0]?.url || "/placeholder.jpg"}
                 alt={item.product.title}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform"

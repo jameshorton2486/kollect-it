@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 /**
  * Dashboard Metrics API
@@ -9,7 +9,7 @@ import { prisma } from '@/lib/prisma';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const period = parseInt(searchParams.get('period') || '30');
+    const period = parseInt(searchParams.get("period") || "30");
 
     const now = new Date();
     const startDate = new Date(now);
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
         createdAt: {
           gte: startDate,
         },
-        paymentStatus: 'paid',
+        paymentStatus: "paid",
       },
       include: {
         items: {
@@ -42,33 +42,43 @@ export async function GET(request: NextRequest) {
           gte: previousStartDate,
           lt: startDate,
         },
-        paymentStatus: 'paid',
+        paymentStatus: "paid",
       },
     });
 
     // Calculate revenue
-    const totalRevenue = orders.reduce((sum: number, order: any) => sum + (order.total || 0), 0);
-    const previousRevenue = previousOrders.reduce((sum: number, order: any) => sum + (order.total || 0), 0);
-    const revenueTrend = previousRevenue > 0 
-      ? ((totalRevenue - previousRevenue) / previousRevenue) * 100 
-      : 0;
+    const totalRevenue = orders.reduce(
+      (sum: number, order: any) => sum + (order.total || 0),
+      0,
+    );
+    const previousRevenue = previousOrders.reduce(
+      (sum: number, order: any) => sum + (order.total || 0),
+      0,
+    );
+    const revenueTrend =
+      previousRevenue > 0
+        ? ((totalRevenue - previousRevenue) / previousRevenue) * 100
+        : 0;
 
     // Calculate orders metrics
     const totalOrders = orders.length;
     const previousOrderCount = previousOrders.length;
-    const ordersTrend = previousOrderCount > 0 
-      ? ((totalOrders - previousOrderCount) / previousOrderCount) * 100 
-      : 0;
+    const ordersTrend =
+      previousOrderCount > 0
+        ? ((totalOrders - previousOrderCount) / previousOrderCount) * 100
+        : 0;
 
     const pendingOrders = await prisma.order.count({
       where: {
         status: {
-          in: ['pending', 'processing'],
+          in: ["pending", "processing"],
         },
       },
     });
 
-    const completedOrders = orders.filter((o: any) => o.status === 'delivered' || o.status === 'completed').length;
+    const completedOrders = orders.filter(
+      (o: any) => o.status === "delivered" || o.status === "completed",
+    ).length;
     const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
     // Daily revenue for chart
@@ -80,23 +90,27 @@ export async function GET(request: NextRequest) {
       const dayEnd = new Date(date.setHours(23, 59, 59, 999));
 
       const dayOrders = orders.filter(
-        (o: any) => o.createdAt >= dayStart && o.createdAt <= dayEnd
+        (o: any) => o.createdAt >= dayStart && o.createdAt <= dayEnd,
       );
-      const dayRevenue = dayOrders.reduce((sum: number, o: any) => sum + (o.total || 0), 0);
+      const dayRevenue = dayOrders.reduce(
+        (sum: number, o: any) => sum + (o.total || 0),
+        0,
+      );
 
       dailyRevenue.push({
-        date: dayStart.toISOString().split('T')[0],
+        date: dayStart.toISOString().split("T")[0],
         revenue: dayRevenue,
       });
     }
 
     // Products metrics
-    const [totalProducts, activeProducts, soldProducts, draftProducts] = await Promise.all([
-      prisma.product.count(),
-      prisma.product.count({ where: { status: 'active' } }),
-      prisma.product.count({ where: { status: 'sold' } }),
-      prisma.product.count({ where: { status: 'draft' } }),
-    ]);
+    const [totalProducts, activeProducts, soldProducts, draftProducts] =
+      await Promise.all([
+        prisma.product.count(),
+        prisma.product.count({ where: { status: "active" } }),
+        prisma.product.count({ where: { status: "sold" } }),
+        prisma.product.count({ where: { status: "draft" } }),
+      ]);
 
     // Products by category
     const categories = await prisma.category.findMany({
@@ -127,7 +141,7 @@ export async function GET(request: NextRequest) {
       where: {
         orders: {
           some: {
-            paymentStatus: 'paid',
+            paymentStatus: "paid",
           },
         },
       },
@@ -136,7 +150,7 @@ export async function GET(request: NextRequest) {
           select: {
             orders: {
               where: {
-                paymentStatus: 'paid',
+                paymentStatus: "paid",
               },
             },
           },
@@ -144,13 +158,19 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const returningCustomers = customersWithOrders.filter((u: any) => u._count.orders > 1).length;
-    const returningRate = customersWithOrders.length > 0 
-      ? (returningCustomers / customersWithOrders.length) * 100 
-      : 0;
+    const returningCustomers = customersWithOrders.filter(
+      (u: any) => u._count.orders > 1,
+    ).length;
+    const returningRate =
+      customersWithOrders.length > 0
+        ? (returningCustomers / customersWithOrders.length) * 100
+        : 0;
 
     // Top products by revenue
-    const productSales = new Map<string, { title: string; sales: number; revenue: number }>();
+    const productSales = new Map<
+      string,
+      { title: string; sales: number; revenue: number }
+    >();
 
     orders.forEach((order: any) => {
       order.items.forEach((item: any) => {
@@ -205,10 +225,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(metrics);
   } catch (error) {
-    console.error('Dashboard metrics error:', error);
+    console.error("Dashboard metrics error:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch dashboard metrics' },
-      { status: 500 }
+      { error: "Failed to fetch dashboard metrics" },
+      { status: 500 },
     );
   }
 }

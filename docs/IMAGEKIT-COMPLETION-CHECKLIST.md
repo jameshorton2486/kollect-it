@@ -1,4 +1,5 @@
 # ImageKit Integration - Completion Checklist
+
 **Last Updated:** November 5, 2025  
 **Status:** Ready for Manual Configuration & Execution
 
@@ -7,16 +8,19 @@
 ## 📋 Complete Step-by-Step Guide (Do These In Order)
 
 ### ✅ Step 1: Install Dependencies (2 minutes)
+
 ```bash
 bun add imagekit googleapis dotenv
 ```
 
 **What this does:** Installs the three packages needed:
+
 - `imagekit` — ImageKit SDK for uploads
 - `googleapis` — Google Drive API client
 - `dotenv` — Environment variable loader
 
 **Verify it worked:**
+
 ```bash
 bun list | grep -E "imagekit|googleapis|dotenv"
 ```
@@ -77,11 +81,13 @@ bun list | grep -E "imagekit|googleapis|dotenv"
 7. A JSON file downloads automatically
 
 **Important:**
+
 - Rename it to: `google-credentials.json`
 - Save to project root: `c:\Users\james\kollect-it-marketplace-1\google-credentials.json`
 - **⚠️ NEVER commit this file** (already in `.gitignore`)
 
 **Verify file exists:**
+
 ```bash
 ls google-credentials.json
 ```
@@ -111,6 +117,7 @@ ls google-credentials.json
 4. The ID is the long string after `/folders/`
 
 **Example:**
+
 ```
 URL: https://drive.google.com/drive/folders/1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
 ID:  1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
@@ -151,6 +158,7 @@ WEBHOOK_SECRET=your_random_secret_min_32_chars_here
 ```
 
 **For WEBHOOK_SECRET**, generate a random string:
+
 ```bash
 # On macOS/Linux:
 openssl rand -base64 32
@@ -172,6 +180,7 @@ bun run sync-images
 ```
 
 **Expected output:**
+
 ```
 🚀 Starting Google Drive to ImageKit Sync
 📁 Drive Folder ID: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
@@ -208,9 +217,11 @@ bun run sync-images
 ### ✅ Step 11: Verify Sync Results (2 minutes)
 
 1. **Check sync-results.json:**
+
    ```bash
    cat sync-results.json
    ```
+
    Look for:
    - `filesUploaded` > 0
    - `filesFailed` = 0 (or low count)
@@ -235,7 +246,7 @@ bun run sync-images
 Once images are synced to ImageKit, use them in your pages:
 
 ```tsx
-import { ProductImage } from '@/components/ProductImage';
+import { ProductImage } from "@/components/ProductImage";
 
 export default function ProductPage() {
   return (
@@ -253,32 +264,35 @@ export default function ProductPage() {
 
 ## 📊 Expected Results After Completion
 
-| Metric | Expected Value |
-|--------|-----------------|
-| Images Synced | All images in your Drive folder |
-| ImageKit Folder | `/products` containing all images |
-| ImageKit URLs | `https://ik.imagekit.io/kollectit/products/[name].jpg` |
-| sync-results.json | Complete report with per-file details |
-| Build Status | ✅ All TypeScript compiles |
-| Components Ready | ✅ ProductImage, ProductImageGrid, ResponsiveProductImage |
+| Metric            | Expected Value                                            |
+| ----------------- | --------------------------------------------------------- |
+| Images Synced     | All images in your Drive folder                           |
+| ImageKit Folder   | `/products` containing all images                         |
+| ImageKit URLs     | `https://ik.imagekit.io/kollectit/products/[name].jpg`    |
+| sync-results.json | Complete report with per-file details                     |
+| Build Status      | ✅ All TypeScript compiles                                |
+| Components Ready  | ✅ ProductImage, ProductImageGrid, ResponsiveProductImage |
 
 ---
 
 ## 🐛 Troubleshooting
 
 ### "GOOGLE_APPLICATION_CREDENTIALS not found"
+
 - **Solution:** Verify `google-credentials.json` exists in project root
   ```bash
   ls google-credentials.json
   ```
 
 ### "Service account doesn't have access to folder" (403 error)
-- **Solution:** 
+
+- **Solution:**
   1. Copy `client_email` from `google-credentials.json`
   2. Share Drive folder with that email (Viewer permission)
   3. Wait 30 seconds, retry sync
 
 ### "ImageKit authentication failed"
+
 - **Solution:**
   1. Verify `IMAGEKIT_PRIVATE_KEY` in `.env.local`
   2. Go to imagekit.io → Settings → API Keys
@@ -286,15 +300,18 @@ export default function ProductPage() {
   4. Update `.env.local` and retry
 
 ### "No images found in Google Drive folder"
+
 - **Solution:**
   1. Verify `GOOGLE_DRIVE_FOLDER_ID` is correct
   2. Confirm folder has supported images (jpg, png, webp, gif)
   3. Check folder was shared with service account
 
 ### "Rate limit exceeded"
+
 - **Solution:** Script includes 500ms delays. Wait 5 minutes, then retry.
 
 ### "sync-results.json shows failures"
+
 - **Solution:** Check error details in `sync-results.json`
   ```bash
   cat sync-results.json | grep -A 5 "failed"
@@ -305,12 +322,14 @@ export default function ProductPage() {
 ## 🔒 Security Reminders
 
 ✅ **DO:**
+
 - Keep `google-credentials.json` in `.gitignore`
 - Keep `.env.local` in `.gitignore`
 - Use strong `WEBHOOK_SECRET` (32+ characters)
 - Rotate credentials quarterly
 
 ❌ **DON'T:**
+
 - Commit `google-credentials.json` to Git
 - Commit `.env.local` to Git
 - Share private keys in code or messages
@@ -363,12 +382,14 @@ Before you consider this complete, verify:
 ## 🎉 Success!
 
 Once all steps are complete:
+
 1. ✅ Images are hosted on ImageKit CDN
 2. ✅ ProductImage component can load them
 3. ✅ Full-featured sync script available for future updates
 4. ✅ API endpoint ready for webhook-triggered syncs
 
 **Next Steps:**
+
 - Integrate ProductImage into product pages
 - Set up scheduled syncs (optional)
 - Monitor ImageKit usage and costs

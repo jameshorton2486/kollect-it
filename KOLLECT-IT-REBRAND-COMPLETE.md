@@ -2,7 +2,8 @@
 
 **Purpose:** Transform from "luxury posh marketplace" to "professional, honest collector's marketplace"
 
-**Target Audience:** 
+**Target Audience:**
+
 - Collectors ($500-2K items)
 - Newcomers to collecting
 - Investors/resellers
@@ -13,12 +14,14 @@
 ## 🏠 HOMEPAGE - NEW MESSAGING
 
 ### Current Hero Section (TOO POSH)
+
 ```
 "Discover authenticated luxury collectibles curated for discerning connoisseurs"
 "Trusted by museums and private collectors"
 ```
 
 ### NEW Hero Section (PROFESSIONAL, HONEST)
+
 ```
 Headline: "Collectibles Worth Collecting"
 
@@ -34,11 +37,13 @@ Secondary CTA: "Sell Your Items"
 ## 🎨 NEW TAGLINE (Replace Furniture)
 
 ### Current 4-Column Tagline
+
 ```
 Fine Art to Rare Books • Furniture to Collectibles • Expert Authentication • Insured Shipping
 ```
 
 ### NEW 4-Column Tagline
+
 ```
 Rare Books to Fine Art • Collectibles to Militaria • Professionally Authenticated • Insured & Tracked Shipping
 ```
@@ -48,15 +53,17 @@ Rare Books to Fine Art • Collectibles to Militaria • Professionally Authenti
 ## 🔐 AUTHENTICATION SECTION (Rewritten)
 
 ### Current (Too Corporate)
+
 ```
 "Expert-vetted items with detailed descriptions, provenance documentation, and certification where applicable."
 "Bank-level encryption. Your payment information is protected by industry-leading security standards."
 ```
 
 ### NEW (Honest & Professional)
+
 ```
 AUTHENTICATION & VALUATION
-We authenticate items using professional resources and valuation tools. If you believe we've made an error, 
+We authenticate items using professional resources and valuation tools. If you believe we've made an error,
 contact us and we'll review and adjust our assessment. Honesty is our foundation.
 
 ✓ Professional valuations using industry-standard resources
@@ -73,11 +80,13 @@ Your payment information is protected by industry-leading security standards.
 ## 📦 SHIPPING & RETURNS (Simplified)
 
 ### Current (Too Fancy)
+
 ```
 "White glove service and authenticated luxury collectibles"
 ```
 
 ### NEW (Practical & Professional)
+
 ```
 SHIPPING
 ✓ Insured and tracked shipping
@@ -85,7 +94,7 @@ SHIPPING
 ✓ Professional packaging to ensure items arrive in condition
 
 RETURNS
-We encourage careful review of all photos and descriptions before purchasing. 
+We encourage careful review of all photos and descriptions before purchasing.
 Returns are possible but discouraged. Contact us to discuss any concerns.
 We want you to be confident in every purchase.
 ```
@@ -100,17 +109,17 @@ ABOUT KOLLECT-IT
 We started with a passion for collectibles and a frustration:
 items worth $500-$15,000 fall through the cracks.
 
-Auction houses have minimums around $10,000. Online marketplaces 
+Auction houses have minimums around $10,000. Online marketplaces
 feel risky and impersonal. Private sales are hit-or-miss.
 
 We built Kollect-It to fill that gap.
 
-Our collection is personally curated. Every item is accurately described, 
-professionally valued, and fairly priced—typically between auction value 
+Our collection is personally curated. Every item is accurately described,
+professionally valued, and fairly priced—typically between auction value
 and retail price, so you get a better deal than traditional auctions.
 
-We're a one-person operation committed to honesty. If you have questions, 
-want additional photos, or disagree with our valuation, reach out. 
+We're a one-person operation committed to honesty. If you have questions,
+want additional photos, or disagree with our valuation, reach out.
 We'll listen and adjust if we're wrong.
 
 Because the best collectibles deserve careful attention.
@@ -121,10 +130,11 @@ Because the best collectibles deserve careful attention.
 ## 🤝 "SELL YOUR ITEMS" SECTION (New)
 
 ### Homepage Secondary Section
+
 ```
 HAVE ITEMS TO SELL?
 
-Whether you have a single valuable piece or a collection, 
+Whether you have a single valuable piece or a collection,
 we're interested in working with you.
 
 For items $500-$15,000 that you want to sell:
@@ -143,6 +153,7 @@ Email us with photos and details. We'll get back to you within 24-48 hours.
 ## 📂 CATEGORY NAMES (Updated)
 
 ### Current
+
 ```
 Antique Books
 Fine Art
@@ -203,16 +214,17 @@ Insured and tracked. Your items arrive the way they should.
 ## 📝 HOMEPAGE COPY - FULL REWRITE
 
 ### Section 1: Hero
+
 ```
 COLLECTIBLES WORTH COLLECTING
 
 Professionally valued. Fairly priced. Personally curated.
 
-We focus on the items auction houses skip—the pieces worth $500-$15,000 
+We focus on the items auction houses skip—the pieces worth $500-$15,000
 that deserve expert attention but don't fit traditional auction minimums.
 
-Every item in our collection is photographed from multiple angles, 
-accurately described, and professionally valued. 
+Every item in our collection is photographed from multiple angles,
+accurately described, and professionally valued.
 
 Browse our collection or contact us to sell your items.
 
@@ -220,6 +232,7 @@ Browse our collection or contact us to sell your items.
 ```
 
 ### Section 2: Four Pillars (Replace old tagline)
+
 ```
 RARE BOOKS TO FINE ART
 Carefully curated across books, art, collectibles, and militaria
@@ -235,6 +248,7 @@ Arrives safely, ships in 3-4 business days
 ```
 
 ### Section 3: How It Works
+
 ```
 THREE STEPS TO YOUR NEXT COLLECTIBLE
 
@@ -242,7 +256,7 @@ THREE STEPS TO YOUR NEXT COLLECTIBLE
 Explore our collection. Detailed photos and honest descriptions for every item.
 
 2. ASK QUESTIONS
-Want more photos? Details? We'll respond within 24 hours. 
+Want more photos? Details? We'll respond within 24 hours.
 That's the benefit of dealing directly.
 
 3. PURCHASE WITH CONFIDENCE
@@ -250,10 +264,11 @@ Insured shipping. Fair pricing. Full visibility into what you're buying.
 ```
 
 ### Section 4: Sell Your Items
+
 ```
 HAVE SOMETHING TO SELL?
 
-We buy and consign items from collectors like you. 
+We buy and consign items from collectors like you.
 Skip the auction house fees (25-50%) and sell directly.
 
 Items $500-$15,000 welcome.
@@ -267,6 +282,7 @@ Items $500-$15,000 welcome.
 ```
 
 ### Section 5: Authentication
+
 ```
 WE AUTHENTICATE. WE LISTEN. WE ADJUST IF WE'RE WRONG.
 
@@ -282,6 +298,7 @@ Honesty is our foundation.
 ## 🗣️ TONE GUIDE
 
 ### DO:
+
 - ✅ Professional but approachable
 - ✅ Direct and honest
 - ✅ Emphasize fair pricing and accurate descriptions
@@ -291,6 +308,7 @@ Honesty is our foundation.
 - ✅ Focus on value (fair prices, no commission)
 
 ### DON'T:
+
 - ❌ Use "luxury," "prestigious," "elite," "curated for connoisseurs"
 - ❌ Mention "museums" or "private collectors" as trust signals
 - ❌ Say "white glove" or overly formal service language
@@ -303,16 +321,16 @@ Honesty is our foundation.
 
 ## 🔄 PAGES TO UPDATE
 
-| Page | Current Problem | New Approach |
-|------|-----------------|--------------|
-| **Homepage** | Too posh, unclear value | Clear value prop: fair prices, no auction fees |
-| **About** | Missing | Add: Your story, why you started, what makes you different |
-| **Categories** | No descriptions | Add: What's in each category, price range |
-| **Product Pages** | Probably fine | Keep: Detailed photos, descriptions, encourage questions |
-| **Checkout** | Need to verify | Should emphasize: Insured shipping, fair price |
-| **Admin/Email Settings** | Probably fine | Keep current |
-| **Analytics** | Probably fine | Keep current |
-| **Authentication** | Too formal | Rewrite: Professional but honest, open to correction |
+| Page                     | Current Problem         | New Approach                                               |
+| ------------------------ | ----------------------- | ---------------------------------------------------------- |
+| **Homepage**             | Too posh, unclear value | Clear value prop: fair prices, no auction fees             |
+| **About**                | Missing                 | Add: Your story, why you started, what makes you different |
+| **Categories**           | No descriptions         | Add: What's in each category, price range                  |
+| **Product Pages**        | Probably fine           | Keep: Detailed photos, descriptions, encourage questions   |
+| **Checkout**             | Need to verify          | Should emphasize: Insured shipping, fair price             |
+| **Admin/Email Settings** | Probably fine           | Keep current                                               |
+| **Analytics**            | Probably fine           | Keep current                                               |
+| **Authentication**       | Too formal              | Rewrite: Professional but honest, open to correction       |
 
 ---
 
@@ -347,11 +365,13 @@ Use these everywhere to stay consistent:
 ## 📱 CALLS TO ACTION (Updated)
 
 ### Current CTAs
+
 - "Browse Collection"
 - "Register Now"
 - "Start Collecting"
 
 ### NEW CTAs
+
 - "Browse Collection" ✓ Keep
 - "Explore by Category" (new)
 - "Sell Your Items" (new, important)

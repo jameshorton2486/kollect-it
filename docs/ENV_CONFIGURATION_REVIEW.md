@@ -103,7 +103,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 - ✅ `.gitignore` excludes `.env` (security)
 - ⚠️ Never commit `.env` to version control
 - ⚠️ Service role keys are server-side only
-- ⚠️ Public keys (NEXT_PUBLIC_*) are intentionally exposed
+- ⚠️ Public keys (NEXT*PUBLIC*\*) are intentionally exposed
 
 ---
 
@@ -126,24 +126,23 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 1. `IMAGEKIT_PRIVATE_KEY` - For image management
 2. `SUPABASE_SERVICE_ROLE_KEY` - For admin operations
 
-
 ---
 
 ## 📊 Current Configuration Status
 
-| Variable | Status | Action |
-|----------|--------|--------|
-| NODE_ENV | ✅ Ready | None |
-| NEXT_PUBLIC_SITE_URL | ✅ Ready | None |
-| NEXTAUTH_URL | ✅ Ready | None |
-| NEXTAUTH_SECRET | ⚠️ Placeholder | Generate & update |
-| DATABASE_URL | ⚠️ Placeholder | Add password |
-| DIRECT_URL | ⚠️ Placeholder | Add password |
-| STRIPE_* | 🔵 Optional | Update for payments |
-| RESEND_API_KEY | 🔵 Optional | Update for email |
-| IMAGEKIT_* | 🔵 Optional | Update for images |
-| NEXT_PUBLIC_SUPABASE_* | ✅ Configured | None |
-| SUPABASE_SERVICE_ROLE_KEY | ⚠️ Placeholder | Update if needed |
+| Variable                  | Status         | Action              |
+| ------------------------- | -------------- | ------------------- |
+| NODE_ENV                  | ✅ Ready       | None                |
+| NEXT_PUBLIC_SITE_URL      | ✅ Ready       | None                |
+| NEXTAUTH_URL              | ✅ Ready       | None                |
+| NEXTAUTH_SECRET           | ⚠️ Placeholder | Generate & update   |
+| DATABASE_URL              | ⚠️ Placeholder | Add password        |
+| DIRECT_URL                | ⚠️ Placeholder | Add password        |
+| STRIPE\_\*                | 🔵 Optional    | Update for payments |
+| RESEND_API_KEY            | 🔵 Optional    | Update for email    |
+| IMAGEKIT\_\*              | 🔵 Optional    | Update for images   |
+| NEXT*PUBLIC_SUPABASE*\*   | ✅ Configured  | None                |
+| SUPABASE_SERVICE_ROLE_KEY | ⚠️ Placeholder | Update if needed    |
 
 ---
 

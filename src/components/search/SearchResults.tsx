@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import SearchFilters from './SearchFilters';
-import { Grid3x3, List, SlidersHorizontal } from 'lucide-react';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import SearchFilters from "./SearchFilters";
+import { Grid3x3, List, SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
 
 interface Product {
   id: string;
@@ -26,16 +26,18 @@ interface SearchResultsData {
 export default function SearchResults() {
   const searchParams = useSearchParams();
   // const router = useRouter(); // Removed unused variable
-  const query = searchParams.get('q') || '';
-  
+  const query = searchParams.get("q") || "";
+
   const [results, setResults] = useState<SearchResultsData>({
     products: [],
     total: 0,
-    filters: []
+    filters: [],
   });
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
-  const [sortBy, setSortBy] = useState('relevance');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({});
+  const [sortBy, setSortBy] = useState("relevance");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,27 +49,27 @@ export default function SearchResults() {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
-      params.append('q', query);
-      params.append('sort', sortBy);
-      
+      params.append("q", query);
+      params.append("sort", sortBy);
+
       Object.entries(selectedFilters).forEach(([key, values]) => {
-        values.forEach(value => params.append(key, value));
+        values.forEach((value) => params.append(key, value));
       });
 
       const response = await fetch(`/api/search?${params}`);
       const data = await response.json();
       setResults(data);
     } catch (error) {
-      console.error('Search failed:', error);
+      console.error("Search failed:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleFilterChange = (filterId: string, values: string[]) => {
-    setSelectedFilters(prev => ({
+    setSelectedFilters((prev) => ({
       ...prev,
-      [filterId]: values
+      [filterId]: values,
     }));
   };
 
@@ -77,45 +79,45 @@ export default function SearchResults() {
 
   const filterSections = [
     {
-      id: 'category',
-      title: 'Category',
-      type: 'checkbox' as const,
+      id: "category",
+      title: "Category",
+      type: "checkbox" as const,
       options: [
-        { value: 'trading-cards', label: 'Trading Cards', count: 150 },
-        { value: 'action-figures', label: 'Action Figures', count: 89 },
-        { value: 'comics', label: 'Comics', count: 234 },
-        { value: 'vintage-toys', label: 'Vintage Toys', count: 67 },
-        { value: 'coins', label: 'Coins & Currency', count: 112 },
-      ]
+        { value: "trading-cards", label: "Trading Cards", count: 150 },
+        { value: "action-figures", label: "Action Figures", count: 89 },
+        { value: "comics", label: "Comics", count: 234 },
+        { value: "vintage-toys", label: "Vintage Toys", count: 67 },
+        { value: "coins", label: "Coins & Currency", count: 112 },
+      ],
     },
     {
-      id: 'condition',
-      title: 'Condition',
-      type: 'checkbox' as const,
+      id: "condition",
+      title: "Condition",
+      type: "checkbox" as const,
       options: [
-        { value: 'mint', label: 'Mint', count: 45 },
-        { value: 'near-mint', label: 'Near Mint', count: 123 },
-        { value: 'excellent', label: 'Excellent', count: 89 },
-        { value: 'good', label: 'Good', count: 234 },
-        { value: 'fair', label: 'Fair', count: 56 },
-      ]
+        { value: "mint", label: "Mint", count: 45 },
+        { value: "near-mint", label: "Near Mint", count: 123 },
+        { value: "excellent", label: "Excellent", count: 89 },
+        { value: "good", label: "Good", count: 234 },
+        { value: "fair", label: "Fair", count: 56 },
+      ],
     },
     {
-      id: 'price',
-      title: 'Price Range',
-      type: 'range' as const,
+      id: "price",
+      title: "Price Range",
+      type: "range" as const,
       min: 0,
-      max: 10000
+      max: 10000,
     },
     {
-      id: 'shipping',
-      title: 'Shipping',
-      type: 'checkbox' as const,
+      id: "shipping",
+      title: "Shipping",
+      type: "checkbox" as const,
       options: [
-        { value: 'free', label: 'Free Shipping' },
-        { value: 'fast', label: 'Fast Shipping (2-3 days)' },
-      ]
-    }
+        { value: "free", label: "Free Shipping" },
+        { value: "fast", label: "Fast Shipping (2-3 days)" },
+      ],
+    },
   ];
 
   return (
@@ -123,10 +125,10 @@ export default function SearchResults() {
       {/* Search Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold mb-2">
-          {query ? `Search results for "${query}"` : 'Search Results'}
+          {query ? `Search results for "${query}"` : "Search Results"}
         </h1>
         <p className="text-muted-foreground">
-          {isLoading ? 'Searching...' : `${results.total} items found`}
+          {isLoading ? "Searching..." : `${results.total} items found`}
         </p>
       </div>
 
@@ -156,14 +158,14 @@ export default function SearchResults() {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setViewMode('grid')}
-            className={`p-2 border rounded ${viewMode === 'grid' ? 'bg-primary text-primary-foreground' : ''}`}
+            onClick={() => setViewMode("grid")}
+            className={`p-2 border rounded ${viewMode === "grid" ? "bg-primary text-primary-foreground" : ""}`}
           >
             <Grid3x3 className="h-4 w-4" />
           </button>
           <button
-            onClick={() => setViewMode('list')}
-            className={`p-2 border rounded ${viewMode === 'list' ? 'bg-primary text-primary-foreground' : ''}`}
+            onClick={() => setViewMode("list")}
+            className={`p-2 border rounded ${viewMode === "list" ? "bg-primary text-primary-foreground" : ""}`}
           >
             <List className="h-4 w-4" />
           </button>
@@ -196,23 +198,37 @@ export default function SearchResults() {
               </p>
             </div>
           ) : (
-            <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
+            <div
+              className={
+                viewMode === "grid"
+                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  : "space-y-4"
+              }
+            >
               {results.products.map((product) => (
                 <Link
                   key={product.id}
                   href={`/products/${product.id}`}
                   className={`block border rounded-lg overflow-hidden hover:shadow-lg transition-shadow ${
-                    viewMode === 'list' ? 'flex gap-4' : ''
+                    viewMode === "list" ? "flex gap-4" : ""
                   }`}
                 >
                   <img
-                    src={product.images[0]?.url || '/placeholder.jpg'}
+                    src={product.images[0]?.url || "/placeholder.jpg"}
                     alt={product.title}
-                    className={viewMode === 'list' ? 'w-48 h-48 object-cover' : 'w-full h-64 object-cover'}
+                    className={
+                      viewMode === "list"
+                        ? "w-48 h-48 object-cover"
+                        : "w-full h-64 object-cover"
+                    }
                   />
                   <div className="p-4 flex-1">
-                    <h3 className="font-semibold mb-2 line-clamp-2">{product.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{product.condition}</p>
+                    <h3 className="font-semibold mb-2 line-clamp-2">
+                      {product.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      {product.condition}
+                    </p>
                     <p className="text-lg font-bold text-primary mb-2">
                       ${product.price.toFixed(2)}
                     </p>

@@ -3,10 +3,10 @@
  * Phase 6 Step 9 - Mobile-optimized data tables
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface Column {
   key: string;
@@ -23,16 +23,21 @@ interface ResponsiveTableProps {
   onRowClick?: (row: any) => void;
 }
 
-export function ResponsiveTable({ columns, data, keyField, onRowClick }: ResponsiveTableProps) {
+export function ResponsiveTable({
+  columns,
+  data,
+  keyField,
+  onRowClick,
+}: ResponsiveTableProps) {
   const [sortColumn, setSortColumn] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortColumn(columnKey);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
   };
 
@@ -40,9 +45,9 @@ export function ResponsiveTable({ columns, data, keyField, onRowClick }: Respons
     ? [...data].sort((a, b) => {
         const aVal = a[sortColumn];
         const bVal = b[sortColumn];
-        const modifier = sortDirection === 'asc' ? 1 : -1;
-        
-        if (typeof aVal === 'string') {
+        const modifier = sortDirection === "asc" ? 1 : -1;
+
+        if (typeof aVal === "string") {
           return aVal.localeCompare(bVal) * modifier;
         }
         return (aVal - bVal) * modifier;
@@ -61,18 +66,18 @@ export function ResponsiveTable({ columns, data, keyField, onRowClick }: Respons
                   key={column.key}
                   onClick={() => column.sortable && handleSort(column.key)}
                   className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                    column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''
+                    column.sortable ? "cursor-pointer hover:bg-gray-100" : ""
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     {column.label}
-                    {column.sortable && sortColumn === column.key && (
-                      sortDirection === 'asc' ? (
+                    {column.sortable &&
+                      sortColumn === column.key &&
+                      (sortDirection === "asc" ? (
                         <ChevronUp className="w-4 h-4" />
                       ) : (
                         <ChevronDown className="w-4 h-4" />
-                      )
-                    )}
+                      ))}
                   </div>
                 </th>
               ))}
@@ -83,11 +88,16 @@ export function ResponsiveTable({ columns, data, keyField, onRowClick }: Respons
               <tr
                 key={row[keyField]}
                 onClick={() => onRowClick?.(row)}
-                className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+                className={onRowClick ? "cursor-pointer hover:bg-gray-50" : ""}
               >
                 {columns.map((column) => (
-                  <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {column.render ? column.render(row[column.key], row) : row[column.key]}
+                  <td
+                    key={column.key}
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                  >
+                    {column.render
+                      ? column.render(row[column.key], row)
+                      : row[column.key]}
                   </td>
                 ))}
               </tr>
@@ -105,12 +115,17 @@ export function ResponsiveTable({ columns, data, keyField, onRowClick }: Respons
             className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 space-y-3"
           >
             {columns.map((column) => (
-              <div key={column.key} className="flex justify-between items-start">
+              <div
+                key={column.key}
+                className="flex justify-between items-start"
+              >
                 <span className="text-sm font-medium text-gray-500">
                   {column.mobileLabel || column.label}
                 </span>
                 <span className="text-sm text-gray-900 text-right ml-4">
-                  {column.render ? column.render(row[column.key], row) : row[column.key]}
+                  {column.render
+                    ? column.render(row[column.key], row)
+                    : row[column.key]}
                 </span>
               </div>
             ))}

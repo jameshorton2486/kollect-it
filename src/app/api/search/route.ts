@@ -1,45 +1,45 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const query = searchParams.get('q') || '';
-    const sort = searchParams.get('sort') || 'relevance';
-    const categories = searchParams.getAll('category');
-    const conditions = searchParams.getAll('condition');
-    const minPrice = searchParams.get('price.0');
-    const maxPrice = searchParams.get('price.1');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '24');
+    const query = searchParams.get("q") || "";
+    const sort = searchParams.get("sort") || "relevance";
+    const categories = searchParams.getAll("category");
+    const conditions = searchParams.getAll("condition");
+    const minPrice = searchParams.get("price.0");
+    const maxPrice = searchParams.get("price.1");
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "24");
 
     // Build where clause
     const where: any = {
-      status: 'active',
-      AND: []
+      status: "active",
+      AND: [],
     };
 
     // Search query
     if (query) {
       where.AND.push({
         OR: [
-          { title: { contains: query, mode: 'insensitive' } },
-          { description: { contains: query, mode: 'insensitive' } },
-        ]
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } },
+        ],
       });
     }
 
     // Category filter
     if (categories.length > 0) {
       where.AND.push({
-        categoryId: { in: categories }
+        categoryId: { in: categories },
       });
     }
 
     // Condition filter
     if (conditions.length > 0) {
       where.AND.push({
-        condition: { in: conditions }
+        condition: { in: conditions },
       });
     }
 
@@ -52,19 +52,19 @@ export async function GET(request: NextRequest) {
     }
 
     // Sort options
-    let orderBy: any = { createdAt: 'desc' };
+    let orderBy: any = { createdAt: "desc" };
     switch (sort) {
-      case 'price-asc':
-        orderBy = { price: 'asc' };
+      case "price-asc":
+        orderBy = { price: "asc" };
         break;
-      case 'price-desc':
-        orderBy = { price: 'desc' };
+      case "price-desc":
+        orderBy = { price: "desc" };
         break;
-      case 'newest':
-        orderBy = { createdAt: 'desc' };
+      case "newest":
+        orderBy = { createdAt: "desc" };
         break;
-      case 'popular':
-        orderBy = { createdAt: 'desc' }; // fallback since we don't have views
+      case "popular":
+        orderBy = { createdAt: "desc" }; // fallback since we don't have views
         break;
     }
 
@@ -79,11 +79,11 @@ export async function GET(request: NextRequest) {
           category: {
             select: {
               name: true,
-            }
-          }
-        }
+            },
+          },
+        },
       }),
-      prisma.product.count({ where })
+      prisma.product.count({ where }),
     ]);
 
     return NextResponse.json({
@@ -91,14 +91,13 @@ export async function GET(request: NextRequest) {
       total,
       page,
       totalPages: Math.ceil(total / limit),
-      filters: [] // Can add dynamic filter counts here
+      filters: [], // Can add dynamic filter counts here
     });
-
   } catch (error) {
-    console.error('Search error:', error);
+    console.error("Search error:", error);
     return NextResponse.json(
-      { error: 'Failed to search products' },
-      { status: 500 }
+      { error: "Failed to search products" },
+      { status: 500 },
     );
   }
 }

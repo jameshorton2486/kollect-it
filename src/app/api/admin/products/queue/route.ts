@@ -3,34 +3,36 @@
  * Fetch pending AI-generated products for approval
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
     // Parse query parameters
     const searchParams = request.nextUrl.searchParams;
-    const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
-    const limit = Math.min(100, parseInt(searchParams.get('limit') || '10'));
-    const status = searchParams.get('status') || 'PENDING';
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, parseInt(searchParams.get("limit") || "10"));
+    const status = searchParams.get("status") || "PENDING";
 
     const skip = (page - 1) * limit;
 
     // Build query
     const query: Record<string, unknown> = {};
-    if (status && status !== 'ALL') {
+    if (status && status !== "ALL") {
       query.status = status;
     }
 
     // Fetch products
     const products = await (prisma as any).aIGeneratedProduct.findMany({
       where: query,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       skip,
       take: limit,
     });
 
-    const total = await (prisma as any).aIGeneratedProduct.count({ where: query });
+    const total = await (prisma as any).aIGeneratedProduct.count({
+      where: query,
+    });
 
     // Format response
     const formattedProducts = products.map((p: any) => ({
@@ -60,13 +62,13 @@ export async function GET(request: NextRequest) {
       pages: Math.ceil(total / limit),
     });
   } catch (error) {
-    console.error('[Queue API] Error:', error);
+    console.error("[Queue API] Error:", error);
     return NextResponse.json(
       {
-        error: 'Failed to fetch products',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to fetch products",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

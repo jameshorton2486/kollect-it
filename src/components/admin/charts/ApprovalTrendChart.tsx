@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 /**
  * Approval Trend Chart Component
  */
 
-import React from 'react';
+import React from "react";
 import {
   LineChart,
   Line,
@@ -14,7 +14,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 interface TrendData {
   date: string;
@@ -47,10 +47,10 @@ export function ApprovalTrendChart({ data }: ApprovalTrendChartProps) {
           <YAxis stroke="#999" />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#1a1a1a',
-              border: '1px solid #D3AF37',
-              borderRadius: '8px',
-              color: '#fff',
+              backgroundColor: "#1a1a1a",
+              border: "1px solid #D3AF37",
+              borderRadius: "8px",
+              color: "#fff",
             }}
           />
           <Legend />
@@ -59,21 +59,21 @@ export function ApprovalTrendChart({ data }: ApprovalTrendChartProps) {
             dataKey="approved"
             stroke="#10B981"
             strokeWidth={2}
-            dot={{ fill: '#10B981', r: 4 }}
+            dot={{ fill: "#10B981", r: 4 }}
           />
           <Line
             type="monotone"
             dataKey="rejected"
             stroke="#EF4444"
             strokeWidth={2}
-            dot={{ fill: '#EF4444', r: 4 }}
+            dot={{ fill: "#EF4444", r: 4 }}
           />
           <Line
             type="monotone"
             dataKey="pending"
             stroke="#F59E0B"
             strokeWidth={2}
-            dot={{ fill: '#F59E0B', r: 4 }}
+            dot={{ fill: "#F59E0B", r: 4 }}
           />
         </LineChart>
       </ResponsiveContainer>

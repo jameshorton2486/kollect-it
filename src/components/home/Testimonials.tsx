@@ -8,7 +8,8 @@ export default function Testimonials() {
       image: "https://ik.imagekit.io/kollectit/testimonial-1.jpg",
     },
     {
-      quote: "The provenance documentation was incredibly thorough. I felt completely confident in my purchase.",
+      quote:
+        "The provenance documentation was incredibly thorough. I felt completely confident in my purchase.",
       author: "Luis",
       title: "Estate Buyer",
       rating: 0,
@@ -22,7 +23,8 @@ export default function Testimonials() {
       image: "https://ik.imagekit.io/kollectit/testimonial-3.jpg",
     },
     {
-      quote: "Providing a third-party appraisal for items over $1,000 is very comforting",
+      quote:
+        "Providing a third-party appraisal for items over $1,000 is very comforting",
       author: "James",
       title: "Private Collector",
       rating: 0,
@@ -41,7 +43,8 @@ export default function Testimonials() {
             What Our Customers Say
           </h2>
           <p className="text-lg text-ink-light max-w-2xl mx-auto">
-            Join other collectors who have found their perfect pieces through Kollect-It.
+            Join other collectors who have found their perfect pieces through
+            Kollect-It.
           </p>
         </div>
 
@@ -61,12 +64,8 @@ export default function Testimonials() {
 
               {/* Author Info */}
               <div>
-                <p className="font-semibold text-ink">
-                  {testimonial.author}
-                </p>
-                <p className="text-sm text-ink-light">
-                  {testimonial.title}
-                </p>
+                <p className="font-semibold text-ink">{testimonial.author}</p>
+                <p className="text-sm text-ink-light">{testimonial.title}</p>
               </div>
             </div>
           ))}
@@ -78,7 +77,8 @@ export default function Testimonials() {
             Join Our Collector Community
           </h3>
           <p className="text-ink-light text-lg mb-6 max-w-xl mx-auto">
-            Over 2,000 satisfied collectors trust Kollect-It for authenticated pieces and expert curation.
+            Over 2,000 satisfied collectors trust Kollect-It for authenticated
+            pieces and expert curation.
           </p>
           <button className="inline-block bg-accent-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity">
             Start Collecting Today

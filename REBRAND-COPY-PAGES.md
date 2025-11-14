@@ -13,21 +13,23 @@
 **Location:** Top of page, large hero section
 
 **Current Copy (DELETE):**
+
 ```
 Discover authenticated luxury collectibles curated for discerning connoisseurs
 Trusted by museums and private collectors
 ```
 
 **NEW Copy:**
+
 ```
 Headline: Collectibles Worth Collecting
 
 Subheadline: Professionally valued. Fairly priced. Personally curated.
 
-Body: We focus on the items auction houses skipâ€"the pieces worth $500-$15,000 
+Body: We focus on the items auction houses skipâ€"the pieces worth $500-$15,000
 that deserve expert attention but don't fit traditional auction minimums.
 
-Every item in our collection is photographed from multiple angles, 
+Every item in our collection is photographed from multiple angles,
 accurately described, and professionally valued.
 
 Browse our collection or contact us to sell your items.
@@ -43,11 +45,13 @@ Browse our collection or contact us to sell your items.
 **Location:** Below hero, horizontal section with 4 columns
 
 **Current Copy (DELETE):**
+
 ```
 Fine Art to Rare Books â€¢ Furniture to Collectibles â€¢ Expert Authentication â€¢ Insured Shipping
 ```
 
 **NEW Copy:**
+
 ```
 Rare Books to Fine Art â€¢ Collectibles to Militaria â€¢ Professionally Authenticated â€¢ Insured & Tracked Shipping
 ```
@@ -59,6 +63,7 @@ Rare Books to Fine Art â€¢ Collectibles to Militaria â€¢ Professionally 
 **Location:** Mid-page educational section
 
 **NEW Copy:**
+
 ```
 Header: THREE STEPS TO YOUR NEXT COLLECTIBLE
 
@@ -66,7 +71,7 @@ Step 1 Title: Browse
 Step 1 Body: Explore our collection. Detailed photos and honest descriptions for every item.
 
 Step 2 Title: Ask Questions
-Step 2 Body: Want more photos? Details? We'll respond within 24 hours. 
+Step 2 Body: Want more photos? Details? We'll respond within 24 hours.
 That's the benefit of dealing directly.
 
 Step 3 Title: Purchase with Confidence
@@ -80,14 +85,16 @@ Step 3 Body: Insured shipping. Fair pricing. Full visibility into what you're bu
 **Location:** Trust section, usually mid-to-lower page
 
 **Current Copy (DELETE):**
+
 ```
-Expert-vetted items with detailed descriptions, provenance documentation, 
+Expert-vetted items with detailed descriptions, provenance documentation,
 and certification where applicable.
-Bank-level encryption. Your payment information is protected by 
+Bank-level encryption. Your payment information is protected by
 industry-leading security standards.
 ```
 
 **NEW Copy:**
+
 ```
 Header: WE AUTHENTICATE. WE LISTEN. WE ADJUST IF WE'RE WRONG.
 
@@ -113,12 +120,14 @@ Your payment information is protected by industry-leading security standards.
 **Location:** Trust/credibility section
 
 **Current Copy (DELETE):**
+
 ```
 Trusted by museums and private collectors
 [Any existing trust messaging]
 ```
 
 **NEW Copy:**
+
 ```
 Header: WHY COLLECTORS CHOOSE KOLLECT-IT
 
@@ -148,10 +157,11 @@ Box 5 Body: Insured and tracked. Your items arrive the way they should.
 **Location:** Mid-to-lower page, below featured products or trust section
 
 **NEW Copy:**
+
 ```
 Header: HAVE SOMETHING TO SELL?
 
-Body: We buy and consign items from collectors like you. 
+Body: We buy and consign items from collectors like you.
 Skip the auction house fees (25-50%) and sell directly.
 
 Items $500-$15,000 welcome.
@@ -171,12 +181,14 @@ Items $500-$15,000 welcome.
 **Location:** Footer or dedicated shipping info section
 
 **Current Copy (DELETE):**
+
 ```
 White glove service and authenticated luxury collectibles
 [Any existing shipping copy]
 ```
 
 **NEW Copy:**
+
 ```
 Header: SHIPPING
 
@@ -202,11 +214,12 @@ We want you to be confident in every purchase.
 **Header:** RARE BOOKS
 
 **Description (NEW):**
+
 ```
 First editions, signed copies, historical texts, vintage finds.
 
 We specialize in rare and valuable books that deserve professional handling.
-Every book is photographed from multiple angles, condition assessed honestly, 
+Every book is photographed from multiple angles, condition assessed honestly,
 and valued using industry-standard resources.
 
 Price range: $200-$8,000
@@ -227,11 +240,12 @@ Featured items include:
 **Header:** FINE ART
 
 **Description (NEW):**
+
 ```
 Paintings, prints, photography, sculptures.
 
 We source fine art pieces that appeal to both collectors and investors.
-Each piece is professionally photographed, authenticated where possible, 
+Each piece is professionally photographed, authenticated where possible,
 and valued fairly between auction house and retail prices.
 
 Price range: $500-$15,000
@@ -252,11 +266,12 @@ Featured items include:
 **Header:** COLLECTIBLES
 
 **Description (NEW):**
+
 ```
 Vintage items, memorabilia, limited editions, sought-after finds.
 
-Collectibles are more than nostalgia—they're pieces of cultural history 
-worth preserving and sharing. We curate unusual, valuable items that 
+Collectibles are more than nostalgia—they're pieces of cultural history
+worth preserving and sharing. We curate unusual, valuable items that
 have genuine collector appeal.
 
 Price range: $300-$10,000
@@ -277,10 +292,11 @@ Featured items include:
 **Header:** MILITARIA
 
 **Description (NEW):**
+
 ```
 Historical uniforms, medals, patches, insignia, documents.
 
-Military history matters. These items tell stories of sacrifice, service, 
+Military history matters. These items tell stories of sacrifice, service,
 and heritage. We treat every piece with respect and professional care.
 
 Price range: $200-$5,000
@@ -299,6 +315,7 @@ Featured items include:
 **Location:** /about or /about-us
 
 **Copy:**
+
 ```
 Header: ABOUT KOLLECT-IT
 
@@ -312,9 +329,9 @@ We started with a passion for collectibles and a frustration.
 
 Items worth $500-$15,000 fall through the cracks in the traditional market.
 
-Auction houses have minimums around $10,000. Online marketplaces like eBay 
-feel risky and impersonal. Private sales are hit-or-miss. Most sellers don't 
-know how to value what they have. Most buyers don't know if they can trust 
+Auction houses have minimums around $10,000. Online marketplaces like eBay
+feel risky and impersonal. Private sales are hit-or-miss. Most sellers don't
+know how to value what they have. Most buyers don't know if they can trust
 what they're buying.
 
 We saw a gap.
@@ -325,12 +342,12 @@ Body Section 2:
 
 We built Kollect-It to fill it.
 
-Our collection is personally curated. Every item is accurately described, 
-professionally valued, and fairly priced—typically between auction value 
+Our collection is personally curated. Every item is accurately described,
+professionally valued, and fairly priced—typically between auction value
 and retail price, so you get a better deal than traditional auctions.
 
-We're a one-person operation committed to honesty. If you have questions, 
-want additional photos, or disagree with our valuation, reach out. 
+We're a one-person operation committed to honesty. If you have questions,
+want additional photos, or disagree with our valuation, reach out.
 
 We'll listen and adjust if we're wrong.
 
@@ -343,19 +360,19 @@ Body Section 3:
 Our Approach:
 
 âœ" HONEST DESCRIPTIONS
-Multiple angles. Condition assessed fairly. Details included. 
+Multiple angles. Condition assessed fairly. Details included.
 We'll clarify anything you want to know.
 
 âœ" FAIR VALUATIONS
-We use industry-standard resources to price items between 
+We use industry-standard resources to price items between
 what auctions get and what retail costs. You benefit.
 
 âœ" PROFESSIONAL AUTHENTICATION
-Where possible, we authenticate items using professional resources. 
+Where possible, we authenticate items using professional resources.
 We're transparent about what we know and what we don't.
 
 âœ" REAL COMMUNICATION
-You reach me directly. No corporate email loops. 
+You reach me directly. No corporate email loops.
 Real person, real answers.
 
 ---
@@ -364,7 +381,7 @@ Body Section 4:
 
 For Sellers:
 
-If you have items to sell, we're interested. We buy outright or take 
+If you have items to sell, we're interested. We buy outright or take
 items on consignment—your choice.
 
 We offer:
@@ -386,11 +403,13 @@ Contact us with photos and details. We'll respond within 24-48 hours.
 **Update if present:**
 
 **Remove:**
+
 - Any mention of "luxury," "white glove," "museums"
 - "Curated for connoisseurs"
 - "Prestigious collections"
 
 **Keep:**
+
 - Detailed product photos ✓
 - Condition descriptions ✓
 - Pricing ✓
@@ -398,6 +417,7 @@ Contact us with photos and details. We'll respond within 24-48 hours.
 - Return policy ✓
 
 **Add if not present:**
+
 - "Ask us questions" option
 - "Request more photos" link
 - Clear shipping timeline (3-4 business days)
@@ -417,13 +437,13 @@ Header: HOW WE AUTHENTICATE AND VALUE ITEMS
 
 Section 1:
 
-We use a combination of professional resources, industry-standard tools, 
+We use a combination of professional resources, industry-standard tools,
 and careful research to authenticate and value items.
 
 But here's the honest part: We're not perfect.
 
-If you believe we've made an error in our valuation or authentication, 
-we want to know. We'll review it, research further, and adjust our 
+If you believe we've made an error in our valuation or authentication,
+we want to know. We'll review it, research further, and adjust our
 assessment if needed.
 
 Honesty is our foundation.
@@ -435,19 +455,19 @@ Section 2:
 Our Valuation Process:
 
 1. CONDITION ASSESSMENT
-We photograph items from multiple angles and assess condition using 
+We photograph items from multiple angles and assess condition using
 industry-standard terminology (Fine, Good, Fair, Poor).
 
 2. RESEARCH
-We research comparable sales, auction results, and retail pricing 
+We research comparable sales, auction results, and retail pricing
 to determine fair market value.
 
 3. INDUSTRY STANDARDS
-For categories like rare books, militaria, and fine art, we consult 
+For categories like rare books, militaria, and fine art, we consult
 published pricing guides and authentication resources.
 
 4. FAIR PRICING
-We price between what auction houses get (typically 60-70% of our price) 
+We price between what auction houses get (typically 60-70% of our price)
 and full retail price. This is fair to both buyer and seller.
 
 ---
@@ -456,8 +476,8 @@ Section 3:
 
 Third-Party Authentication:
 
-For high-value items ($5,000+), we can facilitate third-party authentication 
-through respected industry organizations. This incurs additional cost but 
+For high-value items ($5,000+), we can facilitate third-party authentication
+through respected industry organizations. This incurs additional cost but
 provides definitive authentication.
 
 ---
@@ -466,7 +486,7 @@ Section 4:
 
 Questions or Disagreements?
 
-If you have questions about how we valued an item, or if you disagree 
+If you have questions about how we valued an item, or if you disagree
 with our assessment after purchase, contact us.
 
 We'll review your concern, research it thoroughly, and adjust if we were wrong.
@@ -480,17 +500,17 @@ We'll review your concern, research it thoroughly, and adjust if we were wrong.
 
 **Search and replace these across entire site:**
 
-| Old CTA | New CTA | Context |
-|---------|---------|---------|
-| "Discover Luxury" | "Browse Collectibles" | Homepage |
-| "Explore Prestige" | "Explore by Category" | Navigation |
-| "Sell Your Collection" | "Sell Your Items" | CTA buttons |
-| "Register Now" | "Create Account" or "Get Started" | Auth |
-| "Add to Cart" | "Add to Cart" | Keep same |
-| "Browse Collection" | "Browse Collection" | Keep same |
-| N/A | "Tell Us About Your Items" | New seller CTA |
-| N/A | "Ask a Question" | New product page CTA |
-| N/A | "Request More Photos" | New product page CTA |
+| Old CTA                | New CTA                           | Context              |
+| ---------------------- | --------------------------------- | -------------------- |
+| "Discover Luxury"      | "Browse Collectibles"             | Homepage             |
+| "Explore Prestige"     | "Explore by Category"             | Navigation           |
+| "Sell Your Collection" | "Sell Your Items"                 | CTA buttons          |
+| "Register Now"         | "Create Account" or "Get Started" | Auth                 |
+| "Add to Cart"          | "Add to Cart"                     | Keep same            |
+| "Browse Collection"    | "Browse Collection"               | Keep same            |
+| N/A                    | "Tell Us About Your Items"        | New seller CTA       |
+| N/A                    | "Ask a Question"                  | New product page CTA |
+| N/A                    | "Request More Photos"             | New product page CTA |
 
 ---
 

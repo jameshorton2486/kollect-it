@@ -78,12 +78,14 @@ git push origin main
 #### 1.3 Authenticate
 
 When prompted:
+
 - **Username**: `jameshorton2486`
 - **Password**: **Paste your Personal Access Token** (the `ghp_xxx...` value, NOT your GitHub password)
 
 #### 1.4 Verify Success
 
 Expected output:
+
 ```
 Enumerating objects: 342, done.
 Counting objects: 100% (342/342), done.
@@ -158,9 +160,9 @@ git push origin main
 Netlify will auto-detect Next.js. Verify:
 
 - **Build command**: `bun install && bunx prisma generate && bun run build`
-  *(Already set in `netlify.toml` - no need to change)*
+  _(Already set in `netlify.toml` - no need to change)_
 - **Publish directory**: `.next`
-  *(Already set in `netlify.toml` - no need to change)*
+  _(Already set in `netlify.toml` - no need to change)_
 - **Framework**: Next.js
 
 **⚠️ DO NOT DEPLOY YET** - Click **"Show advanced"** to add environment variables first.
@@ -174,6 +176,7 @@ Click **"New variable"** for each variable below. Get values from your service d
 **Variable**: `DATABASE_URL`
 **Value**: `postgresql://user:password@host:6543/database?pgbouncer=true`
 **Notes**:
+
 - Use **pooled** connection (port `6543`)
 - Include `?pgbouncer=true` for connection pooling
 - Get from Supabase: Settings → Database → Connection string (Pooler)
@@ -181,6 +184,7 @@ Click **"New variable"** for each variable below. Get values from your service d
 **Variable**: `DIRECT_URL`
 **Value**: `postgresql://user:password@host:5432/database`
 **Notes**:
+
 - Use **direct** connection (port `5432`)
 - For local migrations ONLY (not used in Netlify build)
 - Get from Supabase: Settings → Database → Connection string (Direct)
@@ -190,14 +194,17 @@ Click **"New variable"** for each variable below. Get values from your service d
 **Variable**: `NEXTAUTH_SECRET`
 **Value**: Generate a random 32-byte string
 **How to generate**:
+
 ```bash
 openssl rand -base64 32
 ```
+
 Example output: `wK9x5vN2mP8qR3tY6u7Z0A1b4C5d8E9f`
 
 **Variable**: `NEXTAUTH_URL`
 **Value**: `https://placeholder.netlify.app`
 **⚠️ CRITICAL**:
+
 - Leave as placeholder for now
 - **MUST UPDATE** after first deploy with actual Netlify URL
 - Example final value: `https://kollect-it-abc123.netlify.app`
@@ -222,6 +229,7 @@ Example output: `wK9x5vN2mP8qR3tY6u7Z0A1b4C5d8E9f`
 **Variable**: `EMAIL_FROM`
 **Value**: `Kollect-It <noreply@your-verified-domain.com>`
 **Notes**:
+
 - For testing: Use `Kollect-It <onboarding@resend.dev>`
 - For production: Verify your domain in Resend first
 
@@ -301,6 +309,7 @@ curl https://YOUR-SITE.netlify.app/api/health
 ### 3.3 If Status is "degraded" or "unhealthy"
 
 **Check**:
+
 1. Which environment variables show `false`?
 2. Is Supabase project active (not paused)?
 3. Is `DATABASE_URL` format correct?
@@ -309,6 +318,7 @@ curl https://YOUR-SITE.netlify.app/api/health
 4. Are all 11+ variables set in Netlify?
 
 **Fix**:
+
 1. Go to Netlify: **Site settings → Environment variables**
 2. Add or correct missing variables
 3. Go to **Deploys → Trigger deploy → Deploy site**
@@ -396,6 +406,7 @@ Should now show `"database": "connected"`
 4. **⚠️ CHANGE THIS IMMEDIATELY!**
 
 **If login fails**:
+
 - Check `NEXTAUTH_URL` matches your Netlify URL exactly
 - Check `NEXTAUTH_SECRET` is set
 - Clear browser cookies and try again
@@ -413,6 +424,7 @@ Should now show `"database": "connected"`
 4. Click **"Create Product"**
 
 **If image upload fails**:
+
 - Check ImageKit variables are set
 - Check ImageKit dashboard for API errors
 
@@ -431,6 +443,7 @@ Should now show `"database": "connected"`
 7. Verify redirect to success page
 
 **If payment fails**:
+
 - Check Stripe keys are set (test mode)
 - Check browser console for errors
 - Check Stripe Dashboard: https://dashboard.stripe.com/test/payments
@@ -446,11 +459,13 @@ Should now show `"database": "connected"`
 ### 6.5 Verify Emails
 
 Check your `ADMIN_EMAIL` inbox for:
+
 - **Order confirmation** (customer copy)
 - **New order notification** (admin alert)
 - **Order status update** (when you changed to "Shipped")
 
 **If emails not received**:
+
 - Test email endpoint: `https://YOUR-SITE.netlify.app/api/email/test`
 - Check Resend logs: https://resend.com/emails
 - Verify `RESEND_API_KEY` is set
@@ -465,6 +480,7 @@ curl https://YOUR-SITE.netlify.app/api/health
 ```
 
 Should return:
+
 - `"status": "healthy"`
 - `"database": "connected"`
 - All environment variables: `true`
@@ -527,6 +543,7 @@ Should return:
 ### Health Returns 503: "degraded"
 
 **Fix**:
+
 1. Check which env vars show `false` in response
 2. Add missing variables in Netlify
 3. Redeploy
@@ -534,6 +551,7 @@ Should return:
 ### Admin Login Fails: "Unauthorized"
 
 **Fix**:
+
 1. Verify `NEXTAUTH_URL` matches your Netlify URL **exactly**
 2. Verify `NEXTAUTH_SECRET` is set
 3. Clear browser cookies
@@ -542,6 +560,7 @@ Should return:
 ### Payments Fail
 
 **Fix**:
+
 1. Use test card: `4242 4242 4242 4242`
 2. Check Stripe Dashboard for errors
 3. Verify Stripe keys are **test mode** (`pk_test_`, `sk_test_`)
@@ -550,6 +569,7 @@ Should return:
 ### Emails Don't Send
 
 **Fix**:
+
 1. Test endpoint: `/api/email/test`
 2. Check Resend logs: https://resend.com/emails
 3. For production: Verify domain in Resend
@@ -575,6 +595,6 @@ Follow Steps 1-6 above in order. Once complete, your Kollect-It marketplace will
 
 ---
 
-*Last Updated: October 24, 2025*
-*Commit: 7686a31*
-*Generated with [Same](https://same.new)*
+_Last Updated: October 24, 2025_
+_Commit: 7686a31_
+_Generated with [Same](https://same.new)_

@@ -3,8 +3,8 @@
  * Reject an AI-generated product
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,8 +13,8 @@ export async function POST(request: NextRequest) {
 
     if (!productId) {
       return NextResponse.json(
-        { error: 'Missing required field: productId' },
-        { status: 400 }
+        { error: "Missing required field: productId" },
+        { status: 400 },
       );
     }
 
@@ -24,16 +24,13 @@ export async function POST(request: NextRequest) {
     });
 
     if (!aiProduct) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
-    if (aiProduct.status !== 'PENDING') {
+    if (aiProduct.status !== "PENDING") {
       return NextResponse.json(
         { error: `Cannot reject product with status: ${aiProduct.status}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -41,25 +38,25 @@ export async function POST(request: NextRequest) {
     await (prisma as any).aIGeneratedProduct.update({
       where: { id: productId },
       data: {
-        status: 'REJECTED',
-        rejectionReason: reason || 'No reason provided',
+        status: "REJECTED",
+        rejectionReason: reason || "No reason provided",
         reviewedAt: new Date(),
-        reviewedBy: 'system',
+        reviewedBy: "system",
       },
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Product rejected successfully',
+      message: "Product rejected successfully",
     });
   } catch (error) {
-    console.error('[Reject API] Error:', error);
+    console.error("[Reject API] Error:", error);
     return NextResponse.json(
       {
-        error: 'Failed to reject product',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to reject product",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

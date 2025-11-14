@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 /**
  * Report Generation API
@@ -11,8 +11,8 @@ import { prisma } from '@/lib/prisma';
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     const { type } = await request.json();
@@ -20,15 +20,15 @@ export async function POST(request: NextRequest) {
     // Determine date range based on report type
     const now = new Date();
     let startDate = new Date();
-    
+
     switch (type) {
-      case 'daily-summary':
+      case "daily-summary":
         startDate.setHours(0, 0, 0, 0);
         break;
-      case 'weekly-summary':
+      case "weekly-summary":
         startDate.setDate(startDate.getDate() - 7);
         break;
-      case 'monthly-summary':
+      case "monthly-summary":
         startDate.setMonth(startDate.getMonth() - 1);
         break;
       default:
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
           gte: startDate,
           lte: now,
         },
-        paymentStatus: 'paid',
+        paymentStatus: "paid",
       },
       include: {
         items: {
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
     });
 
@@ -71,22 +71,22 @@ export async function POST(request: NextRequest) {
     const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
     // Group by status
-    const ordersByStatus = orders.reduce(
-      (acc: any, order: any) => {
-        acc[order.status] = (acc[order.status] || 0) + 1;
-        return acc;
-      },
-      {}
-    );
+    const ordersByStatus = orders.reduce((acc: any, order: any) => {
+      acc[order.status] = (acc[order.status] || 0) + 1;
+      return acc;
+    }, {});
 
     // Top products
-    const productSales = new Map<string, { title: string; quantity: number; revenue: number }>();
-    
+    const productSales = new Map<
+      string,
+      { title: string; quantity: number; revenue: number }
+    >();
+
     orders.forEach((order: any) => {
       order.items.forEach((item: any) => {
         const key = item.productId;
         const existing = productSales.get(key) || {
-          title: item.product?.title || 'Unknown',
+          title: item.product?.title || "Unknown",
           quantity: 0,
           revenue: 0,
         };
@@ -122,17 +122,20 @@ export async function POST(request: NextRequest) {
         total: order.total,
         status: order.status,
         createdAt: order.createdAt,
-        itemCount: order.items.reduce((sum: number, item: any) => sum + item.quantity, 0),
+        itemCount: order.items.reduce(
+          (sum: number, item: any) => sum + item.quantity,
+          0,
+        ),
       })),
     };
 
     // For now, return JSON (implement PDF generation later)
     return NextResponse.json(report);
   } catch (error) {
-    console.error('Error generating report:', error);
+    console.error("Error generating report:", error);
     return NextResponse.json(
-      { error: 'Failed to generate report' },
-      { status: 500 }
+      { error: "Failed to generate report" },
+      { status: 500 },
     );
   }
 }

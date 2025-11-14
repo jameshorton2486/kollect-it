@@ -3,14 +3,17 @@
  * Phase 5 - Automated report generation and email delivery
  */
 
-import { prisma } from '@/lib/prisma';
-import { getDashboardMetrics } from '@/lib/analytics/queries';
-import { exportMetricsAsJSON, exportMetricsAsCSV } from '@/lib/analytics/export';
+import { prisma } from "@/lib/prisma";
+import { getDashboardMetrics } from "@/lib/analytics/queries";
+import {
+  exportMetricsAsJSON,
+  exportMetricsAsCSV,
+} from "@/lib/analytics/export";
 
 export enum ReportFrequency {
-  DAILY = 'DAILY',
-  WEEKLY = 'WEEKLY',
-  MONTHLY = 'MONTHLY',
+  DAILY = "DAILY",
+  WEEKLY = "WEEKLY",
+  MONTHLY = "MONTHLY",
 }
 
 export interface ScheduledReport {
@@ -19,7 +22,7 @@ export interface ScheduledReport {
   name: string;
   frequency: ReportFrequency;
   recipients: string[];
-  format: 'JSON' | 'CSV' | 'PDF';
+  format: "JSON" | "CSV" | "PDF";
   includeCharts: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -43,8 +46,8 @@ export async function createScheduledReport(
   name: string,
   frequency: ReportFrequency,
   recipients: string[],
-  format: 'JSON' | 'CSV' = 'CSV',
-  includeCharts: boolean = false
+  format: "JSON" | "CSV" = "CSV",
+  includeCharts: boolean = false,
 ): Promise<ScheduledReport> {
   const nextScheduled = calculateNextScheduled(frequency);
 
@@ -68,7 +71,7 @@ export async function createScheduledReport(
  */
 export async function updateScheduledReport(
   reportId: string,
-  updates: Partial<ScheduledReport>
+  updates: Partial<ScheduledReport>,
 ): Promise<ScheduledReport> {
   const report = await (prisma as any).scheduledReport.update({
     where: { id: reportId },
@@ -90,10 +93,12 @@ export async function deleteScheduledReport(reportId: string): Promise<void> {
 /**
  * Get user's scheduled reports
  */
-export async function getUserScheduledReports(userId: string): Promise<ScheduledReport[]> {
+export async function getUserScheduledReports(
+  userId: string,
+): Promise<ScheduledReport[]> {
   const reports = await (prisma as any).scheduledReport.findMany({
     where: { userId },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
   });
 
   return reports;
@@ -103,12 +108,12 @@ export async function getUserScheduledReports(userId: string): Promise<Scheduled
  * Generate report data
  */
 export async function generateReportData(
-  format: 'JSON' | 'CSV'
+  format: "JSON" | "CSV",
 ): Promise<ReportData> {
   const metrics = await getDashboardMetrics();
 
-  let fileContent = '';
-  if (format === 'JSON') {
+  let fileContent = "";
+  if (format === "JSON") {
     fileContent = exportMetricsAsJSON(metrics);
   } else {
     fileContent = exportMetricsAsCSV(metrics);
@@ -128,10 +133,10 @@ export async function generateReportData(
  */
 export function generateReportFilename(
   reportName: string,
-  format: 'JSON' | 'CSV'
+  format: "JSON" | "CSV",
 ): string {
-  const timestamp = new Date().toISOString().split('T')[0];
-  const ext = format === 'JSON' ? 'json' : 'csv';
+  const timestamp = new Date().toISOString().split("T")[0];
+  const ext = format === "JSON" ? "json" : "csv";
   return `${reportName}-${timestamp}.${ext}`;
 }
 
@@ -216,8 +221,8 @@ export async function markReportAsSent(reportId: string): Promise<void> {
 export async function logReportSent(
   reportId: string,
   recipients: string[],
-  status: 'SUCCESS' | 'FAILED',
-  error?: string
+  status: "SUCCESS" | "FAILED",
+  error?: string,
 ): Promise<void> {
   await (prisma as any).reportAuditLog.create({
     data: {
@@ -236,7 +241,7 @@ export async function logReportSent(
 export async function getReportAuditLogs(reportId: string) {
   const logs = await (prisma as any).reportAuditLog.findMany({
     where: { reportId },
-    orderBy: { sentAt: 'desc' },
+    orderBy: { sentAt: "desc" },
     take: 100,
   });
 

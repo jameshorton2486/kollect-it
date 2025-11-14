@@ -121,7 +121,7 @@ class Cache {
   async getOrSet<T>(
     key: string,
     factory: () => Promise<T> | T,
-    ttl?: number
+    ttl?: number,
   ): Promise<T> {
     const cached = this.get<T>(key);
     if (cached !== null) {
@@ -177,9 +177,10 @@ class Cache {
    */
   getStats(): CacheStats {
     const totalRequests = this.hits + this.misses;
-    const hitRate = totalRequests > 0 
-      ? ((this.hits / totalRequests) * 100).toFixed(2) + '%'
-      : '0%';
+    const hitRate =
+      totalRequests > 0
+        ? ((this.hits / totalRequests) * 100).toFixed(2) + "%"
+        : "0%";
 
     return {
       size: this.store.size,
@@ -220,12 +221,12 @@ export const cache = new Cache(1000, 300000); // 1000 entries, 5 min TTL
  */
 export const cacheKeys = {
   product: (id: string) => `product:${id}`,
-  products: (params: Record<string, any>) => 
+  products: (params: Record<string, any>) =>
     `products:${JSON.stringify(params)}`,
   category: (slug: string) => `category:${slug}`,
-  categories: () => 'categories:all',
+  categories: () => "categories:all",
   user: (id: string) => `user:${id}`,
-  analytics: (startDate: string, endDate: string) => 
+  analytics: (startDate: string, endDate: string) =>
     `analytics:${startDate}:${endDate}`,
   aiAnalysis: (imageUrl: string) => `ai:${imageUrl}`,
   pricing: (productId: string) => `pricing:${productId}`,
@@ -264,12 +265,12 @@ export function invalidateCachePattern(pattern: string): number {
  */
 export function cached<T extends (...args: any[]) => Promise<any>>(
   keyFn: (...args: Parameters<T>) => string,
-  ttl: number = cacheTTL.medium
+  ttl: number = cacheTTL.medium,
 ) {
   return function (
     _target: any,
     _propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
   ) {
     const originalMethod = descriptor.value;
 
@@ -288,13 +289,13 @@ export function cached<T extends (...args: any[]) => Promise<any>>(
 export function memoize<T extends (...args: any[]) => any>(
   fn: T,
   keyFn?: (...args: Parameters<T>) => string,
-  ttl?: number
+  ttl?: number,
 ): T {
   const localCache = new Map<string, any>();
 
   return ((...args: Parameters<T>) => {
     const key = keyFn ? keyFn(...args) : JSON.stringify(args);
-    
+
     if (localCache.has(key)) {
       return localCache.get(key);
     }

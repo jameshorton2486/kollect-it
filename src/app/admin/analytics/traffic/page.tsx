@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
 /**
  * Traffic Analytics Page
  * Phase 6 Step 6 - Google Analytics integration admin page
  */
 
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { TrafficAnalyticsDashboard } from '@/components/admin/TrafficAnalyticsDashboard';
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { TrafficAnalyticsDashboard } from "@/components/admin/TrafficAnalyticsDashboard";
 
 export default function TrafficAnalyticsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'loading') return;
+    if (status === "loading") return;
 
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      router.push('/admin/login');
+    if (!session?.user || (session.user as any).role !== "admin") {
+      router.push("/admin/login");
     }
   }, [session, status, router]);
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-gray-500">Loading...</div>
@@ -30,7 +30,7 @@ export default function TrafficAnalyticsPage() {
     );
   }
 
-  if (!session?.user || (session.user as any).role !== 'admin') {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return null;
   }
 

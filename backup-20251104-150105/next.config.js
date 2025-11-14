@@ -2,12 +2,12 @@
 /** @type {import('next').NextConfig} */
 
 // Only relax type/lint checks in local dev, enforce in CI
-const isCI = process.env.CI === 'true';
+const isCI = process.env.CI === "true";
 
 let withBundleAnalyzer = (config) => config;
-if (process.env.ANALYZE === 'true') {
+if (process.env.ANALYZE === "true") {
   try {
-    const analyzer = require('@next/bundle-analyzer');
+    const analyzer = require("@next/bundle-analyzer");
     withBundleAnalyzer = analyzer({ enabled: true, openAnalyzer: true });
   } catch (_e) {
     // Analyzer not available; proceed without wrapping
@@ -27,16 +27,20 @@ const nextConfig = {
   images: {
     unoptimized: true,
     remotePatterns: [
-      { protocol: 'https', hostname: 'ik.imagekit.io', pathname: '/**' },
+      { protocol: "https", hostname: "ik.imagekit.io", pathname: "/**" },
       // Keep only explicitly used external assets (OG images, etc.)
-      { protocol: 'https', hostname: 'ext.same-assets.com', pathname: '/**' },
+      { protocol: "https", hostname: "ext.same-assets.com", pathname: "/**" },
       // Content images referenced in pages
-      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'c8.alamy.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'images.squarespace-cdn.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
-    ]
-  }
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
+      { protocol: "https", hostname: "c8.alamy.com", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "images.squarespace-cdn.com",
+        pathname: "/**",
+      },
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
+    ],
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

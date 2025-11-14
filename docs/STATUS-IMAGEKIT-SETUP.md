@@ -8,23 +8,27 @@
 ## ✅ What's Working
 
 ### Hero Component
+
 - ✅ Created and integrated into homepage
 - ✅ Dark luxury theme with gold accents
 - ✅ Responsive design
 - ✅ Build passes with zero errors
 
 ### ImageKit Configuration
+
 - ✅ Public key: `public_1MwR2t3I95qAJXc72h1DzbbLLZU=`
 - ✅ Private key: `private_C5l6XYj7keSe1uBHlCedLI2/F9s=` (FIXED with `private_` prefix)
 - ✅ URL endpoint: `https://ik.imagekit.io/kollectit`
 - ✅ All environment variables configured in `.env.local`
 
 ### Sync Infrastructure
+
 - ✅ Sync script: `scripts/sync-drive-to-imagekit.ts`
 - ✅ Package.json scripts: `sync-images`, `sync-images:watch`, `sync-status`, `sync-help`
 - ✅ All dependencies installed: `imagekit`, `googleapis`, `dotenv`
 
 ### Documentation
+
 - ✅ Setup guides created
 - ✅ Credential update script: `scripts/update-credentials.ps1`
 - ✅ Quick reference: `docs/QUICK-FIX-CREDENTIALS.md`
@@ -34,6 +38,7 @@
 ## ⚠️ Known Issue: Google Service Account Authentication
 
 ### The Problem
+
 ```
 error: invalid_grant: Invalid JWT Signature
 ```
@@ -41,6 +46,7 @@ error: invalid_grant: Invalid JWT Signature
 The sync script is failing at the **Google OAuth token exchange** step, not at ImageKit upload. This means the Google service account keys need to be regenerated in Google Cloud Console.
 
 ### Current Credentials Files
+
 - ✅ `cred1.json` - Valid JSON, key ID: `700dc99af5fe...`
 - ✅ `cred2.json` - Valid JSON, key ID: `90240cec2f19...`
 - ✅ `google-credentials.json` - Currently symlinked to cred1.json
@@ -83,6 +89,7 @@ bun run sync-images
 ```
 
 **Expected output:**
+
 ```
 🚀 Starting Google Drive to ImageKit Sync
 📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
@@ -95,15 +102,15 @@ bun run sync-images
 
 ## 📊 Current Status Summary
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| **Hero Component** | ✅ | Fully integrated, build passing |
-| **ImageKit Config** | ✅ | All keys configured correctly |
-| **ImageKit SDK** | ✅ | Ready to upload images |
-| **Sync Script** | ✅ | Code complete, awaiting credentials |
-| **Google Drive Folder** | ✅ | ID configured: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa |
-| **Google Service Account** | ⚠️ | Keys disabled - needs regeneration |
-| **Build Status** | ✅ | Exit code 0, zero errors |
+| Component                  | Status | Notes                                            |
+| -------------------------- | ------ | ------------------------------------------------ |
+| **Hero Component**         | ✅     | Fully integrated, build passing                  |
+| **ImageKit Config**        | ✅     | All keys configured correctly                    |
+| **ImageKit SDK**           | ✅     | Ready to upload images                           |
+| **Sync Script**            | ✅     | Code complete, awaiting credentials              |
+| **Google Drive Folder**    | ✅     | ID configured: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa |
+| **Google Service Account** | ⚠️     | Keys disabled - needs regeneration               |
+| **Build Status**           | ✅     | Exit code 0, zero errors                         |
 
 ---
 
@@ -135,6 +142,7 @@ docs/QUICK-FIX-CREDENTIALS.md               ✅ Quick reference guide
 **You're 99% done.** The only blocker is regenerating the Google service account keys in Google Cloud Console. This is a 5-minute task that will unblock the entire sync pipeline and get all your images uploading to ImageKit automatically.
 
 Once that's done, your marketplace will be fully operational with:
+
 - ✅ Hero component on homepage
 - ✅ Automated image sync from Google Drive
 - ✅ Images served through ImageKit CDN

@@ -8,29 +8,32 @@
 
 ## ✅ YOUR CREDENTIALS (VERIFIED)
 
-| Key | Value | Status |
-|-----|-------|--------|
-| **Project URL** | https://okthcpumncidcihdhgea.supabase.co | ✅ |
-| **Anon Key** | eyJhbGciOiJIUzI1... | ✅ Safe (public) |
-| **Service Role Key** | eyJhbGciOiJIUzI1... | ✅ Protected (private) |
-| **Database Host** | db.okthcpumncidcihdhgea.supabase.co | ✅ |
-| **Pooled Connection** | Port 6543 with pgbouncer | ✅ |
-| **Direct Connection** | Port 5432 for migrations | ✅ |
+| Key                   | Value                                    | Status                 |
+| --------------------- | ---------------------------------------- | ---------------------- |
+| **Project URL**       | https://okthcpumncidcihdhgea.supabase.co | ✅                     |
+| **Anon Key**          | eyJhbGciOiJIUzI1...                      | ✅ Safe (public)       |
+| **Service Role Key**  | eyJhbGciOiJIUzI1...                      | ✅ Protected (private) |
+| **Database Host**     | db.okthcpumncidcihdhgea.supabase.co      | ✅                     |
+| **Pooled Connection** | Port 6543 with pgbouncer                 | ✅                     |
+| **Direct Connection** | Port 5432 for migrations                 | ✅                     |
 
 ---
 
 ## 🔧 STEP 1: INSTALL SUPABASE VS CODE EXTENSION
 
 ### Why?
+
 Direct database access, SQL editor, table viewing, and migration management.
 
 ### How?
+
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X)
 3. Search for: **"Supabase"** (by Supabase)
 4. Click **Install**
 
 ### After Installation:
+
 1. Open Command Palette (Ctrl+Shift+P)
 2. Type: `Supabase: Start`
 3. Sign in with your Supabase account
@@ -45,8 +48,8 @@ Direct database access, SQL editor, table viewing, and migration management.
 **File:** `src/app/api/supabase/example.ts`
 
 ```typescript
-import { createClient } from '@supabase/supabase-js'
-import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from "next/server";
 
 // Initialize Supabase with Service Role Key (server-side only)
 // This bypasses RLS, so be careful with queries!
@@ -58,41 +61,40 @@ const supabase = createClient(
       autoRefreshToken: false,
       persistSession: false,
     },
-  }
-)
+  },
+);
 
 export async function GET(request: NextRequest) {
   try {
     // Example: Query all users (admin access - bypasses RLS)
     const { data, error } = await supabase
-      .from('User')  // Your table name from Prisma schema
-      .select('*')
-      .limit(10)
+      .from("User") // Your table name from Prisma schema
+      .select("*")
+      .limit(10);
 
     if (error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      )
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ data, total: data?.length || 0 })
+    return NextResponse.json({ data, total: data?.length || 0 });
   } catch (error) {
-    console.error('Database error:', error)
+    console.error("Database error:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
 
 ### Usage:
+
 ```bash
 curl http://localhost:3000/api/supabase/example
 ```
 
 **Response:**
+
 ```json
 {
   "data": [
@@ -107,18 +109,22 @@ curl http://localhost:3000/api/supabase/example
 ## 🔐 STEP 3: UNDERSTAND YOUR API KEYS
 
 ### Anon Key (Public - Safe)
+
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
+
 - **Visibility:** Can be in browser/client code
 - **Access Level:** Limited by RLS policies
 - **Use Cases:** Client-side queries, public data
 - **Location in code:** `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ### Service Role Key (Private - CRITICAL)
+
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
+
 - **Visibility:** Server-side ONLY
 - **Access Level:** Bypasses RLS (admin access)
 - **Use Cases:** Admin operations, migrations, secure queries
@@ -130,9 +136,11 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ## 🛡️ STEP 4: ROW LEVEL SECURITY (RLS)
 
 ### What is RLS?
+
 Database-level security that controls who can access which rows.
 
 ### Your Supabase RLS Status
+
 To check RLS on your tables:
 
 1. Go to Supabase Dashboard
@@ -148,6 +156,7 @@ ORDER BY tablename;
 ```
 
 Expected output:
+
 ```
 schemaname | tablename | rowsecurity
 -----------+-----------+-------------
@@ -157,6 +166,7 @@ public     | Order     | t
 ```
 
 ### Recommended RLS Policies
+
 For authenticated users:
 
 ```sql
@@ -182,13 +192,13 @@ USING (auth.uid() = id);
 **File:** `src/lib/supabase/client.ts`
 
 ```typescript
-import { createBrowserClient } from '@supabase/ssr'
+import { createBrowserClient } from "@supabase/ssr";
 
 export const createClient = () =>
   createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
 ```
 
 **Usage in React Component:**
@@ -233,13 +243,13 @@ export function ProductList() {
 
 ## 📊 SECURITY BEST PRACTICES
 
-| Practice | Implementation | Why |
-|----------|-----------------|-----|
-| **Anon Key in Client** | ✅ OK in NEXT_PUBLIC_* | Limited by RLS |
-| **Service Role in Browser** | ❌ NEVER | Bypasses RLS - security risk |
-| **Service Role in API Routes** | ✅ OK | Server-side, can validate requests |
-| **Service Role in .env** | ✅ OK | Protected by .gitignore |
-| **Service Role in git** | ❌ NEVER | Would expose to everyone |
+| Practice                       | Implementation          | Why                                |
+| ------------------------------ | ----------------------- | ---------------------------------- |
+| **Anon Key in Client**         | ✅ OK in NEXT*PUBLIC*\* | Limited by RLS                     |
+| **Service Role in Browser**    | ❌ NEVER                | Bypasses RLS - security risk       |
+| **Service Role in API Routes** | ✅ OK                   | Server-side, can validate requests |
+| **Service Role in .env**       | ✅ OK                   | Protected by .gitignore            |
+| **Service Role in git**        | ❌ NEVER                | Would expose to everyone           |
 
 ---
 
@@ -291,16 +301,19 @@ bun run db:studio
 ## 🆘 TROUBLESHOOTING
 
 ### "Service Role Key not working"
+
 - Ensure it's NOT in public environment variables
 - Check it's in `.env` file, not `.env.public`
 - Verify key hasn't expired (check Supabase dashboard)
 
 ### "Cannot authenticate to database"
+
 - Check IP whitelist in Supabase: Settings → Network
 - Verify password is correct
 - Ensure pooled connection (port 6543) for app queries
 
 ### "RLS policy blocking queries"
+
 - Check RLS policies in Supabase dashboard
 - Use Service Role Key to bypass RLS temporarily for testing
 - Use `EXPLAIN` in SQL to debug policy issues

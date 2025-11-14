@@ -3,7 +3,7 @@
  * Phase 4 - Calculate admin analytics metrics
  */
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 import type {
   ApprovalMetrics,
   PricingAnalysis,
@@ -13,14 +13,16 @@ import type {
   CategoryMetrics,
   AdminAnalyticsSummary,
   AnalyticsQueryParams,
-} from './types';
+} from "./types";
 
 /**
  * Calculate approval metrics
  */
-export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<ApprovalMetrics> {
+export async function getApprovalMetrics(
+  params: AnalyticsQueryParams,
+): Promise<ApprovalMetrics> {
   const { startDate, endDate } = params;
-  
+
   const dateFilter: any = {};
   if (startDate) dateFilter.gte = new Date(startDate);
   if (endDate) {
@@ -31,20 +33,20 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
 
   const approvals = await (prisma as any).aIGeneratedProduct.count({
     where: {
-      status: 'APPROVED',
+      status: "APPROVED",
       reviewedAt: Object.keys(dateFilter).length > 0 ? dateFilter : undefined,
     },
   });
 
   const rejections = await (prisma as any).aIGeneratedProduct.count({
     where: {
-      status: 'REJECTED',
+      status: "REJECTED",
       reviewedAt: Object.keys(dateFilter).length > 0 ? dateFilter : undefined,
     },
   });
 
   const pending = await (prisma as any).aIGeneratedProduct.count({
-    where: { status: 'PENDING' },
+    where: { status: "PENDING" },
   });
 
   // Calculate approval rate
@@ -64,7 +66,7 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
 
   const todayApprovals = await (prisma as any).aIGeneratedProduct.count({
     where: {
-      status: 'APPROVED',
+      status: "APPROVED",
       reviewedAt: { gte: today, lt: tomorrow },
     },
   });
@@ -74,7 +76,7 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
   weekStart.setDate(weekStart.getDate() - weekStart.getDay());
   const thisWeekApprovals = await (prisma as any).aIGeneratedProduct.count({
     where: {
-      status: 'APPROVED',
+      status: "APPROVED",
       reviewedAt: { gte: weekStart },
     },
   });
@@ -84,7 +86,7 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
   monthStart.setDate(1);
   const thisMonthApprovals = await (prisma as any).aIGeneratedProduct.count({
     where: {
-      status: 'APPROVED',
+      status: "APPROVED",
       reviewedAt: { gte: monthStart },
     },
   });
@@ -110,9 +112,11 @@ export async function getApprovalMetrics(params: AnalyticsQueryParams): Promise<
 /**
  * Calculate pricing analysis
  */
-export async function getPricingAnalysis(_params: AnalyticsQueryParams): Promise<PricingAnalysis> {
+export async function getPricingAnalysis(
+  _params: AnalyticsQueryParams,
+): Promise<PricingAnalysis> {
   const approvedProducts = await (prisma as any).aIGeneratedProduct.findMany({
-    where: { status: 'APPROVED' },
+    where: { status: "APPROVED" },
     take: 1000, // Limit to last 1000
   });
 
@@ -127,19 +131,26 @@ export async function getPricingAnalysis(_params: AnalyticsQueryParams): Promise
   }
 
   // Calculate average confidence
-  const avgConfidence = 
-    approvedProducts.reduce((sum: number, p: any) => sum + (p.priceConfidence || 0), 0) / 
-    approvedProducts.length;
+  const avgConfidence =
+    approvedProducts.reduce(
+      (sum: number, p: any) => sum + (p.priceConfidence || 0),
+      0,
+    ) / approvedProducts.length;
 
   // Assume if productId is set, it was approved and created
-  const productsWithFinalPrice = approvedProducts.filter((p: any) => p.productId);
-  
-    // Mock pricing accuracy (in production, compare to final price from Product model)
-    const pricingAccuracy = Math.min(100, 75 + Math.random() * 20); // 75-95%
-    
-    // Calculate average confidence
-  const categoryDeviations: Record<string, { deviations: number[]; count: number }> = {};
-  
+  const productsWithFinalPrice = approvedProducts.filter(
+    (p: any) => p.productId,
+  );
+
+  // Mock pricing accuracy (in production, compare to final price from Product model)
+  const pricingAccuracy = Math.min(100, 75 + Math.random() * 20); // 75-95%
+
+  // Calculate average confidence
+  const categoryDeviations: Record<
+    string,
+    { deviations: number[]; count: number }
+  > = {};
+
   approvedProducts.forEach((product: any) => {
     if (!categoryDeviations[product.aiCategory]) {
       categoryDeviations[product.aiCategory] = { deviations: [], count: 0 };
@@ -150,25 +161,34 @@ export async function getPricingAnalysis(_params: AnalyticsQueryParams): Promise
     categoryDeviations[product.aiCategory].count++;
   });
 
-  const categoriesByDeviation = Object.entries(categoryDeviations).map(([category, data]) => ({
-    category,
-    avgDeviation: Math.round(
-      (data.deviations.reduce((a, b) => a + b, 0) / data.deviations.length) * 100
-    ) / 100,
-    count: data.count,
-  }));
+  const categoriesByDeviation = Object.entries(categoryDeviations).map(
+    ([category, data]) => ({
+      category,
+      avgDeviation:
+        Math.round(
+          (data.deviations.reduce((a, b) => a + b, 0) /
+            data.deviations.length) *
+            100,
+        ) / 100,
+      count: data.count,
+    }),
+  );
 
   const overridesCount = productsWithFinalPrice.length;
   const overridesPercentage = (overridesCount / approvedProducts.length) * 100;
 
   return {
     averagePricingAccuracy: Math.round(pricingAccuracy * 100) / 100,
-    averageAIPriceDeviation: Math.round(
-      (approvedProducts.reduce((sum: number) => sum + (Math.random() * 5), 0) / 
-        approvedProducts.length) * 100
-    ) / 100,
+    averageAIPriceDeviation:
+      Math.round(
+        (approvedProducts.reduce((sum: number) => sum + Math.random() * 5, 0) /
+          approvedProducts.length) *
+          100,
+      ) / 100,
     avgConfidenceScore: Math.round(avgConfidence * 100) / 100,
-    categoriesByDeviation: categoriesByDeviation.sort((a, b) => b.avgDeviation - a.avgDeviation),
+    categoriesByDeviation: categoriesByDeviation.sort(
+      (a, b) => b.avgDeviation - a.avgDeviation,
+    ),
     priceOverridesPercentage: Math.round(overridesPercentage * 100) / 100,
   };
 }
@@ -176,7 +196,9 @@ export async function getPricingAnalysis(_params: AnalyticsQueryParams): Promise
 /**
  * Calculate product performance
  */
-export async function getProductPerformance(_params: AnalyticsQueryParams): Promise<ProductPerformance> {
+export async function getProductPerformance(
+  _params: AnalyticsQueryParams,
+): Promise<ProductPerformance> {
   const allProducts = await prisma.product.findMany({
     include: {
       category: true,
@@ -191,23 +213,27 @@ export async function getProductPerformance(_params: AnalyticsQueryParams): Prom
       sellThroughRate: 0,
       averageSellingPrice: 0,
       priceAccuracy: 0,
-      bestPerformingCategory: 'N/A',
-      lowestPerformingCategory: 'N/A',
+      bestPerformingCategory: "N/A",
+      lowestPerformingCategory: "N/A",
       trendingCategories: [],
     };
   }
 
   const soldProducts = allProducts.filter((p) => p.orderItems.length > 0);
   const sellThroughRate = (soldProducts.length / allProducts.length) * 100;
-  
+
   const avgSellingPrice =
-    soldProducts.reduce((sum, p) => sum + p.price, 0) / (soldProducts.length || 1);
+    soldProducts.reduce((sum, p) => sum + p.price, 0) /
+    (soldProducts.length || 1);
 
   // Group by category
-  const categoryMetrics: Record<string, { count: number; sold: number; revenue: number }> = {};
-  
+  const categoryMetrics: Record<
+    string,
+    { count: number; sold: number; revenue: number }
+  > = {};
+
   allProducts.forEach((p) => {
-    const catName = p.category?.name || 'Unknown';
+    const catName = p.category?.name || "Unknown";
     if (!categoryMetrics[catName]) {
       categoryMetrics[catName] = { count: 0, sold: 0, revenue: 0 };
     }
@@ -218,23 +244,27 @@ export async function getProductPerformance(_params: AnalyticsQueryParams): Prom
     }
   });
 
-  const categoryPerformance = Object.entries(categoryMetrics).map(([name, data]) => ({
-    name,
-    performance: (data.sold / data.count) * 100,
-    revenue: data.revenue,
-  }));
+  const categoryPerformance = Object.entries(categoryMetrics).map(
+    ([name, data]) => ({
+      name,
+      performance: (data.sold / data.count) * 100,
+      revenue: data.revenue,
+    }),
+  );
 
-  const bestPerforming = categoryPerformance.length > 0
-    ? categoryPerformance.reduce((prev, current) =>
-        prev.performance > current.performance ? prev : current
-      ).name
-    : 'N/A';
+  const bestPerforming =
+    categoryPerformance.length > 0
+      ? categoryPerformance.reduce((prev, current) =>
+          prev.performance > current.performance ? prev : current,
+        ).name
+      : "N/A";
 
-  const lowestPerforming = categoryPerformance.length > 0
-    ? categoryPerformance.reduce((prev, current) =>
-        prev.performance < current.performance ? prev : current
-      ).name
-    : 'N/A';
+  const lowestPerforming =
+    categoryPerformance.length > 0
+      ? categoryPerformance.reduce((prev, current) =>
+          prev.performance < current.performance ? prev : current,
+        ).name
+      : "N/A";
 
   const trendingCategories = categoryPerformance
     .sort((a, b) => b.revenue - a.revenue)
@@ -260,7 +290,9 @@ export async function getProductPerformance(_params: AnalyticsQueryParams): Prom
 /**
  * Calculate revenue insights
  */
-export async function getRevenueInsights(_params: AnalyticsQueryParams): Promise<RevenueInsights> {
+export async function getRevenueInsights(
+  _params: AnalyticsQueryParams,
+): Promise<RevenueInsights> {
   const orders = await prisma.order.findMany({
     include: {
       items: {
@@ -287,7 +319,7 @@ export async function getRevenueInsights(_params: AnalyticsQueryParams): Promise
 
   orders.forEach((order) => {
     order.items.forEach((item) => {
-      const catName = item.product.category?.name || 'Unknown';
+      const catName = item.product.category?.name || "Unknown";
       if (!revenueByCategory[catName]) {
         revenueByCategory[catName] = { revenue: 0, productsSold: 0 };
       }
@@ -307,7 +339,8 @@ export async function getRevenueInsights(_params: AnalyticsQueryParams): Promise
 
   // Mock conversion rate and growth
   const totalListings = await prisma.product.count();
-  const conversionRate = totalListings > 0 ? (totalOrders / totalListings) * 100 : 0;
+  const conversionRate =
+    totalListings > 0 ? (totalOrders / totalListings) * 100 : 0;
 
   return {
     totalRevenue: Math.round(totalRevenue * 100) / 100,
@@ -326,33 +359,35 @@ export async function getRevenueInsights(_params: AnalyticsQueryParams): Promise
 /**
  * Get approval trends over time
  */
-export async function getApprovalTrends(days: number = 30): Promise<ApprovalTrends[]> {
+export async function getApprovalTrends(
+  days: number = 30,
+): Promise<ApprovalTrends[]> {
   const trends: ApprovalTrends[] = [];
-  
+
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date();
     date.setDate(date.getDate() - i);
     date.setHours(0, 0, 0, 0);
-    
+
     const nextDate = new Date(date);
     nextDate.setDate(nextDate.getDate() + 1);
 
     const approvalsCount = await (prisma as any).aIGeneratedProduct.count({
       where: {
-        status: 'APPROVED',
+        status: "APPROVED",
         reviewedAt: { gte: date, lt: nextDate },
       },
     });
 
     const rejectionsCount = await (prisma as any).aIGeneratedProduct.count({
       where: {
-        status: 'REJECTED',
+        status: "REJECTED",
         reviewedAt: { gte: date, lt: nextDate },
       },
     });
 
     trends.push({
-      date: date.toISOString().split('T')[0],
+      date: date.toISOString().split("T")[0],
       approvalsCount,
       rejectionsCount,
       averageConfidence: 75 + Math.random() * 20, // Mock
@@ -366,7 +401,9 @@ export async function getApprovalTrends(days: number = 30): Promise<ApprovalTren
 /**
  * Get category metrics
  */
-export async function getCategoryMetrics(_params: AnalyticsQueryParams): Promise<CategoryMetrics[]> {
+export async function getCategoryMetrics(
+  _params: AnalyticsQueryParams,
+): Promise<CategoryMetrics[]> {
   const categories = await prisma.category.findMany({
     include: {
       products: {
@@ -379,19 +416,23 @@ export async function getCategoryMetrics(_params: AnalyticsQueryParams): Promise
 
   const metrics = categories.map((cat) => {
     const productCount = cat.products.length;
-    const soldCount = cat.products.filter((p) => p.orderItems.length > 0).length;
+    const soldCount = cat.products.filter(
+      (p) => p.orderItems.length > 0,
+    ).length;
     const totalRevenue = cat.products.reduce(
       (sum, p) => sum + p.price * p.orderItems.length,
-      0
+      0,
     );
 
     return {
       name: cat.name,
       productCount,
       approvalRate: 85 + Math.random() * 10, // Mock
-      averagePrice: cat.products.length > 0
-        ? cat.products.reduce((sum, p) => sum + p.price, 0) / cat.products.length
-        : 0,
+      averagePrice:
+        cat.products.length > 0
+          ? cat.products.reduce((sum, p) => sum + p.price, 0) /
+            cat.products.length
+          : 0,
       averageConfidence: 80 + Math.random() * 15, // Mock
       revenue: totalRevenue,
       soldCount,
@@ -407,7 +448,7 @@ export async function getCategoryMetrics(_params: AnalyticsQueryParams): Promise
  */
 export async function getRevenueMetrics(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): Promise<any> {
   try {
     const orders = await prisma.order.findMany({
@@ -416,7 +457,7 @@ export async function getRevenueMetrics(
           gte: startDate,
           lte: endDate,
         },
-        paymentStatus: 'COMPLETED',
+        paymentStatus: "COMPLETED",
       },
       include: {
         items: {
@@ -434,8 +475,8 @@ export async function getRevenueMetrics(
 
     // Revenue by category
     const categoryMap = new Map();
-    orders.forEach(order => {
-      order.items.forEach(item => {
+    orders.forEach((order) => {
+      order.items.forEach((item) => {
         const categoryName = item.product.category.name;
         if (!categoryMap.has(categoryName)) {
           categoryMap.set(categoryName, {
@@ -450,14 +491,14 @@ export async function getRevenueMetrics(
       });
     });
 
-    const revenueByCategory = Array.from(categoryMap.values()).map(cat => ({
+    const revenueByCategory = Array.from(categoryMap.values()).map((cat) => ({
       ...cat,
       percentage: totalRevenue > 0 ? (cat.revenue / totalRevenue) * 100 : 0,
     }));
 
     // Revenue by month
     const monthMap = new Map();
-    orders.forEach(order => {
+    orders.forEach((order) => {
       const monthStr = order.createdAt.toISOString().substring(0, 7);
       if (!monthMap.has(monthStr)) {
         monthMap.set(monthStr, { month: monthStr, revenue: 0, orders: 0 });
@@ -468,7 +509,9 @@ export async function getRevenueMetrics(
     });
 
     const revenueByMonth = Array.from(monthMap.values()).sort(
-      (a, b) => new Date(`${a.month}-01`).getTime() - new Date(`${b.month}-01`).getTime()
+      (a, b) =>
+        new Date(`${a.month}-01`).getTime() -
+        new Date(`${b.month}-01`).getTime(),
     );
 
     return {
@@ -478,7 +521,7 @@ export async function getRevenueMetrics(
       revenueByMonth,
     };
   } catch (error) {
-    console.error('Error getting revenue metrics:', error);
+    console.error("Error getting revenue metrics:", error);
     return {
       totalRevenue: 0,
       averageOrderValue: 0,
@@ -493,7 +536,7 @@ export async function getRevenueMetrics(
  */
 export async function getPricingMetrics(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): Promise<any> {
   try {
     const products = await (prisma as any).aIGeneratedProduct.findMany({
@@ -509,13 +552,20 @@ export async function getPricingMetrics(
       },
     });
 
-    const autoApproved = products.filter((p: any) => p.priceConfidence > 85).length;
-    const manualReview = products.filter((p: any) => p.priceConfidence >= 70 && p.priceConfidence <= 85).length;
-    const lowConfidence = products.filter((p: any) => p.priceConfidence < 70).length;
+    const autoApproved = products.filter(
+      (p: any) => p.priceConfidence > 85,
+    ).length;
+    const manualReview = products.filter(
+      (p: any) => p.priceConfidence >= 70 && p.priceConfidence <= 85,
+    ).length;
+    const lowConfidence = products.filter(
+      (p: any) => p.priceConfidence < 70,
+    ).length;
 
     const avgConfidence =
       products.length > 0
-        ? products.reduce((sum: number, p: any) => sum + p.priceConfidence, 0) / products.length
+        ? products.reduce((sum: number, p: any) => sum + p.priceConfidence, 0) /
+          products.length
         : 0;
 
     return {
@@ -523,10 +573,11 @@ export async function getPricingMetrics(
       autoApprovedCount: autoApproved,
       manualReviewCount: manualReview,
       lowConfidenceCount: lowConfidence,
-      priceAccuracy: products.length > 0 ? (autoApproved / products.length) * 100 : 0,
+      priceAccuracy:
+        products.length > 0 ? (autoApproved / products.length) * 100 : 0,
     };
   } catch (error) {
-    console.error('Error getting pricing metrics:', error);
+    console.error("Error getting pricing metrics:", error);
     return {
       averageConfidence: 0,
       autoApprovedCount: 0,
@@ -547,11 +598,12 @@ export async function getProductMetrics(): Promise<any> {
     });
 
     const totalProducts = products.length;
-    const prices = products.map(p => p.price);
-    const avgPrice = prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
+    const prices = products.map((p) => p.price);
+    const avgPrice =
+      prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
 
     const categoryMap = new Map();
-    products.forEach(p => {
+    products.forEach((p) => {
       if (!categoryMap.has(p.category.name)) {
         categoryMap.set(p.category.name, {
           category: p.category.name,
@@ -565,7 +617,7 @@ export async function getProductMetrics(): Promise<any> {
       entry.totalPrice += p.price;
     });
 
-    const categoryBreakdown = Array.from(categoryMap.values()).map(cat => ({
+    const categoryBreakdown = Array.from(categoryMap.values()).map((cat) => ({
       category: cat.category,
       count: cat.count,
       averagePrice: cat.totalPrice / cat.count,
@@ -583,7 +635,7 @@ export async function getProductMetrics(): Promise<any> {
       categoryBreakdown,
     };
   } catch (error) {
-    console.error('Error getting product metrics:', error);
+    console.error("Error getting product metrics:", error);
     return {
       totalProducts: 0,
       activeProducts: 0,
@@ -599,7 +651,7 @@ export async function getProductMetrics(): Promise<any> {
  */
 export async function getDashboardMetrics(
   startDate: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-  endDate: Date = new Date()
+  endDate: Date = new Date(),
 ): Promise<any> {
   try {
     console.log(`Getting dashboard metrics from ${startDate} to ${endDate}`);
@@ -619,7 +671,7 @@ export async function getDashboardMetrics(
       generatedAt: new Date(),
     };
   } catch (error) {
-    console.error('Error getting dashboard metrics:', error);
+    console.error("Error getting dashboard metrics:", error);
     throw error;
   }
 }
@@ -629,7 +681,7 @@ export async function getDashboardMetrics(
  */
 async function getApprovalMetricsNew(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): Promise<any> {
   try {
     const products = await (prisma as any).aIGeneratedProduct.findMany({
@@ -647,13 +699,17 @@ async function getApprovalMetricsNew(
     });
 
     const total = products.length;
-    const approved = products.filter((p: any) => p.status === 'APPROVED').length;
-    const rejected = products.filter((p: any) => p.status === 'REJECTED').length;
-    const pending = products.filter((p: any) => p.status === 'PENDING').length;
+    const approved = products.filter(
+      (p: any) => p.status === "APPROVED",
+    ).length;
+    const rejected = products.filter(
+      (p: any) => p.status === "REJECTED",
+    ).length;
+    const pending = products.filter((p: any) => p.status === "PENDING").length;
 
     // Calculate average time to approve
     const approvedProducts = products.filter(
-      (p: any) => p.status === 'APPROVED' && p.approvedAt
+      (p: any) => p.status === "APPROVED" && p.approvedAt,
     );
     const avgTimeToApprove =
       approvedProducts.length > 0
@@ -667,18 +723,23 @@ async function getApprovalMetricsNew(
     // Build trend data (daily)
     const trendMap = new Map();
     products.forEach((p: any) => {
-      const dateStr = p.createdAt.toISOString().split('T')[0];
+      const dateStr = p.createdAt.toISOString().split("T")[0];
       if (!trendMap.has(dateStr)) {
-        trendMap.set(dateStr, { date: dateStr, approved: 0, rejected: 0, pending: 0 });
+        trendMap.set(dateStr, {
+          date: dateStr,
+          approved: 0,
+          rejected: 0,
+          pending: 0,
+        });
       }
       const entry = trendMap.get(dateStr);
-      if (p.status === 'APPROVED') entry.approved++;
-      else if (p.status === 'REJECTED') entry.rejected++;
+      if (p.status === "APPROVED") entry.approved++;
+      else if (p.status === "REJECTED") entry.rejected++;
       else entry.pending++;
     });
 
     const trend = Array.from(trendMap.values()).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
     return {
@@ -691,7 +752,7 @@ async function getApprovalMetricsNew(
       trend,
     };
   } catch (error) {
-    console.error('Error getting approval metrics:', error);
+    console.error("Error getting approval metrics:", error);
     return {
       totalSubmitted: 0,
       approved: 0,
@@ -708,21 +769,31 @@ async function getApprovalMetricsNew(
  * Get complete analytics summary
  */
 export async function getAnalyticsSummary(
-  params: AnalyticsQueryParams
+  params: AnalyticsQueryParams,
 ): Promise<AdminAnalyticsSummary> {
   const now = new Date();
-  const startDate = params.startDate || new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  const endDate = params.endDate || now.toISOString().split('T')[0];
+  const startDate =
+    params.startDate ||
+    new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
+  const endDate = params.endDate || now.toISOString().split("T")[0];
 
-  const [approvalMetrics, pricingAnalysis, productPerformance, revenueInsights, approvalTrends, categoryMetrics] =
-    await Promise.all([
-      getApprovalMetrics(params),
-      getPricingAnalysis(params),
-      getProductPerformance(params),
-      getRevenueInsights(params),
-      getApprovalTrends(30),
-      getCategoryMetrics(params),
-    ]);
+  const [
+    approvalMetrics,
+    pricingAnalysis,
+    productPerformance,
+    revenueInsights,
+    approvalTrends,
+    categoryMetrics,
+  ] = await Promise.all([
+    getApprovalMetrics(params),
+    getPricingAnalysis(params),
+    getProductPerformance(params),
+    getRevenueInsights(params),
+    getApprovalTrends(30),
+    getCategoryMetrics(params),
+  ]);
 
   return {
     dateRange: { startDate, endDate },

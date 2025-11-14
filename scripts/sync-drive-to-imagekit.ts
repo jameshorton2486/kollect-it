@@ -3,9 +3,9 @@
 /**
  * Google Drive to ImageKit Sync Script
  * Syncs images from Google Drive folder to ImageKit with duplicate detection
- * 
+ *
  * Usage: bun run scripts/sync-drive-to-imagekit.ts
- * 
+ *
  * Environment variables required:
  * - GOOGLE_APPLICATION_CREDENTIALS: path to service account JSON
  * - GOOGLE_DRIVE_FOLDER_ID: ID of folder to sync from
@@ -14,38 +14,42 @@
  * - IMAGEKIT_URL_ENDPOINT: ImageKit URL endpoint
  */
 
-import ImageKit from 'imagekit';
-import { google } from 'googleapis';
-import fs from 'fs/promises';
-import path from 'path';
+import ImageKit from "imagekit";
+import { google } from "googleapis";
+import fs from "fs/promises";
+import path from "path";
 import {
   GoogleDriveImageFile,
   SyncOperationResult,
   SyncResultsReport,
   SyncSummary,
   ImageKitUploadResult,
-} from '../types/imagekit';
+} from "../types/imagekit";
 
 /**
  * Supported image MIME types
  */
 const SUPPORTED_MIME_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/gif',
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
 ];
 
 /**
  * Configuration from environment
  */
 const config = {
-  googleCredentialsPath: process.env.GOOGLE_APPLICATION_CREDENTIALS || './google-credentials.json',
-  driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || '',
+  googleCredentialsPath:
+    process.env.GOOGLE_APPLICATION_CREDENTIALS || "./google-credentials.json",
+  driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || "",
   imagekit: {
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-    privateKey: (process.env.IMAGEKIT_PRIVATE_KEY || '').replace(/^private_/, ''),
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || '',
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",
+    privateKey: (process.env.IMAGEKIT_PRIVATE_KEY || "").replace(
+      /^private_/,
+      "",
+    ),
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "",
   },
 };
 
@@ -64,17 +68,17 @@ const imagekit = new ImageKit({
 async function initializeDriveApi() {
   try {
     const credentials = JSON.parse(
-      await fs.readFile(config.googleCredentialsPath, 'utf-8')
+      await fs.readFile(config.googleCredentialsPath, "utf-8"),
     );
 
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
     });
 
-    return google.drive({ version: 'v3', auth });
+    return google.drive({ version: "v3", auth });
   } catch (error) {
-    console.error('❌ Failed to initialize Google Drive API:', error);
+    console.error("❌ Failed to initialize Google Drive API:", error);
     throw error;
   }
 }
@@ -84,17 +88,18 @@ async function initializeDriveApi() {
  */
 async function getImagesFromDrive(
   drive: ReturnType<typeof google.drive>,
-  folderId: string
+  folderId: string,
 ): Promise<GoogleDriveImageFile[]> {
   try {
-    console.log('📂 Fetching images from Google Drive folder...');
+    console.log("📂 Fetching images from Google Drive folder...");
 
     const response = await drive.files.list({
       q: `'${folderId}' in parents and trashed=false and (${SUPPORTED_MIME_TYPES.map(
-        (mime) => `mimeType='${mime}'`
-      ).join(' or ')})`,
-      spaces: 'drive',
-      fields: 'files(id, name, mimeType, size, webContentLink, createdTime, modifiedTime)',
+        (mime) => `mimeType='${mime}'`,
+      ).join(" or ")})`,
+      spaces: "drive",
+      fields:
+        "files(id, name, mimeType, size, webContentLink, createdTime, modifiedTime)",
       pageSize: 100,
     });
 
@@ -103,7 +108,7 @@ async function getImagesFromDrive(
 
     return files as GoogleDriveImageFile[];
   } catch (error) {
-    console.error('❌ Failed to fetch images from Google Drive:', error);
+    console.error("❌ Failed to fetch images from Google Drive:", error);
     throw error;
   }
 }
@@ -113,7 +118,7 @@ async function getImagesFromDrive(
  */
 async function fileExistsInImageKit(
   fileName: string,
-  folderPath: string = '/products'
+  folderPath: string = "/products",
 ): Promise<boolean> {
   try {
     const response = await imagekit.listFiles({
@@ -123,7 +128,10 @@ async function fileExistsInImageKit(
 
     return response.length > 0;
   } catch (error) {
-    console.warn(`⚠️  Error checking if file exists in ImageKit: ${fileName}`, error);
+    console.warn(
+      `⚠️  Error checking if file exists in ImageKit: ${fileName}`,
+      error,
+    );
     return false;
   }
 }
@@ -134,17 +142,20 @@ async function fileExistsInImageKit(
 async function downloadFromDrive(
   drive: ReturnType<typeof google.drive>,
   fileId: string,
-  fileName: string
+  fileName: string,
 ): Promise<Buffer> {
   try {
     const response = await drive.files.get(
-      { fileId, alt: 'media' },
-      { responseType: 'arraybuffer' }
+      { fileId, alt: "media" },
+      { responseType: "arraybuffer" },
     );
 
     return Buffer.from(response.data as ArrayBuffer);
   } catch (error) {
-    console.error(`❌ Failed to download file from Google Drive: ${fileName}`, error);
+    console.error(
+      `❌ Failed to download file from Google Drive: ${fileName}`,
+      error,
+    );
     throw error;
   }
 }
@@ -155,14 +166,14 @@ async function downloadFromDrive(
 async function uploadToImageKit(
   buffer: Buffer,
   fileName: string,
-  folderPath: string = '/products'
+  folderPath: string = "/products",
 ): Promise<ImageKitUploadResult> {
   try {
     const result = await imagekit.upload({
       file: buffer,
       fileName: fileName,
       folder: folderPath,
-      tags: ['drive-sync', 'auto-imported'],
+      tags: ["drive-sync", "auto-imported"],
     });
 
     return result as unknown as ImageKitUploadResult;
@@ -177,14 +188,14 @@ async function uploadToImageKit(
  */
 async function syncDriveToImageKit(
   driveFolderId: string,
-  imagekitFolder: string = '/products',
-  skipExisting: boolean = true
+  imagekitFolder: string = "/products",
+  skipExisting: boolean = true,
 ): Promise<SyncResultsReport> {
   const startTime = new Date();
   const results: SyncOperationResult[] = [];
   const errors: string[] = [];
 
-  console.log('\n🚀 Starting Google Drive to ImageKit Sync');
+  console.log("\n🚀 Starting Google Drive to ImageKit Sync");
   console.log(`📁 Drive Folder ID: ${driveFolderId}`);
   console.log(`🖼️  ImageKit Folder: ${imagekitFolder}`);
   console.log(`⏭️  Skip Existing: ${skipExisting}\n`);
@@ -197,7 +208,7 @@ async function syncDriveToImageKit(
     const driveFiles = await getImagesFromDrive(drive, driveFolderId);
 
     if (driveFiles.length === 0) {
-      console.log('⚠️  No images found in Google Drive folder');
+      console.log("⚠️  No images found in Google Drive folder");
       const summary: SyncSummary = {
         startTime: startTime.toISOString(),
         endTime: new Date().toISOString(),
@@ -213,7 +224,7 @@ async function syncDriveToImageKit(
       return {
         summary,
         results,
-        version: '1.0.0',
+        version: "1.0.0",
         timestamp: new Date().toISOString(),
       };
     }
@@ -242,7 +253,7 @@ async function syncDriveToImageKit(
               filePath: `${imagekitFolder}/${file.name}`,
               driveFileId: file.id,
               skipped: true,
-              skipReason: 'File already exists in ImageKit',
+              skipReason: "File already exists in ImageKit",
               fileSize: parseInt(file.size, 10),
             });
             skipped++;
@@ -257,7 +268,11 @@ async function syncDriveToImageKit(
 
         // Upload to ImageKit
         console.log(`⬆️  Uploading to ImageKit...`);
-        const uploadResult = await uploadToImageKit(buffer, file.name, imagekitFolder);
+        const uploadResult = await uploadToImageKit(
+          buffer,
+          file.name,
+          imagekitFolder,
+        );
 
         // Record success
         console.log(`✅ Successfully uploaded: ${file.name}`);
@@ -313,23 +328,27 @@ async function syncDriveToImageKit(
     };
 
     // Log summary
-    console.log('\n' + '='.repeat(60));
-    console.log('📊 SYNC SUMMARY');
-    console.log('='.repeat(60));
+    console.log("\n" + "=".repeat(60));
+    console.log("📊 SYNC SUMMARY");
+    console.log("=".repeat(60));
     console.log(`📁 Files Found:     ${summary.filesFound}`);
     console.log(`✅ Files Uploaded:  ${summary.filesUploaded}`);
     console.log(`⏭️  Files Skipped:   ${summary.filesSkipped}`);
     console.log(`❌ Files Failed:    ${summary.filesFailed}`);
-    console.log(`💾 Total Bytes:     ${(summary.totalBytesUploaded / 1024 / 1024).toFixed(2)} MB`);
-    console.log(`⏱️  Duration:        ${(summary.totalDuration / 1000).toFixed(2)}s`);
-    console.log('='.repeat(60) + '\n');
+    console.log(
+      `💾 Total Bytes:     ${(summary.totalBytesUploaded / 1024 / 1024).toFixed(2)} MB`,
+    );
+    console.log(
+      `⏱️  Duration:        ${(summary.totalDuration / 1000).toFixed(2)}s`,
+    );
+    console.log("=".repeat(60) + "\n");
 
     // Save results to file
-    const reportPath = path.join(process.cwd(), 'sync-results.json');
+    const reportPath = path.join(process.cwd(), "sync-results.json");
     const report: SyncResultsReport = {
       summary,
       results,
-      version: '1.0.0',
+      version: "1.0.0",
       timestamp: new Date().toISOString(),
     };
 
@@ -338,7 +357,7 @@ async function syncDriveToImageKit(
 
     return report;
   } catch (error) {
-    console.error('❌ Sync failed:', error);
+    console.error("❌ Sync failed:", error);
     throw error;
   }
 }
@@ -351,22 +370,24 @@ if (import.meta.main) {
   const driveFolderId = config.driveFolderId;
 
   if (!driveFolderId) {
-    console.error('❌ Error: GOOGLE_DRIVE_FOLDER_ID environment variable is not set');
+    console.error(
+      "❌ Error: GOOGLE_DRIVE_FOLDER_ID environment variable is not set",
+    );
     process.exit(1);
   }
 
   if (!config.imagekit.publicKey || !config.imagekit.privateKey) {
-    console.error('❌ Error: ImageKit credentials are not set');
+    console.error("❌ Error: ImageKit credentials are not set");
     process.exit(1);
   }
 
   syncDriveToImageKit(driveFolderId)
     .then(() => {
-      console.log('✅ Sync completed successfully');
+      console.log("✅ Sync completed successfully");
       process.exit(0);
     })
     .catch((error) => {
-      console.error('❌ Sync failed:', error);
+      console.error("❌ Sync failed:", error);
       process.exit(1);
     });
 }

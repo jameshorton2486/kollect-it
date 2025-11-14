@@ -1,11 +1,18 @@
-'use client';
+"use client";
 
 /**
  * Revenue by Category Chart
  */
 
-import React from 'react';
-import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import React from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 interface RevenueByCategory {
   category: string;
@@ -18,7 +25,7 @@ interface RevenueByCategoryProps {
   data: RevenueByCategory[];
 }
 
-const COLORS = ['#D3AF37', '#A17D2F', '#CD7F32', '#C0C0C0', '#FFD700'];
+const COLORS = ["#D3AF37", "#A17D2F", "#CD7F32", "#C0C0C0", "#FFD700"];
 
 export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   if (!data || data.length === 0) {
@@ -29,7 +36,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
     );
   }
 
-  const chartData = data.map(item => ({
+  const chartData = data.map((item) => ({
     name: `${item.category} (${item.percentage.toFixed(1)}%)`,
     value: item.revenue,
   }));
@@ -51,16 +58,19 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
             dataKey="value"
           >
             {chartData.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
           <Tooltip
             formatter={(value: number) => `$${value.toFixed(2)}`}
             contentStyle={{
-              backgroundColor: '#1a1a1a',
-              border: '1px solid #D3AF37',
-              borderRadius: '8px',
-              color: '#fff',
+              backgroundColor: "#1a1a1a",
+              border: "1px solid #D3AF37",
+              borderRadius: "8px",
+              color: "#fff",
             }}
           />
           <Legend />
@@ -68,10 +78,15 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
       </ResponsiveContainer>
 
       <div className="mt-6 space-y-2">
-        {data.map(item => (
-          <div key={item.category} className="flex justify-between text-gray-300">
+        {data.map((item) => (
+          <div
+            key={item.category}
+            className="flex justify-between text-gray-300"
+          >
             <span>{item.category}</span>
-            <span className="text-[#D3AF37] font-semibold">${item.revenue.toFixed(2)}</span>
+            <span className="text-[#D3AF37] font-semibold">
+              ${item.revenue.toFixed(2)}
+            </span>
           </div>
         ))}
       </div>

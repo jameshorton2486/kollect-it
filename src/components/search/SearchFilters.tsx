@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface FilterOption {
   value: string;
@@ -12,7 +12,7 @@ interface FilterOption {
 interface FilterSection {
   id: string;
   title: string;
-  type: 'checkbox' | 'range' | 'radio';
+  type: "checkbox" | "range" | "radio";
   options?: FilterOption[];
   min?: number;
   max?: number;
@@ -29,21 +29,23 @@ export default function SearchFilters({
   filters,
   selectedFilters,
   onFilterChange,
-  onClearAll
+  onClearAll,
 }: SearchFiltersProps) {
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [expandedSections, setExpandedSections] = useState<
+    Record<string, boolean>
+  >({});
 
   const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [sectionId]: !prev[sectionId]
+      [sectionId]: !prev[sectionId],
     }));
   };
 
   const handleCheckboxChange = (filterId: string, value: string) => {
     const current = selectedFilters[filterId] || [];
     const updated = current.includes(value)
-      ? current.filter(v => v !== value)
+      ? current.filter((v) => v !== value)
       : [...current, value];
     onFilterChange(filterId, updated);
   };
@@ -54,7 +56,7 @@ export default function SearchFilters({
 
   const totalSelected = Object.values(selectedFilters).reduce(
     (sum, values) => sum + values.length,
-    0
+    0,
   );
 
   return (
@@ -64,7 +66,9 @@ export default function SearchFilters({
         <div>
           <h2 className="font-semibold">Filters</h2>
           {totalSelected > 0 && (
-            <p className="text-sm text-muted-foreground">{totalSelected} selected</p>
+            <p className="text-sm text-muted-foreground">
+              {totalSelected} selected
+            </p>
           )}
         </div>
         {totalSelected > 0 && (
@@ -106,7 +110,7 @@ export default function SearchFilters({
 
               {isExpanded && (
                 <div className="space-y-2">
-                  {section.type === 'checkbox' && section.options && (
+                  {section.type === "checkbox" && section.options && (
                     <>
                       {section.options.map((option) => (
                         <label
@@ -116,7 +120,9 @@ export default function SearchFilters({
                           <input
                             type="checkbox"
                             checked={sectionValues.includes(option.value)}
-                            onChange={() => handleCheckboxChange(section.id, option.value)}
+                            onChange={() =>
+                              handleCheckboxChange(section.id, option.value)
+                            }
                             className="rounded border-gray-300 text-primary focus:ring-primary"
                           />
                           <span className="flex-1 text-sm">
@@ -132,7 +138,7 @@ export default function SearchFilters({
                     </>
                   )}
 
-                  {section.type === 'radio' && section.options && (
+                  {section.type === "radio" && section.options && (
                     <>
                       {section.options.map((option) => (
                         <label
@@ -143,7 +149,9 @@ export default function SearchFilters({
                             type="radio"
                             name={section.id}
                             checked={sectionValues.includes(option.value)}
-                            onChange={() => handleRadioChange(section.id, option.value)}
+                            onChange={() =>
+                              handleRadioChange(section.id, option.value)
+                            }
                             className="border-gray-300 text-primary focus:ring-primary"
                           />
                           <span className="flex-1 text-sm">{option.label}</span>
@@ -152,7 +160,7 @@ export default function SearchFilters({
                     </>
                   )}
 
-                  {section.type === 'range' && (
+                  {section.type === "range" && (
                     <div className="space-y-3">
                       <div className="flex gap-2">
                         <input
@@ -160,10 +168,16 @@ export default function SearchFilters({
                           placeholder="Min"
                           min={section.min}
                           max={section.max}
-                          value={sectionValues[0] || ''}
+                          value={sectionValues[0] || ""}
                           onChange={(e) => {
-                            const newValues = [e.target.value, sectionValues[1] || ''];
-                            onFilterChange(section.id, newValues.filter(Boolean));
+                            const newValues = [
+                              e.target.value,
+                              sectionValues[1] || "",
+                            ];
+                            onFilterChange(
+                              section.id,
+                              newValues.filter(Boolean),
+                            );
                           }}
                           className="flex-1 px-3 py-2 border rounded text-sm"
                         />
@@ -173,10 +187,16 @@ export default function SearchFilters({
                           placeholder="Max"
                           min={section.min}
                           max={section.max}
-                          value={sectionValues[1] || ''}
+                          value={sectionValues[1] || ""}
                           onChange={(e) => {
-                            const newValues = [sectionValues[0] || '', e.target.value];
-                            onFilterChange(section.id, newValues.filter(Boolean));
+                            const newValues = [
+                              sectionValues[0] || "",
+                              e.target.value,
+                            ];
+                            onFilterChange(
+                              section.id,
+                              newValues.filter(Boolean),
+                            );
                           }}
                           className="flex-1 px-3 py-2 border rounded text-sm"
                         />

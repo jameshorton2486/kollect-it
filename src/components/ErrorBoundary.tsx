@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { AlertCircle, Home, RefreshCw } from 'lucide-react'
+import { useEffect } from "react";
+import { AlertCircle, Home, RefreshCw } from "lucide-react";
 
 interface ErrorBoundaryProps {
-  error: Error & { digest?: string }
-  reset: () => void
+  error: Error & { digest?: string };
+  reset: () => void;
 }
 
 export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
   useEffect(() => {
-    console.error('Application error:', {
+    console.error("Application error:", {
       message: error.message,
       digest: error.digest,
       stack: error.stack,
-    })
-  }, [error])
+    });
+  }, [error]);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
@@ -23,15 +23,16 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
         <div className="flex justify-center mb-4">
           <AlertCircle className="w-16 h-16 text-red-500" />
         </div>
-        
+
         <h1 className="text-3xl font-serif text-navy mb-3">
           Something Went Wrong
         </h1>
-        
+
         <p className="text-gray-600 mb-6">
-          We apologize for the inconvenience. Our team has been notified and is working to resolve the issue.
+          We apologize for the inconvenience. Our team has been notified and is
+          working to resolve the issue.
         </p>
-        
+
         {error.digest && (
           <div className="bg-gray-100 rounded p-3 mb-6">
             <p className="text-xs text-gray-500 font-mono">
@@ -39,7 +40,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
             </p>
           </div>
         )}
-        
+
         <div className="flex gap-3 justify-center">
           <button
             onClick={reset}
@@ -48,9 +49,9 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
             <RefreshCw className="w-4 h-4" />
             Try Again
           </button>
-          
+
           <button
-            onClick={() => window.location.href = '/'}
+            onClick={() => (window.location.href = "/")}
             className="flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg hover:bg-navy hover:text-white transition-colors"
           >
             <Home className="w-4 h-4" />
@@ -59,5 +60,5 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

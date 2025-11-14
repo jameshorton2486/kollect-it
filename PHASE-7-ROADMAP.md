@@ -9,9 +9,11 @@
 **After Phase 6 Launch (Week 6-7), you have two paths:**
 
 ### PATH A: "Operate & Learn" (Recommended First)
+
 **Timeline:** 4-12 weeks before Phase 7
 
 You let Platform v2 run in production and:
+
 - ✅ Collect real customer data
 - ✅ Understand what features are actually needed
 - ✅ Identify bottlenecks or problems
@@ -26,10 +28,12 @@ You let Platform v2 run in production and:
 
 ---
 
-### PATH B: "Sprint to Full Platform" 
+### PATH B: "Sprint to Full Platform"
+
 **Timeline:** Continuous development, Phase 7 immediately after 6
 
 You start Phase 7 right after Phase 6 without operational pause:
+
 - ✅ Build all advanced features quickly
 - ✅ Have complete feature set faster
 - ✅ Hit market earlier with more features
@@ -54,6 +58,7 @@ If you ever get 50+ items to add, that's painful.
 
 **Solution:**
 Automated system to:
+
 - Upload CSV of items
 - Use AI to enhance descriptions
 - Automatically categorize
@@ -64,6 +69,7 @@ Automated system to:
 **Timeline:** ~2 weeks (if you've done AI work before)
 
 **Technical approach:**
+
 ```
 CSV upload → Parse data → Claude API (descriptions/categorization)
   → OpenAI/ImageKit (photo descriptions) → Bulk insert to database
@@ -71,6 +77,7 @@ CSV upload → Parse data → Claude API (descriptions/categorization)
 ```
 
 **Deliverables:**
+
 - [ ] CSV upload interface
 - [ ] AI description generation
 - [ ] Auto-categorization
@@ -95,6 +102,7 @@ With hundreds of items, customers need better ways to browse.
 
 **Solution:**
 Faceted search that lets customers:
+
 - Filter by price range (slider)
 - Filter by condition (checkboxes)
 - Filter by date added (recent first, etc.)
@@ -105,6 +113,7 @@ Faceted search that lets customers:
 **Timeline:** ~1.5-2 weeks
 
 **Technical approach:**
+
 ```
 Elasticsearch (or Meilisearch on database) for fast faceted search
   → Frontend UI for filtering → Real-time search as user types
@@ -112,6 +121,7 @@ Elasticsearch (or Meilisearch on database) for fast faceted search
 ```
 
 **Deliverables:**
+
 - [ ] Search engine setup (Elasticsearch or Meilisearch)
 - [ ] Facet definitions (price, condition, category, etc.)
 - [ ] Frontend filter UI (clean, intuitive)
@@ -131,6 +141,7 @@ Elasticsearch (or Meilisearch on database) for fast faceted search
 
 **Problem it solves:**
 When you bring on other sellers (Phase 6 prep for this), customers need to:
+
 - See seller reputation
 - See reviews from past buyers
 - Verify seller authenticity
@@ -138,6 +149,7 @@ When you bring on other sellers (Phase 6 prep for this), customers need to:
 
 **Solution:**
 Reputation system with:
+
 - Seller profiles (items sold, average rating)
 - 5-star reviews (with text)
 - Seller verification badges
@@ -148,6 +160,7 @@ Reputation system with:
 **Timeline:** ~2-2.5 weeks
 
 **Technical approach:**
+
 ```
 Seller profile pages → Review submission form → Star ratings
   → Admin dashboard for review moderation → Dispute tracking
@@ -155,6 +168,7 @@ Seller profile pages → Review submission form → Star ratings
 ```
 
 **Deliverables:**
+
 - [ ] Seller profile pages (public)
 - [ ] Review submission form
 - [ ] Star rating system (1-5 stars)
@@ -181,6 +195,7 @@ No way to do marketing emails (newsletters, announcements).
 Also, no professional email address.
 
 **Solution:**
+
 - Professional email (james@kollect-it.com) via Google Workspace
 - Email marketing system (newsletter templates, scheduled sends)
 - Automation (new product alerts, price drops)
@@ -189,6 +204,7 @@ Also, no professional email address.
 **Timeline:** ~1.5-2 weeks (mostly setup, less coding)
 
 **Technical approach:**
+
 ```
 Google Workspace setup (mail server) → Create email templates
   → Subscriber management → Scheduled email sends → Automation rules
@@ -196,6 +212,7 @@ Google Workspace setup (mail server) → Create email templates
 ```
 
 **Deliverables:**
+
 - [ ] Google Workspace account setup
 - [ ] Professional email address
 - [ ] Email template library (newsletter, alerts, announcements)
@@ -215,12 +232,12 @@ Google Workspace setup (mail server) → Create email templates
 
 ## 📊 PHASE 7 OPTIONS COMPARISON
 
-| Phase 7 | Focus | Timeline | Complexity | Value | Priority |
-|---------|-------|----------|-----------|-------|----------|
-| **7a** | Batch Import | 2 weeks | High | Very High | #1 (if scaling) |
-| **7b** | Advanced Search | 1.5-2 weeks | Medium | Very High | #2 (if 50+ items) |
-| **7c** | Seller Reputation | 2 weeks | Medium | High | #3 (if multi-seller) |
-| **7d** | Email Marketing | 1.5 weeks | Low | Medium | #4 (nice to have) |
+| Phase 7 | Focus             | Timeline    | Complexity | Value     | Priority             |
+| ------- | ----------------- | ----------- | ---------- | --------- | -------------------- |
+| **7a**  | Batch Import      | 2 weeks     | High       | Very High | #1 (if scaling)      |
+| **7b**  | Advanced Search   | 1.5-2 weeks | Medium     | Very High | #2 (if 50+ items)    |
+| **7c**  | Seller Reputation | 2 weeks     | Medium     | High      | #3 (if multi-seller) |
+| **7d**  | Email Marketing   | 1.5 weeks   | Low        | Medium    | #4 (nice to have)    |
 
 ---
 
@@ -229,6 +246,7 @@ Google Workspace setup (mail server) → Create email templates
 **Suggested execution order (for typical path):**
 
 ### Timeline A: Solo operator path (you selling items)
+
 ```
 Week 1-6:  Phase 5 + 6 (Platform v2)
 Weeks 7-10: Phase 7b (Advanced Search) - makes browsing better for customers
@@ -237,6 +255,7 @@ Weeks 15+:  Phase 7a (Batch Import) - if you ever need bulk product import
 ```
 
 ### Timeline B: Multi-seller marketplace path (building for other sellers)
+
 ```
 Week 1-6:  Phase 5 + 6 (Platform v2)
 Weeks 7-10: Phase 7c (Seller Reputation) - needed before inviting other sellers
@@ -245,6 +264,7 @@ Weeks 15-18: Phase 7b (Advanced Search) - helps all sellers' items discoverable
 ```
 
 ### Timeline C: Maximum velocity (build everything)
+
 ```
 Weeks 1-6:   Phase 5 + 6 (Platform v2)
 Weeks 7-12:  Phase 7a + 7b (Batch + Search) - parallel development
@@ -259,18 +279,21 @@ Week 17+:    Operate and optimize
 **After Phase 7, here's what's possible:**
 
 ### Phase 8: Advanced AI Features
+
 - AI-powered product recommendations (buyers see similar items)
 - Automatic pricing suggestions (based on market data)
 - Fraud detection (suspicious transactions)
 - Auto-tagging (AI automatically tags items based on images)
 
 ### Phase 9: Marketplace Expansion
+
 - Category additions (beyond 4 current categories)
 - International shipping support
 - Multi-currency support
 - API for third-party integrations
 
 ### Phase 10: Enterprise Features
+
 - Wholesale bulk ordering (B2B)
 - Subscription auctions (recurring item drops)
 - Auction functionality (items go to highest bidder)
@@ -311,12 +334,14 @@ MONTH 12+ (Phase 8+): Maturity
 **After Phase 6, ask yourself:**
 
 ### If you answer YES to most of these:
+
 - "I have 50+ items to list" → Do Phase 7a (Batch Import) first
 - "Customers are asking how to search/filter better" → Do Phase 7b first
 - "I want to bring other sellers on" → Do Phase 7c first
 - "I want email newsletter" → Do Phase 7d first
 
 ### If you answer NO to most:
+
 - "I'm solo, selling slowly" → Wait, don't rush Phase 7
 - "Customers are happy with current browsing" → Don't do 7b yet
 - "Not ready for multi-seller yet" → Don't do 7c yet
@@ -331,12 +356,14 @@ MONTH 12+ (Phase 8+): Maturity
 **How to know which Phase 7 feature to prioritize:**
 
 ### Metric 1: Customer Requests
+
 - Track support requests, emails, feedback
 - What do customers complain about?
 - What features do they ask for?
 - **Most requested = highest priority**
 
 ### Metric 2: Conversion Funnel
+
 - Where do customers drop off?
 - Is it search/browsing? → Do Phase 7b
 - Is it checkout? → Already done (Phase 5)
@@ -344,12 +371,14 @@ MONTH 12+ (Phase 8+): Maturity
 - **Biggest bottleneck = highest priority**
 
 ### Metric 3: Growth Rate
+
 - How many new products per week?
 - If >10/week manually = Phase 7a needed
 - If static inventory = 7a not urgent
 - **Growth rate indicates what's blocking you**
 
 ### Metric 4: Revenue Impact
+
 - Which feature would have biggest revenue impact?
 - Better search = more sales? → 7b
 - Multi-seller = more inventory? → 7c
@@ -363,6 +392,7 @@ MONTH 12+ (Phase 8+): Maturity
 **At end of Phase 6 (Week 6-7), you need to decide:**
 
 ### OPTION 1: "Pause & Operate"
+
 Wait 4-12 weeks, run Platform v2, collect data, then decide
 
 **Pros:** Data-driven, know what customers want
@@ -371,6 +401,7 @@ Wait 4-12 weeks, run Platform v2, collect data, then decide
 ---
 
 ### OPTION 2: "Pick One Phase 7"
+
 Choose ONE of 7a, 7b, 7c, or 7d and execute
 
 **Pros:** Add one high-value feature, ship sooner
@@ -379,6 +410,7 @@ Choose ONE of 7a, 7b, 7c, or 7d and execute
 ---
 
 ### OPTION 3: "Do All Phase 7"
+
 Execute 7a, 7b, 7c, 7d in sequence (8-10 weeks total)
 
 **Pros:** Complete feature set, ready for aggressive growth
@@ -425,6 +457,7 @@ _______________________
 You will have a **professional, operational marketplace** that's ready for real customers and real growth.
 
 **You won't have:**
+
 - Advanced features (Phase 7+)
 - Massive scale (Phase 8+)
 - Full marketplace automation (Phase 9+)
@@ -460,6 +493,7 @@ You will have a **professional, operational marketplace** that's ready for real 
 ---
 
 **Questions before you start Phase 5?**
+
 - Any Phase 7 features you definitely want?
 - Any business goals that should influence prioritization?
 - Timeline constraints we should know about?

@@ -3,8 +3,8 @@
  * Approve an AI-generated product and create a marketplace product
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,8 +13,8 @@ export async function POST(request: NextRequest) {
 
     if (!productId || !finalPrice) {
       return NextResponse.json(
-        { error: 'Missing required fields: productId, finalPrice' },
-        { status: 400 }
+        { error: "Missing required fields: productId, finalPrice" },
+        { status: 400 },
       );
     }
 
@@ -24,16 +24,13 @@ export async function POST(request: NextRequest) {
     });
 
     if (!aiProduct) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
-    if (aiProduct.status !== 'PENDING') {
+    if (aiProduct.status !== "PENDING") {
       return NextResponse.json(
         { error: `Cannot approve product with status: ${aiProduct.status}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -42,7 +39,7 @@ export async function POST(request: NextRequest) {
       where: {
         name: {
           contains: aiProduct.aiCategory,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
     });
@@ -50,25 +47,25 @@ export async function POST(request: NextRequest) {
     if (!category) {
       return NextResponse.json(
         { error: `Category not found: ${aiProduct.aiCategory}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Generate slug
     const slug = aiProduct.aiTitle
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
     const product = await prisma.product.create({
       data: {
         title: aiProduct.aiTitle,
-        slug: slug + '-' + Math.random().toString(36).substring(7),
+        slug: slug + "-" + Math.random().toString(36).substring(7),
         description: aiProduct.aiDescription,
         price: finalPrice,
         categoryId: category.id,
         condition: aiProduct.aiCondition,
-        status: 'active',
+        status: "active",
       },
     });
 
@@ -76,26 +73,26 @@ export async function POST(request: NextRequest) {
     await (prisma as any).aIGeneratedProduct.update({
       where: { id: productId },
       data: {
-        status: 'APPROVED',
+        status: "APPROVED",
         productId: product.id,
         reviewedAt: new Date(),
-        reviewedBy: 'system', // In real app, would be the logged-in admin user ID
+        reviewedBy: "system", // In real app, would be the logged-in admin user ID
       },
     });
 
     return NextResponse.json({
       success: true,
       productId: product.id,
-      message: 'Product approved and created successfully',
+      message: "Product approved and created successfully",
     });
   } catch (error) {
-    console.error('[Approve API] Error:', error);
+    console.error("[Approve API] Error:", error);
     return NextResponse.json(
       {
-        error: 'Failed to approve product',
-        message: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to approve product",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

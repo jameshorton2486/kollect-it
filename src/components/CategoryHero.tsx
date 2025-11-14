@@ -32,12 +32,16 @@ export default function CategoryHero({
 
       <div className="category-hero-content">
         <div className="ki-container">
-          <h1 className="font-serif text-white text-[clamp(36px,5vw,56px)] leading-tight">{title}</h1>
+          <h1 className="font-serif text-white text-[clamp(36px,5vw,56px)] leading-tight">
+            {title}
+          </h1>
           {description && (
-            <p className="mt-3 max-w-3xl text-white/90 text-lg leading-[1.8]">{description}</p>
+            <p className="mt-3 max-w-3xl text-white/90 text-lg leading-[1.8]">
+              {description}
+            </p>
           )}
           <p className="mt-2 text-white/80 text-sm tracking-wide uppercase">
-            {productCount} {productCount === 1 ? 'Item' : 'Items'} Available
+            {productCount} {productCount === 1 ? "Item" : "Items"} Available
           </p>
         </div>
       </div>

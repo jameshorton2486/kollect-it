@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Star, ThumbsUp, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Star, ThumbsUp, CheckCircle } from "lucide-react";
 
 interface Review {
   id: string;
@@ -36,14 +36,14 @@ export default function ProductReviews({ productId }: ReviewsProps) {
   const fetchReviews = async () => {
     try {
       const params = new URLSearchParams({ productId });
-      if (filterRating) params.append('rating', filterRating.toString());
+      if (filterRating) params.append("rating", filterRating.toString());
 
       const response = await fetch(`/api/reviews?${params}`);
       const data = await response.json();
       setReviews(data.reviews || []);
       setStats(data.stats);
     } catch (error) {
-      console.error('Failed to fetch reviews:', error);
+      console.error("Failed to fetch reviews:", error);
     } finally {
       setIsLoading(false);
     }
@@ -51,14 +51,14 @@ export default function ProductReviews({ productId }: ReviewsProps) {
 
   const handleHelpful = async (reviewId: string) => {
     try {
-      await fetch('/api/reviews', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reviewId, helpful: true })
+      await fetch("/api/reviews", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviewId, helpful: true }),
       });
       fetchReviews();
     } catch (error) {
-      console.error('Failed to mark helpful:', error);
+      console.error("Failed to mark helpful:", error);
     }
   };
 
@@ -76,7 +76,9 @@ export default function ProductReviews({ productId }: ReviewsProps) {
             {/* Overall Rating */}
             <div>
               <div className="flex items-center gap-4 mb-4">
-                <div className="text-5xl font-bold">{stats.average.toFixed(1)}</div>
+                <div className="text-5xl font-bold">
+                  {stats.average.toFixed(1)}
+                </div>
                 <div>
                   <div className="flex gap-1 mb-1">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -84,8 +86,8 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                         key={star}
                         className={`h-5 w-5 ${
                           star <= Math.round(stats.average)
-                            ? 'fill-yellow-400 text-yellow-400'
-                            : 'text-gray-300'
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
                         }`}
                       />
                     ))}
@@ -109,9 +111,13 @@ export default function ProductReviews({ productId }: ReviewsProps) {
               {stats.breakdown.reverse().map((item: any) => (
                 <button
                   key={item.rating}
-                  onClick={() => setFilterRating(filterRating === item.rating ? null : item.rating)}
+                  onClick={() =>
+                    setFilterRating(
+                      filterRating === item.rating ? null : item.rating,
+                    )
+                  }
                   className={`w-full flex items-center gap-3 hover:bg-muted p-2 rounded ${
-                    filterRating === item.rating ? 'bg-muted' : ''
+                    filterRating === item.rating ? "bg-muted" : ""
                   }`}
                 >
                   <span className="text-sm w-6">{item.rating}</span>
@@ -163,8 +169,8 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                           key={star}
                           className={`h-4 w-4 ${
                             star <= review.rating
-                              ? 'fill-yellow-400 text-yellow-400'
-                              : 'text-gray-300'
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
                           }`}
                         />
                       ))}

@@ -3,8 +3,8 @@
  * POST /api/admin/reports - Create new scheduled report
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
@@ -20,13 +20,16 @@ export async function GET() {
         enabled: true,
         createdAt: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(reports);
   } catch (error) {
-    console.error('Error fetching reports:', error);
-    return NextResponse.json({ error: 'Failed to fetch reports' }, { status: 500 });
+    console.error("Error fetching reports:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch reports" },
+      { status: 500 },
+    );
   }
 }
 
@@ -38,22 +41,27 @@ export async function POST(request: NextRequest) {
 
     // Validate input
     if (!name || !frequency || !recipients) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
     }
 
     // Calculate next scheduled time
     const now = new Date();
     let nextScheduled = new Date(now);
 
-    if (frequency === 'DAILY') {
+    if (frequency === "DAILY") {
       nextScheduled.setDate(nextScheduled.getDate() + 1);
       nextScheduled.setHours(9, 0, 0, 0);
-    } else if (frequency === 'WEEKLY') {
+    } else if (frequency === "WEEKLY") {
       // Next Monday at 9 AM
       const daysUntilMonday = (1 - nextScheduled.getDay() + 7) % 7;
-      nextScheduled.setDate(nextScheduled.getDate() + (daysUntilMonday === 0 ? 7 : daysUntilMonday));
+      nextScheduled.setDate(
+        nextScheduled.getDate() + (daysUntilMonday === 0 ? 7 : daysUntilMonday),
+      );
       nextScheduled.setHours(9, 0, 0, 0);
-    } else if (frequency === 'MONTHLY') {
+    } else if (frequency === "MONTHLY") {
       // First of next month at 9 AM
       nextScheduled.setMonth(nextScheduled.getMonth() + 1);
       nextScheduled.setDate(1);
@@ -64,17 +72,20 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         frequency,
-        format: format || 'JSON',
+        format: format || "JSON",
         recipients,
         nextScheduled,
-        userId: 'user-id', // TODO: Get from auth session
+        userId: "user-id", // TODO: Get from auth session
         enabled: true,
       },
     });
 
     return NextResponse.json(report, { status: 201 });
   } catch (error) {
-    console.error('Error creating report:', error);
-    return NextResponse.json({ error: 'Failed to create report' }, { status: 500 });
+    console.error("Error creating report:", error);
+    return NextResponse.json(
+      { error: "Failed to create report" },
+      { status: 500 },
+    );
   }
 }

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface EmailStatus {
   configured: boolean;
@@ -17,16 +17,19 @@ export default function EmailSettingsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [emailStatus, setEmailStatus] = useState<EmailStatus | null>(null);
-  const [testEmail, setTestEmail] = useState('');
+  const [testEmail, setTestEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   // Redirect if not admin
   useEffect(() => {
-    if (status === 'loading') return;
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      router.push('/admin/login');
+    if (status === "loading") return;
+    if (!session?.user || (session.user as any).role !== "admin") {
+      router.push("/admin/login");
     }
   }, [session, status, router]);
 
@@ -38,15 +41,15 @@ export default function EmailSettingsPage() {
   const fetchEmailStatus = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/admin/email/test');
+      const response = await fetch("/api/admin/email/test");
       if (response.ok) {
         const data = await response.json();
         setEmailStatus(data);
       } else {
-        setMessage({ type: 'error', text: 'Failed to fetch email status' });
+        setMessage({ type: "error", text: "Failed to fetch email status" });
       }
     } catch (error) {
-      setMessage({ type: 'error', text: 'Error fetching email status' });
+      setMessage({ type: "error", text: "Error fetching email status" });
     } finally {
       setLoading(false);
     }
@@ -60,28 +63,31 @@ export default function EmailSettingsPage() {
     setMessage(null);
 
     try {
-      const response = await fetch('/api/admin/email/test', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/email/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ to: testEmail }),
       });
 
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setMessage({ type: 'success', text: data.message });
-        setTestEmail('');
+        setMessage({ type: "success", text: data.message });
+        setTestEmail("");
       } else {
-        setMessage({ type: 'error', text: data.message || 'Failed to send test email' });
+        setMessage({
+          type: "error",
+          text: data.message || "Failed to send test email",
+        });
       }
     } catch (error) {
-      setMessage({ type: 'error', text: 'Error sending test email' });
+      setMessage({ type: "error", text: "Error sending test email" });
     } finally {
       setSending(false);
     }
   };
 
-  if (status === 'loading' || loading) {
+  if (status === "loading" || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -92,7 +98,7 @@ export default function EmailSettingsPage() {
     );
   }
 
-  if (!session?.user || (session.user as any).role !== 'admin') {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return null;
   }
 
@@ -109,8 +115,10 @@ export default function EmailSettingsPage() {
 
         {/* Configuration Status */}
         <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Configuration Status</h2>
-          
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Configuration Status
+          </h2>
+
           {emailStatus && (
             <div className="space-y-4">
               {/* Status Badge */}
@@ -118,39 +126,57 @@ export default function EmailSettingsPage() {
                 <div
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     emailStatus.configured
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-yellow-100 text-yellow-800'
+                      ? "bg-green-100 text-green-800"
+                      : "bg-yellow-100 text-yellow-800"
                   }`}
                 >
-                  {emailStatus.configured ? '✓ Configured' : '⚠ Not Configured'}
+                  {emailStatus.configured
+                    ? "✓ Configured"
+                    : "⚠ Not Configured"}
                 </div>
               </div>
 
               {/* Configuration Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">SMTP Host</label>
-                  <p className="mt-1 text-sm text-gray-900">{emailStatus.host}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Email User</label>
-                  <p className="mt-1 text-sm text-gray-900">{emailStatus.user}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">From Address</label>
-                  <p className="mt-1 text-sm text-gray-900">{emailStatus.from}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Enabled</label>
+                  <label className="block text-sm font-medium text-gray-700">
+                    SMTP Host
+                  </label>
                   <p className="mt-1 text-sm text-gray-900">
-                    {emailStatus.enabled ? 'Yes' : 'No'}
+                    {emailStatus.host}
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Email User
+                  </label>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {emailStatus.user}
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    From Address
+                  </label>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {emailStatus.from}
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Enabled
+                  </label>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {emailStatus.enabled ? "Yes" : "No"}
                   </p>
                 </div>
               </div>
 
               {/* Instructions */}
               <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-900">{emailStatus.instructions}</p>
+                <p className="text-sm text-blue-900">
+                  {emailStatus.instructions}
+                </p>
               </div>
 
               {!emailStatus.configured && (
@@ -162,7 +188,7 @@ export default function EmailSettingsPage() {
                     <li>Create a Google Workspace account ($6/month)</li>
                     <li>Enable 2FA on your account</li>
                     <li>
-                      Generate App Password:{' '}
+                      Generate App Password:{" "}
                       <a
                         href="https://myaccount.google.com/apppasswords"
                         target="_blank"
@@ -175,14 +201,16 @@ export default function EmailSettingsPage() {
                     <li>Add the following to your .env.local file:</li>
                   </ol>
                   <pre className="mt-2 p-3 bg-gray-900 text-gray-100 rounded text-xs overflow-x-auto">
-{`EMAIL_FROM="Kollect-It <noreply@yourdomain.com>"
+                    {`EMAIL_FROM="Kollect-It <noreply@yourdomain.com>"
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="587"
 EMAIL_USER="noreply@yourdomain.com"
 EMAIL_PASSWORD="your-app-password"
 ADMIN_EMAIL="admin@yourdomain.com"`}
                   </pre>
-                  <p className="mt-2 text-sm text-amber-800">5. Restart your application</p>
+                  <p className="mt-2 text-sm text-amber-800">
+                    5. Restart your application
+                  </p>
                 </div>
               )}
             </div>
@@ -192,10 +220,15 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
         {/* Test Email Form */}
         {emailStatus?.configured && (
           <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Send Test Email</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Send Test Email
+            </h2>
             <form onSubmit={handleSendTestEmail} className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Recipient Email Address
                 </label>
                 <input
@@ -214,7 +247,7 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
                 disabled={sending}
                 className="w-full bg-amber-600 text-white px-4 py-2 rounded-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {sending ? 'Sending...' : 'Send Test Email'}
+                {sending ? "Sending..." : "Send Test Email"}
               </button>
             </form>
 
@@ -222,9 +255,9 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
             {message && (
               <div
                 className={`mt-4 p-4 rounded-lg ${
-                  message.type === 'success'
-                    ? 'bg-green-50 text-green-800 border border-green-200'
-                    : 'bg-red-50 text-red-800 border border-red-200'
+                  message.type === "success"
+                    ? "bg-green-50 text-green-800 border border-green-200"
+                    : "bg-red-50 text-red-800 border border-red-200"
                 }`}
               >
                 <p className="text-sm">{message.text}</p>
@@ -235,7 +268,9 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
 
         {/* Email Templates Info */}
         <div className="mt-6 bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Email Templates</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Email Templates
+          </h2>
           <p className="text-sm text-gray-600 mb-4">
             The following email templates are configured and ready to use:
           </p>

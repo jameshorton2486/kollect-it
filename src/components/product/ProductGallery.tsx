@@ -1,15 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
-import Image from 'next/image';
+import { useState } from "react";
+import { ChevronLeft, ChevronRight, ZoomIn, X } from "lucide-react";
+import Image from "next/image";
 
 interface ProductGalleryProps {
   images: { url: string; alt?: string }[];
   productName: string;
 }
 
-export default function ProductGallery({ images, productName }: ProductGalleryProps) {
+export default function ProductGallery({
+  images,
+  productName,
+}: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -28,7 +31,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       {/* Main Image */}
       <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
         <Image
-          src={currentImage?.url || '/placeholder.jpg'}
+          src={currentImage?.url || "/placeholder.jpg"}
           alt={currentImage?.alt || productName}
           fill
           className="object-contain"
@@ -77,7 +80,9 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
               key={index}
               onClick={() => setSelectedIndex(index)}
               className={`relative aspect-square rounded-lg overflow-hidden border-2 ${
-                index === selectedIndex ? 'border-primary' : 'border-transparent'
+                index === selectedIndex
+                  ? "border-primary"
+                  : "border-transparent"
               }`}
             >
               <Image
@@ -105,7 +110,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           </button>
           <div className="relative w-full h-full max-w-6xl max-h-[90vh]">
             <Image
-              src={currentImage?.url || '/placeholder.jpg'}
+              src={currentImage?.url || "/placeholder.jpg"}
               alt={currentImage?.alt || productName}
               fill
               className="object-contain"

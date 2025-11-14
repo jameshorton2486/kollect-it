@@ -3,7 +3,7 @@
  * Phase 6 Step 10 - Performance optimization with indexes and query optimization
  */
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -51,14 +51,18 @@ export const optimizedQueries = {
   /**
    * Get paginated products with minimal fields for list views
    */
-  getProductsList: async (page: number = 1, limit: number = 20, filters?: {
-    category?: string;
-    status?: string;
-    minPrice?: number;
-    maxPrice?: number;
-  }) => {
+  getProductsList: async (
+    page: number = 1,
+    limit: number = 20,
+    filters?: {
+      category?: string;
+      status?: string;
+      minPrice?: number;
+      maxPrice?: number;
+    },
+  ) => {
     const skip = (page - 1) * limit;
-    
+
     const where: any = {};
     if (filters?.category) where.category = filters.category;
     if (filters?.status) where.status = filters.status;
@@ -80,7 +84,7 @@ export const optimizedQueries = {
           images: true,
           createdAt: true,
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         skip,
         take: limit,
       }),
@@ -103,14 +107,18 @@ export const optimizedQueries = {
   /**
    * Get paginated orders with user info
    */
-  getOrdersList: async (page: number = 1, limit: number = 20, filters?: {
-    status?: string;
-    userId?: string;
-    dateFrom?: Date;
-    dateTo?: Date;
-  }) => {
+  getOrdersList: async (
+    page: number = 1,
+    limit: number = 20,
+    filters?: {
+      status?: string;
+      userId?: string;
+      dateFrom?: Date;
+      dateTo?: Date;
+    },
+  ) => {
     const skip = (page - 1) * limit;
-    
+
     const where: any = {};
     if (filters?.status) where.status = filters.status;
     if (filters?.userId) where.userId = filters.userId;
@@ -141,7 +149,7 @@ export const optimizedQueries = {
             select: { items: true },
           },
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         skip,
         take: limit,
       }),
@@ -165,25 +173,21 @@ export const optimizedQueries = {
    * Get analytics data with aggregations
    */
   getAnalytics: async (dateFrom: Date, dateTo: Date) => {
-    const [
-      orderStats,
-      revenueByDay,
-      topProducts,
-      productsByCategory,
-    ] = await Promise.all([
-      // Order statistics
-      prisma.order.aggregate({
-        where: {
-          createdAt: { gte: dateFrom, lte: dateTo },
-          status: { not: 'cancelled' },
-        },
-        _count: true,
-        _sum: { total: true },
-        _avg: { total: true },
-      }),
+    const [orderStats, revenueByDay, topProducts, productsByCategory] =
+      await Promise.all([
+        // Order statistics
+        prisma.order.aggregate({
+          where: {
+            createdAt: { gte: dateFrom, lte: dateTo },
+            status: { not: "cancelled" },
+          },
+          _count: true,
+          _sum: { total: true },
+          _avg: { total: true },
+        }),
 
-      // Revenue by day
-      prisma.$queryRaw`
+        // Revenue by day
+        prisma.$queryRaw`
         SELECT 
           DATE("createdAt") as date,
           COUNT(*) as order_count,
@@ -196,27 +200,27 @@ export const optimizedQueries = {
         ORDER BY date DESC
       `,
 
-      // Top selling products
-      prisma.orderItem.groupBy({
-        by: ['productId'],
-        where: {
-          order: {
-            createdAt: { gte: dateFrom, lte: dateTo },
-            status: { not: 'cancelled' },
+        // Top selling products
+        prisma.orderItem.groupBy({
+          by: ["productId"],
+          where: {
+            order: {
+              createdAt: { gte: dateFrom, lte: dateTo },
+              status: { not: "cancelled" },
+            },
           },
-        },
-        _sum: { quantity: true },
-        _count: true,
-        orderBy: { _sum: { quantity: 'desc' } },
-        take: 10,
-      }),
+          _sum: { quantity: true },
+          _count: true,
+          orderBy: { _sum: { quantity: "desc" } },
+          take: 10,
+        }),
 
-      // Products by category count
-      prisma.product.groupBy({
-        by: ['categoryId'],
-        _count: true,
-      }),
-    ]);
+        // Products by category count
+        prisma.product.groupBy({
+          by: ["categoryId"],
+          _count: true,
+        }),
+      ]);
 
     return {
       orderStats,
@@ -259,7 +263,7 @@ export const maintenance = {
     const result = await prisma.order.updateMany({
       where: {
         createdAt: { lt: cutoffDate },
-        status: { in: ['delivered', 'cancelled'] },
+        status: { in: ["delivered", "cancelled"] },
       },
       data: {
         // Add an 'archived' field to your schema if needed
@@ -273,23 +277,19 @@ export const maintenance = {
    * Get database statistics
    */
   getStats: async () => {
-    const [
-      productCount,
-      orderCount,
-      userCount,
-      recentOrders,
-    ] = await Promise.all([
-      prisma.product.count(),
-      prisma.order.count(),
-      prisma.user.count(),
-      prisma.order.count({
-        where: {
-          createdAt: {
-            gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
+    const [productCount, orderCount, userCount, recentOrders] =
+      await Promise.all([
+        prisma.product.count(),
+        prisma.order.count(),
+        prisma.user.count(),
+        prisma.order.count({
+          where: {
+            createdAt: {
+              gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
+            },
           },
-        },
-      }),
-    ]);
+        }),
+      ]);
 
     return {
       products: productCount,

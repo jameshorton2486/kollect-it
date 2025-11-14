@@ -13,7 +13,7 @@ Build a comprehensive admin dashboard with analytics, user management, product m
 **File: src/lib/analytics.ts**
 
 ```typescript
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 export async function getAnalyticsData() {
   const now = new Date();
@@ -22,7 +22,7 @@ export async function getAnalyticsData() {
 
   // Total revenue
   const totalRevenue = await prisma.order.aggregate({
-    where: { status: 'completed', createdAt: { gte: thirtyDaysAgo } },
+    where: { status: "completed", createdAt: { gte: thirtyDaysAgo } },
     _sum: { total: true },
   });
 
@@ -41,23 +41,23 @@ export async function getAnalyticsData() {
 
   // Top products
   const topProducts = await prisma.orderItem.groupBy({
-    by: ['productId'],
+    by: ["productId"],
     where: { order: { createdAt: { gte: thirtyDaysAgo } } },
     _count: { id: true },
-    orderBy: { _count: { id: 'desc' } },
+    orderBy: { _count: { id: "desc" } },
     take: 5,
   });
 
   // Revenue by category
   const revenueByCategory = await prisma.orderItem.groupBy({
-    by: ['product', 'category'],
+    by: ["product", "category"],
     where: { order: { createdAt: { gte: thirtyDaysAgo } } },
     _sum: { price: true },
   });
 
   // Order trends
   const orderTrends = await prisma.order.groupBy({
-    by: ['createdAt'],
+    by: ["createdAt"],
     where: { createdAt: { gte: ninetyDaysAgo } },
     _count: { id: true },
     _sum: { total: true },
@@ -83,7 +83,7 @@ export async function getUserMetrics() {
       createdAt: true,
       _count: { select: { orders: true } },
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     take: 50,
   });
 
@@ -101,7 +101,7 @@ export async function getProductMetrics() {
       createdAt: true,
       _count: { select: { wishlistItems: true } },
     },
-    orderBy: { salesCount: 'desc' },
+    orderBy: { salesCount: "desc" },
     take: 50,
   });
 
@@ -114,15 +114,19 @@ export async function getProductMetrics() {
 **File: src/app/api/admin/analytics/route.ts**
 
 ```typescript
-import { auth } from '@/auth';
-import { NextResponse } from 'next/server';
-import { getAnalyticsData, getUserMetrics, getProductMetrics } from '@/lib/analytics';
+import { auth } from "@/auth";
+import { NextResponse } from "next/server";
+import {
+  getAnalyticsData,
+  getUserMetrics,
+  getProductMetrics,
+} from "@/lib/analytics";
 
 export async function GET() {
   try {
     const session = await auth();
-    if (!session?.user || session.user.role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!session?.user || session.user.role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const [analytics, users, products] = await Promise.all([
@@ -138,8 +142,11 @@ export async function GET() {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Analytics error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Analytics error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
@@ -685,27 +692,30 @@ export default function AdminLayout({
 **File: src/app/api/admin/orders/route.ts**
 
 ```typescript
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
     const session = await auth();
-    if (!session?.user || session.user.role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!session?.user || session.user.role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const orders = await prisma.order.findMany({
       include: { customer: { select: { email: true } } },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       take: 50,
     });
 
     return NextResponse.json({ orders });
   } catch (error) {
-    console.error('Orders error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Orders error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
@@ -713,22 +723,22 @@ export async function GET() {
 **File: src/app/api/admin/products/route.ts**
 
 ```typescript
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
-    if (!session?.user || session.user.role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!session?.user || session.user.role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const formData = await req.formData();
-    const title = formData.get('title') as string;
-    const price = parseFloat(formData.get('price') as string);
-    const category = formData.get('category') as string;
-    const description = formData.get('description') as string;
+    const title = formData.get("title") as string;
+    const price = parseFloat(formData.get("price") as string);
+    const category = formData.get("category") as string;
+    const description = formData.get("description") as string;
 
     const product = await prisma.product.create({
       data: {
@@ -736,14 +746,17 @@ export async function POST(req: NextRequest) {
         price,
         category,
         description,
-        slug: title.toLowerCase().replace(/\s+/g, '-'),
+        slug: title.toLowerCase().replace(/\s+/g, "-"),
       },
     });
 
     return NextResponse.json({ product });
   } catch (error) {
-    console.error('Product creation error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Product creation error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```

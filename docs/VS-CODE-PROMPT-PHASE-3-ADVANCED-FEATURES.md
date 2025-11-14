@@ -42,7 +42,7 @@ export default function WelcomeEmail({ userFirstName }: WelcomeEmailProps) {
 }
 ```
 
-### File: src/emails/order-confirmation.tsx**
+### File: src/emails/order-confirmation.tsx\*\*
 
 ```typescript
 import { Html, Body, Container, Text, Heading, Button } from '@react-email/components';
@@ -76,7 +76,7 @@ export default function OrderConfirmationEmail({
 }
 ```
 
-### File: src/emails/shipment-notification.tsx**
+### File: src/emails/shipment-notification.tsx\*\*
 
 ```typescript
 import { Html, Body, Container, Text, Heading, Button, Link } from '@react-email/components';
@@ -112,27 +112,27 @@ export default function ShipmentNotificationEmail({
 
 ### Step 2: Create Email Service
 
-### File: src/lib/email-service.ts**
+### File: src/lib/email-service.ts\*\*
 
 ```typescript
-import { Resend } from 'resend';
-import WelcomeEmail from '@/emails/welcome';
-import OrderConfirmationEmail from '@/emails/order-confirmation';
-import ShipmentNotificationEmail from '@/emails/shipment-notification';
+import { Resend } from "resend";
+import WelcomeEmail from "@/emails/welcome";
+import OrderConfirmationEmail from "@/emails/order-confirmation";
+import ShipmentNotificationEmail from "@/emails/shipment-notification";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendWelcomeEmail(email: string, firstName: string) {
   try {
     const result = await resend.emails.send({
-      from: 'Kollect-It <noreply@kollect-it.com>',
+      from: "Kollect-It <noreply@kollect-it.com>",
       to: email,
-      subject: 'Welcome to Kollect-It',
+      subject: "Welcome to Kollect-It",
       react: WelcomeEmail({ userFirstName: firstName }),
     });
     return { success: true, messageId: result.data?.id };
   } catch (error) {
-    console.error('Failed to send welcome email:', error);
+    console.error("Failed to send welcome email:", error);
     return { success: false, error };
   }
 }
@@ -141,18 +141,18 @@ export async function sendOrderConfirmationEmail(
   email: string,
   orderNumber: string,
   totalAmount: number,
-  itemCount: number
+  itemCount: number,
 ) {
   try {
     const result = await resend.emails.send({
-      from: 'Kollect-It <orders@kollect-it.com>',
+      from: "Kollect-It <orders@kollect-it.com>",
       to: email,
       subject: `Order Confirmation #${orderNumber}`,
       react: OrderConfirmationEmail({ orderNumber, totalAmount, itemCount }),
     });
     return { success: true, messageId: result.data?.id };
   } catch (error) {
-    console.error('Failed to send order confirmation email:', error);
+    console.error("Failed to send order confirmation email:", error);
     return { success: false, error };
   }
 }
@@ -161,13 +161,13 @@ export async function sendShipmentNotificationEmail(
   email: string,
   trackingNumber: string,
   carrier: string,
-  estimatedDelivery: string
+  estimatedDelivery: string,
 ) {
   try {
     const result = await resend.emails.send({
-      from: 'Kollect-It <shipping@kollect-it.com>',
+      from: "Kollect-It <shipping@kollect-it.com>",
       to: email,
-      subject: 'Your Order is On Its Way',
+      subject: "Your Order is On Its Way",
       react: ShipmentNotificationEmail({
         trackingNumber,
         carrier,
@@ -176,7 +176,7 @@ export async function sendShipmentNotificationEmail(
     });
     return { success: true, messageId: result.data?.id };
   } catch (error) {
-    console.error('Failed to send shipment notification email:', error);
+    console.error("Failed to send shipment notification email:", error);
     return { success: false, error };
   }
 }
@@ -222,18 +222,18 @@ wishlistItems Wishlist[]
 
 ### Step 2: Create Wishlist API Routes
 
-### File: src/app/api/wishlist/add/route.ts**
+### File: src/app/api/wishlist/add/route.ts\*\*
 
 ```typescript
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { productId } = await req.json();
@@ -254,24 +254,27 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, wishlistItem });
   } catch (error) {
-    console.error('Failed to add to wishlist:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Failed to add to wishlist:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
 
-### File: src/app/api/wishlist/remove/route.ts**
+### File: src/app/api/wishlist/remove/route.ts\*\*
 
 ```typescript
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(req: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { productId } = await req.json();
@@ -287,43 +290,49 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Failed to remove from wishlist:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Failed to remove from wishlist:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
 
-### File: src/app/api/wishlist/list/route.ts**
+### File: src/app/api/wishlist/list/route.ts\*\*
 
 ```typescript
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const wishlistItems = await prisma.wishlist.findMany({
       where: { userId: session.user.id },
       include: { product: true },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json({ wishlistItems });
   } catch (error) {
-    console.error('Failed to fetch wishlist:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Failed to fetch wishlist:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
 
 ### Step 3: Create Wishlist UI Component
 
-### File: src/components/WishlistButton.tsx**
+### File: src/components/WishlistButton.tsx\*\*
 
 ```typescript
 'use client';
@@ -396,20 +405,20 @@ export function WishlistButton({ productId, isWishlisted = false }: WishlistButt
 
 ### Step 1: Create Search API Route
 
-### File: src/app/api/search/route.ts**
+### File: src/app/api/search/route.ts\*\*
 
 ```typescript
-import { prisma } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const query = searchParams.get('q');
-    const category = searchParams.get('category');
-    const minPrice = searchParams.get('minPrice');
-    const maxPrice = searchParams.get('maxPrice');
-    const sortBy = searchParams.get('sortBy') || 'recent';
+    const query = searchParams.get("q");
+    const category = searchParams.get("category");
+    const minPrice = searchParams.get("minPrice");
+    const maxPrice = searchParams.get("maxPrice");
+    const sortBy = searchParams.get("sortBy") || "recent";
 
     if (!query || query.length < 2) {
       return NextResponse.json({ results: [] });
@@ -417,8 +426,8 @@ export async function GET(req: NextRequest) {
 
     const where: any = {
       OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { description: { contains: query, mode: 'insensitive' } },
+        { title: { contains: query, mode: "insensitive" } },
+        { description: { contains: query, mode: "insensitive" } },
       ],
     };
 
@@ -434,17 +443,17 @@ export async function GET(req: NextRequest) {
 
     const orderBy: any = {};
     switch (sortBy) {
-      case 'price-low':
-        orderBy.price = 'asc';
+      case "price-low":
+        orderBy.price = "asc";
         break;
-      case 'price-high':
-        orderBy.price = 'desc';
+      case "price-high":
+        orderBy.price = "desc";
         break;
-      case 'popular':
-        orderBy.salesCount = 'desc';
+      case "popular":
+        orderBy.salesCount = "desc";
         break;
       default:
-        orderBy.createdAt = 'desc';
+        orderBy.createdAt = "desc";
     }
 
     const results = await prisma.product.findMany({
@@ -463,15 +472,18 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ results, count: results.length });
   } catch (error) {
-    console.error('Search error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Search error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
 
 ### Step 2: Create Search Component
 
-### File: src/components/AdvancedSearch.tsx**
+### File: src/components/AdvancedSearch.tsx\*\*
 
 ```typescript
 'use client';
@@ -643,25 +655,23 @@ const Wishlist = dynamic(() => import('@/components/Wishlist'), {
 Update `next.config.js`:
 
 ```javascript
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
 });
 
 module.exports = withBundleAnalyzer({
   images: {
-    remotePatterns: [
-      { hostname: 'ik.imagekit.io' },
-    ],
+    remotePatterns: [{ hostname: "ik.imagekit.io" }],
     unoptimized: false,
   },
   headers: async () => {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600, stale-while-revalidate=86400',
+            key: "Cache-Control",
+            value: "public, max-age=3600, stale-while-revalidate=86400",
           },
         ],
       },
@@ -768,4 +778,3 @@ After completing Phase 3:
 2. Test all features end-to-end
 3. Verify performance metrics
 4. Consider Phase 4: Analytics, Admin Panel, Advanced Features
-

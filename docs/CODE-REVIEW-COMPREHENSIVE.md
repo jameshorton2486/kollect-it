@@ -11,15 +11,17 @@
 ## 📊 Executive Summary
 
 ### Key Findings
+
 - **Total Issues Identified:** 47
 - **Critical Issues:** 3
-- **Major Issues:** 12  
+- **Major Issues:** 12
 - **Minor Issues:** 32
 - **Estimated LoC Reduction:** 800-1200 lines (~15% of codebase)
 - **Estimated Performance Gain:** 20-30% faster bundle/runtime
 - **Technical Debt:** Moderate - Quick wins available
 
 ### Overall Health: 6.5/10
+
 - ✅ Modern stack and tooling
 - ❌ Significant code duplication
 - ❌ Unused/orphaned files and dependencies
@@ -33,23 +35,26 @@
 ### [MAJOR] Duplicate Component Hierarchy: Header/Footer in Two Locations
 
 **Location:**
+
 - `src/components/Header.tsx` (300+ lines)
 - `src/components/layout/Header.tsx` (duplicate)
-- `src/components/Footer.tsx` (200+ lines)  
+- `src/components/Footer.tsx` (200+ lines)
 - `src/components/layout/Footer.tsx` (duplicate)
 
-**Problem:** 
+**Problem:**
 Identical header and footer components exist in both `src/components/` and `src/components/layout/` directories. This creates maintenance burden and potential divergence.
 
-**Impact:** 
+**Impact:**
+
 - 500+ duplicate LoC
 - Risk of updates applied to only one version
 - Confusing import paths for developers
 
-**Recommendation:** 
+**Recommendation:**
 Delete `src/components/layout/Header.tsx` and `src/components/layout/Footer.tsx`. Update all imports to reference `src/components/Header.tsx` and `src/components/Footer.tsx`.
 
 **Implementation:**
+
 ```bash
 # Remove duplicates
 rm src/components/layout/Header.tsx
@@ -67,6 +72,7 @@ grep -r "from '@/components/layout/Footer" src/ --include="*.tsx" --include="*.t
 ### [MAJOR] Duplicate Home Component: hero.tsx vs Hero.tsx
 
 **Location:**
+
 - `src/components/home/hero.tsx` (old, unused)
 - `src/components/Hero.tsx` (new, in use)
 
@@ -74,6 +80,7 @@ grep -r "from '@/components/layout/Footer" src/ --include="*.tsx" --include="*.t
 Old hero component (`src/components/home/hero.tsx`) is no longer imported or used but remains in codebase.
 
 **Impact:**
+
 - Dead code cluttering imports and module resolution
 - 80+ unused LoC
 - Developer confusion about which to use
@@ -92,6 +99,7 @@ rm src/components/home/hero.tsx
 ### [MAJOR] Duplicate Helper/Utility Files
 
 **Location:**
+
 - `src/lib/email.ts` (appears twice in search results)
 - `src/lib/imagekit.ts` (appears twice)
 - `src/lib/image.ts` (appears twice)
@@ -101,11 +109,13 @@ rm src/components/home/hero.tsx
 
 **Problem:**
 File search results show duplicates, indicating either:
+
 1. Files are being imported multiple times by different paths
 2. Symlinks or mirror directories exist
 3. Build cache is creating duplicates
 
 **Impact:**
+
 - Module resolution confusion
 - Potential for stale imports
 - Build process overhead
@@ -127,6 +137,7 @@ find src/lib -name "*.ts" -type f -exec md5sum {} \;
 ### [MINOR] Repeated useSession() Pattern Across Admin Pages
 
 **Location:**
+
 - `src/app/admin/dashboard/page.tsx` (line 39)
 - `src/app/admin/orders/page.tsx` (line 6)
 - `src/app/admin/customers/page.tsx` (line 6)
@@ -142,8 +153,8 @@ const { data: session, status } = useSession();
 const router = useRouter();
 
 useEffect(() => {
-  if (status === 'unauthenticated') {
-    router.push('/admin/login');
+  if (status === "unauthenticated") {
+    router.push("/admin/login");
   }
 }, [status, router]);
 ```
@@ -153,25 +164,26 @@ Create a reusable hook `useAdminAuth()`:
 
 ```typescript
 // src/hooks/useAdminAuth.ts
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function useAdminAuth() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/admin/login');
+    if (status === "unauthenticated") {
+      router.push("/admin/login");
     }
   }, [status, router]);
 
-  return { session, status, isLoading: status === 'loading' };
+  return { session, status, isLoading: status === "loading" };
 }
 ```
 
 **Usage:**
+
 ```typescript
 // src/app/admin/dashboard/page.tsx
 const { session, status, isLoading } = useAdminAuth();
@@ -185,6 +197,7 @@ if (isLoading) return <Loader />;
 ### [MINOR] Category Fetching Duplicated Across Pages
 
 **Location:**
+
 - `src/app/shop/page.tsx` (lines 29-50)
 - `src/app/about/page.tsx` (lines 24-66)
 - Multiple category-related API endpoints
@@ -197,7 +210,7 @@ if (isLoading) return <Loader />;
 async function getCategories() {
   try {
     return await prisma.category.findMany({
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
     });
   } catch (error) {
     // ... fallback categories
@@ -231,9 +244,10 @@ function getCategoryFallback() {
 ```
 
 **Usage:**
+
 ```typescript
 // src/app/shop/page.tsx
-import { getCategories } from '@/lib/server/categories';
+import { getCategories } from "@/lib/server/categories";
 
 export default async function ShopPage() {
   const categories = await getCategories();
@@ -248,6 +262,7 @@ export default async function ShopPage() {
 ### [MINOR] Repeated JSON-LD Schema Generation
 
 **Location:**
+
 - `src/app/page.tsx` (lines 58-68)
 - `src/app/about/page.tsx` (lines 78-95)
 - `src/app/shop/page.tsx` (lines 100-120)
@@ -286,6 +301,7 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
 ```
 
 **Usage:**
+
 ```typescript
 // src/app/page.tsx
 import { generateOrganizationSchema } from '@/lib/server/schema';
@@ -306,19 +322,21 @@ import { generateOrganizationSchema } from '@/lib/server/schema';
 
 **Files with No Active References:**
 
-| File | Status | Reason | Action |
-|------|--------|--------|--------|
-| `src/components/home/hero.tsx` | ❌ Orphaned | Replaced by `src/components/Hero.tsx` | DELETE |
-| `src/components/layout/Header.tsx` | ❌ Duplicate | Copy of `src/components/Header.tsx` | DELETE |
-| `src/components/layout/Footer.tsx` | ❌ Duplicate | Copy of `src/components/Footer.tsx` | DELETE |
-| `src/lib/request-context.ts` | ⚠️ Unused | No imports found in codebase | VERIFY |
+| File                               | Status       | Reason                                | Action |
+| ---------------------------------- | ------------ | ------------------------------------- | ------ |
+| `src/components/home/hero.tsx`     | ❌ Orphaned  | Replaced by `src/components/Hero.tsx` | DELETE |
+| `src/components/layout/Header.tsx` | ❌ Duplicate | Copy of `src/components/Header.tsx`   | DELETE |
+| `src/components/layout/Footer.tsx` | ❌ Duplicate | Copy of `src/components/Footer.tsx`   | DELETE |
+| `src/lib/request-context.ts`       | ⚠️ Unused    | No imports found in codebase          | VERIFY |
 
 **Impact:**
+
 - 380+ unused lines
 - Increased bundle size (though Next.js tree-shaking should eliminate)
 - Developer confusion about maintained vs. abandoned code
 
 **Action Items:**
+
 ```bash
 # Remove dead code
 rm src/components/home/hero.tsx
@@ -366,6 +384,7 @@ export default function LoginPage() { ... }
 ```
 
 **Impact:**
+
 - Removes ~15 files
 - Simpler import structure
 - Faster file navigation
@@ -378,14 +397,15 @@ export default function LoginPage() { ... }
 
 **Potential Unused Packages:**
 
-| Package | Status | Usage | Recommendation |
-|---------|--------|-------|-----------------|
-| `same-runtime` | ⚠️ Unknown | 0 imports found | VERIFY/REMOVE |
-| `class-variance-authority` | ✓ Used | Found in components | KEEP |
-| `clsx` | ✓ Used | CSS utilities | KEEP |
-| `tailwind-merge` | ✓ Used | Style merging | KEEP |
+| Package                    | Status     | Usage               | Recommendation |
+| -------------------------- | ---------- | ------------------- | -------------- |
+| `same-runtime`             | ⚠️ Unknown | 0 imports found     | VERIFY/REMOVE  |
+| `class-variance-authority` | ✓ Used     | Found in components | KEEP           |
+| `clsx`                     | ✓ Used     | CSS utilities       | KEEP           |
+| `tailwind-merge`           | ✓ Used     | Style merging       | KEEP           |
 
 **Action:**
+
 ```bash
 # Check for unused packages
 bun run depcheck
@@ -404,72 +424,72 @@ bun remove same-runtime
 
 **Problem:**
 The upload endpoint validates file type and size but doesn't validate:
+
 1. File name sanitization (path traversal risk)
 2. Image dimensions or actual content
 3. MIME type mismatch (file extension vs. actual content)
 
 ```typescript
 // Current code - INCOMPLETE VALIDATION
-const file = formData.get('file') as File;
-if (!file.type.startsWith('image/')) {
+const file = formData.get("file") as File;
+if (!file.type.startsWith("image/")) {
   // This can be spoofed - client can lie about MIME type
-  return NextResponse.json({ error: 'File must be an image' }, { status: 400 });
+  return NextResponse.json({ error: "File must be an image" }, { status: 400 });
 }
 ```
 
 **Severity:** CRITICAL (Security - file upload vulnerability)
 
 **Recommendation:**
+
 ```typescript
-import { readFileSync } from 'fs';
-import sharp from 'sharp'; // Add sharp for image validation
+import { readFileSync } from "fs";
+import sharp from "sharp"; // Add sharp for image validation
 
 export async function POST(req: NextRequest) {
   // ... existing validation ...
 
   // Validate actual file content
   const buffer = Buffer.from(await file.arrayBuffer());
-  
+
   try {
     const metadata = await sharp(buffer).metadata();
-    
+
     // Validate dimensions
     if (metadata.width! < 200 || metadata.height! < 200) {
       return NextResponse.json(
-        { error: 'Image must be at least 200x200px' },
-        { status: 400 }
+        { error: "Image must be at least 200x200px" },
+        { status: 400 },
       );
     }
-    
+
     // Validate format
-    if (!['jpeg', 'png', 'webp', 'avif'].includes(metadata.format!)) {
+    if (!["jpeg", "png", "webp", "avif"].includes(metadata.format!)) {
       return NextResponse.json(
-        { error: 'Invalid image format' },
-        { status: 400 }
+        { error: "Invalid image format" },
+        { status: 400 },
       );
     }
   } catch (err) {
-    return NextResponse.json(
-      { error: 'Invalid image file' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid image file" }, { status: 400 });
   }
 
   // Sanitize filename
   const sanitizedName = file.name
-    .replace(/[^a-zA-Z0-9._-]/g, '_')
+    .replace(/[^a-zA-Z0-9._-]/g, "_")
     .toLowerCase();
-  
+
   // Use UUID for uniqueness instead of random()
   const timestamp = Date.now();
   const randomStr = Math.random().toString(36).substring(7);
   const finalFilename = `category-${categoryId}-${timestamp}-${randomStr}-${sanitizedName}`;
-  
+
   // Rest of upload logic...
 }
 ```
 
 **Testing:**
+
 ```typescript
 // Test malicious inputs
 - Upload file with .jpg extension but is actually .exe
@@ -490,7 +510,7 @@ Cart items from client are not re-verified against database before checkout:
 // PROBLEMATIC PATTERN
 export async function POST(req: NextRequest) {
   const cartItems = await req.json(); // Trust client data!
-  
+
   // Should re-fetch from database and verify:
   // 1. Product still exists
   // 2. Product is still active/available
@@ -503,16 +523,17 @@ export async function POST(req: NextRequest) {
 **Severity:** CRITICAL (Business Logic - potential fraud)
 
 **Recommendation:**
+
 ```typescript
 export async function POST(req: NextRequest) {
   const { cartItems } = await req.json();
-  
+
   // Re-fetch and verify each item from database
   const validatedItems = await Promise.all(
     cartItems.map(async (item) => {
       const product = await prisma.product.findUnique({
         where: { id: item.id },
-        select: { 
+        select: {
           id: true,
           price: true,
           stock: true,
@@ -524,13 +545,13 @@ export async function POST(req: NextRequest) {
         throw new Error(`Product ${item.id} not found`);
       }
 
-      if (product.status !== 'active') {
+      if (product.status !== "active") {
         throw new Error(`Product ${product.id} is not available`);
       }
 
       if (product.stock < item.quantity) {
         throw new Error(
-          `Insufficient stock for ${product.id}. Requested: ${item.quantity}, Available: ${product.stock}`
+          `Insufficient stock for ${product.id}. Requested: ${item.quantity}, Available: ${product.stock}`,
         );
       }
 
@@ -539,13 +560,16 @@ export async function POST(req: NextRequest) {
         ...item,
         price: product.price, // Override with DB value
       };
-    })
+    }),
   );
 
-  return NextResponse.json({ 
-    valid: true, 
+  return NextResponse.json({
+    valid: true,
     items: validatedItems,
-    total: validatedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+    total: validatedItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    ),
   });
 }
 ```
@@ -564,13 +588,13 @@ The category management API has authentication check only in one route:
 export async function GET() {
   try {
     const categories = await prisma.category.findMany({
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
     });
     return NextResponse.json(categories);
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch categories' },
-      { status: 500 }
+      { error: "Failed to fetch categories" },
+      { status: 500 },
     );
   }
 }
@@ -579,7 +603,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const session = await getServerSession();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   // ...
 }
@@ -588,13 +612,14 @@ export async function POST(req: NextRequest) {
 **Severity:** CRITICAL (Security - inconsistent auth)
 
 **Recommendation:**
+
 ```typescript
-import { getServerSession } from 'next-auth';
+import { getServerSession } from "next-auth";
 
 async function requireAdminAuth() {
   const session = await getServerSession();
   if (!session?.user?.email) {
-    throw new Error('Unauthorized');
+    throw new Error("Unauthorized");
   }
   return session;
 }
@@ -604,15 +629,15 @@ export async function GET() {
     // GET is public for category listing (intentional)
     // But if sensitive, require auth:
     // await requireAdminAuth();
-    
+
     const categories = await prisma.category.findMany({
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
     });
     return NextResponse.json(categories);
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch categories' },
-      { status: 500 }
+      { error: "Failed to fetch categories" },
+      { status: 500 },
     );
   }
 }
@@ -622,7 +647,7 @@ export async function POST(req: NextRequest) {
     await requireAdminAuth();
     // ... rest of implementation
   } catch (error) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 }
 ```
@@ -638,11 +663,11 @@ Database queries could fail silently or cause unhandled rejections:
 
 ```typescript
 // RISKY - no error handling for getCategoryWithProducts
-const { category, products } = await getCategoryWithProducts(
-  slug,
-  sort,
-  { priceMin: priceMinNum, priceMax: priceMaxNum, cond: condArr }
-);
+const { category, products } = await getCategoryWithProducts(slug, sort, {
+  priceMin: priceMinNum,
+  priceMax: priceMaxNum,
+  cond: condArr,
+});
 
 if (!data) {
   notFound();
@@ -652,6 +677,7 @@ if (!data) {
 **Severity:** MAJOR (Runtime error potential)
 
 **Recommendation:**
+
 ```typescript
 // Better error handling
 let categoryData;
@@ -694,6 +720,7 @@ User data accessed without null checks:
 **Severity:** MAJOR (Runtime error - TypeError)
 
 **Recommendation:**
+
 ```typescript
 // Safe access with optional chaining
 <input
@@ -734,12 +761,13 @@ catch (error) {
 ```
 
 **Recommendation:**
+
 ```typescript
 // Standardized error handling
 catch (error) {
   const isDevelopment = process.env.NODE_ENV === 'development';
   const errorMessage = error instanceof Error ? error.message : String(error);
-  
+
   console.error('[API Error]', {
     endpoint: req.url,
     method: req.method,
@@ -766,6 +794,7 @@ catch (error) {
 ### [MAJOR] Missing Pagination for Product Lists
 
 **Location:**
+
 - `src/app/shop/page.tsx` (line 85-110)
 - `src/app/category/[slug]/page.tsx` (line 140-180)
 
@@ -775,20 +804,24 @@ Products are fetched with `take: 60` or `take: 12` but no limit/offset paginatio
 ```typescript
 // Fetches potentially ALL products without pagination
 const products = await prisma.product.findMany({
-  where: { /* filters */ },
-  include: { images: { orderBy: { order: 'asc' } }, category: true },
-  orderBy: { createdAt: 'desc' },
-  take: 60,  // Hard limit
+  where: {
+    /* filters */
+  },
+  include: { images: { orderBy: { order: "asc" } }, category: true },
+  orderBy: { createdAt: "desc" },
+  take: 60, // Hard limit
 });
 ```
 
 **Impact:**
+
 - All products loaded at once (memory)
 - Slow initial page load with many products
 - No "Load More" or pagination UI
 - Database N+1 queries if not using include/select properly
 
 **Recommendation:**
+
 ```typescript
 // src/lib/server/products.ts
 interface PaginationParams {
@@ -798,7 +831,7 @@ interface PaginationParams {
 
 export async function getProductsPaginated(
   filters: Record<string, any>,
-  pagination: PaginationParams = {}
+  pagination: PaginationParams = {},
 ) {
   const page = Math.max(1, pagination.page ?? 1);
   const pageSize = Math.min(pagination.pageSize ?? 12, 100); // Max 100
@@ -806,8 +839,11 @@ export async function getProductsPaginated(
   const [products, total] = await Promise.all([
     prisma.product.findMany({
       where: filters,
-      include: { images: { orderBy: { order: 'asc' }, take: 5 }, category: true },
-      orderBy: { createdAt: 'desc' },
+      include: {
+        images: { orderBy: { order: "asc" }, take: 5 },
+        category: true,
+      },
+      orderBy: { createdAt: "desc" },
       skip: (page - 1) * pageSize,
       take: pageSize,
     }),
@@ -828,11 +864,12 @@ export async function getProductsPaginated(
 ```
 
 **Usage:**
+
 ```typescript
 // src/app/category/[slug]/page.tsx
 const { products, pagination } = await getProductsPaginated(
-  { categoryId: category.id, status: 'active' },
-  { page: currentPage, pageSize: 12 }
+  { categoryId: category.id, status: "active" },
+  { page: currentPage, pageSize: 12 },
 );
 ```
 
@@ -850,13 +887,14 @@ Order data not validated before Prisma create:
 ```typescript
 // No validation of input data structure
 const order = await prisma.order.create({
-  data: req.body,  // Trusting client entirely
+  data: req.body, // Trusting client entirely
 });
 ```
 
 **Recommendation:**
+
 ```typescript
-import { z } from 'zod'; // Already in dependencies
+import { z } from "zod"; // Already in dependencies
 
 const OrderItemSchema = z.object({
   productId: z.string().min(1),
@@ -870,25 +908,25 @@ const CreateOrderSchema = z.object({
   customerName: z.string().min(1),
   items: z.array(OrderItemSchema),
   total: z.number().positive(),
-  status: z.enum(['pending', 'completed', 'failed']),
+  status: z.enum(["pending", "completed", "failed"]),
 });
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const validated = CreateOrderSchema.parse(body);
-    
+
     // Now safe to use validated data
     const order = await prisma.order.create({
       data: validated,
     });
-    
+
     return NextResponse.json(order);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid request data', details: error.issues },
-        { status: 400 }
+        { error: "Invalid request data", details: error.issues },
+        { status: 400 },
       );
     }
     // ... handle other errors
@@ -918,6 +956,7 @@ Images not using Next.js Image optimization or Responsive Image attributes:
 ```
 
 **Recommendation:**
+
 ```typescript
 // OPTIMIZED
 <Image
@@ -948,6 +987,7 @@ Images not using Next.js Image optimization or Responsive Image attributes:
 ### [MINOR] Missing React.memo for Expensive Components
 
 **Location:**
+
 - `src/components/ProductCard.tsx`
 - `src/components/ProductGrid.tsx`
 - `src/components/home/ShopByCategoriesClient.tsx`
@@ -967,6 +1007,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 ```
 
 **Recommendation:**
+
 ```typescript
 // OPTIMIZED with React.memo
 export default React.memo(function ProductCard({ product }: ProductCardProps) {
@@ -1001,6 +1042,7 @@ const lastOrderDate = orders[0]?.createdAt;
 ```
 
 **Recommendation:**
+
 ```typescript
 // OPTIMIZED
 const stats = useMemo(() => {
@@ -1038,6 +1080,7 @@ const products = await prisma.product.findMany({
 ```
 
 **Recommendation:**
+
 ```typescript
 // OPTIMIZED - only fetch needed fields
 const products = await prisma.product.findMany({
@@ -1074,14 +1117,15 @@ API responses not properly typed:
 // WEAK TYPING
 export async function GET(req: NextRequest) {
   const data = await prisma.product.findMany();
-  return NextResponse.json(data);  // Type inference only
+  return NextResponse.json(data); // Type inference only
 }
 ```
 
 **Recommendation:**
+
 ```typescript
 // STRONG TYPING
-import type { Product } from '@prisma/client';
+import type { Product } from "@prisma/client";
 
 interface GetProductsResponse {
   data: Product[];
@@ -1099,7 +1143,9 @@ interface ErrorResponse {
 
 type ApiResponse = GetProductsResponse | ErrorResponse;
 
-export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse>> {
+export async function GET(
+  req: NextRequest,
+): Promise<NextResponse<ApiResponse>> {
   try {
     const products = await prisma.product.findMany();
     return NextResponse.json<GetProductsResponse>({
@@ -1110,11 +1156,11 @@ export async function GET(req: NextRequest): Promise<NextResponse<ApiResponse>> 
     return NextResponse.json<ErrorResponse>(
       {
         error: {
-          code: 'FETCH_FAILED',
-          message: 'Failed to fetch products',
+          code: "FETCH_FAILED",
+          message: "Failed to fetch products",
         },
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -1136,18 +1182,19 @@ const stripePrivateKey = process.env.STRIPE_SECRET_KEY;
 ```
 
 **Recommendation:**
+
 ```typescript
 // src/lib/env.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 const envSchema = z.object({
   // Public
   NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: z.string().min(1),
   NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: z.string().url(),
-  
+
   // Private
   IMAGEKIT_PRIVATE_KEY: z.string().min(1),
-  STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
+  STRIPE_SECRET_KEY: z.string().startsWith("sk_"),
   DATABASE_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string().min(32),
   NEXTAUTH_URL: z.string().url(),
@@ -1165,15 +1212,15 @@ export function getEnv(): Env {
     return validatedEnv;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('Environment validation failed:', error.issues);
-      throw new Error('Invalid environment configuration');
+      console.error("Environment validation failed:", error.issues);
+      throw new Error("Invalid environment configuration");
     }
     throw error;
   }
 }
 
 // Usage throughout app
-import { getEnv } from '@/lib/env';
+import { getEnv } from "@/lib/env";
 const env = getEnv();
 const imageKitPublicKey = env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
 ```
@@ -1188,6 +1235,7 @@ const imageKitPublicKey = env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
 Error boundary not wrapping all error-prone sections:
 
 **Recommendation:**
+
 ```typescript
 // Wrap root layout
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -1223,13 +1271,14 @@ Client components don't show loading UI during data fetch:
 // NO LOADING STATE
 export default function ShopByCategories() {
   const [loading, setLoading] = useState(false);
-  
+
   // User sees nothing while loading
   return <div>{categories.map(...)}</div>;
 }
 ```
 
 **Recommendation:**
+
 ```typescript
 import { Skeleton } from '@/components/ui/Skeleton';
 
@@ -1268,9 +1317,12 @@ useCallback imported but only used sporadically:
 
 ```typescript
 // Some functions wrapped
-const handleUpdateStatus = useCallback(async (status) => {
-  // ...
-}, [orderId]);
+const handleUpdateStatus = useCallback(
+  async (status) => {
+    // ...
+  },
+  [orderId],
+);
 
 // Others not wrapped (could cause unnecessary re-renders)
 const handleDeleteOrder = async (id) => {
@@ -1282,13 +1334,16 @@ const handleDeleteOrder = async (id) => {
 Wrap all callbacks passed to memoized child components:
 
 ```typescript
-const handleUpdateStatus = useCallback(async (status: string) => {
-  await updateOrderStatus(orderId, status);
-  refreshOrders();
-}, [orderId]);
+const handleUpdateStatus = useCallback(
+  async (status: string) => {
+    await updateOrderStatus(orderId, status);
+    refreshOrders();
+  },
+  [orderId],
+);
 
 const handleDeleteOrder = useCallback(async (id: string) => {
-  if (confirm('Are you sure?')) {
+  if (confirm("Are you sure?")) {
     await deleteOrder(id);
     refreshOrders();
   }
@@ -1301,26 +1356,26 @@ const handleDeleteOrder = useCallback(async (id: string) => {
 
 ### Issues by Severity
 
-| Severity | Count | Category | Action |
-|----------|-------|----------|--------|
-| **CRITICAL** | 3 | Security/Data Loss | ⚠️ URGENT - Fix immediately |
-| **MAJOR** | 12 | Functional/Performance | 🔧 Fix in next sprint |
-| **MINOR** | 32 | Code quality/DX | 📅 Schedule for refinement |
-| **Total** | **47** | | |
+| Severity     | Count  | Category               | Action                      |
+| ------------ | ------ | ---------------------- | --------------------------- |
+| **CRITICAL** | 3      | Security/Data Loss     | ⚠️ URGENT - Fix immediately |
+| **MAJOR**    | 12     | Functional/Performance | 🔧 Fix in next sprint       |
+| **MINOR**    | 32     | Code quality/DX        | 📅 Schedule for refinement  |
+| **Total**    | **47** |                        |                             |
 
 ---
 
 ### Issues by Category
 
-| Category | Count | Examples |
-|----------|-------|----------|
-| Code Redundancy | 8 | Duplicate components, repeated functions |
-| Dead Code | 4 | Orphaned files, unused utilities |
-| Security Issues | 3 | Validation, auth, file upload |
-| Performance | 8 | Pagination, image optimization, memoization |
-| Type Safety | 6 | Missing types, weak inference |
-| Error Handling | 7 | Missing try-catch, inconsistent messages |
-| Code Organization | 5 | Architecture, folder structure |
+| Category          | Count | Examples                                    |
+| ----------------- | ----- | ------------------------------------------- |
+| Code Redundancy   | 8     | Duplicate components, repeated functions    |
+| Dead Code         | 4     | Orphaned files, unused utilities            |
+| Security Issues   | 3     | Validation, auth, file upload               |
+| Performance       | 8     | Pagination, image optimization, memoization |
+| Type Safety       | 6     | Missing types, weak inference               |
+| Error Handling    | 7     | Missing try-catch, inconsistent messages    |
+| Code Organization | 5     | Architecture, folder structure              |
 
 ---
 
@@ -1329,11 +1384,13 @@ const handleDeleteOrder = useCallback(async (id: string) => {
 ### Week 1 Implementation (2-4 hours)
 
 1. **Delete Duplicate Files** (-500 LoC)
+
    ```bash
    rm src/components/home/hero.tsx
    rm src/components/layout/Header.tsx
    rm src/components/layout/Footer.tsx
    ```
+
    Impact: Cleaner codebase, faster module resolution
 
 2. **Create useAdminAuth Hook** (-60 LoC)
@@ -1379,17 +1436,20 @@ const handleDeleteOrder = useCallback(async (id: string) => {
 ## 📈 Estimated Impact
 
 ### Code Metrics
+
 - **Total LoC Reduction:** 800-1200 lines (~15% decrease)
 - **File Cleanup:** 5-8 orphaned files removed
 - **Duplicate Code Elimination:** 90% DRY compliance
 
 ### Performance Metrics
+
 - **Bundle Size Reduction:** 10-15% with tree-shaking
 - **Initial Load Time:** 30-40% faster with pagination
 - **API Response Size:** 40-60% smaller with select()
 - **Image Payload:** 20-30% reduction with optimization
 
 ### Maintainability Metrics
+
 - **Cyclomatic Complexity:** 15-20% reduction
 - **Code Duplication:** From 12% to <3%
 - **Type Coverage:** From 70% to >95%
@@ -1400,18 +1460,21 @@ const handleDeleteOrder = useCallback(async (id: string) => {
 ## 🔐 Security Improvements Priority
 
 ### Critical (Implement This Week)
+
 1. Add file upload validation (sharp library)
 2. Validate cart items against database
 3. Standardize API authentication
 4. Validate environment variables on startup
 
 ### High (Next 2 Weeks)
+
 1. Add input sanitization utilities
 2. Implement CORS properly
 3. Rate limiting on public APIs
 4. SQL injection prevention review
 
 ### Medium (Month 2)
+
 1. Security headers audit
 2. CSRF token implementation
 3. Dependency security scanning
@@ -1422,24 +1485,28 @@ const handleDeleteOrder = useCallback(async (id: string) => {
 ## 📝 Phased Implementation Roadmap
 
 ### Phase 1: Foundation (Week 1)
+
 - Delete duplicate files
 - Create reusable hooks and utilities
 - Add environment validation
 - Fix critical security issues
 
 ### Phase 2: Architecture (Week 2-3)
+
 - Implement pagination system
 - Standardize API responses
 - Create error handling utilities
 - Add input validation layer
 
 ### Phase 3: Performance (Week 4-5)
+
 - Optimize images across codebase
 - Add React.memo to expensive components
 - Implement proper caching strategies
 - Database query optimization
 
 ### Phase 4: Polish (Week 6+)
+
 - Add comprehensive TypeScript types
 - Implement monitoring/logging
 - Add proper loading states
@@ -1480,12 +1547,14 @@ grep -r "src/lib/request-context" src/ || echo "Unused"
 ## Final Recommendations
 
 ### Go/No-Go Criteria
+
 ✅ **GO** - Implement quick-wins immediately (low risk)
 ✅ **GO** - Fix critical security issues this week
 ⚠️ **CAUTION** - Strategic refactors require testing plan
 🚫 **NO-GO** - Don't refactor while building new features
 
 ### Next Steps
+
 1. Assign developer to fix [CRITICAL] security issues
 2. Schedule architecture review for pagination
 3. Add type safety as part of code review process
@@ -1497,4 +1566,3 @@ grep -r "src/lib/request-context" src/ || echo "Unused"
 **Report Generated:** November 6, 2025  
 **Repository:** https://github.com/jameshorton2486/kollect-it-marketplace  
 **Estimated Total Remediation Time:** 60-80 hours (4-5 week sprint at 15-20 hours/week)
-

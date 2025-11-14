@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { rateLimiters } from '@/lib/rate-limit';
-import { applySecurityHeaders } from '@/lib/security';
-import { cache, cacheTTL } from '@/lib/cache';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { rateLimiters } from "@/lib/rate-limit";
+import { applySecurityHeaders } from "@/lib/security";
+import { cache, cacheTTL } from "@/lib/cache";
 
 /**
  * GET /api/admin/analytics/sales
- * 
+ *
  * Detailed sales analytics with revenue, trends, and forecasting
  * Admin only
  */
@@ -20,17 +20,17 @@ export async function GET(request: NextRequest) {
 
     // Check admin authorization
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
+    if (!session?.user || (session.user as any).role !== "admin") {
       const response = NextResponse.json(
-        { error: 'Unauthorized - admin access required' },
-        { status: 403 }
+        { error: "Unauthorized - admin access required" },
+        { status: 403 },
       );
       return applySecurityHeaders(response);
     }
 
     // Get date range from query params
     const searchParams = request.nextUrl.searchParams;
-    const period = searchParams.get('period') || '30'; // days
+    const period = searchParams.get("period") || "30"; // days
     const endDate = new Date();
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - parseInt(period));
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     const cached = cache.get<any>(cacheKey);
     if (cached) {
       const response = NextResponse.json(cached);
-      response.headers.set('X-Cache', 'HIT');
+      response.headers.set("X-Cache", "HIT");
       return applySecurityHeaders(response);
     }
 
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
           gte: startDate,
           lte: endDate,
         },
-        paymentStatus: 'paid',
+        paymentStatus: "paid",
       },
       include: {
         items: {
@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
     });
 
@@ -83,53 +83,72 @@ export async function GET(request: NextRequest) {
     const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
     // Revenue by day
-    const revenueByDay = orders.reduce((acc, order) => {
-      const date = order.createdAt.toISOString().split('T')[0];
-      acc[date] = (acc[date] || 0) + order.total;
-      return acc;
-    }, {} as Record<string, number>);
+    const revenueByDay = orders.reduce(
+      (acc, order) => {
+        const date = order.createdAt.toISOString().split("T")[0];
+        acc[date] = (acc[date] || 0) + order.total;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     const dailyRevenue = Object.entries(revenueByDay)
       .map(([date, revenue]) => ({ date, revenue }))
       .sort((a, b) => a.date.localeCompare(b.date));
 
     // Revenue by category
-    const revenueByCategory = orders.reduce((acc, order) => {
-      order.items.forEach((item) => {
-        const categoryName = item.product?.category?.name || 'Uncategorized';
-        const categoryId = item.product?.categoryId || 'unknown';
-        if (!acc[categoryId]) {
-          acc[categoryId] = { name: categoryName, revenue: 0, orders: 0 };
-        }
-        acc[categoryId].revenue += item.price * item.quantity;
-        acc[categoryId].orders += 1;
-      });
-      return acc;
-    }, {} as Record<string, { name: string; revenue: number; orders: number }>);
+    const revenueByCategory = orders.reduce(
+      (acc, order) => {
+        order.items.forEach((item) => {
+          const categoryName = item.product?.category?.name || "Uncategorized";
+          const categoryId = item.product?.categoryId || "unknown";
+          if (!acc[categoryId]) {
+            acc[categoryId] = { name: categoryName, revenue: 0, orders: 0 };
+          }
+          acc[categoryId].revenue += item.price * item.quantity;
+          acc[categoryId].orders += 1;
+        });
+        return acc;
+      },
+      {} as Record<string, { name: string; revenue: number; orders: number }>,
+    );
 
-    const categoryData = Object.values(revenueByCategory)
-      .sort((a, b) => b.revenue - a.revenue);
+    const categoryData = Object.values(revenueByCategory).sort(
+      (a, b) => b.revenue - a.revenue,
+    );
 
     // Top products by revenue
-    const productRevenue = orders.reduce((acc, order) => {
-      order.items.forEach((item) => {
-        if (!item.product) return;
-        const productId = item.product.id;
-        if (!acc[productId]) {
-          acc[productId] = {
-            id: productId,
-            title: item.title,
-            revenue: 0,
-            quantity: 0,
-            orders: 0,
-          };
+    const productRevenue = orders.reduce(
+      (acc, order) => {
+        order.items.forEach((item) => {
+          if (!item.product) return;
+          const productId = item.product.id;
+          if (!acc[productId]) {
+            acc[productId] = {
+              id: productId,
+              title: item.title,
+              revenue: 0,
+              quantity: 0,
+              orders: 0,
+            };
+          }
+          acc[productId].revenue += item.price * item.quantity;
+          acc[productId].quantity += item.quantity;
+          acc[productId].orders += 1;
+        });
+        return acc;
+      },
+      {} as Record<
+        string,
+        {
+          id: string;
+          title: string;
+          revenue: number;
+          quantity: number;
+          orders: number;
         }
-        acc[productId].revenue += item.price * item.quantity;
-        acc[productId].quantity += item.quantity;
-        acc[productId].orders += 1;
-      });
-      return acc;
-    }, {} as Record<string, { id: string; title: string; revenue: number; quantity: number; orders: number }>);
+      >,
+    );
 
     const topProducts = Object.values(productRevenue)
       .sort((a, b) => b.revenue - a.revenue)
@@ -146,25 +165,30 @@ export async function GET(request: NextRequest) {
           gte: previousStartDate,
           lt: previousEndDate,
         },
-        paymentStatus: 'paid',
+        paymentStatus: "paid",
       },
       select: {
         total: true,
       },
     });
 
-    const previousRevenue = previousOrders.reduce((sum, order) => sum + order.total, 0);
-    const revenueGrowth = previousRevenue > 0
-      ? ((totalRevenue - previousRevenue) / previousRevenue) * 100
-      : 0;
+    const previousRevenue = previousOrders.reduce(
+      (sum, order) => sum + order.total,
+      0,
+    );
+    const revenueGrowth =
+      previousRevenue > 0
+        ? ((totalRevenue - previousRevenue) / previousRevenue) * 100
+        : 0;
 
-    const orderGrowth = previousOrders.length > 0
-      ? ((totalOrders - previousOrders.length) / previousOrders.length) * 100
-      : 0;
+    const orderGrowth =
+      previousOrders.length > 0
+        ? ((totalOrders - previousOrders.length) / previousOrders.length) * 100
+        : 0;
 
     // Enhanced analytics: Payment methods
     const paymentMethodsMap = orders.reduce((acc: any, order: any) => {
-      const method = order.paymentMethod || 'card';
+      const method = order.paymentMethod || "card";
       if (!acc[method]) {
         acc[method] = { method, count: 0, revenue: 0 };
       }
@@ -190,7 +214,7 @@ export async function GET(request: NextRequest) {
 
     // Enhanced analytics: Shipping status
     const shippingStatusMap = orders.reduce((acc: any, order: any) => {
-      const status = order.status || 'pending';
+      const status = order.status || "pending";
       if (!acc[status]) {
         acc[status] = { status, count: 0 };
       }
@@ -201,7 +225,7 @@ export async function GET(request: NextRequest) {
 
     // Enhanced analytics: Daily orders count
     const ordersByDay = orders.reduce((acc: any, order: any) => {
-      const date = order.createdAt.toISOString().split('T')[0];
+      const date = order.createdAt.toISOString().split("T")[0];
       acc[date] = (acc[date] || 0) + 1;
       return acc;
     }, {});
@@ -238,16 +262,16 @@ export async function GET(request: NextRequest) {
     cache.set(cacheKey, analytics, cacheTTL.hour);
 
     const response = NextResponse.json(analytics);
-    response.headers.set('X-Cache', 'MISS');
+    response.headers.set("X-Cache", "MISS");
     return applySecurityHeaders(response);
   } catch (error) {
-    console.error('Error fetching sales analytics:', error);
+    console.error("Error fetching sales analytics:", error);
     const response = NextResponse.json(
       {
-        error: 'Failed to fetch sales analytics',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to fetch sales analytics",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
     return applySecurityHeaders(response);
   }

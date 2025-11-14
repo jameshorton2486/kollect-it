@@ -1,13 +1,13 @@
 /**
  * KOLLECT-IT: ImageKit Sync Module
- * 
+ *
  * Uploads photos from product.json to ImageKit CDN
  * Handles retries, batch uploads, and metadata tagging
  */
 
-import ImageKit from 'imagekit';
-import * as fs from 'fs';
-import * as path from 'path';
+import ImageKit from "imagekit";
+import * as fs from "fs";
+import * as path from "path";
 
 interface Photo {
   url: string;
@@ -28,7 +28,7 @@ interface SyncedPhoto {
   imagekit_url: string;
   imagekit_file_id: string;
   sequence_order: number;
-  status: 'success' | 'failed';
+  status: "success" | "failed";
   error?: string;
 }
 
@@ -52,13 +52,15 @@ export class ImageKitSyncService {
     const urlEndpoint = process.env.IMAGEKIT_URL_ENDPOINT;
 
     if (!publicKey || !privateKey || !urlEndpoint) {
-      throw new Error('ImageKit credentials not fully configured in .env.local');
+      throw new Error(
+        "ImageKit credentials not fully configured in .env.local",
+      );
     }
 
     this.imageKit = new ImageKit({
       publicKey,
       privateKey,
-      urlEndpoint
+      urlEndpoint,
     });
   }
 
@@ -74,7 +76,7 @@ export class ImageKitSyncService {
       uploaded: 0,
       failed: 0,
       synced_photos: [],
-      errors: []
+      errors: [],
     };
 
     for (let i = 0; i < product.photos.length; i++) {
@@ -86,40 +88,42 @@ export class ImageKitSyncService {
           product.product_id,
           photo,
           sequenceOrder,
-          i
+          i,
         );
 
         result.synced_photos.push(syncedPhoto);
         result.uploaded++;
 
         console.log(
-          `   ✅ Uploaded (${i + 1}/${product.photos.length}): ${photo.url}`
+          `   ✅ Uploaded (${i + 1}/${product.photos.length}): ${photo.url}`,
         );
       } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
 
         result.synced_photos.push({
           original_url: photo.url,
-          imagekit_url: '',
-          imagekit_file_id: '',
+          imagekit_url: "",
+          imagekit_file_id: "",
           sequence_order: sequenceOrder,
-          status: 'failed',
-          error: errorMsg
+          status: "failed",
+          error: errorMsg,
         });
 
         result.errors.push({
           photo: photo.url,
-          error: errorMsg
+          error: errorMsg,
         });
 
         result.failed++;
 
-        console.error(`   ❌ Failed (${i + 1}/${product.photos.length}): ${errorMsg}`);
+        console.error(
+          `   ❌ Failed (${i + 1}/${product.photos.length}): ${errorMsg}`,
+        );
       }
     }
 
     console.log(
-      `📊 ImageKit sync complete: ${result.uploaded}/${result.total_photos} successful`
+      `📊 ImageKit sync complete: ${result.uploaded}/${result.total_photos} successful`,
     );
 
     return result;
@@ -133,18 +137,18 @@ export class ImageKitSyncService {
     photo: Photo,
     sequenceOrder: number,
     index: number,
-    attempt = 1
+    attempt = 1,
   ): Promise<SyncedPhoto> {
     try {
       // Resolve file path
       let fileBuffer: Buffer;
 
-      if (photo.url.startsWith('http')) {
+      if (photo.url.startsWith("http")) {
         // Download remote URL
         fileBuffer = await this.downloadRemotePhoto(photo.url);
       } else {
         // Local file
-        const localPath = path.join(process.cwd(), 'public', photo.url);
+        const localPath = path.join(process.cwd(), "public", photo.url);
 
         if (!fs.existsSync(localPath)) {
           throw new Error(`File not found: ${localPath}`);
@@ -154,21 +158,21 @@ export class ImageKitSyncService {
       }
 
       // Upload to ImageKit
-      const fileName = `${productId}_${String(index + 1).padStart(2, '0')}.jpg`;
+      const fileName = `${productId}_${String(index + 1).padStart(2, "0")}.jpg`;
       const folderPath = `/kollect-it/products/${productId}`;
 
       const uploadResponse = await this.imageKit.upload({
         file: fileBuffer,
         fileName,
         folder: folderPath,
-        tags: [productId, 'product'],
+        tags: [productId, "product"],
         customMetadata: {
           product_id: productId,
           sequence_order: String(sequenceOrder),
-          alt_text: photo.alt || ''
+          alt_text: photo.alt || "",
         },
         useUniqueFileName: false,
-        overwriteFile: true
+        overwriteFile: true,
       });
 
       return {
@@ -176,17 +180,23 @@ export class ImageKitSyncService {
         imagekit_url: uploadResponse.url,
         imagekit_file_id: uploadResponse.fileId,
         sequence_order: sequenceOrder,
-        status: 'success'
+        status: "success",
       };
     } catch (error) {
       // Retry logic
       if (attempt < this.maxRetries) {
         console.log(
-          `   ⏳ Retry attempt ${attempt}/${this.maxRetries - 1} for ${photo.url}...`
+          `   ⏳ Retry attempt ${attempt}/${this.maxRetries - 1} for ${photo.url}...`,
         );
 
         await this.delay(this.retryDelayMs * attempt);
-        return this.uploadPhotoWithRetry(productId, photo, sequenceOrder, index, attempt + 1);
+        return this.uploadPhotoWithRetry(
+          productId,
+          photo,
+          sequenceOrder,
+          index,
+          attempt + 1,
+        );
       }
 
       throw error;
@@ -211,7 +221,7 @@ export class ImageKitSyncService {
    * Delay utility for retries
    */
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**

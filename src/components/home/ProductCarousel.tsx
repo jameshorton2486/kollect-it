@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useRef } from 'react'; // Removed unused useState
-import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRef } from "react"; // Removed unused useState
+import Link from "next/link";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Product {
   id: string;
@@ -24,16 +24,16 @@ export default function ProductCarousel({
   title,
   subtitle,
   products,
-  viewAllHref
+  viewAllHref,
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 300;
       scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
       });
     }
   };
@@ -44,17 +44,19 @@ export default function ProductCarousel({
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-3xl font-bold">{title}</h2>
-            {subtitle && <p className="text-muted-foreground mt-1">{subtitle}</p>}
+            {subtitle && (
+              <p className="text-muted-foreground mt-1">{subtitle}</p>
+            )}
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() => scroll('left')}
+              onClick={() => scroll("left")}
               className="p-2 border rounded-lg hover:bg-muted"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
-              onClick={() => scroll('right')}
+              onClick={() => scroll("right")}
               className="p-2 border rounded-lg hover:bg-muted"
             >
               <ChevronRight className="h-5 w-5" />
@@ -73,7 +75,7 @@ export default function ProductCarousel({
         <div
           ref={scrollRef}
           className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-          style={{ scrollbarWidth: 'none' }}
+          style={{ scrollbarWidth: "none" }}
         >
           {products.map((product) => (
             <Link
@@ -83,13 +85,15 @@ export default function ProductCarousel({
             >
               <div className="relative aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                 <Image
-                  src={product.images[0]?.url || '/placeholder.jpg'}
+                  src={product.images[0]?.url || "/placeholder.jpg"}
                   alt={product.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform"
                 />
               </div>
-              <h3 className="font-semibold line-clamp-2 mb-2">{product.title}</h3>
+              <h3 className="font-semibold line-clamp-2 mb-2">
+                {product.title}
+              </h3>
               <p className="text-lg font-bold text-primary">
                 ${product.price.toFixed(2)}
               </p>

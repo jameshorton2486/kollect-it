@@ -7,7 +7,7 @@ export interface PaginationParams {
   page?: number;
   limit?: number;
   sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
 }
 
 export interface PaginationResult<T> {
@@ -27,11 +27,7 @@ export interface PaginationResult<T> {
 /**
  * Create pagination metadata
  */
-export function createPagination(
-  total: number,
-  page: number,
-  limit: number
-) {
+export function createPagination(total: number, page: number, limit: number) {
   const totalPages = Math.ceil(total / limit);
   const from = (page - 1) * limit + 1;
   const to = Math.min(page * limit, total);
@@ -53,12 +49,15 @@ export function createPagination(
  */
 export function parsePaginationParams(
   searchParams: URLSearchParams,
-  defaultLimit: number = 20
+  defaultLimit: number = 20,
 ): PaginationParams {
-  const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
-  const limit = Math.max(1, Math.min(100, parseInt(searchParams.get('limit') || String(defaultLimit))));
-  const sortBy = searchParams.get('sortBy') || undefined;
-  const sortOrder = (searchParams.get('sortOrder') as 'asc' | 'desc') || 'desc';
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+  const limit = Math.max(
+    1,
+    Math.min(100, parseInt(searchParams.get("limit") || String(defaultLimit))),
+  );
+  const sortBy = searchParams.get("sortBy") || undefined;
+  const sortOrder = (searchParams.get("sortOrder") as "asc" | "desc") || "desc";
 
   return { page, limit, sortBy, sortOrder };
 }
@@ -75,10 +74,10 @@ export function getSkip(page: number, limit: number): number {
  */
 export function createOrderBy(
   sortBy?: string,
-  sortOrder: 'asc' | 'desc' = 'desc'
+  sortOrder: "asc" | "desc" = "desc",
 ): any {
   if (!sortBy) {
-    return { createdAt: 'desc' };
+    return { createdAt: "desc" };
   }
 
   return { [sortBy]: sortOrder };
@@ -90,15 +89,15 @@ export function createOrderBy(
 export function generatePageNumbers(
   currentPage: number,
   totalPages: number,
-  maxVisible: number = 5
-): (number | '...')[] {
+  maxVisible: number = 5,
+): (number | "...")[] {
   if (totalPages <= maxVisible) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
-  const pages: (number | '...')[] = [1];
+  const pages: (number | "...")[] = [1];
   const halfVisible = Math.floor(maxVisible / 2);
-  
+
   let start = Math.max(2, currentPage - halfVisible);
   let end = Math.min(totalPages - 1, currentPage + halfVisible);
 
@@ -113,7 +112,7 @@ export function generatePageNumbers(
   }
 
   if (start > 2) {
-    pages.push('...');
+    pages.push("...");
   }
 
   for (let i = start; i <= end; i++) {
@@ -121,7 +120,7 @@ export function generatePageNumbers(
   }
 
   if (end < totalPages - 1) {
-    pages.push('...');
+    pages.push("...");
   }
 
   pages.push(totalPages);
@@ -136,7 +135,7 @@ export interface CursorPaginationParams {
   cursor?: string;
   limit?: number;
   sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
 }
 
 export interface CursorPaginationResult<T> {
@@ -152,7 +151,7 @@ export interface CursorPaginationResult<T> {
  */
 export function createCursorPagination<T extends { id: string }>(
   data: T[],
-  limit: number
+  limit: number,
 ): CursorPaginationResult<T> {
   const hasMore = data.length > limit;
   const items = hasMore ? data.slice(0, limit) : data;
@@ -170,10 +169,7 @@ export function createCursorPagination<T extends { id: string }>(
 /**
  * Create Prisma cursor query
  */
-export function createCursorQuery(
-  cursor: string | undefined,
-  limit: number
-) {
+export function createCursorQuery(cursor: string | undefined, limit: number) {
   return {
     take: limit + 1, // Fetch one extra to determine if there are more
     ...(cursor && {
@@ -189,7 +185,7 @@ export function createCursorQuery(
 export interface PaginationComponentData {
   currentPage: number;
   totalPages: number;
-  pageNumbers: (number | '...')[];
+  pageNumbers: (number | "...")[];
   hasNext: boolean;
   hasPrev: boolean;
   showing: string; // "Showing 1-20 of 100 results"
@@ -201,11 +197,11 @@ export interface PaginationComponentData {
 export function createPaginationComponentData(
   total: number,
   page: number,
-  limit: number
+  limit: number,
 ): PaginationComponentData {
   const pagination = createPagination(total, page, limit);
   const pageNumbers = generatePageNumbers(page, pagination.totalPages);
-  
+
   return {
     currentPage: page,
     totalPages: pagination.totalPages,
@@ -222,9 +218,9 @@ export function createPaginationComponentData(
 export function createPaginationUrl(
   baseUrl: string,
   page: number,
-  additionalParams?: Record<string, string>
+  additionalParams?: Record<string, string>,
 ): string {
   const params = new URLSearchParams(additionalParams);
-  params.set('page', String(page));
+  params.set("page", String(page));
   return `${baseUrl}?${params.toString()}`;
 }

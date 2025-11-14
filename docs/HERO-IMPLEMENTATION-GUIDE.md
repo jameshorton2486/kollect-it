@@ -40,6 +40,7 @@ mkdir -p public/images
 ### Step 3: Place the Image
 
 Copy/move the downloaded image to:
+
 ```
 c:\Users\james\kollect-it-marketplace-1\public\images\hero-antique-shop.jpg
 ```
@@ -70,7 +71,7 @@ All product images will be stored in this Google Drive folder:
 
 ```tsx
 // app/page.tsx or any page file
-import Hero from '@/components/Hero';
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
@@ -93,17 +94,20 @@ If you need a reusable hero with dynamic content later, you can refactor it to a
 ## 🎨 Styling Details
 
 ### Color Scheme
+
 - **Background:** `#1a1a1a` (dark)
 - **Accent Gold:** `#D3AF37`
 - **Text:** White / `gray-200` for secondary
 - **Overlay:** Black gradient (70% opacity)
 
 ### Responsive Breakpoints
+
 - **Mobile:** Single column, stacked CTAs
 - **Tablet (md):** Inline CTAs, adjusted typography
 - **Desktop (lg):** Full 7xl headline, optimal spacing
 
 ### Interactive Elements
+
 - **CTA Buttons:** 300ms smooth transitions on hover
 - **Gold button hover:** Slightly darker gold (`#c9a532`)
 - **White button hover:** Inverts to white background with dark text
@@ -150,6 +154,7 @@ Before you deploy, verify:
 **Problem:** Hero image shows as broken or blank
 
 **Solutions:**
+
 1. Verify file is at: `public/images/hero-antique-shop.jpg`
 2. Check file name has no typos (case-sensitive on Linux)
 3. Clear Next.js cache: `rm -rf .next`
@@ -161,6 +166,7 @@ Before you deploy, verify:
 **Problem:** Tagline, headline, or subheading appears invisible
 
 **Solutions:**
+
 1. Verify gradient overlay exists in the component
 2. Check that `text-white` and `text-gray-200` classes are applied
 3. Ensure Tailwind CSS is properly configured
@@ -171,6 +177,7 @@ Before you deploy, verify:
 **Problem:** Buttons don't navigate when clicked
 
 **Solutions:**
+
 1. Verify routes exist: `/collections` and `/authentication`
 2. Check Link imports are from `next/link`
 3. Ensure Next.js routing is properly configured
@@ -197,7 +204,7 @@ COMPONENT STRUCTURE:
 - Headline: Large serif font (5xl-7xl), light weight - "Authenticated Antiques, Curated with Care"
 - Subheading: 2 lines max, gray-200 text, describing museum-quality antiques
 - Feature bullets: Single row with bullet separators - "Fine Art to Rare Books • Furniture to Collectibles • Expert Authentication • Insured Shipping"
-- CTAs: 
+- CTAs:
   - Primary: Gold button (#D3AF37) with dark text - "Browse Collections" → /collections
   - Secondary: White outlined button - "How We Authenticate" → /authentication
 - Social proof: Star rating with text "Trusted by museums and private collectors"
@@ -226,6 +233,7 @@ Export as default function component following Next.js 15 best practices.
 **Note:** The product images from the Google Drive folder will be synced to ImageKit using the sync system we created earlier.
 
 **Next steps (when ready):**
+
 1. Complete ImageKit configuration (see: `docs/IMAGEKIT-COMPLETION-CHECKLIST.md`)
 2. Upload product images to the Drive folder
 3. Run the sync script: `bun run sync-images`

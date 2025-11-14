@@ -8,8 +8,8 @@
 
 **Commitment:** Tier 2 Platform (Phase 5 + 6)
 **Duration:** 6-8 weeks
-**Start Date:** _______________
-**Target Launch:** _______________
+**Start Date:** ******\_\_\_******
+**Target Launch:** ******\_\_\_******
 **Goal:** Professional, operational marketplace v2
 
 ---
@@ -17,9 +17,11 @@
 ## ⏰ WEEK-BY-WEEK TIMELINE
 
 ### WEEK 1: Phase 5 Foundation
+
 **Objective:** Start design polish, establish pattern
 
 #### Pre-Work (Day 1)
+
 - [ ] Review PHASE-5-6-STRATEGIC-ROADMAP.md (all of it)
 - [ ] Copy Phase 5 Master Prompt from document
 - [ ] Paste into Copilot Chat
@@ -27,6 +29,7 @@
 - [ ] Keep checklist visible
 
 #### Phase 5 Design Polish (Days 1-7)
+
 - [ ] **STEP 1:** Component system refinement (Copilot Chat working)
 - [ ] **STEP 2:** Product card redesign
 - [ ] **STEP 3:** Category page enhancement
@@ -39,6 +42,7 @@
 - [ ] **STEP 10:** Trust & security visuals
 
 #### End-of-Week QA (Day 7)
+
 - [ ] Verify: `bun run build` passes (zero errors)
 - [ ] Verify: `bunx tsc --noEmit` passes
 - [ ] Test: Homepage loads, looks polished
@@ -51,9 +55,11 @@
 ---
 
 ### WEEK 2: Phase 5 QA & Polish
+
 **Objective:** Final testing, bug fixes, deploy Phase 5
 
 #### Testing (Days 1-3)
+
 - [ ] **Lighthouse Desktop:** Run audit, document score
 - [ ] **Lighthouse Mobile:** Run audit, target 85+
 - [ ] **Mobile Testing:** Test on actual phone (not just DevTools)
@@ -71,12 +77,14 @@
   - [ ] Links are visible
 
 #### Bug Fixes (Days 4-5)
+
 - [ ] Fix any Lighthouse issues (target 85+)
 - [ ] Fix any mobile responsiveness issues
 - [ ] Fix any console errors
 - [ ] Fix any accessibility issues
 
 #### Final Verification (Day 6)
+
 - [ ] All tests pass
 - [ ] Lighthouse 85+ (mobile and desktop)
 - [ ] No console errors
@@ -85,6 +93,7 @@
 - [ ] Code is clean and committed
 
 #### Phase 5 Launch (Day 7)
+
 - [ ] Git commit: "phase-5: Design polish complete"
 - [ ] Git push to main
 - [ ] Wait for Vercel deploy
@@ -95,24 +104,29 @@
 **Week 2 Status:** ⬜ Not started | 🟡 In progress | ✅ Complete
 
 **PHASE 5 GO/NO-GO DECISION:**
+
 - [ ] ✅ GO - All checkpoints passed, Phase 5 is live
 - [ ] ❌ NO-GO - More work needed, continue Phase 5
 
 ---
 
 ## 📊 WEEKS 3-4: Phase 6 Dashboards Part 1
+
 **Objective:** Build dashboard foundation and core analytics
 
 ### WEEK 3: Dashboard Foundation + Sales Metrics
+
 **Objective:** Get dashboards operational and data flowing
 
 #### Pre-Work (Day 1)
+
 - [ ] Review Phase 6 section of PHASE-5-6-STRATEGIC-ROADMAP.md
 - [ ] Copy Phase 6 Master Prompt
 - [ ] Paste into Copilot Chat
 - [ ] Verify agent starts (usually takes longer than Phase 5)
 
 #### Dashboard Build (Days 1-7)
+
 - [ ] **STEP 1:** Admin dashboard foundation
   - [ ] Dashboard layout created
   - [ ] Navigation menu works
@@ -129,6 +143,7 @@
   - [ ] Product table showing
 
 #### End-of-Week Check (Day 7)
+
 - [ ] Admin login works
 - [ ] Dashboard loads without errors
 - [ ] Charts render (no blank spaces)
@@ -141,9 +156,11 @@
 ---
 
 ### WEEK 4: Product Analytics + Seller Management
+
 **Objective:** Complete analytics and add seller tracking
 
 #### Dashboard Build Continues (Days 1-7)
+
 - [ ] **STEP 3:** Product analytics (complete)
   - [ ] Products by category chart
   - [ ] Products by condition chart
@@ -159,12 +176,14 @@
   - [ ] Consignment tracking visible
 
 #### Mid-Phase Testing (Day 5)
+
 - [ ] Can make a test purchase and see order in dashboard
 - [ ] Can view order details
 - [ ] Charts are updating
 - [ ] Search/filter working
 
 #### End-of-Week Check (Day 7)
+
 - [ ] All dashboard sections accessible
 - [ ] Data appears correct
 - [ ] Build passes: `bun run build`
@@ -175,12 +194,15 @@
 ---
 
 ## 📈 WEEKS 5-6: Phase 6 Dashboards Part 2
+
 **Objective:** Complete dashboards, optimize, test, launch
 
 ### WEEK 5: Email System + Settings + Optimization
+
 **Objective:** Add notification system and admin controls
 
 #### Dashboard Build Continues (Days 1-5)
+
 - [ ] **STEP 6:** Traffic & analytics integration
   - [ ] Google Analytics data displaying (if configured)
   - [ ] Top pages showing
@@ -202,12 +224,14 @@
   - [ ] Navigation accessible on mobile
 
 #### Email Testing (Day 4)
+
 - [ ] Make test purchase
 - [ ] Verify order confirmation email arrives
 - [ ] Verify admin alert email arrives
 - [ ] Check email formatting
 
 #### End-of-Week Check (Day 7)
+
 - [ ] All dashboard features working
 - [ ] Email system operational
 - [ ] Mobile view responsive
@@ -218,9 +242,11 @@
 ---
 
 ### WEEK 6: Final Testing + Optimization + Launch
+
 **Objective:** Quality assurance, performance optimization, production launch
 
 #### Performance Optimization (Days 1-3)
+
 - [ ] **STEP 10:** Performance & optimization
   - [ ] Dashboard loads in <2 seconds (measure it)
   - [ ] Queries are optimized (no slow queries)
@@ -228,6 +254,7 @@
   - [ ] Lighthouse 85+ on mobile
 
 #### QA Testing (Days 3-5)
+
 - [ ] Dashboard security check:
   - [ ] Admin login required
   - [ ] Can't access dashboard without login
@@ -247,11 +274,13 @@
   - [ ] Safari ✓
 
 #### Bug Fixes (Day 5)
+
 - [ ] Fix any issues found in QA
 - [ ] Re-test critical paths
 - [ ] Verify build passes
 
 #### Phase 6 Launch (Days 6-7)
+
 - [ ] Final build: `bun run build` ✓
 - [ ] Final type check: `bunx tsc --noEmit` ✓
 - [ ] Git commit: "phase-6: Admin dashboards and analytics complete"
@@ -265,6 +294,7 @@
 **Week 6 Status:** ⬜ Not started | 🟡 In progress | ✅ Complete
 
 **PHASE 6 GO/NO-GO DECISION:**
+
 - [ ] ✅ GO - Dashboard operational, data flows correctly, ready to use
 - [ ] ❌ NO-GO - More testing/fixes needed
 
@@ -273,6 +303,7 @@
 ## 🏆 PHASE 5 + 6 COMPLETION CHECKLIST
 
 ### Phase 5 Final Sign-Off
+
 - [ ] ✅ All design components refined
 - [ ] ✅ Product cards professional
 - [ ] ✅ Category pages polished
@@ -284,6 +315,7 @@
 - [ ] ✅ Production URL shows polished design
 
 ### Phase 6 Final Sign-Off
+
 - [ ] ✅ Admin dashboard functional
 - [ ] ✅ Sales metrics visible
 - [ ] ✅ Product analytics working
@@ -296,6 +328,7 @@
 - [ ] ✅ Production dashboard working
 
 ### Overall Platform v2 Sign-Off
+
 - [ ] ✅ Phase 4 (Rebrand) complete
 - [ ] ✅ Phase 5 (Design) complete
 - [ ] ✅ Phase 6 (Analytics) complete
@@ -308,14 +341,16 @@
 ## 📊 METRICS TO TRACK
 
 ### Phase 5 Metrics
-- [ ] Lighthouse Desktop Score: ________
-- [ ] Lighthouse Mobile Score: ________
-- [ ] Build time: ________ seconds
-- [ ] Deployment time: ________ seconds
+
+- [ ] Lighthouse Desktop Score: **\_\_\_\_**
+- [ ] Lighthouse Mobile Score: **\_\_\_\_**
+- [ ] Build time: **\_\_\_\_** seconds
+- [ ] Deployment time: **\_\_\_\_** seconds
 - [ ] Zero errors on production? ☐ Yes ☐ No
 
 ### Phase 6 Metrics
-- [ ] Dashboard load time: ________ seconds
+
+- [ ] Dashboard load time: **\_\_\_\_** seconds
 - [ ] Can log in? ☐ Yes ☐ No
 - [ ] Can see sales data? ☐ Yes ☐ No
 - [ ] Can see product analytics? ☐ Yes ☐ No
@@ -365,6 +400,7 @@ WEEK __:
 - [ ] **PROCEED TO PHASE 7** - Want to add advanced features (AI batch import, advanced search, etc.)
 
 **If proceeding to Phase 7, which first?**
+
 - [ ] 7a: AI-powered batch product import
 - [ ] 7b: Advanced search & filtering (faceted search)
 - [ ] 7c: Seller reputation system
@@ -382,6 +418,7 @@ WEEK __:
 - [ ] Combined: ✅ Professional, operational marketplace
 
 **What you have:**
+
 - ✅ Professional messaging
 - ✅ Polished UI matching brand
 - ✅ Full business visibility
@@ -390,6 +427,7 @@ WEEK __:
 - ✅ Ready for real customers
 
 **What you're ready for:**
+
 - 🚀 Marketing push
 - 📊 Data-driven decisions
 - 👥 Growing customer base

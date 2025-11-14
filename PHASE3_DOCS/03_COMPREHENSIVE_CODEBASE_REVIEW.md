@@ -33,6 +33,7 @@ Deployment:   Vercel-ready
 ### Core Directories
 
 **`/src/app`** - Next.js App Router
+
 ```
 app/
 ├── admin/                    # Admin pages & dashboard
@@ -59,6 +60,7 @@ app/
 ```
 
 **`/src/lib`** - Utilities & Services
+
 ```
 lib/
 ├── ai/
@@ -75,6 +77,7 @@ lib/
 ```
 
 **`/src/components`** - React Components
+
 ```
 components/
 ├── Header.tsx
@@ -88,6 +91,7 @@ components/
 ```
 
 **`/prisma`** - Database Schema
+
 ```
 prisma/
 ├── schema.prisma            # Complete data model
@@ -140,11 +144,13 @@ ProductImage {
 ### NextAuth Configuration
 
 **Providers:**
+
 - Google OAuth
 - Credentials (Email/Password)
 - Session storage in database
 
 **Admin Protection:**
+
 - Role-based access control (RBAC)
 - Admin middleware on protected routes
 - Session validation on API endpoints
@@ -158,17 +164,20 @@ ProductImage {
 ### Design System
 
 **Color Palette:**
+
 - Primary: `#D3AF37` (Gold)
 - Background: Dark theme (`#0F0F0F`)
 - Text: White/Light gray
 - Accents: Gold on dark surfaces
 
 **Typography:**
+
 - Headers: Elegant sans-serif
 - Body: Clean, readable sans-serif
 - Font weights: 400, 500, 600, 700
 
 **Components:**
+
 - Responsive grid layouts
 - Dark-mode optimized
 - Accessibility standards (WCAG)
@@ -224,24 +233,28 @@ POST /api/webhooks/stripe       # Stripe events
 ## 📝 KEY CONFIGURATION FILES
 
 ### `next.config.js`
+
 - Image optimization (ImageKit integration)
 - Performance settings
 - API routes configuration
 - Environment validation
 
 ### `tsconfig.json`
+
 - Strict type checking enabled
 - Path aliases configured
 - DOM and Node.js types included
 - No `any` type allowed
 
 ### `tailwind.config.ts`
+
 - Dark mode enabled
 - Gold color scheme (#D3AF37)
 - Custom font families
 - Extended spacing/sizing
 
 ### `prisma/schema.prisma`
+
 - PostgreSQL database
 - All models with proper relations
 - Indexes on key fields
@@ -280,29 +293,34 @@ POST /api/webhooks/stripe       # Stripe events
 ### Where Phase 3 Adds To Current System
 
 **1. Admin Dashboard Enhancement**
+
 - New approval queue section
 - Integration with existing admin layout
 - Uses current authentication system
 - Extends admin role permissions
 
 **2. Database Extension**
+
 - New `AIGeneratedProduct` model
 - Links to existing `Product` model
 - Extends `Category` model
 - New approval status tracking
 
 **3. API Extension**
+
 - 5 new routes in `/api/admin/products/`
 - Uses existing NextAuth middleware
 - Follows current API patterns
 - Integrates with Prisma client
 
 **4. New Services (Non-Invasive)**
+
 - `/lib/pricing/engineWithConfidence.ts` (new)
 - Enhanced `/lib/ai/` folder (extends existing)
 - New approval workflow logic (new)
 
 **5. Component Additions**
+
 - New admin dashboard components
 - Approval queue UI (new)
 - Price adjustment form (new)
@@ -332,9 +350,9 @@ interface ApiResponse<T> {
 
 // Enum for status
 enum ApprovalStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
 }
 ```
 
@@ -345,7 +363,7 @@ try {
   const result = await operation();
   return { success: true, data: result };
 } catch (error) {
-  logger.error('Operation failed:', error);
+  logger.error("Operation failed:", error);
   return { success: false, error: error.message };
 }
 ```
@@ -357,14 +375,14 @@ export async function GET(request: Request) {
   try {
     const session = await auth();
     if (!session?.user?.isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    
+
     const data = await prisma.model.findMany();
     return NextResponse.json(data);
   } catch (error) {
-    logger.error('Route error:', error);
-    return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    logger.error("Route error:", error);
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }
 ```
@@ -404,7 +422,7 @@ export async function GET(request: Request) {
 ### Using Existing Prisma Client
 
 ```typescript
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 export async function getProducts() {
   const products = await prisma.product.findMany({
@@ -417,12 +435,12 @@ export async function getProducts() {
 ### Using Existing Authentication
 
 ```typescript
-import { auth } from '@/lib/auth';
+import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {
   const session = await auth();
   if (!session?.user?.isAdmin) {
-    return new NextResponse('Unauthorized', { status: 401 });
+    return new NextResponse("Unauthorized", { status: 401 });
   }
   // Handle request
 }
@@ -431,10 +449,10 @@ export async function GET(request: Request) {
 ### Using Existing Logger
 
 ```typescript
-import { logger } from '@/lib/logger';
+import { logger } from "@/lib/logger";
 
-logger.info('Operation started');
-logger.error('Operation failed:', error);
+logger.info("Operation started");
+logger.error("Operation failed:", error);
 ```
 
 ---
@@ -489,6 +507,7 @@ tsconfig.json                 # If new paths needed
 ### Phase 3 Performance Impact
 
 **Minimal:**
+
 - New database queries are indexed
 - AI calls are asynchronous
 - Admin UI only loads when needed

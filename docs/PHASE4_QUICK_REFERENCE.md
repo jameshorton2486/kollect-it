@@ -2,10 +2,10 @@
 
 ## URLs & Routes
 
-| Route | Purpose | Auth |
-|-------|---------|------|
-| `/admin/analytics` | Analytics dashboard | Admin |
-| `/api/admin/analytics` | Analytics data API | Admin |
+| Route                  | Purpose             | Auth  |
+| ---------------------- | ------------------- | ----- |
+| `/admin/analytics`     | Analytics dashboard | Admin |
+| `/api/admin/analytics` | Analytics data API  | Admin |
 
 ---
 
@@ -14,11 +14,13 @@
 ### GET /api/admin/analytics
 
 **Example Request:**
+
 ```bash
 curl "http://localhost:3000/api/admin/analytics?startDate=2025-10-01&endDate=2025-11-09"
 ```
 
 **Query Parameters:**
+
 ```
 startDate   (YYYY-MM-DD)  - Filter from date
 endDate     (YYYY-MM-DD)  - Filter to date
@@ -27,6 +29,7 @@ status      (enum)        - APPROVED|REJECTED|ALL
 ```
 
 **Response Structure:**
+
 ```json
 {
   "dateRange": { "startDate": "...", "endDate": "..." },
@@ -102,6 +105,7 @@ status      (enum)        - APPROVED|REJECTED|ALL
 ## Dashboard Sections
 
 ### 1. Metric Cards (Top Row)
+
 ```
 [Total Approvals]  [Pending Review]  [Total Revenue]  [Avg Order Value]
      42 items        15 items           $185,750        $1,250
@@ -109,6 +113,7 @@ status      (enum)        - APPROVED|REJECTED|ALL
 ```
 
 ### 2. Approval Trends (Left Chart)
+
 ```
 Last 7 days trend:
 Nov 03: ✓ 6 approved, ✗ 1 rejected (Conf: 78%)
@@ -118,6 +123,7 @@ Nov 05: ✓ 7 approved, ✗ 2 rejected (Conf: 77%)
 ```
 
 ### 3. Revenue by Category (Right Chart)
+
 ```
 Vintage Comics      ████████░░░░  28.5% • 300 units
 Trading Cards       ██████░░░░░░  18.2% • 182 units
@@ -127,6 +133,7 @@ Books               ██░░░░░░░░░░   6.2% • 62 units
 ```
 
 ### 4. Category Performance Table
+
 ```
 Category         Products  Approval%  Avg Price  Confidence  Revenue    Growth
 Vintage Comics   45        88.5%      $150.00   82.3        $45,000    +12.5%
@@ -136,6 +143,7 @@ Collectibles     28        85.3%      $220.00   79.5        $28,160    +5.2%
 ```
 
 ### 5. Pricing Analysis Cards
+
 ```
 [Accuracy]         [Confidence]       [Overrides]
 87.5%             78.5               12.5%
@@ -143,6 +151,7 @@ Pricing accurate   Avg confidence     Admin changed
 ```
 
 ### 6. Product Performance Cards
+
 ```
 [Total]  [Sell-Through]  [Avg Price]  [Time-to-Sell]
 156      68.5%          $1,250.50    7 days
@@ -153,6 +162,7 @@ Pricing accurate   Avg confidence     Admin changed
 ## Data Structure Examples
 
 ### ApprovalMetrics
+
 ```typescript
 {
   totalApprovals: 42,
@@ -168,6 +178,7 @@ Pricing accurate   Avg confidence     Admin changed
 ```
 
 ### CategoryMetrics
+
 ```typescript
 {
   name: "Vintage Comics",
@@ -182,6 +193,7 @@ Pricing accurate   Avg confidence     Admin changed
 ```
 
 ### RevenueByCategory
+
 ```typescript
 {
   category: "Vintage Comics",
@@ -196,6 +208,7 @@ Pricing accurate   Avg confidence     Admin changed
 ## Component Props
 
 ### AnalyticsDashboard
+
 ```typescript
 interface DashboardProps {
   initialData?: AdminAnalyticsSummary;
@@ -205,37 +218,41 @@ interface DashboardProps {
 ```
 
 ### MetricCard
+
 ```typescript
 interface MetricCardProps {
   title: string;
   value: number;
   unit: string;
-  prefix?: string;  // "$", "%", etc
-  trend?: number;   // +/- percentage
+  prefix?: string; // "$", "%", etc
+  trend?: number; // +/- percentage
   trendLabel?: string;
-  color?: string;   // "bg-blue-50"
-  borderColor?: string;  // "border-blue-200"
+  color?: string; // "bg-blue-50"
+  borderColor?: string; // "border-blue-200"
 }
 ```
 
 ### ApprovalTrendChart
+
 ```typescript
 interface ApprovalTrendChartProps {
-  data: ApprovalTrends[];  // 30-day array
+  data: ApprovalTrends[]; // 30-day array
 }
 ```
 
 ### RevenueByCategory
+
 ```typescript
 interface RevenueByCategoryProps {
-  data: RevenueByCategory[];  // Top 5 categories
+  data: RevenueByCategory[]; // Top 5 categories
 }
 ```
 
 ### CategoryMetricsGrid
+
 ```typescript
 interface CategoryMetricsGridProps {
-  data: CategoryMetrics[];  // All categories
+  data: CategoryMetrics[]; // All categories
 }
 ```
 
@@ -244,24 +261,31 @@ interface CategoryMetricsGridProps {
 ## Key Functions
 
 ### getApprovalMetrics(params)
+
 Returns approval rate, pending count, timing metrics
 
 ### getPricingAnalysis(params)
+
 Returns accuracy, confidence, AI deviations by category
 
 ### getProductPerformance(params)
+
 Returns time-to-sell, sell-through rate, trending categories
 
 ### getRevenueInsights(params)
+
 Returns total revenue, AOV, conversion rate, category breakdown
 
 ### getApprovalTrends(days=30)
+
 Returns time-series approval/rejection data for N days
 
 ### getCategoryMetrics(params)
+
 Returns per-category performance metrics
 
 ### getAnalyticsSummary(params)
+
 Orchestrates all functions in parallel, returns complete snapshot
 
 ---
@@ -269,31 +293,37 @@ Orchestrates all functions in parallel, returns complete snapshot
 ## Common Queries
 
 ### Last 30 Days Analytics
+
 ```
 GET /api/admin/analytics
 ```
 
 ### Last Quarter Analytics
+
 ```
 GET /api/admin/analytics?startDate=2025-07-09&endDate=2025-10-09
 ```
 
 ### Vintage Comics Category Only
+
 ```
 GET /api/admin/analytics?category=Vintage Comics
 ```
 
 ### Approved Products Only
+
 ```
 GET /api/admin/analytics?status=APPROVED
 ```
 
 ### Rejected Products Only
+
 ```
 GET /api/admin/analytics?status=REJECTED
 ```
 
 ### Combined Filters
+
 ```
 GET /api/admin/analytics?startDate=2025-10-01&category=Collectibles&status=APPROVED
 ```
@@ -302,17 +332,17 @@ GET /api/admin/analytics?startDate=2025-10-01&category=Collectibles&status=APPRO
 
 ## Files Reference
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| `src/lib/analytics/types.ts` | 113 | 12 type interfaces |
-| `src/lib/analytics/queries.ts` | 403 | 6 query functions |
-| `src/app/api/admin/analytics/route.ts` | 48 | API endpoint |
-| `src/components/admin/AnalyticsDashboard.tsx` | 190 | Main component |
-| `src/components/admin/charts/MetricCard.tsx` | 45 | Metric display |
-| `src/components/admin/charts/ApprovalTrendChart.tsx` | 76 | Trend chart |
-| `src/components/admin/charts/RevenueByCategory.tsx` | 48 | Category chart |
-| `src/components/admin/charts/CategoryMetricsGrid.tsx` | 63 | Table view |
-| `src/app/admin/analytics/page.tsx` | 16 | Route page |
+| File                                                  | Lines | Purpose            |
+| ----------------------------------------------------- | ----- | ------------------ |
+| `src/lib/analytics/types.ts`                          | 113   | 12 type interfaces |
+| `src/lib/analytics/queries.ts`                        | 403   | 6 query functions  |
+| `src/app/api/admin/analytics/route.ts`                | 48    | API endpoint       |
+| `src/components/admin/AnalyticsDashboard.tsx`         | 190   | Main component     |
+| `src/components/admin/charts/MetricCard.tsx`          | 45    | Metric display     |
+| `src/components/admin/charts/ApprovalTrendChart.tsx`  | 76    | Trend chart        |
+| `src/components/admin/charts/RevenueByCategory.tsx`   | 48    | Category chart     |
+| `src/components/admin/charts/CategoryMetricsGrid.tsx` | 63    | Table view         |
+| `src/app/admin/analytics/page.tsx`                    | 16    | Route page         |
 
 **Total: 9 files, 1,174 lines**
 
@@ -329,32 +359,36 @@ GET /api/admin/analytics?startDate=2025-10-01&category=Collectibles&status=APPRO
 
 ## Error Codes
 
-| Code | Meaning | Solution |
-|------|---------|----------|
-| 401 | Unauthorized | Login as admin user |
-| 403 | Forbidden | Ensure user has ADMIN role |
-| 500 | Server error | Check database connection |
+| Code | Meaning      | Solution                   |
+| ---- | ------------ | -------------------------- |
+| 401  | Unauthorized | Login as admin user        |
+| 403  | Forbidden    | Ensure user has ADMIN role |
+| 500  | Server error | Check database connection  |
 
 ---
 
 ## Troubleshooting
 
 **No data showing?**
+
 - Check admin role: `user.role === 'ADMIN'`
 - Verify approvals exist in database
 - Check date range isn't too narrow
 
 **Charts look empty?**
+
 - Insufficient data for period
 - Try wider date range (30+ days)
 - Ensure products have sales
 
 **API returns 401?**
+
 - Session expired: Refresh page
 - Check authentication cookie
 - Verify NextAuth setup
 
 **Slow performance?**
+
 - Large date ranges slow queries
 - Limit to 90 days max
 - Reduce category count
@@ -371,5 +405,5 @@ GET /api/admin/analytics?startDate=2025-10-01&category=Collectibles&status=APPRO
 
 ---
 
-*Last Updated: November 9, 2025*
-*Phase 4: Admin Analytics Dashboard*
+_Last Updated: November 9, 2025_
+_Phase 4: Admin Analytics Dashboard_

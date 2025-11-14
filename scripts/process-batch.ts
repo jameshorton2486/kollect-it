@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
  * KOLLECT-IT: Batch Product Generator
- * 
+ *
  * Processes multiple products from JSON file
  * Useful for bulk product imports
- * 
+ *
  * Usage: bun run process-batch batch-products.json
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
 interface BatchProduct {
   category: string;
@@ -32,8 +32,8 @@ interface BatchResult {
 
 class BatchProcessor {
   async processBatchFile(filePath: string): Promise<BatchResult> {
-    console.log('📋 KOLLECT-IT Batch Processor');
-    console.log('═══════════════════════════════\n');
+    console.log("📋 KOLLECT-IT Batch Processor");
+    console.log("═══════════════════════════════\n");
 
     // Read batch file
     if (!fs.existsSync(filePath)) {
@@ -43,15 +43,15 @@ class BatchProcessor {
     let batchProducts: BatchProduct[] = [];
 
     try {
-      const content = fs.readFileSync(filePath, 'utf-8');
+      const content = fs.readFileSync(filePath, "utf-8");
       batchProducts = JSON.parse(content);
 
       if (!Array.isArray(batchProducts)) {
-        throw new Error('Batch file must be a JSON array of products');
+        throw new Error("Batch file must be a JSON array of products");
       }
     } catch (error) {
       throw new Error(
-        `Failed to parse batch file: ${error instanceof Error ? error.message : String(error)}`
+        `Failed to parse batch file: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -62,20 +62,20 @@ class BatchProcessor {
       const errors = this.validateProduct(product);
       return {
         index,
-        name: product.name || 'Unknown',
+        name: product.name || "Unknown",
         valid: errors.length === 0,
-        errors
+        errors,
       };
     });
 
-    const validProducts = validationResults.filter(r => r.valid);
-    const invalidProducts = validationResults.filter(r => !r.valid);
+    const validProducts = validationResults.filter((r) => r.valid);
+    const invalidProducts = validationResults.filter((r) => !r.valid);
 
     console.log(`✅ Valid: ${validProducts.length}`);
     console.log(`❌ Invalid: ${invalidProducts.length}\n`);
 
     if (invalidProducts.length > 0) {
-      console.log('📝 Invalid products:');
+      console.log("📝 Invalid products:");
       for (const invalid of invalidProducts) {
         console.log(`   • ${invalid.name} (index ${invalid.index})`);
         for (const error of invalid.errors) {
@@ -111,12 +111,12 @@ class BatchProcessor {
         category: product.category,
         photos: Array.isArray(product.photos) ? product.photos.length : 0,
         valid: validationResults[index]?.valid || false,
-        errors: validationResults[index]?.errors || []
-      }))
+        errors: validationResults[index]?.errors || [],
+      })),
     };
 
     // Save manifest
-    const outputDir = './batches';
+    const outputDir = "./batches";
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
@@ -125,25 +125,25 @@ class BatchProcessor {
     fs.writeFileSync(outputFile, JSON.stringify(batchManifest, null, 2));
 
     console.log(`📄 Batch manifest saved: ${outputFile}\n`);
-    console.log('📊 Summary:');
+    console.log("📊 Summary:");
     console.log(`   Batch ID: ${batchId}`);
     console.log(`   Total Products: ${batchProducts.length}`);
     console.log(`   Total Photos: ${totalPhotos}`);
     console.log(`   Output: ${outputFile}\n`);
 
     // Print next steps
-    console.log('🚀 Next steps:');
-    console.log('   1. Review batch manifest');
-    console.log('   2. Submit to AI Agent v3 for product.json generation');
-    console.log('   3. Save output to Google Drive (/Kollect-It/Products/)');
-    console.log('   4. Run: bun run sync-from-google-drive\n');
+    console.log("🚀 Next steps:");
+    console.log("   1. Review batch manifest");
+    console.log("   2. Submit to AI Agent v3 for product.json generation");
+    console.log("   3. Save output to Google Drive (/Kollect-It/Products/)");
+    console.log("   4. Run: bun run sync-from-google-drive\n");
 
     return {
       batch_id: batchId,
       timestamp,
       total_products: batchProducts.length,
       total_photos: totalPhotos,
-      output_file: outputFile
+      output_file: outputFile,
     };
   }
 
@@ -152,29 +152,34 @@ class BatchProcessor {
 
     // Check required fields
     if (!product.category) {
-      errors.push('Missing required field: category');
+      errors.push("Missing required field: category");
     } else if (
-      !['fine_art', 'collectibles', 'books_and_manuscripts', 'militaria_and_historical'].includes(
-        product.category as string
-      )
+      ![
+        "fine_art",
+        "collectibles",
+        "books_and_manuscripts",
+        "militaria_and_historical",
+      ].includes(product.category as string)
     ) {
       errors.push(`Invalid category: ${product.category}`);
     }
 
     if (!product.name) {
-      errors.push('Missing required field: name');
+      errors.push("Missing required field: name");
     }
 
     if (!product.condition) {
-      errors.push('Missing required field: condition');
+      errors.push("Missing required field: condition");
     } else if (
-      !['poor', 'fair', 'good', 'very_good', 'excellent'].includes(product.condition as string)
+      !["poor", "fair", "good", "very_good", "excellent"].includes(
+        product.condition as string,
+      )
     ) {
       errors.push(`Invalid condition: ${product.condition}`);
     }
 
     if (!Array.isArray(product.photos) || product.photos.length === 0) {
-      errors.push('Missing required field: photos (at least 1 required)');
+      errors.push("Missing required field: photos (at least 1 required)");
     } else if (product.photos.length > 20) {
       errors.push(`Too many photos: ${product.photos.length} (max 20)`);
     }
@@ -188,18 +193,18 @@ async function main() {
   const batchFile = process.argv[2];
 
   if (!batchFile) {
-    console.error('❌ Usage: bun run process-batch <batch-file.json>');
-    console.error('Example: bun run process-batch batch-products.json');
+    console.error("❌ Usage: bun run process-batch <batch-file.json>");
+    console.error("Example: bun run process-batch batch-products.json");
     process.exit(1);
   }
 
   try {
     const processor = new BatchProcessor();
     await processor.processBatchFile(batchFile);
-    console.log('✅ Batch processing complete!');
+    console.log("✅ Batch processing complete!");
     process.exit(0);
   } catch (error) {
-    console.error('❌ Batch processing failed:', error);
+    console.error("❌ Batch processing failed:", error);
     process.exit(1);
   }
 }

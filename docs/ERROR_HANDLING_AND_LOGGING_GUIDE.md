@@ -17,6 +17,7 @@ project-root/
 ### Browser Console Errors
 
 **Location:** Your browser's Developer Tools
+
 - **Chrome/Edge:** F12 → Console tab
 - **Firefox:** F12 → Console tab
 - Shows real-time errors and logging
@@ -24,6 +25,7 @@ project-root/
 ### Server Logs (Development)
 
 **Location:** Terminal running `bun run dev`
+
 - Shows all console.log, console.error, etc.
 - Real-time output during development
 - Prefixed with timestamps and log levels
@@ -31,12 +33,14 @@ project-root/
 ### Database Errors
 
 **Location:** Prisma error logs
+
 - **File:** `.next/logs/` (Next.js build logs)
 - **File:** `prisma/debug.log` (if DEBUG enabled)
 
 ### Next.js Build Errors
 
 **Location:** Terminal output when running `bun run build`
+
 - Shows TypeScript errors
 - Shows bundling errors
 - Shows runtime warnings
@@ -66,6 +70,7 @@ Each log entry is a JSON object on a single line:
 ### Parsing Log Files
 
 **View recent errors:**
+
 ```bash
 # PowerShell - Last 20 error lines
 Get-Content logs/error-*.log | Select-Object -Last 20
@@ -75,6 +80,7 @@ Get-Content logs/error-2025-11-09.log | ConvertFrom-Json
 ```
 
 **Search for specific errors:**
+
 ```bash
 # Find all pricing errors
 Select-String "PricingEngine" logs/*.log
@@ -92,31 +98,31 @@ Get-Content logs/error-*.log | Where-Object { $_ -match '"error":".*"' }
 
 ### Approval Service Errors
 
-| Code | HTTP Status | Meaning | Action |
-|------|-------------|---------|--------|
-| `INVALID_PRICE` | 400 | Price is invalid (≤ 0) | Check price input validation |
-| `UNAUTHORIZED` | 403 | User is not an admin | Check authentication |
-| `NOT_FOUND` | 404 | Approval doesn't exist | Check approval ID |
-| `INVALID_STATE` | 400 | Can't approve (wrong status) | Check current approval status |
-| `DATABASE_ERROR` | 500 | Database operation failed | Check database connection |
+| Code             | HTTP Status | Meaning                      | Action                        |
+| ---------------- | ----------- | ---------------------------- | ----------------------------- |
+| `INVALID_PRICE`  | 400         | Price is invalid (≤ 0)       | Check price input validation  |
+| `UNAUTHORIZED`   | 403         | User is not an admin         | Check authentication          |
+| `NOT_FOUND`      | 404         | Approval doesn't exist       | Check approval ID             |
+| `INVALID_STATE`  | 400         | Can't approve (wrong status) | Check current approval status |
+| `DATABASE_ERROR` | 500         | Database operation failed    | Check database connection     |
 
 ### Pricing Engine Errors
 
-| Code | HTTP Status | Meaning | Action |
-|------|-------------|---------|--------|
-| `INVALID_PRODUCT` | 400 | Product data invalid | Verify product exists |
-| `NO_AI_DATA` | 400 | Product lacks AI analysis | Run AI analysis first |
-| `INVALID_AI_PRICE` | 400 | AI price is ≤ 0 | Check AI analysis output |
-| `MARKET_DATA_UNAVAILABLE` | 503 | Market API is down | Uses fallback mock data |
-| `CONFIDENCE_CALCULATION_ERROR` | 500 | Confidence calc failed | Check historical data |
+| Code                           | HTTP Status | Meaning                   | Action                   |
+| ------------------------------ | ----------- | ------------------------- | ------------------------ |
+| `INVALID_PRODUCT`              | 400         | Product data invalid      | Verify product exists    |
+| `NO_AI_DATA`                   | 400         | Product lacks AI analysis | Run AI analysis first    |
+| `INVALID_AI_PRICE`             | 400         | AI price is ≤ 0           | Check AI analysis output |
+| `MARKET_DATA_UNAVAILABLE`      | 503         | Market API is down        | Uses fallback mock data  |
+| `CONFIDENCE_CALCULATION_ERROR` | 500         | Confidence calc failed    | Check historical data    |
 
 ### Common API Errors
 
-| Code | HTTP Status | Meaning |
-|------|-------------|---------|
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected error (logs included) |
-| `VALIDATION_ERROR` | 422 | Request validation failed |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests |
+| Code                    | HTTP Status | Meaning                          |
+| ----------------------- | ----------- | -------------------------------- |
+| `INTERNAL_SERVER_ERROR` | 500         | Unexpected error (logs included) |
+| `VALIDATION_ERROR`      | 422         | Request validation failed        |
+| `RATE_LIMIT_EXCEEDED`   | 429         | Too many requests                |
 
 ---
 
@@ -125,12 +131,14 @@ Get-Content logs/error-*.log | Where-Object { $_ -match '"error":".*"' }
 ### Scenario 1: Approval Failed to Process
 
 **Find the error:**
+
 ```bash
 # Search for the approval ID
 Select-String "approval_123" logs/error-*.log
 ```
 
 **Example output:**
+
 ```
 logs/error-2025-11-09.log:1:"error":"INVALID_STATE","message":"Cannot approve product with status: rejected"
 ```
@@ -142,12 +150,14 @@ logs/error-2025-11-09.log:1:"error":"INVALID_STATE","message":"Cannot approve pr
 ### Scenario 2: Pricing Calculation Not Working
 
 **Find the error:**
+
 ```bash
 # Find all pricing errors
 Select-String "PricingEngine" logs/error-*.log
 ```
 
 **Example output:**
+
 ```json
 {
   "timestamp": "2025-11-09T14:32:15.123Z",
@@ -169,6 +179,7 @@ Select-String "PricingEngine" logs/error-*.log
 ### Scenario 3: Market Data API Connection Failed
 
 **Find the warning:**
+
 ```bash
 # Find market data failures
 Select-String "market data" logs/warn-*.log
@@ -183,11 +194,13 @@ Select-String "market data" logs/warn-*.log
 ### Enable Debug Logging
 
 **Add to `.env.local`:**
+
 ```bash
 DEBUG=true
 ```
 
 Then restart dev server:
+
 ```bash
 bun run dev
 ```
@@ -197,11 +210,13 @@ Debug logs will appear in `logs/debug-*.log`
 ### Monitor Logs in Real-Time
 
 **PowerShell - Watch error log:**
+
 ```powershell
 Get-Content logs/error-*.log -Wait -Tail 5
 ```
 
 **PowerShell - Watch all logs:**
+
 ```powershell
 Get-Content logs/*.log -Wait -Tail 10
 ```
@@ -214,29 +229,29 @@ Get-Content logs/*.log -Wait -Tail 10
 
 ```typescript
 // ❌ Bad
-await logger.error('Service', 'Something failed', error)
+await logger.error("Service", "Something failed", error);
 
 // ✅ Good
-await logger.error('Service', 'Price calculation failed', error, {
+await logger.error("Service", "Price calculation failed", error, {
   productId: product.id,
   requestId: requestId,
   attemptedPrice: calculatedPrice,
-})
+});
 ```
 
 ### 2. Use Specific Error Codes
 
 ```typescript
 // ❌ Bad
-throw new Error('Approval failed')
+throw new Error("Approval failed");
 
 // ✅ Good
 throw new ApprovalError(
-  'INVALID_STATE',
+  "INVALID_STATE",
   400,
-  'Cannot approve product with status: rejected',
-  { currentStatus: approval.status }
-)
+  "Cannot approve product with status: rejected",
+  { currentStatus: approval.status },
+);
 ```
 
 ### 3. Log at Right Level
@@ -248,14 +263,15 @@ throw new ApprovalError(
 
 ```typescript
 // Market API fails - use fallback
-await logger.warn('PricingEngine', 'Market API failed, using mock data', { 
-  error: err.message 
-})
+await logger.warn("PricingEngine", "Market API failed, using mock data", {
+  error: err.message,
+});
 
 // Product approved successfully
-await logger.info('ApprovalService', 'Product approved', { 
-  productId, finalPrice 
-})
+await logger.info("ApprovalService", "Product approved", {
+  productId,
+  finalPrice,
+});
 ```
 
 ### 4. Graceful Error Recovery
@@ -286,6 +302,7 @@ try {
 ### Environment Variables for Production
 
 Add to Vercel project settings:
+
 ```
 DEBUG=false  (keep false for performance)
 LOG_LEVEL=INFO  (only log INFO and above)
@@ -298,6 +315,7 @@ LOG_LEVEL=INFO  (only log INFO and above)
 ### "Logs directory doesn't exist"
 
 **Fix:**
+
 ```bash
 # Create it manually
 New-Item -ItemType Directory -Force -Path "logs"
@@ -308,6 +326,7 @@ Then restart your dev server.
 ### "Can't read log files - Permission denied"
 
 **Fix:**
+
 ```bash
 # On Windows, check file permissions
 Get-Item logs/*.log | Get-Acl
@@ -319,6 +338,7 @@ icacls logs /grant $env:USERNAME:F /T
 ### "Log file too large"
 
 **Clean up old logs:**
+
 ```bash
 # Keep only recent logs (optional - do this monthly)
 Remove-Item logs/error-2025-10*.log  # Delete October logs
@@ -327,11 +347,12 @@ Remove-Item logs/error-2025-10*.log  # Delete October logs
 ### "Missing context in errors"
 
 **Add logging statement:**
+
 ```typescript
-await logger.debug('MyService', 'Debug checkpoint', {
+await logger.debug("MyService", "Debug checkpoint", {
   variableName: value,
-  checkpointName: 'after-database-query'
-})
+  checkpointName: "after-database-query",
+});
 ```
 
 ---
@@ -348,7 +369,7 @@ export class Logger {
   error(service: string, message: string, error?: Error, context?: Record<string, any>) {
     // Log locally
     this.log({ timestamp: ..., level: 'ERROR', ... })
-    
+
     // Also send to Sentry for monitoring
     if (process.env.SENTRY_DSN) {
       Sentry.captureException(error, { contexts: { context } })
@@ -361,17 +382,17 @@ export class Logger {
 
 ## File Locations Summary
 
-| What | Where | How to Access |
-|------|-------|---------------|
-| Error logs | `./logs/error-YYYY-MM-DD.log` | Text editor or `Get-Content` |
-| Info logs | `./logs/info-YYYY-MM-DD.log` | Text editor or `Get-Content` |
-| Warn logs | `./logs/warn-YYYY-MM-DD.log` | Text editor or `Get-Content` |
-| Debug logs | `./logs/debug-YYYY-MM-DD.log` | When DEBUG=true |
-| Browser errors | Developer Console (F12) | Chrome/Firefox DevTools |
-| Server console | Terminal running `bun run dev` | Watch terminal output |
-| Build errors | Terminal output | After `bun run build` |
-| Database errors | `.next/logs/` | Next.js internal |
-| Next.js logs | `.next/logs/` | After each build |
+| What            | Where                          | How to Access                |
+| --------------- | ------------------------------ | ---------------------------- |
+| Error logs      | `./logs/error-YYYY-MM-DD.log`  | Text editor or `Get-Content` |
+| Info logs       | `./logs/info-YYYY-MM-DD.log`   | Text editor or `Get-Content` |
+| Warn logs       | `./logs/warn-YYYY-MM-DD.log`   | Text editor or `Get-Content` |
+| Debug logs      | `./logs/debug-YYYY-MM-DD.log`  | When DEBUG=true              |
+| Browser errors  | Developer Console (F12)        | Chrome/Firefox DevTools      |
+| Server console  | Terminal running `bun run dev` | Watch terminal output        |
+| Build errors    | Terminal output                | After `bun run build`        |
+| Database errors | `.next/logs/`                  | Next.js internal             |
+| Next.js logs    | `.next/logs/`                  | After each build             |
 
 ---
 
@@ -412,5 +433,5 @@ Remove-Item logs/error-2025-10*.log  # Example: remove October logs
 
 ---
 
-*Last updated: November 9, 2025*
-*For Phase 3 Implementation*
+_Last updated: November 9, 2025_
+_For Phase 3 Implementation_

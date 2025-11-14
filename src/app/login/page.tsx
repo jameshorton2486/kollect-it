@@ -1,42 +1,45 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<{ email?: string; password?: string }>({});
+  const [validationErrors, setValidationErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
 
   const validateForm = () => {
     const errors: { email?: string; password?: string } = {};
-    
+
     if (!formData.email) {
-      errors.email = 'Email is required';
+      errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = 'Please enter a valid email address';
+      errors.email = "Please enter a valid email address";
     }
-    
+
     if (!formData.password) {
-      errors.password = 'Password is required';
+      errors.password = "Password is required";
     }
-    
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!validateForm()) {
       return;
@@ -45,20 +48,20 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         email: formData.email,
         password: formData.password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError('Invalid email or password. Please try again.');
+        setError("Invalid email or password. Please try again.");
       } else if (result?.ok) {
-        router.push('/account');
+        router.push("/account");
         router.refresh();
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -79,11 +82,18 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12" role="main">
+    <main
+      className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12"
+      role="main"
+    >
       <div className="max-w-md mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-serif font-bold text-ink mb-2">Welcome Back</h1>
-          <p className="text-ink-secondary">Sign in to your Kollect-It account</p>
+          <h1 className="text-3xl font-serif font-bold text-ink mb-2">
+            Welcome Back
+          </h1>
+          <p className="text-ink-secondary">
+            Sign in to your Kollect-It account
+          </p>
         </div>
 
         {error && (
@@ -96,7 +106,10 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-ink mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-ink mb-1"
+            >
               Email Address <span className="text-red-500">*</span>
             </label>
             <input
@@ -108,20 +121,27 @@ export default function LoginPage() {
               placeholder="your@email.com"
               className={`w-full px-4 py-2 border rounded-lg transition-colors ${
                 validationErrors.email
-                  ? 'border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200'
-                  : 'border-border-neutral bg-white focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50'
+                  ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
+                  : "border-border-neutral bg-white focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
               }`}
-              {...(validationErrors.email ? { 'aria-invalid': true, 'aria-describedby': 'email-error' } : {})}
+              {...(validationErrors.email
+                ? { "aria-invalid": true, "aria-describedby": "email-error" }
+                : {})}
             />
             {validationErrors.email && (
-              <p id="email-error" className="text-sm text-red-600 mt-1">{validationErrors.email}</p>
+              <p id="email-error" className="text-sm text-red-600 mt-1">
+                {validationErrors.email}
+              </p>
             )}
           </div>
 
           {/* Password Field */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label htmlFor="password" className="block text-sm font-medium text-ink">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-ink"
+              >
                 Password <span className="text-red-500">*</span>
               </label>
               <Link
@@ -134,29 +154,36 @@ export default function LoginPage() {
             <div className="relative">
               <input
                 id="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 required
                 value={formData.password}
                 onChange={handlePasswordChange}
                 placeholder="Enter your password"
                 className={`w-full px-4 py-2 pr-10 border rounded-lg transition-colors ${
                   validationErrors.password
-                    ? 'border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200'
-                    : 'border-border-neutral bg-white focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50'
+                    ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
+                    : "border-border-neutral bg-white focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
                 }`}
-                {...(validationErrors.password ? { 'aria-invalid': true, 'aria-describedby': 'password-error' } : {})}
+                {...(validationErrors.password
+                  ? {
+                      "aria-invalid": true,
+                      "aria-describedby": "password-error",
+                    }
+                  : {})}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-secondary hover:text-ink transition-colors"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
             {validationErrors.password && (
-              <p id="password-error" className="text-sm text-red-600 mt-1">{validationErrors.password}</p>
+              <p id="password-error" className="text-sm text-red-600 mt-1">
+                {validationErrors.password}
+              </p>
             )}
           </div>
 
@@ -172,7 +199,7 @@ export default function LoginPage() {
                 Signing In...
               </div>
             ) : (
-              'Sign In'
+              "Sign In"
             )}
           </button>
         </form>
@@ -187,8 +214,11 @@ export default function LoginPage() {
         {/* Sign Up Link */}
         <div className="text-center">
           <p className="text-sm text-ink-secondary">
-            Don't have an account?{' '}
-            <Link href="/register" className="font-medium text-link hover:text-link/80 transition-colors">
+            Don't have an account?{" "}
+            <Link
+              href="/register"
+              className="font-medium text-link hover:text-link/80 transition-colors"
+            >
               Create one
             </Link>
           </p>

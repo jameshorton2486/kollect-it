@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
 /**
  * Seller Inquiry Manager Component
  * Phase 6 Step 5 - Seller inquiry tracking and consignment management
  */
 
-import { useState, useEffect } from 'react';
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  Package, 
-  CheckCircle, 
-  XCircle, 
+import { useState, useEffect } from "react";
+import {
+  User,
+  Mail,
+  Phone,
+  Package,
+  CheckCircle,
+  XCircle,
   Clock,
   MessageSquare,
   Calendar,
   Filter,
-  Search
-} from 'lucide-react';
+  Search,
+} from "lucide-react";
 
 interface SellerInquiry {
   id: string;
   sellerName: string;
   email: string;
   phone: string;
-  inquiryType: 'consignment' | 'direct-sale' | 'appraisal' | 'general';
-  status: 'pending' | 'reviewing' | 'approved' | 'rejected' | 'completed';
+  inquiryType: "consignment" | "direct-sale" | "appraisal" | "general";
+  status: "pending" | "reviewing" | "approved" | "rejected" | "completed";
   itemDescription: string;
   category: string;
   estimatedValue: number;
@@ -39,11 +39,13 @@ interface SellerInquiry {
 export function SellerInquiryManager() {
   const [inquiries, setInquiries] = useState<SellerInquiry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedInquiry, setSelectedInquiry] = useState<SellerInquiry | null>(null);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [newNote, setNewNote] = useState('');
+  const [selectedInquiry, setSelectedInquiry] = useState<SellerInquiry | null>(
+    null,
+  );
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [newNote, setNewNote] = useState("");
 
   useEffect(() => {
     fetchInquiries();
@@ -52,13 +54,13 @@ export function SellerInquiryManager() {
   const fetchInquiries = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/admin/sellers/inquiries');
+      const response = await fetch("/api/admin/sellers/inquiries");
       if (response.ok) {
         const data = await response.json();
         setInquiries(data.inquiries);
       }
     } catch (error) {
-      console.error('Error fetching inquiries:', error);
+      console.error("Error fetching inquiries:", error);
     } finally {
       setLoading(false);
     }
@@ -66,21 +68,25 @@ export function SellerInquiryManager() {
 
   const updateInquiryStatus = async (inquiryId: string, newStatus: string) => {
     try {
-      const response = await fetch(`/api/admin/sellers/inquiries/${inquiryId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
+      const response = await fetch(
+        `/api/admin/sellers/inquiries/${inquiryId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus }),
+        },
+      );
 
       if (response.ok) {
         await fetchInquiries();
         if (selectedInquiry?.id === inquiryId) {
-          const updated = inquiries.find(i => i.id === inquiryId);
-          if (updated) setSelectedInquiry({ ...updated, status: newStatus as any });
+          const updated = inquiries.find((i) => i.id === inquiryId);
+          if (updated)
+            setSelectedInquiry({ ...updated, status: newStatus as any });
         }
       }
     } catch (error) {
-      console.error('Error updating inquiry:', error);
+      console.error("Error updating inquiry:", error);
     }
   };
 
@@ -88,56 +94,65 @@ export function SellerInquiryManager() {
     if (!selectedInquiry || !newNote.trim()) return;
 
     try {
-      const response = await fetch(`/api/admin/sellers/inquiries/${selectedInquiry.id}/notes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ note: newNote }),
-      });
+      const response = await fetch(
+        `/api/admin/sellers/inquiries/${selectedInquiry.id}/notes`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ note: newNote }),
+        },
+      );
 
       if (response.ok) {
-        const updated = { ...selectedInquiry, adminNotes: [...selectedInquiry.adminNotes, newNote] };
+        const updated = {
+          ...selectedInquiry,
+          adminNotes: [...selectedInquiry.adminNotes, newNote],
+        };
         setSelectedInquiry(updated);
-        setNewNote('');
+        setNewNote("");
         await fetchInquiries();
       }
     } catch (error) {
-      console.error('Error adding note:', error);
+      console.error("Error adding note:", error);
     }
   };
 
   const sendEmail = async (inquiryId: string, template: string) => {
     try {
       await fetch(`/api/admin/sellers/inquiries/${inquiryId}/email`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ template }),
       });
-      alert('Email sent successfully');
+      alert("Email sent successfully");
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error("Error sending email:", error);
     }
   };
 
-  const filteredInquiries = inquiries.filter(inquiry => {
-    const matchesStatus = statusFilter === 'all' || inquiry.status === statusFilter;
-    const matchesType = typeFilter === 'all' || inquiry.inquiryType === typeFilter;
-    const matchesSearch = searchQuery === '' || 
+  const filteredInquiries = inquiries.filter((inquiry) => {
+    const matchesStatus =
+      statusFilter === "all" || inquiry.status === statusFilter;
+    const matchesType =
+      typeFilter === "all" || inquiry.inquiryType === typeFilter;
+    const matchesSearch =
+      searchQuery === "" ||
       inquiry.sellerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       inquiry.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       inquiry.itemDescription.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return matchesStatus && matchesType && matchesSearch;
   });
 
   const getStatusColor = (status: string) => {
     const colors = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      reviewing: 'bg-blue-100 text-blue-800',
-      approved: 'bg-green-100 text-green-800',
-      rejected: 'bg-red-100 text-red-800',
-      completed: 'bg-gray-100 text-gray-800',
+      pending: "bg-yellow-100 text-yellow-800",
+      reviewing: "bg-blue-100 text-blue-800",
+      approved: "bg-green-100 text-green-800",
+      rejected: "bg-red-100 text-red-800",
+      completed: "bg-gray-100 text-gray-800",
     };
-    return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    return colors[status as keyof typeof colors] || "bg-gray-100 text-gray-800";
   };
 
   const getStatusIcon = (status: string) => {
@@ -163,8 +178,10 @@ export function SellerInquiryManager() {
     <div className="space-y-6">
       {/* Header & Filters */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Seller Inquiries & Consignments</h2>
-        
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          Seller Inquiries & Consignments
+        </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative">
@@ -181,7 +198,9 @@ export function SellerInquiryManager() {
           {/* Status Filter */}
           <div className="relative">
             <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <label htmlFor="status-filter" className="sr-only">Filter by status</label>
+            <label htmlFor="status-filter" className="sr-only">
+              Filter by status
+            </label>
             <select
               id="status-filter"
               value={statusFilter}
@@ -199,7 +218,9 @@ export function SellerInquiryManager() {
 
           {/* Type Filter */}
           <div>
-            <label htmlFor="type-filter" className="sr-only">Filter by type</label>
+            <label htmlFor="type-filter" className="sr-only">
+              Filter by type
+            </label>
             <select
               id="type-filter"
               value={typeFilter}
@@ -217,7 +238,9 @@ export function SellerInquiryManager() {
           {/* Stats */}
           <div className="flex items-center justify-center bg-amber-50 rounded-lg px-4 py-2">
             <span className="text-sm text-gray-600">Total: </span>
-            <span className="ml-2 text-xl font-bold text-amber-600">{filteredInquiries.length}</span>
+            <span className="ml-2 text-xl font-bold text-amber-600">
+              {filteredInquiries.length}
+            </span>
           </div>
         </div>
       </div>
@@ -231,15 +254,21 @@ export function SellerInquiryManager() {
               key={inquiry.id}
               onClick={() => setSelectedInquiry(inquiry)}
               className={`bg-white rounded-lg shadow p-4 cursor-pointer transition-all hover:shadow-md ${
-                selectedInquiry?.id === inquiry.id ? 'ring-2 ring-amber-500' : ''
+                selectedInquiry?.id === inquiry.id
+                  ? "ring-2 ring-amber-500"
+                  : ""
               }`}
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-gray-900">{inquiry.sellerName}</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {inquiry.sellerName}
+                  </h3>
                   <p className="text-sm text-gray-500">{inquiry.email}</p>
                 </div>
-                <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(inquiry.status)}`}>
+                <span
+                  className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(inquiry.status)}`}
+                >
                   {getStatusIcon(inquiry.status)}
                   {inquiry.status}
                 </span>
@@ -248,12 +277,18 @@ export function SellerInquiryManager() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <Package className="w-4 h-4" />
-                  <span className="capitalize">{inquiry.inquiryType.replace('-', ' ')}</span>
+                  <span className="capitalize">
+                    {inquiry.inquiryType.replace("-", " ")}
+                  </span>
                 </div>
-                <p className="text-sm text-gray-700 line-clamp-2">{inquiry.itemDescription}</p>
+                <p className="text-sm text-gray-700 line-clamp-2">
+                  {inquiry.itemDescription}
+                </p>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-500">{inquiry.category}</span>
-                  <span className="font-semibold text-amber-600">${inquiry.estimatedValue.toLocaleString()}</span>
+                  <span className="font-semibold text-amber-600">
+                    ${inquiry.estimatedValue.toLocaleString()}
+                  </span>
                 </div>
               </div>
 
@@ -278,8 +313,10 @@ export function SellerInquiryManager() {
         {selectedInquiry ? (
           <div className="bg-white rounded-lg shadow p-6 space-y-6 lg:sticky lg:top-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Inquiry Details</h3>
-              
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Inquiry Details
+              </h3>
+
               {/* Seller Info */}
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-3">
@@ -307,51 +344,71 @@ export function SellerInquiryManager() {
 
               {/* Item Details */}
               <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">Item Information</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">
+                  Item Information
+                </h4>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Type:</span>
-                    <span className="font-medium capitalize">{selectedInquiry.inquiryType.replace('-', ' ')}</span>
+                    <span className="font-medium capitalize">
+                      {selectedInquiry.inquiryType.replace("-", " ")}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Category:</span>
-                    <span className="font-medium">{selectedInquiry.category}</span>
+                    <span className="font-medium">
+                      {selectedInquiry.category}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Estimated Value:</span>
-                    <span className="font-semibold text-amber-600">${selectedInquiry.estimatedValue.toLocaleString()}</span>
+                    <span className="font-semibold text-amber-600">
+                      ${selectedInquiry.estimatedValue.toLocaleString()}
+                    </span>
                   </div>
                 </div>
                 <div className="mt-3">
                   <p className="text-sm text-gray-600 mb-1">Description:</p>
-                  <p className="text-gray-900">{selectedInquiry.itemDescription}</p>
+                  <p className="text-gray-900">
+                    {selectedInquiry.itemDescription}
+                  </p>
                 </div>
               </div>
 
               {/* Status Actions */}
               <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">Update Status</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">
+                  Update Status
+                </h4>
                 <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => updateInquiryStatus(selectedInquiry.id, 'reviewing')}
+                    onClick={() =>
+                      updateInquiryStatus(selectedInquiry.id, "reviewing")
+                    }
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
                   >
                     Mark Reviewing
                   </button>
                   <button
-                    onClick={() => updateInquiryStatus(selectedInquiry.id, 'approved')}
+                    onClick={() =>
+                      updateInquiryStatus(selectedInquiry.id, "approved")
+                    }
                     className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
                   >
                     Approve
                   </button>
                   <button
-                    onClick={() => updateInquiryStatus(selectedInquiry.id, 'rejected')}
+                    onClick={() =>
+                      updateInquiryStatus(selectedInquiry.id, "rejected")
+                    }
                     className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
                   >
                     Reject
                   </button>
                   <button
-                    onClick={() => updateInquiryStatus(selectedInquiry.id, 'completed')}
+                    onClick={() =>
+                      updateInquiryStatus(selectedInquiry.id, "completed")
+                    }
                     className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm"
                   >
                     Complete
@@ -364,19 +421,21 @@ export function SellerInquiryManager() {
                 <h4 className="font-semibold text-gray-900 mb-3">Send Email</h4>
                 <div className="space-y-2">
                   <button
-                    onClick={() => sendEmail(selectedInquiry.id, 'acknowledgment')}
+                    onClick={() =>
+                      sendEmail(selectedInquiry.id, "acknowledgment")
+                    }
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
                   >
                     Send Acknowledgment
                   </button>
                   <button
-                    onClick={() => sendEmail(selectedInquiry.id, 'approval')}
+                    onClick={() => sendEmail(selectedInquiry.id, "approval")}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
                   >
                     Send Approval Email
                   </button>
                   <button
-                    onClick={() => sendEmail(selectedInquiry.id, 'rejection')}
+                    onClick={() => sendEmail(selectedInquiry.id, "rejection")}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
                   >
                     Send Rejection Email
@@ -386,7 +445,9 @@ export function SellerInquiryManager() {
 
               {/* Admin Notes */}
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Admin Notes</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">
+                  Admin Notes
+                </h4>
                 <div className="space-y-2 mb-3 max-h-40 overflow-y-auto">
                   {selectedInquiry.adminNotes.map((note, index) => (
                     <div key={index} className="bg-gray-50 rounded p-2 text-sm">

@@ -8,7 +8,7 @@
 You are an autonomous coding agent for Kollect-It Phase 4 Rebrand.
 
 MISSION:
-Update all customer-facing copy on the Kollect-It website to shift from "luxury posh marketplace" 
+Update all customer-facing copy on the Kollect-It website to shift from "luxury posh marketplace"
 to "professional, honest collector's marketplace for items $500-2K." Keep layouts and structure intact.
 
 CORE PRINCIPLES:
@@ -70,7 +70,7 @@ File: Wherever authentication is described on homepage or /admin/settings/email 
 Task: Rewrite authentication approach to be honest and transparent
 Current: "Expert-vetted items with detailed descriptions, provenance documentation, and certification where applicable."
 New: "AUTHENTICATION & VALUATION
-We authenticate items using professional resources and valuation tools. If you believe we've made an error, 
+We authenticate items using professional resources and valuation tools. If you believe we've made an error,
 contact us and we'll review and adjust our assessment. Honesty is our foundation.
 
 ✓ Professional valuations using industry-standard resources
@@ -93,7 +93,7 @@ New: "SHIPPING
 ✓ Professional packaging to ensure items arrive in condition
 
 RETURNS
-We encourage careful review of all photos and descriptions before purchasing. 
+We encourage careful review of all photos and descriptions before purchasing.
 Returns are possible but discouraged. Contact us to discuss any concerns.
 We want you to be confident in every purchase."
 
@@ -173,7 +173,7 @@ Task: Add or enhance "Sell Your Items" call-out
 New text:
 "HAVE ITEMS TO SELL?
 
-Whether you have a single valuable piece or a collection, 
+Whether you have a single valuable piece or a collection,
 we're interested in working with you.
 
 For items $500-$15,000 that you want to sell:
@@ -186,7 +186,7 @@ Email us with photos and details. We'll get back to you within 24-48 hours.
 
 [CTA Button: "Tell Us About Your Items" → links to contact email or /contact page]"
 
-ACTION: 
+ACTION:
   Option A: If homepage has space, add new section below featured products
   Option B: If "Sell Your Items" exists, replace copy with new version
   Option C: If doesn't exist, add link to /about or /contact explaining process
@@ -204,17 +204,17 @@ New copy:
 We started with a passion for collectibles and a frustration:
 items worth $500-$15,000 fall through the cracks.
 
-Auction houses have minimums around $10,000. Online marketplaces 
+Auction houses have minimums around $10,000. Online marketplaces
 feel risky and impersonal. Private sales are hit-or-miss.
 
 We built Kollect-It to fill that gap.
 
-Our collection is personally curated. Every item is accurately described, 
-professionally valued, and fairly priced—typically between auction value 
+Our collection is personally curated. Every item is accurately described,
+professionally valued, and fairly priced—typically between auction value
 and retail price, so you get a better deal than traditional auctions.
 
-We're a one-person operation committed to honesty. If you have questions, 
-want additional photos, or disagree with our valuation, reach out. 
+We're a one-person operation committed to honesty. If you have questions,
+want additional photos, or disagree with our valuation, reach out.
 We'll listen and adjust if we're wrong.
 
 Because the best collectibles deserve careful attention."
@@ -243,7 +243,7 @@ FINAL CHECKS:
 
 □ Search entire project for: "luxury", "connoisseur", "white glove", "museum", "prestigious", "elite"
   → If found, replace with appropriate new language or remove
-  
+
 □ Check that "Sell Your Items" link/button exists and works (email or contact form)
 
 □ Verify homepage loads correctly with all new copy
@@ -263,7 +263,7 @@ COMPLETION STATUS:
 Mark each step complete as you finish:
 
 ✅ Step 1: Homepage hero
-✅ Step 2: Four-pillar tagline  
+✅ Step 2: Four-pillar tagline
 ✅ Step 3: Security messaging
 ✅ Step 4: Authentication section
 ✅ Step 5: Shipping & returns

@@ -22,6 +22,7 @@ Your Netlify deployment is **NOT deploying from your GitHub repository AT ALL**.
 **Netlify is NOT connected to your GitHub repository!**
 
 It's either:
+
 - Deploying from a different repository
 - Serving cached static content
 - Not configured at all (showing default/test content)
@@ -45,6 +46,7 @@ bun.lockb     # ✅ Netlify detects Bun automatically
 ### 2. Updated `netlify.toml` ✅
 
 **Before:**
+
 ```toml
 [build]
   command = "npm install && npx prisma generate && npm run build"
@@ -52,6 +54,7 @@ bun.lockb     # ✅ Netlify detects Bun automatically
 ```
 
 **After:**
+
 ```toml
 [build]
   command = "bun install && bunx prisma generate && bun run build"
@@ -92,6 +95,7 @@ These fixes are in the repository, but **you MUST manually configure Netlify**:
 **Current Status:** Probably shows "No repository connected" or wrong repo
 
 **Required Action:**
+
 1. Click **Link site to Git repository**
 2. Choose **GitHub**
 3. Select: `jameshorton2486/kollect-it-marketplace`
@@ -138,6 +142,7 @@ When correctly configured, Netlify build logs should show:
 ## 🔍 How to Verify It's Fixed
 
 ### Before (WRONG):
+
 - Site shows vintage furniture
 - "Powered by Shopify" in footer
 - "Drew's Projects" links
@@ -145,6 +150,7 @@ When correctly configured, Netlify build logs should show:
 - Completely different design
 
 ### After (CORRECT):
+
 - Shows Kollect-It marketplace
 - Header with user account dropdown
 - Product grid from database
@@ -216,6 +222,7 @@ git push origin master
 ### Cause: Repository still not connected properly
 
 **Solution:**
+
 1. Delete the Netlify site completely
 2. Create a new site
 3. Connect to GitHub from the start
@@ -224,6 +231,7 @@ git push origin master
 ### Cause: Cached content
 
 **Solution:**
+
 1. Clear cache (as described above)
 2. Delete `/.netlify` folder in repo if it exists
 3. Force new build
@@ -231,6 +239,7 @@ git push origin master
 ### Cause: Wrong branch selected
 
 **Solution:**
+
 1. Check branch is `master` (not `main`)
 2. Verify latest commit is shown in Netlify
 
@@ -245,12 +254,14 @@ git push origin master
 **Root Cause:** Repository not connected OR deploying wrong content
 
 **Fixes Applied:**
+
 1. ✅ Renamed `bun.lock` → `bun.lockb`
 2. ✅ Updated `netlify.toml` for Bun
 3. ✅ Verified clean repository structure
 4. ✅ Created comprehensive documentation
 
 **What You Must Do:**
+
 1. ⚠️ Push changes to GitHub
 2. ⚠️ Connect repository in Netlify dashboard
 3. ⚠️ Set environment variables (see other guides)

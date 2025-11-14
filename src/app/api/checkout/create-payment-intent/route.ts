@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { stripe, formatAmountForStripe } from '@/lib/stripe';
-import { rateLimiters } from '@/lib/rate-limit';
-import { securityMiddleware, applySecurityHeaders } from '@/lib/security';
+import { NextRequest, NextResponse } from "next/server";
+import { stripe, formatAmountForStripe } from "@/lib/stripe";
+import { rateLimiters } from "@/lib/rate-limit";
+import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
 
 interface ValidatedCartItem {
   productId: string;
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     // Apply enhanced security for payment endpoint
     const securityCheck = await securityMiddleware(request, {
       maxBodySize: 1024 * 1024, // 1MB max
-      allowedContentTypes: ['application/json'],
+      allowedContentTypes: ["application/json"],
     });
     if (securityCheck) return securityCheck;
 
@@ -32,27 +32,24 @@ export async function POST(request: NextRequest) {
     const { items, shippingInfo } = await request.json();
 
     if (!items || items.length === 0) {
-      return NextResponse.json(
-        { error: 'No items in cart' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No items in cart" }, { status: 400 });
     }
 
     // STEP 1: Validate cart server-side (prevents price tampering)
     const validationResponse = await fetch(
-      `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/checkout/validate-cart`,
+      `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/checkout/validate-cart`,
       {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items }),
-      }
+      },
     );
 
     if (!validationResponse.ok) {
       const error = await validationResponse.json();
       return NextResponse.json(
-        { error: error.error || 'Cart validation failed' },
-        { status: 400 }
+        { error: error.error || "Cart validation failed" },
+        { status: 400 },
       );
     }
 
@@ -61,7 +58,7 @@ export async function POST(request: NextRequest) {
     // STEP 2: Create Payment Intent with validated amounts
     const paymentIntent = await stripe.paymentIntents.create({
       amount: formatAmountForStripe(validatedCart.total),
-      currency: 'usd',
+      currency: "usd",
       automatic_payment_methods: {
         enabled: true,
       },
@@ -81,12 +78,14 @@ export async function POST(request: NextRequest) {
           zipCode: shippingInfo.zipCode,
           country: shippingInfo.country,
         }),
-        items: JSON.stringify(validatedCart.items.map((item: ValidatedCartItem) => ({
-          id: item.productId,
-          title: item.title,
-          price: item.price, // Validated database price
-          quantity: item.quantity,
-        }))),
+        items: JSON.stringify(
+          validatedCart.items.map((item: ValidatedCartItem) => ({
+            id: item.productId,
+            title: item.title,
+            price: item.price, // Validated database price
+            quantity: item.quantity,
+          })),
+        ),
       },
       description: `Kollect-It Order - ${validatedCart.items.length} item(s)`,
       receipt_email: shippingInfo.email,
@@ -98,7 +97,7 @@ export async function POST(request: NextRequest) {
           city: shippingInfo.city,
           state: shippingInfo.state,
           postal_code: shippingInfo.zipCode,
-          country: 'US',
+          country: "US",
         },
       },
     });
@@ -110,10 +109,15 @@ export async function POST(request: NextRequest) {
     });
     return applySecurityHeaders(response);
   } catch (error) {
-    console.error('Error creating payment intent:', error);
+    console.error("Error creating payment intent:", error);
     const errorResponse = NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create payment intent' },
-      { status: 500 }
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create payment intent",
+      },
+      { status: 500 },
     );
     return applySecurityHeaders(errorResponse);
   }

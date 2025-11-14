@@ -9,7 +9,7 @@ import {
   ConfidenceFactor,
   ProductCondition,
   RarityLevel,
-} from './types';
+} from "./types";
 import {
   categoryBaseMultiplier,
   conditionMultiplier,
@@ -20,37 +20,39 @@ import {
   priceRangeMultipliers,
   sourceWeights,
   multiplierBoundaries,
-} from './rules';
+} from "./rules";
 
 /**
  * Calculate historical price from comparable sales
  */
-function calculateHistoricalPrice(
-  comps: number[] | undefined
-): { price: number; confidence: number; reasoning: string } {
+function calculateHistoricalPrice(comps: number[] | undefined): {
+  price: number;
+  confidence: number;
+  reasoning: string;
+} {
   if (!comps || comps.length === 0) {
     return {
       price: 0,
       confidence: 0,
-      reasoning: 'No comparable sales data available',
+      reasoning: "No comparable sales data available",
     };
   }
 
   const sortedComps = comps.sort((a, b) => a - b);
-  
+
   // Use median and quartile analysis
   const median = sortedComps[Math.floor(sortedComps.length / 2)];
   const q1 = sortedComps[Math.floor(sortedComps.length / 4)];
   const q3 = sortedComps[Math.floor((sortedComps.length * 3) / 4)];
 
   // Weight median higher for stability
-  const historicalPrice = (median * 0.5 + (q1 + q3) / 2 * 0.5);
-  
+  const historicalPrice = median * 0.5 + ((q1 + q3) / 2) * 0.5;
+
   // Confidence increases with number of comps and narrow range
   const range = q3 - q1;
   const rangeConfidence = Math.max(0, 100 - (range / median) * 100);
   const countConfidence = Math.min(100, comps.length * 15);
-  
+
   const overallConfidence = (rangeConfidence + countConfidence) / 2;
 
   return {
@@ -64,24 +66,27 @@ function calculateHistoricalPrice(
  * Calculate market price from trend data
  */
 function calculateMarketPrice(
-  marketData: PricingInput['marketTrendData'],
-  categoryMultiplier: number
+  marketData: PricingInput["marketTrendData"],
+  categoryMultiplier: number,
 ): { price: number; confidence: number; reasoning: string } {
   if (!marketData) {
     return {
       price: 0,
       confidence: 0,
-      reasoning: 'No market trend data available',
+      reasoning: "No market trend data available",
     };
   }
 
-  const trendMultiplier = 
-    marketData.trendDirection === 'up' ? 1.1 :
-    marketData.trendDirection === 'down' ? 0.9 :
-    1.0;
+  const trendMultiplier =
+    marketData.trendDirection === "up"
+      ? 1.1
+      : marketData.trendDirection === "down"
+        ? 0.9
+        : 1.0;
 
-  const marketPrice = marketData.averagePrice * trendMultiplier * categoryMultiplier;
-  
+  const marketPrice =
+    marketData.averagePrice * trendMultiplier * categoryMultiplier;
+
   // Confidence based on price range tightness
   const range = marketData.priceRange[1] - marketData.priceRange[0];
   const rangePercent = (range / marketData.averagePrice) * 100;
@@ -102,40 +107,41 @@ function calculateAIPrice(
   category: string,
   condition: string,
   rarity: string,
-  estimatedAge: string
+  estimatedAge: string,
 ): { adjustedPrice: number; multipliers: Record<string, number> } {
   const multipliers: Record<string, number> = {};
   let totalMultiplier = 1.0;
 
   // Category multiplier
-  const catMult = categoryBaseMultiplier[category] ?? categoryBaseMultiplier['default'];
-  multipliers['category'] = catMult;
+  const catMult =
+    categoryBaseMultiplier[category] ?? categoryBaseMultiplier["default"];
+  multipliers["category"] = catMult;
   totalMultiplier *= catMult;
 
   // Condition multiplier
   const condMult = conditionMultiplier[condition as ProductCondition] ?? 1.0;
-  multipliers['condition'] = condMult;
+  multipliers["condition"] = condMult;
   totalMultiplier *= condMult;
 
   // Rarity multiplier
   const rarityMult = rarityMultiplier[rarity as RarityLevel] ?? 1.0;
-  multipliers['rarity'] = rarityMult;
+  multipliers["rarity"] = rarityMult;
   totalMultiplier *= rarityMult;
 
   // Age multiplier
   const ageMult = getAgeMultiplier(estimatedAge);
-  multipliers['age'] = ageMult;
+  multipliers["age"] = ageMult;
   totalMultiplier *= ageMult;
 
   // Decade bonus
   const decadeMult = getDecadeBonus(estimatedAge);
-  multipliers['decade'] = decadeMult;
+  multipliers["decade"] = decadeMult;
   totalMultiplier *= decadeMult;
 
   // Apply boundaries
   totalMultiplier = Math.max(
     multiplierBoundaries.MIN,
-    Math.min(multiplierBoundaries.MAX, totalMultiplier)
+    Math.min(multiplierBoundaries.MAX, totalMultiplier),
   );
 
   return {
@@ -150,20 +156,20 @@ function calculateAIPrice(
 function calculateConfidenceFactors(
   input: PricingInput,
   historicalPrice: number,
-  marketPrice: number
+  marketPrice: number,
 ): ConfidenceFactor[] {
   const factors: ConfidenceFactor[] = [];
 
   // AI confidence
   if (input.aiConfidence >= 90) {
     factors.push({
-      factor: 'Excellent AI Confidence',
+      factor: "Excellent AI Confidence",
       impact: confidenceFactors.EXCELLENT_AI_CONFIDENCE,
       reasoning: `AI analysis was ${input.aiConfidence}% confident`,
     });
   } else if (input.aiConfidence >= 70) {
     factors.push({
-      factor: 'Good AI Confidence',
+      factor: "Good AI Confidence",
       impact: confidenceFactors.GOOD_AI_CONFIDENCE,
       reasoning: `AI analysis was ${input.aiConfidence}% confident`,
     });
@@ -172,30 +178,30 @@ function calculateConfidenceFactors(
   // Historical comps
   if (input.historicalComps && input.historicalComps.length > 0) {
     factors.push({
-      factor: 'Comparable Sales Data',
+      factor: "Comparable Sales Data",
       impact: confidenceFactors.COMPARABLE_SALES_FOUND,
       reasoning: `Found ${input.historicalComps.length} comparable sales`,
     });
 
     if (input.historicalComps.length >= 5) {
       factors.push({
-        factor: 'Multiple Comparable Sales',
+        factor: "Multiple Comparable Sales",
         impact: confidenceFactors.MULTIPLE_COMPARABLE_SALES,
         reasoning: `${input.historicalComps.length} data points provide strong validation`,
       });
     }
   } else {
     factors.push({
-      factor: 'Limited Comparable Sales',
+      factor: "Limited Comparable Sales",
       impact: confidenceFactors.LIMITED_COMPS_PENALTY,
-      reasoning: 'Few or no comparable sales found for this item',
+      reasoning: "Few or no comparable sales found for this item",
     });
   }
 
   // Rarity impact
-  if (input.rarity === 'EXTREMELY_RARE' || input.rarity === 'VERY_RARE') {
+  if (input.rarity === "EXTREMELY_RARE" || input.rarity === "VERY_RARE") {
     factors.push({
-      factor: 'Rare Item Pricing Challenge',
+      factor: "Rare Item Pricing Challenge",
       impact: confidenceFactors.RARE_ITEM_PENALTY,
       reasoning: `${input.rarity} items are harder to price accurately`,
     });
@@ -203,30 +209,31 @@ function calculateConfidenceFactors(
 
   // Market trend
   if (input.marketTrendData) {
-    if (input.marketTrendData.trendDirection === 'up') {
+    if (input.marketTrendData.trendDirection === "up") {
       factors.push({
-        factor: 'Trending Market',
+        factor: "Trending Market",
         impact: confidenceFactors.TRENDING_UP,
-        reasoning: 'Market for this category is trending upward',
+        reasoning: "Market for this category is trending upward",
       });
-    } else if (input.marketTrendData.trendDirection === 'down') {
+    } else if (input.marketTrendData.trendDirection === "down") {
       factors.push({
-        factor: 'Declining Market',
+        factor: "Declining Market",
         impact: confidenceFactors.TRENDING_DOWN,
-        reasoning: 'Market for this category is declining',
+        reasoning: "Market for this category is declining",
       });
     }
   }
 
   // Price agreement
   if (historicalPrice > 0 && marketPrice > 0) {
-    const agreement = Math.abs(historicalPrice - marketPrice) / 
+    const agreement =
+      Math.abs(historicalPrice - marketPrice) /
       ((historicalPrice + marketPrice) / 2);
     if (agreement < 0.2) {
       factors.push({
-        factor: 'Strong Price Agreement',
+        factor: "Strong Price Agreement",
         impact: confidenceFactors.REASONABLE_RANGE,
-        reasoning: 'Historical and market prices align well',
+        reasoning: "Historical and market prices align well",
       });
     }
   }
@@ -238,7 +245,7 @@ function calculateConfidenceFactors(
  * Main pricing engine function
  */
 export async function calculatePriceWithConfidence(
-  input: PricingInput
+  input: PricingInput,
 ): Promise<PricingResult> {
   // Step 1: Calculate AI price with multipliers
   const { adjustedPrice: aiPrice, multipliers } = calculateAIPrice(
@@ -246,27 +253,25 @@ export async function calculatePriceWithConfidence(
     input.category,
     input.condition,
     input.rarity,
-    input.estimatedAge
+    input.estimatedAge,
   );
 
   // Step 2: Calculate historical price
-  const historicalPricing = calculateHistoricalPrice(
-    input.historicalComps
-  );
+  const historicalPricing = calculateHistoricalPrice(input.historicalComps);
 
   // Step 3: Calculate market price
-  const categoryMultiplier = 
-    categoryBaseMultiplier[input.category] ?? categoryBaseMultiplier['default'];
+  const categoryMultiplier =
+    categoryBaseMultiplier[input.category] ?? categoryBaseMultiplier["default"];
   const marketPricing = calculateMarketPrice(
     input.marketTrendData,
-    categoryMultiplier
+    categoryMultiplier,
   );
 
   // Step 4: Calculate confidence factors
   const confidenceFactorsList = calculateConfidenceFactors(
     input,
     historicalPricing.price,
-    marketPricing.price
+    marketPricing.price,
   );
 
   // Step 5: Blend prices with weights
@@ -294,13 +299,18 @@ export async function calculatePriceWithConfidence(
     confidenceAdjustment += factor.impact;
   });
 
-  let finalConfidence = Math.max(0, Math.min(100, baseConfidence + confidenceAdjustment));
+  let finalConfidence = Math.max(
+    0,
+    Math.min(100, baseConfidence + confidenceAdjustment),
+  );
 
   // Step 7: Calculate price range
-  const multiplier = 
-    finalConfidence >= 80 ? priceRangeMultipliers.HIGH_CONFIDENCE :
-    finalConfidence >= 60 ? priceRangeMultipliers.MEDIUM_CONFIDENCE :
-    priceRangeMultipliers.LOW_CONFIDENCE;
+  const multiplier =
+    finalConfidence >= 80
+      ? priceRangeMultipliers.HIGH_CONFIDENCE
+      : finalConfidence >= 60
+        ? priceRangeMultipliers.MEDIUM_CONFIDENCE
+        : priceRangeMultipliers.LOW_CONFIDENCE;
 
   const lowRange = suggestedPrice * multiplier.low;
   const highRange = suggestedPrice * multiplier.high;
@@ -315,41 +325,56 @@ export async function calculatePriceWithConfidence(
       aiPrice: {
         price: Math.round(aiPrice * 100) / 100,
         confidence: input.aiConfidence,
-        reasoning: `AI base price: $${input.aiPrice.toFixed(2)}, multipliers applied: category (${multipliers['category']?.toFixed(2)}x), condition (${multipliers['condition']?.toFixed(2)}x), rarity (${multipliers['rarity']?.toFixed(2)}x), age (${multipliers['age']?.toFixed(2)}x)`,
+        reasoning: `AI base price: $${input.aiPrice.toFixed(2)}, multipliers applied: category (${multipliers["category"]?.toFixed(2)}x), condition (${multipliers["condition"]?.toFixed(2)}x), rarity (${multipliers["rarity"]?.toFixed(2)}x), age (${multipliers["age"]?.toFixed(2)}x)`,
       },
-      historicalPrice: historicalPricing.price > 0 ? {
-        price: historicalPricing.price,
-        confidence: historicalPricing.confidence,
-        reasoning: historicalPricing.reasoning,
-      } : undefined,
-      marketPrice: marketPricing.price > 0 ? {
-        price: marketPricing.price,
-        confidence: marketPricing.confidence,
-        reasoning: marketPricing.reasoning,
-      } : undefined,
+      historicalPrice:
+        historicalPricing.price > 0
+          ? {
+              price: historicalPricing.price,
+              confidence: historicalPricing.confidence,
+              reasoning: historicalPricing.reasoning,
+            }
+          : undefined,
+      marketPrice:
+        marketPricing.price > 0
+          ? {
+              price: marketPricing.price,
+              confidence: marketPricing.confidence,
+              reasoning: marketPricing.reasoning,
+            }
+          : undefined,
     },
     sources: [
       {
-        name: 'ai',
+        name: "ai",
         price: aiPrice,
         confidence: input.aiConfidence,
         weight: sourceWeights.ai * 100,
-        reasoning: 'AI-generated price with category, condition, and rarity adjustments',
+        reasoning:
+          "AI-generated price with category, condition, and rarity adjustments",
       },
-      ...(historicalPricing.price > 0 ? [{
-        name: 'historical' as const,
-        price: historicalPricing.price,
-        confidence: historicalPricing.confidence,
-        weight: sourceWeights.historical * 100,
-        reasoning: historicalPricing.reasoning,
-      }] : []),
-      ...(marketPricing.price > 0 ? [{
-        name: 'market' as const,
-        price: marketPricing.price,
-        confidence: marketPricing.confidence,
-        weight: sourceWeights.market * 100,
-        reasoning: marketPricing.reasoning,
-      }] : []),
+      ...(historicalPricing.price > 0
+        ? [
+            {
+              name: "historical" as const,
+              price: historicalPricing.price,
+              confidence: historicalPricing.confidence,
+              weight: sourceWeights.historical * 100,
+              reasoning: historicalPricing.reasoning,
+            },
+          ]
+        : []),
+      ...(marketPricing.price > 0
+        ? [
+            {
+              name: "market" as const,
+              price: marketPricing.price,
+              confidence: marketPricing.confidence,
+              weight: sourceWeights.market * 100,
+              reasoning: marketPricing.reasoning,
+            },
+          ]
+        : []),
     ],
     timestamp: new Date(),
   };
@@ -365,16 +390,21 @@ export function calculateSimplePrice(
   category: string,
   condition: string,
   rarity: string,
-  estimatedAge: string
+  estimatedAge: string,
 ): number {
   const categoryMult = categoryBaseMultiplier[category] ?? 1.0;
-  const conditionMult = conditionMultiplier[condition as ProductCondition] ?? 1.0;
+  const conditionMult =
+    conditionMultiplier[condition as ProductCondition] ?? 1.0;
   const rarityMult = rarityMultiplier[rarity as RarityLevel] ?? 1.0;
   const ageMult = getAgeMultiplier(estimatedAge);
   const decadeMult = getDecadeBonus(estimatedAge);
 
-  let totalMult = categoryMult * conditionMult * rarityMult * ageMult * decadeMult;
-  totalMult = Math.max(multiplierBoundaries.MIN, Math.min(multiplierBoundaries.MAX, totalMult));
+  let totalMult =
+    categoryMult * conditionMult * rarityMult * ageMult * decadeMult;
+  totalMult = Math.max(
+    multiplierBoundaries.MIN,
+    Math.min(multiplierBoundaries.MAX, totalMult),
+  );
 
-  return Math.round((basePrice * totalMult) * 100) / 100;
+  return Math.round(basePrice * totalMult * 100) / 100;
 }

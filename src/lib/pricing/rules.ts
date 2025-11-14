@@ -3,28 +3,28 @@
  * Phase 3 - Category-based and condition-based pricing adjustments
  */
 
-import { ProductCondition, RarityLevel } from './types';
+import { ProductCondition, RarityLevel } from "./types";
 
 /**
  * Category-based pricing multipliers
  * Adjust base price based on product category
  */
 export const categoryBaseMultiplier: Record<string, number> = {
-  'Vintage Watches': 1.8,
-  'Antique Furniture': 1.5,
-  'Fine Art': 2.5,
-  'Coins & Currency': 1.6,
-  'Stamps & Philately': 1.3,
-  'Jewelry': 2.0,
-  'Books & Manuscripts': 1.4,
-  'Ceramics & Pottery': 1.5,
-  'Glass': 1.2,
-  'Memorabilia': 1.3,
-  'Musical Instruments': 1.9,
-  'Toys & Games': 1.1,
-  'Sports Equipment': 1.2,
-  'Militaria': 1.4,
-  'Photography': 1.7,
+  "Vintage Watches": 1.8,
+  "Antique Furniture": 1.5,
+  "Fine Art": 2.5,
+  "Coins & Currency": 1.6,
+  "Stamps & Philately": 1.3,
+  Jewelry: 2.0,
+  "Books & Manuscripts": 1.4,
+  "Ceramics & Pottery": 1.5,
+  Glass: 1.2,
+  Memorabilia: 1.3,
+  "Musical Instruments": 1.9,
+  "Toys & Games": 1.1,
+  "Sports Equipment": 1.2,
+  Militaria: 1.4,
+  Photography: 1.7,
   default: 1.0,
 };
 
@@ -56,9 +56,7 @@ export const rarityMultiplier: Record<RarityLevel, number> = {
  * Age-based appreciation multipliers
  * Vintage items appreciate over time
  */
-export const getAgeMultiplier = (
-  yearOrDecade: string
-): number => {
+export const getAgeMultiplier = (yearOrDecade: string): number => {
   const year = parseInt(yearOrDecade);
   const currentYear = new Date().getFullYear();
   const age = currentYear - year;
@@ -81,7 +79,7 @@ export const getDecadeBonus = (year: string): number => {
   const highDemandDecades: Record<number, number> = {
     1920: 1.15, // Art Deco
     1930: 1.12, // Art Deco continuation
-    1950: 1.1,  // Mid-century modern
+    1950: 1.1, // Mid-century modern
     1960: 1.15, // Space age / psychedelic
     1970: 1.08, // Retro/vintage
     1980: 1.05, // Emerging collectible

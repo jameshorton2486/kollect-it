@@ -4,7 +4,7 @@
  */
 
 export interface PricingSource {
-  name: 'ai' | 'historical' | 'market';
+  name: "ai" | "historical" | "market";
   price: number;
   confidence: number; // 0-100
   weight: number; // 0-100
@@ -51,7 +51,7 @@ export interface PricingInput {
   marketTrendData?: {
     averagePrice: number;
     priceRange: [number, number];
-    trendDirection: 'up' | 'down' | 'stable';
+    trendDirection: "up" | "down" | "stable";
   };
 }
 
@@ -61,5 +61,15 @@ export interface ConfidenceFactor {
   reasoning: string;
 }
 
-export type ProductCondition = 'EXCELLENT' | 'VERY_GOOD' | 'GOOD' | 'FAIR' | 'POOR';
-export type RarityLevel = 'COMMON' | 'UNCOMMON' | 'RARE' | 'VERY_RARE' | 'EXTREMELY_RARE';
+export type ProductCondition =
+  | "EXCELLENT"
+  | "VERY_GOOD"
+  | "GOOD"
+  | "FAIR"
+  | "POOR";
+export type RarityLevel =
+  | "COMMON"
+  | "UNCOMMON"
+  | "RARE"
+  | "VERY_RARE"
+  | "EXTREMELY_RARE";

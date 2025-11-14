@@ -11,7 +11,7 @@
  */
 interface EnvironmentVariables {
   // Application
-  NODE_ENV: 'development' | 'production' | 'test';
+  NODE_ENV: "development" | "production" | "test";
   NEXTAUTH_URL: string;
   NEXTAUTH_SECRET: string;
 
@@ -48,26 +48,28 @@ let validatedEnv: Partial<EnvironmentVariables> | null = null;
 function validateEnvVar(
   name: keyof EnvironmentVariables,
   value: string | undefined,
-  required: boolean = true
+  required: boolean = true,
 ): string | undefined {
   if (!value) {
     if (required) {
       throw new Error(
         `Missing required environment variable: ${name}\n` +
-        'Please set this variable in your .env.local file'
+          "Please set this variable in your .env.local file",
       );
     }
     return undefined;
   }
 
   // Type-specific validation
-  if (name === 'NODE_ENV') {
-    if (!['development', 'production', 'test'].includes(value)) {
-      throw new Error(`Invalid NODE_ENV: ${value}. Must be development, production, or test`);
+  if (name === "NODE_ENV") {
+    if (!["development", "production", "test"].includes(value)) {
+      throw new Error(
+        `Invalid NODE_ENV: ${value}. Must be development, production, or test`,
+      );
     }
   }
 
-  if (name.includes('URL')) {
+  if (name.includes("URL")) {
     try {
       new URL(value);
     } catch {
@@ -75,16 +77,16 @@ function validateEnvVar(
     }
   }
 
-  if (name === 'STRIPE_SECRET_KEY' && !value.startsWith('sk_')) {
+  if (name === "STRIPE_SECRET_KEY" && !value.startsWith("sk_")) {
     throw new Error(`Invalid STRIPE_SECRET_KEY: must start with 'sk_'`);
   }
 
-  if (name === 'STRIPE_PUBLIC_KEY' && !value.startsWith('pk_')) {
+  if (name === "STRIPE_PUBLIC_KEY" && !value.startsWith("pk_")) {
     throw new Error(`Invalid STRIPE_PUBLIC_KEY: must start with 'pk_'`);
   }
 
-  if (name === 'NEXTAUTH_SECRET' && value.length < 32) {
-    throw new Error('NEXTAUTH_SECRET must be at least 32 characters long');
+  if (name === "NEXTAUTH_SECRET" && value.length < 32) {
+    throw new Error("NEXTAUTH_SECRET must be at least 32 characters long");
   }
 
   return value;
@@ -102,63 +104,82 @@ export function getEnv(): Partial<EnvironmentVariables> {
   try {
     validatedEnv = {
       // Application
-      NODE_ENV: (validateEnvVar(
-        'NODE_ENV',
-        process.env.NODE_ENV
-      ) as 'development' | 'production' | 'test') || 'development',
-      NEXTAUTH_URL: validateEnvVar('NEXTAUTH_URL', process.env.NEXTAUTH_URL),
-      NEXTAUTH_SECRET: validateEnvVar('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET),
+      NODE_ENV:
+        (validateEnvVar("NODE_ENV", process.env.NODE_ENV) as
+          | "development"
+          | "production"
+          | "test") || "development",
+      NEXTAUTH_URL: validateEnvVar("NEXTAUTH_URL", process.env.NEXTAUTH_URL),
+      NEXTAUTH_SECRET: validateEnvVar(
+        "NEXTAUTH_SECRET",
+        process.env.NEXTAUTH_SECRET,
+      ),
 
       // Database
-      DATABASE_URL: validateEnvVar('DATABASE_URL', process.env.DATABASE_URL),
-      DIRECT_URL: validateEnvVar('DIRECT_URL', process.env.DIRECT_URL, false),
+      DATABASE_URL: validateEnvVar("DATABASE_URL", process.env.DATABASE_URL),
+      DIRECT_URL: validateEnvVar("DIRECT_URL", process.env.DIRECT_URL, false),
 
       // ImageKit
       NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: validateEnvVar(
-        'NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY',
-        process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY
+        "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
+        process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
       ),
       NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: validateEnvVar(
-        'NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT',
-        process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+        "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
+        process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
       ),
       IMAGEKIT_PRIVATE_KEY: validateEnvVar(
-        'IMAGEKIT_PRIVATE_KEY',
-        process.env.IMAGEKIT_PRIVATE_KEY
+        "IMAGEKIT_PRIVATE_KEY",
+        process.env.IMAGEKIT_PRIVATE_KEY,
       ),
 
       // Stripe
-      STRIPE_PUBLIC_KEY: validateEnvVar('STRIPE_PUBLIC_KEY', process.env.STRIPE_PUBLIC_KEY),
-      STRIPE_SECRET_KEY: validateEnvVar('STRIPE_SECRET_KEY', process.env.STRIPE_SECRET_KEY),
+      STRIPE_PUBLIC_KEY: validateEnvVar(
+        "STRIPE_PUBLIC_KEY",
+        process.env.STRIPE_PUBLIC_KEY,
+      ),
+      STRIPE_SECRET_KEY: validateEnvVar(
+        "STRIPE_SECRET_KEY",
+        process.env.STRIPE_SECRET_KEY,
+      ),
       STRIPE_WEBHOOK_SECRET: validateEnvVar(
-        'STRIPE_WEBHOOK_SECRET',
-        process.env.STRIPE_WEBHOOK_SECRET
+        "STRIPE_WEBHOOK_SECRET",
+        process.env.STRIPE_WEBHOOK_SECRET,
       ),
 
       // Google OAuth
-      GOOGLE_CLIENT_ID: validateEnvVar('GOOGLE_CLIENT_ID', process.env.GOOGLE_CLIENT_ID),
+      GOOGLE_CLIENT_ID: validateEnvVar(
+        "GOOGLE_CLIENT_ID",
+        process.env.GOOGLE_CLIENT_ID,
+      ),
       GOOGLE_CLIENT_SECRET: validateEnvVar(
-        'GOOGLE_CLIENT_SECRET',
-        process.env.GOOGLE_CLIENT_SECRET
+        "GOOGLE_CLIENT_SECRET",
+        process.env.GOOGLE_CLIENT_SECRET,
       ),
 
       // Email
       NEXT_PUBLIC_APP_EMAIL: validateEnvVar(
-        'NEXT_PUBLIC_APP_EMAIL',
-        process.env.NEXT_PUBLIC_APP_EMAIL
+        "NEXT_PUBLIC_APP_EMAIL",
+        process.env.NEXT_PUBLIC_APP_EMAIL,
       ),
 
       // Google Analytics (optional)
-      NEXT_PUBLIC_GA_ID: validateEnvVar('NEXT_PUBLIC_GA_ID', process.env.NEXT_PUBLIC_GA_ID, false),
+      NEXT_PUBLIC_GA_ID: validateEnvVar(
+        "NEXT_PUBLIC_GA_ID",
+        process.env.NEXT_PUBLIC_GA_ID,
+        false,
+      ),
     };
 
     return validatedEnv;
   } catch (error) {
-    console.error('❌ Environment validation failed:');
+    console.error("❌ Environment validation failed:");
     if (error instanceof Error) {
       console.error(error.message);
     }
-    throw new Error('Invalid environment configuration. Please check your .env.local file.');
+    throw new Error(
+      "Invalid environment configuration. Please check your .env.local file.",
+    );
   }
 }
 
@@ -167,7 +188,7 @@ export function getEnv(): Partial<EnvironmentVariables> {
  * Usage: const { STRIPE_SECRET_KEY } = getEnv();
  */
 export function requireEnv<K extends keyof EnvironmentVariables>(
-  key: K
+  key: K,
 ): EnvironmentVariables[K] {
   const env = getEnv();
   const value = env[key];
@@ -183,12 +204,12 @@ export function requireEnv<K extends keyof EnvironmentVariables>(
  * Check if we're in development mode
  */
 export function isDevelopment(): boolean {
-  return getEnv().NODE_ENV === 'development';
+  return getEnv().NODE_ENV === "development";
 }
 
 /**
  * Check if we're in production mode
  */
 export function isProduction(): boolean {
-  return getEnv().NODE_ENV === 'production';
+  return getEnv().NODE_ENV === "production";
 }

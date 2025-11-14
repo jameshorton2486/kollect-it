@@ -1,12 +1,19 @@
-'use client';
+"use client";
 
 /**
  * Bulk Order Actions Component
  * Phase 6 Step 4 - Bulk operations for order management
  */
 
-import { useState } from 'react';
-import { CheckSquare, Square, Download, Mail, Trash2, Archive } from 'lucide-react';
+import { useState } from "react";
+import {
+  CheckSquare,
+  Square,
+  Download,
+  Mail,
+  Trash2,
+  Archive,
+} from "lucide-react";
 
 interface Order {
   id: string;
@@ -31,7 +38,7 @@ export function BulkOrderActions({
   onBulkAction,
 }: Props) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedAction, setSelectedAction] = useState('');
+  const [selectedAction, setSelectedAction] = useState("");
 
   const handleBulkAction = async () => {
     if (!selectedAction || selectedIds.length === 0) return;
@@ -42,10 +49,10 @@ export function BulkOrderActions({
     setIsProcessing(true);
     try {
       await onBulkAction(selectedAction, selectedIds);
-      setSelectedAction('');
+      setSelectedAction("");
     } catch (error) {
-      console.error('Bulk action failed:', error);
-      alert('Failed to perform bulk action');
+      console.error("Bulk action failed:", error);
+      alert("Failed to perform bulk action");
     } finally {
       setIsProcessing(false);
     }
@@ -61,7 +68,9 @@ export function BulkOrderActions({
           <button
             onClick={onSelectAll}
             className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900"
-            aria-label={allSelected ? 'Deselect all orders' : 'Select all orders'}
+            aria-label={
+              allSelected ? "Deselect all orders" : "Select all orders"
+            }
           >
             {allSelected ? (
               <CheckSquare className="text-amber-600" size={20} />
@@ -71,7 +80,7 @@ export function BulkOrderActions({
             <span className="font-medium">
               {selectedIds.length > 0
                 ? `${selectedIds.length} selected`
-                : 'Select all'}
+                : "Select all"}
             </span>
           </button>
         </div>
@@ -100,7 +109,7 @@ export function BulkOrderActions({
               disabled={!selectedAction || isProcessing}
               className="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm font-medium"
             >
-              {isProcessing ? 'Processing...' : 'Apply'}
+              {isProcessing ? "Processing..." : "Apply"}
             </button>
           </div>
         )}
@@ -109,7 +118,7 @@ export function BulkOrderActions({
         {selectedIds.length > 0 && (
           <div className="flex items-center gap-2">
             <button
-              onClick={() => onBulkAction('export-csv', selectedIds)}
+              onClick={() => onBulkAction("export-csv", selectedIds)}
               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
               title="Export selected orders"
               aria-label="Export selected orders to CSV"
@@ -117,7 +126,7 @@ export function BulkOrderActions({
               <Download size={18} />
             </button>
             <button
-              onClick={() => onBulkAction('send-email', selectedIds)}
+              onClick={() => onBulkAction("send-email", selectedIds)}
               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
               title="Send email to selected orders"
               aria-label="Send email to selected orders"
@@ -125,7 +134,7 @@ export function BulkOrderActions({
               <Mail size={18} />
             </button>
             <button
-              onClick={() => onBulkAction('archive', selectedIds)}
+              onClick={() => onBulkAction("archive", selectedIds)}
               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
               title="Archive selected orders"
               aria-label="Archive selected orders"
@@ -133,7 +142,7 @@ export function BulkOrderActions({
               <Archive size={18} />
             </button>
             <button
-              onClick={() => onBulkAction('delete', selectedIds)}
+              onClick={() => onBulkAction("delete", selectedIds)}
               className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md"
               title="Delete selected orders"
               aria-label="Delete selected orders"
@@ -148,8 +157,9 @@ export function BulkOrderActions({
       {selectedIds.length > 0 && (
         <div className="mt-3 pt-3 border-t border-gray-200">
           <div className="text-sm text-gray-600">
-            <span className="font-medium">{selectedIds.length}</span> order(s) selected
-            {selectedIds.length > 1 && ' · '}
+            <span className="font-medium">{selectedIds.length}</span> order(s)
+            selected
+            {selectedIds.length > 1 && " · "}
             {selectedIds.length > 1 && (
               <button
                 onClick={onSelectAll}

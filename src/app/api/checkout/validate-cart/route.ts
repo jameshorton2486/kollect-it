@@ -1,5 +1,5 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextResponse, NextRequest } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 // Validation schemas - Using simple validation instead of Zod
 interface CartItem {
@@ -29,16 +29,16 @@ export async function POST(request: NextRequest) {
     // Validate input structure
     if (
       !body ||
-      typeof body !== 'object' ||
+      typeof body !== "object" ||
       !Array.isArray(body.items) ||
       body.items.length === 0
     ) {
       return NextResponse.json(
         {
-          error: 'Invalid request: items must be a non-empty array',
-          code: 'INVALID_FORMAT',
+          error: "Invalid request: items must be a non-empty array",
+          code: "INVALID_FORMAT",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,19 +52,19 @@ export async function POST(request: NextRequest) {
       // Validate item structure
       if (
         !item.productId ||
-        typeof item.productId !== 'string' ||
+        typeof item.productId !== "string" ||
         !item.quantity ||
-        typeof item.quantity !== 'number' ||
+        typeof item.quantity !== "number" ||
         item.quantity < 1 ||
         item.quantity > 99
       ) {
         return NextResponse.json(
           {
             error:
-              'Invalid item format: productId must be string, quantity must be 1-99',
-            code: 'INVALID_ITEM',
+              "Invalid item format: productId must be string, quantity must be 1-99",
+            code: "INVALID_ITEM",
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -84,23 +84,23 @@ export async function POST(request: NextRequest) {
         if (!product) {
           return NextResponse.json(
             {
-              error: 'Product not found',
-              code: 'PRODUCT_NOT_FOUND',
+              error: "Product not found",
+              code: "PRODUCT_NOT_FOUND",
               productId: item.productId,
             },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
         // Validate product is active
-        if (product.status !== 'active') {
+        if (product.status !== "active") {
           return NextResponse.json(
             {
               error: `Product "${product.title}" is no longer available`,
-              code: 'PRODUCT_UNAVAILABLE',
+              code: "PRODUCT_UNAVAILABLE",
               productId: product.id,
             },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -116,7 +116,10 @@ export async function POST(request: NextRequest) {
           lineTotal,
         });
       } catch (itemError) {
-        if (itemError instanceof Error && itemError.message.includes('PRODUCT')) {
+        if (
+          itemError instanceof Error &&
+          itemError.message.includes("PRODUCT")
+        ) {
           throw itemError; // Re-throw known errors
         }
         throw new Error(`Failed to validate item ${item.productId}`);
@@ -142,10 +145,11 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const isDevelopment = process.env.NODE_ENV === "development";
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
 
-    console.error('[Cart Validation Error]', {
+    console.error("[Cart Validation Error]", {
       error: errorMessage,
       timestamp: new Date().toISOString(),
     });
@@ -154,10 +158,10 @@ export async function POST(request: NextRequest) {
       {
         error: isDevelopment
           ? errorMessage
-          : 'Failed to validate cart. Please try again.',
-        code: 'VALIDATION_ERROR',
+          : "Failed to validate cart. Please try again.",
+        code: "VALIDATION_ERROR",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

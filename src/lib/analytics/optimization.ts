@@ -3,7 +3,7 @@
  * Phase 5 - Indexes, caching, and query optimization
  */
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 interface QueryCache<T> {
   data: T;
@@ -21,7 +21,7 @@ function generateCacheKey(prefix: string, params: Record<string, any>): string {
   const sorted = Object.keys(params)
     .sort()
     .map((key) => `${key}=${JSON.stringify(params[key])}`)
-    .join('&');
+    .join("&");
 
   return `${prefix}:${sorted}`;
 }
@@ -49,7 +49,11 @@ export function getFromCache<T>(key: string): T | null {
 /**
  * Set value in cache
  */
-export function setInCache<T>(key: string, data: T, ttlMs: number = 300000): void {
+export function setInCache<T>(
+  key: string,
+  data: T,
+  ttlMs: number = 300000,
+): void {
   cacheStore.set(key, {
     data,
     timestamp: Date.now(),
@@ -79,15 +83,21 @@ export function clearAllCache(): void {
  * Get cached or fresh approval metrics
  */
 export async function getCachedApprovalMetrics(ttlMs: number = 300000) {
-  const cacheKey = 'approval-metrics:default';
+  const cacheKey = "approval-metrics:default";
   const cached = getFromCache(cacheKey);
 
   if (cached) return cached;
 
   const metrics = {
-    approved: await (prisma as any).aIGeneratedProduct.count({ where: { status: 'APPROVED' } }),
-    rejected: await (prisma as any).aIGeneratedProduct.count({ where: { status: 'REJECTED' } }),
-    pending: await (prisma as any).aIGeneratedProduct.count({ where: { status: 'PENDING' } }),
+    approved: await (prisma as any).aIGeneratedProduct.count({
+      where: { status: "APPROVED" },
+    }),
+    rejected: await (prisma as any).aIGeneratedProduct.count({
+      where: { status: "REJECTED" },
+    }),
+    pending: await (prisma as any).aIGeneratedProduct.count({
+      where: { status: "PENDING" },
+    }),
   };
 
   setInCache(cacheKey, metrics, ttlMs);
@@ -98,14 +108,16 @@ export async function getCachedApprovalMetrics(ttlMs: number = 300000) {
  * Get cached or fresh revenue metrics
  */
 export async function getCachedRevenueMetrics(ttlMs: number = 300000) {
-  const cacheKey = 'revenue-metrics:default';
+  const cacheKey = "revenue-metrics:default";
   const cached = getFromCache(cacheKey);
 
   if (cached) return cached;
 
-  const totalOrders = await (prisma as any).order.count({ where: { status: 'COMPLETED' } });
+  const totalOrders = await (prisma as any).order.count({
+    where: { status: "COMPLETED" },
+  });
   const revenue = await (prisma as any).order.aggregate({
-    where: { status: 'COMPLETED' },
+    where: { status: "COMPLETED" },
     _sum: {
       total: true,
     },
@@ -114,7 +126,8 @@ export async function getCachedRevenueMetrics(ttlMs: number = 300000) {
   const metrics = {
     totalOrders,
     totalRevenue: revenue._sum.total || 0,
-    averageOrderValue: totalOrders > 0 ? (revenue._sum.total || 0) / totalOrders : 0,
+    averageOrderValue:
+      totalOrders > 0 ? (revenue._sum.total || 0) / totalOrders : 0,
   };
 
   setInCache(cacheKey, metrics, ttlMs);
@@ -125,7 +138,7 @@ export async function getCachedRevenueMetrics(ttlMs: number = 300000) {
  * Get cached or fresh product metrics
  */
 export async function getCachedProductMetrics(ttlMs: number = 300000) {
-  const cacheKey = 'product-metrics:default';
+  const cacheKey = "product-metrics:default";
   const cached = getFromCache(cacheKey);
 
   if (cached) return cached;
@@ -137,7 +150,9 @@ export async function getCachedProductMetrics(ttlMs: number = 300000) {
   };
 
   if (metrics.totalCategories > 0) {
-    metrics.avgProductsPerCategory = Math.round(metrics.totalProducts / metrics.totalCategories);
+    metrics.avgProductsPerCategory = Math.round(
+      metrics.totalProducts / metrics.totalCategories,
+    );
   }
 
   setInCache(cacheKey, metrics, ttlMs);
@@ -148,9 +163,9 @@ export async function getCachedProductMetrics(ttlMs: number = 300000) {
  * Invalidate all metrics cache
  */
 export function invalidateMetricsCache(): void {
-  clearCacheByPrefix('approval-metrics');
-  clearCacheByPrefix('revenue-metrics');
-  clearCacheByPrefix('product-metrics');
+  clearCacheByPrefix("approval-metrics");
+  clearCacheByPrefix("revenue-metrics");
+  clearCacheByPrefix("product-metrics");
 }
 
 /**
@@ -191,10 +206,12 @@ export async function createOptimizationIndexes(): Promise<void> {
  */
 export async function explainQuery(query: string): Promise<any> {
   try {
-    const result = await (prisma as any).$executeRawUnsafe(`EXPLAIN (FORMAT JSON) ${query}`);
+    const result = await (prisma as any).$executeRawUnsafe(
+      `EXPLAIN (FORMAT JSON) ${query}`,
+    );
     return result;
   } catch (error) {
-    console.error('Error analyzing query:', error);
+    console.error("Error analyzing query:", error);
     return null;
   }
 }
@@ -218,7 +235,8 @@ export function getCacheStats() {
     cacheSize: cacheStore.size,
     expiredCount,
     totalBytes: totalSize,
-    averageBytesPerEntry: cacheStore.size > 0 ? Math.round(totalSize / cacheStore.size) : 0,
+    averageBytesPerEntry:
+      cacheStore.size > 0 ? Math.round(totalSize / cacheStore.size) : 0,
   };
 }
 
@@ -245,9 +263,9 @@ export function cleanExpiredCache(): number {
 export async function optimizeDatabase(): Promise<void> {
   try {
     // Vacuum analyze for PostgreSQL
-    await (prisma as any).$executeRawUnsafe('VACUUM ANALYZE;');
-    console.log('Database optimization completed');
+    await (prisma as any).$executeRawUnsafe("VACUUM ANALYZE;");
+    console.log("Database optimization completed");
   } catch (error) {
-    console.error('Error optimizing database:', error);
+    console.error("Error optimizing database:", error);
   }
 }

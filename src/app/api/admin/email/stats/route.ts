@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 /**
  * Email Statistics API
@@ -10,8 +10,8 @@ import { authOptions } from '@/lib/auth';
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     // Mock data - replace with database aggregation in production
@@ -24,10 +24,10 @@ export async function GET() {
 
     return NextResponse.json(stats);
   } catch (error) {
-    console.error('Error fetching email stats:', error);
+    console.error("Error fetching email stats:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch email stats' },
-      { status: 500 }
+      { error: "Failed to fetch email stats" },
+      { status: 500 },
     );
   }
 }

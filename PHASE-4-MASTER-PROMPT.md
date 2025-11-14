@@ -1,4 +1,5 @@
 # 🤖 PHASE-4-MASTER-PROMPT.md
+
 **Complete Autonomous AI Agent Prompt for Phase 4: Polish & Launch**
 
 ---
@@ -8,6 +9,7 @@
 This is a **single, comprehensive prompt** designed to be pasted into VS Code Copilot Chat (or similar AI agent) for autonomous execution through all 5 phases of Phase 4 cleanup.
 
 **Key principles:**
+
 - ✅ 100% file-based changes (no terminal execution)
 - ✅ No manual clicking for code changes — the AI agent handles all file edits
 - ✅ You'll still do one manual pass to run `bun run dev/build/test` and deploy
@@ -25,11 +27,11 @@ This is a **single, comprehensive prompt** designed to be pasted into VS Code Co
 ---
 
 ```
-You are an autonomous coding agent for Phase 4: Polish & Launch of Kollect-It, 
-a luxury collectibles marketplace built with Next.js 15, TypeScript, Supabase, 
+You are an autonomous coding agent for Phase 4: Polish & Launch of Kollect-It,
+a luxury collectibles marketplace built with Next.js 15, TypeScript, Supabase,
 Stripe, and ImageKit.
 
-Your mission: Polish existing pages, fix rough edges, disable incomplete features, 
+Your mission: Polish existing pages, fix rough edges, disable incomplete features,
 and prepare the site for real users — WITHOUT adding new infrastructure or big features.
 
 ════════════════════════════════════════════════════════════════════════════════
@@ -73,7 +75,7 @@ GLOBAL CONSTRAINTS (Read carefully. Do not violate these.)
 EXECUTION FLOW: 5 SEQUENTIAL PROMPTS (FULLY AUTONOMOUS)
 ════════════════════════════════════════════════════════════════════════════════
 
-You will run through these 5 prompts in order. After completing each prompt, 
+You will run through these 5 prompts in order. After completing each prompt,
 you will:
 1. Update PHASE-4-STATUS.md with progress
 2. Create a completion marker file (PROMPT-{N}-COMPLETE.md)
@@ -277,7 +279,7 @@ Disable these features while keeping code for future phases:
 4. NEWSLETTER / BLOG / MARKETING EXTRAS
    - Remove/hide newsletter form links from nav/footer.
    - Remove/hide blog links from nav/footer.
-   - If blog/newsletter routes exist but are incomplete, hide them OR leave them 
+   - If blog/newsletter routes exist but are incomplete, hide them OR leave them
      but do not expose links to them.
 
 After changes:
@@ -318,7 +320,7 @@ STEP 5 OF 5: GLOBAL CLEANUP & CREATE HUMAN TESTING GUIDE
 2. CREATE HUMAN TESTING GUIDE
    Create file: PHASE-4-HUMAN-TESTING.md
    Include:
-   
+
    ## Customer Purchase Flow
    - [ ] Register new user
    - [ ] Browse products in /shop
@@ -332,7 +334,7 @@ STEP 5 OF 5: GLOBAL CLEANUP & CREATE HUMAN TESTING GUIDE
    - [ ] See order confirmation page
    - [ ] Check account page — order appears in history
    - [ ] Check admin /admin/orders — order visible
-   
+
    ## Seller/Admin Approval Flow
    - [ ] Create a test product (if applicable)
    - [ ] Go to /admin/products/queue
@@ -340,32 +342,32 @@ STEP 5 OF 5: GLOBAL CLEANUP & CREATE HUMAN TESTING GUIDE
    - [ ] Click Approve
    - [ ] Verify product disappears from queue
    - [ ] Go to /shop, verify product appears
-   
+
    ## Admin Dashboard
    - [ ] Navigate to /admin/dashboard
    - [ ] Verify product count is accurate
    - [ ] Verify order count is accurate
    - [ ] Verify recent orders/products are listed
-   
+
    ## Static Pages
    - [ ] Visit /about — see reasonable copy
    - [ ] Visit /contact — see contact form or email
    - [ ] Visit /faq — see 5-10 FAQs
    - [ ] Visit /shipping-returns — see clear policy
-   
+
    ## Mobile Check
    - [ ] Open DevTools, toggle device mode
    - [ ] Select iPhone 12 or similar
    - [ ] Run through a quick purchase flow
    - [ ] Verify text is readable, buttons are tappable
-   
+
    ## Console & Build
    - [ ] Run: bun run dev
    - [ ] Navigate through all pages, check browser console (F12)
    - [ ] Confirm NO red errors on any page (warnings OK)
    - [ ] Run: bun run build
    - [ ] Build should complete with "✓ Compiled successfully"
-   
+
    ## Deployment (manual by human)
    - [ ] Ensure all changes are committed: git status (should be clean)
    - [ ] Push to GitHub: git push origin main
@@ -383,7 +385,7 @@ STEP 5 OF 5: GLOBAL CLEANUP & CREATE HUMAN TESTING GUIDE
    ✅ PROMPT 5 COMPLETE
    Global cleanup complete.
    Human testing guide created: PHASE-4-HUMAN-TESTING.md
-   
+
    NEXT STEPS (for human):
    1. Run: bun run dev (verify flows locally)
    2. Run: bun run build (verify production build)
@@ -418,7 +420,7 @@ The human will then:
 START HERE
 ════════════════════════════════════════════════════════════════════════════════
 
-Begin with STEP 1 OF 5 above. Execute each step in order. 
+Begin with STEP 1 OF 5 above. Execute each step in order.
 After each step, you will have created completion marker files.
 If you encounter an error at any point, STOP and write a detailed report to:
 PHASE-4-AGENT-ERROR.md

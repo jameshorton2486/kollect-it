@@ -9,6 +9,7 @@
 ## 📋 What You Have
 
 A complete page-by-page cleanup checklist with:
+
 - 26 major sections
 - 242 individual tasks
 - Copy-paste code examples
@@ -21,6 +22,7 @@ A complete page-by-page cleanup checklist with:
 ## 🚀 HOW TO EXECUTE
 
 ### Option A: Linear Approach (Easiest)
+
 **Go through checklist top-to-bottom:**
 
 1. Open `PHASE-4-DETAILED-CHECKLIST.md`
@@ -35,6 +37,7 @@ A complete page-by-page cleanup checklist with:
 ---
 
 ### Option B: Feature-Based Approach (Faster)
+
 **Group by workflow type:**
 
 1. **Week 1: Public Pages (Sections 1-9)**
@@ -58,6 +61,7 @@ A complete page-by-page cleanup checklist with:
 ---
 
 ### Option C: Quick & Dirty (Fastest)
+
 **Just hit the critical path:**
 
 1. **Critical public pages only (4-6 hours):**
@@ -115,6 +119,7 @@ Purpose: What this page does
 ```
 
 **What to do:**
+
 1. Open file: `src/app/page.tsx`
 2. Search for "coming", "beta", "launch"
 3. If found, delete or fix
@@ -153,18 +158,21 @@ Purpose: What this page does
 ### Step 4: Save Progress
 
 **Every 5-10 tasks completed:**
+
 - Command: `git add . && git commit -m "Phase 4: Tasks X-Y complete"`
 - This saves progress in case you lose work
 
 ### Step 5: When Section Complete
 
 **After finishing a section (e.g., Homepage = 8 tasks):**
+
 - Command: `git add . && git commit -m "Phase 4: Section 1 (Homepage) complete"`
 - Creates checkpoint you can revert to if needed
 
 ### Step 6: Final Deployment
 
 **When ALL 242 tasks done:**
+
 - Run: `bun run build` (should succeed)
 - Command: `git add . && git commit -m "Phase 4: All cleanup complete, ready to deploy"`
 - Command: `git push origin main`
@@ -177,17 +185,18 @@ Purpose: What this page does
 
 **By section (estimated):**
 
-| Section | Time | Notes |
-|---------|------|-------|
-| 1-8 (Public pages) | 12 hrs | Most important, do first |
-| 9 (Static pages) | 2 hrs | Short, quick wins |
-| 10-14 (Admin) | 6 hrs | Important for operations |
-| 15-18 (Disable features) | 2 hrs | Straightforward |
-| 19-22 (Testing) | 4 hrs | Make sure it all works |
-| 23-26 (Deploy prep) | 2 hrs | Final steps |
-| **TOTAL** | **~28 hrs** | Spread over 1-2 weeks |
+| Section                  | Time        | Notes                    |
+| ------------------------ | ----------- | ------------------------ |
+| 1-8 (Public pages)       | 12 hrs      | Most important, do first |
+| 9 (Static pages)         | 2 hrs       | Short, quick wins        |
+| 10-14 (Admin)            | 6 hrs       | Important for operations |
+| 15-18 (Disable features) | 2 hrs       | Straightforward          |
+| 19-22 (Testing)          | 4 hrs       | Make sure it all works   |
+| 23-26 (Deploy prep)      | 2 hrs       | Final steps              |
+| **TOTAL**                | **~28 hrs** | Spread over 1-2 weeks    |
 
 **Realistic daily pace:**
+
 - 2 hours/day × 14 days = 28 hours ✓
 - 4 hours/day × 7 days = 28 hours ✓
 - 8 hours/day × 3-4 days = 24-32 hours ✓
@@ -199,26 +208,31 @@ Purpose: What this page does
 **Common blockers and solutions:**
 
 ### "I don't know what this task is asking"
+
 - Re-read the task description carefully
 - Look at the "Command:" line for concrete action
 - If still confused: skip it and come back later
 
 ### "Task asks to delete something but I'm not sure"
+
 - Use git: delete/modify file, test, `git diff` to see change
 - If it breaks: `git checkout -- filename` to undo
 - Then try different approach
 
 ### "Page doesn't look right after my change"
+
 - Refresh browser (Ctrl+R)
 - Hard refresh (Ctrl+Shift+R)
 - Check DevTools console for errors (F12)
 - If still broken: `git diff` to see what changed, revert if needed
 
 ### "I finished a section but section status still says "incomplete""
+
 - Just manually update checklist
 - Mark all tasks in that section as ✓
 
 ### "I want to skip some tasks"
+
 - That's fine, but mark them as skipped
 - Note why (e.g., "Not applicable, feature doesn't exist")
 - Resume with next task
@@ -241,6 +255,7 @@ Purpose: What this page does
 - [ ] git status is clean: `git status` → "nothing to commit"
 
 **If any above fails:**
+
 - Don't deploy yet
 - Go back and fix
 - Run test again

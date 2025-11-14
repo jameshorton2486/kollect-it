@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 /**
  * Individual Seller Inquiry API
@@ -9,12 +9,12 @@ import { authOptions } from '@/lib/auth';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (!session?.user || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     const body = await request.json();
@@ -23,15 +23,15 @@ export async function PATCH(
     // In production, update database here
     console.log(`Updating inquiry ${params.id} to status: ${status}`);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      inquiry: { id: params.id, status }
+      inquiry: { id: params.id, status },
     });
   } catch (error) {
-    console.error('Error updating inquiry:', error);
+    console.error("Error updating inquiry:", error);
     return NextResponse.json(
-      { error: 'Failed to update inquiry' },
-      { status: 500 }
+      { error: "Failed to update inquiry" },
+      { status: 500 },
     );
   }
 }

@@ -3,13 +3,13 @@
  * Phase 5 - Filter metrics by category, status, date range
  */
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 export interface FilterOptions {
   startDate?: Date;
   endDate?: Date;
   categories?: string[];
-  status?: 'APPROVED' | 'REJECTED' | 'PENDING';
+  status?: "APPROVED" | "REJECTED" | "PENDING";
   searchQuery?: string;
   limit?: number;
   offset?: number;
@@ -49,7 +49,7 @@ export async function getFilteredApprovalMetrics(filters: FilterOptions) {
     take: filters.limit || 50,
     skip: filters.offset || 0,
     orderBy: {
-      reviewedAt: 'desc',
+      reviewedAt: "desc",
     },
   });
 
@@ -59,7 +59,7 @@ export async function getFilteredApprovalMetrics(filters: FilterOptions) {
     pageInfo: {
       limit: filters.limit || 50,
       offset: filters.offset || 0,
-      hasMore: count > ((filters.offset || 0) + (filters.limit || 50)),
+      hasMore: count > (filters.offset || 0) + (filters.limit || 50),
     },
   };
 }
@@ -69,7 +69,7 @@ export async function getFilteredApprovalMetrics(filters: FilterOptions) {
  */
 export async function getFilteredRevenueMetrics(filters: FilterOptions) {
   const where: any = {
-    status: 'COMPLETED',
+    status: "COMPLETED",
   };
 
   if (filters.startDate || filters.endDate) {
@@ -91,7 +91,7 @@ export async function getFilteredRevenueMetrics(filters: FilterOptions) {
   }
 
   const orders = await (prisma as any).order.groupBy({
-    by: ['categoryId', 'status'],
+    by: ["categoryId", "status"],
     _sum: {
       total: true,
     },
@@ -105,16 +105,17 @@ export async function getFilteredRevenueMetrics(filters: FilterOptions) {
 
   const totalRevenue = orders.reduce(
     (sum: number, order: any) => sum + (order._sum.total || 0),
-    0
+    0,
   );
 
   return {
     total: totalRevenue,
     byCategory: orders.map((order: any) => ({
-      category: order.categoryId || 'Unknown',
+      category: order.categoryId || "Unknown",
       revenue: order._sum.total || 0,
       orderCount: order._count.id || 0,
-      percentage: totalRevenue > 0 ? ((order._sum.total || 0) / totalRevenue) * 100 : 0,
+      percentage:
+        totalRevenue > 0 ? ((order._sum.total || 0) / totalRevenue) * 100 : 0,
     })),
     pageInfo: {
       limit: filters.limit || 50,
@@ -128,7 +129,7 @@ export async function getFilteredRevenueMetrics(filters: FilterOptions) {
  */
 export async function getFilteredPricingMetrics(filters: FilterOptions) {
   const where: any = {
-    status: 'APPROVED',
+    status: "APPROVED",
   };
 
   if (filters.startDate || filters.endDate) {
@@ -193,7 +194,7 @@ export async function getFilteredPricingMetrics(filters: FilterOptions) {
     // Calculate deviation if both prices exist
     if (product.suggestedPrice && product.finalPrice) {
       const deviation = Math.abs(
-        (product.finalPrice - product.suggestedPrice) / product.suggestedPrice
+        (product.finalPrice - product.suggestedPrice) / product.suggestedPrice,
       );
       totalDeviation += deviation;
     }
@@ -202,14 +203,17 @@ export async function getFilteredPricingMetrics(filters: FilterOptions) {
   // Calculate averages
   for (const category in accuracyByCategory) {
     const cat = accuracyByCategory[category];
-    cat.averageConfidence = Math.round((cat.totalConfidence / cat.count) * 100) / 100;
+    cat.averageConfidence =
+      Math.round((cat.totalConfidence / cat.count) * 100) / 100;
     delete cat.totalConfidence;
   }
 
   return {
-    averageConfidence: Math.round((totalAccuracy / products.length) * 100) / 100,
+    averageConfidence:
+      Math.round((totalAccuracy / products.length) * 100) / 100,
     accuracyByCategory: Object.values(accuracyByCategory),
-    averageDeviation: Math.round((totalDeviation / products.length) * 10000) / 100,
+    averageDeviation:
+      Math.round((totalDeviation / products.length) * 10000) / 100,
     total: products.length,
   };
 }
@@ -229,7 +233,7 @@ export async function getFilteredProductMetrics(filters: FilterOptions) {
   if (filters.searchQuery) {
     where.name = {
       contains: filters.searchQuery,
-      mode: 'insensitive',
+      mode: "insensitive",
     };
   }
 
@@ -246,7 +250,7 @@ export async function getFilteredProductMetrics(filters: FilterOptions) {
     take: filters.limit || 50,
     skip: filters.offset || 0,
     orderBy: {
-      createdAt: 'desc',
+      createdAt: "desc",
     },
   });
 
@@ -268,7 +272,7 @@ export async function getFilteredProductMetrics(filters: FilterOptions) {
     pageInfo: {
       limit: filters.limit || 50,
       offset: filters.offset || 0,
-      hasMore: total > ((filters.offset || 0) + (filters.limit || 50)),
+      hasMore: total > (filters.offset || 0) + (filters.limit || 50),
     },
   };
 }
@@ -286,7 +290,7 @@ export function buildFilterSummary(filters: FilterOptions): string {
   }
 
   if (filters.categories && filters.categories.length > 0) {
-    parts.push(`Categories: ${filters.categories.join(', ')}`);
+    parts.push(`Categories: ${filters.categories.join(", ")}`);
   }
 
   if (filters.status) {
@@ -297,5 +301,5 @@ export function buildFilterSummary(filters: FilterOptions): string {
     parts.push(`Search: "${filters.searchQuery}"`);
   }
 
-  return parts.length > 0 ? parts.join(' | ') : 'No filters applied';
+  return parts.length > 0 ? parts.join(" | ") : "No filters applied";
 }

@@ -1,16 +1,16 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { rateLimiters } from '@/lib/rate-limit';
-import { securityMiddleware, applySecurityHeaders } from '@/lib/security';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
+import { rateLimiters } from "@/lib/rate-limit";
+import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
 
 export async function POST(req: NextRequest) {
   try {
     // Apply security middleware with 5MB body limit for product creation
     const securityCheck = await securityMiddleware(req, {
       maxBodySize: 5 * 1024 * 1024, // 5MB
-      allowedContentTypes: ['application/json'],
+      allowedContentTypes: ["application/json"],
     });
     if (securityCheck) return securityCheck;
 
@@ -20,10 +20,10 @@ export async function POST(req: NextRequest) {
 
     // Check admin authorization
     const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'admin') {
+    if (!session?.user || (session.user as any).role !== "admin") {
       const errorResponse = NextResponse.json(
-        { error: 'Unauthorized - admin access required' },
-        { status: 403 }
+        { error: "Unauthorized - admin access required" },
+        { status: 403 },
       );
       return applySecurityHeaders(errorResponse);
     }
@@ -55,17 +55,17 @@ export async function POST(req: NextRequest) {
 
     // Validate required fields
     const required = [
-      'imageUrl',
-      'category',
-      'title',
-      'description',
-      'suggestedPrice',
+      "imageUrl",
+      "category",
+      "title",
+      "description",
+      "suggestedPrice",
     ];
     for (const field of required) {
       if (!body[field]) {
         return NextResponse.json(
           { error: `Missing required field: ${field}` },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -78,15 +78,15 @@ export async function POST(req: NextRequest) {
     if (!categoryRecord) {
       return NextResponse.json(
         { error: `Category not found: ${category}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Generate slug from title
     const slug = title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
     // Check if slug already exists
     const existing = await prisma.product.findUnique({
@@ -95,8 +95,8 @@ export async function POST(req: NextRequest) {
 
     if (existing) {
       return NextResponse.json(
-        { error: 'Product with similar title already exists' },
-        { status: 400 }
+        { error: "Product with similar title already exists" },
+        { status: 400 },
       );
     }
 
@@ -124,17 +124,17 @@ export async function POST(req: NextRequest) {
     console.log(`✅ [API] Product created: ${product.id}`);
     const response = NextResponse.json({
       ...product,
-      message: 'Product created successfully as draft',
+      message: "Product created successfully as draft",
     });
     return applySecurityHeaders(response);
   } catch (error) {
-    console.error('❌ [API] Create product error:', error);
+    console.error("❌ [API] Create product error:", error);
     const errorResponse = NextResponse.json(
       {
         error:
-          error instanceof Error ? error.message : 'Failed to create product',
+          error instanceof Error ? error.message : "Failed to create product",
       },
-      { status: 500 }
+      { status: 500 },
     );
     return applySecurityHeaders(errorResponse);
   }

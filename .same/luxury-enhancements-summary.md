@@ -19,6 +19,7 @@ Following the complete 1stdibs luxury restyle (Version 123), Version 124 adds so
 
 **Feature**: Product cards gracefully fade in as they enter the viewport
 **Implementation**:
+
 - Uses IntersectionObserver API for performance
 - Cards start with `opacity: 0` and `translateY(12px)`
 - Smooth 300ms ease transition to full visibility
@@ -27,13 +28,23 @@ Following the complete 1stdibs luxury restyle (Version 123), Version 124 adds so
 - Respects `prefers-reduced-motion` for accessibility
 
 **CSS Classes**:
+
 ```css
-.reveal { opacity: 0; transform: translateY(12px); }
-.reveal.is-in { opacity: 1; transform: none; }
-.product-card.reveal { transition-delay: calc(var(--delay, 0) * 50ms); }
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.product-card.reveal {
+  transition-delay: calc(var(--delay, 0) * 50ms);
+}
 ```
 
 **User Experience**:
+
 - Products smoothly fade in from bottom as user scrolls
 - Creates museum-gallery browsing feel
 - Draws attention to content progressively
@@ -45,6 +56,7 @@ Following the complete 1stdibs luxury restyle (Version 123), Version 124 adds so
 
 **Feature**: Pill-shaped search with elegant focus state
 **Styling**:
+
 - `border-radius: 999px` for perfect pill shape
 - `min-width: 240px` for proper proportion
 - `padding: 0.65rem 1.25rem` for comfortable spacing
@@ -52,6 +64,7 @@ Following the complete 1stdibs luxury restyle (Version 123), Version 124 adds so
 - **Focus**: Gold border + 4px rgba glow effect
 
 **CSS**:
+
 ```css
 input[type="search"] {
   border-radius: 999px;
@@ -64,6 +77,7 @@ input[type="search"]:focus {
 ```
 
 **User Experience**:
+
 - Modern, approachable design
 - Clear visual feedback on interaction
 - Matches luxury aesthetic while being functional
@@ -75,6 +89,7 @@ input[type="search"]:focus {
 
 **Feature**: "Explore Collection" text slides up on hover
 **Implementation**:
+
 - Hidden overlay positioned at `bottom: 0`
 - `transform: translateY(100%)` initially (off-screen)
 - Transitions to `translateY(0)` on hover
@@ -82,6 +97,7 @@ input[type="search"]:focus {
 - Gold underline on text that becomes white on hover
 
 **HTML Structure**:
+
 ```html
 <div class="category-card-overlay-cta">
   <span class="category-cta-text">Explore Collection</span>
@@ -89,10 +105,11 @@ input[type="search"]:focus {
 ```
 
 **CSS**:
+
 ```css
 .category-card-overlay-cta {
   transform: translateY(100%);
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }
 .category-card:hover .category-card-overlay-cta {
   transform: translateY(0);
@@ -100,6 +117,7 @@ input[type="search"]:focus {
 ```
 
 **User Experience**:
+
 - Inviting call-to-action reveals on hover
 - Doesn't obstruct category info when not hovered
 - Premium interaction feel
@@ -111,6 +129,7 @@ input[type="search"]:focus {
 
 **Feature**: Luxury floating button appears after scrolling 400px
 **Design**:
+
 - Charcoal background (#1E1E1E)
 - Muted gold border (1px solid #C7A85E)
 - 48px × 48px circular button (44px on mobile)
@@ -118,17 +137,20 @@ input[type="search"]:focus {
 - Subtle shadow: `0 4px 16px rgba(0,0,0,0.15)`
 
 **States**:
+
 - Hidden: `opacity: 0`, `visibility: hidden`, `translateY(20px)`
 - Visible: `opacity: 1`, `visibility: visible`, `translateY(0)`
 - Hover: Gold background, charcoal text, lifts -2px
 
 **Behavior**:
+
 - Fades in when `scrollY > 400`
 - Smooth scroll to top on click
 - Respects reduced motion preferences
 - z-index: 999 (always accessible)
 
 **User Experience**:
+
 - Convenient navigation on long pages
 - Doesn't appear until needed
 - Smooth, premium interaction
@@ -140,12 +162,14 @@ input[type="search"]:focus {
 
 **Feature**: Pill-shaped email input matching search aesthetic
 **Styling**:
+
 - `border-radius: 999px` for pill shape
 - `padding: 0.875rem 1.5rem` for comfortable input
 - Focus state with gold glow matching search
 - Seamless integration with existing form
 
 **CSS**:
+
 ```css
 .newsletter-form input[type="email"] {
   border-radius: 999px;
@@ -158,6 +182,7 @@ input[type="search"]:focus {
 ```
 
 **User Experience**:
+
 - Consistent design language
 - Approachable, modern feel
 - Clear focus indication
@@ -169,18 +194,21 @@ input[type="search"]:focus {
 
 **Feature**: Interactive trust badges with hover effects
 **Styling**:
+
 - Pill-shaped badges: `border-radius: 999px`
 - Thin border: `1px solid var(--color-gray-light)`
 - Uppercase text: `letter-spacing: 0.08em`
 - Hover: Gold border + gold text color
 
 **Pills**:
+
 - AUTHENTICATED
 - EXPERT-CURATED
 - TRANSPARENT PRICING
 - INSURED SHIPPING
 
 **User Experience**:
+
 - Build trust with visual cues
 - Interactive feedback on hover
 - Cohesive with overall design
@@ -192,12 +220,14 @@ input[type="search"]:focus {
 
 **Feature**: Improved hover zoom on product images
 **Enhancement**:
+
 - Increased from `scale(1.05)` to `scale(1.06)`
 - `will-change: transform` for GPU acceleration
 - 0.5s cubic-bezier timing for smooth zoom
 - Overflow hidden to prevent layout shift
 
 **CSS**:
+
 ```css
 .product-card-image img {
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -209,6 +239,7 @@ input[type="search"]:focus {
 ```
 
 **User Experience**:
+
 - More pronounced zoom draws attention
 - Smooth, premium feel
 - No performance issues
@@ -220,12 +251,14 @@ input[type="search"]:focus {
 
 **Feature**: Elegant loading state for images
 **Animation**:
+
 - Gradient shimmer from cream to gray-light
 - 1.5s infinite loop
 - Moves from -200% to 200% position
 - Only shows when image hasn't loaded
 
 **CSS**:
+
 ```css
 .product-card-image.loading {
   background: linear-gradient(
@@ -239,6 +272,7 @@ input[type="search"]:focus {
 ```
 
 **User Experience**:
+
 - No blank boxes while loading
 - Premium loading experience
 - Matches luxury aesthetic
@@ -250,6 +284,7 @@ input[type="search"]:focus {
 
 **Feature**: Respects user motion preferences
 **Implementation**:
+
 ```css
 @media (prefers-reduced-motion: reduce) {
   .reveal,
@@ -266,12 +301,14 @@ input[type="search"]:focus {
 ```
 
 **Impact**:
+
 - All animations disabled for users who prefer reduced motion
 - Smooth scroll disabled in favor of instant jump
 - Maintains full functionality without motion
 - WCAG 2.1 compliant (Level AA)
 
 **User Experience**:
+
 - Inclusive design
 - No vestibular triggers
 - Still fully functional
@@ -283,12 +320,14 @@ input[type="search"]:focus {
 
 **Feature**: Luxury aesthetic maintained in print
 **Optimizations**:
+
 - Hide interactive elements (back-to-top, cart, modals)
 - Black text on white background for clarity
 - Avoid page breaks inside cards
 - Clean, professional print output
 
 **CSS**:
+
 ```css
 @media print {
   .back-to-top,
@@ -308,6 +347,7 @@ input[type="search"]:focus {
 ```
 
 **User Experience**:
+
 - Professional print output
 - No wasted ink on interactive elements
 - Clean layout preservation
@@ -320,12 +360,14 @@ input[type="search"]:focus {
 ### Files Created
 
 **`src/components/LuxuryEnhancements.tsx`**
+
 - Client component for scroll animations
 - Back-to-top button logic
 - IntersectionObserver setup
 - Scroll position tracking
 
 **Modified Files**:
+
 - `src/app/ClientBody.tsx` - Added LuxuryEnhancements component
 - `src/app/page.tsx` - Added "Explore Collection" overlay to categories
 - `src/app/kollect-it-styles.css` - All enhancement styles
@@ -351,6 +393,7 @@ input[type="search"]:focus {
 ## 📊 Impact Summary
 
 ### User Experience
+
 - **+40% more engaging**: Scroll animations guide attention
 - **+25% clearer interactions**: Focus states clearly indicate active elements
 - **+35% more inviting**: Category hover encourages exploration
@@ -358,12 +401,14 @@ input[type="search"]:focus {
 - **100% accessible**: Works for all users, including those who prefer reduced motion
 
 ### Design Consistency
+
 - ✅ Pill shapes consistent across search, newsletter, trust badges
 - ✅ Gold accent color used strategically for interaction feedback
 - ✅ Timing functions match (cubic-bezier for natural movement)
 - ✅ All hover states have consistent 150-250ms transitions
 
 ### Performance
+
 - ✅ 0 additional HTTP requests
 - ✅ ~2KB total CSS added (gzipped)
 - ✅ No JavaScript bundle size increase (uses native APIs)
@@ -379,6 +424,7 @@ These enhancements follow the core principle:
 > **"Whisper, don't shout"**
 
 Each animation and interaction is:
+
 - **Subtle**: Never distracting from content
 - **Purposeful**: Guides user attention meaningfully
 - **Refined**: Matches 1stdibs luxury aesthetic
@@ -404,6 +450,7 @@ Each animation and interaction is:
 ### For Developers
 
 **To disable scroll animations** (if needed):
+
 ```css
 .product-card,
 .product-card-category {
@@ -413,6 +460,7 @@ Each animation and interaction is:
 ```
 
 **To adjust stagger timing**:
+
 ```css
 .product-card.reveal {
   transition-delay: calc(var(--delay, 0) * 100ms); /* Change 100ms */
@@ -420,6 +468,7 @@ Each animation and interaction is:
 ```
 
 **To modify back-to-top trigger point**:
+
 ```tsx
 // In LuxuryEnhancements.tsx
 setShowBackToTop(window.scrollY > 600); // Change from 400 to 600
@@ -428,6 +477,7 @@ setShowBackToTop(window.scrollY > 600); // Change from 400 to 600
 ### For Content Managers
 
 All enhancements work automatically:
+
 - ✅ New products get scroll animations
 - ✅ New categories get hover overlays
 - ✅ All forms get enhanced inputs
@@ -462,6 +512,7 @@ All enhancements work automatically:
 **🎉 Transformation Complete**
 
 Your Kollect-It marketplace now features:
+
 - ✨ Museum-quality aesthetics
 - 🎨 Sophisticated interactions
 - ♿ Inclusive accessibility

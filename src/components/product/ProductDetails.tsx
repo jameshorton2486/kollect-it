@@ -1,8 +1,15 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Heart, Share2, ShoppingCart, Truck, Shield, RotateCcw } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import {
+  Heart,
+  Share2,
+  ShoppingCart,
+  Truck,
+  Shield,
+  RotateCcw,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ProductDetailsProps {
   product: {
@@ -26,31 +33,31 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
   const handleAddToCart = async () => {
     try {
-      const response = await fetch('/api/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: product.id, quantity })
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: product.id, quantity }),
       });
 
       if (response.ok) {
-        router.push('/cart');
+        router.push("/cart");
       }
     } catch (error) {
-      console.error('Failed to add to cart:', error);
+      console.error("Failed to add to cart:", error);
     }
   };
 
   const handleWishlist = async () => {
     try {
-      const method = isWishlisted ? 'DELETE' : 'POST';
-      await fetch('/api/wishlist', {
+      const method = isWishlisted ? "DELETE" : "POST";
+      await fetch("/api/wishlist", {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: product.id })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: product.id }),
       });
       setIsWishlisted(!isWishlisted);
     } catch (error) {
-      console.error('Failed to update wishlist:', error);
+      console.error("Failed to update wishlist:", error);
     }
   };
 
@@ -59,11 +66,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       await navigator.share({
         title: product.title,
         text: `Check out ${product.title}`,
-        url: window.location.href
+        url: window.location.href,
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+      alert("Link copied to clipboard!");
     }
   };
 
@@ -82,16 +89,16 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       {/* Key Info */}
       <div className="flex gap-4 text-sm">
         <div>
-          <span className="text-muted-foreground">Condition:</span>{' '}
+          <span className="text-muted-foreground">Condition:</span>{" "}
           <span className="font-medium">{product.condition}</span>
         </div>
         <div>
-          <span className="text-muted-foreground">Category:</span>{' '}
+          <span className="text-muted-foreground">Category:</span>{" "}
           <span className="font-medium">{product.category.name}</span>
         </div>
         {product.year && (
           <div>
-            <span className="text-muted-foreground">Year:</span>{' '}
+            <span className="text-muted-foreground">Year:</span>{" "}
             <span className="font-medium">{product.year}</span>
           </div>
         )}
@@ -110,10 +117,12 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <button
             onClick={handleWishlist}
             className={`p-3 border rounded-lg ${
-              isWishlisted ? 'bg-red-50 border-red-500 text-red-500' : ''
+              isWishlisted ? "bg-red-50 border-red-500 text-red-500" : ""
             }`}
           >
-            <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-current' : ''}`} />
+            <Heart
+              className={`h-5 w-5 ${isWishlisted ? "fill-current" : ""}`}
+            />
           </button>
           <button onClick={handleShare} className="p-3 border rounded-lg">
             <Share2 className="h-5 w-5" />
@@ -153,11 +162,16 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       {/* Description */}
       <div className="pt-4 border-t">
         <h2 className="text-xl font-semibold mb-3">Description</h2>
-        <p className="text-muted-foreground whitespace-pre-line">{product.description}</p>
+        <p className="text-muted-foreground whitespace-pre-line">
+          {product.description}
+        </p>
       </div>
 
       {/* Specifications */}
-      {(product.artist || product.year || product.rarity || product.estimatedEra) && (
+      {(product.artist ||
+        product.year ||
+        product.rarity ||
+        product.estimatedEra) && (
         <div className="pt-4 border-t">
           <h2 className="text-xl font-semibold mb-3">Specifications</h2>
           <dl className="grid grid-cols-2 gap-3">

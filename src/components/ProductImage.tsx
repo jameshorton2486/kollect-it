@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 /**
  * ProductImage Component
- * 
+ *
  * Reusable ImageKit image component for displaying product images
  * with automatic transformations and optimization.
- * 
+ *
  * Features:
  * - Responsive sizing
  * - WebP format conversion
@@ -13,7 +13,7 @@
  * - Quality optimization
  * - Dark theme compatible
  * - Error handling
- * 
+ *
  * Usage:
  * ```tsx
  * <ProductImage
@@ -26,9 +26,9 @@
  * ```
  */
 
-import React, { useState, useCallback } from 'react';
-import Image from 'next/image';
-import type { ProductImageProps } from '../../types/imagekit';
+import React, { useState, useCallback } from "react";
+import Image from "next/image";
+import type { ProductImageProps } from "../../types/imagekit";
 
 /**
  * Get ImageKit transformation URL
@@ -37,23 +37,23 @@ function getImageKitUrl(
   basePath: string,
   width?: number,
   height?: number,
-  quality: number = 80
+  quality: number = 80,
 ): string {
   const endpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
-  
+
   if (!endpoint) {
-    console.warn('NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT is not configured');
+    console.warn("NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT is not configured");
     return basePath;
   }
 
   // Construct transformation parameters
   const params = [
-    'w-auto',
-    'ar-auto',
-    'q-auto',
+    "w-auto",
+    "ar-auto",
+    "q-auto",
     `quality-${quality}`,
-    'f-webp',
-    'crop-smart',
+    "f-webp",
+    "crop-smart",
   ];
 
   if (width && height) {
@@ -65,7 +65,7 @@ function getImageKitUrl(
     params.unshift(`h-${height}`);
   }
 
-  const transformation = params.join('/');
+  const transformation = params.join("/");
   return `${endpoint}/${transformation}${basePath}`;
 }
 
@@ -77,7 +77,7 @@ export default function ProductImage({
   alt,
   width = 400,
   height = 300,
-  className = '',
+  className = "",
   priority = false,
   quality = 80,
   onLoad,
@@ -103,8 +103,8 @@ export default function ProductImage({
   const finalClassName = `
     ${className}
     transition-opacity duration-300
-    ${isLoading ? 'opacity-0' : 'opacity-100'}
-    ${hasError ? 'bg-gray-800' : ''}
+    ${isLoading ? "opacity-0" : "opacity-100"}
+    ${hasError ? "bg-gray-800" : ""}
   `.trim();
 
   return (
@@ -142,7 +142,7 @@ export default function ProductImage({
         height={height}
         className={finalClassName}
         priority={priority}
-        loading={priority ? 'eager' : 'lazy'}
+        loading={priority ? "eager" : "lazy"}
         quality={quality}
         onLoadingComplete={handleLoadingComplete}
         onError={handleError}
@@ -154,7 +154,7 @@ export default function ProductImage({
 
 /**
  * Product Image Grid Component
- * 
+ *
  * Display multiple product images in a responsive grid
  */
 interface ProductImageGridProps {
@@ -163,7 +163,7 @@ interface ProductImageGridProps {
     alt: string;
   }>;
   className?: string;
-  imageSize?: 'small' | 'medium' | 'large';
+  imageSize?: "small" | "medium" | "large";
 }
 
 const imageSizeMap = {
@@ -174,8 +174,8 @@ const imageSizeMap = {
 
 export function ProductImageGrid({
   images,
-  className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4',
-  imageSize = 'medium',
+  className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4",
+  imageSize = "medium",
 }: ProductImageGridProps): React.ReactElement {
   const { width, height } = imageSizeMap[imageSize];
 
@@ -196,18 +196,19 @@ export function ProductImageGrid({
 
 /**
  * Responsive Product Image Component
- * 
+ *
  * Automatically adjusts size based on viewport
  */
-interface ResponsiveProductImageProps extends Omit<ProductImageProps, 'width' | 'height'> {
-  sizes?: 'small' | 'medium' | 'large' | 'full';
+interface ResponsiveProductImageProps
+  extends Omit<ProductImageProps, "width" | "height"> {
+  sizes?: "small" | "medium" | "large" | "full";
 }
 
 export function ResponsiveProductImage({
   path,
   alt,
-  className = '',
-  sizes = 'medium',
+  className = "",
+  sizes = "medium",
   ...props
 }: ResponsiveProductImageProps): React.ReactElement {
   const sizeMap = {

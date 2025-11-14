@@ -12,7 +12,6 @@
   ```bash
   grep -r "sk_live_\|pk_live_" . --exclude-dir=node_modules
   ```
-  
 - [ ] **If LIVE keys exposed:**
   - [ ] Go to https://dashboard.stripe.com/apikeys IMMEDIATELY
   - [ ] Click "Roll" on Secret key
@@ -20,7 +19,6 @@
   - [ ] Update local `.env` file
   - [ ] Check Stripe Dashboard for suspicious transactions
   - [ ] Contact Stripe support if fraud suspected
-  
 - [ ] **If TEST keys exposed:**
   - [ ] Go to https://dashboard.stripe.com/test/apikeys
   - [ ] Click "Roll" on Secret key
@@ -33,12 +31,10 @@
   - [ ] Go to Project → Settings → Database
   - [ ] Click "Reset database password"
   - [ ] Copy new connection string
-  
 - [ ] **Update DATABASE_URL:**
   - [ ] Update `.env` file locally
   - [ ] Update Netlify: Site settings → Environment variables
   - [ ] Test connection: `bun run db:studio`
-  
 - [ ] **Rotate service keys (if using Supabase):**
   - [ ] Settings → API
   - [ ] Generate new `anon` key
@@ -52,12 +48,10 @@
   - [ ] Click "Create API Key"
   - [ ] Name it (e.g., "Production Key - Oct 2025")
   - [ ] Copy the key IMMEDIATELY (shown only once)
-  
 - [ ] **Delete Old Key:**
   - [ ] Find the compromised key in list
   - [ ] Click "Delete"
   - [ ] Confirm deletion
-  
 - [ ] **Update RESEND_API_KEY:**
   - [ ] Update `.env` file
   - [ ] Update Netlify environment variables
@@ -70,12 +64,10 @@
   - [ ] Navigate to Developer options → API keys
   - [ ] Click "Reset private key"
   - [ ] Copy new private key
-  
 - [ ] **Update IMAGEKIT_PRIVATE_KEY:**
   - [ ] Update `.env` file
   - [ ] Update Netlify environment variables
   - [ ] Test image upload in admin panel
-  
 - [ ] **Note:** Public key does NOT need rotation (it's public)
 
 ### Priority 5: Authentication (NextAuth)
@@ -84,13 +76,10 @@
   ```bash
   openssl rand -base64 32
   ```
-  
 - [ ] **Update NEXTAUTH_SECRET:**
   - [ ] Replace in `.env` file
   - [ ] Update Netlify environment variables
-  
 - [ ] **Warning:** This will log out ALL users
-  
 - [ ] **Communicate to users if production:**
   - [ ] Send notification about security update
   - [ ] Explain they need to log in again
@@ -102,6 +91,7 @@
 ### Test All Services
 
 - [ ] **Database Connection:**
+
   ```bash
   cd kollect-it-marketplace
   bun run db:studio
@@ -109,12 +99,14 @@
   ```
 
 - [ ] **Stripe Payment:**
+
   ```bash
   # Test checkout with card: 4242 4242 4242 4242
   # Should complete successfully
   ```
 
 - [ ] **Email Sending:**
+
   ```bash
   curl http://localhost:3000/api/email/test
   # Should receive test email
@@ -136,13 +128,11 @@
   - [ ] Go to: Site settings → Environment variables
   - [ ] Update each rotated credential
   - [ ] Click "Save"
-  
 - [ ] **Trigger new deployment:**
   ```bash
   git commit --allow-empty -m "Trigger deployment after credential rotation"
   git push origin main
   ```
-  
 - [ ] **Verify deployment:**
   - [ ] Check Netlify build logs
   - [ ] Visit deployed site
@@ -156,7 +146,6 @@
   - [ ] Stripe Dashboard for failed payments
   - [ ] Resend Dashboard for bounced emails
   - [ ] ImageKit usage logs
-  
 - [ ] **Watch for suspicious activity:**
   - [ ] Unexpected database queries
   - [ ] Unusual payment patterns
@@ -299,7 +288,8 @@ After rotation, update processes:
 
 ---
 
-**Remember:** 
+**Remember:**
+
 - Rotate immediately when in doubt
 - Better safe than sorry
 - Document everything

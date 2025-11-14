@@ -1,6 +1,6 @@
 /**
  * Performance Configuration
- * 
+ *
  * Centralized performance settings for the entire application
  * These can be toggled based on environment or feature flags
  */
@@ -12,11 +12,11 @@ export const performanceConfig = {
     heroQuality: 75, // Hero section images (most critical, but quality reduced for speed)
     productQuality: 80, // Product images
     thumbnailQuality: 60, // Thumbnail images
-    
+
     // Cache durations (in seconds)
     staticImageCacheTTL: 31536000, // 1 year for static assets
     dynamicImageCacheTTL: 3600, // 1 hour for dynamic content
-    
+
     // Image sizes for responsive design
     sizes: {
       mobile: "(max-width: 640px) 100vw",
@@ -38,17 +38,17 @@ export const performanceConfig = {
   scripts: {
     // Third-party scripts configuration
     gtag: {
-      strategy: 'afterInteractive' as const, // Load after page interactive
+      strategy: "afterInteractive" as const, // Load after page interactive
     },
     stripe: {
-      strategy: 'beforeInteractive' as const, // Load critical payment scripts early
+      strategy: "beforeInteractive" as const, // Load critical payment scripts early
     },
   },
 
   // Font optimization
   fonts: {
     // Use font-display: swap for better LCP
-    display: 'swap',
+    display: "swap",
     // Preload critical fonts
     preload: {
       serif: true, // Main headings
@@ -85,8 +85,8 @@ export const performanceConfig = {
     // Service worker caching
     enableServiceWorker: false, // Set to true if implemented
     // Browser cache control headers
-    staticAssetCacheDuration: '31536000', // 1 year
-    dynamicContentCacheDuration: '3600', // 1 hour
+    staticAssetCacheDuration: "31536000", // 1 year
+    dynamicContentCacheDuration: "3600", // 1 hour
   },
 
   // Web Vitals targets (these inform optimization priorities)
@@ -102,21 +102,25 @@ export const performanceConfig = {
 
 /**
  * Utility function to get responsive image sizes string
- * 
+ *
  * @example
  * sizes={getImageSizes('desktop')}
  */
-export function getImageSizes(breakpoint: 'mobile' | 'tablet' | 'desktop'): string {
+export function getImageSizes(
+  breakpoint: "mobile" | "tablet" | "desktop",
+): string {
   return performanceConfig.images.sizes[breakpoint];
 }
 
 /**
  * Utility function to get quality setting based on image type
- * 
+ *
  * @example
  * quality={getImageQuality('hero')}
  */
-export function getImageQuality(type: 'hero' | 'product' | 'thumbnail'): number {
+export function getImageQuality(
+  type: "hero" | "product" | "thumbnail",
+): number {
   const qualityMap = {
     hero: performanceConfig.images.heroQuality,
     product: performanceConfig.images.productQuality,
@@ -128,7 +132,7 @@ export function getImageQuality(type: 'hero' | 'product' | 'thumbnail'): number 
 /**
  * Utility function to get cache TTL based on content type
  */
-export function getCacheTTL(type: 'static' | 'dynamic' | 'api'): number {
+export function getCacheTTL(type: "static" | "dynamic" | "api"): number {
   const ttlMap = {
     static: performanceConfig.images.staticImageCacheTTL,
     dynamic: performanceConfig.images.dynamicImageCacheTTL,

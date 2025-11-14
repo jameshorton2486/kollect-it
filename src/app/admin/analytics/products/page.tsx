@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { ProductAnalyticsDashboard } from '@/components/admin/ProductAnalyticsDashboard';
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { ProductAnalyticsDashboard } from "@/components/admin/ProductAnalyticsDashboard";
 
 export default function ProductAnalyticsPage() {
   const { data: session, status } = useSession();
@@ -11,13 +11,13 @@ export default function ProductAnalyticsPage() {
 
   // Redirect if not admin
   useEffect(() => {
-    if (status === 'loading') return;
-    if (!session?.user || (session.user as any).role !== 'admin') {
-      router.push('/admin/login');
+    if (status === "loading") return;
+    if (!session?.user || (session.user as any).role !== "admin") {
+      router.push("/admin/login");
     }
   }, [session, status, router]);
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -28,7 +28,7 @@ export default function ProductAnalyticsPage() {
     );
   }
 
-  if (!session?.user || (session.user as any).role !== 'admin') {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return null;
   }
 
