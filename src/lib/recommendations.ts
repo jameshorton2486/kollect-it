@@ -16,7 +16,7 @@ export async function getRecommendations(userId?: string, productId?: string, li
 
       const viewedCategoryIds = await prisma.product.findMany({
         where: {
-          id: { in: userOrders.map(o => o.productId) }
+          id: { in: userOrders.map((o: { productId: string }) => o.productId) }
         },
         select: { categoryId: true },
         distinct: ['categoryId']
@@ -25,8 +25,8 @@ export async function getRecommendations(userId?: string, productId?: string, li
       // Recommend from similar categories
       const recommendations = await prisma.product.findMany({
         where: {
-          categoryId: { in: viewedCategoryIds.map(c => c.categoryId) },
-          id: { notIn: userOrders.map(o => o.productId) },
+          categoryId: { in: viewedCategoryIds.map((c: { categoryId: string }) => c.categoryId) },
+          id: { notIn: userOrders.map((o: { productId: string }) => o.productId) },
           status: 'active'
         },
         take: limit,

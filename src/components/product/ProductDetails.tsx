@@ -21,7 +21,7 @@ interface ProductDetailsProps {
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const router = useRouter();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity] = useState(1); // Removed unused setter
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const handleAddToCart = async () => {

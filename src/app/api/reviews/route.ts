@@ -42,11 +42,11 @@ export async function GET(request: NextRequest) {
     ]);
 
     const totalReviews = reviews.length;
-    const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / (totalReviews || 1);
+  const averageRating = reviews.reduce((sum: number, r: { rating: number }) => sum + r.rating, 0) / (totalReviews || 1);
 
     const ratingBreakdown = [1, 2, 3, 4, 5].map(star => ({
       rating: star,
-      count: stats.find(s => s.rating === star)?._count || 0
+  count: stats.find((s: { rating: number, _count: number }) => s.rating === star)?._count || 0
     }));
 
     return NextResponse.json({

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import SearchFilters from './SearchFilters';
 import { Grid3x3, List, SlidersHorizontal } from 'lucide-react';
 import Link from 'next/link';
@@ -25,7 +25,7 @@ interface SearchResultsData {
 
 export default function SearchResults() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  // const router = useRouter(); // Removed unused variable
   const query = searchParams.get('q') || '';
   
   const [results, setResults] = useState<SearchResultsData>({
