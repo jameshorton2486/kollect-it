@@ -1,8 +1,7 @@
 // Load environment variables from .env.local (or .env as fallback)
-require("dotenv").config({ path: ".env.local" });
-require("dotenv").config(); // Fallback to .env
+import "dotenv/config";
 
 // Prisma configuration
-module.exports = {
+export default {
   schema: "./prisma/schema.prisma",
 };

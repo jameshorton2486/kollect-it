@@ -8,8 +8,8 @@
 
 **Commitment:** Tier 2 Platform (Phase 5 + 6)
 **Duration:** 6-8 weeks
-**Start Date:** ******\_\_\_******
-**Target Launch:** ******\_\_\_******
+**Start Date:** **\*\***\_\_\_**\*\***
+**Target Launch:** **\*\***\_\_\_**\*\***
 **Goal:** Professional, operational marketplace v2
 
 ---

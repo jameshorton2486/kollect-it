@@ -11,7 +11,6 @@ import {
   Send,
   CheckCircle,
   XCircle,
-  Users,
   Package,
   DollarSign,
   AlertCircle,
@@ -67,9 +66,6 @@ export function EmailNotificationManager() {
   const [activeTab, setActiveTab] = useState<
     "templates" | "campaigns" | "stats"
   >("templates");
-  const [selectedTemplate, _setSelectedTemplate] =
-    useState<EmailTemplate | null>(null);
-  const [showTemplateEditor, _setShowTemplateEditor] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -172,7 +168,7 @@ export function EmailNotificationManager() {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Email Notifications</h2>
         <button
-          onClick={() => _setShowTemplateEditor(true)}
+          onClick={() => {/* TODO: Implement template editor */}}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           <Plus className="w-4 h-4" />
@@ -352,7 +348,7 @@ export function EmailNotificationManager() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
                         <button
-                          onClick={() => _setSelectedTemplate(template)}
+                          onClick={() => {/* TODO: Implement template editing */}}
                           className="text-blue-600 hover:text-blue-900"
                           aria-label="Edit template"
                         >

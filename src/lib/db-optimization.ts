@@ -77,7 +77,7 @@ export const optimizedQueries = {
         where,
         select: {
           id: true,
-          name: true,
+          title: true,
           price: true,
           category: true,
           status: true,

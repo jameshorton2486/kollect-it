@@ -1,4 +1,5 @@
 ﻿# TypeScript Audit
+
 Generated: 11/14/2025 10:36:19
 
 ## Type Check Results
@@ -32,4 +33,3 @@ src/lib/auth.ts(29,11): error TS2769: No overload matches this call.
       Type 'null' is not assignable to type 'string'.
 src/lib/db-optimization.ts(80,11): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'ProductSelect<DefaultArgs>'.
 ```
-

@@ -1,4 +1,5 @@
 ﻿# Database Audit
+
 Generated: 11/14/2025 10:36:47
 
 ## Models Found: 12
@@ -15,4 +16,3 @@ Generated: 11/14/2025 10:36:47
 - ReportAuditLog
 - CartItem
 - Review
-

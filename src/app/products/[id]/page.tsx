@@ -44,6 +44,11 @@ async function getRelatedProducts(
     },
     take: 4,
     include: {
+      category: {
+        select: {
+          name: true,
+        },
+      },
       images: {
         take: 1,
         select: {
@@ -72,17 +77,36 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {/* Gallery */}
-        <ProductGallery images={product.images} productName={product.title} />
+        <ProductGallery 
+          images={product.images.map(img => ({ 
+            url: img.url, 
+            alt: img.alt || undefined 
+          }))} 
+          productName={product.title} 
+        />
 
         {/* Details */}
-        <ProductDetails product={product} />
+        <ProductDetails 
+          product={{
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            condition: product.condition || "Unknown",
+            description: product.description,
+            category: { name: product.category.name },
+            year: product.year || undefined,
+            artist: product.artist || undefined,
+            rarity: product.rarity || undefined,
+            estimatedEra: product.estimatedEra || undefined,
+          }}
+        />
       </div>
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <RelatedProducts
           products={relatedProducts}
-          categoryName={product.categoryName}
+          categoryName={product.category.name}
         />
       )}
     </div>

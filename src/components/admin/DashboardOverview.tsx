@@ -227,7 +227,7 @@ export function DashboardOverview() {
                 cx="50%"
                 cy="50%"
                 outerRadius={100}
-                label={(entry) => `${entry.name} (${entry.count})`}
+                label={(entry: any) => `${entry.name} (${entry.count})`}
                 labelLine={{ stroke: "#999", strokeWidth: 1 }}
               >
                 {metrics.products.byCategory.map((_entry, index) => (

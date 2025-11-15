@@ -508,8 +508,8 @@ Before marking deployment complete, ensure:
 - [ ] Documentation updated
 - [ ] Backup plan in place
 
-**Deployment approved by:** ******\_\_\_******  
-**Date:** ******\_\_\_******
+**Deployment approved by:** **\*\***\_\_\_**\*\***  
+**Date:** **\*\***\_\_\_**\*\***
 
 ---
 

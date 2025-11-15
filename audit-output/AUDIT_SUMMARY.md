@@ -17,7 +17,9 @@ All reports available in: audit-output\reports\
 - LOW: Check audit-output\reports\LOW\
 
 ## Automated Fixes
+
 Automated fixes APPLIED:
+
 - Dependencies pruned and deduped
 - Code formatted with Prettier (if available)
 - ESLint fixes applied (if available)
@@ -37,12 +39,15 @@ All changes committed to branch: automated-audit-20251114-103545
 ## Review Reports
 
 # View all reports
-ls audit-output\reports\ -Recurse -Filter *.md
+
+ls audit-output\reports\ -Recurse -Filter \*.md
 
 # View critical issues
+
 ls audit-output\reports\CRITICAL\
 
 # View high priority
+
 ls audit-output\reports\HIGH\
 
 ---
