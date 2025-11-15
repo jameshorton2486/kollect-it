@@ -52,7 +52,7 @@ bun run sync-images
 
 ```
 🚀 Starting Google Drive to ImageKit Sync
-📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+📁 Drive Folder ID: [REDACTED-FOLDER-ID]
 🖼️  ImageKit Folder: /products
 ✅ Found 5 images in Google Drive
 📤 Uploading...
@@ -75,7 +75,7 @@ bun run sync-images
 
 **To grant access:**
 
-1. Open: https://drive.google.com/drive/folders/1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+1. Open: https://drive.google.com/drive/folders/[REDACTED-FOLDER-ID]
 2. Right-click → Share
 3. Add: `imagekit-sync@kollect-it-imagekit.iam.gserviceaccount.com`
 4. Permission: **Editor**

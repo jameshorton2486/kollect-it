@@ -90,7 +90,7 @@ IMAGEKIT_PRIVATE_KEY=C5l6XYj7keSe1uBHlCedLI2/F9s=
 IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/kollectit
 
 # Google Drive Configuration
-GOOGLE_DRIVE_FOLDER_ID=1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+GOOGLE_DRIVE_FOLDER_ID=[REDACTED-FOLDER-ID]
 GOOGLE_APPLICATION_CREDENTIALS=./google-credentials.json
 
 # Webhook Security
@@ -126,7 +126,7 @@ bun run sync-images
 
 # Expected output:
 # 🚀 Starting Google Drive to ImageKit Sync
-# 📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+# 📁 Drive Folder ID: [REDACTED-FOLDER-ID]
 # 🖼️  ImageKit Folder: /products
 # ⏭️  Skip Existing: true
 #

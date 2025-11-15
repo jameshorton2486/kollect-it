@@ -55,7 +55,7 @@
 
 ### 1. Product Images Storage
 
-**Google Drive Folder:** [Product Images](https://drive.google.com/drive/folders/1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa)
+**Google Drive Folder:** [Product Images](https://drive.google.com/drive/folders/[REDACTED-FOLDER-ID])
 
 - Location for all product images
 - Will be synced to ImageKit using the sync system

@@ -59,7 +59,7 @@ Should output the file path if it exists.
 
 All product images will be stored in this Google Drive folder:
 
-**📁 Folder URL:** https://drive.google.com/drive/folders/1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+**📁 Folder URL:** https://drive.google.com/drive/folders/[REDACTED-FOLDER-ID]
 
 **Note:** This is where you'll upload all product images that will later be synced to ImageKit using the Google Drive → ImageKit sync system (in progress).
 

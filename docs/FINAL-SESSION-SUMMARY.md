@@ -40,7 +40,7 @@
 - **Google Service Account:** ✅ Enabled and working
 - **Credentials:** New key generated and validated (`google-credentials.json`)
 - **Authentication:** ✅ **WORKING PERFECTLY**
-- **Drive Folder:** Successfully connects to folder ID `1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa`
+- **Drive Folder:** Successfully connects to folder ID `[REDACTED-FOLDER-ID]`
 - **Test Result:** ✅ Found 4 images, downloaded successfully
 - **Images in Drive:**
   - categories_art.png
@@ -66,7 +66,7 @@
   - Public: `public_1MwR2t3I95qAJXc72h1DzbbLLZU=`
   - Private: `private_C5l6XYj7keSe1uBHlCedLI2/F9s=`
 - **Google Drive:** Configured
-  - Folder ID: `1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa`
+  - Folder ID: `[REDACTED-FOLDER-ID]`
   - Credentials file: `./google-credentials.json` ✅
 - **Webhook Secret:** Configured for API security
 - **Status:** ✅ All configured and validated

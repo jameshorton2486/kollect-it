@@ -87,8 +87,8 @@ NEXTAUTH_URL="https://your-site.netlify.app"
 **Example:**
 
 ```env
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_51AbC123..."
-STRIPE_SECRET_KEY="sk_test_51AbC123..."
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_[REDACTED]"
+STRIPE_SECRET_KEY="sk_test_[REDACTED]"
 ```
 
 **For production:** Use live keys (starts with `pk_live_` and `sk_live_`)

@@ -92,7 +92,7 @@ bun run sync-images
 
 ```
 🚀 Starting Google Drive to ImageKit Sync
-📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+📁 Drive Folder ID: [REDACTED-FOLDER-ID]
 ✅ Found 4 images in Google Drive
 [Uploading to ImageKit...]
 ✅ Success: X files uploaded
@@ -108,7 +108,7 @@ bun run sync-images
 | **ImageKit Config**        | ✅     | All keys configured correctly                    |
 | **ImageKit SDK**           | ✅     | Ready to upload images                           |
 | **Sync Script**            | ✅     | Code complete, awaiting credentials              |
-| **Google Drive Folder**    | ✅     | ID configured: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa |
+| **Google Drive Folder**    | ✅     | ID configured: [REDACTED-FOLDER-ID] |
 | **Google Service Account** | ⚠️     | Keys disabled - needs regeneration               |
 | **Build Status**           | ✅     | Exit code 0, zero errors                         |
 

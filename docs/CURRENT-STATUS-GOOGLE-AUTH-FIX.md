@@ -73,7 +73,7 @@ Google service account keys can fail JWT validation if:
 
 ### Option C: Grant Permissions to Service Account (If Keys Are Valid)
 
-1. Open Google Drive folder: https://drive.google.com/drive/folders/1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+1. Open Google Drive folder: https://drive.google.com/drive/folders/[REDACTED-FOLDER-ID]
 2. Right-click → Share
 3. Add email: `imagekit-sync@kollect-it-imagekit.iam.gserviceaccount.com`
 4. Set permission: **Editor**
@@ -107,7 +107,7 @@ bun run sync-images
 
 ```
 🚀 Starting Google Drive to ImageKit Sync
-📁 Drive Folder ID: 1PhzYwJ8u6Fe6cOYmdljcjki3u4QlkAMa
+📁 Drive Folder ID: [REDACTED-FOLDER-ID]
 ✅ Found 4 images in Google Drive
 [1/4] Processing: categories_collectibles.png
 ⬇️  Downloading from Google Drive...

@@ -13,8 +13,8 @@
 - **Project ID:** okthcpumncidcihdhgea
 - **Project URL:** https://okthcpumncidcihdhgea.supabase.co
 - **Database Host:** db.okthcpumncidcihdhgea.supabase.co
-- **Anon Key:** eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... ✅
-- **Service Role Key:** eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... ✅
+- **Anon Key:** [REDACTED-SUPABASE-KEY] ✅
+- **Service Role Key:** [REDACTED-SUPABASE-KEY] ✅
 
 ### Environment Variables ✅
 
@@ -25,8 +25,8 @@ DIRECT_URL="postgres://postgres:***@db.okthcpumncidcihdhgea.supabase.co:5432/pos
 
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL="https://okthcpumncidcihdhgea.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+NEXT_PUBLIC_SUPABASE_ANON_KEY="[REDACTED-SUPABASE-KEY]"
+SUPABASE_SERVICE_ROLE_KEY="[REDACTED-SUPABASE-KEY]"
 ```
 
 ### Security Posture ✅

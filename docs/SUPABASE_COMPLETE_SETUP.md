@@ -111,7 +111,7 @@ curl http://localhost:3000/api/supabase/example
 ### Anon Key (Public - Safe)
 
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+[REDACTED-SUPABASE-KEY]
 ```
 
 - **Visibility:** Can be in browser/client code
@@ -122,7 +122,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ### Service Role Key (Private - CRITICAL)
 
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+[REDACTED-SUPABASE-KEY]
 ```
 
 - **Visibility:** Server-side ONLY

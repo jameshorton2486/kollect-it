@@ -36,8 +36,8 @@ The Kollect-It marketplace uses Stripe for secure payment processing:
 **Local (.env)**:
 
 ```bash
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_51ABC123..."
-STRIPE_SECRET_KEY="sk_test_51XYZ789..."
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_[REDACTED]"
+STRIPE_SECRET_KEY="sk_test_[REDACTED]"
 ```
 
 **Netlify**:
