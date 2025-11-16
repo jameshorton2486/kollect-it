@@ -21,7 +21,7 @@ export default function TrustStrip() {
 
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <Package className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
+              <Package className="h-8 w-8 text-gold" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">
               Insured Shipping
@@ -34,7 +34,7 @@ export default function TrustStrip() {
 
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <Award className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
+              <Award className="h-8 w-8 text-gold" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">
               Personally Curated
@@ -48,7 +48,7 @@ export default function TrustStrip() {
 
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <Undo2 className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
+              <Undo2 className="h-8 w-8 text-gold" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">
               Returns Available
@@ -62,7 +62,7 @@ export default function TrustStrip() {
 
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <Zap className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
+              <Zap className="h-8 w-8 text-gold" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">
               Fast Shipping
@@ -75,7 +75,7 @@ export default function TrustStrip() {
 
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <Lock className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
+              <Lock className="h-8 w-8 text-gold" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">
               Secure Checkout

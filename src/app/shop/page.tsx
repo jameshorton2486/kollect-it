@@ -167,14 +167,14 @@ export default async function ShopPage({
               </h2>
               {products.length > 0 ? (
                 <>
-                  <p className="text-[var(--color-gray-dark)] mb-4">
+                  <p className="text-[hsl(var(--ink-700))] mb-4">
                     {products.length} result{products.length === 1 ? "" : "s"}
                   </p>
                   <ProductGrid products={products} />
                 </>
               ) : (
-                <div className="rounded border border-[var(--color-gray-light)] bg-cream p-6">
-                  <p className="text-[var(--color-gray-dark)]">
+                <div className="rounded border border-[hsl(var(--border-300))] bg-cream p-6">
+                  <p className="text-[hsl(var(--ink-700))]">
                     No products found. Try a different search term.
                   </p>
                   <div className="mt-3">
@@ -200,7 +200,7 @@ export default async function ShopPage({
               Shop by Category
             </h1>
             <p
-              className="max-w-[700px] mx-auto text-base leading-[1.7] text-[var(--color-gray-dark)]"
+              className="max-w-[700px] mx-auto text-base leading-[1.7] text-[hsl(var(--ink-700))]"
               data-reveal
               data-reveal-delay="200"
             >
@@ -216,7 +216,7 @@ export default async function ShopPage({
               <Link
                 key={category.id}
                 href={`/category/${category.slug}`}
-                className="group block overflow-hidden rounded border border-[var(--color-gray-light)] bg-white shadow-sm transition hover:shadow-md"
+                className="group block overflow-hidden rounded border border-[hsl(var(--border-300))] bg-white shadow-sm transition hover:shadow-md"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
@@ -238,7 +238,7 @@ export default async function ShopPage({
                 </div>
                 <div className="p-4">
                   <h4 className="ki-heading-sm mb-1">{category.name}</h4>
-                  <p className="ki-text-sm text-[var(--color-gray-dark)]">
+                  <p className="ki-text-sm text-[hsl(var(--ink-700))]">
                     {category.description}
                   </p>
                 </div>

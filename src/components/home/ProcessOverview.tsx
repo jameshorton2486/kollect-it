@@ -44,7 +44,7 @@ export default function ProcessOverview() {
     <section className="py-16 md:py-24 bg-surface-1 border-t border-surface-2">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <p className="text-sm md:text-base font-semibold text-accent-gold uppercase tracking-widest mb-3">
+          <p className="text-sm md:text-base font-semibold text-gold uppercase tracking-widest mb-3">
             Our Process
           </p>
           <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4">
@@ -60,17 +60,17 @@ export default function ProcessOverview() {
           {steps.map((s) => (
             <div
               key={s.n}
-              className="group bg-white rounded-lg p-8 border border-surface-2 hover:border-accent-gold transition-all duration-300 hover:shadow-lg"
+              className="group bg-white rounded-lg p-8 border border-surface-2 hover:border-gold transition-all duration-300 hover:shadow-lg"
             >
               <div className="flex items-start gap-4 mb-4">
-                <div className="flex-shrink-0 h-12 w-12 rounded-full bg-accent-gold/10 flex items-center justify-center text-2xl">
+                <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gold/10 flex items-center justify-center text-2xl">
                   {s.icon}
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-accent-gold uppercase tracking-wider">
+                  <div className="text-sm font-semibold text-gold uppercase tracking-wider">
                     Step {s.n}
                   </div>
-                  <h3 className="font-serif text-xl text-ink group-hover:text-accent-gold transition-colors">
+                  <h3 className="font-serif text-xl text-ink group-hover:text-gold transition-colors">
                     {s.title}
                   </h3>
                 </div>
@@ -88,13 +88,13 @@ export default function ProcessOverview() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shop"
-              className="inline-block bg-accent-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity"
             >
               Begin Shopping
             </Link>
             <Link
               href="/about"
-              className="inline-block bg-white border-2 border-accent-gold text-accent-gold font-semibold px-10 py-3 rounded-lg hover:bg-accent-gold hover:text-white transition-all"
+              className="inline-block bg-white border-2 border-gold text-gold font-semibold px-10 py-3 rounded-lg hover:bg-gold hover:text-white transition-all"
             >
               Learn More About Us
             </Link>

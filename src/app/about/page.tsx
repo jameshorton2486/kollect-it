@@ -111,7 +111,7 @@ export default async function AboutPage() {
       <section className="py-20 md:py-32 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
               ABOUT KOLLECT-IT
             </p>
             <h1 className="font-display text-5xl md:text-6xl mb-6 leading-tight text-ink">
@@ -131,7 +131,7 @@ export default async function AboutPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal">
               OUR STORY
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-8 leading-tight">
@@ -178,7 +178,7 @@ export default async function AboutPage() {
       <section className="py-16 md:py-24 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               WHY COLLECTORS CHOOSE KOLLECT-IT
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -255,7 +255,7 @@ export default async function AboutPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               OUR PROCESS
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -265,7 +265,7 @@ export default async function AboutPage() {
             <div className="space-y-8">
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     1
                   </div>
                 </div>
@@ -285,7 +285,7 @@ export default async function AboutPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     2
                   </div>
                 </div>
@@ -305,7 +305,7 @@ export default async function AboutPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     3
                   </div>
                 </div>
@@ -325,7 +325,7 @@ export default async function AboutPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     4
                   </div>
                 </div>
@@ -345,7 +345,7 @@ export default async function AboutPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     5
                   </div>
                 </div>
@@ -364,7 +364,7 @@ export default async function AboutPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     6
                   </div>
                 </div>
@@ -389,7 +389,7 @@ export default async function AboutPage() {
       <section className="py-16 md:py-24 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               OUR TEAM
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -476,7 +476,7 @@ export default async function AboutPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               CATEGORIES
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -496,7 +496,7 @@ export default async function AboutPage() {
                   <p className="text-ink-light leading-relaxed">
                     {category.description}
                   </p>
-                  <span className="inline-block mt-4 text-accent-gold font-medium">
+                  <span className="inline-block mt-4 text-gold font-medium">
                     Explore →
                   </span>
                 </Link>
@@ -507,7 +507,7 @@ export default async function AboutPage() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="py-16 md:py-24 bg-accent-gold text-white">
+      <section className="py-16 md:py-24 bg-gold text-white">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-4xl md:text-5xl mb-6 leading-tight">
@@ -520,7 +520,7 @@ export default async function AboutPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-block bg-white text-accent-gold font-semibold px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all"
+              className="inline-block bg-white text-gold font-semibold px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all"
             >
               Browse Collection
             </Link>
@@ -532,3 +532,4 @@ export default async function AboutPage() {
     </main>
   );
 }
+

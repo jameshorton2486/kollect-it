@@ -83,7 +83,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-block bg-accent-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
             >
               Browse Collection
             </Link>
@@ -123,14 +123,14 @@ export default function CartPage() {
                       ) : (
                         <div className="h-full w-full bg-surface-2" />
                       )}
-                      <div className="absolute top-4 right-4 bg-accent-gold text-white px-3 py-1 rounded text-sm font-semibold">
+                      <div className="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded text-sm font-semibold">
                         New
                       </div>
                     </div>
-                    <h3 className="font-serif text-lg text-ink mb-2 group-hover:text-accent-gold transition-colors line-clamp-2">
+                    <h3 className="font-serif text-lg text-ink mb-2 group-hover:text-gold transition-colors line-clamp-2">
                       {p.title}
                     </h3>
-                    <p className="text-accent-gold font-semibold text-lg">
+                    <p className="text-gold font-semibold text-lg">
                       {formatUSD(p.price)}
                     </p>
                     <p className="text-ink-light text-sm">{p.category?.name}</p>
@@ -151,7 +151,7 @@ export default function CartPage() {
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-2 font-normal">
+              <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-2 font-normal">
                 SHOPPING CART
               </p>
               <h1 className="font-serif text-4xl md:text-5xl text-ink">
@@ -160,7 +160,7 @@ export default function CartPage() {
             </div>
             <Link
               href="/shop"
-              className="text-accent-gold font-semibold hover:underline"
+              className="text-gold font-semibold hover:underline"
             >
               Continue Shopping
             </Link>
@@ -196,16 +196,16 @@ export default function CartPage() {
                   <div className="flex-grow">
                     <div className="flex items-start justify-between gap-4 mb-4">
                       <div>
-                        <p className="text-xs font-semibold text-accent-gold uppercase tracking-wider mb-1">
+                        <p className="text-xs font-semibold text-gold uppercase tracking-wider mb-1">
                           {item.categoryName}
                         </p>
                         <Link
                           href={`/product/${item.slug}`}
-                          className="font-serif text-lg md:text-xl text-ink hover:text-accent-gold transition-colors block mb-2"
+                          className="font-serif text-lg md:text-xl text-ink hover:text-gold transition-colors block mb-2"
                         >
                           {item.title}
                         </Link>
-                        <p className="text-accent-gold font-semibold text-lg">
+                        <p className="text-gold font-semibold text-lg">
                           {formatUSD(item.price)}
                         </p>
                       </div>
@@ -297,21 +297,21 @@ export default function CartPage() {
 
                 <div className="flex justify-between items-center mb-6">
                   <span className="font-serif text-lg text-ink">Total</span>
-                  <span className="font-serif text-2xl text-accent-gold">
+                  <span className="font-serif text-2xl text-gold">
                     {formatUSD(total)}
                   </span>
                 </div>
 
                 <Link
                   href="/checkout"
-                  className="block w-full bg-accent-gold text-white font-semibold py-4 text-center rounded-lg hover:opacity-90 transition-opacity mb-3"
+                  className="block w-full bg-gold text-white font-semibold py-4 text-center rounded-lg hover:opacity-90 transition-opacity mb-3"
                 >
                   Proceed to Checkout
                 </Link>
 
                 <button
                   onClick={() => (window.location.href = "/shop")}
-                  className="w-full border-2 border-accent-gold text-accent-gold font-semibold py-3 rounded-lg hover:bg-accent-gold hover:text-white transition-colors"
+                  className="w-full border-2 border-gold text-gold font-semibold py-3 rounded-lg hover:bg-gold hover:text-white transition-colors"
                 >
                   Continue Shopping
                 </button>
@@ -399,13 +399,13 @@ export default function CartPage() {
                       <div className="h-full w-full bg-surface-2" />
                     )}
                   </div>
-                  <p className="text-xs text-accent-gold font-semibold uppercase tracking-wider mb-1">
+                  <p className="text-xs text-gold font-semibold uppercase tracking-wider mb-1">
                     {p.category?.name}
                   </p>
-                  <h3 className="font-serif text-lg text-ink mb-2 group-hover:text-accent-gold transition-colors line-clamp-2">
+                  <h3 className="font-serif text-lg text-ink mb-2 group-hover:text-gold transition-colors line-clamp-2">
                     {p.title}
                   </h3>
-                  <p className="text-accent-gold font-semibold text-lg">
+                  <p className="text-gold font-semibold text-lg">
                     {formatUSD(p.price)}
                   </p>
                 </Link>

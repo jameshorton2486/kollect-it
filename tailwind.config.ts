@@ -16,37 +16,46 @@ const config: Config = {
     extend: {
       colors: {
         /* Ink - Primary Text */
-        ink: "hsl(var(--ink-900))",
+        ink: {
+          DEFAULT: "hsl(var(--ink-900))",
+          secondary: "hsl(var(--ink-700))",
+          muted: "hsl(var(--ink-500))",
+        },
         
         /* Gold - Brand Accent */
         gold: {
           DEFAULT: "hsl(var(--gold-500))",
-          dark: "hsl(var(--gold-600))",
           light: "hsl(var(--gold-400))",
+          dark: "hsl(var(--gold-600))",
+          darker: "hsl(var(--gold-700))",
         },
         
         /* Surface - Backgrounds */
         surface: {
-          1: "hsl(var(--surface-1))",
-          2: "hsl(var(--surface-2))",
-          3: "hsl(var(--surface-3))",
+          DEFAULT: "hsl(var(--surface-0))",
+          50: "hsl(var(--surface-50))",
+          100: "hsl(var(--surface-100))",
+          900: "hsl(var(--surface-900))",
         },
         
         /* CTA - Call to Action */
         cta: {
-          DEFAULT: "hsl(var(--gold-500))",
-          hover: "hsl(var(--gold-600))",
+          DEFAULT: "hsl(var(--cta-primary))",
+          hover: "hsl(var(--cta-hover))",
+          active: "hsl(var(--cta-active))",
         },
         
         /* Semantic Colors */
-        success: "hsl(var(--success-500))",
-        error: "hsl(var(--error-500))",
-        warning: "hsl(var(--warning-500))",
-        info: "hsl(var(--info-500))",
+        semantic: {
+          error: "hsl(var(--semantic-error))",
+          success: "hsl(var(--semantic-success))",
+          warning: "hsl(var(--semantic-warning))",
+          info: "hsl(var(--semantic-info))",
+        },
         
         /* Borders & Dividers */
-        border: "hsl(var(--border))",
-        divider: "hsl(var(--surface-2))",
+        border: "hsl(var(--border-300))",
+        divider: "hsl(var(--surface-100))",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],

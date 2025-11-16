@@ -36,20 +36,20 @@ export default function SortingBar({
 
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] pb-3">
-      <div className="text-xs tracking-wider uppercase text-[var(--color-charcoal)]">
+      <div className="text-xs tracking-wider uppercase text-[hsl(var(--ink-900))]">
         Showing {showing} of {total} products
       </div>
 
       <div className="flex items-center gap-2">
         <label
           htmlFor="sort"
-          className="text-sm font-medium text-[var(--color-charcoal)]"
+          className="text-sm font-medium text-[hsl(var(--ink-900))]"
         >
           Sort by
         </label>
         <select
           id="sort"
-          className="rounded border border-[var(--color-border)] bg-white px-3 py-2 text-sm leading-tight focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white"
+          className="rounded border border-[var(--color-border)] bg-white px-3 py-2 text-sm leading-tight focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold-500))] focus:ring-offset-2 focus:ring-offset-white"
           value={currentSort || "featured"}
           onChange={(e) => updateParam("sort", e.target.value)}
         >
@@ -66,13 +66,13 @@ export default function SortingBar({
           aria-label="View toggle"
         >
           <button
-            className={`rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${currentView === "grid" ? "border-brand-gold text-brand-navy" : "border-[var(--color-border)]"}`}
+            className={`rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold-500))] focus:ring-offset-2 focus:ring-offset-white ${currentView === "grid" ? "border-brand-gold text-brand-navy" : "border-[var(--color-border)]"}`}
             onClick={() => updateParam("view", "grid")}
           >
             Grid
           </button>
           <button
-            className={`rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-muted-gold)] focus:ring-offset-2 focus:ring-offset-white ${currentView === "list" ? "border-brand-gold text-brand-navy" : "border-[var(--color-border)]"}`}
+            className={`rounded border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold-500))] focus:ring-offset-2 focus:ring-offset-white ${currentView === "list" ? "border-brand-gold text-brand-navy" : "border-[var(--color-border)]"}`}
             onClick={() => updateParam("view", "list")}
           >
             List

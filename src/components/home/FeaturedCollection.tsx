@@ -11,10 +11,10 @@ export default function FeaturedCollection() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <BookOpen
-                className="h-5 w-5 text-accent-gold"
+                className="h-5 w-5 text-gold"
                 strokeWidth={1.5}
               />
-              <p className="text-sm font-semibold text-accent-gold uppercase tracking-widest">
+              <p className="text-sm font-semibold text-gold uppercase tracking-widest">
                 Featured Collection
               </p>
             </div>
@@ -37,7 +37,7 @@ export default function FeaturedCollection() {
 
             <Link
               href="/category/antique-books"
-              className="inline-block bg-accent-gold text-white font-semibold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity text-lg"
+              className="inline-block bg-gold text-white font-semibold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity text-lg"
             >
               Explore Rare Books →
             </Link>

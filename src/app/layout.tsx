@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Lato, Cormorant_Garamond, Archivo_Black } from "next/font/google";
 import "./globals.css";
-import "./kollect-it-styles.css";
 import ClientBody from "./ClientBody";
 import Script from "next/script";
 import { SessionProvider } from "@/components/SessionProvider";

@@ -36,7 +36,7 @@ export default function Testimonials() {
     <section className="py-16 md:py-24 bg-surface-1 border-y border-surface-2">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <p className="text-sm md:text-base font-semibold text-accent-gold uppercase tracking-widest mb-3">
+          <p className="text-sm md:text-base font-semibold text-gold uppercase tracking-widest mb-3">
             Trusted by Collectors
           </p>
           <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4">
@@ -60,7 +60,7 @@ export default function Testimonials() {
               </p>
 
               {/* Divider */}
-              <div className="w-8 h-1 bg-accent-gold/30 mb-4" />
+              <div className="w-8 h-1 bg-gold/30 mb-4" />
 
               {/* Author Info */}
               <div>
@@ -72,7 +72,7 @@ export default function Testimonials() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-14 text-center bg-white rounded-lg p-10 border-2 border-accent-gold/20">
+        <div className="mt-14 text-center bg-white rounded-lg p-10 border-2 border-gold/20">
           <h3 className="font-serif text-3xl text-ink mb-3">
             Join Our Collector Community
           </h3>
@@ -80,7 +80,7 @@ export default function Testimonials() {
             Over 2,000 satisfied collectors trust Kollect-It for authenticated
             pieces and expert curation.
           </p>
-          <button className="inline-block bg-accent-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity">
+          <button className="inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity">
             Start Collecting Today
           </button>
         </div>

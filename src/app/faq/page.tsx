@@ -320,7 +320,7 @@ export default function FAQPage() {
       <section className="py-20 md:py-28 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
               HELP CENTER
             </p>
             <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
@@ -360,7 +360,7 @@ export default function FAQPage() {
                     >
                       <summary className="cursor-pointer font-semibold text-ink text-lg flex justify-between items-start gap-4 select-none">
                         {faq.q}
-                        <span className="flex-shrink-0 text-accent-gold text-2xl group-open:rotate-180 transition-transform">
+                        <span className="flex-shrink-0 text-gold text-2xl group-open:rotate-180 transition-transform">
                           ▼
                         </span>
                       </summary>
@@ -391,13 +391,13 @@ export default function FAQPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-block bg-accent-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
+                className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Contact Us
               </Link>
               <Link
                 href="/sell"
-                className="inline-block bg-white text-accent-gold font-semibold px-8 py-4 rounded-lg border-2 border-accent-gold hover:bg-accent-gold hover:text-white transition-colors"
+                className="inline-block bg-white text-gold font-semibold px-8 py-4 rounded-lg border-2 border-gold hover:bg-gold hover:text-white transition-colors"
               >
                 Sell With Us
               </Link>

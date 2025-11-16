@@ -28,7 +28,7 @@ export default function SellPage() {
       <section className="py-20 md:py-32 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
               HAVE ITEMS TO SELL?
             </p>
             <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
@@ -43,7 +43,7 @@ export default function SellPage() {
             </p>
             <a
               href="#consignment-form"
-              className="inline-block bg-accent-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
             >
               Tell Us About Your Items
             </a>
@@ -55,7 +55,7 @@ export default function SellPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               HOW IT WORKS
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -65,7 +65,7 @@ export default function SellPage() {
             <div className="space-y-8">
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     1
                   </div>
                 </div>
@@ -83,7 +83,7 @@ export default function SellPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     2
                   </div>
                 </div>
@@ -101,7 +101,7 @@ export default function SellPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     3
                   </div>
                 </div>
@@ -120,7 +120,7 @@ export default function SellPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     4
                   </div>
                 </div>
@@ -138,7 +138,7 @@ export default function SellPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     5
                   </div>
                 </div>
@@ -157,7 +157,7 @@ export default function SellPage() {
 
               <div className="process-step flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-gold text-white font-serif font-bold text-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
                     6
                   </div>
                 </div>
@@ -182,7 +182,7 @@ export default function SellPage() {
       <section className="py-16 md:py-24 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               PRICING
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4 leading-tight text-center">
@@ -202,7 +202,7 @@ export default function SellPage() {
                   <p className="text-ink-light text-sm">$50 - $1,000</p>
                 </div>
                 <div className="mb-6">
-                  <span className="text-5xl font-bold text-accent-gold">
+                  <span className="text-5xl font-bold text-gold">
                     30%
                   </span>
                   <span className="text-ink-light text-sm ml-2">
@@ -218,8 +218,8 @@ export default function SellPage() {
                 </ul>
               </div>
 
-              <div className="commission-tier bg-accent-gold text-white p-8 rounded-lg shadow-md">
-                <div className="absolute -top-4 left-8 bg-accent-gold px-3 py-1 rounded-full text-sm font-semibold">
+              <div className="commission-tier bg-gold text-white p-8 rounded-lg shadow-md">
+                <div className="absolute -top-4 left-8 bg-gold px-3 py-1 rounded-full text-sm font-semibold">
                   Most Popular
                 </div>
                 <div className="mb-6">
@@ -251,7 +251,7 @@ export default function SellPage() {
                   <p className="text-ink-light text-sm">$5,000+</p>
                 </div>
                 <div className="mb-6">
-                  <span className="text-5xl font-bold text-accent-gold">
+                  <span className="text-5xl font-bold text-gold">
                     20%
                   </span>
                   <span className="text-ink-light text-sm ml-2">
@@ -275,7 +275,7 @@ export default function SellPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               REQUIREMENTS
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4 leading-tight text-center">
@@ -357,7 +357,7 @@ export default function SellPage() {
       <section className="py-16 md:py-24 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
               SUCCESS STORIES
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -367,7 +367,7 @@ export default function SellPage() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="testimonial bg-white p-8 rounded-lg">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-accent-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
+                  <div className="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
                     JM
                   </div>
                   <div>
@@ -386,7 +386,7 @@ export default function SellPage() {
 
               <div className="testimonial bg-white p-8 rounded-lg">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-accent-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
+                  <div className="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
                     SA
                   </div>
                   <div>
@@ -405,7 +405,7 @@ export default function SellPage() {
 
               <div className="testimonial bg-white p-8 rounded-lg">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-accent-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
+                  <div className="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
                     RS
                   </div>
                   <div>
@@ -527,7 +527,7 @@ export default function SellPage() {
                       I agree to the consignment terms and commission structure.
                       <a
                         href="#"
-                        className="text-accent-gold hover:underline ml-1"
+                        className="text-gold hover:underline ml-1"
                       >
                         View Terms
                       </a>
@@ -537,7 +537,7 @@ export default function SellPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-accent-gold text-white font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity"
+                  className="w-full bg-gold text-white font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity"
                 >
                   Submit for Review
                 </button>
@@ -559,7 +559,7 @@ export default function SellPage() {
             <p className="text-ink-light mb-4">Questions about consignment?</p>
             <Link
               href="/contact"
-              className="text-accent-gold font-semibold hover:underline"
+              className="text-gold font-semibold hover:underline"
             >
               Contact our consignment team →
             </Link>

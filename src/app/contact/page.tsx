@@ -60,7 +60,7 @@ export default function ContactPage() {
       <section className="py-20 md:py-28 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[var(--color-gold)] uppercase mb-6 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
               GET IN TOUCH
             </p>
             <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
@@ -95,7 +95,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="mailto:hello@kollect-it.com"
-                    className="text-accent-gold font-medium hover:underline"
+                    className="text-gold font-medium hover:underline"
                   >
                     hello@kollect-it.com
                   </a>
@@ -106,7 +106,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="tel:+15551234567"
-                    className="text-accent-gold font-medium hover:underline"
+                    className="text-gold font-medium hover:underline"
                   >
                     +1 (555) 123-4567
                   </a>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="mailto:consign@kollect-it.com"
-                    className="text-accent-gold font-medium hover:underline"
+                    className="text-gold font-medium hover:underline"
                   >
                     consign@kollect-it.com
                   </a>
@@ -146,14 +146,14 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="tel:+15551234567"
-                    className="text-accent-gold font-medium hover:underline"
+                    className="text-gold font-medium hover:underline"
                   >
                     +1 (555) 123-4567
                   </a>
                 </div>
                 <Link
                   href="/sell"
-                  className="inline-block text-accent-gold font-medium hover:underline mt-2"
+                  className="inline-block text-gold font-medium hover:underline mt-2"
                 >
                   Consignment Info →
                 </Link>
@@ -175,7 +175,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="mailto:support@kollect-it.com"
-                    className="text-accent-gold font-medium hover:underline"
+                    className="text-gold font-medium hover:underline"
                   >
                     support@kollect-it.com
                   </a>
@@ -186,7 +186,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="tel:+15551234567"
-                    className="text-accent-gold font-medium hover:underline"
+                    className="text-gold font-medium hover:underline"
                   >
                     +1 (555) 123-4567
                   </a>
@@ -237,7 +237,7 @@ export default function ContactPage() {
                 <h3 className="font-serif text-lg text-ink mb-2">
                   Buying & Ordering
                 </h3>
-                <span className="text-accent-gold text-sm">View FAQ →</span>
+                <span className="text-gold text-sm">View FAQ →</span>
               </Link>
               <Link
                 href="/faq#shipping"
@@ -246,7 +246,7 @@ export default function ContactPage() {
                 <h3 className="font-serif text-lg text-ink mb-2">
                   Shipping & Delivery
                 </h3>
-                <span className="text-accent-gold text-sm">View FAQ →</span>
+                <span className="text-gold text-sm">View FAQ →</span>
               </Link>
               <Link
                 href="/faq#authentication"
@@ -255,7 +255,7 @@ export default function ContactPage() {
                 <h3 className="font-serif text-lg text-ink mb-2">
                   Authentication
                 </h3>
-                <span className="text-accent-gold text-sm">View FAQ →</span>
+                <span className="text-gold text-sm">View FAQ →</span>
               </Link>
               <Link
                 href="/faq#returns"
@@ -264,7 +264,7 @@ export default function ContactPage() {
                 <h3 className="font-serif text-lg text-ink mb-2">
                   Returns & Refunds
                 </h3>
-                <span className="text-accent-gold text-sm">View FAQ →</span>
+                <span className="text-gold text-sm">View FAQ →</span>
               </Link>
               <Link
                 href="/faq#selling"
@@ -273,7 +273,7 @@ export default function ContactPage() {
                 <h3 className="font-serif text-lg text-ink mb-2">
                   Selling & Consignment
                 </h3>
-                <span className="text-accent-gold text-sm">View FAQ →</span>
+                <span className="text-gold text-sm">View FAQ →</span>
               </Link>
               <Link
                 href="/faq#account"
@@ -282,7 +282,7 @@ export default function ContactPage() {
                 <h3 className="font-serif text-lg text-ink mb-2">
                   Account & Technical
                 </h3>
-                <span className="text-accent-gold text-sm">View FAQ →</span>
+                <span className="text-gold text-sm">View FAQ →</span>
               </Link>
             </div>
           </div>

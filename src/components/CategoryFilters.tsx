@@ -90,7 +90,7 @@ export default function CategoryFilters({
     >
       <div className="sticky top-24 space-y-6">
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[hsl(var(--ink-900))]">
             Price
           </legend>
           <div className="flex items-center gap-2">
@@ -119,7 +119,7 @@ export default function CategoryFilters({
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[hsl(var(--ink-900))]">
             Condition
           </legend>
           <div className="space-y-1">
@@ -142,7 +142,7 @@ export default function CategoryFilters({
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[var(--color-charcoal)]">
+          <legend className="mb-2 text-xs uppercase tracking-wider text-[hsl(var(--ink-900))]">
             Year
           </legend>
           <div className="flex items-center gap-2">

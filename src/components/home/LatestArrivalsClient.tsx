@@ -54,7 +54,7 @@ export default function LatestArrivals() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-sm md:text-base font-semibold text-accent-gold uppercase tracking-widest mb-3">
+          <p className="text-sm md:text-base font-semibold text-gold uppercase tracking-widest mb-3">
             What's New This Week
           </p>
           <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4">
@@ -86,7 +86,7 @@ export default function LatestArrivals() {
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   {/* Authentication badge */}
-                  <div className="absolute top-3 right-3 bg-accent-gold text-white px-3 py-1 rounded-full text-xs font-semibold">
+                  <div className="absolute top-3 right-3 bg-gold text-white px-3 py-1 rounded-full text-xs font-semibold">
                     Authenticated
                   </div>
 
@@ -97,17 +97,17 @@ export default function LatestArrivals() {
                 </div>
               </Link>
 
-              <p className="text-xs text-accent-gold font-semibold uppercase tracking-wide mb-2">
+              <p className="text-xs text-gold font-semibold uppercase tracking-wide mb-2">
                 {item.category}
               </p>
-              <h3 className="font-serif text-lg text-ink mb-1 group-hover:text-accent-gold transition-colors line-clamp-2">
+              <h3 className="font-serif text-lg text-ink mb-1 group-hover:text-gold transition-colors line-clamp-2">
                 {item.title}
               </h3>
               <p className="text-sm text-ink-light mb-3">{item.desc}</p>
 
               <Link
                 href={`/product/${item.slug}`}
-                className="text-accent-gold text-sm font-semibold hover:text-accent-gold-dark transition-colors inline-flex items-center gap-2"
+                className="text-gold text-sm font-semibold hover:text-gold-dark transition-colors inline-flex items-center gap-2"
               >
                 View Details →
               </Link>
@@ -129,7 +129,7 @@ export default function LatestArrivals() {
           </p>
           <Link
             href="/shop"
-            className="inline-block bg-accent-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity"
+            className="inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity"
           >
             Explore Full Collection
           </Link>

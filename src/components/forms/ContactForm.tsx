@@ -76,7 +76,7 @@ export default function ContactForm() {
     <div className="mb-4">
       <label
         htmlFor={id}
-        className="mb-1 block text-sm font-medium text-[var(--color-charcoal)]"
+        className="mb-1 block text-sm font-medium text-[hsl(var(--ink-900))]"
       >
         {label}
       </label>
@@ -102,14 +102,14 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded border border-[var(--color-gray-light)] bg-cream p-6 shadow-lg"
+      className="rounded border border-[hsl(var(--border-300))] bg-cream p-6 shadow-lg"
     >
       {sent ? (
         <div className="text-center p-8">
           <h3 className="font-serif text-3xl font-bold text-brand-navy">
             Message Sent Successfully! 🎉
           </h3>
-          <p className="mt-3 text-lg text-[var(--color-charcoal)]">
+          <p className="mt-3 text-lg text-[hsl(var(--ink-900))]">
             We appreciate you reaching out. We'll get back to you shortly.
           </p>
           <button
@@ -133,7 +133,7 @@ export default function ContactForm() {
           <div className="mb-4">
             <label
               htmlFor="message"
-              className="mb-1 block text-sm font-medium text-[var(--color-charcoal)]"
+              className="mb-1 block text-sm font-medium text-[hsl(var(--ink-900))]"
             >
               Message *
             </label>
@@ -155,7 +155,7 @@ export default function ContactForm() {
                   {errors.message}
                 </p>
               )}
-              <div className="ml-auto text-xs text-[var(--color-gray-dark)]">
+              <div className="ml-auto text-xs text-[hsl(var(--ink-700))]">
                 {form.message.length} / 500
               </div>
             </div>

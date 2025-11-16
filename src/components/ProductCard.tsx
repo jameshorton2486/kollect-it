@@ -35,7 +35,7 @@ export default function ProductCard({
 
   if (variant === "list") {
     return (
-      <div className="flex gap-4 rounded border border-[var(--color-gray-light)] bg-white p-3">
+      <div className="flex gap-4 rounded border border-[hsl(var(--border-300))] bg-white p-3">
         <Link
           href={`/product/${product.slug}`}
           className="block h-36 w-36 shrink-0 overflow-hidden rounded"
@@ -65,7 +65,7 @@ export default function ProductCard({
               </h3>
             </Link>
             {product.description && (
-              <p className="mt-1 text-[14px] text-[var(--color-gray-dark)] line-clamp-2">
+              <p className="mt-1 text-[14px] text-[hsl(var(--ink-700))] line-clamp-2">
                 {product.description}
               </p>
             )}
@@ -86,7 +86,7 @@ export default function ProductCard({
                 quantity={1}
               />
               <button
-                className={`inline-flex items-center gap-2 rounded border border-[var(--color-gray-light)] px-3 py-2 text-[14px] ${wishlisted ? "text-brand-gold" : ""}`}
+                className={`inline-flex items-center gap-2 rounded border border-[hsl(var(--border-300))] px-3 py-2 text-[14px] ${wishlisted ? "text-brand-gold" : ""}`}
                 aria-label={
                   wishlisted ? "Remove from wishlist" : "Add to wishlist"
                 }
@@ -118,7 +118,7 @@ export default function ProductCard({
   // grid variant
   return (
     <div
-      className="group rounded-lg border-2 border-[var(--color-gray-light)] bg-white overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-[var(--color-accent)]"
+      className="group rounded-lg border-2 border-[hsl(var(--border-300))] bg-white overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-[var(--color-accent)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -169,7 +169,7 @@ export default function ProductCard({
       {/* Content Section - 30% of card height */}
       <div className="p-4 flex flex-col gap-2">
         <Link href={`/product/${product.slug}`} className="no-underline">
-          <h3 className="font-serif text-[22px] leading-tight text-[var(--color-charcoal)] line-clamp-2 transition-colors hover:text-[var(--color-accent)]">
+          <h3 className="font-serif text-[22px] leading-tight text-[hsl(var(--ink-900))] line-clamp-2 transition-colors hover:text-[var(--color-accent)]">
             {product.title}
           </h3>
         </Link>
