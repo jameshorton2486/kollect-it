@@ -1,161 +1,169 @@
 "use client";
 
 import Link from "next/link";
-import { Instagram, Youtube, Facebook } from "lucide-react";
+import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
 
-export default function Footer() {
+export function Footer() {
+  const navigation = {
+    shop: [
+      { name: "Browse All", href: "/products" },
+      { name: "Rare Books", href: "/categories/rare-books" },
+      { name: "Fine Art", href: "/categories/fine-art" },
+      { name: "Militaria", href: "/categories/militaria" },
+      { name: "Collectibles", href: "/categories/collectibles" },
+    ],
+    company: [
+      { name: "About Us", href: "/about" },
+      { name: "How It Works", href: "/how-it-works" },
+      { name: "Authentication", href: "/authentication" },
+      { name: "Sell With Us", href: "/sell" },
+      { name: "Contact", href: "/contact" },
+    ],
+    support: [
+      { name: "FAQ", href: "/faq" },
+      { name: "Shipping & Returns", href: "/shipping" },
+      { name: "Payment Options", href: "/payment" },
+      { name: "Privacy Policy", href: "/privacy" },
+      { name: "Terms of Service", href: "/terms" },
+    ],
+  };
+
   return (
-    <footer className="bg-[#1a1a1a]">
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-36">
-          {/* Brand Section - Takes flexible space on left */}
+    <footer className="bg-surface-1 border-t border-border">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* Brand Column */}
           <div className="lg:col-span-1">
-            <div className="font-serif text-2xl leading-tight tracking-wide text-[#D3AF37] mb-4">
-              KOLLECT—IT
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Timeless antiques and collectibles curated with care.
+            <Link href="/" className="inline-block mb-4">
+              <span className="font-serif text-3xl font-bold text-gold">
+                Kollect-It
+              </span>
+            </Link>
+            <p className="text-ink/70 text-sm leading-relaxed mb-6">
+              Your trusted marketplace for authenticated luxury collectibles and antiques.
+              Expert curation, transparent pricing, professional service.
             </p>
+            
+            {/* Social Links */}
+            <div className="flex space-x-4">
+              <Link
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink hover:text-gold transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink hover:text-gold transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink hover:text-gold transition-colors"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-5 w-5" />
+              </Link>
+              <Link
+                href="mailto:info@kollect-it.com"
+                className="text-ink hover:text-gold transition-colors"
+                aria-label="Email"
+              >
+                <Mail className="h-5 w-5" />
+              </Link>
+            </div>
           </div>
 
-          {/* About Section */}
+          {/* Shop Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-white">About</h3>
+            <h3 className="font-serif text-ink font-semibold mb-4">Shop</h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Our Story
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Contact
-                </Link>
-              </li>
+              {navigation.shop.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-ink/70 hover:text-gold transition-colors text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Support Section */}
+          {/* Company Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-white">Support</h3>
+            <h3 className="font-serif text-ink font-semibold mb-4">Company</h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/faq"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/shipping-returns"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Shipping & Returns
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Contact Support
-                </Link>
-              </li>
+              {navigation.company.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-ink/70 hover:text-gold transition-colors text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Categories Section - Pushed 1" to the right */}
-          <div className="pr-24">
-            <h3 className="text-lg font-semibold mb-6 text-white">
-              Categories
-            </h3>
+          {/* Support Links */}
+          <div>
+            <h3 className="font-serif text-ink font-semibold mb-4">Support</h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/category/fine-art"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Fine Art
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/antiques"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Antiques
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/collectibles"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Collectibles
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/militaria"
-                  className="text-white hover:text-[#D3AF37] transition-colors duration-200 text-sm"
-                >
-                  Militaria
-                </Link>
-              </li>
+              {navigation.support.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-ink/70 hover:text-gold transition-colors text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        {/* Connect Section */}
-        <div className="mt-12 pt-8 border-t border-gray-700">
-          <h3 className="text-lg font-semibold mb-4 text-white">Connect</h3>
-          <div className="flex gap-4">
-            <a
-              href="https://instagram.com/kollectit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#D3AF37] transition-colors duration-200"
-              aria-label="Instagram"
-            >
-              <Instagram className="w-5 h-5 text-white" />
-            </a>
-            <a
-              href="https://youtube.com/kollectit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#D3AF37] transition-colors duration-200"
-              aria-label="YouTube"
-            >
-              <Youtube className="w-5 h-5 text-white" />
-            </a>
-            <a
-              href="https://facebook.com/kollectit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 border-2 border-gray-600 rounded-lg hover:border-[#D3AF37] transition-colors duration-200"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-5 h-5 text-white" />
-            </a>
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t border-border">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-ink/60 text-sm">
+              © {new Date().getFullYear()} Kollect-It. All rights reserved.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-6">
+              <Link
+                href="/privacy"
+                className="text-ink/60 hover:text-gold transition-colors text-sm"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-ink/60 hover:text-gold transition-colors text-sm"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="/cookies"
+                className="text-ink/60 hover:text-gold transition-colors text-sm"
+              >
+                Cookie Policy
+              </Link>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Copyright */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-8">
-          <p className="text-sm text-white text-center md:text-left">
-            © 2025 Kollect-It. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>

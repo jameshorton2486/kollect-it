@@ -7,7 +7,7 @@ export default function TrustStrip() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <Shield className="h-8 w-8 text-accent-gold" strokeWidth={1.5} />
+              <Shield className="h-8 w-8 text-gold" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-ink mb-2 text-lg">
               Professional Authentication

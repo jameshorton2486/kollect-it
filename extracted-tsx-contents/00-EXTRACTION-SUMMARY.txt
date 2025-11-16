@@ -1,0 +1,22 @@
+KOLLECT-IT TSX EXTRACTION REPORT
+Generated: 2025-11-15 20:34:37
+
+EXTRACTION RESULTS
+======================================================================
+Total Targeted: 1
+Successfully Extracted: 0
+Missing: 1
+
+MISSING FILES (Need to locate or create):
+======================================================================
+  - False
+
+EXTRACTED FILES
+======================================================================
+
+NEXT STEPS
+======================================================================
+1. Review files in: extracted-tsx-contents
+2. Check for hardcoded colors (look for #, rgb, bg-, text-)
+3. Identify which files need color system updates
+4. Copy clean versions to deployment-new/02-COMPONENTS/

@@ -1,85 +1,35 @@
-/* tailwindcss */
-/* postcss */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* =============================================================================
-   1STDIBS LUXURY AESTHETIC - COLOR PALETTE & DESIGN SYSTEM
+   KOLLECT-IT DESIGN TOKENS - Single Source of Truth
    ============================================================================= */
 
 @layer base {
   :root {
-    /* HSL token ramp for Tailwind semantic mapping */
-    /* Ink (text) */
-    --ink-900: 0 0% 17%;   /* #2C2C2C */
-    --ink-700: 0 0% 35%;   /* #5A5A5A */
-    --ink-500: 0 0% 55%;   /* #8C8C8C */
-    --ink-inverted: 0 0% 100%; /* #FFFFFF */
+    /* Text (Ink) */
+    --ink-900: 0 0% 12%;    /* #1E1E1E - Deep charcoal */
+    --ink-700: 0 0% 35%;    /* #5A5A5A - Secondary */
+    --ink-500: 0 0% 55%;    /* #8C8C8C - Muted */
 
-    /* Gold (brand accent) */
-    --gold-500: 36 41% 50%; /* ~#B1874C */
-    --gold-600: 36 41% 39%; /* ~#8B6937 */
-    --gold-200: 36 35% 80%; /* lighter subtle */
+    /* Backgrounds (Surface) */
+    --surface-0: 0 0% 100%;     /* #FFFFFF - Pure white */
+    --surface-1: 30 20% 96%;    /* #F5F3F0 - Warm cream */
+    --surface-2: 60 5% 98%;     /* #FAFAF9 - Elevated */
 
-    /* Surface (backgrounds) */
-    --surface-0: 0 0% 100%;    /* #FFFFFF */
-    --surface-1: 30 20% 96%;   /* ~#F5F3F0 */
-    --surface-2: 60 5% 98%;    /* ~#FAFAF9 */
-    --surface-3: 30 15% 94%;   /* subtle tinted */
+    /* Brand Gold */
+    --gold-500: 36 41% 50%;  /* #B1874C */
+    --gold-600: 36 41% 39%;  /* #8B6937 */
 
-    /* CTA (deep navy) */
-    --cta-500: 212 52% 25%; /* ~#1E3A5F */
-    --cta-600: 212 52% 21%; /* darker hover */
-    --cta-400: 212 52% 35%; /* ring */
+    /* CTA (Deep Navy) */
+    --cta-500: 212 52% 25%;  /* #1E3A5F */
 
-    /* Link */
-    --link-600: 212 28% 49%; /* ~#5C7BA0 */
-    --link-700: 212 28% 43%; /* ~#4B688E */
+    /* Links */
+    --link-600: 212 28% 49%; /* #5C7BA0 */
 
     /* Borders */
-    --border-300: 36 9% 86%;  /* ~#E0DDD9 */
-    --border-400: 36 12% 80%; /* stronger */
-    /* Design Tokens: Neutrals & Text */
-    --color-text-primary: #2C2C2C; /* Readable charcoal */
-    --color-text-secondary: #5A5A5A; /* De-emphasized */
-    --color-text-tertiary: #8C8C8C; /* Captions */
-
-    /* Design Tokens: Brand Accent */
-    --color-accent: #B1874C;       /* Primary gold */
-    --color-accent-light: #D6A85F; /* Hover */
-    --color-accent-dark: #8B6937;  /* Pressed */
-
-    /* Design Tokens: Backgrounds */
-    --color-bg: #FFFFFF;            /* Canvas */
-    --color-bg-alt: #F5F3F0;        /* Section alternation */
-    --color-bg-elevated: #FAFAF9;   /* Cards, modals */
-
-    /* Design Tokens: Interactive */
-    --color-cta: #1E3A5F;           /* Deep navy CTA */
-    --color-cta-hover: #254B74;     /* Hover */
-    --color-link: #5C7BA0;          /* Accessible blue-gray */
-    --color-link-hover: #4B688E;    /* Link hover */
-
-    /* Design Tokens: System States */
-    --color-success: #2D6A4F;
-    --color-error: #B85450;
-    --color-warning: #D4A373;
-    --color-border-token: #E0DDD9;
-    /* 1stdibs Color Palette */
-    --color-white: #FFFFFF;
-    --color-off-white: #F9F9F9;
-  --color-cream: #F5F3F0;
-    --color-charcoal: #1E1E1E;
-    --color-muted-gold: #C7A85E;
-    --color-deep-navy: #1C2233;
-    --color-gray-light: #E5E5E5;
-    --color-gray-medium: #999999;
-    --color-gray-dark: #666666;
-
-  /* Brand Palette (emails + product detail) */
-  --color-brand-gold: #B1874C;
-  --color-brand-navy: #2C2C2C;
+    --border-300: 36 9% 86%;  /* #E0DDD9 */
 
     /* CSS Variables for Tailwind */
     --background: 0 0% 100%;
@@ -111,511 +61,94 @@
     --ring: 39 48% 56%;
     --radius: 0.25rem;
 
-    /* Typography */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  /* Semantic font tokens mapped to Next.js font vars */
-  --font-heading: var(--font-serif); /* Cormorant Garamond */
-  --font-body: var(--font-sans);     /* Lato */
-    --font-logo: 'Archivo Black', sans-serif;
+/* ============================================
+   BASE STYLES
+   ============================================ */
 
-    /* Typography Scale - Phase 5 Standardized */
-    --text-h1: 36px;
-    --text-h2: 28px;
-    --text-h3: 22px;
-    --text-h4: 18px;
-    --text-body: 16px;
-    --text-small: 14px;
-    --text-xs: 12px;
-    --line-height-heading: 1.3;
-    --line-height-body: 1.6;
-    --letter-spacing-tight: -0.01em;
-    --letter-spacing-normal: 0;
-    --letter-spacing-wide: 0.03em;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* Spacing System - Phase 5 Standardized */
-  --spacing-xs: 0.5rem;  /* 8px */
-  --spacing-sm: 1rem;    /* 16px */
-  --spacing-md: 1.5rem;  /* 24px */
-  --spacing-lg: 2rem;    /* 32px */
-  --spacing-xl: 3rem;    /* 48px */
-  --spacing-2xl: 4rem;   /* 64px */
-  /* Alt spacing token names (alias) */
-  --space-xs: 0.25rem;  /* 4px */
-  --space-sm: 0.5rem;   /* 8px */
-  --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
-  --space-2xl: 3rem;    /* 48px */
-  --space-3xl: 4rem;    /* 64px */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Elevation */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.10);
-  --shadow-focus: 0 0 0 3px rgba(91, 123, 160, 0.15);
+body {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  color: hsl(var(--ink-900));
+  background-color: hsl(var(--surface-1));
+  line-height: 1.6;
+}
 
-    /* Transitions */
-    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
 
-  * {
-    @apply border-border;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 600;
+  line-height: 1.2;
+  color: hsl(var(--ink-900));
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
 
-  body {
-    @apply bg-white;
-    font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: var(--color-text-primary);
-  }
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 
-  /* =============================================================================
-     DARK THEME REFINEMENT - PHASE 5 STEP 8
-     ============================================================================= */
-  .dark {
-    /* Dark Theme Color Overrides */
-    --background: 0 0% 12%;           /* Dark gray, not pure black */
-    --foreground: 0 0% 90%;           /* High contrast text */
-    
-    --card: 0 0% 14%;                 /* Slightly lighter than bg */
-    --card-foreground: 0 0% 90%;
-    
-    --popover: 0 0% 14%;
-    --popover-foreground: 0 0% 90%;
-    
-    --primary: 39 48% 56%;            /* Gold accent maintained */
-    --primary-foreground: 0 0% 100%;
-    
-    --secondary: 0 0% 20%;            /* Subtle surface */
-    --secondary-foreground: 0 0% 90%;
-    
-    --muted: 0 0% 18%;                /* Muted elements */
-    --muted-foreground: 0 0% 65%;     /* De-emphasized text */
-    
-    --accent: 39 48% 56%;             /* Gold accent */
-    --accent-foreground: 0 0% 100%;
-    
-    --destructive: 0 84% 60%;         /* Error red */
-    --destructive-foreground: 0 0% 100%;
-    
-    --border: 0 0% 25%;               /* Subtle visible borders */
-    --input: 0 0% 22%;                /* Form input background */
-    --ring: 39 48% 56%;               /* Gold focus ring */
-    
-    /* Dark Theme Design Tokens */
-    --color-text-primary: #E5E5E5;    /* High contrast */
-    --color-text-secondary: #B3B3B3;  /* Secondary text */
-    --color-text-tertiary: #8C8C8C;   /* Tertiary/muted */
-    
-    --color-bg: #1E1E1E;              /* Main background - dark gray */
-    --color-bg-alt: #252525;          /* Section alternation */
-    --color-bg-elevated: #2A2A2A;     /* Cards, modals */
-    
-    --color-accent: #D3AF37;          /* Gold accent (brighter in dark) */
-    --color-accent-light: #E5C65A;    /* Gold hover */
-    --color-accent-dark: #B1874C;     /* Gold pressed */
-    
-    --color-cta: #3A5A8A;             /* Navy CTA (lighter in dark) */
-    --color-cta-hover: #4B6B9B;       /* CTA hover */
-    
-    --color-link: #7BA0C8;            /* Link blue (lighter) */
-    --color-link-hover: #8FB3D6;      /* Link hover */
-    
-    --color-border-token: #333333;    /* Subtle borders */
-    --color-charcoal: #E5E5E5;        /* Inverted for text */
-    --color-gray-light: #333333;      /* Borders */
-    --color-gray-medium: #666666;     /* Secondary elements */
-    --color-gray-dark: #999999;       /* Lighter in dark mode */
-    
-    /* Dark Theme Shadows (deeper, more prominent) */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
-    --shadow-focus: 0 0 0 3px rgba(211, 175, 55, 0.25);
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
   }
-  
-  .dark body {
-    @apply bg-[#1E1E1E];
-    color: var(--color-text-primary);
-  }
-  
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    color: var(--color-text-primary);
-  }
-  
-  .dark p {
-    color: var(--color-text-secondary);
-  }
-  
-  .dark a {
-    color: var(--color-link);
-  }
-  
-  .dark a:hover {
-    color: var(--color-link-hover);
-  }
-  
-  /* Dark theme form inputs */
-  .dark input, .dark select, .dark textarea {
-    background: var(--input);
-    border-color: var(--border);
-    color: var(--foreground);
-  }
-  
-  .dark input:focus, .dark select:focus, .dark textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(211, 175, 55, 0.15);
-  }
-  
-  .dark label {
-    color: var(--foreground);
-  }
-  
-  /* Dark theme card borders */
-  .dark .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
-  
-  .dark .card:hover {
-    border-color: var(--accent);
-  }
+}
 
-  /* Global Enhancements - Parallax, Counters, Lightbox */
-  [data-parallax] {
-    transform: translateY(0);
-    transition: transform 0.6s ease;
-  }
+/* ============================================
+   FOCUS STATES
+   ============================================ */
 
-  [data-parallax].is-in {
-    transform: translateY(-8px);
-  }
+:focus-visible {
+  outline: 2px solid hsl(var(--gold-500));
+  outline-offset: 2px;
+}
 
-  [data-count] {
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    transition: opacity 0.4s ease;
   }
-
-  [data-count].is-in {
+  to {
     opacity: 1;
   }
+}
 
-  /* Typography Hierarchy */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-tight);
-    color: var(--color-text-primary);
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-
-  h1 {
-    font-size: var(--text-h1);
-    margin-bottom: var(--spacing-md);
-  }
-
-  h2 {
-    font-size: var(--text-h2);
-    margin-bottom: var(--spacing-sm);
-  }
-
-  h3 {
-    font-size: var(--text-h3);
-    margin-bottom: var(--spacing-sm);
-  }
-
-  h4 {
-    font-size: var(--text-h4);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  p {
-    font-size: var(--text-body);
-    line-height: var(--line-height-body);
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-text-secondary);
-  }
-
-  small {
-    font-size: var(--text-small);
-  }
-
-  a {
-    color: var(--color-link);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  a:hover {
-    color: var(--color-link-hover);
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-@layer utilities {
-  /* Custom Utility Classes */
-  .text-balance {
-    /* Fallback for browsers without text-wrap support */
-    overflow-wrap: anywhere;
-  }
-
-  /* Prefer balance when supported */
-  @supports (text-wrap: balance) {
-    .text-balance {
-      text-wrap: balance;
-    }
-  }
-
-  .container-luxury {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: clamp(1rem, 5vw, 4rem);
-    padding-right: clamp(1rem, 5vw, 4rem);
-  }
-
-  /* Map common .container usage to ki-container for consistency across pages */
-  .container { width: min(1200px, 92vw); margin-left: auto; margin-right: auto; }
-
-  .section-spacing {
-    padding-top: clamp(3rem, 8vw, 6rem);
-    padding-bottom: clamp(3rem, 8vw, 6rem);
-  }
-
-  /* Font family helpers matching tokenized typography */
-  .font-serif { font-family: var(--font-serif); }
-  .font-logo { font-family: var(--font-logo); }
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Component-level tokens and helpers that reference global variables */
-@layer components {
-  .text-navy { color: var(--color-text-primary); }
-  .text-gold { color: var(--color-muted-gold); }
-  .bg-cream { background: var(--color-bg-alt); }
-  .bg-navy { background: var(--color-deep-navy); }
-  .border-gold { border-color: var(--color-muted-gold); }
-
-  /* Brand utilities */
-  .text-brand-gold { color: var(--color-accent); }
-  .text-brand-navy { color: var(--color-brand-navy); }
-  .bg-brand-navy { background: var(--color-brand-navy); }
-  .border-brand-gold { border-color: var(--color-accent); }
-
-  /* CTA button built from tokens */
-  .btn-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.9rem 2rem;
-    border-width: 2px;
-    border-color: var(--color-cta);
-    background: var(--color-cta);
-    color: #FFFFFF;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border-radius: 0.75rem;
-    transition: all var(--transition-base);
-  }
-  .btn-cta:hover {
-    background: var(--color-cta-hover);
-    border-color: var(--color-cta-hover);
-    color: #FFFFFF;
-    transform: translateY(-2px);
-  }
-
-  /* Focus ring utility matching CTA color */
-  .focus-ring-cta:focus-visible {
-    outline: none;
-    box-shadow: var(--shadow-focus);
-  }
-
-  /* Shared utilities built on semantic tokens */
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium text-white bg-cta hover:bg-cta-hover shadow-elevation-sm focus:outline-none;
-    box-shadow: 0 0 0 0 hsla(var(--cta-400), 0);
-  }
-  .btn-primary:focus-visible {
-    box-shadow: 0 0 0 4px hsla(var(--cta-400), 0.35);
-  }
-
-  .link {
-    @apply underline text-link hover:text-link-hover;
-  }
-
-  .card {
-    @apply rounded-2xl bg-surface shadow-elevation-sm;
-  }
-  .card:hover {
-    @apply shadow-elevation-lg;
-  }
-  
-  /* =============================================================================
-     DARK THEME COMPONENT ENHANCEMENTS - PHASE 5 STEP 8
-     ============================================================================= */
-  
-  /* Dark theme product cards with subtle borders */
-  .dark .product-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
-  
-  .dark .product-card:hover {
-    border-color: var(--accent);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  /* Dark theme buttons with gold accent */
-  .dark .btn-primary {
-    background: var(--accent);
-    color: #000;
-    border: 2px solid var(--accent);
-  }
-  
-  .dark .btn-primary:hover {
-    background: var(--color-accent-light);
-    border-color: var(--color-accent-light);
-  }
-  
-  .dark .btn-secondary {
-    background: var(--secondary);
-    color: var(--foreground);
-    border: 2px solid var(--border);
-  }
-  
-  .dark .btn-secondary:hover {
-    background: var(--muted);
-    border-color: var(--accent);
-  }
-  
-  /* Dark theme navigation */
-  .dark nav {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-  }
-  
-  /* Dark theme footer */
-  .dark footer {
-    background: var(--card);
-    border-top: 1px solid var(--border);
-  }
-  
-  /* Dark theme section backgrounds */
-  .dark .section-alt {
-    background: var(--color-bg-alt);
-  }
-  
-  /* Dark theme tables */
-  .dark table {
-    border-color: var(--border);
-  }
-  
-  .dark th {
-    background: var(--card);
-    color: var(--foreground);
-    border-bottom: 2px solid var(--border);
-  }
-  
-  .dark td {
-    border-color: var(--border);
-    color: var(--color-text-secondary);
-  }
-  
-  .dark tr:hover {
-    background: var(--muted);
-  }
-  
-  /* Dark theme modals */
-  .dark .modal {
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
-  
-  /* Dark theme badges */
-  .dark .badge {
-    background: var(--muted);
-    color: var(--foreground);
-    border: 1px solid var(--border);
-  }
-  
-  .dark .badge-success {
-    background: rgba(45, 106, 79, 0.2);
-    color: #4ADE80;
-    border-color: rgba(74, 222, 128, 0.3);
-  }
-  
-  .dark .badge-warning {
-    background: rgba(212, 163, 115, 0.2);
-    color: #FBBF24;
-    border-color: rgba(251, 191, 36, 0.3);
-  }
-  
-  .dark .badge-error {
-    background: rgba(184, 84, 80, 0.2);
-    color: #F87171;
-    border-color: rgba(248, 113, 113, 0.3);
-  }
-  
-  /* Dark theme breadcrumbs */
-  .dark .breadcrumb {
-    color: var(--color-text-secondary);
-  }
-  
-  .dark .breadcrumb a:hover {
-    color: var(--accent);
-  }
-  
-  /* Dark theme dividers */
-  .dark hr {
-    border-color: var(--border);
-  }
-  
-  /* Dark theme code blocks */
-  .dark code {
-    background: var(--muted);
-    color: var(--accent);
-    border: 1px solid var(--border);
-  }
-  
-  .dark pre {
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
-}
-
-/* Base form and control styling for consistency */
-@layer base {
-  input, select, textarea {
-    border: 2px solid var(--color-gray-light);
-    border-radius: 4px;
-    padding: 0.875rem 1rem;
-    font-size: 15px;
-    outline: none;
-    background: #fff;
-    color: var(--color-text-primary);
-    transition: all var(--transition-base);
-  }
-  input:focus, select:focus, textarea:focus {
-    box-shadow: 0 0 0 3px rgba(177, 135, 76, 0.15);
-    border-color: var(--color-accent);
-  }
-  label { 
-    display: inline-block; 
-    margin-bottom: 0.5rem; 
-    color: var(--color-text-primary);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-  }
-  fieldset { border: 0; padding: 0; margin: 0; }
-  .form-row { display: grid; gap: 0.75rem; margin-bottom: 1rem; }
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
 }
