@@ -1,0 +1,133 @@
+# ============================================================
+# DEPENDENCIES
+# ============================================================
+node_modules
+.pnp
+.pnp.js
+dist
+build
+
+# ============================================================
+# TESTING
+# ============================================================
+coverage
+test-results/
+
+# ============================================================
+# NEXT.JS & BUILD
+# ============================================================
+.next/
+out/
+.vercel
+.netlify
+
+# ============================================================
+# ENVIRONMENT & SECRETS - NEVER COMMIT!
+# ============================================================
+# Local environment files with sensitive data
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+# Keep .env.example with placeholders only
+!.env.example
+
+# ============================================================
+# API CREDENTIALS & SERVICE ACCOUNTS - NEVER COMMIT!
+# ============================================================
+# Google Cloud & Firebase
+google-credentials.json
+google-service-account.json
+*-service-account.json
+*-serviceaccount.json
+kollect-it-*.json
+firebase-*.json
+
+# AWS Credentials
+.aws/
+aws-credentials.json
+
+# Stripe & Payment Credentials
+stripe-credentials.json
+
+# Database Credentials
+db-credentials.json
+database-credentials.json
+
+# Generic credential files
+credentials.json
+secrets.json
+*-credentials.json
+*-secret*.json
+
+# ============================================================
+# SENSITIVE DATA FILES
+# ============================================================
+*.pem
+*.key
+*.p12
+*.p8
+private-key.json
+production-env-vars.md
+sync-results.json
+cred*.json
+
+# ============================================================
+# IMAGEKIT & MEDIA
+# ============================================================
+.imagekit/
+
+# ============================================================
+# DATABASE
+# ============================================================
+prisma/dev.db
+prisma/dev.db-journal
+*.db
+*.db-journal
+
+# ============================================================
+# BUILD & CACHE FILES
+# ============================================================
+*.tsbuildinfo
+next-env.d.ts
+.bun
+
+# ============================================================
+# LOGS & DEBUG
+# ============================================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+/tmp
+
+# ============================================================
+# IDE & EDITOR
+# ============================================================
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
+.sublime-project
+.sublime-workspace
+
+# ============================================================
+# GIT TEMPORARY FILES
+# ============================================================
+.git-rewrite/
+.git/MERGE_*
+.git/BISECT_*
+
+# ============================================================
+# OS FILES
+# ============================================================
+Thumbs.db
+.DS_Store
+ehthumbs.db
+node_modules_corrupt_*

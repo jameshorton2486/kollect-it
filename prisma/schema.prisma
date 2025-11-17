@@ -1,0 +1,297 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")   // Pooled connection (port 6543) for app queries
+  directUrl = env("DIRECT_URL")     // Direct connection (port 5432) for migrations
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  role          String         @default("user") // "admin" or "user"
+  phone         String?
+  address       String?
+  city          String?
+  state         String?
+  zipCode       String?
+  country       String?        @default("United States")
+  wishlistItems WishlistItem[]
+  cartItems     CartItem[]
+  orders        Order[]
+  reviews       Review[]
+  scheduledReports ScheduledReport[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String
+  image       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Product {
+  id            String         @id @default(cuid())
+  title         String
+  slug          String         @unique
+  description   String
+  price         Float
+  category      Category       @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  images        Image[]
+  featured      Boolean        @default(false)
+  condition     String?        // "Fine", "Very Good", "Good", "Fair"
+  year          String?
+  artist        String?
+  medium        String?        // For art
+  period        String?        // Historical period
+  status        String         @default("active") // "active", "sold", "pending"
+  wishlistItems WishlistItem[]
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+  reviews       Review[]
+
+  // AI ANALYSIS FIELDS
+  aiAnalysis          Json?                   // Store full Claude analysis
+  estimatedEra        String?                 // e.g., "Late 19th Century"
+  rarity              String?                 // "Common|Uncommon|Rare|Very Rare|Extremely Rare"
+  authenticity        String?                 // "Believed authentic|Attributed|School of"
+  investmentPotential String?                 // Assessment of investment value
+
+  // PRICING INTELLIGENCE
+  calculatedPrice     Float?                  // AI-calculated price (may differ from final price)
+  priceConfidence     Float?                  // 0.0-1.0 confidence score
+  pricingReasoning    String?                 // Why this price was suggested
+
+  // SEO METADATA
+  seoTitle            String?                 // Max 60 chars
+  seoDescription      String?                 // Max 155 chars
+  keywords            String[]    @default([])
+
+  // DRAFT/PUBLISHING STATUS
+  isDraft             Boolean     @default(true)   // Not visible until published
+  publishedAt         DateTime?
+
+  // AI GENERATED PRODUCTS RELATION
+  aiGeneratedProducts AIGeneratedProduct[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([categoryId])
+  @@index([createdAt])
+  @@index([featured])
+  @@index([title])
+  @@index([status, createdAt])
+  @@index([isDraft])
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  user            User?       @relation(fields: [userId], references: [id])
+  userId          String?
+  items           OrderItem[]
+  status          String      @default("pending") // "pending", "processing", "shipped", "delivered", "cancelled"
+  subtotal        Float
+  tax             Float
+  shipping        Float       @default(0)
+  total           Float
+  customerName    String?
+  customerEmail   String?
+  customerPhone   String?
+  shippingAddress String
+  shippingCity    String
+  shippingState   String
+  shippingZip     String
+  shippingCountry String
+  trackingNumber  String?
+  shippingLabelUrl String?
+  carrier         String?     // "USPS", "UPS", "FedEx", etc.
+  paymentMethod   String?
+  paymentStatus   String      @default("pending") // "pending", "paid", "failed"
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  title     String // Store product title at time of order
+  price     Float // Store price at time of order
+  quantity  Int
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+// AI-Generated Product Model - Phase 3
+model AIGeneratedProduct {
+  id                String    @id @default(cuid())
+  googleDriveId     String?
+  imageUrl          String?
+  
+  // AI Generated Content
+  aiTitle           String    @db.VarChar(500)
+  aiDescription     String    @db.Text
+  aiCategory        String
+  aiCondition       String    @default("GOOD")
+  aiEstimatedAge    String?
+  aiRarity          String?
+  
+  // Image Analysis
+  imageQualityScore Float?    // 0-100
+  authenticityScore Float?    // 0-100
+  imageAnalysis     Json?     // GPT-4V analysis result
+  
+  // Pricing Data
+  suggestedPrice    Float
+  priceLowRange     Float
+  priceHighRange    Float
+  priceConfidence   Float     // 0-100
+  pricingAnalysis   Json      // {aiSource, historicalSource, marketSource, weights}
+  
+  // Review Status
+  status            String    @default("PENDING") // PENDING, APPROVED, REJECTED, PUBLISHED
+  reviewedBy        String?   // Admin user ID
+  reviewedAt        DateTime?
+  rejectionReason   String?
+  
+  // Product Link (after approval)
+  productId         String?
+  product           Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  
+  // Metadata
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([reviewedBy])
+  @@index([productId])
+  @@index([status, createdAt])
+}
+
+model ScheduledReport {
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  name          String   // User-friendly report name
+  frequency     String   // DAILY, WEEKLY, MONTHLY
+  format        String   @default("JSON") // JSON, CSV, HTML
+  recipients    String   // Comma-separated email addresses
+  lastSent      DateTime?
+  nextScheduled DateTime
+  enabled       Boolean  @default(true)
+  
+  // Audit trail
+  auditLogs     ReportAuditLog[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+  @@index([nextScheduled])
+  @@index([enabled])
+  @@index([frequency])
+}
+
+model ReportAuditLog {
+  id            String   @id @default(cuid())
+  report        ScheduledReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId      String
+  recipients    String   // Who received it
+  status        String   @default("PENDING") // SUCCESS, FAILED, PENDING
+  error         String?  // Error message if failed
+  sentAt        DateTime @default(now())
+
+  @@index([reportId])
+  @@index([sentAt])
+  @@index([status])
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  rating    Int      // 1-5 stars
+  title     String?
+  comment   String
+  images    String[]  @default([])
+  helpful   Int       @default(0)
+  verified  Boolean   @default(false) // Verified purchase
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([productId])
+  @@index([userId])
+  @@index([rating])
+  @@index([createdAt])
+}

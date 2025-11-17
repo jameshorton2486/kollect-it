@@ -1,0 +1,10 @@
+{
+  "buildCommand": "bun install && bunx prisma generate && bun run build",
+  "devCommand": "bun run dev",
+  "installCommand": "bun install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

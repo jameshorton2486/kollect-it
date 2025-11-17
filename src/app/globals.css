@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   KOLLECT-IT DESIGN TOKENS - Single Source of Truth
+   ============================================================================= */
+
+@layer base {
+  :root {
+    /* Text (Ink) */
+    --ink-900: 0 0% 12%;    /* #1E1E1E - Deep charcoal */
+    --ink-700: 0 0% 35%;    /* #5A5A5A - Secondary */
+    --ink-500: 0 0% 55%;    /* #8C8C8C - Muted */
+
+    /* Backgrounds (Surface) */
+    --surface-0: 0 0% 100%;     /* #FFFFFF - Pure white */
+    --surface-1: 30 20% 96%;    /* #F5F3F0 - Warm cream */
+    --surface-2: 60 5% 98%;     /* #FAFAF9 - Elevated */
+
+    /* Brand Gold */
+    --gold-400: 36 41% 60%;  /* Light variant */
+    --gold-500: 36 41% 50%;  /* #B1874C - Base */
+    --gold-600: 36 41% 39%;  /* #8B6937 - Dark variant */
+    --gold-700: 36 41% 30%;  /* Extra dark */
+
+    /* CTA (Deep Navy) */
+    --cta-primary: 212 52% 25%;   /* #1E3A5F - Default */
+    --cta-hover: 212 52% 20%;     /* Darker on hover */
+    --cta-active: 212 52% 15%;    /* Active state */
+
+    /* Semantic Colors */
+    --semantic-error: 0 65% 55%;     /* #E53E3E - Red */
+    --semantic-success: 142 76% 36%; /* #38A169 - Green */
+    --semantic-warning: 38 92% 50%;  /* #ED8936 - Orange */
+    --semantic-info: 212 28% 49%;    /* #5C7BA0 - Blue */
+
+    /* Surface Variants */
+    --surface-50: 60 9% 98%;      /* Lightest */
+    --surface-100: 30 20% 96%;    /* Light cream */
+    --surface-900: 0 0% 12%;      /* Dark surface */
+
+    /* Links */
+    --link-600: 212 28% 49%; /* #5C7BA0 */
+
+    /* Borders */
+    --border-300: 36 9% 86%;  /* #E0DDD9 */
+
+    /* CSS Variables for Tailwind */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    --primary: 39 48% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 215 23% 15%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 39 48% 56%;
+    --accent-foreground: 0 0% 12%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 39 48% 56%;
+    --radius: 0.25rem;
+  }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  color: hsl(var(--ink-900));
+  background-color: hsl(var(--surface-1));
+  line-height: 1.6;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 600;
+  line-height: 1.2;
+  color: hsl(var(--ink-900));
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid hsl(var(--gold-500));
+  outline-offset: 2px;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
