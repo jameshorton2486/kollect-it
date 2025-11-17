@@ -2,6 +2,85 @@
 
 A modern, full-stack Next.js 15 application for the Kollect-It antiques and collectibles marketplace. Built with TypeScript, Prisma, Supabase, and comprehensive e-commerce functionality.
 
+## 🚀 Quick Start
+
+**⚠️ CRITICAL: This project uses Bun, not npm.**
+
+### Prerequisites
+
+- [Bun](https://bun.sh) ≥ 1.0 (required package manager)
+- [Node.js](https://nodejs.org) ≥ 18 (for compatibility)
+- PostgreSQL database (we use [Supabase](https://supabase.com))
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/jameshorton2486/kollect-it.git
+cd kollect-it
+
+# 2. Install dependencies with Bun (NOT npm!)
+bun install
+
+# 3. Copy environment variables
+cp .env.example .env.local
+# Edit .env.local and fill in your actual credentials
+
+# 4. Generate Prisma client
+bunx prisma generate
+
+# 5. Run database migrations
+bunx prisma migrate deploy
+
+# 6. Seed database (optional)
+bunx prisma db seed
+
+# 7. Start development server
+bun run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Verify Installation
+
+```bash
+# TypeScript check (no errors)
+bun run typecheck
+
+# Build check (should complete without errors)
+bun run build
+
+# Run tests
+bun run test:e2e
+```
+
+**⚠️ DO NOT RUN `npm install`** - This project is configured for Bun. Using npm will cause dependency conflicts and Prisma errors.
+
+### Available Scripts
+
+```bash
+# Development
+bun run dev              # Start dev server with Turbopack
+bun run build            # Production build
+bun run start            # Start production server
+
+# Development Tools
+bun run typecheck        # TypeScript check without build
+bun run lint             # ESLint + TypeScript check
+bun run format           # Code formatting with Biome
+bun run check            # Full check (lint + typecheck + build)
+
+# Database
+bunx prisma generate    # Generate Prisma client
+bunx prisma migrate dev # Create migration
+bunx prisma db push     # Push schema to database
+bunx prisma studio     # Open Prisma Studio UI
+
+# Testing
+bun run test:e2e        # Run Playwright e2e tests
+bun run test:e2e:ui     # Run tests in UI mode
+```
+
 ## 🏛️ Architecture
 
 - **Frontend**: Next.js 15 with App Router, TypeScript, Tailwind CSS

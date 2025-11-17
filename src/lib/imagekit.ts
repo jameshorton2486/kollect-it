@@ -1,5 +1,14 @@
 import crypto from "crypto";
 
+/**
+ * ImageKit Configuration
+ * 
+ * Required Environment Variables:
+ * - NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: Public URL endpoint (client + server)
+ * - NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: Public API key (client + server)
+ * - IMAGEKIT_PRIVATE_KEY: Private key (server-only, no NEXT_PUBLIC_ prefix)
+ */
+
 // Lazy configuration access to avoid crashing dev/build when env is missing
 export function getImagekitConfig() {
   const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
