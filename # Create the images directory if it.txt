@@ -1,5 +1,0 @@
-# Create the images directory if it doesn't exist
-New-Item -ItemType Directory -Force -Path "public/images/categories"
-
-# Copy images from Downloads
-Copy-Item ~\Downloads\categories_*.png public/images/"

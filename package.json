@@ -36,10 +36,7 @@
     "error-summary": "bun run scripts/generate-error-summary.ts",
     "error-summary:last-hour": "bun run scripts/generate-error-summary.ts --last=1h",
     "error-summary:last-30min": "bun run scripts/generate-error-summary.ts --last=30m",
-    "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h",
-    "logs:view": "Get-Content logs\\*.log | Select-Object -Last 50",
-    "logs:errors": "Get-Content logs\\error-*.log | Select-Object -Last 50",
-    "logs:watch": "Get-Content logs\\*.log -Wait -Tail 10"
+    "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.68.0",
@@ -61,11 +58,10 @@
     "googleapis": "^164.1.0",
     "imagekit": "^6.0.0",
     "lucide-react": "^0.475.0",
-    "next": "14.2.33",
+    "next": "^15.0.0",
     "next-auth": "^4.24.13",
     "nodemailer": "^7.0.10",
     "openai": "^6.8.1",
-    "prisma": "^6.18.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-email": "^4.3.1",
