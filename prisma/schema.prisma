@@ -47,6 +47,12 @@ model Category {
 
 model Product {
   id            String         @id @default(cuid())
+  
+  // ✨ NEW: SKU System
+  sku           String         @unique
+  skuYear       Int?           // For filtering by year
+  skuNumber     Int?           // Sequential number tracking
+  
   title         String
   slug          String         @unique
   description   String
@@ -61,6 +67,12 @@ model Product {
   medium        String?        // For art
   period        String?        // Historical period
   status        String         @default("active") // "active", "sold", "pending"
+  
+  // ✨ NEW: Notes field for structured data
+  productNotes  String?        @db.Text  // Raw notes from notes.txt
+  
+  // ✨ NEW: Appraisal document URLs
+  appraisalUrls String[]       @default([])
   wishlistItems WishlistItem[]
   cartItems     CartItem[]
   orderItems    OrderItem[]
@@ -99,18 +111,25 @@ model Product {
   @@index([title])
   @@index([status, createdAt])
   @@index([isDraft])
+  @@index([sku])                    // ✨ NEW: Fast SKU lookups
+  @@index([skuYear, skuNumber])     // ✨ NEW: Year-based queries
 }
 
 model Image {
   id        String   @id @default(cuid())
   url       String
   alt       String?
+  
+  // ✨ NEW: Image classification
+  imageType String?  // "main", "condition", "signature", "detail", "provenance", etc.
+  
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   order     Int      @default(0)
   createdAt DateTime @default(now())
 
   @@index([productId])
+  @@index([productId, order])  // ✨ NEW: Optimize gallery queries
 }
 
 model WishlistItem {

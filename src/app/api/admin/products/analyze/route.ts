@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { imageUrl, category } = await req.json();
+    const { imageUrl, category, notes } = await req.json();
 
     if (!imageUrl || !category) {
       return NextResponse.json(
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     console.log(`\n🔍 [API] Analyze request received`);
     console.log(`   Admin: ${session.user.email}`);
     console.log(`   Category: ${category}`);
+    if (notes) console.log(`   Notes provided: Yes (${notes.length} chars)`);
 
     // Check cache first (30 min TTL for AI analysis)
     const cacheKey = cacheKeys.aiAnalysis(imageUrl);
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Run AI analysis
-    const analysis = await generateProductAnalysis(imageUrl, category);
+    const analysis = await generateProductAnalysis(imageUrl, category, notes);
 
     // Cache the result
     cache.set(cacheKey, analysis, cacheTTL.long);

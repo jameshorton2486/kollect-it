@@ -11,8 +11,10 @@ const client = new Anthropic({
 export async function analyzeProductImageWithClaude(
   imageUrl: string,
   category: string,
+  notes?: string,
 ) {
   console.log(`[Claude] Analyzing ${category} item from: ${imageUrl}`);
+  if (notes) console.log(`[Claude] User provided notes: ${notes.substring(0, 50)}...`);
 
   const systemPrompt = `You are an expert luxury collectibles appraiser and marketplace specialist. Your task is to analyze product images and generate professional marketplace listings for a luxury collectibles platform (Kollect-It).
 
@@ -33,6 +35,8 @@ ${category} Context:
 - Fine Art: Focus on artist, period, medium, condition, style, provenance
 - Collectibles: Focus on rarity, condition, original packaging, year, manufacturer
 - Militaria: Focus on era, authenticity, condition, historical significance, provenance
+
+${notes ? `\nSeller's Notes:\n${notes}\n\nIncorporate these details into your analysis where relevant.` : ""}
 
 Return ONLY this JSON structure (all fields required):
 {

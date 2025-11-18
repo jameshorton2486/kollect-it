@@ -7,16 +7,18 @@ import { analyzeImageQualityWithGPT4V } from "./gpt4v-image-analyzer";
 export async function generateProductAnalysis(
   imageUrl: string,
   category: string,
+  notes?: string,
 ) {
   console.log(`\n📦 Starting product analysis...`);
   console.log(`   Category: ${category}`);
+  if (notes) console.log(`   User Notes: ${notes.substring(0, 50)}...`);
   console.log(`   Image: ${imageUrl.substring(0, 50)}...`);
 
   try {
     // Run both AI analyses in parallel for speed
     console.log("\n🤖 Running AI analysis (Claude + GPT-4V in parallel)...");
     const [claudeAnalysis, gpt4vAnalysis] = await Promise.all([
-      analyzeProductImageWithClaude(imageUrl, category),
+      analyzeProductImageWithClaude(imageUrl, category, notes),
       analyzeImageQualityWithGPT4V(imageUrl),
     ]);
 
