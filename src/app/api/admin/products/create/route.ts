@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimiters } from "@/lib/rate-limit";
 import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
+import { validateSKU } from "@/lib/utils/image-parser";
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,37 +31,31 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const {
-      imageUrl,
+      sku,                    // ✨ NEW: Required SKU
+      imageUrls = [],         // ✨ NEW: Array of image URLs with metadata
       category,
       title,
       description,
-      // Note: These fields will be fully utilized after database migration
-      // shortDescription,
-      // estimatedEra,
-      // rarity,
-      // authenticity,
-      // investmentPotential,
-      // priceReasoning,
-      // seoTitle,
-      // seoDescription,
-      // keywords,
-      // aiAnalysis,
-      // isDraft = true,
+      shortDescription,
+      estimatedEra,
+      rarity,
+      authenticity,
       suggestedPrice,
+      seoTitle,
+      seoDescription,
+      aiAnalysis,
+      isDraft = true,
+      productNotes,           // ✨ NEW: Raw notes
+      appraisalUrls = [],     // ✨ NEW: PDF links
     } = body;
 
     console.log(`\n📦 [API] Create product request`);
     console.log(`   Admin: ${session.user?.email}`);
+    console.log(`   SKU: ${sku}`);
     console.log(`   Title: "${title}"`);
 
     // Validate required fields
-    const required = [
-      "imageUrl",
-      "category",
-      "title",
-      "description",
-      "suggestedPrice",
-    ];
+    const required = ["sku", "title", "category"];
     for (const field of required) {
       if (!body[field]) {
         return NextResponse.json(
@@ -68,6 +63,27 @@ export async function POST(req: NextRequest) {
           { status: 400 },
         );
       }
+    }
+
+    // Validate SKU format
+    const skuValidation = validateSKU(sku);
+    if (!skuValidation.valid) {
+      return NextResponse.json(
+        { error: skuValidation.error },
+        { status: 400 },
+      );
+    }
+
+    // Check SKU uniqueness
+    const existingSKU = await prisma.product.findUnique({
+      where: { sku },
+    });
+
+    if (existingSKU) {
+      return NextResponse.json(
+        { error: `SKU ${sku} already exists` },
+        { status: 400 },
+      );
     }
 
     // Find category by name
@@ -88,31 +104,48 @@ export async function POST(req: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    // Check if slug already exists
-    const existing = await prisma.product.findUnique({
-      where: { slug },
+    // Check slug uniqueness (add random suffix if needed)
+    let finalSlug = slug;
+    let slugExists = await prisma.product.findUnique({
+      where: { slug: finalSlug },
     });
 
-    if (existing) {
-      return NextResponse.json(
-        { error: "Product with similar title already exists" },
-        { status: 400 },
-      );
+    if (slugExists) {
+      finalSlug = `${slug}-${Date.now().toString().slice(-6)}`;
     }
 
-    // Create product with image
+    // Create product with images
     const product = await prisma.product.create({
       data: {
+        sku,
+        skuYear: skuValidation.parsed!.year,
+        skuNumber: skuValidation.parsed!.number,
         title,
-        slug,
-        description,
-        price: suggestedPrice,
+        slug: finalSlug,
+        description: description || shortDescription,
+        price: suggestedPrice || 0,
         categoryId: categoryRecord.id,
+        productNotes,
+        appraisalUrls,
+        
+        // AI-generated fields
+        estimatedEra,
+        rarity,
+        authenticity,
+        calculatedPrice: suggestedPrice,
+        seoTitle,
+        seoDescription,
+        aiAnalysis,
+        isDraft,
+
+        // Create images relation
         images: {
-          create: {
-            url: imageUrl,
-            alt: `${title} - High quality photo`,
-          },
+          create: imageUrls.map((img: any, index: number) => ({
+            url: img.url,
+            alt: img.alt || `${title} - Image ${index + 1}`,
+            imageType: img.type || "additional",
+            order: img.order !== undefined ? img.order : index,
+          })),
         },
       },
       include: {
@@ -121,10 +154,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log(`✅ [API] Product created: ${product.id}`);
+    console.log(`✅ [API] Product created: ${product.sku} - ${product.title}`);
     const response = NextResponse.json({
-      ...product,
-      message: "Product created successfully as draft",
+      success: true,
+      product,
+      message: `Product ${sku} created successfully`,
     });
     return applySecurityHeaders(response);
   } catch (error) {
