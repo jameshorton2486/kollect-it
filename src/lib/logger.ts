@@ -93,5 +93,22 @@ export const logger = {
   warn: (message: string, ctx?: LogContext) => write("warn", message, ctx),
   error: (message: string, ctx?: LogContext, err?: unknown) =>
     write("error", message, ctx, err),
+  
+  // Enhanced auth-specific logging
+  authAttempt: (email: string, success: boolean, reason?: string) => {
+    write("info", "Auth attempt", {
+      email: redactValue(email),
+      success,
+      reason,
+      timestamp: new Date().toISOString(),
+    });
+  },
+  
+  authError: (message: string, email: string, error?: unknown) => {
+    write("error", message, {
+      email: redactValue(email),
+      errorType: error instanceof Error ? error.name : typeof error,
+    }, error);
+  },
 };
 
