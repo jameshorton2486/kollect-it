@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "error-summary": "bun run scripts/generate-error-summary.ts",
+    "error-summary:last-hour": "bun run scripts/generate-error-summary.ts --last=1h",
+    "error-summary:last-30min": "bun run scripts/generate-error-summary.ts --last=30m",
+    "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h",
+    "logs:view": "tail -n 50 logs/*.log",
+    "logs:errors": "tail -n 50 logs/error-*.log",
+    "logs:watch": "tail -f logs/*.log"
+  }
+}

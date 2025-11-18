@@ -32,7 +32,14 @@
     "process-batch": "bun run scripts/process-batch.ts",
     "validate-product": "bun run scripts/validate-product.ts",
     "test-imagekit": "bun run scripts/test-imagekit.ts",
-    "test-google-drive": "bun run scripts/test-google-drive.ts"
+    "test-google-drive": "bun run scripts/test-google-drive.ts",
+    "error-summary": "bun run scripts/generate-error-summary.ts",
+    "error-summary:last-hour": "bun run scripts/generate-error-summary.ts --last=1h",
+    "error-summary:last-30min": "bun run scripts/generate-error-summary.ts --last=30m",
+    "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h",
+    "logs:view": "Get-Content logs\\*.log | Select-Object -Last 50",
+    "logs:errors": "Get-Content logs\\error-*.log | Select-Object -Last 50",
+    "logs:watch": "Get-Content logs\\*.log -Wait -Tail 10"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.68.0",
