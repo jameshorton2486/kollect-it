@@ -18,7 +18,7 @@
     "db:seed": "bunx prisma db seed",
     "db:studio": "bunx prisma studio",
     "db:setup": "bunx prisma generate && bunx prisma migrate dev --name init && bunx prisma db seed",
-    "postinstall": "bunx prisma generate",
+    "postinstall": "npx prisma generate",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "setup:imagekit": "bun run setup-imagekit-sync.ts",
