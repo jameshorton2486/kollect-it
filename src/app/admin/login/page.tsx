@@ -100,9 +100,9 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 text-center text-sm text-slate-500">
-            <p>Default credentials:</p>
-            <p className="mt-1 font-mono text-xs">
-              admin@kollect-it.com / admin123
+            <p>Use your Kollect-It admin email and password.</p>
+            <p className="mt-1 text-xs">
+              Example: <span className="font-mono">admin@kollect-it.com</span>
             </p>
           </div>
         </div>
