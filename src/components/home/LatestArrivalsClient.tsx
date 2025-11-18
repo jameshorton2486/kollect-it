@@ -8,7 +8,7 @@ export default function LatestArrivals() {
   const items = [
     {
       title: "19th-C. Gilt Frame Mirror",
-      img: "https://ik.imagekit.io/kollectit/latest1.jpg",
+      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=Victorian+Mirror",
       desc: "Victorian • London • c. 1880",
       category: "Mirrors & Glass",
       slug: "mirror-1",
@@ -17,7 +17,7 @@ export default function LatestArrivals() {
     },
     {
       title: "Art Deco Bronze Figurine",
-      img: "https://ik.imagekit.io/kollectit/latest2.jpg",
+      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=Art+Deco+Figurine",
       desc: "France • c. 1930",
       category: "Sculpture",
       slug: "figurine-1",
@@ -26,7 +26,7 @@ export default function LatestArrivals() {
     },
     {
       title: "Stanley Mouse 1966 Poster",
-      img: "https://ik.imagekit.io/kollectit/latest3.jpg",
+      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=1966+Poster",
       desc: "Jefferson Airplane • Original",
       category: "Posters & Art",
       slug: "poster-1",
@@ -35,7 +35,7 @@ export default function LatestArrivals() {
     },
     {
       title: "Tsavorite Garnet 6.12 ct",
-      img: "https://ik.imagekit.io/kollectit/latest4.jpg",
+      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=Tsavorite+Garnet",
       desc: "Merelani Hills • Tanzania",
       category: "Gemstones",
       slug: "garnet-1",

@@ -2,7 +2,20 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "./prisma";
-import { enhancedLogger } from "./enhanced-logger";
+import { logger } from "./logger";
+
+/**
+ * Enhanced NextAuth configuration with comprehensive logging
+ * 
+ * This version logs every step of the authentication process to help debug
+ * login issues. All logs use the structured logger with appropriate levels.
+ * 
+ * Logs to check when login fails:
+ * 1. Terminal running `bun run dev` (local)
+ * 2. `logs/` directory (local files)
+ * 3. Vercel dashboard → Logs (production)
+ * 4. Run `bun run error-summary` for AI-ready summary
+ */
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,112 +26,100 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const startTime = Date.now();
-        
+        // Log the attempt (redacted for security)
+        logger.info("Login attempt started", {
+          emailProvided: !!credentials?.email,
+          passwordProvided: !!credentials?.password,
+        });
+
+        // Check for missing credentials
+        if (!credentials?.email || !credentials?.password) {
+          logger.warn("Login failed: missing credentials", {
+            hasEmail: !!credentials?.email,
+            hasPassword: !!credentials?.password,
+          });
+          throw new Error("Invalid credentials");
+        }
+
+        // Look up user in database
+        let user;
         try {
-          enhancedLogger.info("🔐 Authorization attempt started", { 
-            email: credentials?.email,
-            hasPassword: !!credentials?.password 
-          });
-
-          // Validation
-          if (!credentials?.email || !credentials?.password) {
-            enhancedLogger.authAttempt(
-              credentials?.email || "unknown", 
-              false, 
-              "Missing email or password"
-            );
-            throw new Error("Invalid credentials");
-          }
-
-          // Database lookup
-          enhancedLogger.info("🔍 Looking up user in database", { email: credentials.email });
-          const dbStart = Date.now();
-          
-          const user = await prisma.user.findUnique({
+          user = await prisma.user.findUnique({
             where: { email: credentials.email },
-          }).catch((err) => {
-            enhancedLogger.dbError("findUnique", "User", err);
-            throw new Error("Database error");
           });
-
-          const dbDuration = Date.now() - dbStart;
-          enhancedLogger.dbQuery("findUnique", "User", !!user, dbDuration);
-
-          if (!user) {
-            enhancedLogger.authAttempt(
-              credentials.email, 
-              false, 
-              "User not found in database",
-              { dbDurationMs: dbDuration }
-            );
-            throw new Error("Invalid credentials");
-          }
-
-          enhancedLogger.info("✅ User found", { 
-            userId: user.id, 
-            hasPassword: !!user.password 
-          });
-
-          // Password check
-          if (!user.password) {
-            enhancedLogger.authAttempt(
-              credentials.email, 
-              false, 
-              "User has no password set",
-              { userId: user.id }
-            );
-            throw new Error("Invalid credentials");
-          }
-
-          const hashStart = Date.now();
-          const isPasswordValid = await bcrypt.compare(
-            credentials.password,
-            user.password,
+        } catch (err) {
+          logger.error(
+            "Login failed: database error during user lookup",
+            {
+              attemptedEmail: credentials.email,
+            },
+            err
           );
-          const hashDuration = Date.now() - hashStart;
+          throw new Error("Invalid credentials");
+        }
 
-          if (!isPasswordValid) {
-            enhancedLogger.authAttempt(
-              credentials.email, 
-              false, 
-              "Password mismatch",
-              { 
-                userId: user.id,
-                hashDurationMs: hashDuration 
-              }
-            );
-            throw new Error("Invalid credentials");
-          }
+        // Check if user exists
+        if (!user) {
+          logger.warn("Login failed: user not found", {
+            attemptedEmail: credentials.email,
+          });
+          throw new Error("Invalid credentials");
+        }
 
-          const totalDuration = Date.now() - startTime;
-          enhancedLogger.authAttempt(
-            credentials.email, 
-            true, 
-            "Login successful",
+        // Check if user has a password hash
+        if (!user.password) {
+          logger.error("Login failed: user has no password hash", {
+            userId: user.id,
+            email: user.email,
+            userRole: user.role,
+            helpText: "User account exists but password is null. Run 'bun run scripts/create-admin.ts' to fix.",
+          });
+          throw new Error("Invalid credentials");
+        }
+
+        // Verify password
+        let isPasswordValid = false;
+        try {
+          isPasswordValid = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+        } catch (err) {
+          logger.error(
+            "Login failed: password comparison error",
             {
               userId: user.id,
-              totalDurationMs: totalDuration,
-              role: user.role
-            }
+              email: user.email,
+              errorType: "bcrypt_compare_failed",
+            },
+            err
           );
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-          };
-        } catch (error) {
-          const totalDuration = Date.now() - startTime;
-          enhancedLogger.authError(
-            "Authorization failed", 
-            credentials?.email || "unknown", 
-            error,
-            { totalDurationMs: totalDuration }
-          );
-          throw error;
+          throw new Error("Invalid credentials");
         }
+
+        // Check password match
+        if (!isPasswordValid) {
+          logger.warn("Login failed: incorrect password", {
+            userId: user.id,
+            email: user.email,
+            userRole: user.role,
+          });
+          throw new Error("Invalid credentials");
+        }
+
+        // Success!
+        logger.info("Login succeeded", {
+          userId: user.id,
+          email: user.email,
+          role: user.role,
+        });
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        };
       },
     }),
   ],
@@ -127,6 +128,13 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.id = user.id;
+        
+        if (process.env.NODE_ENV === "development") {
+          logger.debug("JWT token created", {
+            userId: user.id,
+            role: user.role,
+          });
+        }
       }
       return token;
     },
@@ -134,6 +142,13 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.role = token.role as string;
         session.user.id = token.id as string;
+        
+        if (process.env.NODE_ENV === "development") {
+          logger.debug("Session created", {
+            userId: token.id as string,
+            role: token.role as string,
+          });
+        }
       }
       return session;
     },
@@ -145,5 +160,26 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  
+  // Hook into NextAuth's own logger
+  logger: {
+    error(code, metadata) {
+      logger.error("NextAuth error", { 
+        code, 
+        ...metadata,
+        helpText: "This is a NextAuth internal error. Check NEXTAUTH_SECRET and NEXTAUTH_URL env vars.",
+      });
+    },
+    warn(code) {
+      logger.warn("NextAuth warning", { code });
+    },
+    debug(code, metadata) {
+      if (process.env.NODE_ENV === "development") {
+        logger.debug("NextAuth debug", { code, ...metadata });
+      }
+    },
+  },
+  
+  // Enable debug in development for extra detail
+  debug: process.env.NODE_ENV === "development",
 };
-

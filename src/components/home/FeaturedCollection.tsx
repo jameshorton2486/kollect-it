@@ -46,7 +46,7 @@ export default function FeaturedCollection() {
           {/* Right Image */}
           <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
             <Image
-              src="https://ik.imagekit.io/kollectit/feature-rare-books-17th-modern.jpg"
+              src="https://via.placeholder.com/1200x900/8B4513/FFFFFF?text=Rare+Books+Collection"
               alt="Collection of rare and historical Virgil volumes, 16th–19th century leather-bound books."
               width={1200}
               height={900}

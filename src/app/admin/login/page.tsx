@@ -16,6 +16,8 @@ export default function AdminLoginPage() {
     setError("");
     setLoading(true);
 
+    console.log("🔐 Login attempt started", { email, hasPassword: !!password });
+
     try {
       const result = await signIn("credentials", {
         email,
@@ -23,13 +25,21 @@ export default function AdminLoginPage() {
         redirect: false,
       });
 
+      console.log("🔐 SignIn result:", result);
+
       if (result?.error) {
+        console.error("🔐 Login failed:", result.error);
         setError("Invalid email or password");
-      } else {
+      } else if (result?.ok) {
+        console.log("🔐 Login succeeded, redirecting to dashboard");
         router.push("/admin/dashboard");
         router.refresh();
+      } else {
+        console.warn("🔐 Unexpected signIn result:", result);
+        setError("Unexpected response from server");
       }
     } catch (err) {
+      console.error("🔐 Login exception:", err);
       setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);

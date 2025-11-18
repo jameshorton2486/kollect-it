@@ -53,6 +53,7 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year for static images
     remotePatterns: [
       { protocol: "https", hostname: "ik.imagekit.io", pathname: "/**" },
+      { protocol: "https", hostname: "via.placeholder.com", pathname: "/**" },
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "c8.alamy.com", pathname: "/**" },
       {

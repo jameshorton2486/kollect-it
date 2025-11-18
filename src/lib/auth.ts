@@ -2,7 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "./prisma";
-import { logger } from "./logger";
+import { enhancedLogger as logger } from "./enhanced-logger";
 
 /**
  * Enhanced NextAuth configuration with comprehensive logging
