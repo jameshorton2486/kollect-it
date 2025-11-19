@@ -135,14 +135,14 @@ node_modules_corrupt_*
 logs/
 *.log
 
-# Credential files - NEVER COMMIT
+# ============================================================
+# CREDENTIAL FILES - NEVER COMMIT!
+# ============================================================
 *.docx
 *credentials*
 *api-key*
 *secrets*
-
-# Credential files - NEVER COMMIT
-*.docx
-*credentials*
-*api-key*
-*secrets*
+*API*KEY*.docx
+*Workspace*.docx
+*Suprabase*.docx
+*env*File*.docx
