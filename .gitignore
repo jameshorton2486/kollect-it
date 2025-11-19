@@ -140,3 +140,9 @@ logs/
 *credentials*
 *api-key*
 *secrets*
+
+# Credential files - NEVER COMMIT
+*.docx
+*credentials*
+*api-key*
+*secrets*
