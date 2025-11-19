@@ -32,7 +32,6 @@ const nextConfig = {
 
   // Output optimization
   output: "standalone",
-  outputFileTracingRoot: __dirname,
 
   // Remove console logs in production
   compiler: {
@@ -136,8 +135,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "2mb",
     },
-    // Optimize SSG static generation
-    staticGenerationRetryCount: 3,
+    // Note: removed staticGenerationRetryCount (not a supported option)
   },
 
   // Note: Webpack config removed for Next.js 15 + Turbopack compatibility
