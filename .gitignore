@@ -134,3 +134,9 @@ node_modules_corrupt_*
 
 logs/
 *.log
+
+# Credential files - NEVER COMMIT
+*.docx
+*credentials*
+*api-key*
+*secrets*
