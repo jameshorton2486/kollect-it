@@ -372,10 +372,10 @@ else
 fi
 
 # Check for TypeScript
-if command -v bunx &> /dev/null; then
+if command -v bun &> /dev/null; then
     echo ""
     print_info "Running TypeScript check..."
-    if bunx tsc --noEmit 2>&1 | head -5; then
+    if bun x tsc --noEmit 2>&1 | head -5; then
         print_success "TypeScript check completed (see output above)"
     else
         print_warning "TypeScript has some errors (this is expected after enabling strict mode)"

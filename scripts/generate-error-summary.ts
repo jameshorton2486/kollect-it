@@ -275,7 +275,7 @@ function analyzeLogs(entries: LogEntry[]): ErrorSummary {
       `   1. Database connection issues (check DATABASE_URL)`,
       `   2. External API timeouts (ImageKit, Stripe, Resend)`,
       `   3. Missing environment variables (check .env.local)`,
-      `   4. Prisma schema mismatch (run 'bunx prisma db push')`
+      `   4. Prisma schema mismatch (run 'bun x prisma db push')`
     );
   }
   
@@ -298,7 +298,7 @@ function analyzeLogs(entries: LogEntry[]): ErrorSummary {
       `🔴 ${dbErrors.length} database errors detected. Check:`,
       `   1. DATABASE_URL is correct in .env.local`,
       `   2. Supabase database is running`,
-      `   3. Run 'bunx prisma db push' to sync schema`
+      `   3. Run 'bun x prisma db push' to sync schema`
     );
   }
 
@@ -449,7 +449,7 @@ function formatSummaryForAI(summary: ErrorSummary): string {
   output += `# Check environment variable\n`;
   output += `echo $DATABASE_URL\n`;
   output += `# Sync database schema\n`;
-  output += `bunx prisma db push\n`;
+  output += `bun x prisma db push\n`;
   output += `\`\`\`\n\n`;
   
   output += `**For NextAuth errors:**\n`;

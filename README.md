@@ -27,13 +27,13 @@ cp .env.example .env.local
 # Edit .env.local and fill in your actual credentials
 
 # 4. Generate Prisma client
-bunx prisma generate
+bun x prisma generate
 
 # 5. Run database migrations
-bunx prisma migrate deploy
+bun x prisma migrate deploy
 
 # 6. Seed database (optional)
-bunx prisma db seed
+bun x prisma db seed
 
 # 7. Start development server
 bun run dev
@@ -71,10 +71,10 @@ bun run format           # Code formatting with Biome
 bun run check            # Full check (lint + typecheck + build)
 
 # Database
-bunx prisma generate    # Generate Prisma client
-bunx prisma migrate dev # Create migration
-bunx prisma db push     # Push schema to database
-bunx prisma studio     # Open Prisma Studio UI
+bun x prisma generate    # Generate Prisma client
+bun x prisma migrate dev # Create migration
+bun x prisma db push     # Push schema to database
+bun x prisma studio     # Open Prisma Studio UI
 
 # Testing
 bun run test:e2e        # Run Playwright e2e tests

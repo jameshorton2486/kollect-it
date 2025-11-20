@@ -149,9 +149,9 @@ echo ""
 echo -e "${YELLOW}TEST 6: Prisma Client Generation${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-if command -v bunx &> /dev/null; then
-    echo -e "${BLUE}Running: bunx prisma generate${NC}"
-    if bunx prisma generate 2>&1 | head -5; then
+if command -v bun &> /dev/null; then
+    echo -e "${BLUE}Running: bun x prisma generate${NC}"
+    if bun x prisma generate 2>&1 | head -5; then
         echo -e "${GREEN}✅ Prisma client generation successful${NC}"
     else
         echo -e "${YELLOW}⚠️  Prisma generation had warnings (check output above)${NC}"
