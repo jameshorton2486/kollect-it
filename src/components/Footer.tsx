@@ -6,11 +6,11 @@ import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
 export function Footer() {
   const navigation = {
     shop: [
-      { name: "Browse All", href: "/products" },
-      { name: "Rare Books", href: "/categories/rare-books" },
-      { name: "Fine Art", href: "/categories/fine-art" },
-      { name: "Militaria", href: "/categories/militaria" },
-      { name: "Collectibles", href: "/categories/collectibles" },
+      { name: "Browse All", href: "/shop" },
+      { name: "Rare Books", href: "/category/rare-books" },
+      { name: "Fine Art", href: "/category/fine-art" },
+      { name: "Militaria", href: "/category/militaria" },
+      { name: "Collectibles", href: "/category/collectibles" },
     ],
     company: [
       { name: "About Us", href: "/about" },
@@ -21,7 +21,7 @@ export function Footer() {
     ],
     support: [
       { name: "FAQ", href: "/faq" },
-      { name: "Shipping & Returns", href: "/shipping" },
+      { name: "Shipping & Returns", href: "/shipping-returns" },
       { name: "Payment Options", href: "/payment" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Terms of Service", href: "/terms" },
