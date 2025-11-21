@@ -1,5 +1,16 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { 
+  Hourglass, 
+  Palette, 
+  Watch, 
+  Home, 
+  Gem, 
+  ShoppingBag, 
+  BookOpen, 
+  Gamepad2, 
+  Trophy 
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Categories | Kollect-It",
@@ -7,15 +18,15 @@ export const metadata: Metadata = {
 };
 
 const categories = [
-  { name: "Antiques", slug: "antiques" },
-  { name: "Fine Art", slug: "fine-art" },
-  { name: "Jewelry & Timepieces", slug: "jewelry-timepieces" },
-  { name: "Home Décor", slug: "home-decor" },
-  { name: "Collectibles", slug: "collectibles" },
-  { name: "Clothing & Accessories", slug: "clothing-accessories" },
-  { name: "Books & Media", slug: "books-media" },
-  { name: "Toys & Games", slug: "toys-games" },
-  { name: "Sports Memorabilia", slug: "sports-memorabilia" },
+  { name: "Antiques", slug: "antiques", icon: Hourglass },
+  { name: "Fine Art", slug: "fine-art", icon: Palette },
+  { name: "Jewelry & Timepieces", slug: "jewelry-timepieces", icon: Watch },
+  { name: "Home Décor", slug: "home-decor", icon: Home },
+  { name: "Collectibles", slug: "collectibles", icon: Gem },
+  { name: "Clothing & Accessories", slug: "clothing-accessories", icon: ShoppingBag },
+  { name: "Books & Media", slug: "books-media", icon: BookOpen },
+  { name: "Toys & Games", slug: "toys-games", icon: Gamepad2 },
+  { name: "Sports Memorabilia", slug: "sports-memorabilia", icon: Trophy },
 ];
 
 export default function CategoriesPage() {
@@ -53,9 +64,12 @@ export default function CategoriesPage() {
                 cursor: "pointer",
                 height: "100%",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
+                gap: "20px"
               }}>
+                <category.icon size={48} color="#C9A66B" strokeWidth={1.5} />
                 <h2 style={{ 
                   fontFamily: "serif", 
                   fontSize: "1.5rem", 

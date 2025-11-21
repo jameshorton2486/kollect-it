@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { CreditCard, Wallet, Landmark, CalendarClock, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Payment Options | Kollect-It",
@@ -15,24 +16,31 @@ export default function PaymentPage() {
           {[
             { 
               title: "Credit Cards", 
+              icon: CreditCard,
               features: ["Visa, Mastercard, American Express, Discover", "Instant processing", "Secure encryption"] 
             },
             { 
               title: "PayPal", 
+              icon: Wallet,
               features: ["Pay with your PayPal balance", "Buyer Protection included", "Quick checkout"] 
             },
             { 
               title: "Bank Transfer", 
+              icon: Landmark,
               features: ["Direct wire transfer", "Ideal for high-value items", "Secure processing"] 
             },
             { 
               title: "Installment Plans", 
+              icon: CalendarClock,
               features: ["Buy now, pay later", "Flexible monthly payments", "Interest-free options available"] 
             }
           ].map((method) => (
             <div key={method.title} style={{ backgroundColor: "#FFFFFF", padding: "30px", borderRadius: "8px", border: "1px solid #EAE6DD" }}>
-              <h2 style={{ fontFamily: "serif", fontSize: "1.8rem", marginBottom: "15px", color: "#C9A66B" }}>{method.title}</h2>
-              <ul style={{ listStyle: "none", padding: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
+                <method.icon size={32} color="#C9A66B" style={{ marginRight: "15px" }} />
+                <h2 style={{ fontFamily: "serif", fontSize: "1.8rem", color: "#C9A66B", margin: 0 }}>{method.title}</h2>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, marginLeft: "47px" }}>
                 {method.features.map((feature, i) => (
                   <li key={i} style={{ marginBottom: "8px", display: "flex", alignItems: "center" }}>
                     <span style={{ color: "#C9A66B", marginRight: "10px" }}>•</span> {feature}
@@ -44,6 +52,7 @@ export default function PaymentPage() {
         </div>
 
         <div style={{ backgroundColor: "#3A3A3A", color: "#FFFFFF", padding: "40px", borderRadius: "8px", textAlign: "center" }}>
+          <ShieldCheck size={48} color="#C9A66B" style={{ margin: "0 auto 20px" }} />
           <h2 style={{ fontFamily: "serif", fontSize: "2rem", marginBottom: "20px", color: "#C9A66B" }}>Security Guarantee</h2>
           <p style={{ lineHeight: "1.6" }}>
             Your security is our top priority. All transactions are encrypted using industry-standard SSL technology. 

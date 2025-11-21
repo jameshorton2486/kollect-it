@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { Search, CreditCard, ShieldCheck, Truck, PackageCheck, CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "How It Works | Kollect-It",
@@ -24,18 +25,18 @@ export default function HowItWorksPage() {
           <h2 style={{ fontFamily: "serif", fontSize: "2.5rem", marginBottom: "40px", textAlign: "center" }}>Buying Process</h2>
           <div style={{ display: "grid", gap: "30px" }}>
             {[
-              { step: 1, title: "Browse & Discover", desc: "Explore our curated collection of authenticated items." },
-              { step: 2, title: "Place Order", desc: "Securely purchase your desired item using our protected payment system." },
-              { step: 3, title: "Authentication", desc: "Every item is verified by our experts before shipping." },
-              { step: 4, title: "Secure Shipping", desc: "Items are carefully packaged and shipped with insurance." },
-              { step: 5, title: "Delivery", desc: "Receive your item with our satisfaction guarantee." }
+              { step: 1, title: "Browse & Discover", desc: "Explore our curated collection of authenticated items.", icon: Search },
+              { step: 2, title: "Place Order", desc: "Securely purchase your desired item using our protected payment system.", icon: CreditCard },
+              { step: 3, title: "Authentication", desc: "Every item is verified by our experts before shipping.", icon: ShieldCheck },
+              { step: 4, title: "Secure Shipping", desc: "Items are carefully packaged and shipped with insurance.", icon: Truck },
+              { step: 5, title: "Delivery", desc: "Receive your item with our satisfaction guarantee.", icon: PackageCheck }
             ].map((item) => (
               <div key={item.step} style={{ display: "flex", alignItems: "flex-start", backgroundColor: "#FFFFFF", padding: "30px", borderRadius: "8px", border: "1px solid #EAE6DD" }}>
                 <div style={{ 
                   backgroundColor: "#C9A66B", 
                   color: "#FFFFFF", 
-                  width: "40px", 
-                  height: "40px", 
+                  width: "50px", 
+                  height: "50px", 
                   borderRadius: "50%", 
                   display: "flex", 
                   alignItems: "center", 
@@ -44,7 +45,7 @@ export default function HowItWorksPage() {
                   marginRight: "20px",
                   flexShrink: 0
                 }}>
-                  {item.step}
+                  <item.icon size={24} />
                 </div>
                 <div>
                   <h3 style={{ fontFamily: "serif", fontSize: "1.5rem", marginBottom: "10px" }}>{item.title}</h3>
@@ -71,7 +72,7 @@ export default function HowItWorksPage() {
                 "30-Day Returns"
               ].map((benefit, i) => (
                 <li key={i} style={{ marginBottom: "15px", display: "flex", alignItems: "center" }}>
-                  <span style={{ color: "#C9A66B", marginRight: "10px" }}>✓</span> {benefit}
+                  <CheckCircle2 size={20} color="#C9A66B" style={{ marginRight: "10px" }} /> {benefit}
                 </li>
               ))}
             </ul>
@@ -90,7 +91,7 @@ export default function HowItWorksPage() {
                 "Shipping Handling"
               ].map((benefit, i) => (
                 <li key={i} style={{ marginBottom: "15px", display: "flex", alignItems: "center" }}>
-                  <span style={{ color: "#C9A66B", marginRight: "10px" }}>✓</span> {benefit}
+                  <CheckCircle2 size={20} color="#C9A66B" style={{ marginRight: "10px" }} /> {benefit}
                 </li>
               ))}
             </ul>
