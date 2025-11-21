@@ -78,12 +78,6 @@ export default function RootLayout({
       className={`${lato.variable} ${cormorant.variable} ${archivoBlack.variable}`}
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
         <Script
           crossOrigin="anonymous"
           src="//unpkg.com/same-runtime/dist/index.global.js"
@@ -113,7 +107,10 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body suppressHydrationWarning className="antialiased">
+      <body
+        suppressHydrationWarning
+        className="antialiased bg-[hsl(var(--surface-50))] text-[hsl(var(--ink-900))]"
+      >
         {/* Skip link for keyboard users */}
         <a
           href="#main"
