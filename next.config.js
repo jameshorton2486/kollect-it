@@ -106,13 +106,7 @@ const nextConfig = {
 
   // Redirects for cache optimization
   async redirects() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "/api/:path*",
-        permanent: false,
-      },
-    ];
+    return [];
   },
 
   // Rewrites for API optimization
