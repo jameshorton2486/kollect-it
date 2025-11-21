@@ -18,11 +18,11 @@
     --surface-1: 30 20% 96%;    /* #F5F3F0 - Warm cream */
     --surface-2: 60 5% 98%;     /* #FAFAF9 - Elevated */
 
-    /* Brand Gold */
-    --gold-400: 36 41% 60%;  /* Light variant */
-    --gold-500: 36 41% 50%;  /* #B1874C - Base */
-    --gold-600: 36 41% 39%;  /* #8B6937 - Dark variant */
-    --gold-700: 36 41% 30%;  /* Extra dark */
+    /* Brand Gold - Refined (#C5A264) */
+    --gold-400: 38 47% 68%;  /* Light variant */
+    --gold-500: 38 47% 58%;  /* #C5A264 - Base (Refined) */
+    --gold-600: 38 47% 48%;  /* Dark variant */
+    --gold-700: 38 47% 38%;  /* Extra dark */
 
     /* CTA (Deep Navy) */
     --cta-primary: 212 52% 25%;   /* #1E3A5F - Default */
@@ -73,8 +73,8 @@
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 39 48% 56%;
-    --radius: 0.25rem;
+    --ring: 212 52% 25%;
+    --radius: 0.5rem;
   }
 }
 
@@ -95,7 +95,7 @@ html {
 }
 
 body {
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   color: hsl(var(--ink-900));
   background-color: hsl(var(--surface-1));
   line-height: 1.6;
@@ -106,7 +106,7 @@ body {
    ============================================ */
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-serif), Georgia, serif;
   font-weight: 600;
   line-height: 1.2;
   color: hsl(var(--ink-900));
@@ -134,7 +134,7 @@ h1, h2, h3, h4, h5, h6 {
    ============================================ */
 
 :focus-visible {
-  outline: 2px solid hsl(var(--gold-500));
+  outline: 2px solid hsl(var(--cta-primary));
   outline-offset: 2px;
 }
 

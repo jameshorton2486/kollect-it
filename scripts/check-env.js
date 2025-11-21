@@ -63,9 +63,10 @@ function loadEnvFile(filename) {
   
   envContent.split('\n').forEach(line => {
     // Skip comments and empty lines
-    if (line.trim().startsWith('#') || !line.trim()) return;
+    const trimmedLine = line.trim();
+    if (trimmedLine.startsWith('#') || !trimmedLine) return;
     
-    const match = line.match(/^([^=]+)=(.*)$/);
+    const match = trimmedLine.match(/^([^=]+)=(.*)$/);
     if (match) {
       const key = match[1].trim();
       let value = match[2].trim();

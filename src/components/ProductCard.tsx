@@ -35,7 +35,7 @@ export default function ProductCard({
 
   if (variant === "list") {
     return (
-      <div className="flex gap-4 rounded border border-[hsl(var(--border-300))] bg-white p-3">
+      <div className="flex gap-4 rounded border border-border bg-surface p-3 shadow-sm">
         <Link
           href={`/product/${product.slug}`}
           className="block h-36 w-36 shrink-0 overflow-hidden rounded"
@@ -65,7 +65,7 @@ export default function ProductCard({
               </h3>
             </Link>
             {product.description && (
-              <p className="mt-1 text-[14px] text-[hsl(var(--ink-700))] line-clamp-2">
+              <p className="mt-1 text-[14px] text-ink-secondary line-clamp-2">
                 {product.description}
               </p>
             )}
@@ -118,7 +118,7 @@ export default function ProductCard({
   // grid variant
   return (
     <div
-      className="group rounded-lg border-2 border-[hsl(var(--border-300))] bg-white overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold"
+      className="group rounded-lg border border-border bg-surface overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-gold shadow-sm"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -138,14 +138,14 @@ export default function ProductCard({
           />
           {/* Category badge - top left */}
           {product.category && (
-            <span className="absolute left-3 top-3 rounded bg-white/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gold shadow-md backdrop-blur-sm border-2 border-gold">
+            <span className="absolute left-3 top-3 rounded bg-surface/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gold shadow-md backdrop-blur-sm border border-gold">
               {product.category}
             </span>
           )}
         </Link>
         {/* Wishlist button - top right */}
         <button
-          className="absolute right-3 top-3 inline-flex items-center justify-center rounded-full border-2 border-white bg-white/95 p-2.5 backdrop-blur-sm transition-all hover:scale-110 hover:bg-gold hover:border-gold hover:text-white shadow-md"
+          className="absolute right-3 top-3 inline-flex items-center justify-center rounded-full border border-surface bg-surface/95 p-2.5 backdrop-blur-sm transition-all hover:scale-110 hover:bg-gold hover:border-gold hover:text-white shadow-md"
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           onClick={async (e) => {
             e.preventDefault();

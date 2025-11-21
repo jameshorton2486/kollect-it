@@ -2,6 +2,8 @@
 
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart, Check } from "lucide-react";
 
 interface AddToCartButtonProps {
   product: {
@@ -58,126 +60,28 @@ export default function AddToCartButton({
     setTimeout(() => setAdded(false), 2000);
   };
 
-  if (variant === "card") {
-    return (
-      <button
-        onClick={handleAddToCart}
-        className={`product-card-cart-btn ${added ? "added" : ""} ${className}`}
-        aria-label="Add to cart"
-      >
-        {added ? (
-          <>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            Added!
-          </>
-        ) : (
-          <>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
-            Add to Cart
-          </>
-        )}
-      </button>
-    );
-  }
-
-  if (variant === "secondary") {
-    return (
-      <button
-        onClick={handleAddToCart}
-        className={`btn-secondary ${added ? "added" : ""} ${className}`}
-      >
-        {added ? (
-          <>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            Added to Cart!
-          </>
-        ) : (
-          <>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
-            Add to Cart
-          </>
-        )}
-      </button>
-    );
-  }
+  const buttonVariant = variant === "primary" ? "default" : "secondary";
+  const size = variant === "card" ? "sm" : "default";
 
   return (
-    <button
+    <Button
       onClick={handleAddToCart}
-      className={`btn-add-to-cart ${added ? "added" : ""} ${className}`}
+      variant={buttonVariant}
+      size={size}
+      className={`${className} ${added ? "bg-green-600 hover:bg-green-700 text-white" : ""}`}
     >
       {added ? (
         <>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          Added to Cart!
+          <Check className="mr-2 h-4 w-4" />
+          {variant === "card" ? "Added" : "Added to Cart"}
         </>
       ) : (
         <>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="9" cy="21" r="1" />
-            <circle cx="20" cy="21" r="1" />
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-          </svg>
+          <ShoppingCart className="mr-2 h-4 w-4" />
           Add to Cart
         </>
       )}
-    </button>
+    </Button>
   );
 }
 

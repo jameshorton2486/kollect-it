@@ -33,6 +33,8 @@ const config: Config = {
         /* Surface - Backgrounds */
         surface: {
           DEFAULT: "hsl(var(--surface-0))",
+          1: "hsl(var(--surface-1))",
+          2: "hsl(var(--surface-2))",
           50: "hsl(var(--surface-50))",
           100: "hsl(var(--surface-100))",
           900: "hsl(var(--surface-900))",
@@ -58,8 +60,8 @@ const config: Config = {
         divider: "hsl(var(--surface-100))",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
