@@ -92,7 +92,7 @@ export default function EmailSettingsPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading email settings...</p>
+          <p className="mt-4 text-ink-600">Loading email settings...</p>
         </div>
       </div>
     );
@@ -103,19 +103,19 @@ export default function EmailSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-surface-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Email Settings</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="text-3xl font-bold text-ink-900">Email Settings</h1>
+          <p className="mt-2 text-ink-600">
             Configure and test email notifications for your store
           </p>
         </div>
 
         {/* Configuration Status */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+        <div className="bg-surface-0 shadow rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold text-ink-900 mb-4">
             Configuration Status
           </h2>
 
@@ -139,34 +139,34 @@ export default function EmailSettingsPage() {
               {/* Configuration Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-ink-700">
                     SMTP Host
                   </label>
-                  <p className="mt-1 text-sm text-gray-900">
+                  <p className="mt-1 text-sm text-ink-900">
                     {emailStatus.host}
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-ink-700">
                     Email User
                   </label>
-                  <p className="mt-1 text-sm text-gray-900">
+                  <p className="mt-1 text-sm text-ink-900">
                     {emailStatus.user}
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-ink-700">
                     From Address
                   </label>
-                  <p className="mt-1 text-sm text-gray-900">
+                  <p className="mt-1 text-sm text-ink-900">
                     {emailStatus.from}
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-ink-700">
                     Enabled
                   </label>
-                  <p className="mt-1 text-sm text-gray-900">
+                  <p className="mt-1 text-sm text-ink-900">
                     {emailStatus.enabled ? "Yes" : "No"}
                   </p>
                 </div>
@@ -219,15 +219,15 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
 
         {/* Test Email Form */}
         {emailStatus?.configured && (
-          <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="bg-surface-0 shadow rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-ink-900 mb-4">
               Send Test Email
             </h2>
             <form onSubmit={handleSendTestEmail} className="space-y-4">
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-ink-700"
                 >
                   Recipient Email Address
                 </label>
@@ -238,7 +238,7 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
                   onChange={(e) => setTestEmail(e.target.value)}
                   placeholder="test@example.com"
                   required
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                  className="mt-1 block w-full px-3 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
                 />
               </div>
 
@@ -267,30 +267,30 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
         )}
 
         {/* Email Templates Info */}
-        <div className="mt-6 bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+        <div className="mt-6 bg-surface-0 shadow rounded-lg p-6">
+          <h2 className="text-xl font-semibold text-ink-900 mb-4">
             Email Templates
           </h2>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-ink-600 mb-4">
             The following email templates are configured and ready to use:
           </p>
           <ul className="space-y-2">
-            <li className="flex items-center text-sm text-gray-700">
+            <li className="flex items-center text-sm text-ink-700">
               <span className="text-green-600 mr-2">✓</span>
               <strong className="mr-2">Order Confirmation:</strong>
               Sent to customers when order is placed
             </li>
-            <li className="flex items-center text-sm text-gray-700">
+            <li className="flex items-center text-sm text-ink-700">
               <span className="text-green-600 mr-2">✓</span>
               <strong className="mr-2">Order Status Update:</strong>
               Sent when order status changes (shipped, delivered, etc.)
             </li>
-            <li className="flex items-center text-sm text-gray-700">
+            <li className="flex items-center text-sm text-ink-700">
               <span className="text-green-600 mr-2">✓</span>
               <strong className="mr-2">Admin New Order Alert:</strong>
               Sent to admin when new order is received
             </li>
-            <li className="flex items-center text-sm text-gray-700">
+            <li className="flex items-center text-sm text-ink-700">
               <span className="text-green-600 mr-2">✓</span>
               <strong className="mr-2">Welcome Email:</strong>
               Sent to new users on registration

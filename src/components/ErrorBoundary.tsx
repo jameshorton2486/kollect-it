@@ -18,8 +18,8 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-surface-50">
+      <div className="max-w-md w-full bg-surface-0 rounded-lg shadow-lg p-8 text-center">
         <div className="flex justify-center mb-4">
           <AlertCircle className="w-16 h-16 text-red-500" />
         </div>
@@ -28,14 +28,14 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
           Something Went Wrong
         </h1>
 
-        <p className="text-gray-600 mb-6">
+        <p className="text-ink-600 mb-6">
           We apologize for the inconvenience. Our team has been notified and is
           working to resolve the issue.
         </p>
 
         {error.digest && (
-          <div className="bg-gray-100 rounded p-3 mb-6">
-            <p className="text-xs text-gray-500 font-mono">
+          <div className="bg-surface-100 rounded p-3 mb-6">
+            <p className="text-xs text-ink-500 font-mono">
               Error ID: {error.digest}
             </p>
           </div>

@@ -61,13 +61,13 @@ export function BulkOrderActions({
   const allSelected = orders.length > 0 && selectedIds.length === orders.length;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
+    <div className="bg-surface-0 border border-border-200 rounded-lg p-4 mb-6">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         {/* Select All */}
         <div className="flex items-center gap-3">
           <button
             onClick={onSelectAll}
-            className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900"
+            className="flex items-center gap-2 text-sm text-ink-700 hover:text-ink-900"
             aria-label={
               allSelected ? "Deselect all orders" : "Select all orders"
             }
@@ -91,7 +91,7 @@ export function BulkOrderActions({
             <select
               value={selectedAction}
               onChange={(e) => setSelectedAction(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="px-3 py-2 border border-border-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
               aria-label="Select bulk action"
             >
               <option value="">Choose action...</option>
@@ -119,7 +119,7 @@ export function BulkOrderActions({
           <div className="flex items-center gap-2">
             <button
               onClick={() => onBulkAction("export-csv", selectedIds)}
-              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
+              className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
               title="Export selected orders"
               aria-label="Export selected orders to CSV"
             >
@@ -127,7 +127,7 @@ export function BulkOrderActions({
             </button>
             <button
               onClick={() => onBulkAction("send-email", selectedIds)}
-              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
+              className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
               title="Send email to selected orders"
               aria-label="Send email to selected orders"
             >
@@ -135,7 +135,7 @@ export function BulkOrderActions({
             </button>
             <button
               onClick={() => onBulkAction("archive", selectedIds)}
-              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
+              className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
               title="Archive selected orders"
               aria-label="Archive selected orders"
             >
@@ -155,8 +155,8 @@ export function BulkOrderActions({
 
       {/* Selection Summary */}
       {selectedIds.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-gray-200">
-          <div className="text-sm text-gray-600">
+        <div className="mt-3 pt-3 border-t border-border-200">
+          <div className="text-sm text-ink-600">
             <span className="font-medium">{selectedIds.length}</span> order(s)
             selected
             {selectedIds.length > 1 && " · "}

@@ -1,52 +1,35 @@
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
-interface BreadcrumbItem {
+interface Breadcrumb {
   label: string;
-  href: string;
+  href?: string;
 }
 
 interface BreadcrumbsProps {
-  items: BreadcrumbItem[];
+  items: Breadcrumb[];
 }
 
-export default function Breadcrumbs({ items }: BreadcrumbsProps) {
+export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav className="breadcrumbs" aria-label="Breadcrumb">
-      <div className="container">
-        {/* JSON-LD BreadcrumbList for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: items.map((item, index) => ({
-                "@type": "ListItem",
-                position: index + 1,
-                name: item.label,
-                item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://kollect-it.com"}${item.href}`,
-              })),
-            }),
-          }}
-        />
-        <ol>
-          {items.map((item, index) => (
-            <li
-              key={item.href}
-              {...(index === items.length - 1
-                ? { "aria-current": "page" }
-                : {})}
+    <nav className="flex items-center space-x-2 text-sm text-ink-600 mb-6">
+      {items.map((item, index) => (
+        <div key={index} className="flex items-center">
+          {index > 0 && <ChevronRight className="h-4 w-4 mx-2" />}
+          {item.href ? (
+            <Link 
+              href={item.href} 
+              className="hover:text-gold-600 transition-colors"
             >
-              {index < items.length - 1 ? (
-                <Link href={item.href}>{item.label}</Link>
-              ) : (
-                item.label
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
+              {item.label}
+            </Link>
+          ) : (
+            <span className="text-ink-900 font-medium">{item.label}</span>
+          )}
+        </div>
+      ))}
     </nav>
   );
 }
 
+export default Breadcrumbs;

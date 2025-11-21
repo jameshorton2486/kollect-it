@@ -60,7 +60,7 @@ export default function ProcessOverview() {
           {steps.map((s) => (
             <div
               key={s.n}
-              className="group bg-white rounded-lg p-8 border border-surface-2 hover:border-gold transition-all duration-300 hover:shadow-lg"
+              className="group bg-surface-0 rounded-lg p-8 border border-surface-2 hover:border-gold transition-all duration-300 hover:shadow-lg"
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gold/10 flex items-center justify-center text-2xl">
@@ -94,7 +94,7 @@ export default function ProcessOverview() {
             </Link>
             <Link
               href="/about"
-              className="inline-block bg-white border-2 border-gold text-gold font-semibold px-10 py-3 rounded-lg hover:bg-gold hover:text-white transition-all"
+              className="inline-block bg-surface-0 border-2 border-gold text-gold font-semibold px-10 py-3 rounded-lg hover:bg-gold hover:text-white transition-all"
             >
               Learn More About Us
             </Link>

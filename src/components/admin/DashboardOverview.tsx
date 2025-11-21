@@ -94,7 +94,7 @@ export function DashboardOverview() {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard metrics...</p>
+          <p className="mt-4 text-ink-600">Loading dashboard metrics...</p>
         </div>
       </div>
     );
@@ -102,7 +102,7 @@ export function DashboardOverview() {
 
   if (!metrics) {
     return (
-      <div className="text-center py-12 text-gray-500">
+      <div className="text-center py-12 text-ink-500">
         No metrics data available
       </div>
     );
@@ -112,7 +112,7 @@ export function DashboardOverview() {
     <div className="space-y-6">
       {/* Period Selector */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Business Overview</h2>
+        <h2 className="text-2xl font-bold text-ink-900">Business Overview</h2>
         <div>
           <label htmlFor="period-select" className="sr-only">
             Select time period
@@ -121,7 +121,7 @@ export function DashboardOverview() {
             id="period-select"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            className="px-4 py-2 border border-border-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
           >
             <option value="7">Last 7 days</option>
             <option value="30">Last 30 days</option>
@@ -167,8 +167,8 @@ export function DashboardOverview() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Chart */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold mb-4 text-ink-900">
             Revenue Trend
           </h3>
           <ResponsiveContainer width="100%" height={300}>
@@ -214,8 +214,8 @@ export function DashboardOverview() {
         </div>
 
         {/* Products by Category */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold mb-4 text-ink-900">
             Products by Category
           </h3>
           <ResponsiveContainer width="100%" height={300}>
@@ -246,9 +246,9 @@ export function DashboardOverview() {
       {/* Additional Metrics Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Average Order Value */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-ink-900">
               Avg Order Value
             </h3>
             <Clock className="text-gray-400" size={20} />
@@ -256,15 +256,15 @@ export function DashboardOverview() {
           <div className="text-3xl font-bold text-amber-600">
             ${metrics.orders.averageValue.toFixed(2)}
           </div>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-ink-500">
             Based on {metrics.orders.completed} completed orders
           </p>
         </div>
 
         {/* Customer Retention */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-ink-900">
               Customer Retention
             </h3>
             <Users className="text-gray-400" size={20} />
@@ -272,34 +272,34 @@ export function DashboardOverview() {
           <div className="text-3xl font-bold text-indigo-600">
             {metrics.customers.returningRate.toFixed(1)}%
           </div>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-ink-500">
             Customers who made repeat purchases
           </p>
         </div>
 
         {/* Product Status Summary */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-ink-900">
               Product Status
             </h3>
             <Package className="text-gray-400" size={20} />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Active</span>
+              <span className="text-sm text-ink-600">Active</span>
               <span className="text-sm font-semibold text-green-600">
                 {metrics.products.active}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Sold</span>
+              <span className="text-sm text-ink-600">Sold</span>
               <span className="text-sm font-semibold text-blue-600">
                 {metrics.products.sold}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Draft</span>
+              <span className="text-sm text-ink-600">Draft</span>
               <span className="text-sm font-semibold text-yellow-600">
                 {metrics.products.draft}
               </span>
@@ -309,44 +309,44 @@ export function DashboardOverview() {
       </div>
 
       {/* Top Products */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">
+      <div className="bg-surface-0 rounded-lg shadow overflow-hidden">
+        <div className="px-6 py-4 border-b border-border-200">
+          <h3 className="text-lg font-semibold text-ink-900">
             Top Performing Products
           </h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-surface-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Product
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Sales
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Revenue
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-surface-0 divide-y divide-gray-200">
               {metrics.topProducts.map((product, index) => (
-                <tr key={product.id} className="hover:bg-gray-50">
+                <tr key={product.id} className="hover:bg-surface-50">
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      <span className="text-sm font-medium text-gray-900 mr-2">
+                      <span className="text-sm font-medium text-ink-900 mr-2">
                         #{index + 1}
                       </span>
-                      <span className="text-sm text-gray-900">
+                      <span className="text-sm text-ink-900">
                         {product.title}
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td className="px-6 py-4 text-sm text-ink-500">
                     {product.sales} {product.sales === 1 ? "sale" : "sales"}
                   </td>
-                  <td className="px-6 py-4 text-sm font-semibold text-gray-900">
+                  <td className="px-6 py-4 text-sm font-semibold text-ink-900">
                     ${product.revenue.toFixed(2)}
                   </td>
                 </tr>
@@ -377,12 +377,12 @@ function MetricCard({
   trendLabel,
 }: MetricCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-surface-0 rounded-lg shadow p-6">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-gray-500">{title}</h3>
+        <h3 className="text-sm font-medium text-ink-500">{title}</h3>
         {icon}
       </div>
-      <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
+      <div className="text-3xl font-bold text-ink-900 mb-2">{value}</div>
       {trend !== undefined && (
         <div
           className={`flex items-center text-sm ${trend >= 0 ? "text-green-600" : "text-red-600"}`}
@@ -397,7 +397,7 @@ function MetricCard({
           </span>
         </div>
       )}
-      {subtitle && <p className="text-sm text-gray-500 mt-2">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-ink-500 mt-2">{subtitle}</p>}
     </div>
   );
 }

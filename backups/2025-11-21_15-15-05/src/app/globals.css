@@ -1,0 +1,321 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   KOLLECT-IT DESIGN TOKENS - Complete System
+   ============================================================================= */
+
+@layer base {
+  :root {
+    /* Ink - Text Colors (Full Scale) */
+    --ink-400: 0 0% 65%;    /* #A6A6A6 - Very light text */
+    --ink-500: 0 0% 55%;    /* #8C8C8C - Muted */
+    --ink-600: 0 0% 45%;    /* #737373 - Secondary */
+    --ink-700: 0 0% 35%;    /* #5A5A5A - Body secondary */
+    --ink-800: 0 0% 25%;    /* #404040 - Strong text */
+    --ink-900: 0 0% 12%;    /* #1E1E1E - Primary text */
+
+    /* Surface - Background Colors (Full Scale) */
+    --surface-0: 0 0% 100%;     /* #FFFFFF - Pure white cards */
+    --surface-50: 30 15% 98%;   /* #F9F8F6 - Lightest cream */
+    --surface-100: 30 20% 96%;  /* #F5F3F0 - Light cream */
+    --surface-200: 30 15% 94%;  /* #F0EDE9 - Elevated elements */
+    --surface-300: 30 10% 90%;  /* #E8E5E1 - Borders/dividers */
+    --surface-800: 0 0% 20%;    /* #333333 - Dark surface */
+    --surface-900: 0 0% 12%;    /* #1E1E1E - Darkest */
+
+    /* Gold - Brand Accent (Full Scale) */
+    --gold-300: 38 47% 72%;  /* #D4B882 - Light gold */
+    --gold-400: 38 47% 68%;  /* #CEAE70 - Medium light */
+    --gold-500: 38 47% 58%;  /* #C5A264 - Base gold */
+    --gold-600: 38 47% 48%;  /* #A58642 - Dark gold */
+    --gold-700: 38 47% 38%;  /* #856B35 - Extra dark */
+
+    /* CTA - Navy Blue (Full Scale) */
+    --cta-400: 212 52% 35%;  /* #2D4E79 - Light navy */
+    --cta-500: 212 52% 30%;  /* #24426C - Medium */
+    --cta-600: 212 52% 25%;  /* #1E3A5F - Primary CTA */
+    --cta-700: 212 52% 20%;  /* #1A3050 - Hover state */
+    --cta-800: 212 52% 15%;  /* #15263D - Active state */
+
+    /* Semantic Colors */
+    --semantic-error-500: 0 65% 55%;      /* #E53E3E */
+    --semantic-success-500: 142 76% 36%;  /* #38A169 */
+    --semantic-warning-500: 38 92% 50%;   /* #ED8936 */
+    --semantic-info-500: 212 28% 49%;     /* #5C7BA0 */
+
+    /* Border Colors */
+    --border-200: 36 12% 90%;  /* #E8E5E1 - Light border */
+    --border-300: 36 9% 86%;   /* #E0DDD9 - Default border */
+
+    /* Radius System */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius-md: 0.5rem;    /* 8px */
+    --radius-lg: 0.75rem;   /* 12px */
+    --radius-xl: 1rem;      /* 16px */
+    --radius-2xl: 1.5rem;   /* 24px */
+    --radius-full: 9999px;  /* Fully rounded */
+    --radius: var(--radius-md);
+
+    /* Spacing System */
+    --spacing-xs: 0.5rem;    /* 8px */
+    --spacing-sm: 1rem;      /* 16px */
+    --spacing-md: 1.5rem;    /* 24px */
+    --spacing-lg: 2rem;      /* 32px */
+    --spacing-xl: 3rem;      /* 48px */
+    --spacing-2xl: 4rem;     /* 64px */
+    --spacing-3xl: 5rem;     /* 80px */
+
+    /* Shadow System */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    /* shadcn/ui compatibility - maps to our tokens */
+    --background: var(--surface-50);
+    --foreground: var(--ink-900);
+    --card: var(--surface-0);
+    --card-foreground: var(--ink-900);
+    --popover: var(--surface-0);
+    --popover-foreground: var(--ink-900);
+    --primary: var(--cta-600);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--gold-500);
+    --secondary-foreground: var(--ink-900);
+    --muted: var(--surface-200);
+    --muted-foreground: var(--ink-600);
+    --accent: var(--gold-500);
+    --accent-foreground: var(--ink-900);
+    --destructive: var(--semantic-error-500);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--border-300);
+    --input: var(--border-300);
+    --ring: var(--cta-600);
+  }
+}
+
+/* ============================================
+   BASE STYLES - Improved & Refined
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: hsl(var(--ink-900));
+  background-color: hsl(var(--surface-50)); /* Lighter, cleaner background */
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ============================================
+   TYPOGRAPHY - More Elegant & Boutique
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
+  font-weight: 500;           /* Softer than 600 */
+  line-height: 1.25;
+  color: hsl(var(--ink-900));
+  letter-spacing: 0.02em;     /* Subtle elegance */
+  margin-bottom: 0.6em;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 3.25rem); /* 36px → 52px */
+  font-weight: 600; /* Keep h1 slightly bolder */
+}
+
+h2 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem); /* 30px → 42px */
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem); /* 24px → 32px */
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* 20px → 24px */
+}
+
+h5 {
+  font-size: clamp(1.1rem, 2vw, 1.25rem); /* 18px → 20px */
+}
+
+h6 {
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+}
+
+/* ============================================
+   CONTAINER - Narrower for Curated Feel
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: 1200px;          /* Was 1280px - more gallery/catalog feel */
+  margin: 0 auto;
+  padding: 0 1.25rem;         /* Was 1rem */
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2.5rem;
+  }
+}
+
+/* ============================================
+   FOCUS STATES - Accessible & Consistent
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid hsl(var(--cta-600));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================
+   LINKS - Subtle & Professional
+   ============================================ */
+
+a {
+  color: hsl(var(--cta-600));
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: hsl(var(--gold-600));
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR (Optional - can remove)
+   ============================================ */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--ink-400)) hsl(var(--surface-100));
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--surface-100));
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--ink-400));
+  border-radius: var(--radius-full);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--ink-600));
+}
+
+/* ============================================
+   ANIMATIONS - Smooth & Professional
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 200px 100%;
+}

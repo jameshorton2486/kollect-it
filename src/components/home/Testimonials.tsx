@@ -52,7 +52,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              className="bg-surface-0 rounded-lg p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
             >
               {/* Quote */}
               <p className="font-serif text-lg text-ink mb-6 leading-relaxed flex-grow">
@@ -72,7 +72,7 @@ export default function Testimonials() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-14 text-center bg-white rounded-lg p-10 border-2 border-gold/20">
+        <div className="mt-14 text-center bg-surface-0 rounded-lg p-10 border-2 border-gold/20">
           <h3 className="font-serif text-3xl text-ink mb-3">
             Join Our Collector Community
           </h3>

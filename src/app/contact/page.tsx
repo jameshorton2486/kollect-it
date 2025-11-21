@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="bg-white" role="main">
+    <main className="bg-surface-0" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -211,7 +211,7 @@ export default function ContactPage() {
               Send Us a Message
             </h2>
 
-            <div className="bg-white p-8 md:p-12 rounded-lg">
+            <div className="bg-surface-0 p-8 md:p-12 rounded-lg">
               <ContactForm />
             </div>
           </div>

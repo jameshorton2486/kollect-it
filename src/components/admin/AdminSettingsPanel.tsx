@@ -211,7 +211,7 @@ export function AdminSettingsPanel() {
       )}
 
       {/* Tabs */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-border-200">
         <nav className="flex space-x-8">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -222,7 +222,7 @@ export function AdminSettingsPanel() {
                 className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? "border-blue-500 text-blue-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -235,14 +235,14 @@ export function AdminSettingsPanel() {
 
       {/* Store Settings Tab */}
       {activeTab === "store" && (
-        <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+        <div className="bg-surface-0 rounded-lg shadow-md p-6 space-y-6">
           <div>
             <h3 className="text-lg font-semibold mb-4">Store Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
                   htmlFor="store-name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Store Name
                 </label>
@@ -256,13 +256,13 @@ export function AdminSettingsPanel() {
                       storeName: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
                 <label
                   htmlFor="store-email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Store Email
                 </label>
@@ -276,13 +276,13 @@ export function AdminSettingsPanel() {
                       storeEmail: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
                 <label
                   htmlFor="store-phone"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Phone Number
                 </label>
@@ -296,13 +296,13 @@ export function AdminSettingsPanel() {
                       storePhone: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
                 <label
                   htmlFor="store-address"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Address
                 </label>
@@ -316,7 +316,7 @@ export function AdminSettingsPanel() {
                       storeAddress: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -328,7 +328,7 @@ export function AdminSettingsPanel() {
               <div>
                 <label
                   htmlFor="currency"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Currency
                 </label>
@@ -341,7 +341,7 @@ export function AdminSettingsPanel() {
                       currency: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="USD">USD - US Dollar</option>
                   <option value="EUR">EUR - Euro</option>
@@ -352,7 +352,7 @@ export function AdminSettingsPanel() {
               <div>
                 <label
                   htmlFor="timezone"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Timezone
                 </label>
@@ -365,7 +365,7 @@ export function AdminSettingsPanel() {
                       timezone: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="America/New_York">Eastern Time</option>
                   <option value="America/Chicago">Central Time</option>
@@ -376,7 +376,7 @@ export function AdminSettingsPanel() {
               <div>
                 <label
                   htmlFor="language"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Language
                 </label>
@@ -389,7 +389,7 @@ export function AdminSettingsPanel() {
                       language: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="en">English</option>
                   <option value="es">Spanish</option>
@@ -404,7 +404,7 @@ export function AdminSettingsPanel() {
 
       {/* Payment Settings Tab */}
       {activeTab === "payment" && (
-        <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+        <div className="bg-surface-0 rounded-lg shadow-md p-6 space-y-6">
           <div>
             <h3 className="text-lg font-semibold mb-4">Stripe Configuration</h3>
             <div className="space-y-4">
@@ -419,11 +419,11 @@ export function AdminSettingsPanel() {
                       stripeEnabled: e.target.checked,
                     })
                   }
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-border-300 rounded focus:ring-blue-500"
                 />
                 <label
                   htmlFor="stripe-enabled"
-                  className="ml-2 text-sm font-medium text-gray-700"
+                  className="ml-2 text-sm font-medium text-ink-700"
                 >
                   Enable Stripe Payments
                 </label>
@@ -431,7 +431,7 @@ export function AdminSettingsPanel() {
               <div>
                 <label
                   htmlFor="stripe-publishable"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Publishable Key
                 </label>
@@ -445,14 +445,14 @@ export function AdminSettingsPanel() {
                       stripePublishableKey: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="pk_live_..."
                 />
               </div>
               <div>
                 <label
                   htmlFor="stripe-secret"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Secret Key
                 </label>
@@ -466,7 +466,7 @@ export function AdminSettingsPanel() {
                       stripeSecretKey: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="sk_live_..."
                 />
               </div>
@@ -487,11 +487,11 @@ export function AdminSettingsPanel() {
                       paypalEnabled: e.target.checked,
                     })
                   }
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-border-300 rounded focus:ring-blue-500"
                 />
                 <label
                   htmlFor="paypal-enabled"
-                  className="ml-2 text-sm font-medium text-gray-700"
+                  className="ml-2 text-sm font-medium text-ink-700"
                 >
                   Enable PayPal Payments
                 </label>
@@ -499,7 +499,7 @@ export function AdminSettingsPanel() {
               <div>
                 <label
                   htmlFor="paypal-client"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Client ID
                 </label>
@@ -513,7 +513,7 @@ export function AdminSettingsPanel() {
                       paypalClientId: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="AYxxxxxxxxxxxxxxxxxxxxxxxx"
                 />
               </div>
@@ -531,7 +531,7 @@ export function AdminSettingsPanel() {
                   testMode: e.target.checked,
                 })
               }
-              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              className="w-4 h-4 text-blue-600 border-border-300 rounded focus:ring-blue-500"
             />
             <label
               htmlFor="test-mode"
@@ -545,7 +545,7 @@ export function AdminSettingsPanel() {
 
       {/* Shipping Zones Tab */}
       {activeTab === "shipping" && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-surface-0 rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">Shipping Zones</h3>
             <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
@@ -557,12 +557,12 @@ export function AdminSettingsPanel() {
             {shippingZones.map((zone) => (
               <div
                 key={zone.id}
-                className="border border-gray-200 rounded-lg p-4"
+                className="border border-border-200 rounded-lg p-4"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h4 className="font-medium text-gray-900">{zone.name}</h4>
-                    <p className="text-sm text-gray-500">
+                    <h4 className="font-medium text-ink-900">{zone.name}</h4>
+                    <p className="text-sm text-ink-500">
                       Countries: {zone.countries.join(", ")}
                     </p>
                   </div>
@@ -577,13 +577,13 @@ export function AdminSettingsPanel() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-600">
+                    <label className="block text-sm text-ink-600">
                       Flat Rate
                     </label>
                     <p className="font-medium">${zone.flatRate}</p>
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-600">
+                    <label className="block text-sm text-ink-600">
                       Free Shipping Over
                     </label>
                     <p className="font-medium">${zone.freeShippingThreshold}</p>
@@ -597,7 +597,7 @@ export function AdminSettingsPanel() {
 
       {/* Tax Rates Tab */}
       {activeTab === "tax" && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-surface-0 rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">Tax Rates</h3>
             <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
@@ -607,32 +607,32 @@ export function AdminSettingsPanel() {
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-surface-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Region
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Tax Rate
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Apply to Shipping
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-500 uppercase">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-surface-0 divide-y divide-gray-200">
                 {taxRates.map((rate) => (
                   <tr key={rate.id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
                       {rate.region}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
                       {rate.rate}%
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
                       {rate.applyToShipping ? "Yes" : "No"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -653,7 +653,7 @@ export function AdminSettingsPanel() {
 
       {/* Categories Tab */}
       {activeTab === "categories" && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-surface-0 rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">Product Categories</h3>
             <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
@@ -663,35 +663,35 @@ export function AdminSettingsPanel() {
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-surface-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Slug
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Description
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-500 uppercase">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-surface-0 divide-y divide-gray-200">
                 {categories.map((category) => (
                   <tr key={category.id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
                       {category.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
                       {category.slug}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-ink-500">
                       {category.description}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -699,7 +699,7 @@ export function AdminSettingsPanel() {
                         className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                           category.active
                             ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
+                            : "bg-surface-100 text-ink-800"
                         }`}
                       >
                         {category.active ? "Active" : "Inactive"}

@@ -324,7 +324,7 @@ export function ProductUploadForm() {
             {skuError && (
               <p className="text-sm text-red-400 mt-1">{skuError}</p>
             )}
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-ink-500 mt-1">
               Format: SKU-YYYY-XXX (e.g., SKU-2025-001)
             </p>
           </div>
@@ -350,7 +350,7 @@ export function ProductUploadForm() {
           <div>
             <label className="block text-sm font-medium mb-2">
               Product Notes (Optional)
-              <span className="text-gray-500 text-xs ml-2">
+              <span className="text-ink-500 text-xs ml-2">
                 Helps AI generate better descriptions
               </span>
             </label>
@@ -408,7 +408,7 @@ TARGET_PRICE: $1,750`}
                 Add
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-ink-500 mt-1">
               Press Enter or click Add to add multiple URLs
             </p>
             {appraisalUrls.length > 0 && (
@@ -581,7 +581,7 @@ TARGET_PRICE: $1,750`}
                 maxLength={60}
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-ink-500 mt-1">
                 {formData.seoTitle.length}/60 characters
               </p>
             </div>
@@ -595,7 +595,7 @@ TARGET_PRICE: $1,750`}
                 rows={3}
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-ink-500 mt-1">
                 {formData.seoDescription.length}/155 characters
               </p>
             </div>
@@ -634,7 +634,7 @@ TARGET_PRICE: $1,750`}
           <p className="text-gray-400 mb-6">
             Product {sku} has been created as a draft. Review it in the admin dashboard.
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-ink-500">
             Redirecting to new product form...
           </p>
         </div>

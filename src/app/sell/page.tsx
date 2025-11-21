@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function SellPage() {
   return (
-    <main className="bg-white" role="main">
+    <main className="bg-surface-0" role="main">
       {/* HERO SECTION */}
       <section className="py-20 md:py-32 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -194,7 +194,7 @@ export default function SellPage() {
             </p>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="commission-tier bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="commission-tier bg-surface-0 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div className="mb-6">
                   <h3 className="font-serif text-2xl text-ink mb-2">
                     Standard Items
@@ -243,7 +243,7 @@ export default function SellPage() {
                 </ul>
               </div>
 
-              <div className="commission-tier bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="commission-tier bg-surface-0 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div className="mb-6">
                   <h3 className="font-serif text-2xl text-ink mb-2">
                     Luxury Items
@@ -365,7 +365,7 @@ export default function SellPage() {
             </h2>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="testimonial bg-white p-8 rounded-lg">
+              <div className="testimonial bg-surface-0 p-8 rounded-lg">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
                     JM
@@ -384,7 +384,7 @@ export default function SellPage() {
                 </p>
               </div>
 
-              <div className="testimonial bg-white p-8 rounded-lg">
+              <div className="testimonial bg-surface-0 p-8 rounded-lg">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
                     SA
@@ -403,7 +403,7 @@ export default function SellPage() {
                 </p>
               </div>
 
-              <div className="testimonial bg-white p-8 rounded-lg">
+              <div className="testimonial bg-surface-0 p-8 rounded-lg">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3">
                     RS

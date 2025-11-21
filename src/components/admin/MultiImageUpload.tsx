@@ -183,7 +183,7 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
         <p className="text-sm text-gray-400">
           Or drag and drop multiple images here
         </p>
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs text-ink-500 mt-2">
           JPG, PNG, WebP up to 10MB each • Max {maxImages} images
         </p>
       </div>

@@ -67,7 +67,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
         }}
       >
         <div
-          className="group relative overflow-hidden rounded-lg border border-ink-tertiary/10 bg-white aspect-square flex items-center justify-center"
+          className="group relative overflow-hidden rounded-lg border border-ink-tertiary/10 bg-surface-0 aspect-square flex items-center justify-center"
           onMouseEnter={() => setIsHoverZoom(true)}
           onMouseLeave={() => setIsHoverZoom(false)}
           title={isHoverZoom ? "Zoom enabled - Hover to zoom" : "Hover to zoom"}
@@ -87,7 +87,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           />
 
           {/* Authentication Watermark Badge on Image */}
-          <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-sm px-3 py-1.5 shadow-md border border-white/50">
+          <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-surface-0/95 backdrop-blur-sm px-3 py-1.5 shadow-md border border-white/50">
             <svg
               width="14"
               height="14"
@@ -105,7 +105,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
 
           {/* Hover Zoom Indicator */}
           {!isHoverZoom && (
-            <div className="absolute bottom-4 left-4 flex items-center gap-1.5 text-xs text-ink-secondary bg-white/90 backdrop-blur-sm rounded px-2.5 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="absolute bottom-4 left-4 flex items-center gap-1.5 text-xs text-ink-secondary bg-surface-0/90 backdrop-blur-sm rounded px-2.5 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
               <svg
                 width="14"
                 height="14"
@@ -136,7 +136,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                 onClick={() =>
                   setSelectedIndex((i) => (i > 0 ? i - 1 : images.length - 1))
                 }
-                className="rounded-full bg-white/90 backdrop-blur-sm p-2 shadow-md hover:bg-white transition-colors"
+                className="rounded-full bg-surface-0/90 backdrop-blur-sm p-2 shadow-md hover:bg-surface-0 transition-colors"
                 aria-label="Previous image"
                 title="Previous image"
               >
@@ -156,7 +156,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                 onClick={() =>
                   setSelectedIndex((i) => (i < images.length - 1 ? i + 1 : 0))
                 }
-                className="rounded-full bg-white/90 backdrop-blur-sm p-2 shadow-md hover:bg-white transition-colors"
+                className="rounded-full bg-surface-0/90 backdrop-blur-sm p-2 shadow-md hover:bg-surface-0 transition-colors"
                 aria-label="Next image"
                 title="Next image"
               >

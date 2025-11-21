@@ -315,7 +315,7 @@ const faqCategories = [
 
 export default function FAQPage() {
   return (
-    <main className="bg-white" role="main">
+    <main className="bg-surface-0" role="main">
       {/* HERO SECTION */}
       <section className="py-20 md:py-28 bg-surface-1">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
@@ -397,7 +397,7 @@ export default function FAQPage() {
               </Link>
               <Link
                 href="/sell"
-                className="inline-block bg-white text-gold font-semibold px-8 py-4 rounded-lg border-2 border-gold hover:bg-gold hover:text-white transition-colors"
+                className="inline-block bg-surface-0 text-gold font-semibold px-8 py-4 rounded-lg border-2 border-gold hover:bg-gold hover:text-white transition-colors"
               >
                 Sell With Us
               </Link>

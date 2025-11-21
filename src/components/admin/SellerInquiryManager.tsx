@@ -150,9 +150,9 @@ export function SellerInquiryManager() {
       reviewing: "bg-blue-100 text-blue-800",
       approved: "bg-green-100 text-green-800",
       rejected: "bg-red-100 text-red-800",
-      completed: "bg-gray-100 text-gray-800",
+      completed: "bg-surface-100 text-ink-800",
     };
-    return colors[status as keyof typeof colors] || "bg-gray-100 text-gray-800";
+    return colors[status as keyof typeof colors] || "bg-surface-100 text-ink-800";
   };
 
   const getStatusIcon = (status: string) => {
@@ -177,8 +177,8 @@ export function SellerInquiryManager() {
   return (
     <div className="space-y-6">
       {/* Header & Filters */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <div className="bg-surface-0 rounded-lg shadow p-6">
+        <h2 className="text-2xl font-bold text-ink-900 mb-6">
           Seller Inquiries & Consignments
         </h2>
 
@@ -191,7 +191,7 @@ export function SellerInquiryManager() {
               placeholder="Search sellers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
             />
           </div>
 
@@ -205,7 +205,7 @@ export function SellerInquiryManager() {
               id="status-filter"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="pending">Pending</option>
@@ -225,7 +225,7 @@ export function SellerInquiryManager() {
               id="type-filter"
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
             >
               <option value="all">All Types</option>
               <option value="consignment">Consignment</option>
@@ -237,7 +237,7 @@ export function SellerInquiryManager() {
 
           {/* Stats */}
           <div className="flex items-center justify-center bg-amber-50 rounded-lg px-4 py-2">
-            <span className="text-sm text-gray-600">Total: </span>
+            <span className="text-sm text-ink-600">Total: </span>
             <span className="ml-2 text-xl font-bold text-amber-600">
               {filteredInquiries.length}
             </span>
@@ -253,7 +253,7 @@ export function SellerInquiryManager() {
             <div
               key={inquiry.id}
               onClick={() => setSelectedInquiry(inquiry)}
-              className={`bg-white rounded-lg shadow p-4 cursor-pointer transition-all hover:shadow-md ${
+              className={`bg-surface-0 rounded-lg shadow p-4 cursor-pointer transition-all hover:shadow-md ${
                 selectedInquiry?.id === inquiry.id
                   ? "ring-2 ring-amber-500"
                   : ""
@@ -261,10 +261,10 @@ export function SellerInquiryManager() {
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-gray-900">
+                  <h3 className="font-semibold text-ink-900">
                     {inquiry.sellerName}
                   </h3>
-                  <p className="text-sm text-gray-500">{inquiry.email}</p>
+                  <p className="text-sm text-ink-500">{inquiry.email}</p>
                 </div>
                 <span
                   className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(inquiry.status)}`}
@@ -275,24 +275,24 @@ export function SellerInquiryManager() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-ink-600">
                   <Package className="w-4 h-4" />
                   <span className="capitalize">
                     {inquiry.inquiryType.replace("-", " ")}
                   </span>
                 </div>
-                <p className="text-sm text-gray-700 line-clamp-2">
+                <p className="text-sm text-ink-700 line-clamp-2">
                   {inquiry.itemDescription}
                 </p>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">{inquiry.category}</span>
+                  <span className="text-ink-500">{inquiry.category}</span>
                   <span className="font-semibold text-amber-600">
                     ${inquiry.estimatedValue.toLocaleString()}
                   </span>
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t flex items-center justify-between text-xs text-gray-500">
+              <div className="mt-3 pt-3 border-t flex items-center justify-between text-xs text-ink-500">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   {new Date(inquiry.submittedAt).toLocaleDateString()}
@@ -303,7 +303,7 @@ export function SellerInquiryManager() {
           ))}
 
           {filteredInquiries.length === 0 && (
-            <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+            <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-500">
               No inquiries found matching your filters
             </div>
           )}
@@ -311,9 +311,9 @@ export function SellerInquiryManager() {
 
         {/* Inquiry Details Panel */}
         {selectedInquiry ? (
-          <div className="bg-white rounded-lg shadow p-6 space-y-6 lg:sticky lg:top-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+          <div className="bg-surface-0 rounded-lg shadow p-6 space-y-6 lg:sticky lg:top-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-xl font-bold text-ink-900 mb-4">
                 Inquiry Details
               </h3>
 
@@ -322,21 +322,21 @@ export function SellerInquiryManager() {
                 <div className="flex items-center gap-3">
                   <User className="w-5 h-5 text-gray-400" />
                   <div>
-                    <p className="text-sm text-gray-500">Seller Name</p>
+                    <p className="text-sm text-ink-500">Seller Name</p>
                     <p className="font-medium">{selectedInquiry.sellerName}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-gray-400" />
                   <div>
-                    <p className="text-sm text-gray-500">Email</p>
+                    <p className="text-sm text-ink-500">Email</p>
                     <p className="font-medium">{selectedInquiry.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-gray-400" />
                   <div>
-                    <p className="text-sm text-gray-500">Phone</p>
+                    <p className="text-sm text-ink-500">Phone</p>
                     <p className="font-medium">{selectedInquiry.phone}</p>
                   </div>
                 </div>
@@ -344,32 +344,32 @@ export function SellerInquiryManager() {
 
               {/* Item Details */}
               <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-ink-900 mb-3">
                   Item Information
                 </h4>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Type:</span>
+                    <span className="text-ink-600">Type:</span>
                     <span className="font-medium capitalize">
                       {selectedInquiry.inquiryType.replace("-", " ")}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Category:</span>
+                    <span className="text-ink-600">Category:</span>
                     <span className="font-medium">
                       {selectedInquiry.category}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Estimated Value:</span>
+                    <span className="text-ink-600">Estimated Value:</span>
                     <span className="font-semibold text-amber-600">
                       ${selectedInquiry.estimatedValue.toLocaleString()}
                     </span>
                   </div>
                 </div>
                 <div className="mt-3">
-                  <p className="text-sm text-gray-600 mb-1">Description:</p>
-                  <p className="text-gray-900">
+                  <p className="text-sm text-ink-600 mb-1">Description:</p>
+                  <p className="text-ink-900">
                     {selectedInquiry.itemDescription}
                   </p>
                 </div>
@@ -377,7 +377,7 @@ export function SellerInquiryManager() {
 
               {/* Status Actions */}
               <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-ink-900 mb-3">
                   Update Status
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -418,25 +418,25 @@ export function SellerInquiryManager() {
 
               {/* Email Actions */}
               <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">Send Email</h4>
+                <h4 className="font-semibold text-ink-900 mb-3">Send Email</h4>
                 <div className="space-y-2">
                   <button
                     onClick={() =>
                       sendEmail(selectedInquiry.id, "acknowledgment")
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
+                    className="w-full px-4 py-2 border border-border-300 rounded-lg hover:bg-surface-50 text-sm"
                   >
                     Send Acknowledgment
                   </button>
                   <button
                     onClick={() => sendEmail(selectedInquiry.id, "approval")}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
+                    className="w-full px-4 py-2 border border-border-300 rounded-lg hover:bg-surface-50 text-sm"
                   >
                     Send Approval Email
                   </button>
                   <button
                     onClick={() => sendEmail(selectedInquiry.id, "rejection")}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
+                    className="w-full px-4 py-2 border border-border-300 rounded-lg hover:bg-surface-50 text-sm"
                   >
                     Send Rejection Email
                   </button>
@@ -445,17 +445,17 @@ export function SellerInquiryManager() {
 
               {/* Admin Notes */}
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-ink-900 mb-3">
                   Admin Notes
                 </h4>
                 <div className="space-y-2 mb-3 max-h-40 overflow-y-auto">
                   {selectedInquiry.adminNotes.map((note, index) => (
-                    <div key={index} className="bg-gray-50 rounded p-2 text-sm">
+                    <div key={index} className="bg-surface-50 rounded p-2 text-sm">
                       {note}
                     </div>
                   ))}
                   {selectedInquiry.adminNotes.length === 0 && (
-                    <p className="text-sm text-gray-500 italic">No notes yet</p>
+                    <p className="text-sm text-ink-500 italic">No notes yet</p>
                   )}
                 </div>
                 <div className="flex gap-2">
@@ -464,7 +464,7 @@ export function SellerInquiryManager() {
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
                     placeholder="Add a note..."
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   />
                   <button
                     onClick={addAdminNote}
@@ -477,7 +477,7 @@ export function SellerInquiryManager() {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500 lg:sticky lg:top-4">
+          <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-500 lg:sticky lg:top-4">
             Select an inquiry to view details
           </div>
         )}

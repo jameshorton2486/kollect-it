@@ -74,13 +74,13 @@ export default function HeroBanner({ banners }: HeroBannerProps) {
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/80 rounded-full hover:bg-white transition-colors"
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-surface-0/80 rounded-full hover:bg-surface-0 transition-colors"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/80 rounded-full hover:bg-white transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-surface-0/80 rounded-full hover:bg-surface-0 transition-colors"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
@@ -92,7 +92,7 @@ export default function HeroBanner({ banners }: HeroBannerProps) {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentIndex ? "bg-white" : "bg-white/50"
+                  index === currentIndex ? "bg-surface-0" : "bg-surface-0/50"
                 }`}
               />
             ))}

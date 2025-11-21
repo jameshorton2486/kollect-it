@@ -123,7 +123,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
       case "cancelled":
         return <XCircle className="text-red-600" size={20} />;
       default:
-        return <Clock className="text-gray-600" size={20} />;
+        return <Clock className="text-ink-600" size={20} />;
     }
   };
 
@@ -136,36 +136,36 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
       />
 
       {/* Panel */}
-      <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl overflow-y-auto">
+      <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-surface-0 shadow-2xl overflow-y-auto">
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 border-b pb-4">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-ink-900">
                 Order {order.orderNumber}
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-ink-500 mt-1">
                 {new Date(order.createdAt).toLocaleString()}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 text-3xl leading-none"
+              className="text-gray-400 hover:text-ink-600 text-3xl leading-none"
             >
               ×
             </button>
           </div>
 
           {/* Status Update Section */}
-          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+          <div className="mb-6 p-4 bg-surface-50 rounded-lg">
+            <h3 className="text-lg font-semibold text-ink-900 mb-3">
               Update Order Status
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
                   htmlFor="status-select"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   New Status
                 </label>
@@ -173,7 +173,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   id="status-select"
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
                 >
                   <option value="pending">Pending</option>
                   <option value="processing">Processing</option>
@@ -185,7 +185,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
               <div>
                 <label
                   htmlFor="internal-note"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-ink-700 mb-2"
                 >
                   Internal Note (Optional)
                 </label>
@@ -195,7 +195,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   value={internalNote}
                   onChange={(e) => setInternalNote(e.target.value)}
                   placeholder="Add a note..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </div>
             </div>
@@ -210,25 +210,25 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Customer Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-ink-900 mb-3">
               Customer Information
             </h3>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Mail className="text-gray-400" size={18} />
-                <span className="text-gray-700">
+                <span className="text-ink-700">
                   {order.customerEmail || "No email"}
                 </span>
               </div>
               {order.customerPhone && (
                 <div className="flex items-center gap-2">
                   <Phone className="text-gray-400" size={18} />
-                  <span className="text-gray-700">{order.customerPhone}</span>
+                  <span className="text-ink-700">{order.customerPhone}</span>
                 </div>
               )}
               <div className="flex items-start gap-2 mt-3">
                 <MapPin className="text-gray-400 mt-1" size={18} />
-                <div className="text-gray-700">
+                <div className="text-ink-700">
                   <p>{order.shippingAddress.street}</p>
                   <p>
                     {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
@@ -242,40 +242,40 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Order Items */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-ink-900 mb-3">
               Order Items
             </h3>
             <div className="border rounded-lg overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-surface-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-ink-500 uppercase">
                       Product
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-center text-xs font-medium text-ink-500 uppercase">
                       Qty
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-500 uppercase">
                       Price
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-500 uppercase">
                       Total
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-surface-0 divide-y divide-gray-200">
                   {order.items.map((item) => (
                     <tr key={item.id}>
-                      <td className="px-4 py-3 text-sm text-gray-900">
+                      <td className="px-4 py-3 text-sm text-ink-900">
                         {item.title}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 text-center">
+                      <td className="px-4 py-3 text-sm text-ink-700 text-center">
                         {item.quantity}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 text-right">
+                      <td className="px-4 py-3 text-sm text-ink-700 text-right">
                         ${item.price.toFixed(2)}
                       </td>
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900 text-right">
+                      <td className="px-4 py-3 text-sm font-medium text-ink-900 text-right">
                         ${(item.price * item.quantity).toFixed(2)}
                       </td>
                     </tr>
@@ -287,17 +287,17 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
             {/* Order Totals */}
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Subtotal:</span>
+                <span className="text-ink-600">Subtotal:</span>
                 <span className="font-medium">
                   ${order.subtotal.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Tax:</span>
+                <span className="text-ink-600">Tax:</span>
                 <span className="font-medium">${order.tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Shipping:</span>
+                <span className="text-ink-600">Shipping:</span>
                 <span className="font-medium">
                   ${order.shipping.toFixed(2)}
                 </span>
@@ -311,13 +311,13 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Payment Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-ink-900 mb-3">
               Payment Information
             </h3>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <CreditCard className="text-gray-400" size={18} />
-                <span className="text-gray-700 capitalize">
+                <span className="text-ink-700 capitalize">
                   {order.paymentMethod}
                 </span>
               </div>
@@ -337,7 +337,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Order Timeline */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-ink-900 mb-3">
               Order Timeline
             </h3>
             <div className="space-y-4">
@@ -346,23 +346,23 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   <div className="flex flex-col items-center">
                     {getStatusIcon(event.status)}
                     {index < order.timeline.length - 1 && (
-                      <div className="w-0.5 h-full bg-gray-200 mt-2" />
+                      <div className="w-0.5 h-full bg-surface-200 mt-2" />
                     )}
                   </div>
                   <div className="flex-1 pb-4">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-gray-900 capitalize">
+                      <span className="font-medium text-ink-900 capitalize">
                         {event.status}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-ink-500">
                         {new Date(event.timestamp).toLocaleString()}
                       </span>
                     </div>
                     {event.note && (
-                      <p className="text-sm text-gray-600 mt-1">{event.note}</p>
+                      <p className="text-sm text-ink-600 mt-1">{event.note}</p>
                     )}
                     {event.user && (
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-ink-500 mt-1">
                         By {event.user}
                       </p>
                     )}
@@ -374,7 +374,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Email Actions */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-ink-900 mb-3">
               Send Email
             </h3>
             <div className="flex gap-3">
@@ -402,11 +402,11 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
           {/* Internal Notes */}
           {order.notes && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              <h3 className="text-lg font-semibold text-ink-900 mb-3">
                 Internal Notes
               </h3>
               <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-sm text-gray-700">{order.notes}</p>
+                <p className="text-sm text-ink-700">{order.notes}</p>
               </div>
             </div>
           )}

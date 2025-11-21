@@ -107,7 +107,7 @@ export function TrafficAnalyticsDashboard() {
 
   if (!metrics) {
     return (
-      <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+      <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-500">
         Failed to load traffic analytics
       </div>
     );
@@ -118,10 +118,10 @@ export function TrafficAnalyticsDashboard() {
       {/* Header with Period Selector */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-ink-900">
             Traffic & Analytics
           </h2>
-          <p className="text-gray-500 mt-1">
+          <p className="text-ink-500 mt-1">
             Real-time visitor metrics and traffic sources
           </p>
         </div>
@@ -133,7 +133,7 @@ export function TrafficAnalyticsDashboard() {
             id="traffic-period-select"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+            className="px-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
           >
             <option value="1">Last 24 hours</option>
             <option value="7">Last 7 days</option>
@@ -148,7 +148,7 @@ export function TrafficAnalyticsDashboard() {
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold">Real-Time Activity</h3>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-surface-0 rounded-full animate-pulse"></div>
             <span className="text-sm">Live</span>
           </div>
         </div>
@@ -175,62 +175,62 @@ export function TrafficAnalyticsDashboard() {
 
       {/* Overview Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-2">
             <Users className="text-blue-600" size={24} />
             <TrendingUp className="text-green-600" size={16} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.totalVisitors.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 mt-1">Total Visitors</div>
+          <div className="text-sm text-ink-500 mt-1">Total Visitors</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-2">
             <Eye className="text-purple-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.pageViews.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 mt-1">Page Views</div>
+          <div className="text-sm text-ink-500 mt-1">Page Views</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-2">
             <MousePointerClick className="text-amber-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.bounceRate}%
           </div>
-          <div className="text-sm text-gray-500 mt-1">Bounce Rate</div>
+          <div className="text-sm text-ink-500 mt-1">Bounce Rate</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-2">
             <Clock className="text-indigo-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-ink-900">
             {Math.floor(metrics.overview.avgSessionDuration / 60)}m{" "}
             {metrics.overview.avgSessionDuration % 60}s
           </div>
-          <div className="text-sm text-gray-500 mt-1">Avg. Session</div>
+          <div className="text-sm text-ink-500 mt-1">Avg. Session</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-2">
             <Target className="text-green-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.conversionRate}%
           </div>
-          <div className="text-sm text-gray-500 mt-1">Conversion Rate</div>
+          <div className="text-sm text-ink-500 mt-1">Conversion Rate</div>
         </div>
       </div>
 
       {/* Traffic Trend Chart */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="bg-surface-0 rounded-lg shadow p-6">
+        <h3 className="text-xl font-semibold text-ink-900 mb-4">
           Traffic Trend
         </h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -272,10 +272,10 @@ export function TrafficAnalyticsDashboard() {
       {/* Traffic Sources & Devices */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Traffic Sources */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center gap-2 mb-4">
             <Globe className="text-amber-600" size={24} />
-            <h3 className="text-xl font-semibold text-gray-900">
+            <h3 className="text-xl font-semibold text-ink-900">
               Traffic Sources
             </h3>
           </div>
@@ -317,9 +317,9 @@ export function TrafficAnalyticsDashboard() {
                       } as React.CSSProperties
                     }
                   />
-                  <span className="text-gray-700">{source.source}</span>
+                  <span className="text-ink-700">{source.source}</span>
                 </div>
-                <span className="font-medium text-gray-900">
+                <span className="font-medium text-ink-900">
                   {source.visitors.toLocaleString()}
                 </span>
               </div>
@@ -328,10 +328,10 @@ export function TrafficAnalyticsDashboard() {
         </div>
 
         {/* Device Breakdown */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center gap-2 mb-4">
             <Smartphone className="text-amber-600" size={24} />
-            <h3 className="text-xl font-semibold text-gray-900">
+            <h3 className="text-xl font-semibold text-ink-900">
               Device Breakdown
             </h3>
           </div>
@@ -359,10 +359,10 @@ export function TrafficAnalyticsDashboard() {
                 {device.device === "Tablet" && (
                   <BarChart3 className="mx-auto text-gray-400 mb-1" size={24} />
                 )}
-                <div className="text-lg font-bold text-gray-900">
+                <div className="text-lg font-bold text-ink-900">
                   {device.percentage}%
                 </div>
-                <div className="text-xs text-gray-500">{device.device}</div>
+                <div className="text-xs text-ink-500">{device.device}</div>
               </div>
             ))}
           </div>
@@ -370,41 +370,41 @@ export function TrafficAnalyticsDashboard() {
       </div>
 
       {/* Top Pages */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="bg-surface-0 rounded-lg shadow p-6">
+        <h3 className="text-xl font-semibold text-ink-900 mb-4">
           Top Performing Pages
         </h3>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-surface-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Page
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Views
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Avg. Time
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                   Bounce Rate
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-surface-0 divide-y divide-gray-200">
               {metrics.topPages.map((page, index) => (
                 <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
                     {page.page}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
                     {page.views.toLocaleString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                     {Math.floor(page.avgTime / 60)}m {page.avgTime % 60}s
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                     {page.bounceRate}%
                   </td>
                 </tr>
@@ -415,8 +415,8 @@ export function TrafficAnalyticsDashboard() {
       </div>
 
       {/* Conversion Funnel */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="bg-surface-0 rounded-lg shadow p-6">
+        <h3 className="text-xl font-semibold text-ink-900 mb-4">
           Conversion Funnel
         </h3>
         <div className="space-y-4">
@@ -431,9 +431,9 @@ export function TrafficAnalyticsDashboard() {
             return (
               <div key={step.step}>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="font-medium text-gray-700">{step.step}</span>
+                  <span className="font-medium text-ink-700">{step.step}</span>
                   <div className="flex gap-4">
-                    <span className="text-gray-900">
+                    <span className="text-ink-900">
                       {step.users.toLocaleString()} users ({percentage}%)
                     </span>
                     {step.dropOff > 0 && (
@@ -443,7 +443,7 @@ export function TrafficAnalyticsDashboard() {
                     )}
                   </div>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
+                <div className="w-full bg-surface-200 rounded-full h-4">
                   <div
                     className="bg-gradient-to-r from-amber-500 to-amber-600 h-4 rounded-full flex items-center justify-end pr-2"
                     // eslint-disable-next-line @next/next/no-inline-styles

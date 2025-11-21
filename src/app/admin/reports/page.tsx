@@ -122,22 +122,22 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-surface-0 border-b border-border-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-ink-900">
                 Sales Reports
               </h1>
-              <p className="mt-2 text-gray-600">
+              <p className="mt-2 text-ink-600">
                 Generate and schedule automated reports
               </p>
             </div>
             <Link
               href="/admin/dashboard"
-              className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700"
+              className="px-4 py-2 border border-border-300 rounded-md hover:bg-surface-50 text-ink-700"
             >
               ← Back to Dashboard
             </Link>

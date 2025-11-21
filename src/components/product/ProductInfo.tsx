@@ -144,7 +144,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
         >
           Quantity
         </label>
-        <div className="inline-flex items-center rounded border border-gold/30 bg-white">
+        <div className="inline-flex items-center rounded border border-gold/30 bg-surface-0">
           <button
             type="button"
             className="px-3 py-2 select-none text-ink hover:bg-gold/10 transition-colors"

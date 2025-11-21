@@ -273,7 +273,7 @@ export default function ReportScheduler() {
                     <p className="text-sm text-gray-400 mt-1">
                       {report.frequency} • {report.format} • {report.recipients}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-ink-500 mt-1">
                       Next: {new Date(report.nextScheduled).toLocaleString()}
                     </p>
                   </div>
@@ -346,7 +346,7 @@ export default function ReportScheduler() {
                     <span className="text-gray-300">
                       {log.status} • {log.recipients}
                     </span>
-                    <span className="text-gray-500">
+                    <span className="text-ink-500">
                       {new Date(log.sentAt).toLocaleString()}
                     </span>
                   </div>

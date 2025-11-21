@@ -53,14 +53,14 @@ export function MetricCard({
                 })
               : value}
           </p>
-          <p className="text-xs text-gray-500 mt-1">{unit}</p>
+          <p className="text-xs text-ink-500 mt-1">{unit}</p>
         </div>
         {trend !== undefined && (
           <div className={`text-right ${trendColor}`}>
             <p className="text-lg font-semibold">
               {trendIcon} {trendPercentage.toFixed(1)}%
             </p>
-            <p className="text-xs text-gray-500">{trendLabel}</p>
+            <p className="text-xs text-ink-500">{trendLabel}</p>
           </div>
         )}
       </div>

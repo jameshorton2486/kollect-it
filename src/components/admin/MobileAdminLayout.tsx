@@ -55,13 +55,13 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-50">
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-surface-0 border-b border-border-200">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+            className="p-2 rounded-lg text-ink-600 hover:bg-surface-100"
             aria-label="Toggle menu"
           >
             {sidebarOpen ? (
@@ -70,9 +70,9 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
               <Menu className="w-6 h-6" />
             )}
           </button>
-          <h1 className="text-lg font-bold text-gray-900">Kollect-It Admin</h1>
+          <h1 className="text-lg font-bold text-ink-900">Kollect-It Admin</h1>
           <button
-            className="p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+            className="p-2 rounded-lg text-ink-600 hover:bg-surface-100"
             aria-label="Notifications"
           >
             <Bell className="w-6 h-6" />
@@ -90,7 +90,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
 
       {/* Mobile Sidebar */}
       <div
-        className={`lg:hidden fixed inset-y-0 left-0 z-40 w-64 bg-white transform transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed inset-y-0 left-0 z-40 w-64 bg-surface-0 transform transition-transform duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -104,7 +104,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive(item.href)
                       ? "bg-blue-50 text-blue-600"
-                      : "text-gray-700 hover:bg-gray-100"
+                      : "text-ink-700 hover:bg-surface-100"
                   }`}
                 >
                   {item.icon && <item.icon className="w-5 h-5" />}
@@ -112,7 +112,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
                 </Link>
               ) : (
                 <>
-                  <div className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700">
+                  <div className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-ink-700">
                     {item.icon && <item.icon className="w-5 h-5" />}
                     {item.name}
                   </div>
@@ -126,7 +126,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
                           className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
                             isActive(child.href)
                               ? "bg-blue-50 text-blue-600"
-                              : "text-gray-600 hover:bg-gray-100"
+                              : "text-ink-600 hover:bg-surface-100"
                           }`}
                         >
                           <ChevronRight className="w-4 h-4" />
@@ -144,9 +144,9 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
 
       {/* Desktop Sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-        <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
+        <div className="flex flex-col flex-grow bg-surface-0 border-r border-border-200 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4 mb-5">
-            <h1 className="text-xl font-bold text-gray-900">
+            <h1 className="text-xl font-bold text-ink-900">
               Kollect-It Admin
             </h1>
           </div>
@@ -159,7 +159,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(item.href)
                         ? "bg-blue-50 text-blue-600"
-                        : "text-gray-700 hover:bg-gray-100"
+                        : "text-ink-700 hover:bg-surface-100"
                     }`}
                   >
                     {item.icon && <item.icon className="w-5 h-5" />}
@@ -167,7 +167,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
                   </Link>
                 ) : (
                   <>
-                    <div className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700">
+                    <div className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-ink-700">
                       {item.icon && <item.icon className="w-5 h-5" />}
                       {item.name}
                     </div>
@@ -180,7 +180,7 @@ export function MobileAdminLayout({ children }: MobileAdminLayoutProps) {
                             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
                               isActive(child.href)
                                 ? "bg-blue-50 text-blue-600"
-                                : "text-gray-600 hover:bg-gray-100"
+                                : "text-ink-600 hover:bg-surface-100"
                             }`}
                           >
                             <ChevronRight className="w-4 h-4" />

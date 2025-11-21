@@ -58,13 +58,13 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
   return (
     <div className="space-y-8">
       {/* Revenue Trend Chart */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-surface-0 rounded-lg shadow p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-ink-900">
               Revenue Trend
             </h2>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-ink-500 mt-1">
               Daily revenue over the selected period
             </p>
           </div>
@@ -104,13 +104,13 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
       {/* Payment Methods & Hourly Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Payment Methods */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-ink-900">
                 Payment Methods
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-ink-500 mt-1">
                 Distribution by payment type
               </p>
             </div>
@@ -120,14 +120,14 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
             {data.paymentMethods.map((method, index) => (
               <div key={method.method}>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="font-medium text-gray-700 capitalize">
+                  <span className="font-medium text-ink-700 capitalize">
                     {method.method}
                   </span>
-                  <span className="text-gray-900">
+                  <span className="text-ink-900">
                     {method.count} orders • ${method.revenue.toFixed(2)}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-surface-200 rounded-full h-2">
                   <div
                     className="h-2 rounded-full"
                     style={
@@ -144,13 +144,13 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
         </div>
 
         {/* Hourly Distribution */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-ink-900">
                 Orders by Hour
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-ink-500 mt-1">
                 Peak hour: {peakHour.hour}:00 ({peakHour.orders} orders)
               </p>
             </div>
@@ -178,13 +178,13 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
       {/* Shipping Status & Order Value Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Shipping Status */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-ink-900">
                 Shipping Status
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-ink-500 mt-1">
                 Current order fulfillment status
               </p>
             </div>
@@ -229,11 +229,11 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
                       } as React.CSSProperties
                     }
                   />
-                  <span className="capitalize text-gray-700">
+                  <span className="capitalize text-ink-700">
                     {status.status}
                   </span>
                 </div>
-                <span className="font-medium text-gray-900">
+                <span className="font-medium text-ink-900">
                   {status.count}
                 </span>
               </div>
@@ -242,13 +242,13 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
         </div>
 
         {/* Orders Trend */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-ink-900">
                 Orders Over Time
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-ink-500 mt-1">
                 Daily order count trend
               </p>
             </div>

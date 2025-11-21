@@ -56,7 +56,7 @@ export default function CartPage() {
 
   if (itemCount === 0) {
     return (
-      <main className="bg-white" role="main">
+      <main className="bg-surface-0" role="main">
         <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4">
           <div className="max-w-md text-center">
             <div className="mx-auto mb-6 h-24 w-24 text-ink">
@@ -142,7 +142,7 @@ export default function CartPage() {
   }
 
   return (
-    <main className="bg-white" role="main">
+    <main className="bg-surface-0" role="main">
       {/* HEADER */}
       <section className="py-12 md:py-16 bg-surface-1 border-b">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -315,7 +315,7 @@ export default function CartPage() {
               </div>
 
               {/* Trust Badges */}
-              <div className="bg-white rounded-lg p-6 space-y-3">
+              <div className="bg-surface-0 rounded-lg p-6 space-y-3">
                 <div className="flex gap-3 text-sm">
                   <span className="text-lg">✓</span>
                   <p>
@@ -349,7 +349,7 @@ export default function CartPage() {
               </div>
 
               {/* Promo Code */}
-              <div className="bg-white rounded-lg p-6">
+              <div className="bg-surface-0 rounded-lg p-6">
                 <label className="block text-sm font-semibold text-ink mb-2">
                   Promo Code
                 </label>

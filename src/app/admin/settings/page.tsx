@@ -97,7 +97,7 @@ export default function AdminSettingsPage() {
         {/* Settings Sections */}
         <div className="space-y-6">
           {/* Platform Settings */}
-          <div className="bg-white rounded-lg border border-border-neutral p-6">
+          <div className="bg-surface-0 rounded-lg border border-border-neutral p-6">
             <h2 className="text-xl font-serif font-bold text-ink mb-4">
               Platform Settings
             </h2>
@@ -119,7 +119,7 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
                 </label>
               </div>
 
@@ -142,7 +142,7 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
                 </label>
               </div>
 
@@ -165,7 +165,7 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
                 </label>
               </div>
 
@@ -188,14 +188,14 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
                 </label>
               </div>
             </div>
           </div>
 
           {/* System Info */}
-          <div className="bg-white rounded-lg border border-border-neutral p-6">
+          <div className="bg-surface-0 rounded-lg border border-border-neutral p-6">
             <h2 className="text-xl font-serif font-bold text-ink mb-4">
               System Information
             </h2>

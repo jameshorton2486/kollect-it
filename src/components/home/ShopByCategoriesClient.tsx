@@ -54,7 +54,7 @@ export default function ShopByCategories() {
             >
               <Link
                 href={cat.href}
-                className="group block border border-gray-200 rounded-2xl overflow-hidden shadow-elevation-sm hover:shadow-elevation-lg transition-all duration-300 bg-white"
+                className="group block border border-border-200 rounded-2xl overflow-hidden shadow-elevation-sm hover:shadow-elevation-lg transition-all duration-300 bg-surface-0"
               >
                 <Image
                   src={cat.img}

@@ -45,7 +45,7 @@ export default function LatestArrivals() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-surface-0">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
         <motion.div
           className="text-center mb-14"
@@ -91,7 +91,7 @@ export default function LatestArrivals() {
                   </div>
 
                   {/* Condition badge */}
-                  <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur text-ink px-3 py-1 rounded-full text-xs font-medium">
+                  <div className="absolute bottom-3 left-3 bg-surface-0/90 backdrop-blur text-ink px-3 py-1 rounded-full text-xs font-medium">
                     {item.condition}
                   </div>
                 </div>

@@ -2,7 +2,8 @@ import type { Config } from "tailwindcss";
 
 /* ============================================
    KOLLECT-IT TAILWIND CONFIGURATION
-   Colors sync with globals.css CSS variables
+   Synced with globals.css CSS variables
+   Full color scales for complete design flexibility
    ============================================ */
 
 const config: Config = {
@@ -13,44 +14,31 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '1.25rem',
-        sm: '1.5rem',
-        md: '2rem',
-        lg: '3rem',
-      },
-      screens: {
-        '2xl': '1200px', // Limits max width on huge screens
-      },
-    },
     extend: {
       colors: {
-        /* Ink - Primary Text */
+        /* Ink - Text Colors (Complete Scale) */
         ink: {
-          DEFAULT: "hsl(var(--ink-900))",
-          900: "hsl(var(--ink-900))",
-          800: "hsl(var(--ink-800))",
-          700: "hsl(var(--ink-700))",
-          600: "hsl(var(--ink-600))",
-          500: "hsl(var(--ink-500))",
           400: "hsl(var(--ink-400))",
+          500: "hsl(var(--ink-500))",
+          600: "hsl(var(--ink-600))",
+          700: "hsl(var(--ink-700))",
+          800: "hsl(var(--ink-800))",
+          900: "hsl(var(--ink-900))",
+          DEFAULT: "hsl(var(--ink-900))", // Fallback
         },
         
-        /* Gold - Brand Accent */
+        /* Gold - Brand Accent (Complete Scale) */
         gold: {
-          DEFAULT: "hsl(var(--gold-500))",
           300: "hsl(var(--gold-300))",
           400: "hsl(var(--gold-400))",
           500: "hsl(var(--gold-500))",
           600: "hsl(var(--gold-600))",
           700: "hsl(var(--gold-700))",
+          DEFAULT: "hsl(var(--gold-500))", // Fallback
         },
         
-        /* Surface - Backgrounds */
+        /* Surface - Backgrounds (Complete Scale) */
         surface: {
-          DEFAULT: "hsl(var(--surface-0))",
           0: "hsl(var(--surface-0))",
           50: "hsl(var(--surface-50))",
           100: "hsl(var(--surface-100))",
@@ -58,32 +46,60 @@ const config: Config = {
           300: "hsl(var(--surface-300))",
           800: "hsl(var(--surface-800))",
           900: "hsl(var(--surface-900))",
+          DEFAULT: "hsl(var(--surface-0))", // Fallback
         },
         
-        /* CTA - Call to Action */
+        /* CTA - Call to Action Navy (Complete Scale) */
         cta: {
-          DEFAULT: "hsl(var(--cta-600))",
           400: "hsl(var(--cta-400))",
           500: "hsl(var(--cta-500))",
           600: "hsl(var(--cta-600))",
           700: "hsl(var(--cta-700))",
           800: "hsl(var(--cta-800))",
+          DEFAULT: "hsl(var(--cta-600))", // Fallback
+        },
+        
+        /* Semantic Colors */
+        semantic: {
+          error: {
+            500: "hsl(var(--semantic-error-500))",
+          },
+          success: {
+            500: "hsl(var(--semantic-success-500))",
+          },
+          warning: {
+            500: "hsl(var(--semantic-warning-500))",
+          },
+          info: {
+            500: "hsl(var(--semantic-info-500))",
+          },
+        },
+        
+        /* Borders & Dividers */
+        border: {
+          200: "hsl(var(--border-200))",
+          300: "hsl(var(--border-300))",
+          DEFAULT: "hsl(var(--border-300))", // Fallback
         },
 
-        /* Shadcn Aliases */
+        /* shadcn/ui compatibility */
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
         primary: {
-          DEFAULT: "hsl(var(--cta-600))",
-          foreground: "hsl(0 0% 100%)",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--gold-500))",
-          foreground: "hsl(var(--ink-900))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -93,57 +109,78 @@ const config: Config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        
-        /* Semantic Colors */
-        semantic: {
-          error: {
-            DEFAULT: "hsl(var(--semantic-error-500))",
-            500: "hsl(var(--semantic-error-500))",
-            600: "hsl(var(--semantic-error-600))",
-          },
-          success: {
-            DEFAULT: "hsl(var(--semantic-success-500))",
-            500: "hsl(var(--semantic-success-500))",
-            600: "hsl(var(--semantic-success-600))",
-          },
-          warning: {
-            DEFAULT: "hsl(var(--semantic-warning-500))",
-            500: "hsl(var(--semantic-warning-500))",
-            600: "hsl(var(--semantic-warning-600))",
-          },
-          info: {
-            DEFAULT: "hsl(var(--semantic-info-500))",
-            500: "hsl(var(--semantic-info-500))",
-            600: "hsl(var(--semantic-info-600))",
-          },
-        },
-        
-        /* Borders & Dividers */
-        border: {
-          DEFAULT: "hsl(var(--border-300))",
-          200: "hsl(var(--border-200))",
-          300: "hsl(var(--border-300))",
-          400: "hsl(var(--border-400))",
-        },
       },
+      
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "'Times New Roman'", "serif"],
+        logo: ["var(--font-logo)", "system-ui", "sans-serif"],
       },
+      
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+        "2xl": "var(--radius-2xl)",
+        full: "var(--radius-full)",
+        DEFAULT: "var(--radius)", // Fallback
+      },
+      
+      spacing: {
+        xs: "var(--spacing-xs)",
+        sm: "var(--spacing-sm)",
+        md: "var(--spacing-md)",
+        lg: "var(--spacing-lg)",
+        xl: "var(--spacing-xl)",
+        "2xl": "var(--spacing-2xl)",
+        "3xl": "var(--spacing-3xl)",
+      },
+      
+      boxShadow: {
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+        xl: "var(--shadow-xl)",
+        card: "0 2px 8px rgba(0, 0, 0, 0.1)",
+        elevated: "0 4px 16px rgba(0, 0, 0, 0.15)",
+      },
+      
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        slideDown: {
+          "0%": { transform: "translateY(-10px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        scaleIn: {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        shimmer: {
+          "0%": { "background-position": "-200px 0" },
+          "100%": { "background-position": "calc(200px + 100%) 0" },
+        },
+      },
+      
+      animation: {
+        "fade-in": "fadeIn 0.5s ease-in-out",
+        "slide-up": "slideUp 0.6s ease-out",
+        "slide-down": "slideDown 0.3s ease-out",
+        "scale-in": "scaleIn 0.3s ease-out",
+        shimmer: "shimmer 1.5s ease-in-out infinite",
       },
     },
   },

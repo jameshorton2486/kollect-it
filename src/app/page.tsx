@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 const LazyFeaturedCollection = dynamic(
   () => import("@/components/home/FeaturedCollection"),
   {
-    loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+    loading: () => <div className="h-96 animate-shimmer" />,
     ssr: true,
   },
 );
@@ -18,7 +18,7 @@ const LazyFeaturedCollection = dynamic(
 const LazyTestimonials = dynamic(
   () => import("@/components/home/Testimonials"),
   {
-    loading: () => <div className="h-64 bg-gray-100 animate-pulse" />,
+    loading: () => <div className="h-64 animate-shimmer" />,
     ssr: true,
   },
 );
@@ -26,7 +26,7 @@ const LazyTestimonials = dynamic(
 const LazyProcessOverview = dynamic(
   () => import("@/components/home/ProcessOverview"),
   {
-    loading: () => <div className="h-80 bg-gray-100 animate-pulse" />,
+    loading: () => <div className="h-80 animate-shimmer" />,
     ssr: true,
   },
 );
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="bg-white" role="main">
+    <main className="bg-surface-0" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

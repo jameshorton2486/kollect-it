@@ -122,7 +122,7 @@ export default function LoginPage() {
               className={`w-full px-4 py-2 border rounded-lg transition-colors ${
                 validationErrors.email
                   ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
-                  : "border-border-neutral bg-white focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
+                  : "border-border-neutral bg-surface-0 focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
               }`}
               {...(validationErrors.email
                 ? { "aria-invalid": true, "aria-describedby": "email-error" }
@@ -162,7 +162,7 @@ export default function LoginPage() {
                 className={`w-full px-4 py-2 pr-10 border rounded-lg transition-colors ${
                   validationErrors.password
                     ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
-                    : "border-border-neutral bg-white focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
+                    : "border-border-neutral bg-surface-0 focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
                 }`}
                 {...(validationErrors.password
                   ? {

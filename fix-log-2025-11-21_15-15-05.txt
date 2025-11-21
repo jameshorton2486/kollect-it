@@ -1,0 +1,91 @@
+[15:15:05] === Step 1: Creating Backup ===
+[15:15:05] Creating backup in .\backups\2025-11-21_15-15-05
+[15:15:05] Backup complete
+[15:15:05] === Step 2: Applying Global Color Fixes ===
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\metadata.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\metadata.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\page.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\page.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06]   page.tsx: 8 replacements
+[15:15:06]   page.tsx: 1 replacements
+[15:15:06]   page.tsx: 25 replacements
+[15:15:06]   page.tsx: 6 replacements
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\categories\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\categories\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\email\templates\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\email\templates\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\orders\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\orders\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\audit\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\audit\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\trigger\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\trigger\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\email\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\email\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\notes\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\notes\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\auth\[...nextauth]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\auth\[...nextauth]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\products\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\products\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06]   page.tsx: 4 replacements
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\loading.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\loading.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\page.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\page.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06]   page.tsx: 2 replacements
+[15:15:06]   page.tsx: 2 replacements
+[15:15:06]   page.tsx: 2 replacements
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\loading.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\loading.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\page.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\page.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06]   page.tsx: 4 replacements
+[15:15:06]   page.tsx: 6 replacements
+[15:15:06]   page.tsx: 1 replacements
+[15:15:06]   layout.tsx: 1 replacements
+[15:15:06]   not-found.tsx: 1 replacements
+[15:15:06]   page.tsx: 1 replacements
+[15:15:06]   ApprovalTrendChart.tsx: 1 replacements
+[15:15:06]   CategoryMetricsGrid.tsx: 14 replacements
+[15:15:06]   MetricCard.tsx: 2 replacements
+[15:15:06]   RevenueByCategory.tsx: 1 replacements
+[15:15:06]   AdminSettingsPanel.tsx: 60 replacements
+[15:15:06]   AutomatedReports.tsx: 38 replacements
+[15:15:06]   BulkOrderActions.tsx: 16 replacements
+[15:15:06]   DashboardOverview.tsx: 36 replacements
+[15:15:06]   EmailNotificationManager.tsx: 60 replacements
+[15:15:06]   EnhancedSalesAnalytics.tsx: 20 replacements
+[15:15:06]   MobileActionSheet.tsx: 8 replacements
+[15:15:06]   MobileAdminLayout.tsx: 22 replacements
+[15:15:06]   MobileFilterPanel.tsx: 18 replacements
+[15:15:06]   MultiImageUpload.tsx: 1 replacements
+[15:15:06]   OrderDetailsPanel.tsx: 40 replacements
+[15:15:06]   ProductAnalyticsDashboard.tsx: 51 replacements
+[15:15:06]   ProductUploadForm.tsx: 6 replacements
+[15:15:06]   ReportScheduler.tsx: 2 replacements
+[15:15:06]   ResponsiveTable.tsx: 10 replacements
+[15:15:06]   SellerInquiryManager.tsx: 44 replacements
+[15:15:06]   TrafficAnalyticsDashboard.tsx: 48 replacements
+[15:15:06]   FeaturedCollection.tsx: 1 replacements
+[15:15:06]   HeroBanner.tsx: 6 replacements
+[15:15:06]   LatestArrivalsClient.tsx: 2 replacements
+[15:15:06]   ProcessOverview.tsx: 2 replacements
+[15:15:06]   ShopByCategoriesClient.tsx: 2 replacements
+[15:15:06]   Testimonials.tsx: 2 replacements
+[15:15:06]   ImageGallery.tsx: 7 replacements
+[15:15:06]   ProductInfo.tsx: 1 replacements
+[15:15:06]   ProductTabs.tsx: 6 replacements
+[15:15:06]   ErrorBoundary.tsx: 5 replacements
+[15:15:06] Total color replacements: 596
+[15:15:06] === Step 3: Fixing Loading States ===
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\metadata.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\metadata.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\page.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\admin\orders\[id]\page.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\categories\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\categories\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\email\templates\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\email\templates\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\orders\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\orders\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\audit\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\audit\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\trigger\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\trigger\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\reports\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\email\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\email\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\notes\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\notes\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\admin\sellers\inquiries\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\auth\[...nextauth]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\auth\[...nextauth]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:06] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\api\products\[id]\route.ts - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\api\products\[id]\route.ts does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:07] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\loading.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\loading.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:07] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\page.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\category\[slug]\page.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:07] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\loading.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\loading.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:07] Warning: Could not process C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\page.tsx - An object at the specified path C:\Users\james\kollect-it-marketplace-1\src\app\product\[slug]\page.tsx does not exist, or has been filtered by the -Include or -Exclude parameter.
+[15:15:07] Total loading state fixes: 0
+[15:15:07] === Step 4: Creating Component Files ===
+[15:15:07] === Step 5: Replacing globals.css ===
+[15:15:07] Warning: globals-ENHANCED.css not found, skipping
+[15:15:07] === Step 6: Generating Report ===
+[15:15:07] Report saved to: .\FIXES-APPLIED-2025-11-21_15-15-05.md

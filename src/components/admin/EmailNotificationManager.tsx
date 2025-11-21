@@ -139,7 +139,7 @@ export function EmailNotificationManager() {
   const getStatusBadge = (status: string) => {
     const styles = {
       active: "bg-green-100 text-green-800",
-      draft: "bg-gray-100 text-gray-800",
+      draft: "bg-surface-100 text-ink-800",
       paused: "bg-yellow-100 text-yellow-800",
       scheduled: "bg-blue-100 text-blue-800",
       sending: "bg-purple-100 text-purple-800",
@@ -158,7 +158,7 @@ export function EmailNotificationManager() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading email system...</div>
+        <div className="text-ink-500">Loading email system...</div>
       </div>
     );
   }
@@ -179,10 +179,10 @@ export function EmailNotificationManager() {
       {/* Stats Overview */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-surface-0 rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">Total Sent</p>
+                <p className="text-ink-600 text-sm font-medium">Total Sent</p>
                 <p className="text-3xl font-bold mt-2">
                   {stats.totalSent.toLocaleString()}
                 </p>
@@ -193,10 +193,10 @@ export function EmailNotificationManager() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-surface-0 rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">
+                <p className="text-ink-600 text-sm font-medium">
                   Avg. Open Rate
                 </p>
                 <p className="text-3xl font-bold mt-2">{stats.avgOpenRate}%</p>
@@ -207,10 +207,10 @@ export function EmailNotificationManager() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-surface-0 rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">
+                <p className="text-ink-600 text-sm font-medium">
                   Avg. Click Rate
                 </p>
                 <p className="text-3xl font-bold mt-2">{stats.avgClickRate}%</p>
@@ -221,10 +221,10 @@ export function EmailNotificationManager() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-surface-0 rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">Bounce Rate</p>
+                <p className="text-ink-600 text-sm font-medium">Bounce Rate</p>
                 <p className="text-3xl font-bold mt-2">{stats.bounceRate}%</p>
               </div>
               <div className="bg-red-100 p-3 rounded-full">
@@ -236,14 +236,14 @@ export function EmailNotificationManager() {
       )}
 
       {/* Tabs */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-border-200">
         <nav className="flex space-x-8">
           <button
             onClick={() => setActiveTab("templates")}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === "templates"
                 ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
             }`}
           >
             Templates ({templates.length})
@@ -253,7 +253,7 @@ export function EmailNotificationManager() {
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === "campaigns"
                 ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
             }`}
           >
             Campaigns ({campaigns.length})
@@ -263,7 +263,7 @@ export function EmailNotificationManager() {
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === "stats"
                 ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
             }`}
           >
             Statistics
@@ -273,51 +273,51 @@ export function EmailNotificationManager() {
 
       {/* Templates Tab */}
       {activeTab === "templates" && (
-        <div className="bg-white rounded-lg shadow-md">
+        <div className="bg-surface-0 rounded-lg shadow-md">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-surface-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Template
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Performance
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Last Sent
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-surface-0 divide-y divide-gray-200">
                 {templates.map((template) => (
-                  <tr key={template.id} className="hover:bg-gray-50">
+                  <tr key={template.id} className="hover:bg-surface-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="text-blue-600 mr-3">
                           {getTemplateIcon(template.type)}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-ink-900">
                             {template.name}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-ink-500">
                             {template.subject}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-900">
+                      <span className="text-sm text-ink-900">
                         {template.type
                           .replace("_", " ")
                           .split(" ")
@@ -331,16 +331,16 @@ export function EmailNotificationManager() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {template.openRate !== undefined && (
                         <div className="text-sm">
-                          <div className="text-gray-900">
+                          <div className="text-ink-900">
                             Open: {template.openRate}%
                           </div>
-                          <div className="text-gray-500">
+                          <div className="text-ink-500">
                             Click: {template.clickRate}%
                           </div>
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
                       {template.lastSent
                         ? new Date(template.lastSent).toLocaleDateString()
                         : "Never"}
@@ -396,57 +396,57 @@ export function EmailNotificationManager() {
 
       {/* Campaigns Tab */}
       {activeTab === "campaigns" && (
-        <div className="bg-white rounded-lg shadow-md">
+        <div className="bg-surface-0 rounded-lg shadow-md">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-surface-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Campaign
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Recipients
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Sent
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Opened
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Clicked
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
                     Date
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-surface-0 divide-y divide-gray-200">
                 {campaigns.map((campaign) => (
-                  <tr key={campaign.id} className="hover:bg-gray-50">
+                  <tr key={campaign.id} className="hover:bg-surface-50">
                     <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-ink-900">
                         {campaign.name}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-ink-500">
                         {campaign.template}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {getStatusBadge(campaign.status)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
                       {campaign.totalRecipients.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-ink-900">
                           {campaign.sent.toLocaleString()}
                         </div>
-                        <div className="ml-2 text-xs text-gray-500">
+                        <div className="ml-2 text-xs text-ink-500">
                           (
                           {Math.round(
                             (campaign.sent / campaign.totalRecipients) * 100,
@@ -457,10 +457,10 @@ export function EmailNotificationManager() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-ink-900">
                           {campaign.opened.toLocaleString()}
                         </div>
-                        <div className="ml-2 text-xs text-gray-500">
+                        <div className="ml-2 text-xs text-ink-500">
                           (
                           {campaign.sent > 0
                             ? Math.round(
@@ -473,10 +473,10 @@ export function EmailNotificationManager() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-ink-900">
                           {campaign.clicked.toLocaleString()}
                         </div>
-                        <div className="ml-2 text-xs text-gray-500">
+                        <div className="ml-2 text-xs text-ink-500">
                           (
                           {campaign.sent > 0
                             ? Math.round(
@@ -487,7 +487,7 @@ export function EmailNotificationManager() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
                       {campaign.sentAt
                         ? new Date(campaign.sentAt).toLocaleDateString()
                         : campaign.scheduledFor
@@ -504,11 +504,11 @@ export function EmailNotificationManager() {
 
       {/* Statistics Tab */}
       {activeTab === "stats" && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-surface-0 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold mb-4">
             Email Performance Analytics
           </h3>
-          <div className="text-gray-500">
+          <div className="text-ink-500">
             Detailed analytics charts and reports coming soon...
           </div>
         </div>

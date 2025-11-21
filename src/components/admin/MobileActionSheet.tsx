@@ -39,14 +39,14 @@ export function MobileActionSheet({
       />
 
       {/* Action Sheet */}
-      <div className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl animate-slide-up">
+      <div className="fixed inset-x-0 bottom-0 z-50 bg-surface-0 rounded-t-2xl shadow-2xl animate-slide-up">
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between p-4 border-b border-border-200">
             <h3 className="text-lg font-semibold">{title}</h3>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-lg"
+              className="p-2 hover:bg-surface-100 rounded-lg"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -69,7 +69,7 @@ export function MobileActionSheet({
                 className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg text-left transition-colors ${
                   action.destructive
                     ? "text-red-600 hover:bg-red-50"
-                    : "text-gray-900 hover:bg-gray-100"
+                    : "text-ink-900 hover:bg-surface-100"
                 } ${action.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
               >
                 {Icon && <Icon className="w-5 h-5" />}
@@ -80,10 +80,10 @@ export function MobileActionSheet({
         </div>
 
         {/* Cancel Button */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-border-200">
           <button
             onClick={onClose}
-            className="w-full px-4 py-3 text-gray-700 font-medium hover:bg-gray-100 rounded-lg"
+            className="w-full px-4 py-3 text-ink-700 font-medium hover:bg-surface-100 rounded-lg"
           >
             Cancel
           </button>

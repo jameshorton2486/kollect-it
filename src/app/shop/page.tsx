@@ -216,7 +216,7 @@ export default async function ShopPage({
               <Link
                 key={category.id}
                 href={`/category/${category.slug}`}
-                className="group block overflow-hidden rounded border border-[hsl(var(--border-300))] bg-white shadow-sm transition hover:shadow-md"
+                className="group block overflow-hidden rounded border border-[hsl(var(--border-300))] bg-surface-0 shadow-sm transition hover:shadow-md"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image

@@ -118,7 +118,7 @@ export default function ProductCard({
   // grid variant
   return (
     <div
-      className="group rounded-lg border border-border bg-surface overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-gold shadow-sm"
+      className="group rounded-lg border border-border bg-surface overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-card hover:shadow-elevated hover:border-gold"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
