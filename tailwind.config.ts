@@ -30,33 +30,44 @@ const config: Config = {
         /* Ink - Primary Text */
         ink: {
           DEFAULT: "hsl(var(--ink-900))",
-          secondary: "hsl(var(--ink-700))",
-          muted: "hsl(var(--ink-500))",
+          900: "hsl(var(--ink-900))",
+          800: "hsl(var(--ink-800))",
+          700: "hsl(var(--ink-700))",
+          600: "hsl(var(--ink-600))",
+          500: "hsl(var(--ink-500))",
+          400: "hsl(var(--ink-400))",
         },
         
         /* Gold - Brand Accent */
         gold: {
           DEFAULT: "hsl(var(--gold-500))",
-          light: "hsl(var(--gold-400))",
-          dark: "hsl(var(--gold-600))",
-          darker: "hsl(var(--gold-700))",
+          300: "hsl(var(--gold-300))",
+          400: "hsl(var(--gold-400))",
+          500: "hsl(var(--gold-500))",
+          600: "hsl(var(--gold-600))",
+          700: "hsl(var(--gold-700))",
         },
         
         /* Surface - Backgrounds */
         surface: {
           DEFAULT: "hsl(var(--surface-0))",
+          0: "hsl(var(--surface-0))",
           50: "hsl(var(--surface-50))",
           100: "hsl(var(--surface-100))",
           200: "hsl(var(--surface-200))",
           300: "hsl(var(--surface-300))",
+          800: "hsl(var(--surface-800))",
           900: "hsl(var(--surface-900))",
         },
         
         /* CTA - Call to Action */
         cta: {
           DEFAULT: "hsl(var(--cta-600))",
-          hover: "hsl(var(--cta-700))",
-          active: "hsl(var(--cta-800))",
+          400: "hsl(var(--cta-400))",
+          500: "hsl(var(--cta-500))",
+          600: "hsl(var(--cta-600))",
+          700: "hsl(var(--cta-700))",
+          800: "hsl(var(--cta-800))",
         },
 
         /* Shadcn Aliases */
@@ -95,15 +106,35 @@ const config: Config = {
         
         /* Semantic Colors */
         semantic: {
-          error: "hsl(var(--semantic-error-500))",
-          success: "hsl(var(--semantic-success-500))",
-          warning: "hsl(var(--semantic-warning-500))",
-          info: "hsl(var(--semantic-info-500))",
+          error: {
+            DEFAULT: "hsl(var(--semantic-error-500))",
+            500: "hsl(var(--semantic-error-500))",
+            600: "hsl(var(--semantic-error-600))",
+          },
+          success: {
+            DEFAULT: "hsl(var(--semantic-success-500))",
+            500: "hsl(var(--semantic-success-500))",
+            600: "hsl(var(--semantic-success-600))",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--semantic-warning-500))",
+            500: "hsl(var(--semantic-warning-500))",
+            600: "hsl(var(--semantic-warning-600))",
+          },
+          info: {
+            DEFAULT: "hsl(var(--semantic-info-500))",
+            500: "hsl(var(--semantic-info-500))",
+            600: "hsl(var(--semantic-info-600))",
+          },
         },
         
         /* Borders & Dividers */
-        border: "hsl(var(--border-300))",
-        divider: "hsl(var(--border-200))",
+        border: {
+          DEFAULT: "hsl(var(--border-300))",
+          200: "hsl(var(--border-200))",
+          300: "hsl(var(--border-300))",
+          400: "hsl(var(--border-400))",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
