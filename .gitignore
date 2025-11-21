@@ -162,3 +162,8 @@ logs/
 *Workspace*.docx
 *Suprabase*.docx
 *env*File*.docx
+
+# Backup files with secrets
+*.bak
+.env.production*
+

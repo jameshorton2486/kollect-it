@@ -11,7 +11,7 @@
     "lint": "bun x tsc --noEmit && bun x eslint . --max-warnings=0",
     "typecheck": "bun x tsc --noEmit",
     "format": "bun x biome format --write",
-    "check": "bun x tsc --noEmit && bun x eslint . --max-warnings=0 && next build",
+    "check": "bun run scripts/check-env.js",
     "db:generate": "bun x prisma generate",
     "db:migrate": "bun x prisma migrate dev --name init",
     "db:migrate:deploy": "bun x prisma migrate deploy",
@@ -37,6 +37,7 @@
     "validate-product": "bun run scripts/validate-product.ts",
     "test-imagekit": "bun run scripts/test-imagekit.ts",
     "test-google-drive": "bun run scripts/test-google-drive.ts",
+    "test:env": "bun run scripts/test-env-complete.ts",
     "error-summary:last-hour": "bun run scripts/generate-error-summary.ts --last=1h",
     "error-summary:last-30min": "bun run scripts/generate-error-summary.ts --last=30m",
     "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h"

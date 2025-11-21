@@ -42,7 +42,7 @@ const REQUIRED_VARS = {
     critical: true
   },
   'ImageKit CDN': {
-    vars: ['IMAGEKIT_PUBLIC_KEY', 'IMAGEKIT_PRIVATE_KEY', 'IMAGEKIT_URL_ENDPOINT'],
+    vars: ['NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY', 'IMAGEKIT_PRIVATE_KEY', 'NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT'],
     critical: false
   },
   'Application': {
