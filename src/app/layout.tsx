@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lato, Cormorant_Garamond, Archivo_Black } from "next/font/google";
+import { Lato, Cormorant_Garamond, Archivo_Black, Tenor_Sans } from "next/font/google";
 import "./globals.css";
 import ClientBody from "./ClientBody";
 import Script from "next/script";
@@ -26,6 +26,13 @@ const archivoBlack = Archivo_Black({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-logo",
+  display: "swap",
+});
+
+const tenor = Tenor_Sans({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-aesop",
   display: "swap",
 });
 
@@ -75,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${lato.variable} ${cormorant.variable} ${archivoBlack.variable}`}
+      className={`${lato.variable} ${cormorant.variable} ${archivoBlack.variable} ${tenor.variable}`}
     >
       <head>
         <Script

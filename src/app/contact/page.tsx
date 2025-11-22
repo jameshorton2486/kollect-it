@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ContactForm from "@/components/forms/ContactForm";
+import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="bg-surface-0" role="main">
+    <main className="bg-aesop-cream" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="bg-surface-0" role="main">
+    <main className="bg-aesop-cream" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -80,12 +80,24 @@ export default function HomePage() {
         }}
       />
       <Hero />
-      <TrustStrip />
-      <LatestArrivals />
-      <LazyFeaturedCollection />
-      <ShopByCategories />
-      <LazyTestimonials />
-      <LazyProcessOverview />
+      <section className="bg-aesop-sand py-16">
+        <TrustStrip />
+      </section>
+      <section className="bg-aesop-cream py-16">
+        <LatestArrivals />
+      </section>
+      <section className="bg-aesop-sand py-16">
+        <LazyFeaturedCollection />
+      </section>
+      <section className="bg-aesop-olive py-16">
+        <ShopByCategories />
+      </section>
+      <section className="bg-aesop-cream py-16">
+        <LazyTestimonials />
+      </section>
+      <section className="bg-aesop-charcoal py-16">
+        <LazyProcessOverview />
+      </section>
     </main>
   );
 }

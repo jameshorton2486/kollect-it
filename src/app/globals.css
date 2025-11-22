@@ -113,6 +113,15 @@
     --border: var(--border-300);
     --input: var(--border-300);
     --ring: var(--cta-600);
+
+    /* Aesop-Inspired Earthy Palette */
+    --aesop-cream: 40 29% 96%;   /* soft parchment */
+    --aesop-sand: 37 23% 90%;    /* warm sand */
+    --aesop-olive: 81 14% 30%;   /* deep olive green */
+    --aesop-charcoal: 0 0% 14%;  /* dark charcoal */
+
+    --aesop-olive-foreground: 40 29% 96%;
+    --aesop-charcoal-foreground: 96 14% 92%;
   }
 }
 
@@ -146,7 +155,7 @@ body {
    ============================================ */
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-family: var(--font-aesop), var(--font-serif), Georgia, "Times New Roman", serif;
   font-weight: 500;           /* Softer than 600 */
   line-height: 1.25;
   color: hsl(var(--ink-900));
@@ -253,6 +262,23 @@ a:hover {
 /* ============================================
    UTILITY CLASSES - NEW: Visual Enhancements
    ============================================ */
+
+/* Section spacing for consistent vertical rhythm */
+.section-spacing {
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding: 5rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding: 6rem 0;
+  }
+}
 
 /* Shadows */
 .shadow-subtle { box-shadow: var(--shadow-subtle); }

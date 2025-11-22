@@ -65,7 +65,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
               aria-labelledby="tab-details"
               tabIndex={0}
             >
-              <div className="rounded-lg border border-gold/20 bg-surface-0 p-6">
+              <div className="rounded-lg border border-gold/20 bg-white p-6">
                 <h3 className="font-serif text-2xl text-ink mb-4 flex items-center gap-2">
                   <span className="text-gold">📖</span> Product
                   Description
@@ -237,7 +237,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="rounded-lg border border-gold/20 bg-surface-0 p-6">
+                <div className="rounded-lg border border-gold/20 bg-white p-6">
                   <h4 className="font-serif text-lg text-ink mb-4">
                     🔍 Authentication Process
                   </h4>
@@ -297,7 +297,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
                   </ul>
                 </div>
 
-                <div className="rounded-lg border border-gold/20 bg-surface-0 p-6">
+                <div className="rounded-lg border border-gold/20 bg-white p-6">
                   <h4 className="font-serif text-lg text-ink mb-4">
                     📜 Certificate of Authenticity
                   </h4>
@@ -340,7 +340,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
                   Every Kollect-It purchase is backed by our unconditional
                   lifetime authenticity guarantee.
                 </p>
-                <div className="bg-surface-0 rounded p-4 border border-green-200">
+                <div className="bg-white rounded p-4 border border-green-200">
                   <p className="text-sm text-ink font-semibold">
                     If any item is ever determined to be inauthentic, we will
                     provide a full refund including original shipping costs.
@@ -350,7 +350,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="rounded-lg border border-gold/20 bg-surface-0 p-6">
+                <div className="rounded-lg border border-gold/20 bg-white p-6">
                   <h4 className="font-serif text-lg text-ink mb-4">
                     ✓ What's Protected
                   </h4>
@@ -418,7 +418,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
                   </ul>
                 </div>
 
-                <div className="rounded-lg border border-gold/20 bg-surface-0 p-6">
+                <div className="rounded-lg border border-gold/20 bg-white p-6">
                   <h4 className="font-serif text-lg text-ink mb-4">
                     💬 How to Make a Claim
                   </h4>

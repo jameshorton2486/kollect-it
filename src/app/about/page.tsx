@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -80,7 +81,7 @@ export default async function AboutPage() {
   const categories = await getCategories();
 
   return (
-    <main className="bg-surface-0" role="main">
+    <main className="bg-aesop-cream" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -108,71 +109,66 @@ export default async function AboutPage() {
       />
 
       {/* HERO SECTION */}
-      <section className="py-20 md:py-32 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
-              ABOUT KOLLECT-IT
-            </p>
-            <h1 className="font-display text-5xl md:text-6xl mb-6 leading-tight text-ink">
-              The Best Collectibles
-              <br />
-              Deserve Careful Attention
-            </h1>
-            <p className="text-xl md:text-2xl text-ink-light font-serif mb-8 leading-relaxed">
-              We fill the gap for items worth $500-$15,000. Professionally
-              valued, fairly priced, personally curated by someone who cares.
-            </p>
-          </div>
-        </div>
-      </section>
+      <AesopSection
+        variant="sand"
+        layout="full"
+        subtitle="ABOUT KOLLECT-IT"
+        title={
+          <>
+            The Best Collectibles
+            <br />
+            Deserve Careful Attention
+          </>
+        }
+        description={
+          <>
+            We fill the gap for items worth $500-$15,000. Professionally
+            valued, fairly priced, personally curated by someone who cares.
+          </>
+        }
+      />
 
       {/* OUR STORY SECTION */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal">
-              OUR STORY
+      <AesopSection
+        variant="cream"
+        layout="full"
+        subtitle="OUR STORY"
+        title="Filling the Gap"
+        description={
+          <>
+            <p className="text-lg md:text-xl font-serif italic mb-6">
+              We started with a passion for collectibles and a frustration:
+              items worth $500-$15,000 fall through the cracks.
             </p>
-            <h2 className="font-serif text-4xl md:text-5xl text-ink mb-8 leading-tight">
-              Filling the Gap
-            </h2>
 
-            <div className="prose prose-lg max-w-none space-y-6 text-ink-light leading-relaxed">
-              <p className="text-lg md:text-xl font-serif italic mb-6">
-                We started with a passion for collectibles and a frustration:
-                items worth $500-$15,000 fall through the cracks.
-              </p>
+            <p className="text-base md:text-lg leading-8">
+              Auction houses have minimums around $10,000. Online marketplaces
+              feel risky and impersonal. Private sales are hit-or-miss.
+            </p>
 
-              <p className="text-base md:text-lg leading-8">
-                Auction houses have minimums around $10,000. Online marketplaces
-                feel risky and impersonal. Private sales are hit-or-miss.
-              </p>
+            <p className="text-base md:text-lg leading-8">
+              We built Kollect-It to fill that gap.
+            </p>
 
-              <p className="text-base md:text-lg leading-8">
-                We built Kollect-It to fill that gap.
-              </p>
+            <p className="text-base md:text-lg leading-8">
+              Our collection is personally curated. Every item is accurately
+              described, professionally valued, and fairly priced—typically
+              between auction value and retail price, so you get a better deal
+              than traditional auctions.
+            </p>
 
-              <p className="text-base md:text-lg leading-8">
-                Our collection is personally curated. Every item is accurately
-                described, professionally valued, and fairly priced—typically
-                between auction value and retail price, so you get a better deal
-                than traditional auctions.
-              </p>
+            <p className="text-base md:text-lg leading-8">
+              We're a one-person operation committed to honesty. If you have
+              questions, want additional photos, or disagree with our
+              valuation, reach out. We'll listen and adjust if we're wrong.
+            </p>
 
-              <p className="text-base md:text-lg leading-8">
-                We're a one-person operation committed to honesty. If you have
-                questions, want additional photos, or disagree with our
-                valuation, reach out. We'll listen and adjust if we're wrong.
-              </p>
-
-              <p className="text-base md:text-lg leading-8">
-                Because the best collectibles deserve careful attention.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+            <p className="text-base md:text-lg leading-8">
+              Because the best collectibles deserve careful attention.
+            </p>
+          </>
+        }
+      />
 
       {/* OUR VALUES SECTION */}
       <section className="py-16 md:py-24 bg-surface-1">

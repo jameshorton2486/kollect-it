@@ -57,6 +57,7 @@ const config: Config = {
           700: "hsl(var(--cta-700))",
           800: "hsl(var(--cta-800))",
           DEFAULT: "hsl(var(--cta-600))", // Fallback
+          hover: "hsl(var(--cta-700))", // Hover state
         },
         
         /* Semantic Colors */
@@ -81,6 +82,10 @@ const config: Config = {
           300: "hsl(var(--border-300))",
           DEFAULT: "hsl(var(--border-300))", // Fallback
         },
+
+        /* Additional aliases for convenience */
+        "ink-secondary": "hsl(var(--ink-600))",
+        "ink-muted": "hsl(var(--ink-500))",
 
         /* shadcn/ui compatibility */
         background: "hsl(var(--background))",
@@ -115,6 +120,16 @@ const config: Config = {
         },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+
+        /* Aesop-Inspired Earthy Palette */
+        aesop: {
+          cream: "hsl(var(--aesop-cream))",
+          sand: "hsl(var(--aesop-sand))",
+          olive: "hsl(var(--aesop-olive))",
+          charcoal: "hsl(var(--aesop-charcoal))",
+          "olive-foreground": "hsl(var(--aesop-olive-foreground))",
+          "charcoal-foreground": "hsl(var(--aesop-charcoal-foreground))",
+        },
       },
       
       fontFamily: {

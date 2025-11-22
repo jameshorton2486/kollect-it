@@ -5,6 +5,7 @@ import { BLUR_DATA_URL } from "@/lib/image";
 import { prisma } from "@/lib/prisma";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductGrid from "@/components/ProductGrid";
+import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
   title: "Shop All Collections",
@@ -121,7 +122,7 @@ export default async function ShopPage({
   }
 
   return (
-    <div>
+    <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -148,7 +149,7 @@ export default async function ShopPage({
         }}
       />
 
-      {/* Breadcrumbs with Fade-In */}
+      {/* Breadcrumbs */}
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
@@ -243,8 +244,7 @@ export default async function ShopPage({
         </div>
       </section>
 
-      {/* Global footer is rendered via ClientBody */}
-    </div>
+    </main>
   );
 }
 
