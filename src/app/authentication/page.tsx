@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
   title: "Authentication Guarantee",
@@ -24,46 +25,46 @@ export const metadata: Metadata = {
 export default function AuthenticationPage() {
   return (
     <>
-      {/* Main Content */}
-      <main
-        className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12"
-        role="main"
-      >
-        <h1 className="ki-heading-xl text-center">Authentication Guarantee</h1>
+      <AesopSection variant="charcoal">
+        <div className="text-center">
+          <h1 className="font-serif text-4xl md:text-5xl mb-12">Authentication Guarantee</h1>
+        </div>
 
-        <section className="mt-12 space-y-6">
-          <h2 className="ki-heading-md">Verified Authenticity</h2>
-          <p className="ki-text-base">
-            Every item sold through Kollect-It undergoes rigorous authentication
-            by our team of specialists.
-          </p>
-        </section>
+        <div className="max-w-4xl mx-auto space-y-12">
+          <section>
+            <h2 className="font-serif text-2xl mb-6 text-gold">Verified Authenticity</h2>
+            <p className="leading-relaxed text-ink-light text-lg">
+              Every item sold through Kollect-It undergoes rigorous authentication
+              by our team of specialists.
+            </p>
+          </section>
 
-        <section className="mt-8 space-y-6">
-          <h2 className="ki-heading-md">What We Verify</h2>
-          <p className="ki-text-base">
-            Our specialists examine provenance, physical condition, maker marks,
-            historical documentation, and consistency with similar items in
-            known collections. We verify antique status, originality, and
-            quality grade.
-          </p>
-        </section>
+          <section>
+            <h2 className="font-serif text-2xl mb-6 text-gold">What We Verify</h2>
+            <p className="leading-relaxed text-ink-light text-lg">
+              Our specialists examine provenance, physical condition, maker marks,
+              historical documentation, and consistency with similar items in
+              known collections. We verify antique status, originality, and
+              quality grade.
+            </p>
+          </section>
 
-        <section className="mt-8 space-y-6">
-          <h2 className="ki-heading-md">Our Guarantee</h2>
-          <p className="ki-text-base">
-            Every item comes with a signed Certificate of Authenticity. If any
-            item is later found to be inauthentic, we offer a full refund—no
-            questions asked.
-          </p>
-        </section>
+          <section>
+            <h2 className="font-serif text-2xl mb-6 text-gold">Our Guarantee</h2>
+            <p className="leading-relaxed text-ink-light text-lg">
+              Every item comes with a signed Certificate of Authenticity. If any
+              item is later found to be inauthentic, we offer a full refund—no
+              questions asked.
+            </p>
+          </section>
 
-        <section className="mt-12 text-center">
-          <Link href="/contact" className="ki-btn-primary inline-block">
-            Contact Our Experts
-          </Link>
-        </section>
-      </main>
+          <div className="text-center">
+            <Link href="/contact" className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity">
+              Contact Our Experts
+            </Link>
+          </div>
+        </div>
+      </AesopSection>
 
       {/* Global Footer is rendered by ClientBody */}
     </>

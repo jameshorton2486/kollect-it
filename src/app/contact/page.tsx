@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="bg-aesop-cream" role="main">
+    <main className="" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -58,261 +58,246 @@ export default function ContactPage() {
       />
 
       {/* HERO SECTION */}
-      <section className="py-20 md:py-28 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
-              GET IN TOUCH
-            </p>
-            <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
-              We're Here to Help
-            </h1>
-            <p className="text-xl text-ink-light leading-relaxed">
-              Our team of experts is ready to assist with acquisitions,
-              authentication, appraisals, consignments, and any questions about
-              our collection.
-            </p>
-          </div>
-        </div>
-      </section>
+      <AesopSection
+        variant="sand"
+        layout="full"
+        subtitle="GET IN TOUCH"
+        title="We're Here to Help"
+        description={
+          <>
+            Our team of experts is ready to assist with acquisitions,
+            authentication, appraisals, consignments, and any questions about
+            our collection.
+          </>
+        }
+      />
 
       {/* CONTACT METHODS SECTION */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
-            {/* General Inquiries */}
-            <div className="contact-method bg-surface-1 p-8 rounded-lg">
-              <h3 className="font-serif text-2xl text-ink mb-4">
-                General Inquiries
-              </h3>
-              <p className="text-ink-light mb-6">
-                Have a question about our collection, authentication process, or
-                services?
-              </p>
-              <div className="space-y-3 text-ink">
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:hello@kollect-it.com"
-                    className="text-gold font-medium hover:underline"
-                  >
-                    hello@kollect-it.com
-                  </a>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Phone
-                  </p>
-                  <a
-                    href="tel:+15551234567"
-                    className="text-gold font-medium hover:underline"
-                  >
-                    +1 (555) 123-4567
-                  </a>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Response Time
-                  </p>
-                  <p className="text-sm">Within 24 hours</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Selling & Consignment */}
-            <div className="contact-method bg-surface-1 p-8 rounded-lg">
-              <h3 className="font-serif text-2xl text-ink mb-4">
-                Selling & Consignment
-              </h3>
-              <p className="text-ink-light mb-6">
-                Ready to consign your items or sell to us directly?
-              </p>
-              <div className="space-y-3 text-ink">
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:consign@kollect-it.com"
-                    className="text-gold font-medium hover:underline"
-                  >
-                    consign@kollect-it.com
-                  </a>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Phone
-                  </p>
-                  <a
-                    href="tel:+15551234567"
-                    className="text-gold font-medium hover:underline"
-                  >
-                    +1 (555) 123-4567
-                  </a>
-                </div>
-                <Link
-                  href="/sell"
-                  className="inline-block text-gold font-medium hover:underline mt-2"
+      <AesopSection variant="cream" layout="full">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+          {/* General Inquiries */}
+          <div className="contact-method bg-surface-1 p-8 rounded-lg">
+            <h3 className="font-serif text-2xl text-ink mb-4">
+              General Inquiries
+            </h3>
+            <p className="text-ink-light mb-6">
+              Have a question about our collection, authentication process, or
+              services?
+            </p>
+            <div className="space-y-3 text-ink">
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Email
+                </p>
+                <a
+                  href="mailto:hello@kollect-it.com"
+                  className="text-gold font-medium hover:underline"
                 >
-                  Consignment Info →
-                </Link>
+                  hello@kollect-it.com
+                </a>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Phone
+                </p>
+                <a
+                  href="tel:+15551234567"
+                  className="text-gold font-medium hover:underline"
+                >
+                  +1 (555) 123-4567
+                </a>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Response Time
+                </p>
+                <p className="text-sm">Within 24 hours</p>
               </div>
             </div>
+          </div>
 
-            {/* Customer Support */}
-            <div className="contact-method bg-surface-1 p-8 rounded-lg">
-              <h3 className="font-serif text-2xl text-ink mb-4">
-                Customer Support
-              </h3>
-              <p className="text-ink-light mb-6">
-                Need help with an order or have a delivery question?
-              </p>
-              <div className="space-y-3 text-ink">
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:support@kollect-it.com"
-                    className="text-gold font-medium hover:underline"
-                  >
-                    support@kollect-it.com
-                  </a>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Phone
-                  </p>
-                  <a
-                    href="tel:+15551234567"
-                    className="text-gold font-medium hover:underline"
-                  >
-                    +1 (555) 123-4567
-                  </a>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink-light mb-1">
-                    Hours
-                  </p>
-                  <p className="text-sm">Mon-Fri: 9am-6pm EST</p>
-                </div>
+          {/* Selling & Consignment */}
+          <div className="contact-method bg-surface-1 p-8 rounded-lg">
+            <h3 className="font-serif text-2xl text-ink mb-4">
+              Selling & Consignment
+            </h3>
+            <p className="text-ink-light mb-6">
+              Ready to consign your items or sell to us directly?
+            </p>
+            <div className="space-y-3 text-ink">
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Email
+                </p>
+                <a
+                  href="mailto:consign@kollect-it.com"
+                  className="text-gold font-medium hover:underline"
+                >
+                  consign@kollect-it.com
+                </a>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Phone
+                </p>
+                <a
+                  href="tel:+15551234567"
+                  className="text-gold font-medium hover:underline"
+                >
+                  +1 (555) 123-4567
+                </a>
+              </div>
+              <Link
+                href="/sell"
+                className="inline-block text-gold font-medium hover:underline mt-2"
+              >
+                Consignment Info →
+              </Link>
+            </div>
+          </div>
+
+          {/* Customer Support */}
+          <div className="contact-method bg-surface-1 p-8 rounded-lg">
+            <h3 className="font-serif text-2xl text-ink mb-4">
+              Customer Support
+            </h3>
+            <p className="text-ink-light mb-6">
+              Need help with an order or have a delivery question?
+            </p>
+            <div className="space-y-3 text-ink">
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Email
+                </p>
+                <a
+                  href="mailto:support@kollect-it.com"
+                  className="text-gold font-medium hover:underline"
+                >
+                  support@kollect-it.com
+                </a>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Phone
+                </p>
+                <a
+                  href="tel:+15551234567"
+                  className="text-gold font-medium hover:underline"
+                >
+                  +1 (555) 123-4567
+                </a>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-ink-light mb-1">
+                  Hours
+                </p>
+                <p className="text-sm">Mon-Fri: 9am-6pm EST</p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* CONTACT FORM SECTION */}
-      <section className="py-16 md:py-24 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="font-serif text-4xl md:text-5xl text-ink mb-8 text-center">
-              Send Us a Message
-            </h2>
-
-            <div className="bg-surface-0 p-8 md:p-12 rounded-lg">
-              <ContactForm />
-            </div>
-          </div>
+      <AesopSection
+        variant="sand"
+        layout="full"
+        title="Send Us a Message"
+      >
+        <div className="bg-surface-0 p-8 md:p-12 rounded-lg max-w-2xl mx-auto">
+          <ContactForm />
         </div>
-      </section>
+      </AesopSection>
 
       {/* FAQ QUICK LINKS */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4 text-center">
-              Find Answers Quickly
-            </h2>
-            <p className="text-center text-ink-light text-lg mb-12">
-              Browse our comprehensive FAQ for answers to common questions
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <Link
-                href="/faq#buying"
-                className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-serif text-lg text-ink mb-2">
-                  Buying & Ordering
-                </h3>
-                <span className="text-gold text-sm">View FAQ →</span>
-              </Link>
-              <Link
-                href="/faq#shipping"
-                className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-serif text-lg text-ink mb-2">
-                  Shipping & Delivery
-                </h3>
-                <span className="text-gold text-sm">View FAQ →</span>
-              </Link>
-              <Link
-                href="/faq#authentication"
-                className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-serif text-lg text-ink mb-2">
-                  Authentication
-                </h3>
-                <span className="text-gold text-sm">View FAQ →</span>
-              </Link>
-              <Link
-                href="/faq#returns"
-                className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-serif text-lg text-ink mb-2">
-                  Returns & Refunds
-                </h3>
-                <span className="text-gold text-sm">View FAQ →</span>
-              </Link>
-              <Link
-                href="/faq#selling"
-                className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-serif text-lg text-ink mb-2">
-                  Selling & Consignment
-                </h3>
-                <span className="text-gold text-sm">View FAQ →</span>
-              </Link>
-              <Link
-                href="/faq#account"
-                className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-serif text-lg text-ink mb-2">
-                  Account & Technical
-                </h3>
-                <span className="text-gold text-sm">View FAQ →</span>
-              </Link>
-            </div>
-          </div>
+      <AesopSection
+        variant="olive"
+        layout="full"
+        title="Find Answers Quickly"
+        description={
+          <>
+            Browse our comprehensive FAQ for answers to common questions
+          </>
+        }
+      >
+        <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <Link
+            href="/faq#buying"
+            className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-serif text-lg text-ink mb-2">
+              Buying & Ordering
+            </h3>
+            <span className="text-gold text-sm">View FAQ →</span>
+          </Link>
+          <Link
+            href="/faq#shipping"
+            className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-serif text-lg text-ink mb-2">
+              Shipping & Delivery
+            </h3>
+            <span className="text-gold text-sm">View FAQ →</span>
+          </Link>
+          <Link
+            href="/faq#authentication"
+            className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-serif text-lg text-ink mb-2">
+              Authentication
+            </h3>
+            <span className="text-gold text-sm">View FAQ →</span>
+          </Link>
+          <Link
+            href="/faq#returns"
+            className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-serif text-lg text-ink mb-2">
+              Returns & Refunds
+            </h3>
+            <span className="text-gold text-sm">View FAQ →</span>
+          </Link>
+          <Link
+            href="/faq#selling"
+            className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-serif text-lg text-ink mb-2">
+              Selling & Consignment
+            </h3>
+            <span className="text-gold text-sm">View FAQ →</span>
+          </Link>
+          <Link
+            href="/faq#account"
+            className="bg-surface-1 p-6 rounded-lg hover:shadow-lg transition-shadow"
+          >
+            <h3 className="font-serif text-lg text-ink mb-2">
+              Account & Technical
+            </h3>
+            <span className="text-gold text-sm">View FAQ →</span>
+          </Link>
         </div>
-      </section>
+      </AesopSection>
 
       {/* HOURS & LOCATION */}
-      <section className="py-12 md:py-16 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="font-serif text-2xl text-ink mb-6">
-              Business Hours
-            </h3>
-            <div className="space-y-2 text-ink-light">
-              <p>
-                <span className="font-semibold text-ink">Monday – Friday:</span>{" "}
-                9:00 AM – 6:00 PM EST
-              </p>
-              <p>
-                <span className="font-semibold text-ink">Saturday:</span> 10:00
-                AM – 4:00 PM EST
-              </p>
-              <p>
-                <span className="font-semibold text-ink">Sunday:</span> Closed
-              </p>
-            </div>
-          </div>
+      <AesopSection
+        variant="charcoal"
+        layout="full"
+        title="Business Hours"
+      >
+        <div className="space-y-2 text-ink-light max-w-2xl mx-auto text-center">
+          <p>
+            <span className="font-semibold text-ink">Monday – Friday:</span>{" "}
+            9:00 AM – 6:00 PM EST
+          </p>
+          <p>
+            <span className="font-semibold text-ink">Saturday:</span> 10:00
+            AM – 4:00 PM EST
+          </p>
+          <p>
+            <span className="font-semibold text-ink">Sunday:</span> Closed
+          </p>
         </div>
-      </section>
+      </AesopSection>
     </main>
   );
 }

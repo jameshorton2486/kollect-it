@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
@@ -315,10 +316,10 @@ const faqCategories = [
 
 export default function FAQPage() {
   return (
-    <main className="bg-surface-0" role="main">
+    <main role="main">
       {/* HERO SECTION */}
-      <section className="py-20 md:py-28 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
+      <AesopSection variant="charcoal">
+        <div className="text-center">
           <div className="max-w-3xl mx-auto">
             <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
               HELP CENTER
@@ -333,52 +334,50 @@ export default function FAQPage() {
             </p>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* FAQ CATEGORIES SECTION */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto">
-            {faqCategories.map((category) => (
-              <div
-                key={category.id}
-                id={category.id}
-                className="mb-16 md:mb-20"
-              >
-                <div className="flex items-center gap-4 mb-12">
-                  <span className="text-4xl">{category.icon}</span>
-                  <h2 className="font-serif text-4xl md:text-5xl text-ink">
-                    {category.title}
-                  </h2>
-                </div>
-
-                <div className="space-y-4">
-                  {category.faqs.map((faq, idx) => (
-                    <details
-                      key={idx}
-                      className="faq-item group border border-surface-2 rounded-lg p-6 hover:shadow-md transition-shadow"
-                    >
-                      <summary className="cursor-pointer font-semibold text-ink text-lg flex justify-between items-start gap-4 select-none">
-                        {faq.q}
-                        <span className="flex-shrink-0 text-gold text-2xl group-open:rotate-180 transition-transform">
-                          ▼
-                        </span>
-                      </summary>
-                      <div className="faq-answer mt-6 text-ink-light leading-relaxed border-t border-surface-2 pt-6">
-                        <p>{faq.a}</p>
-                      </div>
-                    </details>
-                  ))}
-                </div>
+      <AesopSection variant="cream">
+        <div className="max-w-5xl mx-auto">
+          {faqCategories.map((category) => (
+            <div
+              key={category.id}
+              id={category.id}
+              className="mb-16 md:mb-20"
+            >
+              <div className="flex items-center gap-4 mb-12">
+                <span className="text-4xl">{category.icon}</span>
+                <h2 className="font-serif text-4xl md:text-5xl text-ink">
+                  {category.title}
+                </h2>
               </div>
-            ))}
-          </div>
+
+              <div className="space-y-4">
+                {category.faqs.map((faq, idx) => (
+                  <details
+                    key={idx}
+                    className="faq-item group border border-surface-2 rounded-lg p-6 hover:shadow-md transition-shadow"
+                  >
+                    <summary className="cursor-pointer font-semibold text-ink text-lg flex justify-between items-start gap-4 select-none">
+                      {faq.q}
+                      <span className="flex-shrink-0 text-gold text-2xl group-open:rotate-180 transition-transform">
+                        ▼
+                      </span>
+                    </summary>
+                    <div className="faq-answer mt-6 text-ink-light leading-relaxed border-t border-surface-2 pt-6">
+                      <p>{faq.a}</p>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
+      </AesopSection>
 
       {/* STILL NEED HELP SECTION */}
-      <section className="py-16 md:py-24 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
+      <AesopSection variant="sand">
+        <div className="text-center">
           <div className="max-w-3xl mx-auto">
             <h3 className="font-serif text-4xl text-ink mb-4">
               Still Have Questions?
@@ -404,7 +403,7 @@ export default function FAQPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
     </main>
   );
 }

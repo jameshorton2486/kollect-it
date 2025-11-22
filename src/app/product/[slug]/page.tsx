@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import dynamic from "next/dynamic";
 import ClientProductLayout from "@/components/product/ClientProductLayout";
+import { AesopSection } from "@/components/AesopSection";
 const ImageGallery = dynamic(() => import("@/components/product/ImageGallery"));
 const ProductInfo = dynamic(() => import("@/components/product/ProductInfo"));
 const ProductTabs = dynamic(() => import("@/components/product/ProductTabs"));
@@ -198,30 +199,29 @@ export default async function ProductPage({ params }: ProductPageProps) {
         />
 
         {/* Main Product Section */}
-        <main
-          className="ki-section container mx-auto px-4 md:px-6 lg:px-8 py-12"
-          role="main"
-        >
-          <div className="container mx-auto">
-            <div className="product-layout">
-              {/* Image Gallery */}
-              <ImageGallery images={product.images} title={product.title} />
+        <AesopSection variant="cream">
+          <div className="product-layout">
+            {/* Image Gallery */}
+            <ImageGallery images={product.images} title={product.title} />
 
-              {/* Product Info */}
-              <ProductInfo product={product} sku={sku} />
-            </div>
+            {/* Product Info */}
+            <ProductInfo product={product} sku={sku} />
           </div>
-        </main>
+        </AesopSection>
 
         {/* Product Tabs */}
-        <ProductTabs product={product} />
+        <AesopSection variant="sand">
+          <ProductTabs product={product} />
+        </AesopSection>
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <RelatedProducts
-            products={relatedProducts}
-            categoryName={product.category.name}
-          />
+          <AesopSection variant="olive">
+            <RelatedProducts
+              products={relatedProducts}
+              categoryName={product.category.name}
+            />
+          </AesopSection>
         )}
 
         {/* Client-only sticky cart bar via wrapper */}

@@ -158,11 +158,10 @@ export default async function ShopPage({
       />
 
       {/* Page Content */}
-      <section className="shop-page">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
           {/* Search Results */}
           {q && (
-            <div className="mb-10">
+            <AesopSection variant="cream">
+              <div className="mb-10">
               <h2 className="font-serif text-2xl mb-2">
                 Search results for “{q}”
               </h2>
@@ -186,63 +185,66 @@ export default async function ShopPage({
                 </div>
               )}
             </div>
+            </AesopSection>
           )}
 
           {/* Animated Headline */}
-          <div className="shop-intro text-center mb-[clamp(3rem,6vw,5rem)]">
-            <p className="section-subtitle" data-reveal>
-              PROFESSIONALLY CURATED COLLECTIONS
-            </p>
-            <h1
-              className="section-title-main"
-              data-reveal
-              data-reveal-delay="100"
-            >
-              Shop by Category
-            </h1>
-            <p
-              className="max-w-[700px] mx-auto text-base leading-[1.7] text-[hsl(var(--ink-700))]"
-              data-reveal
-              data-reveal-delay="200"
-            >
-              Browse rare books, fine art, collectibles, and historical
-              artifacts. Professionally described, fairly priced, personally
-              curated.
-            </p>
-          </div>
+          <AesopSection variant="sand">
+            <div className="shop-intro text-center mb-[clamp(3rem,6vw,5rem)]">
+              <p className="section-subtitle" data-reveal>
+                PROFESSIONALLY CURATED COLLECTIONS
+              </p>
+              <h1
+                className="section-title-main"
+                data-reveal
+                data-reveal-delay="100"
+              >
+                Shop by Category
+              </h1>
+              <p
+                className="max-w-[700px] mx-auto text-base leading-[1.7] text-[hsl(var(--ink-700))]"
+                data-reveal
+                data-reveal-delay="200"
+              >
+                Browse rare books, fine art, collectibles, and historical
+                artifacts. Professionally described, fairly priced, personally
+                curated.
+              </p>
+            </div>
+          </AesopSection>
 
           {/* Category Grid 2x2 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {categories.slice(0, 4).map((category) => (
-              <Link
-                key={category.id}
-                href={`/category/${category.slug}`}
-                className="group block overflow-hidden rounded border border-[hsl(var(--border-300))] bg-surface-0 shadow-sm transition hover:shadow-md"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={category.image}
-                    alt={`${category.name} banner`}
-                    width={800}
-                    height={600}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                    quality={85}
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL={BLUR_DATA_URL}
-                  />
-                </div>
-                <div className="p-4">
-                  <h4 className="ki-heading-sm mb-1">{category.name}</h4>
-                  <p className="ki-text-sm text-[hsl(var(--ink-700))]">
-                    {category.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+          <AesopSection variant="olive">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {categories.slice(0, 4).map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/category/${category.slug}`}
+                  className="group block overflow-hidden rounded border border-[hsl(var(--border-300))] bg-surface-0 shadow-sm transition hover:shadow-md"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={category.image}
+                      alt={`${category.name} banner`}
+                      width={800}
+                      height={600}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      quality={85}
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={BLUR_DATA_URL}
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h4 className="ki-heading-sm mb-1">{category.name}</h4>
+                    <p className="ki-text-sm text-[hsl(var(--ink-700))]">
+                      {category.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </AesopSection>
 
     </main>
   );

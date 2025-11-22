@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import LatestArrivals from "@/components/home/LatestArrivalsClient";
 import ShopByCategories from "@/components/home/ShopByCategoriesClient";
 import TrustStrip from "@/components/home/TrustStrip";
+import { AesopSection } from "@/components/AesopSection";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="bg-aesop-cream" role="main">
+    <main role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -80,24 +81,24 @@ export default function HomePage() {
         }}
       />
       <Hero />
-      <section className="bg-aesop-sand py-16">
+      <AesopSection variant="sand">
         <TrustStrip />
-      </section>
-      <section className="bg-aesop-cream py-16">
+      </AesopSection>
+      <AesopSection variant="cream">
         <LatestArrivals />
-      </section>
-      <section className="bg-aesop-sand py-16">
+      </AesopSection>
+      <AesopSection variant="sand">
         <LazyFeaturedCollection />
-      </section>
-      <section className="bg-aesop-olive py-16">
+      </AesopSection>
+      <AesopSection variant="olive">
         <ShopByCategories />
-      </section>
-      <section className="bg-aesop-cream py-16">
+      </AesopSection>
+      <AesopSection variant="cream">
         <LazyTestimonials />
-      </section>
-      <section className="bg-aesop-charcoal py-16">
+      </AesopSection>
+      <AesopSection variant="charcoal">
         <LazyProcessOverview />
-      </section>
+      </AesopSection>
     </main>
   );
 }

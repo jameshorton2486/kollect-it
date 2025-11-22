@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
   title: "Sell Your Items - Kollect-It",
@@ -23,163 +24,159 @@ export const metadata: Metadata = {
 
 export default function SellPage() {
   return (
-    <main className="bg-surface-0" role="main">
+    <main role="main">
       {/* HERO SECTION */}
-      <section className="py-20 md:py-32 bg-surface-1">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
-              HAVE ITEMS TO SELL?
-            </p>
-            <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
-              Sell Your Items
-              <br />
-              Directly to Collectors
-            </h1>
-            <p className="text-xl md:text-2xl text-ink-light font-serif mb-8 leading-relaxed">
-              Whether you have a single valuable piece or a collection, we're
-              interested in working with you. Fair valuations, transparent
-              process, no 25-50% auction house commissions.
-            </p>
-            <a
-              href="#consignment-form"
-              className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Tell Us About Your Items
-            </a>
-          </div>
+      <AesopSection variant="charcoal">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
+            HAVE ITEMS TO SELL?
+          </p>
+          <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
+            Sell Your Items
+            <br />
+            Directly to Collectors
+          </h1>
+          <p className="text-xl md:text-2xl text-ink-light font-serif mb-8 leading-relaxed">
+            Whether you have a single valuable piece or a collection, we're
+            interested in working with you. Fair valuations, transparent
+            process, no 25-50% auction house commissions.
+          </p>
+          <a
+            href="#consignment-form"
+            className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Tell Us About Your Items
+          </a>
         </div>
-      </section>
+      </AesopSection>
 
       {/* HOW IT WORKS - DETAILED PROCESS */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
-              HOW IT WORKS
-            </p>
-            <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
-              Six Simple Steps
-            </h2>
+      <AesopSection variant="cream">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
+            HOW IT WORKS
+          </p>
+          <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
+            Six Simple Steps
+          </h2>
 
-            <div className="space-y-8">
-              <div className="process-step flex gap-6 md:gap-8">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                    1
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">
-                    Submit Your Items
-                  </h3>
-                  <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Fill out our simple consignment form with photos and
-                    descriptions of your items. Our team reviews submissions
-                    within 48 hours and provides initial feedback.
-                  </p>
+          <div className="space-y-8">
+            <div className="process-step flex gap-6 md:gap-8">
+              <div className="flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
+                  1
                 </div>
               </div>
+              <div className="flex-grow">
+                <h3 className="font-serif text-2xl text-ink mb-3">
+                  Submit Your Items
+                </h3>
+                <p className="text-ink-light leading-relaxed text-base md:text-lg">
+                  Fill out our simple consignment form with photos and
+                  descriptions of your items. Our team reviews submissions
+                  within 48 hours and provides initial feedback.
+                </p>
+              </div>
+            </div>
 
-              <div className="process-step flex gap-6 md:gap-8">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                    2
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">
-                    Expert Evaluation
-                  </h3>
-                  <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Our specialists assess authenticity, condition, and market
-                    value. We provide a detailed appraisal and pricing
-                    recommendation based on comparable sales and current demand.
-                  </p>
+            <div className="process-step flex gap-6 md:gap-8">
+              <div className="flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
+                  2
                 </div>
               </div>
+              <div className="flex-grow">
+                <h3 className="font-serif text-2xl text-ink mb-3">
+                  Expert Evaluation
+                </h3>
+                <p className="text-ink-light leading-relaxed text-base md:text-lg">
+                  Our specialists assess authenticity, condition, and market
+                  value. We provide a detailed appraisal and pricing
+                  recommendation based on comparable sales and current demand.
+                </p>
+              </div>
+            </div>
 
-              <div className="process-step flex gap-6 md:gap-8">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                    3
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">
-                    Professional Listing
-                  </h3>
-                  <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    We handle everything: professional studio photography,
-                    detailed descriptions, authentication documentation,
-                    strategic pricing, and category optimization for maximum
-                    visibility.
-                  </p>
+            <div className="process-step flex gap-6 md:gap-8">
+              <div className="flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
+                  3
                 </div>
               </div>
+              <div className="flex-grow">
+                <h3 className="font-serif text-2xl text-ink mb-3">
+                  Professional Listing
+                </h3>
+                <p className="text-ink-light leading-relaxed text-base md:text-lg">
+                  We handle everything: professional studio photography,
+                  detailed descriptions, authentication documentation,
+                  strategic pricing, and category optimization for maximum
+                  visibility.
+                </p>
+              </div>
+            </div>
 
-              <div className="process-step flex gap-6 md:gap-8">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                    4
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">
-                    Marketing & Sales
-                  </h3>
-                  <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Your items are promoted to our established collector base
-                    through email campaigns, social media, featured placements,
-                    and targeted outreach to relevant collectors and dealers.
-                  </p>
+            <div className="process-step flex gap-6 md:gap-8">
+              <div className="flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
+                  4
                 </div>
               </div>
+              <div className="flex-grow">
+                <h3 className="font-serif text-2xl text-ink mb-3">
+                  Marketing & Sales
+                </h3>
+                <p className="text-ink-light leading-relaxed text-base md:text-lg">
+                  Your items are promoted to our established collector base
+                  through email campaigns, social media, featured placements,
+                  and targeted outreach to relevant collectors and dealers.
+                </p>
+              </div>
+            </div>
 
-              <div className="process-step flex gap-6 md:gap-8">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                    5
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">
-                    White Glove Fulfillment
-                  </h3>
-                  <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    When your item sells, we handle all logistics: payment
-                    processing, insurance, professional packaging with archival
-                    materials, and shipping coordination with full tracking and
-                    protection.
-                  </p>
+            <div className="process-step flex gap-6 md:gap-8">
+              <div className="flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
+                  5
                 </div>
               </div>
+              <div className="flex-grow">
+                <h3 className="font-serif text-2xl text-ink mb-3">
+                  White Glove Fulfillment
+                </h3>
+                <p className="text-ink-light leading-relaxed text-base md:text-lg">
+                  When your item sells, we handle all logistics: payment
+                  processing, insurance, professional packaging with archival
+                  materials, and shipping coordination with full tracking and
+                  protection.
+                </p>
+              </div>
+            </div>
 
-              <div className="process-step flex gap-6 md:gap-8">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                    6
-                  </div>
+            <div className="process-step flex gap-6 md:gap-8">
+              <div className="flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
+                  6
                 </div>
-                <div className="flex-grow">
-                  <h3 className="font-serif text-2xl text-ink mb-3">
-                    Get Paid
-                  </h3>
-                  <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                    Receive your payment within 7 days of confirmed delivery.
-                    You get itemized documentation showing sale price, all fees,
-                    and your net proceeds. Payment via bank transfer, check, or
-                    PayPal.
-                  </p>
-                </div>
+              </div>
+              <div className="flex-grow">
+                <h3 className="font-serif text-2xl text-ink mb-3">
+                  Get Paid
+                </h3>
+                <p className="text-ink-light leading-relaxed text-base md:text-lg">
+                  Receive your payment within 7 days of confirmed delivery.
+                  You get itemized documentation showing sale price, all fees,
+                  and your net proceeds. Payment via bank transfer, check, or
+                  PayPal.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* COMMISSION STRUCTURE */}
-      <section className="py-16 md:py-24 bg-surface-1">
+      <AesopSection variant="sand">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
@@ -269,10 +266,10 @@ export default function SellPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* WHAT WE ACCEPT */}
-      <section className="py-16 md:py-24">
+      <AesopSection variant="olive">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
@@ -351,10 +348,10 @@ export default function SellPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* SELLER TESTIMONIALS */}
-      <section className="py-16 md:py-24 bg-surface-1">
+      <AesopSection variant="cream">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
@@ -424,10 +421,10 @@ export default function SellPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* CONSIGNMENT FORM */}
-      <section id="consignment-form" className="py-16 md:py-24">
+      <AesopSection variant="sand">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-8 text-center leading-tight">
@@ -550,10 +547,10 @@ export default function SellPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AesopSection>
 
       {/* CTA SECTION */}
-      <section className="py-12 md:py-16 bg-surface-1 text-center">
+      <AesopSection variant="olive">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
             <p className="text-ink-light mb-4">Questions about consignment?</p>
@@ -565,7 +562,7 @@ export default function SellPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </AesopSection>
     </main>
   );
 }
