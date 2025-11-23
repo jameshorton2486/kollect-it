@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="relative bg-gradient-subtle py-20 md:py-32 overflow-hidden">
+    <section className="relative bg-gradient-subtle py-16 md:py-20 overflow-hidden">
       {/* Decorative blur */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/20 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Headline */}
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-ink-900">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-ink-900">
             Rare Finds, Timeless
             <span className="block text-gold-600 mt-2">
               Treasures

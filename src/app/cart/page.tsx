@@ -148,7 +148,7 @@ export default function CartPage() {
       <AesopSection variant="cream">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-2 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-gold uppercase mb-2 font-normal">
               SHOPPING CART
             </p>
             <h1 className="font-serif text-4xl md:text-5xl text-ink">
