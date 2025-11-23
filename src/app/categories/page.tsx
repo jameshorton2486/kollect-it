@@ -46,8 +46,8 @@ export default function CategoriesPage() {
               className="group block"
             >
               <div className="bg-surface-0 border border-border-300 rounded-lg p-8 text-center transition-all duration-300 hover:shadow-lg hover:border-gold-500 h-full flex flex-col items-center justify-center gap-6">
-                <category.icon size={48} color="#C9A66B" strokeWidth={1.5} />
-                <h2 className="font-serif text-xl text-ink m-0">
+                <category.icon size={48} className="text-gold-500" strokeWidth={1.5} />
+                <h2 className="font-serif text-xl text-ink-900 m-0">
                   {category.name}
                 </h2>
               </div>

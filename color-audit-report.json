@@ -1,0 +1,4012 @@
+{
+  "filesScanned": 242,
+  "filesWithIssues": 71,
+  "totalIssues": 629,
+  "issuesByFile": {
+    "src\\app\\about\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 254,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 274,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 294,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 314,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 334,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 353,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\account\\page.tsx": [
+      {
+        "color": "rgba(199,168,94,0.15)",
+        "line": 303,
+        "context": "? \"bg-[rgba(199,168,94,0.15)] text-[hsl(var(--ink-900))]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\analytics\\customers\\page.tsx": [
+      {
+        "color": "border-amber-600",
+        "line": 73,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-500",
+        "line": 103,
+        "context": "className=\"px-4 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-500",
+        "line": 206,
+        "context": "className=\"bg-blue-500 h-2 rounded-full\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 220,
+        "context": "className=\"px-6 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 220,
+        "context": "className=\"px-6 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 220,
+        "context": "className=\"px-6 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\analytics\\products\\page.tsx": [
+      {
+        "color": "border-amber-600",
+        "line": 24,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\analytics\\sales\\page.tsx": [
+      {
+        "color": "border-amber-600",
+        "line": 91,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-500",
+        "line": 125,
+        "context": "className=\"px-4 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 195,
+        "context": "className=\"w-full px-4 py-2 text-sm bg-amber-600 text-white rounded hover:bg-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 195,
+        "context": "className=\"w-full px-4 py-2 text-sm bg-amber-600 text-white rounded hover:bg-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 195,
+        "context": "className=\"w-full px-4 py-2 text-sm bg-amber-600 text-white rounded hover:bg-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 201,
+        "context": "className=\"w-full px-4 py-2 text-sm bg-gray-600 text-white rounded hover:bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 201,
+        "context": "className=\"w-full px-4 py-2 text-sm bg-gray-600 text-white rounded hover:bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 201,
+        "context": "className=\"w-full px-4 py-2 text-sm bg-gray-600 text-white rounded hover:bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 241,
+        "context": "className=\"bg-amber-600 h-2 rounded-full\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\categories\\page.tsx": [
+      {
+        "color": "text-gray-400",
+        "line": 153,
+        "context": "<span className=\"text-gray-400\">No image</span>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-black",
+        "line": 158,
+        "context": "<label className=\"absolute inset-0 bg-black/0 hover:bg-black/50 flex items-center justify-center cursor-pointer transition-all duration-200 group\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-black",
+        "line": 158,
+        "context": "<label className=\"absolute inset-0 bg-black/0 hover:bg-black/50 flex items-center justify-center cursor-pointer transition-all duration-200 group\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 163,
+        "context": "className=\"animate-spin text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 166,
+        "context": "<span className=\"text-white text-sm\">Uploading...</span>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 170,
+        "context": "<Upload className=\"text-white\" size={32} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 171,
+        "context": "<span className=\"text-white text-sm font-medium\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 237,
+        "context": "className=\"flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-medium flex items-center justify-center gap-2 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-300",
+        "line": 247,
+        "context": "className=\"flex-1 bg-gray-300 hover:bg-gray-400 text-ink-900 px-3 py-2 rounded text-sm font-medium flex items-center justify-center gap-2 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-400",
+        "line": 247,
+        "context": "className=\"flex-1 bg-gray-300 hover:bg-gray-400 text-ink-900 px-3 py-2 rounded text-sm font-medium flex items-center justify-center gap-2 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 263,
+        "context": "className=\"flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 263,
+        "context": "className=\"flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 263,
+        "context": "className=\"flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\customers\\page.tsx": [
+      {
+        "color": "bg-blue-100",
+        "line": 161,
+        "context": "<div className=\"stat-icon bg-blue-100\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-800",
+        "line": 167,
+        "context": "className=\"text-blue-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-100",
+        "line": 210,
+        "context": "<div className=\"stat-icon bg-amber-100\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-900",
+        "line": 216,
+        "context": "className=\"text-amber-900\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 370,
+        "context": "<span className=\"inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-700",
+        "line": 370,
+        "context": "<span className=\"inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\dashboard\\page.tsx": [
+      {
+        "color": "bg-blue-600",
+        "line": 224,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 224,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 224,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 236,
+        "context": "className=\"px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 286,
+        "context": "className=\"inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-semibold\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 286,
+        "context": "className=\"inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-semibold\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 286,
+        "context": "className=\"inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-semibold\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 292,
+        "context": "className=\"inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-semibold\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 338,
+        "context": "<h2 className=\"text-xl font-semibold mb-4 text-amber-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-100",
+        "line": 438,
+        "context": "? \"bg-blue-100 text-blue-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-800",
+        "line": 438,
+        "context": "? \"bg-blue-100 text-blue-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-100",
+        "line": 439,
+        "context": ": \"bg-yellow-100 text-yellow-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-800",
+        "line": 439,
+        "context": ": \"bg-yellow-100 text-yellow-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 489,
+        "context": "className=\"text-sm text-blue-600 hover:underline\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-100",
+        "line": 524,
+        "context": "? \"bg-amber-100 text-amber-900\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-900",
+        "line": 524,
+        "context": "? \"bg-amber-100 text-amber-900\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 574,
+        "context": "? \"text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-700",
+        "line": 576,
+        "context": "? \"text-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 875,
+        "context": "className=\"w-4 h-4 text-amber-600 border-border-neutral rounded focus:ring-cta-ring\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 886,
+        "context": "className=\"px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 886,
+        "context": "className=\"px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 886,
+        "context": "className=\"px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\login\\page.tsx": [
+      {
+        "color": "border-amber-500",
+        "line": 80,
+        "context": "className=\"w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-500",
+        "line": 98,
+        "context": "className=\"w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 106,
+        "context": "className=\"w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold py-3 rounded-lg hover:from-amber-700 hover:to-amber-800 transition disabled:opacity-50 disabled:cursor-not-allowed\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\orders\\page.tsx": [
+      {
+        "color": "bg-blue-100",
+        "line": 237,
+        "context": "<div className=\"stat-icon bg-blue-100\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-800",
+        "line": 243,
+        "context": "className=\"text-blue-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-100",
+        "line": 258,
+        "context": "<div className=\"stat-icon bg-amber-100\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-900",
+        "line": 264,
+        "context": "className=\"text-amber-900\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\orders\\[id]\\page.tsx": [
+      {
+        "color": "text-gray-600",
+        "line": 152,
+        "context": "<p className=\"text-gray-600 mb-6\">{error}</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-800",
+        "line": 166,
+        "context": "return \"bg-amber-800\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-800",
+        "line": 168,
+        "context": "return \"bg-blue-800\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-500",
+        "line": 176,
+        "context": "return \"bg-gray-500\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-800",
+        "line": 183,
+        "context": "return \"text-amber-800\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-800",
+        "line": 185,
+        "context": "return \"text-blue-800\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-500",
+        "line": 193,
+        "context": "return \"text-gray-500\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 207,
+        "context": "className={`status-badge ${getStatusClass(order.status)} text-white px-3 py-1`}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\sellers\\page.tsx": [
+      {
+        "color": "border-amber-600",
+        "line": 27,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\admin\\settings\\page.tsx": [
+      {
+        "color": "border-white",
+        "line": 122,
+        "context": "<div className=\"w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-white",
+        "line": 145,
+        "context": "<div className=\"w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-white",
+        "line": 168,
+        "context": "<div className=\"w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-white",
+        "line": 191,
+        "context": "<div className=\"w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 225,
+        "context": "className=\"flex items-center gap-2 px-6 py-3 bg-cta text-white rounded-lg hover:bg-cta/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\authentication\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 62,
+        "context": "<Link href=\"/contact\" className=\"inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\cart\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 88,
+        "context": "className=\"inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 125,
+        "context": "<div className=\"absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded text-sm font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 303,
+        "context": "className=\"block w-full bg-gold text-white font-semibold py-4 text-center rounded-lg hover:opacity-90 transition-opacity mb-3\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 310,
+        "context": "className=\"w-full border-2 border-gold text-gold font-semibold py-3 rounded-lg hover:bg-gold hover:text-white transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\category\\[slug]\\page.tsx": [
+      {
+        "color": "bg-white",
+        "line": 243,
+        "context": "<div className=\"category-page min-h-screen bg-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 373,
+        "context": "? \"border-[var(--color-accent)] bg-[var(--color-accent)] text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\compare\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 109,
+        "context": "className=\"absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\faq\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 393,
+        "context": "className=\"inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 399,
+        "context": "className=\"inline-block bg-surface-0 text-gold font-semibold px-8 py-4 rounded-lg border-2 border-gold hover:bg-gold hover:text-white transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\how-it-works\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 37,
+        "context": "<div className=\"bg-gold-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold mr-6 flex-shrink-0\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 101,
+        "context": "className=\"inline-block bg-gold-500 text-white px-10 py-4 rounded-lg font-bold text-lg hover:bg-gold-600 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\login\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 194,
+        "context": "className=\"w-full px-4 py-3 bg-cta text-white font-medium rounded-lg hover:bg-cta/90 disabled:bg-cta/50 disabled:cursor-not-allowed transition-colors mt-6\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-white",
+        "line": 198,
+        "context": "<div className=\"w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\payment\\page.tsx": [
+      {
+        "color": "#3A3A3A",
+        "line": 54,
+        "context": "<div style={{ backgroundColor: \"#3A3A3A\", color: \"#FFFFFF\", padding: \"40px\", borderRadius: \"8px\", textAlign: \"center\" }}>",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#FFFFFF",
+        "line": 54,
+        "context": "<div style={{ backgroundColor: \"#3A3A3A\", color: \"#FFFFFF\", padding: \"40px\", borderRadius: \"8px\", textAlign: \"center\" }}>",
+        "suggestion": "bg-surface-0"
+      },
+      {
+        "color": "#C9A66B",
+        "line": 55,
+        "context": "<ShieldCheck size={48} color=\"#C9A66B\" style={{ margin: \"0 auto 20px\" }} />",
+        "suggestion": "bg-gold-500"
+      },
+      {
+        "color": "#C9A66B",
+        "line": 56,
+        "context": "<h2 style={{ fontFamily: \"serif\", fontSize: \"2rem\", marginBottom: \"20px\", color: \"#C9A66B\" }}>Security Guarantee</h2>",
+        "suggestion": "bg-gold-500"
+      }
+    ],
+    "src\\app\\register\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 306,
+        "context": "className=\"w-full px-4 py-3 bg-cta text-white font-medium rounded-lg hover:bg-cta/90 disabled:bg-cta/50 disabled:cursor-not-allowed transition-colors mt-6\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-white",
+        "line": 310,
+        "context": "<div className=\"w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\sell\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 46,
+        "context": "className=\"inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 66,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 84,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 102,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 121,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 139,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 158,
+        "context": "<div className=\"flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 218,
+        "context": "<div className=\"commission-tier bg-gold text-white p-8 rounded-lg shadow-md\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 224,
+        "context": "<p className=\"text-white opacity-90 text-sm\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 230,
+        "context": "<span className=\"text-white opacity-90 text-sm ml-2\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 234,
+        "context": "<ul className=\"space-y-3 text-white opacity-90 text-sm\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 367,
+        "context": "<div className=\"w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 375,
+        "context": "<p className=\"text-yellow-400 mb-3\">★★★★★</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 386,
+        "context": "<div className=\"w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 394,
+        "context": "<p className=\"text-yellow-400 mb-3\">★★★★★</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 405,
+        "context": "<div className=\"w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center font-serif font-bold mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 413,
+        "context": "<p className=\"text-yellow-400 mb-3\">★★★★★</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 537,
+        "context": "className=\"w-full bg-gold text-white font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\app\\shipping-returns\\page.tsx": [
+      {
+        "color": "text-white",
+        "line": 57,
+        "context": "<Link href=\"/contact\" className=\"inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\AddToCartButton.tsx": [
+      {
+        "color": "text-white",
+        "line": 71,
+        "context": "className={`${className} ${added ? \"bg-green-600 hover:bg-green-700 text-white\" : \"\"}`}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\AdminSettingsPanel.tsx": [
+      {
+        "color": "bg-blue-600",
+        "line": 192,
+        "context": "className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 192,
+        "context": "className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 192,
+        "context": "className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-blue-500",
+        "line": 224,
+        "context": "? \"border-blue-500 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 224,
+        "context": "? \"border-blue-500 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 422,
+        "context": "className=\"w-4 h-4 text-blue-600 border-border-300 rounded focus:ring-blue-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 490,
+        "context": "className=\"w-4 h-4 text-blue-600 border-border-300 rounded focus:ring-blue-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-50",
+        "line": 523,
+        "context": "<div className=\"flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-yellow-200",
+        "line": 523,
+        "context": "<div className=\"flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 534,
+        "context": "className=\"w-4 h-4 text-blue-600 border-border-300 rounded focus:ring-blue-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-800",
+        "line": 538,
+        "context": "className=\"ml-2 text-sm font-medium text-yellow-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 551,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 551,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 551,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 570,
+        "context": "<button className=\"p-2 text-blue-600 hover:bg-blue-50 rounded\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 570,
+        "context": "<button className=\"p-2 text-blue-600 hover:bg-blue-50 rounded\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 603,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 603,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 603,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 639,
+        "context": "<button className=\"text-blue-600 hover:text-blue-900 mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-900",
+        "line": 639,
+        "context": "<button className=\"text-blue-600 hover:text-blue-900 mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 659,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 659,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 659,
+        "context": "<button className=\"flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 709,
+        "context": "<button className=\"text-blue-600 hover:text-blue-900 mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-900",
+        "line": 709,
+        "context": "<button className=\"text-blue-600 hover:text-blue-900 mr-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\AnalyticsDashboard.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 64,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 71,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 113,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 120,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 142,
+        "context": "<div className=\"pt-3 border-t border-[#D3AF37] flex justify-between\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 144,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 151,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 172,
+        "context": "<div className=\"pt-3 border-t border-[#D3AF37] flex justify-between\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 174,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 181,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 186,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 198,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 202,
+        "context": "<div className=\"pt-3 border-t border-[#D3AF37] text-sm\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 204,
+        "context": "<p className=\"text-[#D3AF37] font-semibold mt-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 214,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 225,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 49,
+        "context": "<div className=\"text-center text-gray-400\">Loading analytics...</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 52,
+        "context": "return <div className=\"text-center text-gray-400\">No data available</div>;",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 57,
+        "context": "<h1 className=\"text-3xl font-bold text-white\">Analytics Dashboard</h1>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 64,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 64,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 71,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 71,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 113,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 114,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 117,
+        "context": "<div className=\"space-y-3 text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 138,
+        "context": "<span className=\"text-yellow-400 font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 151,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 152,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">Pricing Metrics</h3>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 153,
+        "context": "<div className=\"space-y-3 text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 162,
+        "context": "<span className=\"text-yellow-400 font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 181,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 182,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">Product Metrics</h3>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 183,
+        "context": "<div className=\"space-y-3 text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 214,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 215,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 222,
+        "context": "className=\"flex justify-between text-gray-300 pb-2 border-b border-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 222,
+        "context": "className=\"flex justify-between text-gray-300 pb-2 border-b border-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\AnalyticsDashboardWebSocket.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 148,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 156,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 199,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 206,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 228,
+        "context": "<div className=\"pt-3 border-t border-[#D3AF37] flex justify-between\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 230,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 237,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 258,
+        "context": "<div className=\"pt-3 border-t border-[#D3AF37] flex justify-between\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 260,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 267,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 272,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 284,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 288,
+        "context": "<div className=\"pt-3 border-t border-[#D3AF37] text-sm\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 290,
+        "context": "<p className=\"text-[#D3AF37] font-semibold mt-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 300,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 311,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 113,
+        "context": "<div className=\"text-center text-gray-400\">Loading analytics...</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 116,
+        "context": "return <div className=\"text-center text-gray-400\">No data available</div>;",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 122,
+        "context": "<h1 className=\"text-3xl font-bold text-white\">Analytics Dashboard</h1>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 124,
+        "context": "<span className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 128,
+        "context": "<span className=\"text-yellow-400\">🟡 Fetching Data</span>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 131,
+        "context": "<label className=\"flex items-center gap-2 text-sm text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 148,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 148,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 156,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 156,
+        "context": "className=\"bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 199,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 200,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 203,
+        "context": "<div className=\"space-y-3 text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 224,
+        "context": "<span className=\"text-yellow-400 font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 237,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 238,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">Pricing Metrics</h3>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 239,
+        "context": "<div className=\"space-y-3 text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 248,
+        "context": "<span className=\"text-yellow-400 font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 267,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 268,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">Product Metrics</h3>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 269,
+        "context": "<div className=\"space-y-3 text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 300,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 301,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 308,
+        "context": "className=\"flex justify-between text-gray-300 pb-2 border-b border-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 308,
+        "context": "className=\"flex justify-between text-gray-300 pb-2 border-b border-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\ApprovalQueue.tsx": [
+      {
+        "color": "#1a1a1a",
+        "line": 127,
+        "context": "<div className=\"min-h-screen bg-[#1a1a1a] text-white p-8\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 131,
+        "context": "<h1 className=\"text-4xl font-bold text-[#D3AF37] mb-2\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 158,
+        "context": "? \"bg-[#D3AF37] text-[#1a1a1a]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 158,
+        "context": "? \"bg-[#D3AF37] text-[#1a1a1a]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 159,
+        "context": ": \"bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 159,
+        "context": ": \"bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]\"",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 172,
+        "context": "<div className=\"bg-[#2a2a2a] rounded-lg overflow-hidden\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 182,
+        "context": "<div className=\"divide-y divide-[#3a3a3a]\">",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 189,
+        "context": "? \"bg-[#3a3a3a] border-l-4 border-[#D3AF37]\"",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 189,
+        "context": "? \"bg-[#3a3a3a] border-l-4 border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 190,
+        "context": ": \"hover:bg-[#3a3a3a]\"",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 202,
+        "context": "<span className=\"text-[#D3AF37]\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 244,
+        "context": "className=\"px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 259,
+        "context": "className=\"px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 269,
+        "context": "<div className=\"bg-[#2a2a2a] rounded-lg p-6 h-fit\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 270,
+        "context": "<h2 className=\"text-2xl font-bold text-[#D3AF37] mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 304,
+        "context": "<p className=\"text-[#D3AF37] text-2xl font-bold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 375,
+        "context": "<div className=\"mt-6 space-y-4 border-t border-[#3a3a3a] pt-6\">",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 381,
+        "context": "<span className=\"text-[#D3AF37] self-center\">$</span>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 388,
+        "context": "className=\"flex-1 px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 388,
+        "context": "className=\"flex-1 px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none\"",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 388,
+        "context": "className=\"flex-1 px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 408,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none h-20\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#3a3a3a",
+        "line": 408,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none h-20\"",
+        "suggestion": "text-ink-800"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 408,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none h-20\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 127,
+        "context": "<div className=\"min-h-screen bg-[#1a1a1a] text-white p-8\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 134,
+        "context": "<p className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 159,
+        "context": ": \"bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 174,
+        "context": "<div className=\"p-8 text-center text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 178,
+        "context": "<div className=\"p-8 text-center text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 195,
+        "context": "<h3 className=\"text-lg font-semibold text-white mb-2\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 198,
+        "context": "<p className=\"text-sm text-gray-400 mb-3\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 205,
+        "context": "<span className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 208,
+        "context": "<span className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-900",
+        "line": 217,
+        "context": "? \"bg-yellow-900/30 text-yellow-200\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-200",
+        "line": 217,
+        "context": "? \"bg-yellow-900/30 text-yellow-200\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 244,
+        "context": "className=\"px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 248,
+        "context": "<span className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 259,
+        "context": "className=\"px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 284,
+        "context": "<label className=\"text-sm text-gray-400\">Title</label>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 285,
+        "context": "<p className=\"text-white font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 291,
+        "context": "<label className=\"text-sm text-gray-400\">Category</label>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 292,
+        "context": "<p className=\"text-white\">{selectedProduct.aiCategory}</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 296,
+        "context": "<label className=\"text-sm text-gray-400\">Condition</label>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 297,
+        "context": "<p className=\"text-white\">{selectedProduct.aiCondition}</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 301,
+        "context": "<label className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 307,
+        "context": "<p className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 311,
+        "context": "<p className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 317,
+        "context": "<label className=\"text-sm text-gray-400\">Description</label>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 318,
+        "context": "<p className=\"text-white text-sm leading-relaxed\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 377,
+        "context": "<label htmlFor=\"final-price\" className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 388,
+        "context": "className=\"flex-1 px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 396,
+        "context": "className=\"w-full py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 396,
+        "context": "className=\"w-full py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 402,
+        "context": "<label className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 408,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none h-20\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 416,
+        "context": "className=\"w-full py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 416,
+        "context": "className=\"w-full py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\AutomatedReports.tsx": [
+      {
+        "color": "border-amber-500",
+        "line": 96,
+        "context": "className=\"flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-amber-500 hover:bg-amber-50 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-50",
+        "line": 96,
+        "context": "className=\"flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-amber-500 hover:bg-amber-50 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 98,
+        "context": "<Calendar className=\"text-amber-600\" size={32} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-blue-500",
+        "line": 109,
+        "context": "className=\"flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 109,
+        "context": "className=\"flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 111,
+        "context": "<TrendingUp className=\"text-blue-600\" size={32} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 156,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 156,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 156,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 272,
+        "context": "className=\"rounded text-amber-600 focus:ring-amber-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 282,
+        "context": "className=\"mt-4 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 282,
+        "context": "className=\"mt-4 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 282,
+        "context": "className=\"mt-4 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 346,
+        "context": "<FileText size={48} className=\"mx-auto mb-3 text-gray-300\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\BulkOrderActions.tsx": [
+      {
+        "color": "text-amber-600",
+        "line": 76,
+        "context": "<CheckSquare className=\"text-amber-600\" size={20} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 78,
+        "context": "<Square className=\"text-gray-400\" size={20} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 110,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 110,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 110,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-300",
+        "line": 110,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 166,
+        "context": "className=\"text-amber-600 hover:text-amber-700 font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-700",
+        "line": 166,
+        "context": "className=\"text-amber-600 hover:text-amber-700 font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\charts\\ApprovalTrendChart.tsx": [
+      {
+        "color": "#F59E0B",
+        "line": 74,
+        "context": "stroke=\"#F59E0B\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#F59E0B",
+        "line": 76,
+        "context": "dot={{ fill: \"#F59E0B\", r: 4 }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#fff",
+        "line": 53,
+        "context": "color: \"#fff\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 41,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">Approval Trends</h3>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\charts\\CategoryMetricsGrid.tsx": [
+      {
+        "color": "border-gray-100",
+        "line": 54,
+        "context": "className=\"border-b border-gray-100 hover:bg-surface-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 74,
+        "context": "<span className=\"text-blue-600 font-medium\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\charts\\MetricCard.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 19,
+        "context": "borderColor = \"border-[#D3AF37]\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 18,
+        "context": "color = \"bg-gray-900\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 38,
+        "context": ": \"text-gray-400\";",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 45,
+        "context": "<p className=\"text-sm font-medium text-gray-400\">{title}</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 48,
+        "context": "<p className=\"text-3xl font-bold text-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\charts\\RevenueByCategory.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 28,
+        "context": "const COLORS = [\"#D3AF37\", \"#A17D2F\", \"#CD7F32\", \"#C0C0C0\", \"#FFD700\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#A17D2F",
+        "line": 28,
+        "context": "const COLORS = [\"#D3AF37\", \"#A17D2F\", \"#CD7F32\", \"#C0C0C0\", \"#FFD700\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#CD7F32",
+        "line": 28,
+        "context": "const COLORS = [\"#D3AF37\", \"#A17D2F\", \"#CD7F32\", \"#C0C0C0\", \"#FFD700\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#C0C0C0",
+        "line": 28,
+        "context": "const COLORS = [\"#D3AF37\", \"#A17D2F\", \"#CD7F32\", \"#C0C0C0\", \"#FFD700\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#FFD700",
+        "line": 28,
+        "context": "const COLORS = [\"#D3AF37\", \"#A17D2F\", \"#CD7F32\", \"#C0C0C0\", \"#FFD700\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 45,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 57,
+        "context": "fill=\"#D3AF37\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 70,
+        "context": "backgroundColor: \"#1a1a1a\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 71,
+        "context": "border: \"1px solid #D3AF37\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 87,
+        "context": "<span className=\"text-[#D3AF37] font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#fff",
+        "line": 73,
+        "context": "color: \"#fff\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 45,
+        "context": "<div className=\"border border-[#D3AF37] rounded-lg p-6 bg-gray-900\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 46,
+        "context": "<h3 className=\"text-white text-lg font-bold mb-4\">Revenue by Category</h3>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 84,
+        "context": "className=\"flex justify-between text-gray-300\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\DashboardOverview.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 66,
+        "context": "const COLORS = [\"#D3AF37\", \"#B1874C\", \"#8B6937\", \"#C7A85E\", \"#E5C65A\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#B1874C",
+        "line": 66,
+        "context": "const COLORS = [\"#D3AF37\", \"#B1874C\", \"#8B6937\", \"#C7A85E\", \"#E5C65A\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#8B6937",
+        "line": 66,
+        "context": "const COLORS = [\"#D3AF37\", \"#B1874C\", \"#8B6937\", \"#C7A85E\", \"#E5C65A\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#C7A85E",
+        "line": 66,
+        "context": "const COLORS = [\"#D3AF37\", \"#B1874C\", \"#8B6937\", \"#C7A85E\", \"#E5C65A\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#E5C65A",
+        "line": 66,
+        "context": "const COLORS = [\"#D3AF37\", \"#B1874C\", \"#8B6937\", \"#C7A85E\", \"#E5C65A\"];",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 176,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 207,
+        "context": "stroke=\"#D3AF37\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 209,
+        "context": "dot={{ fill: \"#D3AF37\", r: 3 }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#999",
+        "line": 231,
+        "context": "labelLine={{ stroke: \"#999\", strokeWidth: 1 }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-600",
+        "line": 96,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-500",
+        "line": 124,
+        "context": "className=\"px-4 py-2 border border-border-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 148,
+        "context": "icon={<ShoppingCart className=\"text-blue-600\" size={24} />}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 254,
+        "context": "<Clock className=\"text-gray-400\" size={20} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 256,
+        "context": "<div className=\"text-3xl font-bold text-amber-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 270,
+        "context": "<Users className=\"text-gray-400\" size={20} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 286,
+        "context": "<Package className=\"text-gray-400\" size={20} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 297,
+        "context": "<span className=\"text-sm font-semibold text-blue-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-600",
+        "line": 303,
+        "context": "<span className=\"text-sm font-semibold text-yellow-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\EmailNotificationManager.tsx": [
+      {
+        "color": "text-amber-600",
+        "line": 362,
+        "context": "className=\"text-amber-600 hover:text-amber-900\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-900",
+        "line": 362,
+        "context": "className=\"text-amber-600 hover:text-amber-900\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\EnhancedSalesAnalytics.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 43,
+        "context": "\"#D3AF37\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#B1874C",
+        "line": 44,
+        "context": "\"#B1874C\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#8B6937",
+        "line": 45,
+        "context": "\"#8B6937\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#C7A85E",
+        "line": 46,
+        "context": "\"#C7A85E\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#E5C65A",
+        "line": 47,
+        "context": "\"#E5C65A\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#F4E4A6",
+        "line": 48,
+        "context": "\"#F4E4A6\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 75,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 95,
+        "context": "stroke=\"#D3AF37\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 97,
+        "context": "dot={{ fill: \"#D3AF37\", r: 4 }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 161,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#9333EA",
+        "line": 172,
+        "context": "<Bar dataKey=\"orders\" fill=\"#9333EA\" radius={[4, 4, 0, 0]} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#8884d8",
+        "line": 203,
+        "context": "fill=\"#8884d8\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 259,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#6366F1",
+        "line": 276,
+        "context": "stroke=\"#6366F1\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#6366F1",
+        "line": 278,
+        "context": "dot={{ fill: \"#6366F1\", r: 4 }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 117,
+        "context": "<CreditCard className=\"text-blue-600\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 191,
+        "context": "<Package className=\"text-amber-600\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\MobileActionSheet.tsx": [
+      {
+        "color": "bg-black",
+        "line": 37,
+        "context": "className=\"fixed inset-0 bg-black bg-opacity-50 z-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\MobileAdminLayout.tsx": [
+      {
+        "color": "bg-black",
+        "line": 86,
+        "context": "className=\"lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 106,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 106,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 128,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 128,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 161,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 161,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 182,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 182,
+        "context": "? \"bg-blue-50 text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\MobileFilterPanel.tsx": [
+      {
+        "color": "bg-blue-600",
+        "line": 56,
+        "context": "<span className=\"ml-1 px-2 py-0.5 bg-blue-600 text-white text-xs rounded-full\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 56,
+        "context": "<span className=\"ml-1 px-2 py-0.5 bg-blue-600 text-white text-xs rounded-full\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-black",
+        "line": 66,
+        "context": "className=\"fixed inset-0 bg-black bg-opacity-50 z-40\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 121,
+        "context": "? \"bg-blue-600 border-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-blue-600",
+        "line": 121,
+        "context": "? \"bg-blue-600 border-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 126,
+        "context": "<Check className=\"w-4 h-4 text-white\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 193,
+        "context": "className=\"flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 193,
+        "context": "className=\"flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 193,
+        "context": "className=\"flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\MultiImageUpload.tsx": [
+      {
+        "color": "bg-black",
+        "line": 230,
+        "context": "<div className=\"absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center p-2\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 231,
+        "context": "<p className=\"text-xs text-white text-center mb-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-black",
+        "line": 259,
+        "context": "<div className=\"absolute top-2 left-2 bg-black/80 text-white text-xs px-2 py-1 rounded\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 259,
+        "context": "<div className=\"absolute top-2 left-2 bg-black/80 text-white text-xs px-2 py-1 rounded\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\OrderDetailsPanel.tsx": [
+      {
+        "color": "text-yellow-600",
+        "line": 116,
+        "context": "return <Clock className=\"text-yellow-600\" size={20} />;",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 118,
+        "context": "return <Package className=\"text-blue-600\" size={20} />;",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-black",
+        "line": 134,
+        "context": "className=\"absolute inset-0 bg-black bg-opacity-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 153,
+        "context": "className=\"text-gray-400 hover:text-ink-600 text-3xl leading-none\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 205,
+        "context": "className=\"mt-3 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 205,
+        "context": "className=\"mt-3 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 205,
+        "context": "className=\"mt-3 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-300",
+        "line": 205,
+        "context": "className=\"mt-3 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 218,
+        "context": "<Mail className=\"text-gray-400\" size={18} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 225,
+        "context": "<Phone className=\"text-gray-400\" size={18} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 230,
+        "context": "<MapPin className=\"text-gray-400 mt-1\" size={18} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 319,
+        "context": "<CreditCard className=\"text-gray-400\" size={18} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-100",
+        "line": 329,
+        "context": "? \"bg-yellow-100 text-yellow-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-800",
+        "line": 329,
+        "context": "? \"bg-yellow-100 text-yellow-800\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 383,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 383,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 383,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 389,
+        "context": "className=\"px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 395,
+        "context": "className=\"px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-50",
+        "line": 408,
+        "context": "<div className=\"p-4 bg-yellow-50 border border-yellow-200 rounded-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-yellow-200",
+        "line": 408,
+        "context": "<div className=\"p-4 bg-yellow-50 border border-yellow-200 rounded-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\ProductAnalyticsDashboard.tsx": [
+      {
+        "color": "#f0f0f0",
+        "line": 182,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#10B981",
+        "line": 189,
+        "context": "stroke=\"#10B981\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 196,
+        "context": "stroke=\"#D3AF37\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 212,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 216,
+        "context": "<Bar dataKey=\"count\" fill=\"#D3AF37\" radius={[4, 4, 0, 0]} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-600",
+        "line": 103,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 145,
+        "context": "icon={<Package className=\"text-blue-600\" size={24} />}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 157,
+        "context": "icon={<DollarSign className=\"text-amber-600\" size={24} />}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-600",
+        "line": 338,
+        "context": "? \"text-yellow-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-yellow-500",
+        "line": 369,
+        "context": "? \"border-yellow-500 bg-yellow-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-50",
+        "line": 369,
+        "context": "? \"border-yellow-500 bg-yellow-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-blue-500",
+        "line": 370,
+        "context": ": \"border-blue-500 bg-blue-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-50",
+        "line": 370,
+        "context": ": \"border-blue-500 bg-blue-50\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-600",
+        "line": 382,
+        "context": "? \"text-yellow-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 383,
+        "context": ": \"text-blue-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\ProductUploadForm.tsx": [
+      {
+        "color": "bg-gray-700",
+        "line": 257,
+        "context": ": \"bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 269,
+        "context": "isComplete ? \"bg-green-600\" : \"bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 299,
+        "context": "<p className=\"text-gray-400\">Enter basic product information</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 313,
+        "context": "className={`flex-1 px-4 py-2 bg-gray-800 border ${",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 314,
+        "context": "skuError ? \"border-red-600\" : \"border-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 319,
+        "context": "className=\"px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 319,
+        "context": "className=\"px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 340,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 340,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 381,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500 font-mono text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 381,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500 font-mono text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 396,
+        "context": "className=\"flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 396,
+        "context": "className=\"flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 406,
+        "context": "className=\"px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 406,
+        "context": "className=\"px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 419,
+        "context": "className=\"text-sm text-gray-400 flex items-center gap-2\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 448,
+        "context": "<p className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 471,
+        "context": "<p className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 476,
+        "context": "<div className=\"bg-gray-800 p-6 rounded-lg\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 481,
+        "context": "<p className=\"text-sm text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 490,
+        "context": "className=\"w-full py-3 bg-gold-600 hover:bg-gold-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded font-medium transition flex items-center justify-center gap-2\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 513,
+        "context": "<p className=\"text-gray-400\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 526,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 526,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 536,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 536,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 547,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 547,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 557,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 557,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 568,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 568,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 571,
+        "context": "<p className=\"text-sm text-gray-400 mt-1\">{analysis.priceReasoning}</p>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 582,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 582,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-800",
+        "line": 596,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-700",
+        "line": 596,
+        "context": "className=\"w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 607,
+        "context": "className=\"flex-1 py-3 bg-gray-700 hover:bg-gray-600 rounded font-medium transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 607,
+        "context": "className=\"flex-1 py-3 bg-gray-700 hover:bg-gray-600 rounded font-medium transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 614,
+        "context": "className=\"flex-1 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded font-medium transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 634,
+        "context": "<p className=\"text-gray-400 mb-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\ReportScheduler.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 149,
+        "context": "<h1 className=\"text-3xl font-bold text-[#D3AF37]\">Scheduled Reports</h1>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 152,
+        "context": "className=\"px-4 py-2 bg-[#D3AF37] text-[#1a1a1a] rounded-lg font-semibold hover:bg-[#e4c44d] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 152,
+        "context": "className=\"px-4 py-2 bg-[#D3AF37] text-[#1a1a1a] rounded-lg font-semibold hover:bg-[#e4c44d] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#e4c44d",
+        "line": 152,
+        "context": "className=\"px-4 py-2 bg-[#D3AF37] text-[#1a1a1a] rounded-lg font-semibold hover:bg-[#e4c44d] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 160,
+        "context": "<div className=\"bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 160,
+        "context": "<div className=\"bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 176,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 192,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 210,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 229,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#667eea",
+        "line": 237,
+        "context": "className=\"w-full px-4 py-2 bg-[#667eea] text-white rounded-lg font-semibold hover:bg-[#5568d3] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#5568d3",
+        "line": 237,
+        "context": "className=\"w-full px-4 py-2 bg-[#667eea] text-white rounded-lg font-semibold hover:bg-[#5568d3] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 264,
+        "context": "? \"bg-[#2a2a2a] border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 264,
+        "context": "? \"bg-[#2a2a2a] border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#1a1a1a",
+        "line": 265,
+        "context": ": \"bg-[#1a1a1a] border-[#444] hover:border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 265,
+        "context": ": \"bg-[#1a1a1a] border-[#444] hover:border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#667eea",
+        "line": 287,
+        "context": "className=\"px-3 py-1 bg-[#667eea] text-white text-sm rounded hover:bg-[#5568d3] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#5568d3",
+        "line": 287,
+        "context": "className=\"px-3 py-1 bg-[#667eea] text-white text-sm rounded hover:bg-[#5568d3] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#2a2a2a",
+        "line": 325,
+        "context": "<div className=\"bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 325,
+        "context": "<div className=\"bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#444",
+        "line": 176,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#444",
+        "line": 192,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#444",
+        "line": 210,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#444",
+        "line": 229,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#444",
+        "line": 265,
+        "context": ": \"bg-[#1a1a1a] border-[#444] hover:border-[#D3AF37]\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 161,
+        "context": "<h2 className=\"text-xl font-semibold text-white mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 166,
+        "context": "<label className=\"block text-sm font-medium text-gray-300 mb-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 176,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 183,
+        "context": "<label className=\"block text-sm font-medium text-gray-300 mb-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 192,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 201,
+        "context": "<label className=\"block text-sm font-medium text-gray-300 mb-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 210,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 219,
+        "context": "<label className=\"block text-sm font-medium text-gray-300 mb-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 229,
+        "context": "className=\"w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 237,
+        "context": "className=\"w-full px-4 py-2 bg-[#667eea] text-white rounded-lg font-semibold hover:bg-[#5568d3] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 247,
+        "context": "<h2 className=\"text-xl font-semibold text-white\">Active Reports</h2>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 250,
+        "context": "<div className=\"text-gray-400\">Loading reports...</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 252,
+        "context": "<div className=\"text-gray-400\">No scheduled reports yet</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 270,
+        "context": "<h3 className=\"text-lg font-semibold text-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 273,
+        "context": "<p className=\"text-sm text-gray-400 mt-1\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 287,
+        "context": "className=\"px-3 py-1 bg-[#667eea] text-white text-sm rounded hover:bg-[#5568d3] transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 299,
+        "context": "? \"bg-green-600 text-white hover:bg-green-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 300,
+        "context": ": \"bg-gray-600 text-white hover:bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 300,
+        "context": ": \"bg-gray-600 text-white hover:bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 300,
+        "context": ": \"bg-gray-600 text-white hover:bg-gray-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 311,
+        "context": "className=\"px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 326,
+        "context": "<h2 className=\"text-xl font-semibold text-white mb-4\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 331,
+        "context": "<div className=\"text-gray-400\">No audit logs yet</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-900",
+        "line": 342,
+        "context": ": \"bg-gray-900/20 border border-gray-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-gray-600",
+        "line": 342,
+        "context": ": \"bg-gray-900/20 border border-gray-600\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 346,
+        "context": "<span className=\"text-gray-300\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\SellerInquiryManager.tsx": [
+      {
+        "color": "bg-yellow-100",
+        "line": 149,
+        "context": "pending: \"bg-yellow-100 text-yellow-800\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-800",
+        "line": 149,
+        "context": "pending: \"bg-yellow-100 text-yellow-800\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-100",
+        "line": 150,
+        "context": "reviewing: \"bg-blue-100 text-blue-800\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-800",
+        "line": 150,
+        "context": "reviewing: \"bg-blue-100 text-blue-800\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-600",
+        "line": 172,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 188,
+        "context": "<Search className=\"absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 200,
+        "context": "<Filter className=\"absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-50",
+        "line": 239,
+        "context": "<div className=\"flex items-center justify-center bg-amber-50 rounded-lg px-4 py-2\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 241,
+        "context": "<span className=\"ml-2 text-xl font-bold text-amber-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 289,
+        "context": "<span className=\"font-semibold text-amber-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 323,
+        "context": "<User className=\"w-5 h-5 text-gray-400\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 330,
+        "context": "<Mail className=\"w-5 h-5 text-gray-400\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 337,
+        "context": "<Phone className=\"w-5 h-5 text-gray-400\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 365,
+        "context": "<span className=\"font-semibold text-amber-600\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-600",
+        "line": 388,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 388,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-blue-700",
+        "line": 388,
+        "context": "className=\"px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 396,
+        "context": "className=\"px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 404,
+        "context": "className=\"px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-600",
+        "line": 412,
+        "context": "className=\"px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 412,
+        "context": "className=\"px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-700",
+        "line": 412,
+        "context": "className=\"px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-600",
+        "line": 471,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 471,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-amber-700",
+        "line": 471,
+        "context": "className=\"px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\admin\\TrafficAnalyticsDashboard.tsx": [
+      {
+        "color": "#D3AF37",
+        "line": 66,
+        "context": "\"#D3AF37\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#B1874C",
+        "line": 67,
+        "context": "\"#B1874C\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#8B6937",
+        "line": 68,
+        "context": "\"#8B6937\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#C7A85E",
+        "line": 69,
+        "context": "\"#C7A85E\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#E5C65A",
+        "line": 70,
+        "context": "\"#E5C65A\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#F4E4A6",
+        "line": 71,
+        "context": "\"#F4E4A6\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 238,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 255,
+        "context": "stroke=\"#D3AF37\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 258,
+        "context": "dot={{ fill: \"#D3AF37\" }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#B1874C",
+        "line": 263,
+        "context": "stroke=\"#B1874C\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#B1874C",
+        "line": 266,
+        "context": "dot={{ fill: \"#B1874C\" }}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#8884d8",
+        "line": 291,
+        "context": "fill=\"#8884d8\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 340,
+        "context": "<CartesianGrid strokeDasharray=\"3 3\" stroke=\"#f0f0f0\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#D3AF37",
+        "line": 344,
+        "context": "<Bar dataKey=\"count\" fill=\"#D3AF37\" radius={[4, 4, 0, 0]} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "border-amber-600",
+        "line": 103,
+        "context": "<div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600\"></div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 147,
+        "context": "<div className=\"bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg shadow p-6 text-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-100",
+        "line": 160,
+        "context": "<div className=\"text-amber-100 mt-1\">Active users right now</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-100",
+        "line": 163,
+        "context": "<div className=\"text-sm text-amber-100 mb-2\">Top Active Pages</div>",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-blue-600",
+        "line": 180,
+        "context": "<Users className=\"text-blue-600\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 201,
+        "context": "<MousePointerClick className=\"text-amber-600\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 277,
+        "context": "<Globe className=\"text-amber-600\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-amber-600",
+        "line": 333,
+        "context": "<Smartphone className=\"text-amber-600\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 352,
+        "context": "className=\"mx-auto text-gray-400 mb-1\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 357,
+        "context": "<Monitor className=\"mx-auto text-gray-400 mb-1\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-400",
+        "line": 360,
+        "context": "<BarChart3 className=\"mx-auto text-gray-400 mb-1\" size={24} />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 452,
+        "context": "<span className=\"text-xs text-white font-medium\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\AesopSection.tsx": [
+      {
+        "color": "text-white",
+        "line": 56,
+        "context": "className=\"inline-block mt-4 px-6 py-3 rounded-lg bg-cta text-white hover:bg-cta-hover transition-colors text-sm font-medium\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\CartIcon.tsx": [
+      {
+        "color": "text-white",
+        "line": 12,
+        "context": "className=\"cart-icon-link text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\CategoryHero.tsx": [
+      {
+        "color": "text-white",
+        "line": 35,
+        "context": "<h1 className=\"font-serif text-white text-[clamp(36px,5vw,56px)] leading-tight\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 39,
+        "context": "<p className=\"mt-3 max-w-3xl text-white/90 text-lg leading-[1.8]\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 43,
+        "context": "<p className=\"mt-2 text-white/80 text-sm tracking-wide uppercase\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\CTA.tsx": [
+      {
+        "color": "text-white",
+        "line": 51,
+        "context": "textClass = \"text-white\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\ErrorBoundary.tsx": [
+      {
+        "color": "text-white",
+        "line": 47,
+        "context": "className=\"flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-lg hover:bg-navy/90 transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 55,
+        "context": "className=\"flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg hover:bg-navy hover:text-white transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\forms\\ContactForm.tsx": [
+      {
+        "color": "text-white",
+        "line": 166,
+        "context": "className=\"btn-cta w-full py-2.5 font-bold rounded-md bg-cta text-white hover:bg-cta-hover transition-colors duration-200 disabled:bg-gray-400\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-gray-400",
+        "line": 166,
+        "context": "className=\"btn-cta w-full py-2.5 font-bold rounded-md bg-cta text-white hover:bg-cta-hover transition-colors duration-200 disabled:bg-gray-400\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\Header.tsx": [
+      {
+        "color": "text-white",
+        "line": 99,
+        "context": "<Button asChild className=\"bg-cta-600 hover:bg-cta-700 text-white font-medium rounded-full px-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 150,
+        "context": "<Button asChild className=\"w-full bg-cta-600 text-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\Hero.tsx": [
+      {
+        "color": "text-white",
+        "line": 33,
+        "context": "className=\"bg-cta-600 hover:bg-cta-700 text-white font-semibold px-8 py-6 text-lg shadow-cta\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\home\\FeaturedCollection.tsx": [
+      {
+        "color": "text-white",
+        "line": 40,
+        "context": "className=\"inline-block bg-gold text-white font-semibold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity text-lg\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\home\\HeroBanner.tsx": [
+      {
+        "color": "text-white",
+        "line": 60,
+        "context": "<div className=\"max-w-2xl text-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\home\\LatestArrivalsClient.tsx": [
+      {
+        "color": "text-white",
+        "line": 89,
+        "context": "<div className=\"absolute top-3 right-3 bg-gold text-white px-3 py-1 rounded-full text-xs font-semibold\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 132,
+        "context": "className=\"inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\home\\ProcessOverview.tsx": [
+      {
+        "color": "text-white",
+        "line": 91,
+        "context": "className=\"inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 97,
+        "context": "className=\"inline-block bg-surface-0 border-2 border-gold text-gold font-semibold px-10 py-3 rounded-lg hover:bg-gold hover:text-white transition-all\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\home\\Testimonials.tsx": [
+      {
+        "color": "text-white",
+        "line": 83,
+        "context": "<button className=\"inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\product\\ImageGallery.tsx": [
+      {
+        "color": "border-white",
+        "line": 90,
+        "context": "<div className=\"absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-surface-0/95 backdrop-blur-sm px-3 py-1.5 shadow-md border border-white/50\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 127,
+        "context": "<div className=\"absolute bottom-4 right-4 rounded-full bg-cta/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-white border border-gold/30\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\product\\ProductGallery.tsx": [
+      {
+        "color": "bg-black",
+        "line": 102,
+        "context": "className=\"fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\product\\ProductInfo.tsx": [
+      {
+        "color": "text-white",
+        "line": 287,
+        "context": "className={`btn-wishlist ${isWishlisted ? \"active\" : \"\"} inline-flex items-center justify-center gap-2 rounded border border-gold px-4 py-3 font-medium text-gold transition-all hover:bg-cta hover:text-white hover:border-cta`}",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 309,
+        "context": "className=\"btn-share inline-flex items-center justify-center gap-2 rounded border border-ink-tertiary px-4 py-3 font-medium text-ink-secondary transition-all hover:bg-ink-tertiary hover:text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\product\\ProductReviews.tsx": [
+      {
+        "color": "text-yellow-400",
+        "line": 89,
+        "context": "? \"fill-yellow-400 text-yellow-400\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 90,
+        "context": ": \"text-gray-300\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 124,
+        "context": "<Star className=\"h-4 w-4 fill-yellow-400 text-yellow-400\" />",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-yellow-400",
+        "line": 127,
+        "context": "className=\"bg-yellow-400 h-2 rounded-full\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-yellow-400",
+        "line": 172,
+        "context": "? \"fill-yellow-400 text-yellow-400\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-gray-300",
+        "line": 173,
+        "context": ": \"text-gray-300\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-black",
+        "line": 218,
+        "context": "<div className=\"fixed inset-0 bg-black/50 flex items-center justify-center z-50\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\product\\ProductTabs.tsx": [
+      {
+        "color": "bg-white",
+        "line": 68,
+        "context": "<div className=\"rounded-lg border border-gold/20 bg-white p-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-white",
+        "line": 240,
+        "context": "<div className=\"rounded-lg border border-gold/20 bg-white p-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-white",
+        "line": 300,
+        "context": "<div className=\"rounded-lg border border-gold/20 bg-white p-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-white",
+        "line": 343,
+        "context": "<div className=\"bg-white rounded p-4 border border-green-200\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-white",
+        "line": 353,
+        "context": "<div className=\"rounded-lg border border-gold/20 bg-white p-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "bg-white",
+        "line": 421,
+        "context": "<div className=\"rounded-lg border border-gold/20 bg-white p-6\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\product\\RelatedProducts.tsx": [
+      {
+        "color": "text-white",
+        "line": 210,
+        "context": "className=\"inline-flex items-center gap-2 rounded-full bg-cta hover:bg-cta-hover text-white px-6 py-3 font-medium transition-colors\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\ProductCard.tsx": [
+      {
+        "color": "text-white",
+        "line": 148,
+        "context": "className=\"absolute right-3 top-3 inline-flex items-center justify-center rounded-full border border-surface bg-surface/95 p-2.5 backdrop-blur-sm transition-all hover:scale-110 hover:bg-gold hover:border-gold hover:text-white shadow-md\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\ui\\button.tsx": [
+      {
+        "color": "text-white",
+        "line": 12,
+        "context": "default: \"bg-cta-600 text-white hover:bg-cta-700 active:bg-cta-800\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 14,
+        "context": "\"bg-semantic-error-500 text-white hover:bg-red-600/90\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\components\\UserAccountDropdown.tsx": [
+      {
+        "color": "text-white",
+        "line": 28,
+        "context": "<div className=\"user-account-loading text-white\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 49,
+        "context": "className=\"header-account-link text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "text-white",
+        "line": 70,
+        "context": "className=\"account-dropdown-trigger text-white\"",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ],
+    "src\\lib\\email\\reportSender.ts": [
+      {
+        "color": "#667eea",
+        "line": 33,
+        "context": ".header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#764ba2",
+        "line": 33,
+        "context": ".header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f9f9f9",
+        "line": 34,
+        "context": ".content { background: #f9f9f9; padding: 20px; border-radius: 0 0 8px 8px; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#f0f0f0",
+        "line": 37,
+        "context": ".data-preview { background: #f0f0f0; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#667eea",
+        "line": 40,
+        "context": ".button { display: inline-block; background: #667eea; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; margin: 10px 0; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#333",
+        "line": 31,
+        "context": "body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#888",
+        "line": 36,
+        "context": ".footer { text-align: center; margin-top: 20px; color: #888; font-size: 12px; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#ddd",
+        "line": 39,
+        "context": "td { padding: 8px; border-bottom: 1px solid #ddd; }",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#ddd",
+        "line": 83,
+        "context": "<hr style=\"border: none; border-top: 1px solid #ddd; margin: 20px 0;\">",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      },
+      {
+        "color": "#039",
+        "line": 105,
+        "context": "\"'\": \"&#039;\",",
+        "suggestion": "MANUAL REVIEW NEEDED"
+      }
+    ]
+  },
+  "colorFrequency": {
+    "text-white": 148,
+    "rgba(199,168,94,0.15)": 1,
+    "border-amber-600": 8,
+    "border-amber-500": 6,
+    "bg-blue-500": 1,
+    "bg-amber-600": 10,
+    "bg-amber-700": 9,
+    "bg-gray-600": 10,
+    "bg-gray-700": 8,
+    "text-gray-400": 53,
+    "bg-black": 10,
+    "bg-gray-300": 3,
+    "bg-gray-400": 2,
+    "bg-blue-600": 11,
+    "bg-blue-700": 9,
+    "bg-blue-100": 4,
+    "text-blue-800": 5,
+    "bg-amber-100": 3,
+    "text-amber-900": 4,
+    "bg-blue-50": 8,
+    "text-blue-700": 1,
+    "text-amber-600": 16,
+    "bg-yellow-100": 3,
+    "text-yellow-800": 4,
+    "text-blue-600": 22,
+    "text-amber-700": 2,
+    "text-gray-600": 1,
+    "bg-amber-800": 1,
+    "bg-blue-800": 1,
+    "bg-gray-500": 1,
+    "text-amber-800": 1,
+    "text-gray-500": 1,
+    "border-white": 7,
+    "bg-white": 7,
+    "#3A3A3A": 1,
+    "#FFFFFF": 1,
+    "#C9A66B": 2,
+    "text-yellow-400": 11,
+    "border-blue-500": 3,
+    "bg-yellow-50": 3,
+    "border-yellow-200": 2,
+    "text-blue-900": 2,
+    "#D3AF37": 65,
+    "bg-gray-800": 16,
+    "bg-gray-900": 11,
+    "text-gray-300": 18,
+    "border-gray-700": 13,
+    "#1a1a1a": 11,
+    "#2a2a2a": 8,
+    "#3a3a3a": 7,
+    "bg-yellow-900": 1,
+    "text-yellow-200": 1,
+    "bg-amber-50": 2,
+    "#F59E0B": 2,
+    "#fff": 2,
+    "border-gray-100": 1,
+    "#A17D2F": 1,
+    "#CD7F32": 1,
+    "#C0C0C0": 1,
+    "#FFD700": 1,
+    "#B1874C": 5,
+    "#8B6937": 3,
+    "#C7A85E": 3,
+    "#E5C65A": 3,
+    "#f0f0f0": 9,
+    "#999": 1,
+    "text-yellow-600": 4,
+    "#F4E4A6": 2,
+    "#9333EA": 1,
+    "#8884d8": 2,
+    "#6366F1": 2,
+    "border-blue-600": 1,
+    "#10B981": 1,
+    "border-yellow-500": 1,
+    "#e4c44d": 1,
+    "#667eea": 4,
+    "#5568d3": 2,
+    "#444": 5,
+    "border-gray-600": 1,
+    "text-amber-100": 2,
+    "bg-yellow-400": 1,
+    "#764ba2": 1,
+    "#f9f9f9": 1,
+    "#333": 1,
+    "#888": 1,
+    "#ddd": 2,
+    "#039": 1
+  }
+}

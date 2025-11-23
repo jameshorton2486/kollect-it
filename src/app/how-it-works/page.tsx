@@ -62,7 +62,7 @@ export default function HowItWorksPage() {
                 "30-Day Returns"
               ].map((benefit, i) => (
                 <li key={i} className="flex items-center">
-                  <CheckCircle2 size={20} color="#C9A66B" className="mr-3" /> {benefit}
+                  <CheckCircle2 size={20} className="text-gold-500 mr-3" /> {benefit}
                 </li>
               ))}
             </ul>
@@ -81,7 +81,7 @@ export default function HowItWorksPage() {
                 "Shipping Handling"
               ].map((benefit, i) => (
                 <li key={i} className="flex items-center">
-                  <CheckCircle2 size={20} color="#C9A66B" className="mr-3" /> {benefit}
+                  <CheckCircle2 size={20} className="text-gold-500 mr-3" /> {benefit}
                 </li>
               ))}
             </ul>

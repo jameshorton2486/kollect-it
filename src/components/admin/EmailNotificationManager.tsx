@@ -138,13 +138,13 @@ export function EmailNotificationManager() {
 
   const getStatusBadge = (status: string) => {
     const styles = {
-      active: "bg-green-100 text-green-800",
+      active: "bg-semantic-success text-ink-800",
       draft: "bg-surface-100 text-ink-800",
-      paused: "bg-yellow-100 text-yellow-800",
-      scheduled: "bg-blue-100 text-blue-800",
-      sending: "bg-purple-100 text-purple-800",
-      sent: "bg-green-100 text-green-800",
-      failed: "bg-red-100 text-red-800",
+      paused: "bg-semantic-warning text-ink-800",
+      scheduled: "bg-surface-200 text-ink-800",
+      sending: "bg-gold-100 text-ink-800",
+      sent: "bg-semantic-success text-ink-800",
+      failed: "bg-semantic-error text-ink-0",
     };
     return (
       <span
@@ -169,7 +169,7 @@ export function EmailNotificationManager() {
         <h2 className="text-2xl font-bold">Email Notifications</h2>
         <button
           onClick={() => {/* TODO: Implement template editor */}}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="flex items-center gap-2 px-4 py-2 bg-cta-600 text-ink-0 rounded-lg hover:bg-cta-700"
         >
           <Plus className="w-4 h-4" />
           New Template
@@ -187,8 +187,8 @@ export function EmailNotificationManager() {
                   {stats.totalSent.toLocaleString()}
                 </p>
               </div>
-              <div className="bg-blue-100 p-3 rounded-full">
-                <Send className="w-6 h-6 text-blue-600" />
+              <div className="bg-surface-200 p-3 rounded-full">
+                <Send className="w-6 h-6 text-cta-600" />
               </div>
             </div>
           </div>
@@ -201,8 +201,8 @@ export function EmailNotificationManager() {
                 </p>
                 <p className="text-3xl font-bold mt-2">{stats.avgOpenRate}%</p>
               </div>
-              <div className="bg-green-100 p-3 rounded-full">
-                <Mail className="w-6 h-6 text-green-600" />
+              <div className="bg-semantic-success p-3 rounded-full">
+                <Mail className="w-6 h-6 text-ink-0" />
               </div>
             </div>
           </div>
@@ -215,8 +215,8 @@ export function EmailNotificationManager() {
                 </p>
                 <p className="text-3xl font-bold mt-2">{stats.avgClickRate}%</p>
               </div>
-              <div className="bg-purple-100 p-3 rounded-full">
-                <CheckCircle className="w-6 h-6 text-purple-600" />
+              <div className="bg-gold-100 p-3 rounded-full">
+                <CheckCircle className="w-6 h-6 text-gold-700" />
               </div>
             </div>
           </div>
@@ -227,8 +227,8 @@ export function EmailNotificationManager() {
                 <p className="text-ink-600 text-sm font-medium">Bounce Rate</p>
                 <p className="text-3xl font-bold mt-2">{stats.bounceRate}%</p>
               </div>
-              <div className="bg-red-100 p-3 rounded-full">
-                <XCircle className="w-6 h-6 text-red-600" />
+              <div className="bg-semantic-error p-3 rounded-full">
+                <XCircle className="w-6 h-6 text-ink-0" />
               </div>
             </div>
           </div>
@@ -242,7 +242,7 @@ export function EmailNotificationManager() {
             onClick={() => setActiveTab("templates")}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === "templates"
-                ? "border-blue-500 text-blue-600"
+                ? "border-gold-500 text-gold-600"
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
             }`}
           >
@@ -252,7 +252,7 @@ export function EmailNotificationManager() {
             onClick={() => setActiveTab("campaigns")}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === "campaigns"
-                ? "border-blue-500 text-blue-600"
+                ? "border-gold-500 text-gold-600"
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
             }`}
           >
@@ -262,7 +262,7 @@ export function EmailNotificationManager() {
             onClick={() => setActiveTab("stats")}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === "stats"
-                ? "border-blue-500 text-blue-600"
+                ? "border-gold-500 text-gold-600"
                 : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
             }`}
           >
@@ -298,12 +298,12 @@ export function EmailNotificationManager() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-surface-0 divide-y divide-gray-200">
+              <tbody className="bg-surface-0 divide-y divide-border-200">
                 {templates.map((template) => (
                   <tr key={template.id} className="hover:bg-surface-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="text-blue-600 mr-3">
+                        <div className="text-gold-600 mr-3">
                           {getTemplateIcon(template.type)}
                         </div>
                         <div>
@@ -349,7 +349,7 @@ export function EmailNotificationManager() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => {/* TODO: Implement template editing */}}
-                          className="text-blue-600 hover:text-blue-900"
+                          className="text-gold-600 hover:text-gold-900"
                           aria-label="Edit template"
                         >
                           <Edit className="w-4 h-4" />
@@ -359,7 +359,7 @@ export function EmailNotificationManager() {
                             onClick={() =>
                               handleTemplateAction(template.id, "pause")
                             }
-                            className="text-yellow-600 hover:text-yellow-900"
+                            className="text-amber-600 hover:text-amber-900"
                             aria-label="Pause template"
                           >
                             <Pause className="w-4 h-4" />
@@ -398,7 +398,7 @@ export function EmailNotificationManager() {
       {activeTab === "campaigns" && (
         <div className="bg-surface-0 rounded-lg shadow-md">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-border-200">
               <thead className="bg-surface-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
@@ -424,7 +424,7 @@ export function EmailNotificationManager() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-surface-0 divide-y divide-gray-200">
+              <tbody className="bg-surface-0 divide-y divide-border-200">
                 {campaigns.map((campaign) => (
                   <tr key={campaign.id} className="hover:bg-surface-50">
                     <td className="px-6 py-4">

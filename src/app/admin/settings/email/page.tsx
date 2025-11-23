@@ -91,7 +91,7 @@ export default function EmailSettingsPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold-600 mx-auto"></div>
           <p className="mt-4 text-ink-600">Loading email settings...</p>
         </div>
       </div>
@@ -126,8 +126,8 @@ export default function EmailSettingsPage() {
                 <div
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     emailStatus.configured
-                      ? "bg-green-100 text-green-800"
-                      : "bg-yellow-100 text-yellow-800"
+                      ? "bg-semantic-success text-ink-800"
+                      : "bg-semantic-warning text-ink-800"
                   }`}
                 >
                   {emailStatus.configured
@@ -173,18 +173,18 @@ export default function EmailSettingsPage() {
               </div>
 
               {/* Instructions */}
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-900">
+              <div className="mt-4 p-4 bg-surface-100 rounded-lg">
+                <p className="text-sm text-ink-700">
                   {emailStatus.instructions}
                 </p>
               </div>
 
               {!emailStatus.configured && (
-                <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                  <h3 className="text-sm font-semibold text-amber-900 mb-2">
+                <div className="mt-4 p-4 bg-semantic-warning border border-gold-200 rounded-lg">
+                  <h3 className="text-sm font-semibold text-ink-900 mb-2">
                     Setup Instructions:
                   </h3>
-                  <ol className="text-sm text-amber-800 space-y-1 list-decimal list-inside">
+                  <ol className="text-sm text-ink-700 space-y-1 list-decimal list-inside">
                     <li>Create a Google Workspace account ($6/month)</li>
                     <li>Enable 2FA on your account</li>
                     <li>
@@ -193,14 +193,14 @@ export default function EmailSettingsPage() {
                         href="https://myaccount.google.com/apppasswords"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-amber-900 underline hover:text-amber-700"
+                        className="text-ink-900 underline hover:text-gold-700"
                       >
                         Google App Passwords
                       </a>
                     </li>
                     <li>Add the following to your .env.local file:</li>
                   </ol>
-                  <pre className="mt-2 p-3 bg-gray-900 text-gray-100 rounded text-xs overflow-x-auto">
+                  <pre className="mt-2 p-3 bg-surface-900 text-ink-100 rounded text-xs overflow-x-auto">
                     {`EMAIL_FROM="Kollect-It <noreply@yourdomain.com>"
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="587"
@@ -208,7 +208,7 @@ EMAIL_USER="noreply@yourdomain.com"
 EMAIL_PASSWORD="your-app-password"
 ADMIN_EMAIL="admin@yourdomain.com"`}
                   </pre>
-                  <p className="mt-2 text-sm text-amber-800">
+                  <p className="mt-2 text-sm text-ink-700">
                     5. Restart your application
                   </p>
                 </div>
@@ -238,14 +238,14 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
                   onChange={(e) => setTestEmail(e.target.value)}
                   placeholder="test@example.com"
                   required
-                  className="mt-1 block w-full px-3 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                  className="mt-1 block w-full px-3 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-gold-500 focus:border-gold-500"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full bg-amber-600 text-white px-4 py-2 rounded-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gold-600 text-ink-0 px-4 py-2 rounded-md hover:bg-gold-700 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {sending ? "Sending..." : "Send Test Email"}
               </button>
@@ -256,8 +256,8 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
               <div
                 className={`mt-4 p-4 rounded-lg ${
                   message.type === "success"
-                    ? "bg-green-50 text-green-800 border border-green-200"
-                    : "bg-red-50 text-red-800 border border-red-200"
+                    ? "bg-semantic-success text-ink-800 border border-gold-200"
+                    : "bg-semantic-error text-ink-0 border border-gold-200"
                 }`}
               >
                 <p className="text-sm">{message.text}</p>
@@ -276,22 +276,22 @@ ADMIN_EMAIL="admin@yourdomain.com"`}
           </p>
           <ul className="space-y-2">
             <li className="flex items-center text-sm text-ink-700">
-              <span className="text-green-600 mr-2">✓</span>
+              <span className="text-semantic-success mr-2">✓</span>
               <strong className="mr-2">Order Confirmation:</strong>
               Sent to customers when order is placed
             </li>
             <li className="flex items-center text-sm text-ink-700">
-              <span className="text-green-600 mr-2">✓</span>
+              <span className="text-semantic-success mr-2">✓</span>
               <strong className="mr-2">Order Status Update:</strong>
               Sent when order status changes (shipped, delivered, etc.)
             </li>
             <li className="flex items-center text-sm text-ink-700">
-              <span className="text-green-600 mr-2">✓</span>
+              <span className="text-semantic-success mr-2">✓</span>
               <strong className="mr-2">Admin New Order Alert:</strong>
               Sent to admin when new order is received
             </li>
             <li className="flex items-center text-sm text-ink-700">
-              <span className="text-green-600 mr-2">✓</span>
+              <span className="text-semantic-success mr-2">✓</span>
               <strong className="mr-2">Welcome Email:</strong>
               Sent to new users on registration
             </li>

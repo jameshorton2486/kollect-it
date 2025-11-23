@@ -104,19 +104,19 @@ export default function ProductImage({
     ${className}
     transition-opacity duration-300
     ${isLoading ? "opacity-0" : "opacity-100"}
-    ${hasError ? "bg-gray-800" : ""}
+    ${hasError ? "bg-surface-800" : ""}
   `.trim();
 
   return (
-    <div className="relative overflow-hidden rounded-lg bg-gray-900">
+    <div className="relative overflow-hidden rounded-lg bg-surface-900">
       {/* Loading skeleton */}
       {isLoading && (
-        <div className="absolute inset-0 animate-pulse bg-gray-800 dark:bg-gray-700" />
+        <div className="absolute inset-0 animate-pulse bg-surface-800" />
       )}
 
       {/* Error state */}
       {hasError && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 text-gray-400">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface-800 text-ink-400">
           <svg
             className="mb-2 h-12 w-12"
             fill="none"

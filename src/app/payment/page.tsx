@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function PaymentPage() {
   return (
-    <div style={{ backgroundColor: "#F7F6F2", minHeight: "100vh", padding: "60px 20px", color: "#3A3A3A" }}>
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <h1 style={{ fontFamily: "serif", fontSize: "3rem", marginBottom: "40px", textAlign: "center" }}>Payment Options</h1>
+    <div className="bg-surface-50 min-h-screen px-5 py-15 text-ink-800">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="font-serif text-4xl md:text-5xl mb-10 text-center">Payment Options</h1>
         
-        <div style={{ display: "grid", gap: "30px", marginBottom: "60px" }}>
+        <div className="grid gap-8 mb-15">
           {[
             { 
               title: "Credit Cards", 
@@ -35,15 +35,15 @@ export default function PaymentPage() {
               features: ["Buy now, pay later", "Flexible monthly payments", "Interest-free options available"] 
             }
           ].map((method) => (
-            <div key={method.title} style={{ backgroundColor: "#FFFFFF", padding: "30px", borderRadius: "8px", border: "1px solid #EAE6DD" }}>
-              <div style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
-                <method.icon size={32} color="#C9A66B" style={{ marginRight: "15px" }} />
-                <h2 style={{ fontFamily: "serif", fontSize: "1.8rem", color: "#C9A66B", margin: 0 }}>{method.title}</h2>
+            <div key={method.title} className="bg-surface-0 p-8 rounded-lg border border-border-200">
+              <div className="flex items-center mb-4">
+                <method.icon size={32} className="text-gold-500 mr-4" />
+                <h2 className="font-serif text-2xl text-gold-500 m-0">{method.title}</h2>
               </div>
-              <ul style={{ listStyle: "none", padding: 0, marginLeft: "47px" }}>
+              <ul className="list-none p-0 ml-12">
                 {method.features.map((feature, i) => (
-                  <li key={i} style={{ marginBottom: "8px", display: "flex", alignItems: "center" }}>
-                    <span style={{ color: "#C9A66B", marginRight: "10px" }}>•</span> {feature}
+                  <li key={i} className="mb-2 flex items-center">
+                    <span className="text-gold-500 mr-3">•</span> {feature}
                   </li>
                 ))}
               </ul>

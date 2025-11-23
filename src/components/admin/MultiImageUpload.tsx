@@ -167,7 +167,7 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
     <div className="space-y-4">
       {/* Upload Area */}
       <div
-        className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center cursor-pointer hover:border-gold-500 transition"
+        className="border-2 border-dashed border-border-300 rounded-lg p-8 text-center cursor-pointer hover:border-gold-500 transition"
         onClick={() => document.getElementById("multi-image-input")?.click()}
       >
         <input
@@ -178,9 +178,9 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
           className="hidden"
           onChange={(e) => handleFileSelect(e.target.files)}
         />
-        <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+        <Upload className="w-12 h-12 mx-auto mb-4 text-ink-400" />
         <p className="text-lg mb-2">Click to upload images</p>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-ink-400">
           Or drag and drop multiple images here
         </p>
         <p className="text-xs text-ink-500 mt-2">
@@ -192,13 +192,13 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
       {images.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-ink-400">
               {images.length} image{images.length !== 1 ? "s" : ""} selected
             </p>
             <button
               onClick={handleUploadAll}
               disabled={uploading || images.every((img) => img.url)}
-              className="px-4 py-2 bg-gold-600 hover:bg-gold-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded transition"
+              className="px-4 py-2 bg-gold-600 hover:bg-gold-700 disabled:bg-surface-300 disabled:cursor-not-allowed rounded transition"
             >
               {uploading ? (
                 <>
@@ -215,10 +215,10 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
             {images.map((img, index) => (
               <div
                 key={index}
-                className="relative group border border-gray-700 rounded-lg overflow-hidden"
+                className="relative group border border-border-300 rounded-lg overflow-hidden"
               >
                 {/* Image Preview */}
-                <div className="aspect-square bg-gray-800">
+                <div className="aspect-square bg-surface-800">
                   <img
                     src={img.preview}
                     alt={img.alt}
@@ -231,7 +231,7 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
                   <p className="text-xs text-white text-center mb-1">
                     {img.type}
                   </p>
-                  <p className="text-xs text-gray-300 text-center mb-2 line-clamp-2">
+                  <p className="text-xs text-ink-300 text-center mb-2 line-clamp-2">
                     {img.alt}
                   </p>
                   
@@ -244,7 +244,7 @@ export function MultiImageUpload({ onImagesUploaded, maxImages = 30 }: MultiImag
                   )}
                   
                   {img.error && (
-                    <p className="text-xs text-red-400">{img.error}</p>
+                    <p className="text-xs text-semantic-error">{img.error}</p>
                   )}
 
                   <button
