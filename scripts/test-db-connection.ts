@@ -4,7 +4,11 @@
  * Tests Supabase PostgreSQL connection with detailed diagnostics
  */
 
+import { config } from "dotenv";
 import { PrismaClient } from '@prisma/client'
+
+// Load environment variables
+config({ path: ".env.local" });
 
 console.log('🔍 Testing Database Connection...\n')
 
