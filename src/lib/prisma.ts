@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as {

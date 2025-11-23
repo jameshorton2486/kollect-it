@@ -61,7 +61,7 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
-    unoptimized: false,
+    unoptimized: true, // Temporarily disable image optimization to prevent timeout crashes
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },

@@ -85,11 +85,6 @@ export default function RootLayout({
       className={`${lato.variable} ${cormorant.variable} ${archivoBlack.variable} ${tenor.variable}`}
     >
       <head>
-        <Script
-          crossOrigin="anonymous"
-          src="//unpkg.com/same-runtime/dist/index.global.js"
-        />
-
         {/* GA4 Analytics - Initialize with environment variable */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
