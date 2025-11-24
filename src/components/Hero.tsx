@@ -9,8 +9,9 @@ export function Hero() {
       {/* Decorative blur */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/20 rounded-full blur-3xl" />
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container mx-auto px-4 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Left Column: Text Content */}
+        <div className="text-center md:text-left">
           {/* Headline */}
           <h1 className="font-serif text-display-xl font-bold mb-6 leading-tight text-ink-900">
             Rare Finds, Timeless
@@ -20,13 +21,12 @@ export function Hero() {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-body-lg text-ink-700 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Discover authenticated antiques and collectibles from trusted sources. 
-            Every piece tells a story worth preserving.
+          <p className="text-body-lg text-ink-700 mb-8 max-w-2xl leading-relaxed">
+            Discover authenticated antiques and collectibles from trusted sources. Every piece tells a story worth preserving.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Button
               asChild
               size="lg"
@@ -44,24 +44,15 @@ export function Hero() {
               <Link href="/how-it-works">How It Works</Link>
             </Button>
           </div>
+        </div>
 
-          {/* Trust Indicators */}
-          <div className="mt-section-small pt-8 border-t border-border-300">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-              <div className="flex flex-col items-center">
-                <div className="text-gold-600 text-2xl font-bold mb-1">100%</div>
-                <div className="text-ink-600">Authenticated</div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="text-gold-600 text-2xl font-bold mb-1">5,000+</div>
-                <div className="text-ink-600">Happy Collectors</div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="text-gold-600 text-2xl font-bold mb-1">$2M+</div>
-                <div className="text-ink-600">Items Sold</div>
-              </div>
-            </div>
-          </div>
+        {/* Right Column: Decorative Image */}
+        <div className="relative">
+          <img
+            src="/images/hero-image.jpg"
+            alt="Hero Decorative"
+            className="rounded-lg shadow-lg"
+          />
         </div>
       </div>
     </section>

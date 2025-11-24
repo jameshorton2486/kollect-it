@@ -20,24 +20,6 @@ export default function ProcessOverview() {
       text: "Professional photography, detailed descriptions, and conservation-grade documentation. Each piece includes historical background and care recommendations.",
       icon: "📋",
     },
-    {
-      n: 4,
-      title: "Ship",
-      text: "Insured, secure shipping with archival-grade packing. White-glove handling for premium items. Full tracking and insurance provided.",
-      icon: "📦",
-    },
-    {
-      n: 5,
-      title: "Support",
-      text: "Post-sale care guidance and lifetime authentication support. Our specialists are available for questions about your collection.",
-      icon: "💬",
-    },
-    {
-      n: 6,
-      title: "Grow",
-      text: "Build your collection with confidence. We offer acquisition consulting and help you discover pieces that match your vision and interests.",
-      icon: "⭐",
-    },
   ];
 
   return (
