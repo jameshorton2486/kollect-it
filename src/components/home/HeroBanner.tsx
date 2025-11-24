@@ -42,7 +42,7 @@ export default function HeroBanner({ banners }: HeroBannerProps) {
   const currentBanner = banners[currentIndex];
 
   return (
-    <section className="relative h-[500px] bg-muted">
+    <section className="relative h-[500px] bg-lux-gray-light">
       {/* Banner Image */}
       <div className="absolute inset-0">
         <Image
@@ -52,7 +52,7 @@ export default function HeroBanner({ banners }: HeroBannerProps) {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-lux-white/80" />
       </div>
 
       {/* Content */}

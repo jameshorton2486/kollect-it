@@ -19,11 +19,11 @@ export default function CategoryShowcase({
   categories,
 }: CategoryShowcaseProps) {
   return (
-    <section className="py-12 bg-muted/30">
+    <section className="py-12 bg-lux-gray-light">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold mb-2">Shop by Category</h2>
-          <p className="text-muted-foreground">
+          <p className="text-lux-gray">
             Explore our curated collection of authentic collectibles
           </p>
         </div>

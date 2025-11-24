@@ -45,7 +45,7 @@ export default function LatestArrivals() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-surface-0">
+    <section className="py-16 md:py-24 bg-lux-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
         <motion.div
           className="text-center mb-14"

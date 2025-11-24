@@ -33,12 +33,12 @@ export default function ShopByCategories() {
   ];
 
   return (
-    <section className="section-spacing bg-cream">
+    <section className="section-spacing bg-lux-white">
       <div className="container mx-auto px-6 max-w-6xl text-center">
         <h2 className="text-4xl text-navy font-semibold mb-6">
           Shop by Category
         </h2>
-        <p className="text-ink-secondary mb-12">
+        <p className="text-lux-gray-dark mb-12">
           Explore diverse categories curated for collectors, designers, and
           historians alike.
         </p>
@@ -54,7 +54,7 @@ export default function ShopByCategories() {
             >
               <Link
                 href={cat.href}
-                className="group block border border-border-200 rounded-2xl overflow-hidden shadow-elevation-sm hover:shadow-elevation-lg transition-all duration-300 bg-surface-0"
+                className="group block border border-lux-silver rounded-2xl overflow-hidden shadow-elevation-sm hover:shadow-elevation-lg transition-all duration-300 bg-surface-0"
               >
                 <Image
                   src={cat.img}
@@ -65,7 +65,7 @@ export default function ShopByCategories() {
                 />
                 <div className="p-6 text-left">
                   <h3 className="text-2xl text-navy mb-2">{cat.title}</h3>
-                  <p className="text-ink-secondary leading-relaxed">
+                  <p className="text-lux-gray-dark leading-relaxed">
                     {cat.desc}
                   </p>
                 </div>
@@ -84,7 +84,7 @@ export default function ShopByCategories() {
         </div>
 
         <motion.p
-          className="mt-10 text-ink-secondary text-lg max-w-2xl mx-auto"
+          className="mt-10 text-lux-gray-dark text-lg max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

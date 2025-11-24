@@ -36,11 +36,7 @@ Write-Host ""
 
 # Step 2: Delete backup files if they exist
 Write-Info "Cleaning up backup files..."
-$backupFiles = @(
-    "src/app/admin/dashboard/page.tsx.backup-20251120-063552",
-    "src/app/admin/dashboard/page.tsx.backup-20251120-151736",
-    "src/app/admin/dashboard/page.tsx.backup-20251120-151901"
-)
+$backupFiles = @()
 
 foreach ($file in $backupFiles) {
     if (Test-Path $file) {

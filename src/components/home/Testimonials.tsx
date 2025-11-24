@@ -33,7 +33,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-surface-1 border-y border-surface-2">
+    <section className="py-16 md:py-24 bg-lux-pearl border-y border-lux-silver">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="text-sm md:text-base font-semibold text-gold uppercase tracking-widest mb-3">
@@ -72,7 +72,7 @@ export default function Testimonials() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-14 text-center bg-surface-0 rounded-lg p-10 border-2 border-gold/20">
+        <div className="mt-14 text-center bg-surface-0 rounded-lg p-10 border-2 border-lux-gold/20">
           <h3 className="font-serif text-3xl text-ink mb-3">
             Join Our Collector Community
           </h3>

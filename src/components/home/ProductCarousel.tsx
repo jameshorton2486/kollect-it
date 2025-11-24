@@ -45,7 +45,7 @@ export default function ProductCarousel({
           <div>
             <h2 className="text-3xl font-bold">{title}</h2>
             {subtitle && (
-              <p className="text-muted-foreground mt-1">{subtitle}</p>
+              <p className="text-lux-gray mt-1">{subtitle}</p>
             )}
           </div>
           <div className="flex gap-2">
