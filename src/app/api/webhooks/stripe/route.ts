@@ -19,6 +19,14 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 export async function POST(request: Request) {
   const requestId = getRequestId(request);
+  if (!stripe) {
+    logger.error("Stripe not configured", { requestId });
+    return NextResponse.json(
+      { error: "Payment processing is not configured", requestId },
+      { status: 503 },
+    );
+  }
+
   const body = await request.text();
   const headersList = await headers();
   const signature = headersList.get("stripe-signature");

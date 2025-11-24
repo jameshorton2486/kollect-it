@@ -33,19 +33,28 @@ const urlPattern = /^postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)(\?.+)
 const urlParts = dbUrl.match(urlPattern)
 
 if (urlParts) {
-  const [, user, password, host, port, database, params] = urlParts
-  
-  console.log(`Protocol: ${dbUrl.startsWith('postgresql://') ? '✓ postgresql://' : '⚠️  postgres:// (should be postgresql://)'}`)
+  const [, user, , host, port, database, params] = urlParts // Removed unused 'password'
+
+  console.log(
+    `Protocol: ${dbUrl.startsWith('postgresql://') ? '✓ postgresql://' : '⚠️  postgres:// (should be postgresql://)'}`
+  )
   console.log(`User: ${user}`)
   console.log(`Host: ${host}`)
-  console.log(`Port: ${port} ${port === '6543' ? '(✓ Pooler)' : port === '5432' ? '(⚠️  Direct)' : '(❌ Invalid)'}`)
+  console.log(
+    `Port: ${port} ${
+      port === '6543'
+        ? '(✓ Pooler)'
+        : port === '5432'
+        ? '(⚠️  Direct)'
+        : '(❌ Invalid)'
+    }`
+  )
   console.log(`Database: ${database}`)
   console.log(`Params: ${params || 'None'}`)
-  
+
   // Check required parameters
   const hasPooler = params?.includes('pgbouncer=true')
   console.log(`pgbouncer=true: ${hasPooler ? '✓ Present' : '❌ Missing'}`)
-  
 } else {
   console.log('❌ Invalid DATABASE_URL format!')
   console.log('Expected: postgresql://user:pass@host:port/db?params')
@@ -61,28 +70,37 @@ const { execSync } = require('child_process')
 try {
   // Extract host from URL
   const host = urlParts[3]
-  
+
   console.log(`Testing connection to ${host}:6543...`)
-  
+
   // Try to resolve DNS first
   try {
-    const dnsResult = execSync(`nslookup ${host}`, { encoding: 'utf-8', timeout: 5000 })
+    execSync(`nslookup ${host}`, {
+      encoding: 'utf-8',
+      timeout: 5000,
+    }) // Removed unused 'dnsResult'
     console.log('✓ DNS resolution successful')
-  } catch (dnsError) {
+  } catch {
     console.log('❌ DNS resolution failed')
     console.log('This might indicate network issues or the server is down')
   }
-  
+
   // Test if we can reach the host at all
   try {
-    const pingResult = execSync(`ping -n 1 -w 1000 ${host}`, { encoding: 'utf-8', timeout: 5000 })
+    execSync(`ping -n 1 -w 1000 ${host}`, {
+      encoding: 'utf-8',
+      timeout: 5000,
+    }) // Removed unused 'pingResult'
     console.log('✓ Host is reachable')
-  } catch (pingError) {
+  } catch {
     console.log('⚠️  Host ping failed (this might be normal - many servers block ping)')
   }
-  
 } catch (error) {
-  console.log('⚠️  Network test failed:', error.message)
+  if (error instanceof Error) {
+    console.log('⚠️  Network test failed:', error.message)
+  } else {
+    console.log('⚠️  Network test failed:', String(error))
+  }
 }
 
 // 4. Supabase Project Status Check
@@ -119,16 +137,16 @@ const prisma = new PrismaClient({
 try {
   await prisma.$connect()
   console.log('✅ Prisma connection successful!')
-  
+
   // Test basic query
   const result = await prisma.$queryRaw`SELECT NOW() as current_time`
   console.log('✅ Database query successful!')
   console.log('Current database time:', result[0].current_time)
-  
+
 } catch (error) {
   console.log('❌ Database connection failed!')
   console.log('Error:', error.message)
-  
+
   // Provide specific guidance based on error
   if (error.message.includes('SASL authentication failed')) {
     console.log('\n🔧 AUTHENTICATION ISSUE DETECTED')
@@ -151,7 +169,7 @@ try {
     console.log('- Server overload')
     console.log('\nSolution: Try again in a few minutes')
   }
-  
+
 } finally {
   await prisma.$disconnect()
 }

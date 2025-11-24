@@ -175,7 +175,7 @@ export const authOptions: NextAuthOptions = {
     },
     debug(code, metadata) {
       if (process.env.NODE_ENV === "development") {
-        logger.debug("NextAuth debug", { code, ...metadata });
+        logger.debug("NextAuth debug", { code, ...(metadata && typeof metadata === 'object' ? metadata : {}) });
       }
     },
   },

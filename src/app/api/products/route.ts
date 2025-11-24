@@ -127,8 +127,15 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
+    const skuYear = new Date().getFullYear();
+    const skuNumber = Math.floor(10000 + Math.random() * 90000);
+    const sku = `${skuYear}-${skuNumber}`;
+
     const product = await prisma.product.create({
       data: {
+        sku,
+        skuYear,
+        skuNumber,
         title,
         slug,
         description,

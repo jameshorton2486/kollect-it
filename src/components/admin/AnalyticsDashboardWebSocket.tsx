@@ -110,25 +110,25 @@ export function AnalyticsDashboardWebSocket() {
 
   if (loading)
     return (
-      <div className="text-center text-gray-400">Loading analytics...</div>
+      <div className="text-center text-lux-gray">Loading analytics...</div>
     );
   if (!metrics)
-    return <div className="text-center text-gray-400">No data available</div>;
+    return <div className="text-center text-lux-gray">No data available</div>;
 
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-white">Analytics Dashboard</h1>
+          <h1 className="text-3xl font-bold text-lux-white">Analytics Dashboard</h1>
           <div className="flex gap-4 items-center mt-2">
-            <span className="text-sm text-gray-400">
+            <span className="text-sm text-lux-gray">
               {connected ? (
                 <span className="text-green-400">🟢 Real-time Connected</span>
               ) : (
                 <span className="text-yellow-400">🟡 Fetching Data</span>
               )}
             </span>
-            <label className="flex items-center gap-2 text-sm text-gray-300">
+            <label className="flex items-center gap-2 text-sm text-lux-gray">
               <input
                 type="checkbox"
                 checked={autoRefresh}
@@ -145,7 +145,7 @@ export function AnalyticsDashboardWebSocket() {
             title="Start Date"
             value={startDate.toISOString().split("T")[0]}
             onChange={(e) => setStartDate(new Date(e.target.value))}
-            className="bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]"
+            className="bg-lux-charcoal text-lux-white px-3 py-2 rounded border border-lux-gold"
             disabled={autoRefresh}
           />
           <input
@@ -153,7 +153,7 @@ export function AnalyticsDashboardWebSocket() {
             title="End Date"
             value={endDate.toISOString().split("T")[0]}
             onChange={(e) => setEndDate(new Date(e.target.value))}
-            className="bg-gray-800 text-white px-3 py-2 rounded border border-[#D3AF37]"
+            className="bg-lux-charcoal text-lux-white px-3 py-2 rounded border border-lux-gold"
             disabled={autoRefresh}
           />
         </div>
@@ -196,14 +196,14 @@ export function AnalyticsDashboardWebSocket() {
 
       {/* Detailed Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
-          <h3 className="text-white text-lg font-bold mb-4">
+        <div className="border border-lux-gold rounded-lg p-6 bg-lux-carbon">
+          <h3 className="text-lux-white text-lg font-bold mb-4">
             Approval Metrics
           </h3>
-          <div className="space-y-3 text-gray-300">
+          <div className="space-y-3 text-lux-gray">
             <div className="flex justify-between">
               <span>Submitted:</span>
-              <span className="text-[#D3AF37] font-semibold">
+              <span className="text-lux-gold font-semibold">
                 {metrics.approval.totalSubmitted}
               </span>
             </div>
@@ -225,18 +225,18 @@ export function AnalyticsDashboardWebSocket() {
                 {metrics.approval.pending}
               </span>
             </div>
-            <div className="pt-3 border-t border-[#D3AF37] flex justify-between">
+            <div className="pt-3 border-t border-lux-gold flex justify-between">
               <span>Avg Time to Approve:</span>
-              <span className="text-[#D3AF37] font-semibold">
+              <span className="text-lux-gold font-semibold">
                 {metrics.approval.averageTimeToApprove.toFixed(0)} min
               </span>
             </div>
           </div>
         </div>
 
-        <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
-          <h3 className="text-white text-lg font-bold mb-4">Pricing Metrics</h3>
-          <div className="space-y-3 text-gray-300">
+        <div className="border border-lux-gold rounded-lg p-6 bg-lux-carbon">
+          <h3 className="text-lux-white text-lg font-bold mb-4">Pricing Metrics</h3>
+          <div className="space-y-3 text-lux-gray">
             <div className="flex justify-between">
               <span>Auto-Approved (&gt;85%):</span>
               <span className="text-green-400 font-semibold">
@@ -255,21 +255,21 @@ export function AnalyticsDashboardWebSocket() {
                 {metrics.pricing.lowConfidenceCount}
               </span>
             </div>
-            <div className="pt-3 border-t border-[#D3AF37] flex justify-between">
+            <div className="pt-3 border-t border-lux-gold flex justify-between">
               <span>Price Accuracy:</span>
-              <span className="text-[#D3AF37] font-semibold">
+              <span className="text-lux-gold font-semibold">
                 {metrics.pricing.priceAccuracy.toFixed(1)}%
               </span>
             </div>
           </div>
         </div>
 
-        <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
-          <h3 className="text-white text-lg font-bold mb-4">Product Metrics</h3>
-          <div className="space-y-3 text-gray-300">
+        <div className="border border-lux-gold rounded-lg p-6 bg-lux-carbon">
+          <h3 className="text-lux-white text-lg font-bold mb-4">Product Metrics</h3>
+          <div className="space-y-3 text-lux-gray">
             <div className="flex justify-between">
               <span>Total Products:</span>
-              <span className="text-[#D3AF37] font-semibold">
+              <span className="text-lux-gold font-semibold">
                 {metrics.products.totalProducts}
               </span>
             </div>
@@ -281,13 +281,13 @@ export function AnalyticsDashboardWebSocket() {
             </div>
             <div className="flex justify-between">
               <span>Average Price:</span>
-              <span className="text-[#D3AF37] font-semibold">
+              <span className="text-lux-gold font-semibold">
                 ${metrics.products.averagePrice.toFixed(2)}
               </span>
             </div>
-            <div className="pt-3 border-t border-[#D3AF37] text-sm">
+            <div className="pt-3 border-t border-lux-gold text-sm">
               <p>Price Range:</p>
-              <p className="text-[#D3AF37] font-semibold mt-1">
+              <p className="text-lux-gold font-semibold mt-1">
                 ${metrics.products.priceRange.min.toFixed(2)} - $
                 {metrics.products.priceRange.max.toFixed(2)}
               </p>
@@ -297,18 +297,18 @@ export function AnalyticsDashboardWebSocket() {
       </div>
 
       {/* Revenue by Category Details */}
-      <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
-        <h3 className="text-white text-lg font-bold mb-4">
+      <div className="border border-lux-gold rounded-lg p-6 bg-lux-carbon">
+        <h3 className="text-lux-white text-lg font-bold mb-4">
           Revenue by Category Breakdown
         </h3>
         <div className="space-y-2">
           {metrics.revenue.revenueByCategory.map((cat) => (
             <div
               key={cat.category}
-              className="flex justify-between text-gray-300 pb-2 border-b border-gray-700"
+              className="flex justify-between text-lux-gray pb-2 border-b border-gray-700"
             >
               <span>{cat.category}</span>
-              <span className="text-[#D3AF37] font-semibold">
+              <span className="text-lux-gold font-semibold">
                 ${cat.revenue.toFixed(2)} ({cat.percentage.toFixed(1)}%)
               </span>
             </div>

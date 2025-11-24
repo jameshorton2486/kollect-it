@@ -124,14 +124,14 @@ export function ApprovalQueue() {
   const totalPages = Math.ceil(pagination.total / pagination.limit);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white p-8">
+    <div className="min-h-screen bg-lux-carbon text-lux-white p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[#D3AF37] mb-2">
+          <h1 className="text-4xl font-bold text-lux-gold mb-2">
             Product Approval Queue
           </h1>
-          <p className="text-gray-400">
+          <p className="text-lux-gray">
             Review and approve AI-generated products for the marketplace
           </p>
         </div>
@@ -155,8 +155,8 @@ export function ApprovalQueue() {
                 }}
                 className={`px-6 py-2 rounded-lg font-semibold transition-all ${
                   filter === status
-                    ? "bg-[#D3AF37] text-[#1a1a1a]"
-                    : "bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]"
+                    ? "bg-lux-gold text-lux-carbon"
+                    : "bg-lux-charcoal text-lux-white hover:bg-lux-charcoal/80"
                 }`}
               >
                 {status}
@@ -169,43 +169,43 @@ export function ApprovalQueue() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Product List */}
           <div className="lg:col-span-2">
-            <div className="bg-[#2a2a2a] rounded-lg overflow-hidden">
+            <div className="bg-lux-charcoal rounded-lg overflow-hidden">
               {loading ? (
-                <div className="p-8 text-center text-gray-400">
+                <div className="p-8 text-center text-lux-gray">
                   <p>Loading products...</p>
                 </div>
               ) : products.length === 0 ? (
-                <div className="p-8 text-center text-gray-400">
+                <div className="p-8 text-center text-lux-gray">
                   <p>No products to review</p>
                 </div>
               ) : (
-                <div className="divide-y divide-[#3a3a3a]">
+                <div className="divide-y divide-lux-charcoal/80">
                   {products.map((product) => (
                     <div
                       key={product.id}
                       onClick={() => setSelectedProduct(product)}
                       className={`p-6 cursor-pointer transition-colors ${
                         selectedProduct?.id === product.id
-                          ? "bg-[#3a3a3a] border-l-4 border-[#D3AF37]"
-                          : "hover:bg-[#3a3a3a]"
+                          ? "bg-lux-charcoal/80 border-l-4 border-lux-gold"
+                          : "hover:bg-lux-charcoal/80"
                       }`}
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-white mb-2">
+                          <h3 className="text-lg font-semibold text-lux-white mb-2">
                             {product.aiTitle}
                           </h3>
-                          <p className="text-sm text-gray-400 mb-3">
+                          <p className="text-sm text-lux-gray mb-3">
                             {product.aiDescription.substring(0, 100)}...
                           </p>
                           <div className="flex gap-4 text-sm">
-                            <span className="text-[#D3AF37]">
+                            <span className="text-lux-gold">
                               ${product.suggestedPrice}
                             </span>
-                            <span className="text-gray-400">
+                            <span className="text-lux-gray">
                               {product.aiCategory}
                             </span>
-                            <span className="text-gray-400">
+                            <span className="text-lux-gray">
                               {product.aiCondition}
                             </span>
                           </div>
@@ -241,11 +241,11 @@ export function ApprovalQueue() {
                     }))
                   }
                   disabled={pagination.page === 1}
-                  className="px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50"
+                  className="px-4 py-2 bg-lux-charcoal text-lux-white rounded-lg disabled:opacity-50"
                 >
                   Previous
                 </button>
-                <span className="text-gray-400">
+                <span className="text-lux-gray">
                   Page {pagination.page} of {totalPages}
                 </span>
                 <button
@@ -256,7 +256,7 @@ export function ApprovalQueue() {
                     }))
                   }
                   disabled={pagination.page === totalPages}
-                  className="px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50"
+                  className="px-4 py-2 bg-lux-charcoal text-lux-white rounded-lg disabled:opacity-50"
                 >
                   Next
                 </button>
@@ -266,8 +266,8 @@ export function ApprovalQueue() {
 
           {/* Detail Panel */}
           {selectedProduct && (
-            <div className="bg-[#2a2a2a] rounded-lg p-6 h-fit">
-              <h2 className="text-2xl font-bold text-[#D3AF37] mb-4">
+            <div className="bg-lux-charcoal rounded-lg p-6 h-fit">
+              <h2 className="text-2xl font-bold text-lux-gold mb-4">
                 Product Details
               </h2>
 
@@ -281,41 +281,41 @@ export function ApprovalQueue() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm text-gray-400">Title</label>
-                  <p className="text-white font-semibold">
+                  <label className="text-sm text-lux-gray">Title</label>
+                  <p className="text-lux-white font-semibold">
                     {selectedProduct.aiTitle}
                   </p>
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-400">Category</label>
-                  <p className="text-white">{selectedProduct.aiCategory}</p>
+                  <label className="text-sm text-lux-gray">Category</label>
+                  <p className="text-lux-white">{selectedProduct.aiCategory}</p>
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-400">Condition</label>
-                  <p className="text-white">{selectedProduct.aiCondition}</p>
+                  <label className="text-sm text-lux-gray">Condition</label>
+                  <p className="text-lux-white">{selectedProduct.aiCondition}</p>
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-400">
+                  <label className="text-sm text-lux-gray">
                     Suggested Price
                   </label>
-                  <p className="text-[#D3AF37] text-2xl font-bold">
+                  <p className="text-lux-gold text-2xl font-bold">
                     ${selectedProduct.suggestedPrice}
                   </p>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-lux-gray">
                     Range: ${selectedProduct.priceLowRange} - $
                     {selectedProduct.priceHighRange}
                   </p>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-lux-gray">
                     Confidence: {selectedProduct.priceConfidence}%
                   </p>
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-400">Description</label>
-                  <p className="text-white text-sm leading-relaxed">
+                  <label className="text-sm text-lux-gray">Description</label>
+                  <p className="text-lux-white text-sm leading-relaxed">
                     {selectedProduct.aiDescription}
                   </p>
                 </div>
@@ -365,58 +365,49 @@ function PriceReviewPanel({
   async function handleReject() {
     setIsRejecting(true);
     try {
-      await onReject(product.id, rejectionReason || "No reason provided");
+      await onReject(product.id, rejectionReason);
     } finally {
       setIsRejecting(false);
     }
   }
 
   return (
-    <div className="mt-6 space-y-4 border-t border-[#3a3a3a] pt-6">
-      <div>
-        <label htmlFor="final-price" className="text-sm text-gray-400">
-          Final Price
-        </label>
-        <div className="flex gap-2">
-          <span className="text-[#D3AF37] self-center">$</span>
-          <input
-            id="final-price"
-            type="number"
-            value={finalPrice}
-            onChange={(e) => setFinalPrice(parseFloat(e.target.value))}
-            placeholder="Enter final price"
-            className="flex-1 px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none"
-          />
-        </div>
-      </div>
-
-      <button
-        onClick={handleApprove}
-        disabled={isApproving}
-        className="w-full py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
-      >
-        {isApproving ? "Approving..." : "Approve Product"}
-      </button>
-
-      <div>
-        <label className="text-sm text-gray-400">
-          Rejection Reason (optional)
-        </label>
-        <textarea
-          value={rejectionReason}
-          onChange={(e) => setRejectionReason(e.target.value)}
-          className="w-full px-3 py-2 bg-[#1a1a1a] text-white rounded-lg border border-[#3a3a3a] focus:border-[#D3AF37] outline-none h-20"
-          placeholder="Enter reason for rejection..."
+    <div className="mt-6">
+      <div className="mb-4">
+        <label className="text-sm text-lux-gray">Final Price</label>
+        <input
+          type="number"
+          value={finalPrice}
+          onChange={(e) => setFinalPrice(Number(e.target.value))}
+          className="w-full bg-lux-charcoal text-lux-white px-3 py-2 rounded border border-lux-gold"
         />
       </div>
 
-      <button
-        onClick={handleReject}
-        disabled={isRejecting}
-        className="w-full py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
-      >
-        {isRejecting ? "Rejecting..." : "Reject Product"}
-      </button>
+      <div className="mb-4">
+        <label className="text-sm text-lux-gray">Rejection Reason</label>
+        <textarea
+          value={rejectionReason}
+          onChange={(e) => setRejectionReason(e.target.value)}
+          className="w-full bg-lux-charcoal text-lux-white px-3 py-2 rounded border border-lux-gold"
+        />
+      </div>
+
+      <div className="flex gap-4">
+        <button
+          onClick={handleApprove}
+          disabled={isApproving}
+          className="px-6 py-2 bg-lux-gold text-lux-carbon rounded-lg font-semibold disabled:opacity-50"
+        >
+          {isApproving ? "Approving..." : "Approve"}
+        </button>
+        <button
+          onClick={handleReject}
+          disabled={isRejecting}
+          className="px-6 py-2 bg-red-900/30 text-red-200 rounded-lg font-semibold disabled:opacity-50"
+        >
+          {isRejecting ? "Rejecting..." : "Reject"}
+        </button>
+      </div>
     </div>
   );
 }

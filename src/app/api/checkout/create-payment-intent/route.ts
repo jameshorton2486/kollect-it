@@ -19,6 +19,13 @@ interface ValidatedCartItem {
  */
 export async function POST(request: NextRequest) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: "Payment processing is not configured" },
+        { status: 503 },
+      );
+    }
+
     // Apply enhanced security for payment endpoint
     const securityCheck = await securityMiddleware(request, {
       maxBodySize: 1024 * 1024, // 1MB max

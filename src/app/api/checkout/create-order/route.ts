@@ -21,6 +21,13 @@ interface ShippingAddress {
 
 export async function POST(request: Request) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: "Payment processing is not configured" },
+        { status: 503 },
+      );
+    }
+
     const { paymentIntentId } = await request.json();
 
     if (!paymentIntentId) {

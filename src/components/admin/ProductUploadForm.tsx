@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Upload, Loader, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
+import { Loader, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
 import { MultiImageUpload } from "./MultiImageUpload";
 import { validateSKU } from "@/lib/utils/image-parser";
 

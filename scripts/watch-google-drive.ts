@@ -131,7 +131,11 @@ class GoogleDriveWatcher {
         }
       }
     } catch (error) {
-      console.error("❌ Error checking for new products:", error);
+      if (error instanceof Error) {
+        console.error("❌ Error checking for new products:", error.message);
+      } else {
+        console.error("❌ Error checking for new products:", String(error));
+      }
     }
   }
 
@@ -186,7 +190,11 @@ class GoogleDriveWatcher {
 
             resolve();
           } catch (error) {
-            reject(error);
+            if (error instanceof Error) {
+              reject(error.message);
+            } else {
+              reject(String(error));
+            }
           }
         });
         response.data.on("error", reject);
