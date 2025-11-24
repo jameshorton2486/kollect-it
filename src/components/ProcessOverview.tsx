@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function ProcessOverview() {
   const steps = [
     {
@@ -47,7 +45,7 @@ export default function ProcessOverview() {
 
         {/* Timeline */}
         <div className="max-w-3xl mx-auto">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div key={step.title} className="flex items-start gap-4 mb-8">
               <div className="text-lux-gold text-2xl font-bold">{step.number}</div>
               <div>
