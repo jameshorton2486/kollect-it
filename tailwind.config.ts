@@ -2,8 +2,8 @@ import type { Config } from "tailwindcss";
 
 /* ============================================
    KOLLECT-IT TAILWIND CONFIGURATION
+   Updated with Luxury Color Palette
    Synced with globals.css CSS variables
-   Full color scales for complete design flexibility
    ============================================ */
 
 const config: Config = {
@@ -16,6 +16,38 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /* ==========================================
+           LUX - Luxury Color Palette (NEW)
+           Primary palette for refined design
+           ========================================== */
+        lux: {
+          // Core Neutrals
+          black: "hsl(var(--lux-black))",
+          carbon: "hsl(var(--lux-carbon))",
+          charcoal: "hsl(var(--lux-charcoal))",
+          "gray-dark": "hsl(var(--lux-gray-dark))",
+          gray: "hsl(var(--lux-gray))",
+          "gray-light": "hsl(var(--lux-gray-light))",
+          silver: "hsl(var(--lux-silver))",
+          pearl: "hsl(var(--lux-pearl))",
+          cream: "hsl(var(--lux-cream))",
+          white: "hsl(var(--lux-white))",
+          
+          // Warm Antique Accents
+          espresso: "hsl(var(--lux-espresso))",
+          taupe: "hsl(var(--lux-taupe))",
+          sage: "hsl(var(--lux-sage))",
+          
+          // Gold Accents
+          gold: "hsl(var(--lux-gold))",
+          "gold-light": "hsl(var(--lux-gold-light))",
+        },
+
+        /* ==========================================
+           LEGACY COLORS (kept for compatibility)
+           Gradually migrate to lux palette
+           ========================================== */
+        
         /* Ink - Text Colors (Complete Scale) */
         ink: {
           400: "hsl(var(--ink-400))",
@@ -24,7 +56,8 @@ const config: Config = {
           700: "hsl(var(--ink-700))",
           800: "hsl(var(--ink-800))",
           900: "hsl(var(--ink-900))",
-          DEFAULT: "hsl(var(--ink-900))", // Fallback
+          DEFAULT: "hsl(var(--ink-900))",
+          light: "hsl(var(--ink-600))", // Alias for lighter text
         },
         
         /* Gold - Brand Accent (Complete Scale) */
@@ -34,30 +67,31 @@ const config: Config = {
           500: "hsl(var(--gold-500))",
           600: "hsl(var(--gold-600))",
           700: "hsl(var(--gold-700))",
-          DEFAULT: "hsl(var(--gold-500))", // Fallback
+          DEFAULT: "hsl(var(--gold-500))",
         },
         
         /* Surface - Backgrounds (Complete Scale) */
         surface: {
           0: "hsl(var(--surface-0))",
+          1: "hsl(var(--surface-50))", // Alias
           50: "hsl(var(--surface-50))",
           100: "hsl(var(--surface-100))",
           200: "hsl(var(--surface-200))",
           300: "hsl(var(--surface-300))",
           800: "hsl(var(--surface-800))",
           900: "hsl(var(--surface-900))",
-          DEFAULT: "hsl(var(--surface-0))", // Fallback
+          DEFAULT: "hsl(var(--surface-0))",
         },
         
-        /* CTA - Call to Action Navy (Complete Scale) */
+        /* CTA - Call to Action (Complete Scale) */
         cta: {
           400: "hsl(var(--cta-400))",
           500: "hsl(var(--cta-500))",
           600: "hsl(var(--cta-600))",
           700: "hsl(var(--cta-700))",
           800: "hsl(var(--cta-800))",
-          DEFAULT: "hsl(var(--cta-600))", // Fallback
-          hover: "hsl(var(--cta-700))", // Hover state
+          DEFAULT: "hsl(var(--cta-600))",
+          hover: "hsl(var(--cta-700))",
         },
         
         /* Semantic Colors */
@@ -80,12 +114,13 @@ const config: Config = {
         border: {
           200: "hsl(var(--border-200))",
           300: "hsl(var(--border-300))",
-          DEFAULT: "hsl(var(--border-300))", // Fallback
+          DEFAULT: "hsl(var(--border-300))",
         },
 
-        /* Additional aliases for convenience */
+        /* Additional aliases */
         "ink-secondary": "hsl(var(--ink-600))",
         "ink-muted": "hsl(var(--ink-500))",
+        "ink-light": "hsl(var(--ink-600))",
 
         /* shadcn/ui compatibility */
         background: "hsl(var(--background))",
@@ -121,7 +156,7 @@ const config: Config = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
 
-        /* Aesop-Inspired Earthy Palette */
+        /* Aesop-Inspired Earthy Palette (Legacy) */
         aesop: {
           cream: "hsl(var(--aesop-cream))",
           sand: "hsl(var(--aesop-sand))",
@@ -138,6 +173,15 @@ const config: Config = {
         logo: ["var(--font-logo)", "system-ui", "sans-serif"],
       },
       
+      fontSize: {
+        /* Display sizes for heroes */
+        "display-sm": ["2rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        "display-md": ["2.5rem", { lineHeight: "1.15", letterSpacing: "-0.02em" }],
+        "display-lg": ["3rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+        "display-xl": ["3.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+        "display-2xl": ["4rem", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+      },
+      
       borderRadius: {
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
@@ -145,7 +189,7 @@ const config: Config = {
         xl: "var(--radius-xl)",
         "2xl": "var(--radius-2xl)",
         full: "var(--radius-full)",
-        DEFAULT: "var(--radius)", // Fallback
+        DEFAULT: "var(--radius)",
       },
       
       spacing: {
@@ -156,6 +200,9 @@ const config: Config = {
         xl: "var(--spacing-xl)",
         "2xl": "var(--spacing-2xl)",
         "3xl": "var(--spacing-3xl)",
+        "section-small": "2rem",
+        "section": "4rem",
+        "section-large": "6rem",
       },
       
       boxShadow: {
@@ -163,8 +210,10 @@ const config: Config = {
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
         xl: "var(--shadow-xl)",
-        card: "0 2px 8px rgba(0, 0, 0, 0.1)",
+        card: "0 2px 8px rgba(0, 0, 0, 0.08)",
+        "card-hover": "0 8px 24px rgba(0, 0, 0, 0.12)",
         elevated: "0 4px 16px rgba(0, 0, 0, 0.15)",
+        cta: "0 4px 14px rgba(0, 0, 0, 0.25)",
       },
       
       keyframes: {
@@ -188,6 +237,10 @@ const config: Config = {
           "0%": { "background-position": "-200px 0" },
           "100%": { "background-position": "calc(200px + 100%) 0" },
         },
+        underlineSlide: {
+          "0%": { transform: "scaleX(0)", transformOrigin: "left" },
+          "100%": { transform: "scaleX(1)", transformOrigin: "left" },
+        },
       },
       
       animation: {
@@ -196,6 +249,7 @@ const config: Config = {
         "slide-down": "slideDown 0.3s ease-out",
         "scale-in": "scaleIn 0.3s ease-out",
         shimmer: "shimmer 1.5s ease-in-out infinite",
+        "underline-slide": "underlineSlide 0.3s ease-out forwards",
       },
     },
   },

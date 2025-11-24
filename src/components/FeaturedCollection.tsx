@@ -39,7 +39,7 @@ export default function FeaturedCollection() {
               href="/category/antique-books"
               className="inline-block bg-lux-gold text-lux-black font-medium px-10 py-4 rounded hover:bg-lux-gold-light transition-colors text-lg"
             >
-              Explore Rare Books →
+              Explore Rare Books 
             </Link>
           </div>
 
@@ -47,13 +47,8 @@ export default function FeaturedCollection() {
           <div className="relative rounded-lg overflow-hidden shadow-2xl">
             <Image
               src="/images/featured-rare-books.jpg"
-              alt="Collection of rare and historical leather-bound books from the 16th–19th century"
-              width={1200}
-              height={900}
-              className="w-full h-96 lg:h-[500px] object-cover hover:scale-105 transition-transform duration-700"
-              priority
+              alt="Collection of rare and historical leather-bound books from the 16th-19th century"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-lux-carbon/60 to-transparent" />
           </div>
         </div>
       </div>

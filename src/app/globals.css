@@ -3,11 +3,42 @@
 @tailwind utilities;
 
 /* =============================================================================
-   KOLLECT-IT DESIGN TOKENS - Complete System with Visual Enhancements
+   KOLLECT-IT DESIGN TOKENS
+   Updated with Luxury Color Palette
    ============================================================================= */
 
 @layer base {
   :root {
+    /* ==========================================
+       LUX - Luxury Color Palette (NEW PRIMARY)
+       Use these for the refined design
+       ========================================== */
+    
+    /* Core Neutrals */
+    --lux-black: 0 0% 0%;           /* #000000 */
+    --lux-carbon: 0 0% 10%;         /* #1A1A1A */
+    --lux-charcoal: 0 0% 18%;       /* #2D2D2D */
+    --lux-gray-dark: 0 0% 29%;      /* #4A4A4A */
+    --lux-gray: 0 0% 42%;           /* #6B6B6B */
+    --lux-gray-light: 0 0% 60%;     /* #9A9A9A */
+    --lux-silver: 0 0% 90%;         /* #E5E5E5 */
+    --lux-pearl: 0 0% 96%;          /* #F5F5F5 */
+    --lux-cream: 40 33% 97%;        /* #FAF8F5 */
+    --lux-white: 0 0% 100%;         /* #FFFFFF */
+    
+    /* Warm Antique Accents */
+    --lux-espresso: 24 47% 16%;     /* #3C2415 - leather, old books */
+    --lux-taupe: 30 18% 66%;        /* #B8A99A - parchment */
+    --lux-sage: 90 14% 55%;         /* #8B9A7D - patina, bronze */
+    
+    /* Gold Accents */
+    --lux-gold: 43 100% 38%;        /* #B8860B */
+    --lux-gold-light: 46 75% 52%;   /* #D4AF37 */
+
+    /* ==========================================
+       LEGACY COLORS (kept for compatibility)
+       ========================================== */
+    
     /* Ink - Text Colors (Full Scale) */
     --ink-400: 0 0% 65%;    /* #A6A6A6 - Very light text */
     --ink-500: 0 0% 55%;    /* #8C8C8C - Muted */
@@ -67,7 +98,7 @@
     --spacing-2xl: 4rem;     /* 64px */
     --spacing-3xl: 5rem;     /* 80px */
 
-    /* Shadow System - NEW: Add depth to elements */
+    /* Shadow System */
     --shadow-subtle: 0 1px 2px 0 rgb(0 0 0 / 0.04);
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
@@ -76,57 +107,47 @@
     --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     
     /* Shadow Colors for Colored Elements */
-    --shadow-gold: 0 4px 12px 0 rgb(197 162 100 / 0.3);
+    --shadow-gold: 0 4px 12px 0 rgb(184 134 11 / 0.3);
     --shadow-cta: 0 4px 12px 0 rgb(30 58 95 / 0.3);
 
-    /* Gradient System - NEW: Add visual interest */
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--surface-50)) 0%, hsl(var(--surface-100)) 100%);
-    --gradient-cream: linear-gradient(180deg, hsl(var(--surface-0)) 0%, hsl(var(--surface-50)) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(var(--gold-400)) 0%, hsl(var(--gold-600)) 100%);
-    --gradient-navy: linear-gradient(135deg, hsl(var(--cta-600)) 0%, hsl(var(--cta-800)) 100%);
-    --gradient-radial-gold: radial-gradient(circle at top right, hsl(var(--gold-300) / 0.15) 0%, transparent 50%);
-    --gradient-radial-navy: radial-gradient(circle at bottom left, hsl(var(--cta-400) / 0.1) 0%, transparent 50%);
+    /* Gradient System */
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--lux-cream)) 0%, hsl(var(--lux-pearl)) 100%);
+    --gradient-cream: linear-gradient(180deg, hsl(var(--lux-white)) 0%, hsl(var(--lux-cream)) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--lux-gold-light)) 0%, hsl(var(--lux-gold)) 100%);
 
-    /* Border Styles - NEW: Better separators */
-    --border-subtle: 1px solid hsl(var(--border-200));
-    --border-default: 1px solid hsl(var(--border-300));
-    --border-accent: 2px solid hsl(var(--gold-500));
-    --border-dashed: 2px dashed hsl(var(--border-300));
-
-    /* shadcn/ui compatibility - maps to our tokens */
-    --background: var(--surface-50);
-    --foreground: var(--ink-900);
-    --card: var(--surface-0);
-    --card-foreground: var(--ink-900);
-    --popover: var(--surface-0);
-    --popover-foreground: var(--ink-900);
-    --primary: var(--cta-600);
-    --primary-foreground: 0 0% 100%;
-    --secondary: var(--gold-500);
-    --secondary-foreground: var(--ink-900);
-    --muted: var(--surface-200);
-    --muted-foreground: var(--ink-600);
-    --accent: var(--gold-500);
-    --accent-foreground: var(--ink-900);
+    /* shadcn/ui compatibility - Updated to use lux palette */
+    --background: var(--lux-cream);
+    --foreground: var(--lux-black);
+    --card: var(--lux-white);
+    --card-foreground: var(--lux-black);
+    --popover: var(--lux-white);
+    --popover-foreground: var(--lux-black);
+    --primary: var(--lux-black);
+    --primary-foreground: var(--lux-white);
+    --secondary: var(--lux-gold);
+    --secondary-foreground: var(--lux-black);
+    --muted: var(--lux-pearl);
+    --muted-foreground: var(--lux-gray);
+    --accent: var(--lux-gold);
+    --accent-foreground: var(--lux-black);
     --destructive: var(--semantic-error-500);
     --destructive-foreground: 0 0% 100%;
-    --border: var(--border-300);
-    --input: var(--border-300);
-    --ring: var(--cta-600);
+    --border: var(--lux-silver);
+    --input: var(--lux-silver);
+    --ring: var(--lux-gold);
 
-    /* Aesop-Inspired Earthy Palette */
+    /* Aesop-Inspired Earthy Palette (Legacy) */
     --aesop-cream: 40 29% 96%;   /* soft parchment */
     --aesop-sand: 37 23% 90%;    /* warm sand */
     --aesop-olive: 81 14% 30%;   /* deep olive green */
     --aesop-charcoal: 0 0% 14%;  /* dark charcoal */
-
     --aesop-olive-foreground: 40 29% 96%;
     --aesop-charcoal-foreground: 96 14% 92%;
   }
 }
 
 /* ============================================
-   BASE STYLES - Improved & Refined
+   BASE STYLES
    ============================================ */
 
 * {
@@ -144,73 +165,94 @@ html {
 
 body {
   font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  color: hsl(var(--ink-900));
-  background-color: hsl(var(--surface-50)); /* Lighter, cleaner background */
+  font-weight: 300; /* Lighter for elegance */
+  color: hsl(var(--lux-black));
+  background-color: hsl(var(--lux-cream));
   line-height: 1.6;
   min-height: 100vh;
 }
 
 /* ============================================
-   TYPOGRAPHY - More Elegant & Boutique
+   TYPOGRAPHY - Luxury Editorial Style
    ============================================ */
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-aesop), var(--font-serif), Georgia, "Times New Roman", serif;
-  font-weight: 500;           /* Softer than 600 */
-  line-height: 1.25;
-  color: hsl(var(--ink-900));
-  letter-spacing: 0.02em;     /* Subtle elegance */
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400; /* Lighter, more elegant */
+  line-height: 1.2;
+  color: hsl(var(--lux-black));
+  letter-spacing: -0.01em; /* Tighter for modern feel */
   margin-bottom: 0.6em;
 }
 
 h1 {
-  font-size: clamp(2.25rem, 5vw, 3.25rem); /* 36px → 52px */
-  font-weight: 600; /* Keep h1 slightly bolder */
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Larger */
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: clamp(1.9rem, 4vw, 2.6rem); /* 30px → 42px */
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem); /* 24px → 32px */
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.25;
 }
 
 h4 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* 20px → 24px */
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 500;
 }
 
 h5 {
-  font-size: clamp(1.1rem, 2vw, 1.25rem); /* 18px → 20px */
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-weight: 500;
 }
 
 h6 {
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Body text variants */
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 /* Lead Text */
 .lead {
   font-size: 1.25rem;
-  line-height: 1.6;
-  color: hsl(var(--ink-700));
-}
-
-/* Small Text */
-.text-small {
-  font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.7;
+  color: hsl(var(--lux-gray-dark));
+  font-weight: 300;
 }
 
 /* ============================================
-   CONTAINER - Narrower for Curated Feel
+   CONTAINER
    ============================================ */
 
 .container {
   width: 100%;
-  max-width: 1200px;          /* Was 1280px - more gallery/catalog feel */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.25rem;         /* Was 1rem */
+  padding: 0 1.25rem;
 }
 
 @media (min-width: 640px) {
@@ -232,11 +274,11 @@ h6 {
 }
 
 /* ============================================
-   FOCUS STATES - Accessible & Consistent
+   FOCUS STATES
    ============================================ */
 
 :focus-visible {
-  outline: 2px solid hsl(var(--cta-600));
+  outline: 2px solid hsl(var(--lux-gold));
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -246,24 +288,24 @@ h6 {
 }
 
 /* ============================================
-   LINKS - Subtle & Professional
+   LINKS
    ============================================ */
 
 a {
-  color: hsl(var(--cta-600));
+  color: hsl(var(--lux-black));
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover {
-  color: hsl(var(--gold-600));
+  color: hsl(var(--lux-gold));
 }
 
 /* ============================================
-   UTILITY CLASSES - NEW: Visual Enhancements
+   UTILITY CLASSES
    ============================================ */
 
-/* Section spacing for consistent vertical rhythm */
+/* Section spacing */
 .section-spacing {
   padding: 4rem 0;
 }
@@ -292,60 +334,6 @@ a:hover {
 .bg-gradient-subtle { background: var(--gradient-subtle); }
 .bg-gradient-cream { background: var(--gradient-cream); }
 .bg-gradient-gold { background: var(--gradient-gold); }
-.bg-gradient-navy { background: var(--gradient-navy); }
-
-/* Background Patterns */
-.bg-pattern-dots {
-  background-image: radial-gradient(circle, hsl(var(--ink-900) / 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.bg-pattern-grid {
-  background-image: 
-    linear-gradient(hsl(var(--border-200)) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--border-200)) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* Decorative Blurs */
-.blur-decoration-gold {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: hsl(var(--gold-300));
-  filter: blur(120px);
-  opacity: 0.15;
-  pointer-events: none;
-}
-
-.blur-decoration-navy {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: hsl(var(--cta-400));
-  filter: blur(120px);
-  opacity: 0.1;
-  pointer-events: none;
-}
-
-/* Visual Hierarchy */
-.text-gradient-gold {
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Card Styles */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: hsl(var(--gold-500));
-}
 
 /* Dividers */
 .divider {
@@ -353,7 +341,7 @@ a:hover {
   background: linear-gradient(
     90deg, 
     transparent 0%, 
-    hsl(var(--border-300)) 50%, 
+    hsl(var(--lux-silver)) 50%, 
     transparent 100%
   );
 }
@@ -363,18 +351,28 @@ a:hover {
   background: linear-gradient(
     90deg, 
     transparent 0%, 
-    hsl(var(--gold-500)) 50%, 
+    hsl(var(--lux-gold)) 50%, 
     transparent 100%
   );
 }
 
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
 /* ============================================
-   CUSTOM SCROLLBAR (Optional - can remove)
+   CUSTOM SCROLLBAR
    ============================================ */
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--ink-400)) hsl(var(--surface-100));
+  scrollbar-color: hsl(var(--lux-gray-light)) hsl(var(--lux-pearl));
 }
 
 *::-webkit-scrollbar {
@@ -382,29 +380,25 @@ a:hover {
 }
 
 *::-webkit-scrollbar-track {
-  background: hsl(var(--surface-100));
+  background: hsl(var(--lux-pearl));
 }
 
 *::-webkit-scrollbar-thumb {
-  background: hsl(var(--ink-400));
+  background: hsl(var(--lux-gray-light));
   border-radius: var(--radius-full);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--ink-600));
+  background: hsl(var(--lux-gray));
 }
 
 /* ============================================
-   ANIMATIONS - Smooth & Professional - ENHANCED
+   ANIMATIONS
    ============================================ */
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -441,65 +435,29 @@ a:hover {
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
 }
 
-@keyframes bounce-subtle {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
+@keyframes underlineSlide {
+  from { transform: scaleX(0); transform-origin: left; }
+  to { transform: scaleX(1); transform-origin: left; }
 }
 
-@keyframes pulse-gold {
-  0%, 100% {
-    box-shadow: 0 0 0 0 hsl(var(--gold-500) / 0.5);
-  }
-  50% {
-    box-shadow: 0 0 0 0 8px hsl(var(--gold-500) / 0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.6s ease-out;
-}
-
-.animate-slide-down {
-  animation: slideDown 0.3s ease-out;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out;
-}
+.animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+.animate-slide-up { animation: slideUp 0.6s ease-out; }
+.animate-slide-down { animation: slideDown 0.3s ease-out; }
+.animate-scale-in { animation: scaleIn 0.3s ease-out; }
 
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    hsl(var(--surface-200)) 0%,
-    hsl(var(--surface-300)) 50%,
-    hsl(var(--surface-200)) 100%
+    hsl(var(--lux-pearl)) 0%,
+    hsl(var(--lux-silver)) 50%,
+    hsl(var(--lux-pearl)) 100%
   );
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
-}
-
-.animate-bounce-subtle {
-  animation: bounce-subtle 2s ease-in-out infinite;
-}
-
-.animate-pulse-gold {
-  animation: pulse-gold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Animation Delays */
@@ -515,9 +473,9 @@ a:hover {
 .skeleton {
   background: linear-gradient(
     90deg,
-    hsl(var(--surface-200)) 25%,
-    hsl(var(--surface-300)) 50%,
-    hsl(var(--surface-200)) 75%
+    hsl(var(--lux-pearl)) 25%,
+    hsl(var(--lux-silver)) 50%,
+    hsl(var(--lux-pearl)) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;

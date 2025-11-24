@@ -1,9 +1,8 @@
-import Hero from "../../deployments/Hero";
-import FeaturedCollection from "../../deployments/FeaturedCollection";
-import ProcessOverview from "../../deployments/ProcessOverview";
-import TrustStrip from "../../deployments/TrustStrip (1)";
-import Footer from "../../deployments/Footer";
-import Header from "../../deployments/Header";
+import Hero from "@/components/Hero";
+import FeaturedCollection from "@/components/home/FeaturedCollection";
+import ProcessOverview from "@/components/home/ProcessOverview";
+import TrustStrip from "@/components/home/TrustStrip";import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export default function HomePage() {
   return (

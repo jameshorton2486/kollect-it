@@ -48,53 +48,18 @@ export default function ProcessOverview() {
         {/* Timeline */}
         <div className="max-w-3xl mx-auto">
           {steps.map((step, index) => (
-            <div key={step.number} className="relative flex gap-6 md:gap-10">
-              {/* Timeline Line & Number */}
-              <div className="flex flex-col items-center">
-                {/* Number Circle */}
-                <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-lux-gold text-lux-black font-semibold text-lg md:text-xl flex items-center justify-center z-10">
-                  {step.number}
-                </div>
-                
-                {/* Connecting Line (not after last item) */}
-                {index < steps.length - 1 && (
-                  <div className="w-px h-full bg-lux-gold/30 min-h-[80px]" />
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="pb-12 md:pb-16">
-                <h3 className="font-serif text-xl md:text-2xl text-lux-white mb-3">
+            <div key={step.title} className="flex items-start gap-4 mb-8">
+              <div className="text-lux-gold text-2xl font-bold">{step.number}</div>
+              <div>
+                <h3 className="text-lg text-lux-white font-medium mb-2">
                   {step.title}
                 </h3>
-                <p className="text-lux-gray-light leading-relaxed font-light">
+                <p className="text-lux-gray-light text-sm leading-relaxed">
                   {step.description}
                 </p>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-lux-gray-light text-lg mb-8 max-w-2xl mx-auto font-light">
-            Ready to start collecting? Whether you're a seasoned collector or
-            just beginning, we're here to guide you through every step.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/shop"
-              className="inline-block bg-lux-gold text-lux-black font-medium px-10 py-4 rounded hover:bg-lux-gold-light transition-colors"
-            >
-              Begin Shopping
-            </Link>
-            <Link
-              href="/about"
-              className="inline-block border border-lux-white/30 text-lux-white font-medium px-10 py-4 rounded hover:bg-lux-white/10 transition-colors"
-            >
-              Learn More About Us
-            </Link>
-          </div>
         </div>
       </div>
     </section>

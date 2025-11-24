@@ -111,12 +111,12 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="antialiased bg-surface-50 text-ink-900"
+        className="antialiased bg-lux-cream text-lux-black"
       >
         {/* Skip link for keyboard users */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:bg-surface-0 focus:text-ink focus:px-4 focus:py-2 focus:rounded"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:bg-lux-white focus:text-lux-black focus:px-4 focus:py-2 focus:rounded"
         >
           Skip to main content
         </a>
