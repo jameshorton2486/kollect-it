@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
@@ -48,10 +49,13 @@ export function Hero() {
 
         {/* Right Column: Decorative Image */}
         <div className="relative">
-          <img
-            src="/images/hero-image.jpg"
-            alt="Hero Decorative"
-            className="rounded-lg shadow-lg"
+          <Image
+            src="/images/homepage/hero/homepage-main-hero-v1.webp"
+            alt="Curated tabletop still life featuring rare books, fine art, collectibles, and militaria"
+            width={1920}
+            height={1080}
+            priority
+            className="rounded-lg shadow-lg object-cover"
           />
         </div>
       </div>
