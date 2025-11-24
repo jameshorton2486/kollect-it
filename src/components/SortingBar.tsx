@@ -36,14 +36,14 @@ export default function SortingBar({
 
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-ink-300 pb-3">
-      <div className="text-xs tracking-wider uppercase text-[hsl(var(--ink-900))]">
+      <div className="text-xs tracking-wider uppercase text-ink-900">
         Showing {showing} of {total} products
       </div>
 
       <div className="flex items-center gap-2">
         <label
           htmlFor="sort"
-          className="text-sm font-medium text-[hsl(var(--ink-900))]"
+          className="text-sm font-medium text-ink-900"
         >
           Sort by
         </label>

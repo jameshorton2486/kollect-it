@@ -70,7 +70,7 @@ export default function CTA({
           href={buttonHref}
           className={`ki-btn-primary inline-block px-8 py-3 border-2 border-current rounded-sm font-medium tracking-[0.1em] uppercase text-[14px] transition-all hover:opacity-90 ${
             bgClass.includes("navy")
-              ? "border-[hsl(var(--gold-500))] text-[hsl(var(--gold-500))]"
+              ? "border-gold-500 text-gold-500"
               : ""
           }`}
         >

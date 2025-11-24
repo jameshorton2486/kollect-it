@@ -86,7 +86,7 @@ export default function ProductCard({
                 quantity={1}
               />
               <button
-                className={`inline-flex items-center gap-2 rounded border border-[hsl(var(--border-300))] px-3 py-2 text-[14px] ${wishlisted ? "text-gold" : ""}`}
+                className={`inline-flex items-center gap-2 rounded border border-border-300 px-3 py-2 text-[14px] ${wishlisted ? "text-gold" : ""}`}
                 aria-label={
                   wishlisted ? "Remove from wishlist" : "Add to wishlist"
                 }
@@ -169,7 +169,7 @@ export default function ProductCard({
       {/* Content Section - 30% of card height */}
       <div className="p-4 flex flex-col gap-2">
         <Link href={`/product/${product.slug}`} className="no-underline">
-          <h3 className="font-serif text-[22px] leading-tight text-[hsl(var(--ink-900))] line-clamp-2 transition-colors hover:text-gold">
+          <h3 className="font-serif text-[22px] leading-tight text-ink-900 line-clamp-2 transition-colors hover:text-gold">
             {product.title}
           </h3>
         </Link>

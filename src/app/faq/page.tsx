@@ -321,7 +321,7 @@ export default function FAQPage() {
       <AesopSection variant="charcoal">
         <div className="text-center">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
+            <p className="text-[12px] tracking-[0.2em] text-gold-500 uppercase mb-6 font-normal">
               HELP CENTER
             </p>
             <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">

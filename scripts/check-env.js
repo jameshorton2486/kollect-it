@@ -113,6 +113,8 @@ function checkEnvironment() {
   const envProd = loadEnvFile('.env.production');
   const envLocal = loadEnvFile('.env.local');
   
+  console.log('DEBUG: envLocal keys:', Object.keys(envLocal || {}));
+  
   console.log(`${colors.bold}Environment Files Found:${colors.reset}`);
   console.log(`  .env            : ${envDev ? colors.green + '✓ Found' : colors.red + '✗ Missing'}${colors.reset}`);
   console.log(`  .env.production : ${envProd ? colors.green + '✓ Found' : colors.red + '✗ Missing'}${colors.reset}`);
@@ -120,7 +122,7 @@ function checkEnvironment() {
   
   // Choose which env to check (prefer production)
   const env = envProd || envDev || envLocal || process.env;
-  const envName = envProd ? '.env.production' : envDev ? '.env' : 'process.env';
+  const envName = envProd ? '.env.production' : envDev ? '.env' : envLocal ? '.env.local' : 'process.env';
   
   console.log(`${colors.bold}Checking: ${colors.cyan}${envName}${colors.reset}\n`);
   

@@ -111,7 +111,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="antialiased bg-[hsl(var(--surface-50))] text-[hsl(var(--ink-900))]"
+        className="antialiased bg-surface-50 text-ink-900"
       >
         {/* Skip link for keyboard users */}
         <a

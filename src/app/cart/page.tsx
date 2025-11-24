@@ -7,6 +7,7 @@ import { BLUR_DATA_URL } from "@/lib/image";
 import { formatUSD } from "@/lib/currency";
 import { useEffect, useState } from "react";
 import { AesopSection } from "@/components/AesopSection";
+import { Button } from "@/components/ui/button";
 
 interface SuggestionProduct {
   id: string;
@@ -76,19 +77,22 @@ export default function CartPage() {
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
               </div>
-              <h1 className="font-serif text-4xl text-ink mb-3">
+              <h1 className="font-serif text-display-lg text-ink-900 mb-3">
                 Your Cart is Empty
               </h1>
-              <p className="text-ink-light mb-8 text-lg">
+              <p className="text-ink-700 mb-8 text-body-lg">
                 Explore our curated collection of authenticated antiques and
                 collectibles to get started.
               </p>
-              <Link
-                href="/shop"
-                className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
+              <Button
+                asChild
+                size="lg"
+                className="bg-gold-600 hover:bg-gold-700"
               >
-                Browse Collection
-              </Link>
+                <Link href="/shop">
+                  Browse Collection
+                </Link>
+              </Button>
             </div>
           </div>
         </AesopSection>
@@ -96,7 +100,7 @@ export default function CartPage() {
         {/* FEATURED ITEMS SECTION */}
         {suggestions.length > 0 && (
           <AesopSection variant="sand">
-            <h2 className="font-serif text-3xl md:text-4xl text-ink text-center mb-12">
+            <h2 className="font-serif text-display-md text-ink-900 text-center mb-12">
               Start with These Curated Pieces
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -126,13 +130,13 @@ export default function CartPage() {
                       New
                     </div>
                   </div>
-                  <h3 className="font-serif text-lg text-ink mb-2 group-hover:text-gold transition-colors line-clamp-2">
+                  <h3 className="font-serif text-lg text-ink-900 mb-2 group-hover:text-gold-600 transition-colors line-clamp-2">
                     {p.title}
                   </h3>
-                  <p className="text-gold font-semibold text-lg">
+                  <p className="text-gold-600 font-semibold text-lg">
                     {formatUSD(p.price)}
                   </p>
-                  <p className="text-ink-light text-sm">{p.category?.name}</p>
+                  <p className="text-ink-600 text-sm">{p.category?.name}</p>
                 </Link>
               ))}
             </div>
@@ -298,12 +302,15 @@ export default function CartPage() {
                   </span>
                 </div>
 
-                <Link
-                  href="/checkout"
-                  className="block w-full bg-gold text-white font-semibold py-4 text-center rounded-lg hover:opacity-90 transition-opacity mb-3"
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full bg-gold-600 hover:bg-gold-700 mb-3"
                 >
-                  Proceed to Checkout
-                </Link>
+                  <Link href="/checkout">
+                    Proceed to Checkout
+                  </Link>
+                </Button>
 
                 <button
                   onClick={() => (window.location.href = "/shop")}

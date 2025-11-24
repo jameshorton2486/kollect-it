@@ -76,7 +76,7 @@ export default function ContactForm() {
     <div className="mb-4">
       <label
         htmlFor={id}
-        className="mb-1 block text-sm font-medium text-[hsl(var(--ink-900))]"
+        className="mb-1 block text-sm font-medium text-ink-900"
       >
         {label}
       </label>
@@ -85,7 +85,7 @@ export default function ContactForm() {
         type={type}
         value={form[id]}
         onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}
-        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors[id] ? "border-red-500 ring-1 ring-red-500" : "border-[hsl(var(--border-300))] focus:border-gold"}`}
+        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors[id] ? "border-red-500 ring-1 ring-red-500" : "border-border-300 focus:border-gold"}`}
         aria-invalid={!!errors[id]}
         aria-describedby={errors[id] ? `${id}-error` : undefined}
       />
@@ -102,14 +102,14 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded border border-[hsl(var(--border-300))] bg-cream p-6 shadow-lg"
+      className="rounded border border-border-300 bg-cream p-6 shadow-lg"
     >
       {sent ? (
         <div className="text-center p-8">
           <h3 className="font-serif text-3xl font-bold text-ink">
             Message Sent Successfully! 🎉
           </h3>
-          <p className="mt-3 text-lg text-[hsl(var(--ink-900))]">
+          <p className="mt-3 text-lg text-ink-900">
             We appreciate you reaching out. We'll get back to you shortly.
           </p>
           <button
@@ -133,7 +133,7 @@ export default function ContactForm() {
           <div className="mb-4">
             <label
               htmlFor="message"
-              className="mb-1 block text-sm font-medium text-[hsl(var(--ink-900))]"
+              className="mb-1 block text-sm font-medium text-ink-900"
             >
               Message *
             </label>
@@ -145,7 +145,7 @@ export default function ContactForm() {
               onChange={(ev) =>
                 setForm((s) => ({ ...s, message: ev.target.value }))
               }
-              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors.message ? "border-red-500 ring-1 ring-red-500" : "border-[hsl(var(--border-300))] focus:border-gold"}`}
+              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors.message ? "border-red-500 ring-1 ring-red-500" : "border-border-300 focus:border-gold"}`}
               aria-invalid={!!errors.message}
               aria-describedby={errors.message ? "message-error" : undefined}
             />
@@ -155,7 +155,7 @@ export default function ContactForm() {
                   {errors.message}
                 </p>
               )}
-              <div className="ml-auto text-xs text-[hsl(var(--ink-700))]">
+              <div className="ml-auto text-xs text-ink-700">
                 {form.message.length} / 500
               </div>
             </div>

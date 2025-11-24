@@ -28,7 +28,7 @@ export default function SellPage() {
       {/* HERO SECTION */}
       <AesopSection variant="charcoal">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-6 font-normal">
+          <p className="text-[12px] tracking-[0.2em] text-gold-500 uppercase mb-6 font-normal">
             HAVE ITEMS TO SELL?
           </p>
           <h1 className="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
@@ -53,7 +53,7 @@ export default function SellPage() {
       {/* HOW IT WORKS - DETAILED PROCESS */}
       <AesopSection variant="cream">
         <div className="max-w-4xl mx-auto">
-          <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
+          <p className="text-[12px] tracking-[0.2em] text-gold-500 uppercase mb-4 font-normal text-center">
             HOW IT WORKS
           </p>
           <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">
@@ -179,7 +179,7 @@ export default function SellPage() {
       <AesopSection variant="sand">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-gold-500 uppercase mb-4 font-normal text-center">
               PRICING
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4 leading-tight text-center">
@@ -272,7 +272,7 @@ export default function SellPage() {
       <AesopSection variant="olive">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-gold-500 uppercase mb-4 font-normal text-center">
               REQUIREMENTS
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4 leading-tight text-center">
@@ -354,7 +354,7 @@ export default function SellPage() {
       <AesopSection variant="cream">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[12px] tracking-[0.2em] text-[hsl(var(--gold-500))] uppercase mb-4 font-normal text-center">
+            <p className="text-[12px] tracking-[0.2em] text-gold-500 uppercase mb-4 font-normal text-center">
               SUCCESS STORIES
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ink mb-16 leading-tight text-center">

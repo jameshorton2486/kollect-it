@@ -150,7 +150,7 @@ export default function Search() {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className="text-[hsl(var(--ink-700))]"
+            className="text-ink-700"
           >
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -194,13 +194,13 @@ export default function Search() {
       {open && (
         <div
           id="search-dropdown"
-          className="absolute z-50 mt-2 w-[420px] max-w-[90vw] rounded border border-[hsl(var(--border-300))] bg-surface-0 p-2 shadow-card"
+          className="absolute z-50 mt-2 w-[420px] max-w-[90vw] rounded border border-border-300 bg-surface-0 p-2 shadow-card"
           aria-label="Search results"
         >
           {/* Recent searches */}
           {showRecent && (
             <div className="p-2">
-              <div className="mb-1 text-xs text-[hsl(var(--ink-700))]">
+              <div className="mb-1 text-xs text-ink-700">
                 Recent searches
               </div>
               <ul className="space-y-1">
@@ -288,7 +288,7 @@ export default function Search() {
 
           {/* No results */}
           {query.trim().length >= 2 && !loading && results.length === 0 && (
-            <div className="p-3 text-sm text-[hsl(var(--ink-700))]">
+            <div className="p-3 text-sm text-ink-700">
               <div className="font-medium text-ink">
                 No products found
               </div>

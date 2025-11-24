@@ -90,13 +90,13 @@ export default function CategoryFilters({
     >
       <div className="sticky top-24 space-y-6">
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[hsl(var(--ink-900))]">
+          <legend className="mb-2 text-xs uppercase tracking-wider text-ink-900">
             Price
           </legend>
           <div className="flex items-center gap-2">
             <input
               type="number"
-              className="w-20 rounded border border-[hsl(var(--border-300))] px-2 py-1 text-sm"
+              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
               value={priceMin}
               min={0}
               onChange={(e) =>
@@ -107,7 +107,7 @@ export default function CategoryFilters({
             <span>–</span>
             <input
               type="number"
-              className="w-20 rounded border border-[hsl(var(--border-300))] px-2 py-1 text-sm"
+              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
               value={priceMax}
               min={0}
               onChange={(e) =>
@@ -119,7 +119,7 @@ export default function CategoryFilters({
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[hsl(var(--ink-900))]">
+          <legend className="mb-2 text-xs uppercase tracking-wider text-ink-900">
             Condition
           </legend>
           <div className="space-y-1">
@@ -142,13 +142,13 @@ export default function CategoryFilters({
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-[hsl(var(--ink-900))]">
+          <legend className="mb-2 text-xs uppercase tracking-wider text-ink-900">
             Year
           </legend>
           <div className="flex items-center gap-2">
             <input
               type="number"
-              className="w-20 rounded border border-[hsl(var(--border-300))] px-2 py-1 text-sm"
+              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
               value={yearMin as number | ""}
               min={0}
               onChange={(e) => setYearMin(Number(e.target.value) || "")}
@@ -157,7 +157,7 @@ export default function CategoryFilters({
             <span>–</span>
             <input
               type="number"
-              className="w-20 rounded border border-[hsl(var(--border-300))] px-2 py-1 text-sm"
+              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
               value={yearMax as number | ""}
               min={0}
               onChange={(e) => setYearMax(Number(e.target.value) || "")}
@@ -172,7 +172,7 @@ export default function CategoryFilters({
           </button>
           <button
             onClick={clearAll}
-            className="rounded border border-[hsl(var(--border-300))] px-3 py-2 text-sm"
+            className="rounded border border-border-300 px-3 py-2 text-sm"
           >
             Clear All
           </button>

@@ -163,7 +163,7 @@ export default async function ShopPage({
             <AesopSection variant="cream">
               <div className="mb-10">
               <h2 className="font-serif text-2xl mb-2">
-                Search results for “{q}”
+                Search results for "{q}"
               </h2>
               {products.length > 0 ? (
                 <>
@@ -173,7 +173,7 @@ export default async function ShopPage({
                   <ProductGrid products={products} />
                 </>
               ) : (
-                <div className="rounded border border-border-300 bg-cream p-6">
+                <div className="rounded border border-border-300 bg-surface-50 p-6">
                   <p className="text-ink-700">
                     No products found. Try a different search term.
                   </p>
@@ -190,7 +190,7 @@ export default async function ShopPage({
 
           {/* Animated Headline */}
           <AesopSection variant="sand">
-            <div className="shop-intro text-center mb-section">
+            <div className="shop-intro text-center mb-12 md:mb-16">
               <p className="section-subtitle" data-reveal>
                 PROFESSIONALLY CURATED COLLECTIONS
               </p>
@@ -202,7 +202,7 @@ export default async function ShopPage({
                 Shop by Category
               </h1>
               <p
-                className="max-w-[700px] mx-auto text-base leading-[1.7] text-ink-700"
+                className="max-w-[700px] mx-auto text-base leading-relaxed text-ink-700"
                 data-reveal
                 data-reveal-delay="200"
               >
@@ -249,4 +249,3 @@ export default async function ShopPage({
     </main>
   );
 }
-
