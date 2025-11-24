@@ -1,104 +1,19 @@
-import Hero from "@/components/Hero";
-import LatestArrivals from "@/components/home/LatestArrivalsClient";
-import ShopByCategories from "@/components/home/ShopByCategoriesClient";
-import TrustStrip from "@/components/home/TrustStrip";
-import { AesopSection } from "@/components/AesopSection";
-import type { Metadata } from "next";
-import dynamic from "next/dynamic";
-
-// Lazy load heavy components for faster initial page load
-// These components are below the fold and don't need to be in the initial bundle
-const LazyFeaturedCollection = dynamic(
-  () => import("@/components/home/FeaturedCollection"),
-  {
-    loading: () => <div className="h-96 animate-shimmer" />,
-    ssr: true,
-  },
-);
-
-const LazyTestimonials = dynamic(
-  () => import("@/components/home/Testimonials"),
-  {
-    loading: () => <div className="h-64 animate-shimmer" />,
-    ssr: true,
-  },
-);
-
-const LazyProcessOverview = dynamic(
-  () => import("@/components/home/ProcessOverview"),
-  {
-    loading: () => <div className="h-80 animate-shimmer" />,
-    ssr: true,
-  },
-);
-
-export const metadata: Metadata = {
-  title: "Kollect-It • Collectibles Worth Collecting",
-  description:
-    "Professionally described, fairly priced, personally curated. Browse rare books, fine art, collectibles, and militaria from $500-$15,000.",
-  openGraph: {
-    title: "Kollect-It • Collectibles Worth Collecting",
-    description:
-      "Professionally described, fairly priced, personally curated. Browse rare books, fine art, collectibles, and militaria from $500-$15,000.",
-    url: "https://kollect-it.com/",
-    siteName: "Kollect-It",
-    images: [
-      {
-        url: "https://ext.same-assets.com/kollect-it/og-home.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Kollect-It – Curated Antiques & Collectibles",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Kollect-It • Collectibles Worth Collecting",
-    description:
-      "Professionally described, fairly priced, personally curated collectibles.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-  },
-};
+import Hero from "../../deployments/Hero";
+import FeaturedCollection from "../../deployments/FeaturedCollection";
+import ProcessOverview from "../../deployments/ProcessOverview";
+import TrustStrip from "../../deployments/TrustStrip (1)";
+import Footer from "../../deployments/Footer";
+import Header from "../../deployments/Header";
 
 export default function HomePage() {
   return (
     <main role="main">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Kollect-It",
-            url: "https://kollect-it.com",
-            logo: "https://ext.same-assets.com/kollect-it/logo.png",
-            sameAs: [
-              "https://www.instagram.com/",
-              "https://www.facebook.com/",
-              "https://www.youtube.com/",
-            ],
-          }),
-        }}
-      />
+      <Header />
       <Hero />
-      <AesopSection variant="sand">
-        <TrustStrip />
-      </AesopSection>
-      <AesopSection variant="cream">
-        <LatestArrivals />
-      </AesopSection>
-      <AesopSection variant="sand">
-        <LazyFeaturedCollection />
-      </AesopSection>
-      <AesopSection variant="olive">
-        <ShopByCategories />
-      </AesopSection>
-      <AesopSection variant="cream">
-        <LazyTestimonials />
-      </AesopSection>
-      <AesopSection variant="charcoal">
-        <LazyProcessOverview />
-      </AesopSection>
+      <TrustStrip />
+      <FeaturedCollection />
+      <ProcessOverview />
+      <Footer />
     </main>
   );
 }
