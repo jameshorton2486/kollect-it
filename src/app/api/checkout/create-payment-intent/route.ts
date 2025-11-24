@@ -19,6 +19,7 @@ interface ValidatedCartItem {
  */
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe is configured
     if (!stripe) {
       return NextResponse.json(
         { error: "Payment processing is not configured" },

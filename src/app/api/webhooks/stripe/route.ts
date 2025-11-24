@@ -19,6 +19,8 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 export async function POST(request: Request) {
   const requestId = getRequestId(request);
+
+  // Check if Stripe is configured
   if (!stripe) {
     logger.error("Stripe not configured", { requestId });
     return NextResponse.json(

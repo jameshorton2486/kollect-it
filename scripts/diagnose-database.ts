@@ -33,7 +33,7 @@ const urlPattern = /^postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)(\?.+)
 const urlParts = dbUrl.match(urlPattern)
 
 if (urlParts) {
-  const [, user, , host, port, database, params] = urlParts // Removed unused 'password'
+  const [, user, , host, port, database, params] = urlParts // Removed 'password'
 
   console.log(
     `Protocol: ${dbUrl.startsWith('postgresql://') ? '✓ postgresql://' : '⚠️  postgres:// (should be postgresql://)'}`
@@ -78,11 +78,10 @@ try {
     execSync(`nslookup ${host}`, {
       encoding: 'utf-8',
       timeout: 5000,
-    }) // Removed unused 'dnsResult'
+    }); // Removed 'dnsResult'
     console.log('✓ DNS resolution successful')
   } catch {
     console.log('❌ DNS resolution failed')
-    console.log('This might indicate network issues or the server is down')
   }
 
   // Test if we can reach the host at all
@@ -90,10 +89,10 @@ try {
     execSync(`ping -n 1 -w 1000 ${host}`, {
       encoding: 'utf-8',
       timeout: 5000,
-    }) // Removed unused 'pingResult'
+    }); // Removed 'pingResult'
     console.log('✓ Host is reachable')
   } catch {
-    console.log('⚠️  Host ping failed (this might be normal - many servers block ping)')
+    console.log('⚠️  Host ping failed')
   }
 } catch (error) {
   if (error instanceof Error) {
@@ -139,9 +138,31 @@ try {
   console.log('✅ Prisma connection successful!')
 
   // Test basic query
-  const result = await prisma.$queryRaw`SELECT NOW() as current_time`
-  console.log('✅ Database query successful!')
-  console.log('Current database time:', result[0].current_time)
+  try {
+    const result = await prisma.$queryRaw`SELECT NOW() as current_time`;
+    if (Array.isArray(result) && result.length > 0 && 'current_time' in result[0]) {
+      console.log('✅ Database query successful!')
+      console.log('Current database time:', result[0].current_time)
+
+    } else {
+      console.log('⚠️  Unexpected query result format:', result)
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log('❌ Database connection failed!')
+      console.log('Error:', error.message)
+
+      if (error.message.includes('SASL authentication failed')) {
+        console.log('🔧 AUTHENTICATION ISSUE DETECTED')
+      } else if (error.message.includes('Can\'t reach database server')) {
+        console.log('🔧 CONNECTIVITY ISSUE DETECTED')
+      } else if (error.message.includes('timeout')) {
+        console.log('🔧 TIMEOUT ISSUE DETECTED')
+      }
+    } else {
+      console.log('❌ Database connection failed with unknown error:', String(error))
+    }
+  }
 
 } catch (error) {
   console.log('❌ Database connection failed!')

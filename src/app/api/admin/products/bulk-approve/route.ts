@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
           "-" +
           Math.random().toString(36).substring(7);
 
-        // Generate SKU
+        // Generate SKU: YYYY-XXXXX format (year + 5 digit random)
         const year = new Date().getFullYear();
         const randomNum = Math.floor(10000 + Math.random() * 90000);
         const sku = `${year}-${randomNum}`;
@@ -102,6 +102,9 @@ export async function POST(request: NextRequest) {
         // Create product
         const product = await prisma.product.create({
           data: {
+            sku: sku,
+            skuYear: year,
+            skuNumber: randomNum,
             title: aiProduct.aiTitle,
             slug,
             description: aiProduct.aiDescription,
@@ -109,9 +112,6 @@ export async function POST(request: NextRequest) {
             categoryId,
             condition: aiProduct.aiCondition || "Good",
             status: "active",
-            sku: sku,
-            skuYear: year,
-            skuNumber: randomNum,
           },
         });
 

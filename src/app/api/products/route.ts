@@ -127,6 +127,7 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
+    // Generate SKU: YYYY-XXXXX format (year + 5 digit random)
     const skuYear = new Date().getFullYear();
     const skuNumber = Math.floor(10000 + Math.random() * 90000);
     const sku = `${skuYear}-${skuNumber}`;
