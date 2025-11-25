@@ -15,15 +15,15 @@ export function Hero() {
         <div className="text-center md:text-left">
           {/* Headline */}
           <h1 className="font-serif text-display-xl font-normal mb-6 leading-tight text-lux-black">
-            Rare Finds, Timeless
+            Preserving History,
             <span className="block text-lux-gold mt-2">
-              Treasures
+              One Artifact at a Time
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-body-lg text-lux-gray-dark mb-8 max-w-2xl leading-relaxed">
-            Discover authenticated antiques and collectibles from trusted sources. Every piece tells a story worth preserving.
+            Authenticated antiques and collectibles from trusted sources. Every piece tells a story worth preserving.
           </p>
 
           {/* CTA Buttons */}

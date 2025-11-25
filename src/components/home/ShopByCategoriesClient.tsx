@@ -21,13 +21,13 @@ export default function ShopByCategories() {
     {
       title: "Collectibles",
       desc: "Rare memorabilia, vintage timepieces, and ephemera.",
-      img: "https://ik.imagekit.io/kollectit/cat-collectibles.jpg",
+      img: "/images/categories/collectibles/collectibles-category-v1.webp",
       href: "/category/collectibles",
     },
     {
       title: "Militaria",
       desc: "Artifacts with verified provenance and historical importance.",
-      img: "https://ik.imagekit.io/kollectit/cat-militaria.jpg",
+      img: "/images/categories/militaria/militaria-category-v1.webp",
       href: "/category/militaria",
     },
   ];

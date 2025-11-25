@@ -1,25 +1,31 @@
+import { Search, ShieldCheck, Camera, Package } from "lucide-react";
+
 export default function ProcessOverview() {
   const steps = [
     {
       number: 1,
+      icon: Search,
       title: "Source",
       description:
         "We identify exceptional pieces from reputable collections, estates, and international specialists. Every potential acquisition undergoes initial assessment for authenticity and condition.",
     },
     {
       number: 2,
+      icon: ShieldCheck,
       title: "Authenticate",
       description:
         "Specialists vet and document provenance with transparent condition notes. We research materials, techniques, and historical context to ensure absolute accuracy.",
     },
     {
       number: 3,
+      icon: Camera,
       title: "Catalog",
       description:
-        "Professional photography, detailed descriptions, and conservation-grade documentation. Each piece includes historical background and care recommendations.",
+        "We photograph every flaw. Our condition reports are forensic, so you know exactly what you're holding before it arrives. Professional photography, detailed descriptions, and conservation-grade documentation included.",
     },
     {
       number: 4,
+      icon: Package,
       title: "Deliver",
       description:
         "Insured shipping with professional packaging ensures your piece arrives safely. Full tracking and dedicated support throughout the delivery process.",
@@ -46,13 +52,17 @@ export default function ProcessOverview() {
         {/* Timeline */}
         <div className="max-w-3xl mx-auto">
           {steps.map((step) => (
-            <div key={step.title} className="flex items-start gap-4 mb-8">
-              <div className="text-lux-gold text-2xl font-bold">{step.number}</div>
+            <div key={step.title} className="flex items-start gap-6 mb-10">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 rounded-full bg-lux-charcoal flex items-center justify-center">
+                  <step.icon className="w-6 h-6 text-lux-gold" strokeWidth={1.5} />
+                </div>
+              </div>
               <div>
-                <h3 className="text-lg text-lux-white font-medium mb-2">
+                <h3 className="text-xl text-lux-white font-medium mb-2">
                   {step.title}
                 </h3>
-                <p className="text-lux-gray-light text-sm leading-relaxed">
+                <p className="text-lux-gray-light leading-relaxed">
                   {step.description}
                 </p>
               </div>
