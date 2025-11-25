@@ -165,25 +165,27 @@ try {
   }
 
 } catch (error) {
+  const message = error instanceof Error ? error.message : String(error)
+
   console.log('❌ Database connection failed!')
-  console.log('Error:', error.message)
+  console.log('Error:', message)
 
   // Provide specific guidance based on error
-  if (error.message.includes('SASL authentication failed')) {
+  if (message.includes('SASL authentication failed')) {
     console.log('\n🔧 AUTHENTICATION ISSUE DETECTED')
     console.log('Possible causes:')
     console.log('- Incorrect password in DATABASE_URL')
     console.log('- Database user permissions changed')
     console.log('- Supabase project credentials rotated')
     console.log('\nSolution: Get fresh connection string from Supabase Dashboard')
-  } else if (error.message.includes('Can\'t reach database server')) {
+  } else if (message.includes('Can\'t reach database server')) {
     console.log('\n🔧 CONNECTIVITY ISSUE DETECTED')
     console.log('Possible causes:')
     console.log('- Supabase project is paused')
     console.log('- Network connectivity issues')
     console.log('- Supabase maintenance')
     console.log('\nSolution: Check Supabase dashboard and ensure project is active')
-  } else if (error.message.includes('timeout')) {
+  } else if (message.includes('timeout')) {
     console.log('\n🔧 TIMEOUT ISSUE DETECTED')
     console.log('Possible causes:')
     console.log('- Slow network connection')

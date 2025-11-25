@@ -33,6 +33,10 @@ function section(title: string) {
   log('─'.repeat(title.length), colors.cyan)
 }
 
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
+}
+
 // ============================================================================
 // TEST RESULTS TRACKING
 // ============================================================================
@@ -81,11 +85,13 @@ async function testDatabase() {
     results.database.passed = true
     results.database.message = `Connected successfully (${userCount} users)`
     
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = getErrorMessage(error)
+
     log('❌ Database connection failed', colors.red)
-    log(`   Error: ${error.message}`, colors.red)
+    log(`   Error: ${message}`, colors.red)
     
-    if (error.message.includes('timeout')) {
+    if (message.includes('timeout')) {
       log('   Possible causes:', colors.yellow)
       log('     • Supabase project paused', colors.yellow)
       log('     • Wrong DATABASE_URL', colors.yellow)
@@ -93,7 +99,7 @@ async function testDatabase() {
     }
     
     results.database.passed = false
-    results.database.message = error.message
+    results.database.message = message
   }
 }
 
@@ -116,7 +122,7 @@ async function testStripe() {
   
   try {
     const stripe = new Stripe(stripeKey, {
-      apiVersion: '2025-10-29.clover',
+      apiVersion: '2025-11-17.clover',
     })
     
     // Test API by retrieving account info
@@ -145,11 +151,12 @@ async function testStripe() {
     results.stripe.passed = true
     results.stripe.message = `Connected to ${account.email || account.id}`
     
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = getErrorMessage(error)
     log('❌ Stripe connection failed', colors.red)
-    log(`   Error: ${error.message}`, colors.red)
+    log(`   Error: ${message}`, colors.red)
     
-    if (error.type === 'StripeAuthenticationError') {
+    if (typeof error === 'object' && error !== null && 'type' in error && (error as { type?: unknown }).type === 'StripeAuthenticationError') {
       log('   Possible causes:', colors.yellow)
       log('     • Invalid API key', colors.yellow)
       log('     • Expired API key', colors.yellow)
@@ -157,7 +164,7 @@ async function testStripe() {
     }
     
     results.stripe.passed = false
-    results.stripe.message = error.message
+    results.stripe.message = message
   }
 }
 
@@ -211,11 +218,13 @@ async function testImageKit() {
     results.imagekit.passed = true
     results.imagekit.message = 'Connected successfully'
     
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = getErrorMessage(error)
+
     log('❌ ImageKit connection failed', colors.red)
-    log(`   Error: ${error.message}`, colors.red)
+    log(`   Error: ${message}`, colors.red)
     
-    if (error.message.includes('401') || error.message.includes('authentication')) {
+    if (message.includes('401') || message.includes('authentication')) {
       log('   Possible causes:', colors.yellow)
       log('     • Invalid private key', colors.yellow)
       log('     • Wrong public key', colors.yellow)
@@ -223,7 +232,7 @@ async function testImageKit() {
     }
     
     results.imagekit.passed = false
-    results.imagekit.message = error.message
+    results.imagekit.message = message
   }
 }
 
@@ -298,12 +307,14 @@ async function testEmail() {
       results.email.message = data.message
     }
     
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = getErrorMessage(error)
+
     log('❌ Email configuration test failed', colors.red)
-    log(`   Error: ${error.message}`, colors.red)
+    log(`   Error: ${message}`, colors.red)
     
     results.email.passed = false
-    results.email.message = error.message
+    results.email.message = message
   }
 }
 

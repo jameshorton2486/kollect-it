@@ -36,8 +36,10 @@ try {
   console.log('\n🎉 ALL TESTS PASSED!')
   
 } catch (error) {
+  const message = error instanceof Error ? error.message : String(error)
+
   console.error('\n❌ Database test failed!')
-  console.error('Error:', error.message)
+  console.error('Error:', message)
 } finally {
   await prisma.$disconnect()
 }

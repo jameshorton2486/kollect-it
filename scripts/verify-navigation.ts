@@ -1,4 +1,3 @@
-import { spawn } from 'child_process';
 import http from 'http';
 
 const BASE_URL = 'http://localhost:3000';

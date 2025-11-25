@@ -25,7 +25,7 @@ console.log(`✓ DATABASE_URL exists (length: ${dbUrl.length})`)
 // Analyze connection string
 const urlParts = dbUrl.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)(\?.+)?/)
 if (urlParts) {
-  const [, user, password, host, port, database, params] = urlParts
+  const [, user, , host, port, database, params] = urlParts
   console.log(`✓ User: ${user}`)
   console.log(`✓ Host: ${host}`)
   console.log(`✓ Port: ${port} ${port === '6543' ? '(✓ Pooler)' : '(⚠️  Direct - should be 6543)'}`)
@@ -51,7 +51,7 @@ try {
   console.log('✅ Database connection successful!')
 
   // Test a simple query
-  const result = await prisma.$queryRaw`SELECT 1 as test`
+  await prisma.$queryRaw`SELECT 1 as test`
   console.log('✅ Query execution successful!')
 
   // Test Users table access
@@ -59,7 +59,8 @@ try {
     const userCount = await prisma.user.count()
     console.log(`✅ Users table accessible! (${userCount} users found)`)
   } catch (error) {
-    console.log(`⚠️  Users table access failed: ${error.message}`)
+    const message = error instanceof Error ? error.message : String(error)
+    console.log(`⚠️  Users table access failed: ${message}`)
   }
 
   // Test Admin user check
@@ -76,23 +77,26 @@ try {
       console.log('⚠️  No admin user found')
     }
   } catch (error) {
-    console.log(`⚠️  Admin user check failed: ${error.message}`)
+    const message = error instanceof Error ? error.message : String(error)
+    console.log(`⚠️  Admin user check failed: ${message}`)
   }
 
   console.log('\n🎉 ALL TESTS PASSED!')
 
 } catch (error) {
+  const message = error instanceof Error ? error.message : String(error)
+
   console.error('❌ Database connection failed!')
-  console.error('Error details:', error.message)
+  console.error('Error details:', message)
   
-  if (error.message.includes('SASL authentication failed')) {
+  if (message.includes('SASL authentication failed')) {
     console.log('\n💡 Suggested fixes:')
     console.log('1. Check if the password in DATABASE_URL is correct')
     console.log('2. Reset database password in Supabase Dashboard')
     console.log('3. Get fresh connection string from Settings → Database → Transaction Pooler')
   }
   
-  if (error.message.includes('network') || error.message.includes('timeout')) {
+  if (message.includes('network') || message.includes('timeout')) {
     console.log('\n💡 Suggested fixes:')
     console.log('1. Check internet connection')
     console.log('2. Verify Supabase project is not paused')

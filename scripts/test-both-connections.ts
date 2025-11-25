@@ -18,19 +18,24 @@ console.log(`Direct: ${directUrl ? 'Set' : 'Missing'}`)
 console.log('\n🔌 Test 1: Transaction Pooler (6543)')
 console.log('----------------------------------------')
 
-const prismaPooler = new PrismaClient({
-  datasources: { db: { url: poolerUrl } },
-  log: ['error']
-})
+if (!poolerUrl) {
+  console.log('❌ DATABASE_URL is not set. Skipping pooler test.')
+} else {
+  const prismaPooler = new PrismaClient({
+    datasources: { db: { url: poolerUrl } },
+    log: ['error']
+  })
 
-try {
-  await prismaPooler.$connect()
-  const result = await prismaPooler.$queryRaw`SELECT 1 as test`
-  console.log('✅ Pooler connection SUCCESS!')
-  await prismaPooler.$disconnect()
-} catch (error) {
-  console.log('❌ Pooler connection FAILED:', error.message)
-  await prismaPooler.$disconnect()
+  try {
+    await prismaPooler.$connect()
+    await prismaPooler.$queryRaw`SELECT 1 as test`
+    console.log('✅ Pooler connection SUCCESS!')
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    console.log('❌ Pooler connection FAILED:', message)
+  } finally {
+    await prismaPooler.$disconnect()
+  }
 }
 
 // Test 2: Direct Connection
@@ -45,7 +50,7 @@ if (directUrl) {
 
   try {
     await prismaDirect.$connect()
-    const result = await prismaDirect.$queryRaw`SELECT 1 as test`
+    await prismaDirect.$queryRaw`SELECT 1 as test`
     console.log('✅ Direct connection SUCCESS!')
     
     // If direct works, update DATABASE_URL temporarily
@@ -53,7 +58,8 @@ if (directUrl) {
     
     await prismaDirect.$disconnect()
   } catch (error) {
-    console.log('❌ Direct connection FAILED:', error.message)
+    const message = error instanceof Error ? error.message : String(error)
+    console.log('❌ Direct connection FAILED:', message)
     await prismaDirect.$disconnect()
   }
 } else {

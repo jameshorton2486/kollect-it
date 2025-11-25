@@ -164,11 +164,12 @@ class ProductionVerifier {
         });
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
       this.results.push({
         name: "Database",
         status: "fail",
-        message: `Connection failed: ${error.message}`,
+        message: `Connection failed: ${message}`,
       });
     }
   }
@@ -188,11 +189,11 @@ class ProductionVerifier {
       }
 
       const stripe = new Stripe(stripeSecret, {
-        apiVersion: "2024-06-20",
+        apiVersion: "2025-11-17.clover",
       });
 
       // Test API connection
-      const balance = await stripe.balance.retrieve();
+      const _balance = await stripe.balance.retrieve();
 
       const isLive = !stripeSecret.includes("sk_test_");
       const mode = isLive ? "live" : "test";
@@ -211,11 +212,12 @@ class ProductionVerifier {
         message,
       });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
       this.results.push({
         name: "Stripe",
         status: "fail",
-        message: `Connection failed: ${error.message}`,
+        message: `Connection failed: ${message}`,
       });
     }
   }
@@ -260,11 +262,12 @@ class ProductionVerifier {
         throw new Error(`API returned ${response.status}`);
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
       this.results.push({
         name: "ImageKit",
         status: "fail",
-        message: `Connection failed: ${error.message}`,
+        message: `Connection failed: ${message}`,
       });
     }
   }
@@ -287,7 +290,7 @@ class ProductionVerifier {
       const resend = new Resend(resendKey);
 
       // Test API key validity
-      const domains = await resend.domains.list();
+      const _domains = await resend.domains.list();
 
       this.results.push({
         name: "Email",
@@ -295,11 +298,12 @@ class ProductionVerifier {
         message: "Service configured",
       });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
       this.results.push({
         name: "Email",
         status: "fail",
-        message: `Configuration failed: ${error.message}`,
+        message: `Configuration failed: ${message}`,
       });
     }
   }
@@ -335,8 +339,9 @@ class ProductionVerifier {
         });
 
         results.push("✅ Claude API functional");
-      } catch (error: any) {
-        results.push(`❌ Claude API failed: ${error.message}`);
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
+        results.push(`❌ Claude API failed: ${message}`);
       }
     }
 
@@ -354,8 +359,9 @@ class ProductionVerifier {
         });
 
         results.push("✅ OpenAI API functional");
-      } catch (error: any) {
-        results.push(`❌ OpenAI API failed: ${error.message}`);
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
+        results.push(`❌ OpenAI API failed: ${message}`);
       }
     }
 
