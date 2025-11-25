@@ -41,8 +41,8 @@ export function Footer() {
   return (
     <footer className="bg-lux-carbon text-lux-gray-light">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      <div className="container mx-auto page-padding section-normal">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-hero lg:gap-luxury">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
@@ -158,7 +158,7 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-lux-charcoal">
-        <div className="container mx-auto px-4 py-6">
+        <div className="container mx-auto page-padding py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-xs text-lux-gray">
               © {currentYear} Kollect-It. All rights reserved.

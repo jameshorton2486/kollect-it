@@ -34,7 +34,8 @@ export function AesopSection({
       ? "text-aesop-charcoal-foreground"
       : "text-ink";
 
-  const container = "container mx-auto py-16 md:py-20";
+  // Use standardized spacing system
+  const container = "container mx-auto section-normal page-padding";
 
   const TextBlock = (
     <div className="space-y-4">
@@ -74,7 +75,7 @@ export function AesopSection({
         className={
           layout === "full"
             ? `${container} text-center max-w-4xl`
-            : `${container} grid gap-10 md:grid-cols-2 items-center`
+            : `${container} grid gap-luxury md:grid-cols-2 items-center`
         }
       >
         {layout === "split-left" && ImageBlock}

@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="relative bg-gradient-subtle py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section className="relative bg-gradient-subtle section-grand overflow-hidden">
       {/* Decorative blur */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-lux-gold/20 rounded-full blur-3xl" />
       
-      <div className="container mx-auto px-4 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="container mx-auto page-padding relative z-10 grid grid-cols-1 md:grid-cols-2 gap-luxury items-center">
         {/* Left Column: Text Content */}
         <div className="text-center md:text-left">
           {/* Headline */}

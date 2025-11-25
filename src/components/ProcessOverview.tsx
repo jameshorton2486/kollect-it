@@ -33,8 +33,8 @@ export default function ProcessOverview() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-lux-carbon">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <section className="section-grand bg-lux-carbon">
+      <div className="container mx-auto page-padding">
         {/* Section Header */}
         <div className="text-center mb-16">
           <p className="text-sm md:text-base font-medium text-lux-gold uppercase tracking-widest mb-3">

@@ -28,8 +28,8 @@ export default function FeaturedCollection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-lux-carbon">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <section className="section-grand bg-lux-carbon">
+      <div className="container mx-auto page-padding">
         {/* Section Header */}
         <div className="text-center mb-12">
           <p className="text-sm font-medium text-lux-gold uppercase tracking-widest mb-3">
@@ -44,7 +44,7 @@ export default function FeaturedCollection() {
         </div>
 
         {/* Three Category Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury">
           {categories.map((category) => (
             <Link
               key={category.title}

@@ -305,7 +305,48 @@ a:hover {
    UTILITY CLASSES
    ============================================ */
 
-/* Section spacing */
+/* ===========================================
+   KOLLECT-IT SPACING SYSTEM (Phase 1)
+   Standardized spacing for luxury consistency
+   =========================================== */
+
+/* Horizontal Page Padding (Desktop → Mobile) */
+.page-padding {
+  padding-left: 2rem;    /* Desktop: px-8 */
+  padding-right: 2rem;
+}
+
+@media (min-width: 768px) {
+  .page-padding {
+    padding-left: 1.5rem;  /* Tablet: px-6 */
+    padding-right: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-padding {
+    padding-left: 1rem;    /* Mobile: px-4 */
+    padding-right: 1rem;
+  }
+}
+
+/* Vertical Section Spacing */
+.section-tight {
+  padding-top: 3rem;     /* py-12 */
+  padding-bottom: 3rem;
+}
+
+.section-normal {
+  padding-top: 4rem;     /* py-16 */
+  padding-bottom: 4rem;
+}
+
+.section-grand {
+  padding-top: 6rem;     /* py-24 */
+  padding-bottom: 6rem;
+}
+
+/* Legacy Section Spacing (Keep for backwards compatibility, but migrate away) */
 .section-spacing {
   padding: 4rem 0;
 }
@@ -320,6 +361,28 @@ a:hover {
   .section-spacing {
     padding: 6rem 0;
   }
+}
+
+/* Standard Grid Gaps */
+.gap-standard {
+  gap: 1.5rem;  /* gap-6 */
+}
+
+.gap-luxury {
+  gap: 2rem;    /* gap-8 */
+}
+
+.gap-hero {
+  gap: 3rem;    /* gap-12 */
+}
+
+/* Card Padding Standards */
+.card-padding-sm {
+  padding: 1rem;  /* p-4 */
+}
+
+.card-padding-md {
+  padding: 1.5rem;  /* p-6 - Luxury default */
 }
 
 /* Shadows */

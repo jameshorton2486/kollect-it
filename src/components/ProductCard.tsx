@@ -35,7 +35,7 @@ export default function ProductCard({
 
   if (variant === "list") {
     return (
-      <div className="flex gap-4 rounded border border-border bg-surface p-3 shadow-sm">
+      <div className="flex gap-4 rounded border border-border bg-surface card-padding-sm shadow-sm">
         <Link
           href={`/product/${product.slug}`}
           className="block h-36 w-36 shrink-0 overflow-hidden rounded"
@@ -167,7 +167,7 @@ export default function ProductCard({
       </div>
 
       {/* Content Section - 30% of card height */}
-      <div className="p-4 flex flex-col gap-2">
+      <div className="card-padding-sm flex flex-col gap-2">
         <Link href={`/product/${product.slug}`} className="no-underline">
           <h3 className="font-serif text-[22px] leading-tight text-ink-900 line-clamp-2 transition-colors hover:text-gold">
             {product.title}
