@@ -1,47 +1,37 @@
-export default function TrustStrip() {
-  const stats = [
-    {
-      value: "100%",
-      label: "Authenticated",
-    },
-    {
-      value: "5,000+",
-      label: "Collectors",
-    },
-    {
-      value: "$2M+",
-      label: "Items Sold",
-    },
-    {
-      value: "4.9",
-      label: "Rating",
-      prefix: "★",
-    },
-  ];
+import React from "react";
 
+const items = [
+  {
+    title: "Thoughtfully Selected",
+    body: "Every item is hand-chosen for its quality, character, or story.",
+  },
+  {
+    title: "Clear Descriptions",
+    body: "Photos and details are straightforward so you know what to expect.",
+  },
+  {
+    title: "Estate & Collector Finds",
+    body: "Pieces come from local estates, auctions, and long-held collections.",
+  },
+  {
+    title: "Personal Service",
+    body: "This is a one-person shop. If you have a question, you talk directly to me.",
+  },
+];
+
+export default function TrustStrip() {
   return (
-    <section className="py-8 md:py-10 bg-lux-pearl border-y border-lux-silver">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-0">
-          {stats.map((stat, index) => (
-            <div key={stat.label} className="flex items-center">
-              {/* Stat */}
-              <div className="text-center px-6 md:px-10 lg:px-12">
-                <div className="text-2xl md:text-3xl lg:text-4xl font-semibold text-lux-black mb-1 tracking-tight">
-                  {stat.prefix && (
-                    <span className="text-lux-gold mr-1">{stat.prefix}</span>
-                  )}
-                  {stat.value}
-                </div>
-                <div className="text-xs md:text-sm text-lux-gray uppercase tracking-widest font-medium">
-                  {stat.label}
-                </div>
+    <section className="border-y border-border-200 bg-surface-0">
+      <div className="container mx-auto px-4 py-10 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+          {items.map((item) => (
+            <div key={item.title} className="space-y-2">
+              <div className="text-xs font-semibold tracking-[0.22em] text-gold-500 uppercase">
+                {item.title}
               </div>
-              
-              {/* Gold Divider (not after last item) */}
-              {index < stats.length - 1 && (
-                <div className="hidden md:block w-px h-12 bg-lux-gold/40" />
-              )}
+              <p className="text-sm text-ink-600 leading-relaxed">
+                {item.body}
+              </p>
             </div>
           ))}
         </div>

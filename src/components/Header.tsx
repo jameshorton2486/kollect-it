@@ -1,138 +1,205 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import Link from "next/link";
-import { Menu, X, Search, User } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import CartIcon from "@/components/CartIcon";
+import { cn } from "@/lib/utils";
 
+/**
+ * Kollect-It Luxury Header
+ * Phase 1 Update: Dark header with gold accents
+ */
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
+  // Adds subtle backdrop when scrolling to match luxury polish
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: "/shop", label: "Shop" },
-    { href: "/categories", label: "Categories" },
-    { href: "/how-it-works", label: "How It Works" },
-    { href: "/about", label: "About" },
+  const navigation = [
+    { name: "Browse", href: "/browse" },
+    { name: "Categories", href: "/categories" },
+    { name: "How It Works", href: "/how-it-works" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={cn(
+        "sticky top-0 z-50 transition-all duration-300 border-b",
         isScrolled
-          ? "bg-lux-white/95 backdrop-blur-md shadow-sm"
-          : "bg-lux-cream"
-      }`}
+          ? "bg-surface-900/98 backdrop-blur-md shadow-lg border-surface-800"
+          : "bg-surface-900 border-surface-800/50",
+      )}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-18">
-          {/* Logo */}
-          <Link href="/" className="flex items-center group">
-            <span className="font-logo text-xl md:text-2xl tracking-tight text-lux-black">
-              Kollect
-            </span>
-            <span className="font-logo text-xl md:text-2xl tracking-tight text-lux-gold">
-              -It
-            </span>
-          </Link>
+      <nav className="container mx-auto px-4" aria-label="Main navigation">
+        <div className="flex items-center justify-between h-20 transition-all duration-300">
+          {/* Logo - White + Gold for Dark Header */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center group">
+              <span className="font-serif text-3xl font-bold text-white group-hover:text-surface-200 transition-colors tracking-tight">
+                Kollect
+              </span>
+              <span className="font-serif text-3xl font-bold text-gold-500 group-hover:text-gold-400 transition-colors tracking-tight">
+                -It
+              </span>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-10">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="relative text-sm font-medium text-lux-gray-dark hover:text-lux-black transition-colors tracking-wide group"
-              >
-                {link.label}
-                {/* Underline animation on hover */}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-lux-gold transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ))}
-          </nav>
+          <div className="hidden md:flex md:items-center md:space-x-10">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b-2",
+                    isActive
+                      ? "text-gold-500 border-gold-500"
+                      : "text-surface-300 hover:text-white border-transparent hover:border-gold-500",
+                  )}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+          </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center space-x-4 md:space-x-6">
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-2">
             {/* Search */}
-            <button
-              aria-label="Search"
-              className="p-2 text-lux-gray hover:text-lux-black transition-colors"
-            >
-              <Search className="w-5 h-5" strokeWidth={1.5} />
-            </button>
-
-            {/* Account */}
-            <Link
-              href="/account"
-              className="p-2 text-lux-gray hover:text-lux-black transition-colors hidden sm:block"
-              aria-label="Account"
-            >
-              <User className="w-5 h-5" strokeWidth={1.5} />
-            </Link>
-
-            {/* Cart */}
-            <CartIcon />
-
-            {/* Sell Button - Desktop */}
             <Button
               asChild
-              className="hidden md:inline-flex bg-lux-black hover:bg-lux-charcoal text-lux-white font-medium px-6"
+              variant="ghost"
+              size="icon"
+              className="text-surface-300 hover:text-white hover:bg-surface-800"
             >
-              <Link href="/sell">Sell With Us</Link>
+              <Link href="/search">
+                <Search className="h-5 w-5" />
+                <span className="sr-only">Search</span>
+              </Link>
+            </Button>
+
+            {/* Account */}
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="text-surface-300 hover:text-white hover:bg-surface-800"
+            >
+              <Link href="/account">
+                <User className="h-5 w-5" />
+                <span className="sr-only">Account</span>
+              </Link>
+            </Button>
+
+            {/* Cart */}
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="text-surface-300 hover:text-white hover:bg-surface-800 relative"
+            >
+              <Link href="/cart">
+                <ShoppingCart className="h-5 w-5" />
+                <span className="sr-only">Cart</span>
+              </Link>
+            </Button>
+
+            {/* Consign CTA - Desktop */}
+            <div className="pl-2">
+              <Button
+                asChild
+                variant="outline"
+                className="font-normal tracking-wide rounded-full px-6 border-gold-500 text-white hover:bg-gold-500 hover:text-surface-900"
+              >
+                <Link href="/sell">Consign With Us</Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center space-x-4">
+            {/* Mobile Cart */}
+            <Button asChild variant="ghost" size="icon" className="text-white">
+              <Link href="/cart">
+                <ShoppingCart className="h-5 w-5" />
+              </Link>
             </Button>
 
             {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-lux-gray-dark hover:text-lux-black transition-colors"
-              aria-label="Toggle menu"
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {isMenuOpen ? (
-                <X className="w-6 h-6" strokeWidth={1.5} />
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
               ) : (
-                <Menu className="w-6 h-6" strokeWidth={1.5} />
+                <Menu className="h-6 w-6" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <nav className="lg:hidden py-6 border-t border-lux-silver animate-slide-down">
-            <div className="flex flex-col space-y-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-base font-medium text-lux-gray-dark hover:text-lux-black transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="pt-4 border-t border-lux-silver">
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute left-0 right-0 top-full bg-surface-900 border-b border-surface-800 shadow-lg animate-slide-down">
+            <div className="flex flex-col p-4 space-y-2">
+              {navigation.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={cn(
+                      "text-lg font-light py-3 border-b border-surface-800 last:border-0 tracking-wide transition-colors",
+                      isActive
+                        ? "text-gold-500"
+                        : "text-surface-200 hover:text-white",
+                    )}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+
+              {/* Mobile CTAs */}
+              <div className="pt-4 flex gap-4">
                 <Button
                   asChild
-                  className="w-full bg-lux-black hover:bg-lux-charcoal text-lux-white font-medium"
+                  className="w-full bg-gold-500 text-surface-900 hover:bg-gold-400"
                 >
-                  <Link href="/sell" onClick={() => setIsMenuOpen(false)}>
-                    Sell With Us
-                  </Link>
+                  <Link href="/sell">Consign With Us</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-surface-300 text-white hover:bg-surface-800"
+                >
+                  <Link href="/account">My Account</Link>
                 </Button>
               </div>
             </div>
-          </nav>
+          </div>
         )}
-      </div>
+      </nav>
     </header>
   );
 }

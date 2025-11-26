@@ -1,99 +1,86 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ShopByCategories() {
-  const categories = [
-    {
-      title: "Antique Books",
-      desc: "Scarce first editions and beautifully bound volumes.",
-      img: "https://ik.imagekit.io/kollectit/cat-books.jpg",
-      href: "/category/antique-books",
-    },
-    {
-      title: "Fine Art",
-      desc: "Paintings, drawings, and sculpture from documented artists.",
-      img: "https://ik.imagekit.io/kollectit/cat-art.jpg",
-      href: "/category/fine-art",
-    },
-    {
-      title: "Collectibles",
-      desc: "Rare memorabilia, vintage timepieces, and ephemera.",
-      img: "/images/categories/collectibles/collectibles-category-v1.webp",
-      href: "/category/collectibles",
-    },
-    {
-      title: "Militaria",
-      desc: "Artifacts with verified provenance and historical importance.",
-      img: "/images/categories/militaria/militaria-category-v1.webp",
-      href: "/category/militaria",
-    },
-  ];
+const categories = [
+  {
+    slug: "rare-books",
+    title: "Rare Manuscripts",
+    description:
+      "Leather-bound volumes, first editions, and historic texts from the 17th century onward.",
+    image: "/images/categories/rare-books.png",
+  },
+  {
+    slug: "militaria",
+    title: "Historic Militaria",
+    description:
+      "Medals, ribbon bars, and service memorabilia with verified provenance and documentation.",
+    image: "/images/categories/militaria.png",
+  },
+  {
+    slug: "fine-art",
+    title: "Fine Art & Ceramics",
+    description:
+      "Documented paintings, sculpture, and refined decorative pieces from established artists.",
+    image: "/images/categories/fine-art.png",
+  },
+  {
+    slug: "collectibles",
+    title: "Collectibles",
+    description:
+      "Characterful objects, curiosities, and display pieces that add personality to a collection or room.",
+    image: "/images/categories/collectibles.png",
+  },
+];
 
+export default function ShopByCategoriesClient() {
   return (
-    <section className="section-spacing bg-lux-white">
-      <div className="container mx-auto px-6 max-w-6xl text-center">
-        <h2 className="text-4xl text-navy font-semibold mb-6">
-          Shop by Category
-        </h2>
-        <p className="text-lux-gray-dark mb-12">
-          Explore diverse categories curated for collectors, designers, and
-          historians alike.
-        </p>
+    <section className="bg-surface-0">
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-24">
+        {/* Heading */}
+        <div className="text-center mb-12 md:mb-16">
+          <p className="text-xs font-semibold tracking-[0.22em] text-ink-500 uppercase">
+            Featured Collections
+          </p>
+          <h2 className="mt-3 text-3xl md:text-4xl font-light tracking-tight text-ink-900">
+            Curated Categories
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-ink-600">
+            Explore our diverse collection of authenticated antiques and collectibles.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {categories.map((cat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+        {/* 2 × 2 grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
+          {categories.map((category) => (
+            <Link
+              key={category.slug}
+              href={`/categories/${category.slug}`}
+              className="group flex flex-col gap-4"
             >
-              <Link
-                href={cat.href}
-                className="group block border border-lux-silver rounded-2xl overflow-hidden shadow-elevation-sm hover:shadow-elevation-lg transition-all duration-300 bg-surface-0"
-              >
+              <div className="overflow-hidden rounded-2xl bg-surface-100">
                 <Image
-                  src={cat.img}
-                  alt={cat.title}
-                  width={600}
-                  height={400}
-                  className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
+                  src={category.image}
+                  alt={category.title}
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  priority={category.slug === "rare-books"}
                 />
-                <div className="p-6 text-left">
-                  <h3 className="text-2xl text-navy mb-2">{cat.title}</h3>
-                  <p className="text-lux-gray-dark leading-relaxed">
-                    {cat.desc}
-                  </p>
-                </div>
-              </Link>
-            </motion.div>
+              </div>
+
+              <div>
+                <h3 className="text-xl md:text-2xl font-semibold text-ink-900">
+                  {category.title}
+                </h3>
+                <p className="mt-2 text-sm text-ink-600 leading-relaxed">
+                  {category.description}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
-
-        <div className="mt-10 text-center">
-          <Link
-            href="/shop"
-            className="text-[13px] uppercase tracking-wide text-gold underline underline-offset-4 hover:text-gold/90 transition-colors"
-          >
-            View All Categories
-          </Link>
-        </div>
-
-        <motion.p
-          className="mt-10 text-lux-gray-dark text-lg max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          Whether you’re building a personal gallery or enhancing a curated
-          space, Kollect-It makes discovery effortless with authenticity at its
-          core.
-        </motion.p>
       </div>
     </section>
   );
