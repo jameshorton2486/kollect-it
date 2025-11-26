@@ -100,6 +100,105 @@ export const categoryConfigs: Record<string, CategoryConfig> = {
     collectingTip:
       "Items with documented provenance and named recipients command premium values.",
   },
+
+  // Fallback categories (matching your categories page)
+  antiques: {
+    slug: "antiques",
+    name: "Antiques",
+    headline: "Timeless Pieces with History",
+    description:
+      "Carefully selected antiques spanning centuries of craftsmanship. From furniture to decorative objects, each piece tells a story.",
+    heroImage: "/images/categories/antiques/antiques-hero.webp",
+    overlayGradient: "from-lux-espresso/85 via-lux-espresso/65 to-transparent",
+    seoTitle: "Antiques | Kollect-It",
+    seoDescription:
+      "Shop authenticated antiques with provenance. Furniture, decorative arts, and historic objects from trusted sources.",
+    features: ["Age verification", "Condition reports", "Provenance research"],
+  },
+
+  "jewelry-timepieces": {
+    slug: "jewelry-timepieces",
+    name: "Jewelry & Timepieces",
+    headline: "Estate Jewelry & Fine Watches",
+    description:
+      "Estate jewelry and vintage timepieces selected for quality and character. From Art Deco rings to classic Swiss movements.",
+    heroImage: "/images/categories/jewelry/jewelry-hero.webp",
+    overlayGradient: "from-lux-carbon/85 via-lux-carbon/65 to-transparent",
+    seoTitle: "Jewelry & Timepieces | Kollect-It",
+    seoDescription:
+      "Discover estate jewelry and vintage watches. Art Deco pieces, Swiss movements, and fine gemstones.",
+    features: ["Gemstone certification", "Movement service history", "Appraisal available"],
+  },
+
+  "home-decor": {
+    slug: "home-decor",
+    name: "Home Décor",
+    headline: "Distinctive Pieces for Living Spaces",
+    description:
+      "Decorative objects and furnishings that add character to any room. Vintage lighting, mirrors, textiles, and accent pieces.",
+    heroImage: "/images/categories/home-decor/home-decor-hero.webp",
+    overlayGradient: "from-lux-taupe/80 via-lux-taupe/60 to-transparent",
+    seoTitle: "Home Décor | Kollect-It",
+    seoDescription:
+      "Shop vintage home décor, decorative objects, and distinctive accent pieces. Curated for quality and style.",
+    features: ["Room-ready condition", "Size specifications", "Style guidance"],
+  },
+
+  "clothing-accessories": {
+    slug: "clothing-accessories",
+    name: "Clothing & Accessories",
+    headline: "Vintage Fashion & Designer Pieces",
+    description:
+      "Curated vintage clothing and accessories from notable designers and eras. Each piece authenticated and described in detail.",
+    heroImage: "/images/categories/clothing/clothing-hero.webp",
+    overlayGradient: "from-lux-charcoal/80 via-lux-charcoal/60 to-transparent",
+    seoTitle: "Vintage Clothing & Accessories | Kollect-It",
+    seoDescription:
+      "Shop authenticated vintage fashion and designer accessories. From haute couture to everyday elegance.",
+    features: ["Designer authentication", "Detailed measurements", "Condition notes"],
+  },
+
+  "books-media": {
+    slug: "books-media",
+    name: "Books & Media",
+    headline: "Literary & Media Collections",
+    description:
+      "Books, records, and media collectibles for the discerning collector. From rare editions to vintage vinyl.",
+    heroImage: "/images/categories/books-media/books-media-hero.webp",
+    overlayGradient: "from-lux-espresso/80 via-lux-espresso/60 to-transparent",
+    seoTitle: "Books & Media | Kollect-It",
+    seoDescription:
+      "Discover rare books, vintage records, and media collectibles. Carefully curated for collectors.",
+    features: ["Grading standards", "Detailed descriptions", "Archival shipping"],
+  },
+
+  "toys-games": {
+    slug: "toys-games",
+    name: "Toys & Games",
+    headline: "Vintage Toys & Classic Games",
+    description:
+      "Nostalgic toys and vintage games from beloved eras. Action figures, board games, and collectible playthings.",
+    heroImage: "/images/categories/toys-games/toys-games-hero.webp",
+    overlayGradient: "from-lux-sage/80 via-lux-sage/60 to-transparent",
+    seoTitle: "Vintage Toys & Games | Kollect-It",
+    seoDescription:
+      "Shop vintage toys, classic games, and nostalgic collectibles. From action figures to board games.",
+    features: ["Completeness noted", "Original packaging when available", "Era verification"],
+  },
+
+  "sports-memorabilia": {
+    slug: "sports-memorabilia",
+    name: "Sports Memorabilia",
+    headline: "Athletic History & Collectibles",
+    description:
+      "Sports cards, signed memorabilia, and athletic collectibles. From baseball to football, authenticated pieces with provenance.",
+    heroImage: "/images/categories/sports/sports-hero.webp",
+    overlayGradient: "from-lux-carbon/80 via-lux-carbon/60 to-transparent",
+    seoTitle: "Sports Memorabilia | Kollect-It",
+    seoDescription:
+      "Authenticated sports memorabilia, signed collectibles, and vintage cards. Professional athlete items with provenance.",
+    features: ["Authentication certificates", "Player provenance", "Graded cards"],
+  },
 };
 
 /**

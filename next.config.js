@@ -106,7 +106,13 @@ const nextConfig = {
 
   // Redirects for cache optimization
   async redirects() {
-    return [];
+    return [
+      {
+        source: "/shop",
+        destination: "/browse",
+        permanent: true,
+      },
+    ];
   },
 
   // Rewrites for API optimization

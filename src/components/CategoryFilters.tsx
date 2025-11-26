@@ -89,14 +89,19 @@ export default function CategoryFilters({
       aria-label="Filters"
     >
       <div className="sticky top-24 space-y-6">
+        {/* Filter Header */}
+        <div className="pb-4 border-b border-lux-silver">
+          <h3 className="font-serif text-lg text-lux-charcoal">Refine Results</h3>
+        </div>
+
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-ink-900">
+          <legend className="mb-3 text-xs font-semibold uppercase tracking-wider text-lux-gray-dark">
             Price
           </legend>
           <div className="flex items-center gap-2">
             <input
               type="number"
-              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
+              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
               value={priceMin}
               min={0}
               onChange={(e) =>
@@ -104,10 +109,10 @@ export default function CategoryFilters({
               }
               aria-label="Min price"
             />
-            <span>–</span>
+            <span className="text-lux-gray-light">–</span>
             <input
               type="number"
-              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
+              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
               value={priceMax}
               min={0}
               onChange={(e) =>
@@ -119,12 +124,12 @@ export default function CategoryFilters({
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-ink-900">
+          <legend className="mb-3 text-xs font-semibold uppercase tracking-wider text-lux-gray-dark">
             Condition
           </legend>
-          <div className="space-y-1">
+          <div className="space-y-2">
             {CONDITIONS.map((c) => (
-              <label key={c} className="flex items-center gap-2 text-sm">
+              <label key={c} className="flex items-center gap-3 text-sm cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={conds.has(c)}
@@ -134,45 +139,51 @@ export default function CategoryFilters({
                     else next.delete(c);
                     setConds(next);
                   }}
+                  className="w-4 h-4 rounded border-lux-silver text-lux-gold focus:ring-lux-gold focus:ring-offset-0 cursor-pointer"
                 />
-                <span>{c}</span>
+                <span className="text-lux-charcoal group-hover:text-lux-gold transition-colors">{c}</span>
               </label>
             ))}
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2 text-xs uppercase tracking-wider text-ink-900">
+          <legend className="mb-3 text-xs font-semibold uppercase tracking-wider text-lux-gray-dark">
             Year
           </legend>
           <div className="flex items-center gap-2">
             <input
               type="number"
-              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
+              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
               value={yearMin as number | ""}
               min={0}
               onChange={(e) => setYearMin(Number(e.target.value) || "")}
               aria-label="Min year"
+              placeholder="From"
             />
-            <span>–</span>
+            <span className="text-lux-gray-light">–</span>
             <input
               type="number"
-              className="w-20 rounded border border-border-300 px-2 py-1 text-sm"
+              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
               value={yearMax as number | ""}
               min={0}
               onChange={(e) => setYearMax(Number(e.target.value) || "")}
               aria-label="Max year"
+              placeholder="To"
             />
           </div>
         </fieldset>
 
-        <div className="flex gap-2">
-          <button onClick={apply} className="ki-btn-primary">
+        <div className="flex flex-col gap-3 pt-4">
+          <button
+            onClick={apply}
+            className="w-full bg-lux-gold hover:bg-lux-gold-light text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
+          >
             Apply Filters
           </button>
           <button
             onClick={clearAll}
-            className="rounded border border-border-300 px-3 py-2 text-sm"
+            className="w-full border border-lux-silver hover:border-lux-gold text-lux-charcoal hover:text-lux-gold px-4 py-2.5 rounded-md text-sm transition-colors"
           >
             Clear All
           </button>
