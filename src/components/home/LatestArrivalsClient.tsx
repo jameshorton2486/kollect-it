@@ -128,7 +128,7 @@ export default function LatestArrivals() {
             personal collection.
           </p>
           <Link
-            href="/shop"
+            href="/browse"
             className="inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity"
           >
             Explore Full Collection

@@ -68,7 +68,7 @@ export function Footer() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="/shop"
+                    href="/browse"
                     className="text-neutral-700 hover:text-neutral-900"
                   >
                     Browse All
@@ -143,7 +143,7 @@ export function Footer() {
                     href="/sell"
                     className="text-neutral-700 hover:text-neutral-900"
                   >
-                    Sell With Us
+                    Consign With Us
                   </Link>
                 </li>
                 <li>
