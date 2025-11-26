@@ -1,188 +1,225 @@
 "use client";
 
+import { Facebook, Instagram, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
-import { Facebook, Instagram, Mail } from "lucide-react";
-import { FaPinterest } from "react-icons/fa";
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = {
-    shop: [
-      { href: "/shop", label: "Browse All" },
-      { href: "/categories", label: "Categories" },
-      { href: "/category/rare-books", label: "Rare Books" },
-      { href: "/category/fine-art", label: "Fine Art" },
-      { href: "/category/militaria", label: "Militaria" },
-    ],
-    company: [
-      { href: "/about", label: "About Us" },
-      { href: "/how-it-works", label: "How It Works" },
-      { href: "/authentication", label: "Authentication" },
-      { href: "/sell", label: "Sell With Us" },
-      { href: "/contact", label: "Contact" },
-    ],
-    support: [
-      { href: "/faq", label: "FAQ" },
-      { href: "/shipping-returns", label: "Shipping & Returns" },
-      { href: "/payment", label: "Payment Options" },
-      { href: "/terms", label: "Terms of Service" },
-      { href: "/privacy", label: "Privacy Policy" },
-    ],
-  };
-
-  const socialLinks = [
-    { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
-    { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
-    { href: "https://pinterest.com", icon: FaPinterest, label: "Pinterest" },
-    { href: "mailto:hello@kollect-it.com", icon: Mail, label: "Email" },
-  ];
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-lux-carbon text-lux-gray-light">
-      {/* Main Footer Content */}
-      <div className="container mx-auto page-padding section-normal">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-hero lg:gap-luxury">
-          {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-6">
-              <span className="font-logo text-2xl text-lux-white">
-                Kollect
-              </span>
-              <span className="font-logo text-2xl text-lux-gold">-It</span>
-            </Link>
-            <p className="text-sm leading-relaxed mb-6 max-w-xs">
-              A trusted marketplace for authenticated antiques and collectibles.
-              Every piece tells a story worth preserving.
-            </p>
-            
-            {/* Newsletter Signup */}
-            <div className="mb-6">
-              <h4 className="text-sm font-semibold text-lux-white mb-3">
-                Join the Collector's List
-              </h4>
-              <p className="text-xs text-lux-gray-light mb-3">
-                Get notified of new arrivals first
+    <footer className="mt-24 border-t border-neutral-200 bg-neutral-50">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Main footer content */}
+        <div className="grid gap-10 py-12 md:gap-12 md:py-16 lg:grid-cols-[2fr,3fr] lg:py-20">
+          {/* Brand + newsletter */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-semibold text-neutral-900 md:text-xl">
+                Kollect-It
+              </h2>
+              <p className="mt-3 max-w-sm text-sm text-neutral-700">
+                A small, collector-run marketplace for antiques, art, books,
+                militaria, and unusual finds. Every piece is hand-selected and
+                described as clearly as possible.
               </p>
-              <form className="flex gap-2">
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-neutral-900">
+                Join the collector&apos;s list
+              </p>
+              <p className="text-xs text-neutral-600">
+                Occasional updates when new groups of items are listed.
+              </p>
+              <div className="flex max-w-sm gap-3">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-3 py-2 text-sm bg-lux-charcoal text-lux-white border border-lux-charcoal rounded focus:outline-none focus:border-lux-gold transition-colors"
-                  required
+                  className="h-10 flex-1 rounded-full border border-neutral-300 bg-white px-3 text-sm text-neutral-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-neutral-900/10"
                 />
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-lux-gold text-lux-black text-sm font-medium rounded hover:bg-lux-gold-light transition-colors"
-                >
+                <button className="h-10 rounded-full border border-neutral-900 bg-neutral-900 px-4 text-xs font-medium uppercase tracking-wide text-white hover:bg-neutral-800">
                   Join
                 </button>
-              </form>
+              </div>
             </div>
 
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 text-lux-gray-light hover:text-lux-white transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" strokeWidth={1.5} />
-                </a>
-              ))}
+            <div className="flex gap-4 text-neutral-500">
+              <Link href="#" aria-label="Email">
+                <Mail className="h-4 w-4 hover:text-neutral-800" />
+              </Link>
+              <Link href="#" aria-label="Instagram">
+                <Instagram className="h-4 w-4 hover:text-neutral-800" />
+              </Link>
+              <Link href="#" aria-label="Facebook">
+                <Facebook className="h-4 w-4 hover:text-neutral-800" />
+              </Link>
+              <Link href="#" aria-label="Twitter">
+                <Twitter className="h-4 w-4 hover:text-neutral-800" />
+              </Link>
             </div>
           </div>
 
-          {/* Shop Column */}
-          <div>
-            <h3 className="text-xs font-semibold text-lux-gold uppercase tracking-widest mb-6">
-              Shop
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.shop.map((link) => (
-                <li key={link.href}>
+          {/* Link columns */}
+          <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3">
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-wide text-neutral-500">
+                SHOP
+              </h3>
+              <ul className="space-y-2">
+                <li>
                   <Link
-                    href={link.href}
-                    className="text-sm text-lux-gray-light hover:text-lux-white transition-colors"
+                    href="/shop"
+                    className="text-neutral-700 hover:text-neutral-900"
                   >
-                    {link.label}
+                    Browse All
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </div>
+                <li>
+                  <Link
+                    href="/categories"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Categories
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/category/rare-books"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Rare Books
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/category/fine-art"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Fine Art
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/category/militaria"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Militaria
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-          {/* Company Column */}
-          <div>
-            <h3 className="text-xs font-semibold text-lux-gold uppercase tracking-widest mb-6">
-              Company
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-wide text-neutral-500">
+                COMPANY
+              </h3>
+              <ul className="space-y-2">
+                <li>
                   <Link
-                    href={link.href}
-                    className="text-sm text-lux-gray-light hover:text-lux-white transition-colors"
+                    href="/about"
+                    className="text-neutral-700 hover:text-neutral-900"
                   >
-                    {link.label}
+                    About
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </div>
+                <li>
+                  <Link
+                    href="/how-it-works"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    How It Works
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/authentication"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Authentication
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/sell"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Sell With Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-          {/* Support Column */}
-          <div>
-            <h3 className="text-xs font-semibold text-lux-gold uppercase tracking-widest mb-6">
-              Support
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.support.map((link) => (
-                <li key={link.href}>
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-wide text-neutral-500">
+                SUPPORT
+              </h3>
+              <ul className="space-y-2">
+                <li>
                   <Link
-                    href={link.href}
-                    className="text-sm text-lux-gray-light hover:text-lux-white transition-colors"
+                    href="/faq"
+                    className="text-neutral-700 hover:text-neutral-900"
                   >
-                    {link.label}
+                    FAQ
                   </Link>
                 </li>
-              ))}
-            </ul>
+                <li>
+                  <Link
+                    href="/shipping-returns"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Shipping &amp; Returns
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/payment-options"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Payment Options
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/terms"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="text-neutral-700 hover:text-neutral-900"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-lux-charcoal">
-        <div className="container mx-auto page-padding py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-lux-gray">
-              © {currentYear} Kollect-It. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-6">
-              <Link
-                href="/privacy"
-                className="text-xs text-lux-gray hover:text-lux-white transition-colors"
-              >
-                Privacy
-              </Link>
-              <Link
-                href="/terms"
-                className="text-xs text-lux-gray hover:text-lux-white transition-colors"
-              >
-                Terms
-              </Link>
-              <Link
-                href="/cookies"
-                className="text-xs text-lux-gray hover:text-lux-white transition-colors"
-              >
-                Cookies
-              </Link>
-            </div>
+        {/* Bottom bar */}
+        <div className="border-t border-neutral-200 py-4 text-xs text-neutral-500 md:flex md:items-center md:justify-between">
+          <p>© {year} Kollect-It. All rights reserved.</p>
+          <div className="mt-2 flex gap-4 md:mt-0">
+            <Link href="/privacy" className="hover:text-neutral-800">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-neutral-800">
+              Terms
+            </Link>
+            <Link href="/cookies" className="hover:text-neutral-800">
+              Cookies
+            </Link>
           </div>
         </div>
       </div>
@@ -191,4 +228,3 @@ export function Footer() {
 }
 
 export default Footer;
-

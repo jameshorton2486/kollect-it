@@ -118,18 +118,18 @@ const nextConfig = {
     };
   },
 
-  // Experimental optimizations
+  // Experimental optimizations (temporarily disabled to investigate ChunkLoadError timeouts)
+  // If stable after fix, re-enable selectively.
   experimental: {
-    optimizePackageImports: [
-      "lucide-react",
-      "framer-motion",
-      "clsx",
-      "tailwind-merge",
-    ],
-    serverActions: {
-      bodySizeLimit: "2mb",
-    },
-    // Note: removed staticGenerationRetryCount (not a supported option)
+    // optimizePackageImports: [
+    //   "lucide-react",
+    //   "framer-motion",
+    //   "clsx",
+    //   "tailwind-merge",
+    // ],
+    // serverActions: {
+    //   bodySizeLimit: "2mb",
+    // },
   },
 
   // Note: Webpack config removed for Next.js 15 + Turbopack compatibility

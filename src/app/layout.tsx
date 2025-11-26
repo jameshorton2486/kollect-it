@@ -6,6 +6,8 @@ import Script from "next/script";
 import { SessionProvider } from "@/components/SessionProvider";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const lato = Lato({
   weight: ["300", "400", "700"],
@@ -110,22 +112,23 @@ export default function RootLayout({
         )}
       </head>
       <body
-        suppressHydrationWarning
-        className="antialiased bg-lux-cream text-lux-black"
+        className="min-h-screen bg-surface-50 text-ink-900 antialiased selection:bg-gold-100 selection:text-ink-900"
       >
-        {/* Skip link for keyboard users */}
+        {/* Accessibility: Skip to main content link */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:bg-lux-white focus:text-lux-black focus:px-4 focus:py-2 focus:rounded"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-4 focus:rounded-md focus:bg-surface-0 focus:px-4 focus:py-2 focus:text-ink-900 shadow-lg"
         >
           Skip to main content
         </a>
         <SessionProvider>
           <CartProvider>
             <WishlistProvider>
+              <Header />
               <ClientBody>
                 <div id="main">{children}</div>
               </ClientBody>
+              <Footer />
             </WishlistProvider>
           </CartProvider>
         </SessionProvider>

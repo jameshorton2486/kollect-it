@@ -1,68 +1,54 @@
-import { Search, ShieldCheck, Camera, Package } from "lucide-react";
-
 export default function ProcessOverview() {
   const steps = [
     {
-      number: 1,
-      icon: Search,
       title: "Source",
       description:
-        "We identify exceptional pieces from reputable collections, estates, and international specialists. Every potential acquisition undergoes initial assessment for authenticity and condition.",
+        "I look for pieces from estates, auctions, and long-held collections that feel special in their quality, design, or story.",
     },
     {
-      number: 2,
-      icon: ShieldCheck,
-      title: "Authenticate",
+      title: "Review & Research",
       description:
-        "Specialists vet and document provenance with transparent condition notes. We research materials, techniques, and historical context to ensure absolute accuracy.",
+        "I examine condition as best I can, note any flaws I see, and learn what I can about age, materials, and background.",
     },
     {
-      number: 3,
-      icon: Camera,
-      title: "Catalog",
+      title: "Photograph & Describe",
       description:
-        "We photograph every flaw. Our condition reports are forensic, so you know exactly what you're holding before it arrives. Professional photography, detailed descriptions, and conservation-grade documentation included.",
+        "Items are photographed in a simple, honest way and described in plain language so you know what to expect.",
     },
     {
-      number: 4,
-      icon: Package,
-      title: "Deliver",
+      title: "Careful Packing & Delivery",
       description:
-        "Insured shipping with professional packaging ensures your piece arrives safely. Full tracking and dedicated support throughout the delivery process.",
+        "When something sells, I pack it carefully and ship with tracking whenever possible. If you have questions, you deal directly with me.",
     },
   ];
 
   return (
-    <section className="section-grand bg-lux-carbon">
-      <div className="container mx-auto page-padding">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-sm md:text-base font-medium text-lux-gold uppercase tracking-widest mb-3">
+    <section className="mt-24 bg-[#FAF5EE] py-24 md:mt-32 md:py-32">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="mb-12 text-center md:mb-16">
+          <h2 className="font-serif text-3xl text-neutral-900 md:text-4xl">
             Our Process
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-lux-white mb-4 font-normal">
-            How We Work
           </h2>
-          <p className="text-lg text-lux-gray-light max-w-2xl mx-auto font-light">
-            From discovery to delivery, every step is designed to ensure
-            authenticity, quality, and your complete satisfaction.
+          <p className="mx-auto mt-4 max-w-2xl text-sm text-neutral-700 md:text-base">
+            I keep things simple: find interesting pieces, describe them
+            honestly, and try to match them with collectors who will appreciate
+            them.
           </p>
         </div>
 
-        {/* Timeline */}
-        <div className="max-w-3xl mx-auto">
-          {steps.map((step) => (
-            <div key={step.title} className="flex items-start gap-6 mb-10">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-lux-charcoal flex items-center justify-center">
-                  <step.icon className="w-6 h-6 text-lux-gold" strokeWidth={1.5} />
-                </div>
+        {/* Steps */}
+        <div className="space-y-8 md:space-y-10">
+          {steps.map((step, index) => (
+            <div key={step.title} className="flex gap-4 md:gap-6">
+              <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 text-xs font-medium text-neutral-700 md:h-9 md:w-9">
+                {String(index + 1).padStart(2, "0")}
               </div>
               <div>
-                <h3 className="text-xl text-lux-white font-medium mb-2">
+                <h3 className="text-base font-medium text-neutral-900 md:text-lg">
                   {step.title}
                 </h3>
-                <p className="text-lux-gray-light leading-relaxed">
+                <p className="mt-2 text-sm text-neutral-700 md:text-base">
                   {step.description}
                 </p>
               </div>

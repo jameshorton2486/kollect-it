@@ -1,10 +1,9 @@
 "use client";
 
-import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
+import { Menu, X, ShoppingCart, User, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +16,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
-  // Adds subtle backdrop when scrolling to match luxury polish
+  // Add shadow when scrolling
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -40,11 +39,12 @@ export function Header() {
         "sticky top-0 z-50 transition-all duration-300 border-b",
         isScrolled
           ? "bg-surface-900/98 backdrop-blur-md shadow-lg border-surface-800"
-          : "bg-surface-900 border-surface-800/50",
+          : "bg-surface-900 border-surface-800/50"
       )}
     >
       <nav className="container mx-auto px-4" aria-label="Main navigation">
         <div className="flex items-center justify-between h-20 transition-all duration-300">
+          
           {/* Logo - White + Gold for Dark Header */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center group">
@@ -67,9 +67,9 @@ export function Header() {
                   href={item.href}
                   className={cn(
                     "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b-2",
-                    isActive
-                      ? "text-gold-500 border-gold-500"
-                      : "text-surface-300 hover:text-white border-transparent hover:border-gold-500",
+                    isActive 
+                      ? "text-gold-500 border-gold-500" 
+                      : "text-surface-300 hover:text-white border-transparent hover:border-gold-500"
                   )}
                 >
                   {item.name}
@@ -81,10 +81,10 @@ export function Header() {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-2">
             {/* Search */}
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
+            <Button 
+              asChild 
+              variant="ghost" 
+              size="icon" 
               className="text-surface-300 hover:text-white hover:bg-surface-800"
             >
               <Link href="/search">
@@ -92,12 +92,12 @@ export function Header() {
                 <span className="sr-only">Search</span>
               </Link>
             </Button>
-
+            
             {/* Account */}
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
+            <Button 
+              asChild 
+              variant="ghost" 
+              size="icon" 
               className="text-surface-300 hover:text-white hover:bg-surface-800"
             >
               <Link href="/account">
@@ -105,12 +105,12 @@ export function Header() {
                 <span className="sr-only">Account</span>
               </Link>
             </Button>
-
+            
             {/* Cart */}
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
+            <Button 
+              asChild 
+              variant="ghost" 
+              size="icon" 
               className="text-surface-300 hover:text-white hover:bg-surface-800 relative"
             >
               <Link href="/cart">
@@ -121,9 +121,9 @@ export function Header() {
 
             {/* Consign CTA - Desktop */}
             <div className="pl-2">
-              <Button
-                asChild
-                variant="outline"
+              <Button 
+                asChild 
+                variant="outline" 
                 className="font-normal tracking-wide rounded-full px-6 border-gold-500 text-white hover:bg-gold-500 hover:text-surface-900"
               >
                 <Link href="/sell">Consign With Us</Link>
@@ -134,12 +134,17 @@ export function Header() {
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-4">
             {/* Mobile Cart */}
-            <Button asChild variant="ghost" size="icon" className="text-white">
+            <Button 
+              asChild 
+              variant="ghost" 
+              size="icon" 
+              className="text-white"
+            >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
               </Link>
             </Button>
-
+            
             {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
@@ -169,9 +174,7 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       "text-lg font-light py-3 border-b border-surface-800 last:border-0 tracking-wide transition-colors",
-                      isActive
-                        ? "text-gold-500"
-                        : "text-surface-200 hover:text-white",
+                      isActive ? "text-gold-500" : "text-surface-200 hover:text-white"
                     )}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -179,18 +182,18 @@ export function Header() {
                   </Link>
                 );
               })}
-
+              
               {/* Mobile CTAs */}
               <div className="pt-4 flex gap-4">
-                <Button
-                  asChild
+                <Button 
+                  asChild 
                   className="w-full bg-gold-500 text-surface-900 hover:bg-gold-400"
                 >
                   <Link href="/sell">Consign With Us</Link>
                 </Button>
-                <Button
-                  asChild
-                  variant="outline"
+                <Button 
+                  asChild 
+                  variant="outline" 
                   className="w-full border-surface-300 text-white hover:bg-surface-800"
                 >
                   <Link href="/account">My Account</Link>
