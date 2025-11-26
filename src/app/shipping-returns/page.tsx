@@ -1,67 +1,74 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import { AesopSection } from "@/components/AesopSection";
-
-export const metadata: Metadata = {
-  title: "Shipping & Returns",
-  description:
-    "Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.",
-  openGraph: {
-    title: "Shipping & Returns",
-    description:
-      "Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Shipping & Returns",
-    description:
-      "Secure packaging, insured shipping with tracking, and hassle-free 30-day returns on all purchases from Kollect-It.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-  },
-};
-
 export default function ShippingReturnsPage() {
   return (
-    <>
-      <AesopSection variant="olive">
-        <div className="text-center">
-          <h1 className="font-serif text-4xl md:text-5xl mb-12">Shipping & Returns</h1>
-        </div>
+    <div className="min-h-screen bg-surface-50 text-ink-900">
+      <div className="mx-auto max-w-3xl px-6 py-20">
+        <h1 className="text-4xl font-serif font-bold mb-12 text-ink-900">
+          Shipping & Returns
+        </h1>
 
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="space-y-12 text-lg leading-relaxed">
+          {/* SHIPPING SECTION */}
           <section>
-            <h2 className="font-serif text-2xl mb-6 text-gold">Shipping</h2>
-            <p className="leading-relaxed text-ink-light text-lg">
-              Your order will be securely packaged, insured, and shipped with full
-              tracking and delivery confirmation. Shipping times vary based on
-              item size and destination, but most orders ship within 3–5 business
-              days. Professional packaging ensures items arrive in the condition
-              described.
+            <h2 className="text-2xl font-serif font-semibold mb-3">Shipping</h2>
+            <p>
+              I pack every item myself and use the right materials for each
+              piece. Fragile items receive extra padding and protection.
+            </p>
+
+            <ul className="list-disc list-inside mt-4 space-y-2">
+              <li><strong>Shipping Time:</strong> 1-2 business days</li>
+              <li><strong>Carrier:</strong> USPS or UPS</li>
+              <li><strong>Tracking:</strong> Always included</li>
+              <li>
+                <strong>Packaging:</strong> New boxes, foam, bubble wrap, and
+                corner guards as needed
+              </li>
+            </ul>
+
+            <p className="mt-4">
+              If you need something shipped faster, feel free to reach out.
             </p>
           </section>
 
+          {/* LOCAL PICKUP */}
           <section>
-            <h2 className="font-serif text-2xl mb-6 text-gold">Returns & Exchanges</h2>
-            <p className="leading-relaxed text-ink-light text-lg">
-              We encourage careful review of all photos and descriptions before
-              purchasing. Returns are possible but discouraged. If you're not
-              satisfied with your purchase, contact us within 30 days of delivery
-              to discuss. Items must be returned in original condition with all
-              documentation.
+            <h2 className="text-2xl font-serif font-semibold mb-3">Local Pickup</h2>
+            <p>
+              If you&apos;re near San Antonio, pickup may be available for larger
+              items. Please contact me before purchasing to confirm.
             </p>
           </section>
 
-          <div className="text-center">
-            <Link href="/contact" className="inline-block bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity">
-              Contact Support
-            </Link>
-          </div>
+          {/* RETURNS */}
+          <section>
+            <h2 className="text-2xl font-serif font-semibold mb-3">Returns</h2>
+            <p>I want you to be happy with your purchase.</p>
+
+            <ul className="list-disc list-inside mt-4 space-y-2">
+              <li>
+                If an item arrives <strong>damaged</strong> or <strong>not as described</strong>,
+                I will make it right.
+              </li>
+              <li>
+                For other returns, please contact me within <strong>48 hours</strong> of
+                delivery.
+              </li>
+              <li>Items must be returned in the same condition they arrived.</li>
+            </ul>
+
+            <p className="mt-4">I always handle returns personally and fairly.</p>
+          </section>
+
+          {/* INTERNATIONAL */}
+          <section>
+            <h2 className="text-2xl font-serif font-semibold mb-3">
+              International Shipping
+            </h2>
+            <p>Not available at this time, but I&apos;m working on adding it.</p>
+          </section>
         </div>
-      </AesopSection>
-      {/* Footer is rendered globally via ClientBody */}
-    </>
+      </div>
+    </div>
   );
 }
 

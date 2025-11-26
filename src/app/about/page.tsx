@@ -1,505 +1,141 @@
-import type { Metadata } from "next";
+// src/app/about/page.tsx
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import { AesopSection } from "@/components/AesopSection";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
-  openGraph: {
-    title: "About Us",
-    description:
-      "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About Us",
-    description:
-      "Learn about Kollect-It's team of experts and our commitment to authenticating and curating rare antiques, collectibles, and fine art.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-  },
-};
-
-export const revalidate = 3600;
-
-async function getCategories() {
-  try {
-    return await prisma.category.findMany({
-      orderBy: { name: "asc" },
-    });
-  } catch (error) {
-    console.log("Database not available, using fallback categories");
-    return [
-      {
-        id: "1",
-        name: "Fine Art",
-        slug: "fine-art",
-        description:
-          "Paintings, prints, photography, sculptures. Price range: $500-$15,000",
-        image: "",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: "2",
-        name: "Rare Books",
-        slug: "rare-books",
-        description:
-          "First editions, signed copies, historical texts, vintage finds. Price range: $200-$8,000",
-        image: "",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: "3",
-        name: "Collectibles",
-        slug: "collectibles",
-        description:
-          "Vintage items, memorabilia, limited editions, sought-after finds. Price range: $300-$10,000",
-        image: "",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: "4",
-        name: "Militaria",
-        slug: "militaria",
-        description:
-          "Historical uniforms, medals, patches, insignia, documents. Price range: $200-$5,000",
-        image: "",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ];
-  }
-}
-
-export default async function AboutPage() {
-  const categories = await getCategories();
-
+export default function AboutPage() {
   return (
-    <main className="" role="main">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Kollect-It",
-            url: "https://kollect-it.com",
-            description:
-              "Authenticated antiques, collectibles, and fine art curated by specialists",
-            logo: "https://ext.same-assets.com/kollect-it/logo.png",
-            foundingDate: "2020",
-            contactPoint: {
-              "@type": "ContactPoint",
-              contactType: "Customer Service",
-              url: "https://kollect-it.com/contact",
-            },
-            sameAs: [
-              "https://www.instagram.com/",
-              "https://www.facebook.com/",
-              "https://www.youtube.com/",
-            ],
-          }),
-        }}
-      />
-
-      {/* HERO SECTION */}
-      <AesopSection
-        variant="sand"
-        layout="full"
-        subtitle="ABOUT KOLLECT-IT"
-        title={
-          <>
-            The Best Collectibles
-            <br />
-            Deserve Careful Attention
-          </>
-        }
-        description={
-          <>
-            We fill the gap for items worth $500-$15,000. Professionally
-            valued, fairly priced, personally curated by someone who cares.
-          </>
-        }
-      />
-
-      {/* OUR STORY SECTION */}
-      <AesopSection
-        variant="cream"
-        layout="full"
-        subtitle="OUR STORY"
-        title="Filling the Gap"
-        description={
-          <>
-            <p className="text-lg md:text-xl font-serif italic mb-6">
-              We started with a passion for collectibles and a frustration:
-              items worth $500-$15,000 fall through the cracks.
-            </p>
-
-            <p className="text-base md:text-lg leading-8">
-              Auction houses have minimums around $10,000. Online marketplaces
-              feel risky and impersonal. Private sales are hit-or-miss.
-            </p>
-
-            <p className="text-base md:text-lg leading-8">
-              We built Kollect-It to fill that gap.
-            </p>
-
-            <p className="text-base md:text-lg leading-8">
-              Our collection is personally curated. Every item is accurately
-              described, professionally valued, and fairly priced—typically
-              between auction value and retail price, so you get a better deal
-              than traditional auctions.
-            </p>
-
-            <p className="text-base md:text-lg leading-8">
-              We're a one-person operation committed to honesty. If you have
-              questions, want additional photos, or disagree with our
-              valuation, reach out. We'll listen and adjust if we're wrong.
-            </p>
-
-            <p className="text-base md:text-lg leading-8">
-              Because the best collectibles deserve careful attention.
-            </p>
-          </>
-        }
-      />
-
-      {/* OUR VALUES SECTION */}
-      <AesopSection
-        variant="sand"
-        layout="full"
-        subtitle="WHY COLLECTORS CHOOSE KOLLECT-IT"
-        title="What Makes Us Different"
-      >
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="value-card bg-surface-0 p-8 rounded-lg shadow-sm">
-            <h3 className="font-serif text-2xl text-ink mb-4">
-              Accurate Descriptions
-            </h3>
-            <p className="text-ink-light leading-relaxed">
-              Every item photographed from multiple angles with honest,
-              detailed descriptions. Questions? We'll send more photos or
-              clarify anything.
-            </p>
-          </div>
-
-          <div className="value-card bg-surface-0 p-8 rounded-lg shadow-sm">
-            <h3 className="font-serif text-2xl text-ink mb-4">
-              Fair Pricing
-            </h3>
-            <p className="text-ink-light leading-relaxed">
-              We price between what auctions get and what retail costs. You
-              save compared to traditional auction houses.
-            </p>
-          </div>
-
-          <div className="value-card bg-surface-0 p-8 rounded-lg shadow-sm">
-            <h3 className="font-serif text-2xl text-ink mb-4">
-              Professional Valuation
-            </h3>
-            <p className="text-ink-light leading-relaxed">
-              We use industry-standard resources to value items accurately.
-              If you disagree, we'll review it.
-            </p>
-          </div>
-
-          <div className="value-card bg-surface-0 p-8 rounded-lg shadow-sm">
-            <h3 className="font-serif text-2xl text-ink mb-4">
-              Real Communication
-            </h3>
-            <p className="text-ink-light leading-relaxed">
-              Direct contact with the owner. Real person, real answers. No
-              corporate run-around.
-            </p>
-          </div>
-
-          <div className="value-card bg-surface-0 p-8 rounded-lg shadow-sm">
-            <h3 className="font-serif text-2xl text-ink mb-4">
-              Careful Shipping
-            </h3>
-            <p className="text-ink-light leading-relaxed">
-              Insured and tracked. Professional packaging to ensure your
-              items arrive the way they should.
-            </p>
-          </div>
-
-          <div className="value-card bg-surface-0 p-8 rounded-lg shadow-sm">
-            <h3 className="font-serif text-2xl text-ink mb-4">
-              Transparency
-            </h3>
-            <p className="text-ink-light leading-relaxed">
-              Full disclosure of condition, including known issues and
-              restoration history. You see exactly what you're purchasing.
-            </p>
-          </div>
-        </div>
-      </AesopSection>
-
-      {/* HOW WE WORK SECTION */}
-      <AesopSection
-        variant="olive"
-        layout="full"
-        subtitle="OUR PROCESS"
-        title="How We Source & Authenticate"
-      >
-        <div className="space-y-8">
-          <div className="process-step flex gap-6 md:gap-8">
-            <div className="flex-shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                1
-              </div>
-            </div>
-            <div className="flex-grow">
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                Sourcing & Discovery
-              </h3>
-              <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                We develop relationships with estate liquidators, auction
-                houses, private consignors, and collectors worldwide. We're
-                selective—only 1 in 10 pieces we evaluate make it to our
-                platform. Each potential acquisition is assessed for
-                quality, rarity, and fit with our community.
-              </p>
-            </div>
-          </div>
-
-          <div className="process-step flex gap-6 md:gap-8">
-            <div className="flex-shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                2
-              </div>
-            </div>
-            <div className="flex-grow">
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                Initial Assessment
-              </h3>
-              <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                Our specialists conduct a thorough preliminary examination,
-                documenting all visible characteristics: materials,
-                construction methods, signs of wear, repairs, and marks. We
-                photograph items from multiple angles under professional
-                lighting.
-              </p>
-            </div>
-          </div>
-
-          <div className="process-step flex gap-6 md:gap-8">
-            <div className="flex-shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                3
-              </div>
-            </div>
-            <div className="flex-grow">
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                Expert Authentication
-              </h3>
-              <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                Category specialists with decades of experience conduct
-                in-depth authentication. This includes comparison with known
-                examples, technical analysis when needed, documentation
-                review, and cross-reference with auction records and
-                scholarly databases.
-              </p>
-            </div>
-          </div>
-
-          <div className="process-step flex gap-6 md:gap-8">
-            <div className="flex-shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                4
-              </div>
-            </div>
-            <div className="flex-grow">
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                Research & Documentation
-              </h3>
-              <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                We research provenance, historical context, maker
-                information, and market comparables. Each item receives a
-                detailed description that tells its story: where it comes
-                from, how it was made, why it matters, and how to care for
-                it.
-              </p>
-            </div>
-          </div>
-
-          <div className="process-step flex gap-6 md:gap-8">
-            <div className="flex-shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                5
-              </div>
-            </div>
-            <div className="flex-grow">
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                Professional Photography & Listing
-              </h3>
-              <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                Studio photography captures every detail. Condition notes
-                are precise and honest. Pricing is based on comparable
-                sales, rarity, condition, and market demand. Each listing is
-                crafted to educate and inspire.
-              </p>
-            </div>
-          </div>
-
-          <div className="process-step flex gap-6 md:gap-8">
-            <div className="flex-shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-white font-serif font-bold text-lg">
-                6
-              </div>
-            </div>
-            <div className="flex-grow">
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                Sale & Careful Fulfillment
-              </h3>
-              <p className="text-ink-light leading-relaxed text-base md:text-lg">
-                When an item sells, we handle everything: secure payment
-                processing, professional packaging, full insurance, and
-                tracking. Your piece arrives as beautifully as it left our
-                hands.
-              </p>
-            </div>
-          </div>
-        </div>
-      </AesopSection>
-
-      {/* TEAM SECTION */}
-      <AesopSection
-        variant="charcoal"
-        layout="full"
-        subtitle="OUR TEAM"
-        title="Expert Specialists"
-      >
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="team-member bg-surface-0 p-8 rounded-lg">
-            <h3 className="font-serif text-2xl text-ink mb-2">
-              Fine Art & Paintings
-            </h3>
-            <p className="text-ink-light leading-relaxed mb-4">
-              We authenticate art using professional valuation resources and
-              technical analysis. Provenance research and comparison with
-              documented sales records inform every listing.
-            </p>
-          </div>
-
-          <div className="team-member bg-surface-0 p-8 rounded-lg">
-            <h3 className="font-serif text-2xl text-ink mb-2">
-              Rare Books & Manuscripts
-            </h3>
-            <p className="text-ink-light leading-relaxed mb-4">
-              Our bibliophile specialists examine binding, printing,
-              typography, and paper aging. They consult rare book databases,
-              track first edition records, and assess condition with respect
-              to academic standards. Every book is cataloged with full
-              bibliographic information.
-            </p>
-          </div>
-
-          <div className="team-member bg-surface-0 p-8 rounded-lg">
-            <h3 className="font-serif text-2xl text-ink mb-2">
-              Furniture & Decorative Arts
-            </h3>
-            <p className="text-ink-light leading-relaxed mb-4">
-              Our furniture experts evaluate construction methods, wood
-              types, hardware, and design elements. They identify makers
-              through labels and stylistic analysis, assess structural
-              integrity, and determine appropriate restoration or
-              conservation approaches.
-            </p>
-          </div>
-
-          <div className="team-member bg-surface-0 p-8 rounded-lg">
-            <h3 className="font-serif text-2xl text-ink mb-2">
-              Collectibles & Militaria
-            </h3>
-            <p className="text-ink-light leading-relaxed mb-4">
-              Specialized knowledge in military history, medals, insignia,
-              and period collectibles. Our team verifies authenticity
-              through manufacturing records, cross-references historical
-              documentation, and consults with military historians when
-              needed.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-12 bg-surface-0 p-8 rounded-lg border border-surface-2">
-          <h3 className="font-serif text-2xl text-ink mb-4">
-            Credentials & Affiliations
-          </h3>
-          <p className="text-ink-light leading-relaxed mb-4">
-            Our team members hold credentials from:
+    <main className="bg-surface-50 text-ink-900">
+      {/* Hero */}
+      <section className="border-b border-surface-200 bg-surface-100">
+        <div className="mx-auto max-w-5xl px-6 py-16 lg:py-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold-600">
+            About
           </p>
-          <ul className="space-y-2 text-ink-light">
-            <li>• Certified Appraisers (American Society of Appraisers)</li>
-            <li>• Certified Collections Specialists (Collections Trust)</li>
+          <h1 className="mt-4 text-3xl font-light leading-tight text-ink-900 sm:text-4xl lg:text-5xl">
+            About Kollect-It
+          </h1>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink-700 sm:text-lg">
+            A small, collector-run marketplace. I&apos;m a lifelong collector who enjoys finding good pieces, researching their stories, and matching them with new homes. Every item is listed by me, one at a time, with realistic descriptions and photos.
+          </p>
+        </div>
+      </section>
+
+      {/* Our Story */}
+      <section className="border-b border-surface-200 bg-surface-50">
+        <div className="mx-auto max-w-5xl px-6 py-12 lg:py-16">
+          <h2 className="text-2xl font-light text-ink-900 sm:text-3xl">
+            How Kollect-It Started
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-700">
+            Kollect-It grew out of years of collecting books, art, militaria, and unusual objects from estates and auctions. I&apos;m not a large company or a warehouse - just one person who enjoys careful research, fair pricing, and connecting interesting pieces with people who appreciate them.
+          </p>
+        </div>
+      </section>
+
+      {/* How I Work */}
+      <section className="border-b border-surface-200 bg-surface-100">
+        <div className="mx-auto max-w-5xl px-6 py-12 lg:py-16">
+          <h2 className="text-2xl font-light text-ink-900 sm:text-3xl">
+            How I Work With Each Piece
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-700">
+            Every item goes through a simple, consistent process before it ever appears on the site:
+          </p>
+          <ul className="mt-6 space-y-3 text-base leading-relaxed text-ink-700">
             <li>
-              • Published authors and contributors to academic journals
+              <span className="font-semibold text-ink-900">Source carefully</span>{" "}
+              - I buy from estates, collections, and trusted local auctions.
             </li>
-            <li>• Former museum curators and auction house specialists</li>
             <li>
-              • Members of professional dealer associations and ethics
-              boards
+              <span className="font-semibold text-ink-900">Research the details</span>{" "}
+              - maker, age, condition, and any history I can reasonably confirm.
+            </li>
+            <li>
+              <span className="font-semibold text-ink-900">Photograph honestly</span>{" "}
+              - I try to show both the strengths and the wear, so there are no surprises.
+            </li>
+            <li>
+              <span className="font-semibold text-ink-900">Price with the market in mind</span>{" "}
+              - I look at recent sales and condition, not wishful thinking.
             </li>
           </ul>
         </div>
-      </AesopSection>
+      </section>
 
-      {/* CATEGORIES SECTION */}
-      <AesopSection
-        variant="cream"
-        layout="full"
-        subtitle="CATEGORIES"
-        title="What We Collect"
-      >
-        <div className="grid md:grid-cols-2 gap-8">
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/category/${category.slug}`}
-              className="category-card bg-surface-1 p-8 rounded-lg hover:shadow-lg transition-shadow"
-            >
-              <h3 className="font-serif text-2xl text-ink mb-3">
-                {category.name}
-              </h3>
-              <p className="text-ink-light leading-relaxed">
-                {category.description}
+      {/* Focus Areas */}
+      <section className="border-b border-surface-200 bg-surface-50">
+        <div className="mx-auto max-w-5xl px-6 py-12 lg:py-16">
+          <h2 className="text-2xl font-light text-ink-900 sm:text-3xl">
+            What You&apos;ll Mostly See Here
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-700">
+            The selection will change over time, but most listings fall into a few main areas:
+          </p>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            <div className="rounded-2xl border border-surface-200 bg-surface-100 p-5">
+              <h3 className="text-base font-semibold text-ink-900">Rare Books &amp; Manuscripts</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-700">
+                Early printings, illustrated editions, and reference works that are interesting to read, research, or display.
               </p>
-              <span className="inline-block mt-4 text-gold font-medium">
-                Explore →
-              </span>
-            </Link>
-          ))}
+            </div>
+            <div className="rounded-2xl border border-surface-200 bg-surface-100 p-5">
+              <h3 className="text-base font-semibold text-ink-900">Fine Art</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-700">
+                Paintings, prints, and pieces that stand out for their quality, subject matter, or story.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-surface-200 bg-surface-100 p-5">
+              <h3 className="text-base font-semibold text-ink-900">Historic Militaria</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-700">
+                Items with clear period character and, where possible, documented background or provenance.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-surface-200 bg-surface-100 p-5">
+              <h3 className="text-base font-semibold text-ink-900">Collectibles &amp; Oddities</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-700">
+                Design pieces, unusual finds, and small treasures that do not fit neatly into one category but deserve a closer look.
+              </p>
+            </div>
+          </div>
         </div>
-      </AesopSection>
+      </section>
 
-      {/* CTA SECTION */}
-      <AesopSection
-        variant="charcoal"
-        layout="full"
-        title="Begin Your Collection"
-        description={
-          <>
-            Explore our curated selection of authenticated antiques, rare
-            books, fine art, and collectibles. Every piece has been carefully
-            selected and verified by our experts.
-          </>
-        }
-      >
-        <Link
-          href="/shop"
-          className="inline-block bg-gold text-charcoal font-semibold px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all"
-        >
-          Browse Collection
-        </Link>
-      </AesopSection>
+      {/* What You Can Expect */}
+      <section className="border-b border-surface-200 bg-surface-100">
+        <div className="mx-auto max-w-5xl px-6 py-12 lg:py-16">
+          <h2 className="text-2xl font-light text-ink-900 sm:text-3xl">
+            What You Can Expect
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-700">
+            Kollect-It is intentionally small. That means you are dealing with one person from start to finish, not a rotating team.
+          </p>
+          <ul className="mt-6 space-y-3 text-base leading-relaxed text-ink-700">
+            <li>Straightforward descriptions written by a single seller.</li>
+            <li>Clear photos taken in real lighting, not heavily edited.</li>
+            <li>Reasonable communication - if you have a question, you hear back from me directly.</li>
+            <li>A calm, no-pressure buying experience.</li>
+          </ul>
+        </div>
+      </section>
 
-      {/* Global footer is rendered via ClientBody */}
+      {/* Contact CTA */}
+      <section className="bg-surface-50">
+        <div className="mx-auto max-w-5xl px-6 py-12 lg:py-16">
+          <h2 className="text-2xl font-light text-ink-900 sm:text-3xl">
+            Have a Question or a Piece to Discuss?
+          </h2>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink-700">
+            If you are curious about an item, need more photos, or have something you are thinking about selling, feel free to reach out. I am always happy to talk through the details.
+          </p>
+          <div className="mt-6">
+            <Link
+              href="/contact"
+              className="inline-flex items-center rounded-full border border-gold-500 px-5 py-2.5 text-sm font-medium tracking-wide text-ink-900 hover:border-gold-600 hover:bg-surface-100"
+            >
+              Go to Contact Page
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
