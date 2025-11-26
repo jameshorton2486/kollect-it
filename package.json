@@ -37,6 +37,7 @@
     "test-imagekit": "bun run scripts/test-imagekit.ts",
     "test-google-drive": "bun run scripts/test-google-drive.ts",
     "test:env": "bun run scripts/check-env.ts",
+    "check": "bun run scripts/check-env.js",
     "error-summary:last-hour": "bun run scripts/generate-error-summary.ts --last=1h",
     "error-summary:last-30min": "bun run scripts/generate-error-summary.ts --last=30m",
     "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h"
