@@ -1,10 +1,21 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function MilitariaCategoryPage() {
   return (
     <main className="bg-surface-50 text-ink-900">
       <section className="border-b border-surface-200 bg-surface-100">
         <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-14 lg:flex-row lg:items-center lg:py-20">
+          <div className="md:self-start">
+            <Link
+              href="/categories"
+              className="inline-flex items-center text-sm font-semibold text-gold-600 transition-colors hover:text-gold-700"
+            >
+              <span aria-hidden="true" className="mr-2">←</span>
+              Back to all categories
+            </Link>
+          </div>
+
           <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold-600">
               Category
@@ -45,9 +56,9 @@ export default function MilitariaCategoryPage() {
           </header>
 
           <div className="rounded-2xl border border-dashed border-surface-300 bg-surface-100 px-6 py-10 text-sm text-ink-700">
-            <p className="font-semibold text-ink-900">Product grid placeholder</p>
+            <p className="font-semibold text-ink-900">No listings yet</p>
             <p className="mt-2">
-              Later, you can replace this with your militaria product grid.
+              Inventory in this category is still small. I add new militaria as I verify provenance—check back soon or contact me if you&apos;re after something specific.
             </p>
           </div>
         </div>
