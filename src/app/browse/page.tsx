@@ -185,7 +185,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-12 lg:py-16">
+      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8 lg:py-12">
         {/* Page heading */}
         <header className="mb-10 max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lux-gold">
@@ -201,7 +201,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
           </p>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 pt-8 border-t border-lux-silver">
           {/* Filtering Sidebar */}
           <div className="lg:w-64 flex-shrink-0">
             <div className="lg:sticky lg:top-24">
