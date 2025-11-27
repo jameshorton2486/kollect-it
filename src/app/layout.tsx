@@ -111,9 +111,6 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body
-        className="min-h-screen bg-surface-50 text-ink-900 antialiased selection:bg-gold-100 selection:text-ink-900"
-      </head>
       <body className="min-h-screen bg-lux-ink-soft text-lux-ink antialiased">
         <a
           href="#main"

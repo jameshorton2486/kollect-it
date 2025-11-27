@@ -71,7 +71,7 @@ export function Footer() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="/shop"
+                    href="/browse"
                     className="text-lux-gray-dark hover:text-lux-black transition-colors"
                   >
                     Browse All
@@ -183,7 +183,7 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/payment-options"
+                    href="/payment"
                     className="text-lux-gray-dark hover:text-lux-black transition-colors"
                   >
                     Payment Options

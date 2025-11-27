@@ -1,107 +1,95 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 
-type Category = {
-  slug: string;
-  name: string;
-  description: string;
-  imageSrc: string;
-  imageAlt: string;
-};
-
-const categories: Category[] = [
+const FEATURED_ITEMS = [
   {
-    slug: "rare-books",
-    name: "Rare Manuscripts",
+    title: "Curated Fine Art",
+    subtitle: "Paintings, prints, and works on paper",
     description:
-      "Leather-bound volumes, first editions, and historic texts from the 17th century onward.",
-    imageSrc: "/images/categories/rare-books.png",
-    imageAlt: "Stack of antique leather-bound books on a wooden table.",
+      "Gallery-caliber pieces with documented provenance, spanning American, European, and modern schools.",
+    href: "/categories/fine-art",
+    imageSrc: "/images/categories/art.svg",
+    imageAlt: "Fine art icon",
   },
   {
-    slug: "militaria",
-    name: "Historic Militaria",
+    title: "Historic Collectibles",
+    subtitle: "Ephemera, posters, and rare objects",
     description:
-      "Medals, ribbon bars, uniforms, and service memorabilia with documented history where possible.",
-    imageSrc: "/images/categories/militaria.png",
-    imageAlt:
-      "Vintage military documents, medals, and artifacts laid out on a desk.",
+      "From early advertising to counterculture posters—objects that capture a moment in time.",
+    href: "/categories/collectibles",
+    imageSrc: "/images/products/placeholder.svg",
+    imageAlt: "Collectible object icon",
   },
   {
-    slug: "fine-art",
-    name: "Fine Art & Ceramics",
+    title: "Decor & Objects",
+    subtitle: "Design, sculpture, and statement pieces",
     description:
-      "Paintings, sculpture, and decorative pieces chosen for quality, character, and display appeal.",
-    imageSrc: "/images/categories/fine-art.png",
-    imageAlt: "Warm interior with framed artwork, sofa, and decorative pieces.",
-  },
-  {
-    slug: "collectibles",
-    name: "Collectibles",
-    description:
-      "Interesting objects, sports items, and unusual finds that make fun additions to a collection.",
-    imageSrc: "/images/categories/collectibles.png",
-    imageAlt:
-      "Table of assorted collectibles including silver, pottery, and ephemera.",
+      "Sculptural forms, studio ceramics, and design-forward objects that anchor a room.",
+    href: "/browse?tag=decor",
+    imageSrc: "/images/categories/militaria.svg",
+    imageAlt: "Decor and object icon",
   },
 ];
 
 export default function FeaturedCollection() {
   return (
-    <section className="bg-lux-white py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="mb-12 text-center md:mb-16">
-          <p className="text-xs font-semibold tracking-[0.25em] text-lux-gold uppercase">
-            Featured Collections
-          </p>
-          <h2 className="mt-3 font-serif text-3xl text-lux-black md:text-4xl">
-            Curated Categories
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-lux-gray-dark md:text-base leading-relaxed">
-            Explore antiques, art, militaria, books, and collectibles. Each
-            category reflects pieces I've personally selected and described.
-          </p>
+    <section className="bg-lux-cream py-12 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <p className="text-xs font-semibold tracking-[0.18em] text-lux-gold uppercase">
+              Featured Collections
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-lux-black sm:text-3xl">
+              Curated groupings for serious collectors
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-lux-gray-dark">
+              We assemble collections around artists, estates, or themes so you
+              can acquire pieces that speak to each other—visually, historically,
+              and emotionally.
+            </p>
+          </div>
+          <div className="text-sm text-lux-gray-dark/85 md:text-right">
+            <p>Every item is evaluated for authenticity, condition, and fit.</p>
+            <p className="mt-1">
+              Explore groupings, then dive deeper into individual works.
+            </p>
+          </div>
         </div>
 
-        {/* 2x2 grid on desktop */}
-        <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
-          {categories.map((category) => (
+        <div className="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURED_ITEMS.map((item) => (
             <Link
-              key={category.slug}
-              href={`/category/${category.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-lux-silver bg-lux-white shadow-sm transition-all duration-300 hover:shadow-lg hover:border-lux-gold"
+              key={item.title}
+              href={item.href}
+              className="group flex flex-col overflow-hidden rounded-xl border border-lux-silver/40 bg-lux-white shadow-[0_14px_40px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:border-lux-gold hover:shadow-[0_18px_55px_rgba(0,0,0,0.10)]"
             >
-              <div className="relative aspect-[3/2] overflow-hidden">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-lux-cream">
                 <Image
-                  src={category.imageSrc}
-                  alt={category.imageAlt}
+                  src={item.imageSrc}
+                  alt={item.imageAlt}
                   fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-contain p-6 transition group-hover:scale-105"
                 />
-                {/* Subtle gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-lux-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-
-              <div className="flex flex-1 flex-col justify-between px-6 py-5 md:px-7 md:py-6">
+              <div className="flex flex-1 flex-col px-5 pb-5 pt-4">
                 <div>
-                  <h3 className="font-serif text-lg text-lux-black md:text-xl group-hover:text-lux-gold transition-colors">
-                    {category.name}
+                  <p className="text-[0.72rem] font-semibold tracking-[0.20em] text-lux-gold uppercase">
+                    {item.subtitle}
+                  </p>
+                  <h3 className="mt-1 text-base font-semibold text-lux-black">
+                    {item.title}
                   </h3>
-                  <p className="mt-2 text-sm text-lux-gray-dark md:text-[0.95rem] leading-relaxed">
-                    {category.description}
+                  <p className="mt-2 text-sm leading-relaxed text-lux-gray-dark">
+                    {item.description}
                   </p>
                 </div>
-
-                <span className="mt-4 inline-flex items-center text-sm font-medium text-lux-black group-hover:text-lux-gold transition-colors">
-                  Browse {category.name}
-                  <span className="ml-2 text-xs transition-transform duration-300 group-hover:translate-x-1">
-                    →
+                <div className="mt-4 text-xs font-medium text-lux-gray-dark/85">
+                  <span className="inline-flex items-center gap-2 group-hover:text-lux-black">
+                    Explore collection
+                    <span className="text-[0.7rem]">↗</span>
                   </span>
-                </span>
+                </div>
               </div>
             </Link>
           ))}
