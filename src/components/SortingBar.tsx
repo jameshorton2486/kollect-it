@@ -35,7 +35,7 @@ export default function SortingBar({
   };
 
   return (
-    <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-lux-silver pb-3 text-xs sm:text-sm">
+    <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
       <div className="font-medium tracking-wider uppercase text-lux-gray">
         Showing <span className="text-lux-charcoal">{showing}</span> of{" "}
         <span className="text-lux-charcoal">{total}</span> items
@@ -45,13 +45,13 @@ export default function SortingBar({
         <div className="flex items-center gap-2">
           <label
             htmlFor="sort"
-            className="text-sm text-lux-gray-dark"
+            className="hidden uppercase tracking-[0.16em] text-lux-gray lg:inline text-xs"
           >
-            Sort by
+            Sort
           </label>
           <select
             id="sort"
-            className="rounded-md border border-lux-silver bg-white px-3 py-2 text-sm text-lux-charcoal leading-tight focus:outline-none focus:ring-1 focus:ring-lux-gold focus:border-lux-gold transition-colors cursor-pointer"
+            className="rounded-full border border-lux-silver/60 bg-white px-3 py-1.5 text-xs text-lux-charcoal leading-tight shadow-sm outline-none transition hover:border-lux-gold focus:border-lux-gold cursor-pointer"
             value={currentSort || "featured"}
             onChange={(e) => updateParam("sort", e.target.value)}
           >
