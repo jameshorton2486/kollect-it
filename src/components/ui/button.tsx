@@ -6,18 +6,18 @@ import { cn } from "@/lib/utils";
 
 /**
  * Kollect-It Luxury Button Variants
- * Phase 1 Update: Black/gold aesthetic with elegant hover states
+ * Updated: Black/gold luxury aesthetic matching high-end auction houses
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-normal font-sans tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-normal font-sans tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         /**
-         * Default: Primary CTA button
-         * Black background, white text, gold border appears on hover
+         * Default: Primary CTA - Luxury Black
+         * Black background, white text, gold border on hover
          */
-        default: "bg-cta-600 text-white border border-cta-600 hover:bg-cta-700 hover:border-gold-500 shadow-sm hover:shadow-md active:bg-cta-800",
+        default: "bg-lux-black text-lux-white border border-lux-black hover:bg-lux-charcoal hover:border-lux-gold shadow-sm hover:shadow-lg active:bg-lux-carbon",
 
         /**
          * Destructive: For dangerous actions
@@ -28,22 +28,28 @@ const buttonVariants = cva(
          * Outline: Gold-framed luxury button
          * Gold border, transparent bg, fills gold on hover
          */
-        outline: "border-2 border-gold-500 bg-transparent text-ink-900 hover:bg-gold-500 hover:text-ink-900 shadow-sm hover:shadow-md",
+        outline: "border-2 border-lux-gold bg-transparent text-lux-black hover:bg-lux-gold hover:text-lux-black shadow-sm hover:shadow-lg",
 
         /**
-         * Secondary: Soft grey for secondary actions
+         * Secondary: Elegant neutral for secondary actions
          */
-        secondary: "bg-surface-200 text-ink-900 border border-border-300 hover:bg-surface-300 hover:border-ink-400",
+        secondary: "bg-lux-pearl text-lux-black border border-lux-silver hover:bg-lux-silver hover:border-lux-gray-light",
 
         /**
          * Ghost: Minimal button for tertiary actions
          */
-        ghost: "text-ink-700 hover:bg-surface-200 hover:text-ink-900",
+        ghost: "text-lux-gray-dark hover:bg-lux-pearl hover:text-lux-black",
 
         /**
          * Link: Text-only with gold hover
          */
-        link: "text-ink-900 underline-offset-4 hover:underline hover:text-gold-600",
+        link: "text-lux-black underline-offset-4 hover:underline hover:text-lux-gold",
+        
+        /**
+         * Gold: Inverted luxury - Gold background
+         * For high-emphasis CTAs on dark backgrounds
+         */
+        gold: "bg-lux-gold text-lux-black border border-lux-gold hover:bg-lux-gold-light hover:border-lux-gold-light shadow-sm hover:shadow-lg font-medium",
       },
       size: {
         default: "h-11 px-6 py-2.5",
