@@ -117,8 +117,8 @@ export default function ProductCard({
 
   // grid variant
   return (
-    <div
-      className="group rounded-lg border border-border bg-surface overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-card hover:shadow-elevated hover:border-gold"
+    <article
+      className="group rounded-3xl border border-lux-silver/60 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -166,36 +166,23 @@ export default function ProductCard({
         </button>
       </div>
 
-      {/* Content Section - 30% of card height */}
-      <div className="card-padding-sm flex flex-col gap-2">
+      {/* Content Section */}
+      <div className="px-4 pb-4 pt-3">
         <Link href={`/product/${product.slug}`} className="no-underline">
-          <h3 className="font-serif text-[22px] leading-tight text-ink-900 line-clamp-2 transition-colors hover:text-gold">
+          <h3 className="font-serif text-[15px] leading-snug text-lux-charcoal tracking-tight line-clamp-2 group-hover:text-lux-gold transition-colors">
             {product.title}
           </h3>
         </Link>
-
-        {/* Large, scannable price */}
-        <div className="text-[28px] font-bold text-gold mt-1">
+        {product.category && (
+          <p className="mt-1 text-xs uppercase tracking-[0.16em] text-lux-gray-dark/80">
+            {product.category}
+          </p>
+        )}
+        <p className="mt-2 text-sm font-semibold text-lux-charcoal">
           {formatUSDWhole(product.price)}
-        </div>
-
-        {/* Add to cart button - shows on hover */}
-        <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <AddToCartButton
-            variant="card"
-            product={{
-              id: product.id,
-              title: product.title,
-              price: product.price,
-              slug: product.slug,
-              image: imgSrc,
-              categoryName: product.category || "General",
-            }}
-            quantity={1}
-          />
-        </div>
+        </p>
       </div>
-    </div>
+    </article>
   );
 }
 
