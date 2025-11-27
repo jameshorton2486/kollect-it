@@ -40,7 +40,17 @@ export default function ProductGrid({
     );
   }
   return (
-    <div className="product-grid-category">
+    <>
+      <div className="mb-3 flex items-center justify-between text-xs text-lux-gray">
+        <span>
+          Showing <span className="font-medium text-lux-charcoal">{products.length}</span>{" "}
+          {products.length === 1 ? "piece" : "pieces"}
+        </span>
+      </div>
+
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
       {products.map((product) => (
         <ProductCard
           key={product.id}
@@ -53,8 +63,8 @@ export default function ProductGrid({
             category: product.category.name,
           }}
         />
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
-

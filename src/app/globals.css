@@ -9,31 +9,21 @@
 
 @layer base {
   :root {
-    /* ==========================================
-       LUX - Luxury Color Palette (NEW PRIMARY)
-       Use these for the refined design
-       ========================================== */
-    
-    /* Core Neutrals */
-    --lux-black: 0 0% 0%;           /* #000000 */
-    --lux-carbon: 0 0% 10%;         /* #1A1A1A */
-    --lux-charcoal: 0 0% 18%;       /* #2D2D2D */
-    --lux-gray-dark: 0 0% 29%;      /* #4A4A4A */
-    --lux-gray: 0 0% 42%;           /* #6B6B6B */
-    --lux-gray-light: 0 0% 60%;     /* #9A9A9A */
-    --lux-silver: 0 0% 90%;         /* #E5E5E5 */
-    --lux-pearl: 0 0% 96%;          /* #F5F5F5 */
-    --lux-cream: 40 33% 97%;        /* #FAF8F5 */
-    --lux-white: 0 0% 100%;         /* #FFFFFF */
-    
-    /* Warm Antique Accents */
-    --lux-espresso: 24 47% 16%;     /* #3C2415 - leather, old books */
-    --lux-taupe: 30 18% 66%;        /* #B8A99A - parchment */
-    --lux-sage: 90 14% 55%;         /* #8B9A7D - patina, bronze */
-    
-    /* Gold Accents */
-    --lux-gold: 43 100% 38%;        /* #B8860B */
-    --lux-gold-light: 46 75% 52%;   /* #D4AF37 */
+    /* 1stDibs-style refined neutrals */
+    --lux-ink: 220 15% 12%;          /* primary text: near-black */
+    --lux-ink-soft: 220 15% 96%;     /* soft neutral background */
+    --lux-charcoal: 220 12% 20%;     /* dark grey for bands */
+    --lux-cream: 40 30% 96%;         /* warm cream background */
+    --lux-silver: 220 10% 65%;       /* borders/dividers */
+    --lux-silver-soft: 220 12% 85%;  /* light panels */
+
+    /* Accent */
+    --lux-gold: 38 60% 55%;          /* warm gold accent */
+
+    /* Optional surface alignment */
+    --surface-900: 220 18% 11%;
+    --surface-800: 220 15% 16%;
+    --surface-100: 220 16% 95%;
 
     /* ==========================================
        LEGACY COLORS (kept for compatibility)
@@ -144,6 +134,27 @@
     --aesop-olive-foreground: 40 29% 96%;
     --aesop-charcoal-foreground: 96 14% 92%;
   }
+}
+
+/* Global layout helpers for page sections */
+.section {
+  @apply w-full py-16 md:py-20;
+}
+
+/* Light cream band (good for content) */
+.section-light {
+  @apply bg-lux-cream text-lux-charcoal;
+}
+
+/* Soft neutral band (default) */
+.section-muted {
+  @apply bg-lux-ink-soft text-lux-charcoal;
+}
+
+/* Dark band (hero strips / emphasis) */
+.section-dark {
+  @apply bg-surface-900 text-lux-ink-soft;
+  @apply border-y border-lux-silver/30;
 }
 
 /* ============================================

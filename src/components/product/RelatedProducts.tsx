@@ -206,7 +206,7 @@ export default function RelatedProducts({
             Didn't find what you're looking for?
           </p>
           <Link
-            href="/shop"
+            href="/browse"
             className="inline-flex items-center gap-2 rounded-full bg-cta hover:bg-cta-hover text-white px-6 py-3 font-medium transition-colors"
           >
             Browse Full Inventory

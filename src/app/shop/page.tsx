@@ -8,23 +8,22 @@ import ProductGrid from "@/components/ProductGrid";
 import { AesopSection } from "@/components/AesopSection";
 
 export const metadata: Metadata = {
-  title: "Shop All Collections",
-  description:
-    "Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria with verified provenance.",
-  openGraph: {
-    title: "Shop All Collections",
-    description:
-      "Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria with verified provenance.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-    type: "website",
+// Phase 1: Deprecate legacy /shop route.
+// This page now immediately redirects to /browse.
+import { redirect } from "next/navigation";
+
+export const metadata = {
+  title: "Shop (Redirecting to Browse)",
+  description: "Legacy /shop route. Redirects to new /browse inventory page.",
+  robots: {
+    index: false,
+    follow: true,
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Shop All Collections",
-    description:
-      "Browse our curated collections of authenticated fine art, antique books, collectibles, and militaria with verified provenance.",
-    images: ["https://ext.same-assets.com/kollect-it/og-home.jpg"],
-  },
+};
+
+export default function ShopRedirectPage() {
+  redirect("/browse");
+}
 };
 
 export const revalidate = 60;

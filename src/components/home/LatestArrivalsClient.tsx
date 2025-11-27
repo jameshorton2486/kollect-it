@@ -1,139 +1,86 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
 
 export default function LatestArrivals() {
+  // Placeholder items - replace with actual data fetching
   const items = [
     {
+      id: "1",
       title: "19th-C. Gilt Frame Mirror",
-      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=Victorian+Mirror",
-      desc: "Victorian • London • c. 1880",
-      category: "Mirrors & Glass",
+      price: 2850,
       slug: "mirror-1",
-      condition: "Excellent",
-      authenticated: true,
+      image: "https://via.placeholder.com/400x400/D4AF37/FFFFFF?text=Victorian+Mirror",
+      category: "Mirrors & Glass",
     },
     {
+      id: "2",
       title: "Art Deco Bronze Figurine",
-      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=Art+Deco+Figurine",
-      desc: "France • c. 1930",
-      category: "Sculpture",
+      price: 4200,
       slug: "figurine-1",
-      condition: "Fine",
-      authenticated: true,
+      image: "https://via.placeholder.com/400x400/D4AF37/FFFFFF?text=Art+Deco+Figurine",
+      category: "Sculpture",
     },
     {
+      id: "3",
       title: "Stanley Mouse 1966 Poster",
-      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=1966+Poster",
-      desc: "Jefferson Airplane • Original",
-      category: "Posters & Art",
+      price: 1850,
       slug: "poster-1",
-      condition: "Very Good",
-      authenticated: true,
+      image: "https://via.placeholder.com/400x400/D4AF37/FFFFFF?text=1966+Poster",
+      category: "Posters & Art",
     },
     {
+      id: "4",
       title: "Tsavorite Garnet 6.12 ct",
-      img: "https://via.placeholder.com/400x300/D4AF37/FFFFFF?text=Tsavorite+Garnet",
-      desc: "Merelani Hills • Tanzania",
-      category: "Gemstones",
+      price: 8400,
       slug: "garnet-1",
-      condition: "Excellent",
-      authenticated: true,
+      image: "https://via.placeholder.com/400x400/D4AF37/FFFFFF?text=Tsavorite+Garnet",
+      category: "Gemstones",
     },
   ];
 
+  if (!items || items.length === 0) return null;
+
   return (
-    <section className="py-16 md:py-24 bg-lux-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
-        <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-sm md:text-base font-semibold text-gold uppercase tracking-widest mb-3">
-            What's New This Week
-          </p>
-          <h2 className="font-serif text-4xl md:text-5xl text-ink mb-4">
-            Latest Arrivals
-          </h2>
-          <p className="text-lg text-ink-light max-w-2xl mx-auto">
-            Newly authenticated pieces added to our collection. Each item is
-            documented, certified, and ready to join your collection.
-          </p>
-        </motion.div>
+    <section className="border-t border-lux-silver bg-white">
+      <div className="mx-auto max-w-6xl px-6 py-10 md:py-12 space-y-6">
+        {/* Header row – mirrors /browse typography */}
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-lux-gold">
+              Just In
+            </p>
+            <h2 className="mt-1 font-serif text-2xl md:text-3xl text-lux-charcoal">
+              Latest Arrivals
+            </h2>
+            <p className="mt-2 text-sm text-lux-gray">
+              Freshly added pieces from trusted sellers across categories.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {items.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group cursor-pointer"
+          <div className="md:text-right">
+            <Link
+              href="/browse"
+              className="inline-flex items-center text-sm font-medium tracking-[0.14em] uppercase text-lux-gray hover:text-lux-gold transition-colors"
             >
-              <Link href={`/product/${item.slug}`} className="block">
-                <div className="relative overflow-hidden rounded-lg mb-4 bg-surface-2">
-                  <Image
-                    src={item.img}
-                    alt={item.title}
-                    width={400}
-                    height={400}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  {/* Authentication badge */}
-                  <div className="absolute top-3 right-3 bg-gold text-white px-3 py-1 rounded-full text-xs font-semibold">
-                    Authenticated
-                  </div>
-
-                  {/* Condition badge */}
-                  <div className="absolute bottom-3 left-3 bg-surface-0/90 backdrop-blur text-ink px-3 py-1 rounded-full text-xs font-medium">
-                    {item.condition}
-                  </div>
-                </div>
-              </Link>
-
-              <p className="text-xs text-gold font-semibold uppercase tracking-wide mb-2">
-                {item.category}
-              </p>
-              <h3 className="font-serif text-lg text-ink mb-1 group-hover:text-gold transition-colors line-clamp-2">
-                {item.title}
-              </h3>
-              <p className="text-sm text-ink-light mb-3">{item.desc}</p>
-
-              <Link
-                href={`/product/${item.slug}`}
-                className="text-gold text-sm font-semibold hover:text-gold-dark transition-colors inline-flex items-center gap-2"
-              >
-                View Details →
-              </Link>
-            </motion.div>
-          ))}
+              Browse all pieces
+              <span aria-hidden="true" className="ml-2">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
 
-        <motion.div
-          className="mt-14 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <p className="text-ink-light text-lg mb-6 max-w-2xl mx-auto">
-            Each piece tells a story of craftsmanship and heritage. Our
-            specialists continually source exceptional treasures to elevate your
-            personal collection.
-          </p>
-          <Link
-            href="/shop"
-            className="inline-block bg-gold text-white font-semibold px-10 py-3 rounded-lg hover:opacity-90 transition-opacity"
-          >
-            Explore Full Collection
-          </Link>
-        </motion.div>
+        {/* Grid – reuses the same ProductCard styling as /browse */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {items.slice(0, 8).map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

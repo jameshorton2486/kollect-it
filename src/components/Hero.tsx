@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="relative min-h-[70vh] md:min-h-[80vh] lg:min-h-screen overflow-hidden bg-ink-900 text-surface-0">
+    <section className="relative min-h-[70vh] md:min-h-[80vh] lg:min-h-screen overflow-hidden bg-lux-black text-lux-white">
       {/* Background image */}
       <div
         className="absolute inset-0 bg-center bg-cover"
@@ -21,14 +21,14 @@ export function Hero() {
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 flex items-center justify-center min-h-[70vh] md:min-h-[80vh] lg:min-h-screen">
         <div className="flex w-full justify-center">
-          <div className="bg-black/65 backdrop-blur-sm px-6 py-10 sm:px-10 sm:py-12 rounded-[32px] shadow-elevated border border-white/10 max-w-2xl w-full text-center">
-            {/* NEW Luxury Headline */}
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 leading-tight text-surface-0">
+          <div className="bg-lux-black/65 backdrop-blur-sm px-6 py-10 sm:px-10 sm:py-12 rounded-[32px] shadow-2xl border border-lux-white/10 max-w-2xl w-full text-center">
+            {/* Luxury Headline */}
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 leading-tight text-lux-white">
               Curated Fine Art &amp; Antiques
             </h1>
 
-            {/* Subheadline (unchanged text wording) */}
-            <p className="text-base md:text-lg lg:text-xl text-surface-100/90 mb-8 leading-relaxed">
+            {/* Subheadline */}
+            <p className="text-base md:text-lg lg:text-xl text-lux-pearl/90 mb-8 leading-relaxed">
               Discover authenticated antiques and collectibles from trusted
               sources. Each listing is personally reviewed before it goes
               live.
@@ -36,7 +36,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" variant="gold">
                 <Link href="/shop">Browse Collection</Link>
               </Button>
 
@@ -44,7 +44,7 @@ export function Hero() {
                 asChild
                 size="lg"
                 variant="ghost"
-                className="text-surface-0 hover:text-surface-0 hover:bg-surface-0/10"
+                className="text-lux-white hover:text-lux-white hover:bg-lux-white/10 border border-lux-white/30 hover:border-lux-white/50"
               >
                 <Link href="/how-it-works">How It Works</Link>
               </Button>

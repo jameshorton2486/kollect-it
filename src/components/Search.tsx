@@ -119,7 +119,7 @@ export default function Search() {
     if (!q) return;
     saveRecent(q);
     setOpen(false);
-    router.push(`/shop?q=${encodeURIComponent(q)}`);
+    router.push(`/browse?q=${encodeURIComponent(q)}`);
   };
 
   const clear = () => {
@@ -211,7 +211,7 @@ export default function Search() {
                       onClick={() => {
                         setQuery(r);
                         setOpen(false);
-                        router.push(`/shop?q=${encodeURIComponent(r)}`);
+                        router.push(`/browse?q=${encodeURIComponent(r)}`);
                       }}
                     >
                       {r}
@@ -300,7 +300,7 @@ export default function Search() {
           {query.trim().length >= 2 && (
             <div className="mt-2 border-t border-surface-100 pt-2">
               <Link
-                href={`/shop?q=${encodeURIComponent(query.trim())}`}
+                href={`/browse?q=${encodeURIComponent(query.trim())}`}
                 className="block rounded px-2 py-2 text-center text-sm text-gold hover:bg-surface-100"
                 onClick={() => {
                   saveRecent(query.trim());

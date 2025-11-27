@@ -89,7 +89,7 @@ export default function CartPage() {
                 size="lg"
                 className="bg-gold-600 hover:bg-gold-700"
               >
-                <Link href="/shop">
+                <Link href="/browse">
                   Browse Collection
                 </Link>
               </Button>
@@ -160,7 +160,7 @@ export default function CartPage() {
             </h1>
           </div>
           <Link
-            href="/shop"
+            href="/browse"
             className="text-gold font-semibold hover:underline"
           >
             Continue Shopping
@@ -313,7 +313,7 @@ export default function CartPage() {
                 </Button>
 
                 <button
-                  onClick={() => (window.location.href = "/shop")}
+                  onClick={() => (window.location.href = "/browse")}
                   className="w-full border-2 border-gold text-gold font-semibold py-3 rounded-lg hover:bg-gold hover:text-white transition-colors"
                 >
                   Continue Shopping

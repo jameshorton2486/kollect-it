@@ -167,41 +167,37 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 
   return (
     <div className="browse-page min-h-screen bg-white">
-      {/* Simple breadcrumb */}
-      <div className="border-b border-lux-silver bg-lux-cream">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <nav aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-sm text-lux-gray">
-              <li>
-                <Link href="/" className="hover:text-lux-charcoal">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li className="text-lux-charcoal font-medium">Browse</li>
-            </ol>
-          </nav>
+      {/* Top band */}
+      <section className="border-b border-lux-silver bg-lux-cream">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 pb-4 pt-8 lg:flex-row lg:items-end lg:justify-between lg:pb-6 lg:pt-10">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-lux-gold">
+              Browse
+            </p>
+            <h1 className="mt-2 font-serif text-2xl tracking-tight text-lux-charcoal lg:text-3xl">
+              Browse Kollect-It
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm text-lux-gray">
+              Explore the full catalog of fine art, rare books, militaria, and
+              distinctive objects. Use filters and sorting to narrow in on what
+              catches your eye.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start gap-2 text-xs text-lux-gray lg:items-end">
+            <p className="uppercase tracking-[0.18em] text-lux-charcoal">
+              Curated Inventory
+            </p>
+            <p className="text-sm text-lux-charcoal font-medium">
+              {totalFiltered} pieces available
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-12 lg:py-16">
-        {/* Page heading */}
-        <header className="mb-10 max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lux-gold">
-            All Collections
-          </p>
-          <h1 className="mt-3 font-serif text-3xl md:text-4xl text-lux-charcoal">
-            Browse the Entire Kollect-It Inventory
-          </h1>
-          <p className="mt-3 text-lux-gray text-sm md:text-base">
-            Explore every item currently available, across fine art, rare books,
-            collectibles, militaria, and more. Use filters and sorting to narrow
-            your search—or simply wander the collection.
-          </p>
-        </header>
-
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      {/* Filters + grid band */}
+      <main className="mx-auto max-w-6xl px-6 py-6 lg:py-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-4 border-b border-lux-silver mb-6">
           {/* Filtering Sidebar */}
           <div className="lg:w-64 flex-shrink-0">
             <div className="lg:sticky lg:top-24">
@@ -212,23 +208,24 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
             </div>
           </div>
 
-          {/* Products + Sorting */}
-          <div className="flex-1 min-w-0">
-            {/* Sorting Bar */}
-            <div className="mb-8">
-              <SortingBar
-                showing={pagedProducts.length}
-                total={totalFiltered}
-                currentSort={sort}
-                currentView={currView}
-              />
-            </div>
+          {/* Sorting Bar */}
+          <div className="flex items-center justify-end lg:ml-auto">
+            <SortingBar
+              showing={pagedProducts.length}
+              total={totalFiltered}
+              currentSort={sort}
+              currentView={currView}
+            />
+          </div>
+        </div>
 
-            {/* Product Grid */}
-            {pagedProducts.length > 0 ? (
-              <ProductGrid products={pagedProducts} view={currView} />
-            ) : (
-              <div className="text-center py-24 px-4 border border-lux-silver rounded-lg bg-lux-cream/50">
+        {/* Product Grid */}
+        <div className="pt-2">
+
+          {pagedProducts.length > 0 ? (
+            <ProductGrid products={pagedProducts} view={currView} />
+          ) : (
+            <div className="text-center py-24 px-4 border border-lux-silver rounded-lg bg-lux-cream/50">
                 <h3 className="font-serif text-lux-charcoal text-2xl mb-3">
                   No items match your filters
                 </h3>
@@ -282,11 +279,10 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                     className="px-4 py-2 text-sm border border-lux-silver rounded-md hover:border-lux-gold hover:text-lux-gold transition-colors"
                   >
                     Next →
-                  </Link>
-                )}
-              </div>
-            )}
-          </div>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </main>
     </div>
