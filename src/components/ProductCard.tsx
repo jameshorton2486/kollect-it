@@ -118,7 +118,7 @@ export default function ProductCard({
   // grid variant
   return (
     <article
-      className="group rounded-3xl border border-lux-silver/60 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]"
+      className="group rounded-3xl border border-lux-silver/60 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-lux-gold hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -130,7 +130,7 @@ export default function ProductCard({
             alt={`${product.title} - ${product.category || "Product"} image`}
             width={400}
             height={500}
-            className={`h-full w-full object-cover transition-transform duration-500 ${hovered ? "scale-110" : "scale-100"}`}
+            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
             quality={90}
             loading="lazy"
             placeholder="blur"
