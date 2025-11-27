@@ -113,8 +113,8 @@ export default function RootLayout({
       </head>
       <body
         className="min-h-screen bg-surface-50 text-ink-900 antialiased selection:bg-gold-100 selection:text-ink-900"
-      >
-        {/* Accessibility: Skip to main content link */}
+      </head>
+      <body className="min-h-screen bg-lux-ink-soft text-lux-ink antialiased">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-4 focus:rounded-md focus:bg-surface-0 focus:px-4 focus:py-2 focus:text-ink-900 shadow-lg"

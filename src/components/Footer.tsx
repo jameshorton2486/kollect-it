@@ -7,8 +7,8 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-neutral-200 bg-neutral-50">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <footer className="mt-24 border-t border-lux-silver/40 bg-surface-900 text-lux-ink-soft">
+      <div className="container py-10 md:py-14">
         {/* Main footer content */}
         <div className="grid gap-10 py-12 md:gap-12 md:py-16 lg:grid-cols-[2fr,3fr] lg:py-20">
           {/* Brand + newsletter */}
@@ -62,14 +62,14 @@ export function Footer() {
           {/* Link columns */}
           <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3">
             <div className="space-y-3">
-              <h3 className="text-xs font-semibold tracking-wide text-neutral-500">
+              <h3 className="text-xs font-semibold tracking-wide text-lux-silver">
                 SHOP
               </h3>
               <ul className="space-y-2">
                 <li>
                   <Link
                     href="/browse"
-                    className="text-neutral-700 hover:text-neutral-900"
+                    className="text-lux-ink-soft hover:text-white"
                   >
                     Browse All
                   </Link>
@@ -77,32 +77,23 @@ export function Footer() {
                 <li>
                   <Link
                     href="/categories"
-                    className="text-neutral-700 hover:text-neutral-900"
+                    className="text-lux-ink-soft hover:text-white"
                   >
                     Categories
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/category/rare-books"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/category/rare-books" className="text-lux-ink-soft hover:text-white">
                     Rare Books
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/category/fine-art"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/category/fine-art" className="text-lux-ink-soft hover:text-white">
                     Fine Art
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/category/militaria"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/category/militaria" className="text-lux-ink-soft hover:text-white">
                     Militaria
                   </Link>
                 </li>
@@ -110,47 +101,32 @@ export function Footer() {
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-xs font-semibold tracking-wide text-neutral-500">
+              <h3 className="text-xs font-semibold tracking-wide text-lux-silver">
                 COMPANY
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <Link
-                    href="/about"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/about" className="text-lux-ink-soft hover:text-white">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/how-it-works"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/how-it-works" className="text-lux-ink-soft hover:text-white">
                     How It Works
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/authentication"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/authentication" className="text-lux-ink-soft hover:text-white">
                     Authentication
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/sell"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/sell" className="text-lux-ink-soft hover:text-white">
                     Consign With Us
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/contact"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/contact" className="text-lux-ink-soft hover:text-white">
                     Contact
                   </Link>
                 </li>
@@ -158,47 +134,32 @@ export function Footer() {
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-xs font-semibold tracking-wide text-neutral-500">
+              <h3 className="text-xs font-semibold tracking-wide text-lux-silver">
                 SUPPORT
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <Link
-                    href="/faq"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/faq" className="text-lux-ink-soft hover:text-white">
                     FAQ
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/shipping-returns"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/shipping-returns" className="text-lux-ink-soft hover:text-white">
                     Shipping &amp; Returns
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/payment-options"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/payment-options" className="text-lux-ink-soft hover:text-white">
                     Payment Options
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/terms"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/terms" className="text-lux-ink-soft hover:text-white">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/privacy"
-                    className="text-neutral-700 hover:text-neutral-900"
-                  >
+                  <Link href="/privacy" className="text-lux-ink-soft hover:text-white">
                     Privacy Policy
                   </Link>
                 </li>
@@ -208,16 +169,16 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-neutral-200 py-4 text-xs text-neutral-500 md:flex md:items-center md:justify-between">
+        <div className="border-t border-lux-silver/30 py-4 text-xs text-lux-silver md:flex md:items-center md:justify-between">
           <p>© {year} Kollect-It. All rights reserved.</p>
           <div className="mt-2 flex gap-4 md:mt-0">
-            <Link href="/privacy" className="hover:text-neutral-800">
+            <Link href="/privacy" className="hover:text-lux-ink-soft">
               Privacy
             </Link>
-            <Link href="/terms" className="hover:text-neutral-800">
+            <Link href="/terms" className="hover:text-lux-ink-soft">
               Terms
             </Link>
-            <Link href="/cookies" className="hover:text-neutral-800">
+            <Link href="/cookies" className="hover:text-lux-ink-soft">
               Cookies
             </Link>
           </div>

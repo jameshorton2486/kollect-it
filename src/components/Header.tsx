@@ -37,14 +37,12 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-300 border-b",
-        isScrolled
-          ? "bg-surface-900/98 backdrop-blur-md shadow-lg border-surface-800"
-          : "bg-surface-900 border-surface-800/50",
+        "sticky top-0 z-50 border-b border-lux-silver/40 text-lux-ink-soft",
+        isScrolled ? "bg-surface-900/95 backdrop-blur" : "bg-surface-900"
       )}
     >
       <nav className="container mx-auto px-4" aria-label="Main navigation">
-        <div className="flex items-center justify-between h-20 transition-all duration-300">
+        <div className="flex items-center justify-between h-14 md:h-16 transition-all duration-300 gap-4">
           {/* Logo - White + Gold for Dark Header */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center group">
@@ -58,7 +56,7 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-10">
+          <div className="hidden md:flex md:items-center md:space-x-8">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -66,10 +64,10 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b-2",
+                    "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b",
                     isActive
-                      ? "text-gold-500 border-gold-500"
-                      : "text-surface-300 hover:text-white border-transparent hover:border-gold-500",
+                      ? "text-lux-ink-soft border-lux-silver"
+                      : "text-lux-ink-soft/80 hover:text-lux-ink-soft border-transparent hover:border-lux-silver",
                   )}
                 >
                   {item.name}
@@ -85,7 +83,7 @@ export function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="text-surface-300 hover:text-white hover:bg-surface-800"
+              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800"
             >
               <Link href="/search">
                 <Search className="h-5 w-5" />
@@ -98,7 +96,7 @@ export function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="text-surface-300 hover:text-white hover:bg-surface-800"
+              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800"
             >
               <Link href="/account">
                 <User className="h-5 w-5" />
@@ -111,7 +109,7 @@ export function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="text-surface-300 hover:text-white hover:bg-surface-800 relative"
+              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800 relative"
             >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
@@ -124,7 +122,7 @@ export function Header() {
               <Button
                 asChild
                 variant="outline"
-                className="font-normal tracking-wide rounded-full px-6 border-gold-500 text-white hover:bg-gold-500 hover:text-surface-900"
+                className="font-normal tracking-wide rounded-full px-6 border-lux-gold text-lux-ink-soft hover:bg-lux-gold hover:text-surface-900"
               >
                 <Link href="/sell">Consign With Us</Link>
               </Button>
