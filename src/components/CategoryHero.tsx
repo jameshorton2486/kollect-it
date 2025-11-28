@@ -48,7 +48,6 @@ export default function CategoryHero({
             fill
             sizes="100vw"
             priority
-            quality={90}
             className="object-cover object-center scale-105"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}

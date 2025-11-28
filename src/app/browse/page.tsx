@@ -166,38 +166,36 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
   };
 
   return (
-    <div className="browse-page min-h-screen bg-white">
-      {/* Top band */}
-      <section className="border-b border-lux-silver bg-lux-cream">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 pb-4 pt-8 lg:flex-row lg:items-end lg:justify-between lg:pb-6 lg:pt-10">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-lux-gold">
+    <div className="min-h-screen bg-lux-pearl">
+      <section className="border-b border-border-200 bg-white">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-12 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:py-16">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
               Browse
             </p>
-            <h1 className="mt-2 font-serif text-2xl tracking-tight text-lux-charcoal lg:text-3xl">
+            <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
               Browse Kollect-It
             </h1>
-            <p className="mt-2 max-w-2xl text-sm text-lux-gray">
+            <p className="max-w-2xl text-base text-ink-700">
               Explore the full catalog of fine art, rare books, militaria, and
               distinctive objects. Use filters and sorting to narrow in on what
               catches your eye.
             </p>
           </div>
 
-          <div className="flex flex-col items-start gap-2 text-xs text-lux-gray lg:items-end">
-            <p className="uppercase tracking-[0.18em] text-lux-charcoal">
-              Curated Inventory
+          <div className="text-sm text-ink-600">
+            <p className="uppercase tracking-[0.3em] text-ink-400">
+              Curated inventory
             </p>
-            <p className="text-sm text-lux-charcoal font-medium">
+            <p className="mt-2 text-base font-semibold text-ink-900">
               {totalFiltered} pieces available
             </p>
           </div>
         </div>
       </section>
 
-      {/* Filters + grid band */}
-      <main className="mx-auto max-w-6xl px-6 py-6 lg:py-8">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-4 border-b border-lux-silver mb-6">
+      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:py-8">
+        <div className="mb-6 flex flex-col gap-6 border-b border-border-200 pb-4 lg:flex-row lg:gap-8">
           {/* Filtering Sidebar */}
           <div className="lg:w-64 flex-shrink-0">
             <div className="lg:sticky lg:top-24">
@@ -208,7 +206,6 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
             </div>
           </div>
 
-          {/* Sorting Bar */}
           <div className="flex items-center justify-end lg:ml-auto">
             <SortingBar
               showing={pagedProducts.length}
@@ -219,28 +216,26 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
           </div>
         </div>
 
-        {/* Product Grid */}
         <div className="pt-2">
-
           {pagedProducts.length > 0 ? (
             <ProductGrid products={pagedProducts} view={currView} />
           ) : (
-            <div className="text-center py-24 px-4 border border-lux-silver rounded-lg bg-lux-cream/50">
-                <h3 className="font-serif text-lux-charcoal text-2xl mb-3">
-                  No items match your filters
-                </h3>
-                <p className="text-lux-gray mb-6">
-                  Try adjusting your filters or clearing them to see more of the
-                  collection.
-                </p>
-                <Link
-                  href="/browse"
-                  className="inline-flex items-center gap-2 bg-lux-gold hover:bg-lux-gold-light text-white px-6 py-3 rounded-md font-medium transition-colors"
-                >
-                  Clear Filters
-                </Link>
-              </div>
-            )}
+            <div className="rounded-2xl border border-dashed border-border-200 bg-surface-50 px-6 py-16 text-center">
+              <h3 className="mb-3 text-2xl font-semibold text-ink-900">
+                No items match your filters
+              </h3>
+              <p className="mb-6 text-sm text-ink-600">
+                Try adjusting your filters or clearing them to see more of the
+                collection.
+              </p>
+              <Link
+                href="/browse"
+                className="inline-flex items-center gap-2 rounded-full bg-lux-gold px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink-900 transition-colors hover:bg-lux-gold-light"
+              >
+                Clear Filters
+              </Link>
+            </div>
+          )}
 
             {/* Pagination */}
             {totalPages > 1 && (
@@ -262,7 +257,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                     <Link
                       key={pageNumber}
                       href={href}
-                      className={`min-w-[40px] h-10 flex items-center justify-center rounded-md border font-medium text-sm transition-all ${
+                    className={`min-w-[40px] h-10 flex items-center justify-center rounded-md border font-medium text-sm transition-all ${
                         isActive
                           ? "border-lux-gold bg-lux-gold text-white"
                           : "border-lux-silver text-lux-charcoal hover:border-lux-gold hover:text-lux-gold"
@@ -279,10 +274,11 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                     className="px-4 py-2 text-sm border border-lux-silver rounded-md hover:border-lux-gold hover:text-lux-gold transition-colors"
                   >
                     Next →
-                </Link>
-              )}
-            </div>
-          )}
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </main>
     </div>

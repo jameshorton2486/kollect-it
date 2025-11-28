@@ -26,9 +26,10 @@ async function getCategoryData(slug: string) {
   });
 }
 
-export async function generateMetadata({
-  params,
-}: CategoryPageProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: CategoryPageProps,
+): Promise<Metadata> {
+  const { params } = props;
   const { slug } = await params;
   const category = await prisma.category.findUnique({
     where: { slug },
@@ -49,7 +50,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage(props: CategoryPageProps) {
+  const { params } = props;
   const { slug } = await params;
   const category = await getCategoryData(slug);
 
@@ -60,29 +62,27 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const products = category.products;
 
   return (
-    <main className="bg-surface-50 text-ink-900">
-      <section className="border-b border-surface-200 bg-surface-100">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-14 lg:flex-row lg:items-center lg:py-20">
-          <div className="md:self-start">
-            <Link
-              href="/categories"
-              className="inline-flex items-center text-sm font-semibold text-gold-600 transition-colors hover:text-gold-700"
-            >
-              <span aria-hidden="true" className="mr-2">
-                ←
-              </span>
-              Back to all categories
-            </Link>
-          </div>
+    <main className="bg-lux-pearl text-ink-900">
+      <section className="border-b border-border-200 bg-white">
+        <div className="mx-auto max-w-6xl space-y-6 px-4 py-12 sm:px-6 lg:py-16">
+          <Link
+            href="/categories"
+            className="inline-flex items-center text-sm font-semibold text-ink-600 transition-colors hover:text-ink-900"
+          >
+            <span aria-hidden="true" className="mr-2">
+              ←
+            </span>
+            Back to all categories
+          </Link>
 
-          <div className="flex-1">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold-600">
+          <div className="space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
               Category
             </p>
-            <h1 className="mt-3 text-3xl font-light leading-tight text-ink-900 sm:text-4xl lg:text-5xl">
+            <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
               {category.name}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-700 sm:text-lg">
+            <p className="max-w-3xl text-base leading-relaxed text-ink-700 sm:text-lg">
               {category.description ||
                 "Curated inventory from the Kollect-It catalog."}
             </p>
@@ -91,14 +91,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-14 lg:py-20">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
           {products.length > 0 ? (
             <>
-              <div className="mb-8">
-                <h2 className="text-2xl font-light text-ink-900 sm:text-3xl">
+              <div className="mb-10 space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
                   Available pieces
                 </h2>
-                <p className="mt-2 text-sm text-ink-700">
+                <p className="text-sm text-ink-600">
                   Showing {products.length}{" "}
                   {products.length === 1 ? "item" : "items"} currently on offer.
                 </p>
@@ -106,13 +106,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <ProductGrid products={products} />
             </>
           ) : (
-            <div className="rounded-2xl border border-dashed border-surface-300 bg-surface-50 px-6 py-10 text-sm text-ink-700">
-              <p className="font-semibold text-ink-900">No listings yet</p>
-              <p className="mt-2">
+            <div className="rounded-2xl border border-dashed border-border-200 bg-surface-50 px-6 py-12 text-sm text-ink-700">
+              <p className="text-base font-semibold text-ink-900">
+                No listings yet
+              </p>
+              <p className="mt-2 max-w-2xl">
                 Inventory in this category is still small. Check back soon or{" "}
                 <Link
                   href="/contact"
-                  className="text-gold-600 underline-offset-4 hover:underline"
+                  className="text-lux-gold underline-offset-4 hover:underline"
                 >
                   contact me
                 </Link>{" "}
