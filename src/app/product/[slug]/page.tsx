@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import dynamic from "next/dynamic";
 import ClientProductLayout from "@/components/product/ClientProductLayout";
-import { AesopSection } from "@/components/AesopSection";
 const ImageGallery = dynamic(() => import("@/components/product/ImageGallery"));
 const ProductInfo = dynamic(() => import("@/components/product/ProductInfo"));
 const ProductTabs = dynamic(() => import("@/components/product/ProductTabs"));
@@ -174,70 +173,61 @@ export default async function ProductPage({ params }: ProductPageProps) {
   };
 
   return (
-    <>
-      {/* Schema.org structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-      />
-
-      <div className="product-page">
-        {/* Breadcrumbs */}
-        <Breadcrumbs
-          items={[
-            { label: "Home", href: "/" },
-            {
-              label: product.category.name,
-              href: `/category/${product.category.slug}`,
-            },
-            { label: product.title, href: `/product/${product.slug}` },
-          ]}
+    <ClientProductLayout
+      product={{
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        slug: product.slug,
+        image: product.images[0]?.url || "/placeholder.jpg",
+        categoryName: product.category.name,
+      }}
+    >
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
 
-        {/* Main Product Section */}
-        <AesopSection variant="cream">
-          <div className="product-layout">
-            {/* Image Gallery */}
-            <ImageGallery images={product.images} title={product.title} />
+        <section className="bg-lux-pearl py-12 md:py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
+            <div>
+              <Breadcrumbs
+                items={[
+                  { label: "Home", href: "/" },
+                  {
+                    label: product.category.name,
+                    href: `/category/${product.category.slug}`,
+                  },
+                  { label: product.title, href: `/product/${product.slug}` },
+                ]}
+              />
+            </div>
 
-            {/* Product Info */}
-            <ProductInfo product={product} sku={sku} />
+            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+              <ImageGallery images={product.images} title={product.title} />
+              <ProductInfo product={product} sku={sku} />
+            </div>
+
+            <ProductTabs product={product} />
           </div>
-        </AesopSection>
+        </section>
 
-        {/* Product Tabs */}
-        <AesopSection variant="sand">
-          <ProductTabs product={product} />
-        </AesopSection>
-
-        {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <AesopSection variant="olive">
-            <RelatedProducts
-              products={relatedProducts}
-              categoryName={product.category.name}
-            />
-          </AesopSection>
+          <section className="bg-white py-12 md:py-16 lg:py-20">
+            <div className="mx-auto max-w-6xl px-4 sm:px-6">
+              <RelatedProducts
+                products={relatedProducts}
+                categoryName={product.category.name}
+              />
+            </div>
+          </section>
         )}
-
-        {/* Client-only sticky cart bar via wrapper */}
-        <ClientProductLayout
-          product={{
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            slug: product.slug,
-            image: product.images[0]?.url || "/placeholder.jpg",
-            categoryName: product.category.name,
-          }}
-        >
-          {/* no additional client-only content here; StickyCartBar is injected within the wrapper */}
-        </ClientProductLayout>
-      </div>
-    </>
+      </>
+    </ClientProductLayout>
   );
 }

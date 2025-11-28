@@ -42,17 +42,24 @@ export default function StickyCartBar({ product }: StickyCartBarProps) {
   };
 
   return (
-    <div className="sticky-cart-bar">
-      <div className="sticky-cart-content">
-        <div className="sticky-cart-info">
-          <p className="sticky-cart-price text-gold font-semibold">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/5 bg-surface-800/95 px-4 py-4 text-white shadow-[0_-10px_30px_rgba(0,0,0,0.4)] backdrop-blur lg:hidden">
+      <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
+        <div className="min-w-0">
+          <p className="text-xs uppercase tracking-[0.3em] text-ink-300">
+            {product.categoryName}
+          </p>
+          <p className="text-sm font-medium text-white line-clamp-1">
+            {product.title}
+          </p>
+          <p className="text-lg font-semibold text-gold-300">
             {formatUSD0(product.price)}
           </p>
-          <p className="text-xs text-ink-secondary">{product.title}</p>
         </div>
         <button
-          className={`sticky-cart-button btn-cta inline-flex items-center justify-center gap-2 ${
-            added ? "bg-green-600 text-white hover:bg-green-700" : ""
+          className={`inline-flex min-w-[160px] items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all ${
+            added
+              ? "bg-lux-gold text-lux-black"
+              : "bg-white text-lux-black hover:bg-lux-gold-light"
           }`}
           onClick={handleAddToCart}
         >

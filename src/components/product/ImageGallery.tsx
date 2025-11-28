@@ -44,10 +44,10 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
   const selectedImage = images[selectedIndex];
 
   return (
-    <div className="product-gallery space-y-6">
+    <div className="space-y-6">
       {/* Main Image Container */}
       <div
-        className="product-gallery-main relative"
+        className="relative"
         ref={mainRef}
         onTouchStart={(e) => {
           touchStartX.current = e.touches[0].clientX;
@@ -67,7 +67,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
         }}
       >
         <div
-          className="group relative overflow-hidden rounded-lg border border-ink-tertiary/10 bg-surface-0 aspect-square flex items-center justify-center"
+          className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-3xl border border-white/20 bg-surface-0 shadow-xl shadow-black/15"
           onMouseEnter={() => setIsHoverZoom(true)}
           onMouseLeave={() => setIsHoverZoom(false)}
           title={isHoverZoom ? "Zoom enabled - Hover to zoom" : "Hover to zoom"}
@@ -87,18 +87,18 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           />
 
           {/* Authentication Watermark Badge on Image */}
-          <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-surface-0/95 backdrop-blur-sm px-3 py-1.5 shadow-md border border-white/50">
+          <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full border border-white/30 bg-white/85 px-3 py-1.5 text-ink-700 shadow-lg backdrop-blur-sm">
             <svg
               width="14"
               height="14"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="text-green-600"
+              className="text-lux-gold"
               aria-hidden="true"
             >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
             </svg>
-            <span className="text-[11px] font-semibold text-ink">
+            <span className="text-[11px] font-semibold">
               Authenticated
             </span>
           </div>
@@ -124,7 +124,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
 
           {/* Image Counter Badge */}
           {images.length > 1 && (
-            <div className="absolute bottom-4 right-4 rounded-full bg-cta/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-white border border-gold/30">
+            <div className="absolute bottom-4 right-4 rounded-full border border-white/20 bg-black/60 px-3 py-1.5 text-xs font-semibold text-white">
               {selectedIndex + 1} / {images.length}
             </div>
           )}
@@ -179,18 +179,18 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
 
       {/* Thumbnails Grid */}
       {images.length > 1 && (
-        <div className="product-gallery-thumbnails">
-          <p className="text-xs uppercase tracking-wider text-ink-secondary font-semibold mb-3">
+        <div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink-400">
             More Views
           </p>
           <div className="flex gap-2 overflow-x-auto pb-2 snap-x">
             {images.map((image, index) => (
               <button
                 key={index}
-                className={`product-gallery-thumbnail shrink-0 snap-start rounded-lg border-2 transition-all overflow-hidden hover:border-gold ${
+                className={`relative shrink-0 snap-start overflow-hidden rounded-xl border transition-all hover:border-lux-gold/40 ${
                   index === selectedIndex
-                    ? "border-gold shadow-md ring-2 ring-gold/20"
-                    : "border-ink-tertiary/20 hover:border-gold/50"
+                    ? "border-lux-gold ring-1 ring-lux-gold"
+                    : "border-transparent bg-surface-100"
                 }`}
                 onClick={() => setSelectedIndex(index)}
                 title={`View image ${index + 1}`}
@@ -207,12 +207,6 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />
-                {index === selectedIndex && (
-                  <div
-                    className="absolute inset-0 bg-gold/10 pointer-events-none"
-                    aria-hidden="true"
-                  ></div>
-                )}
               </button>
             ))}
           </div>

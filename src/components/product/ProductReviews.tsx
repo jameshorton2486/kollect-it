@@ -155,7 +155,7 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-semibold">{review.user.name}</span>
                     {review.verified && (
-                      <span className="flex items-center gap-1 text-xs text-green-600">
+                      <span className="flex items-center gap-1 text-xs text-lux-gold">
                         <CheckCircle className="h-3 w-3" />
                         Verified Purchase
                       </span>

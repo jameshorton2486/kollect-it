@@ -33,63 +33,55 @@ const FEATURED_ITEMS = [
 
 export default function FeaturedCollection() {
   return (
-    <section className="bg-lux-cream py-12 sm:py-16">
+    <section className="bg-surface-800 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-xl">
-            <p className="text-xs font-semibold tracking-[0.18em] text-lux-gold uppercase">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-xl space-y-4 text-white">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">
               Featured Collections
             </p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-lux-black sm:text-3xl">
-              Curated groupings for serious collectors
+            <h2 className="text-3xl font-semibold tracking-tight">
+              Curated capsules for serious collectors
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-lux-gray-dark">
-              We assemble collections around artists, estates, or themes so you
-              can acquire pieces that speak to each other—visually, historically,
-              and emotionally.
+            <p className="text-sm leading-relaxed text-white/80">
+              Groupings are drawn from estates, studio archives, and private
+              consignments—so you can acquire pieces that converse with one
+              another in your space.
             </p>
           </div>
-          <div className="text-sm text-lux-gray-dark/85 md:text-right">
-            <p>Every item is evaluated for authenticity, condition, and fit.</p>
-            <p className="mt-1">
-              Explore groupings, then dive deeper into individual works.
-            </p>
-          </div>
+          <p className="text-sm text-white/70">
+            Each capsule includes documented condition notes and provenance
+            context so you can act quickly on the pieces you love.
+          </p>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURED_ITEMS.map((item) => (
             <Link
               key={item.title}
               href={item.href}
-              className="group flex flex-col overflow-hidden rounded-xl border border-lux-silver/40 bg-lux-white shadow-[0_14px_40px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:border-lux-gold hover:shadow-[0_18px_55px_rgba(0,0,0,0.10)]"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/95 shadow-[0_14px_45px_rgba(15,15,15,0.35)] transition hover:-translate-y-1"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-lux-cream">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-lux-ink-soft">
                 <Image
                   src={item.imageSrc}
                   alt={item.imageAlt}
                   fill
-                  className="object-contain p-6 transition group-hover:scale-105"
+                  className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="flex flex-1 flex-col px-5 pb-5 pt-4">
-                <div>
-                  <p className="text-[0.72rem] font-semibold tracking-[0.20em] text-lux-gold uppercase">
-                    {item.subtitle}
-                  </p>
-                  <h3 className="mt-1 text-base font-semibold text-lux-black">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-lux-gray-dark">
-                    {item.description}
-                  </p>
-                </div>
-                <div className="mt-4 text-xs font-medium text-lux-gray-dark/85">
-                  <span className="inline-flex items-center gap-2 group-hover:text-lux-black">
-                    Explore collection
-                    <span className="text-[0.7rem]">↗</span>
+              <div className="flex flex-1 flex-col px-5 pb-5 pt-4 text-ink-900">
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-ink-400">
+                  {item.subtitle}
+                </p>
+                <h3 className="mt-1 text-lg font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-ink-600">{item.description}</p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-ink-500 group-hover:text-ink-900">
+                  Explore collection
+                  <span aria-hidden className="text-[0.8rem]">
+                    ↗
                   </span>
-                </div>
+                </span>
               </div>
             </Link>
           ))}

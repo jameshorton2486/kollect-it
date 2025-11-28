@@ -4,6 +4,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface AddToCartButtonProps {
   product: {
@@ -60,15 +61,28 @@ export default function AddToCartButton({
     setTimeout(() => setAdded(false), 2000);
   };
 
-  const buttonVariant = variant === "primary" ? "default" : "secondary";
+  const variantMap: Record<
+    NonNullable<AddToCartButtonProps["variant"]>,
+    "default" | "outline" | "gold"
+  > = {
+    primary: "default",
+    secondary: "outline",
+    card: "gold",
+  };
+
+  const buttonVariant = variantMap[variant];
   const size = variant === "card" ? "sm" : "default";
+  const addedStyles =
+    variant === "card"
+      ? "bg-lux-gold text-lux-black hover:bg-lux-gold-light"
+      : "bg-lux-charcoal text-white hover:bg-black";
 
   return (
     <Button
       onClick={handleAddToCart}
       variant={buttonVariant}
       size={size}
-      className={`${className} ${added ? "bg-green-600 hover:bg-green-700 text-white" : ""}`}
+      className={cn(className, added && addedStyles, "tracking-wide")}
     >
       {added ? (
         <>

@@ -40,23 +40,24 @@ export default async function HomePage() {
   }));
 
   return (
-    <main role="main">
+    <main role="main" className="bg-lux-pearl">
       <Hero />
       <TrustStrip />
 
       {featuredProducts.length > 0 && (
-        <section className="border-t border-lux-silver bg-lux-cream/40">
-          <div className="mx-auto max-w-6xl px-6 py-12 space-y-6">
+        <section className="bg-white py-16">
+          <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lux-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
                   Featured
                 </p>
-                <h2 className="font-serif text-2xl md:text-3xl text-lux-charcoal">
-                  Collector Highlights
+                <h2 className="text-3xl font-semibold tracking-tight text-ink-900">
+                  Collector highlights
                 </h2>
-                <p className="mt-2 text-sm text-lux-gray max-w-2xl">
-                  A rotating selection of authenticated pieces ready for serious collectors.
+                <p className="mt-2 text-sm text-ink-600">
+                  A rotating selection of authenticated pieces ready for the most
+                  considered interiors.
                 </p>
               </div>
             </div>

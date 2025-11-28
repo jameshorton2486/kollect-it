@@ -130,13 +130,13 @@ export default function RelatedProducts({
                 )}
 
                 {/* Authentication Badge */}
-                <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-surface-0/95 backdrop-blur-sm px-2 py-1 shadow-sm">
+                <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full border border-white/40 bg-white/80 px-2 py-1 text-ink-700 shadow-sm backdrop-blur">
                   <svg
                     width="12"
                     height="12"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="text-green-600"
+                    className="text-lux-gold"
                     aria-hidden="true"
                   >
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />

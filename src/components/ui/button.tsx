@@ -17,7 +17,7 @@ const buttonVariants = cva(
          * Default: Primary CTA - Luxury Black
          * Black background, white text, gold border on hover
          */
-        default: "bg-lux-black text-lux-white border border-lux-black hover:bg-lux-charcoal hover:border-lux-gold shadow-sm hover:shadow-lg active:bg-lux-carbon",
+        default: "bg-lux-black text-lux-white border border-lux-black hover:bg-lux-charcoal hover:border-lux-gold shadow-sm hover:shadow-lg active:bg-lux-charcoal/90",
 
         /**
          * Destructive: For dangerous actions

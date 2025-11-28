@@ -21,13 +21,20 @@ const config: Config = {
            Primary palette for refined design
            ========================================== */
         lux: {
+          black: "hsl(var(--lux-black))",
           ink: "hsl(var(--lux-ink))",
           "ink-soft": "hsl(var(--lux-ink-soft))",
           charcoal: "hsl(var(--lux-charcoal))",
+          white: "hsl(var(--lux-white))",
+          pearl: "hsl(var(--lux-pearl))",
           cream: "hsl(var(--lux-cream))",
+          "gray-light": "hsl(var(--lux-gray-light))",
+          gray: "hsl(var(--lux-gray))",
+          "gray-dark": "hsl(var(--lux-gray-dark))",
           silver: "hsl(var(--lux-silver))",
           "silver-soft": "hsl(var(--lux-silver-soft))",
           gold: "hsl(var(--lux-gold))",
+          "gold-light": "hsl(var(--lux-gold-light))",
         },
 
         /* ==========================================

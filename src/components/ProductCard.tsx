@@ -118,34 +118,30 @@ export default function ProductCard({
   // grid variant
   return (
     <article
-      className="group rounded-3xl border border-lux-silver/60 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-lux-gold hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/20 bg-white shadow-md shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Image Section - 70% of card height */}
-      <div className="relative overflow-hidden aspect-[4/5]">
-        <Link href={`/product/${product.slug}`} className="block h-full">
+      <div className="relative m-4 overflow-hidden rounded-xl shadow-md shadow-black/10">
+        <Link href={`/product/${product.slug}`} className="block">
           <Image
             src={imgSrc}
             alt={`${product.title} - ${product.category || "Product"} image`}
             width={400}
             height={500}
-            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
-            quality={90}
+            className="aspect-[4/5] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
             loading="lazy"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
           />
-          {/* Category badge - top left */}
           {product.category && (
-            <span className="absolute left-3 top-3 rounded bg-surface/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gold shadow-md backdrop-blur-sm border border-gold">
+            <span className="absolute left-3 top-3 rounded-full border border-white/30 bg-white/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-ink-400 shadow-sm backdrop-blur">
               {product.category}
             </span>
           )}
         </Link>
-        {/* Wishlist button - top right */}
         <button
-          className="absolute right-3 top-3 inline-flex items-center justify-center rounded-full border border-surface bg-surface/95 p-2.5 backdrop-blur-sm transition-all hover:scale-110 hover:bg-gold hover:border-gold hover:text-white shadow-md"
+          className="absolute right-3 top-3 inline-flex items-center justify-center rounded-full border border-white/40 bg-white/80 p-2.5 text-ink-600 shadow-sm backdrop-blur transition-all hover:scale-110 hover:text-lux-gold"
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           onClick={async (e) => {
             e.preventDefault();
@@ -166,21 +162,22 @@ export default function ProductCard({
         </button>
       </div>
 
-      {/* Content Section */}
-      <div className="px-4 pb-4 pt-3">
-        <Link href={`/product/${product.slug}`} className="no-underline">
-          <h3 className="font-serif text-[15px] leading-snug text-lux-charcoal tracking-tight line-clamp-2 group-hover:text-lux-gold transition-colors">
-            {product.title}
-          </h3>
-        </Link>
-        {product.category && (
-          <p className="mt-1 text-xs uppercase tracking-[0.16em] text-lux-gray-dark/80">
-            {product.category}
+      <div className="flex flex-1 flex-col px-4 pb-5 pt-1">
+        <div className="space-y-3">
+          {product.category && (
+            <p className="text-[0.65rem] uppercase tracking-[0.35em] text-ink-400">
+              {product.category}
+            </p>
+          )}
+          <Link href={`/product/${product.slug}`} className="no-underline">
+            <h3 className="text-base font-medium leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-lux-gold line-clamp-2">
+              {product.title}
+            </h3>
+          </Link>
+          <p className="text-sm font-semibold text-gold-500">
+            {formatUSDWhole(product.price)}
           </p>
-        )}
-        <p className="mt-2 text-sm font-semibold text-lux-charcoal">
-          {formatUSDWhole(product.price)}
-        </p>
+        </div>
       </div>
     </article>
   );

@@ -48,12 +48,21 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-lux-silver/40 text-lux-ink-soft",
-        isScrolled ? "bg-surface-900/95 backdrop-blur" : "bg-surface-900"
+        "sticky top-0 z-50 border-b border-white/10 text-lux-white transition-colors",
+        isScrolled
+          ? "bg-lux-black/90 backdrop-blur supports-[backdrop-filter]:bg-lux-black/75 shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+          : "bg-lux-black"
       )}
     >
-      <nav className="container mx-auto px-4" aria-label="Main navigation">
-        <div className="flex items-center justify-between h-14 md:h-16 transition-all duration-300 gap-4">
+      <div className="hidden border-b border-white/5 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-lux-gray-light/80 sm:flex sm:justify-between">
+        <span>Certified consignments • Worldwide delivery</span>
+        <span className="hidden md:inline">Concierge: james@kollect-it.com</span>
+      </div>
+      <nav
+        className="mx-auto flex max-w-6xl flex-col px-4 sm:px-6"
+        aria-label="Main navigation"
+      >
+        <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo - White + Gold for Dark Header */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center group">
@@ -75,10 +84,10 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-surface-900",
+                    "relative text-[0.72rem] font-semibold tracking-[0.28em] uppercase transition-colors pb-1 border-b focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-black",
                     isActive
-                      ? "text-lux-ink-soft border-lux-silver"
-                      : "text-lux-ink-soft/80 hover:text-lux-ink-soft border-transparent hover:border-lux-silver",
+                      ? "text-white border-white"
+                      : "text-lux-gray-light/70 hover:text-white border-transparent hover:border-white/60",
                   )}
                 >
                   {item.name}
@@ -88,13 +97,13 @@ export function Header() {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1">
             {/* Search */}
             <Button
               asChild
               variant="ghost"
               size="icon"
-              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800"
+              className="text-lux-gray-light/80 hover:text-white hover:bg-white/5"
             >
               <Link href="/search">
                 <Search className="h-5 w-5" />
@@ -107,7 +116,7 @@ export function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800"
+              className="text-lux-gray-light/80 hover:text-white hover:bg-white/5"
             >
               <Link href="/wishlist">
                 <Heart className="h-5 w-5" />
@@ -120,7 +129,7 @@ export function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800"
+              className="text-lux-gray-light/80 hover:text-white hover:bg-white/5"
             >
               <Link href="/account">
                 <User className="h-5 w-5" />
@@ -133,7 +142,7 @@ export function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800 relative"
+              className="text-lux-gray-light/80 hover:text-white hover:bg-white/5 relative"
             >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
@@ -142,11 +151,11 @@ export function Header() {
             </Button>
 
             {/* Consign CTA - Desktop */}
-            <div className="pl-2">
+            <div className="pl-3">
               <Button
                 asChild
-                variant="outline"
-                className="font-normal tracking-wide rounded-full px-6 border-lux-gold text-lux-ink-soft hover:bg-lux-gold hover:text-surface-900"
+                variant="gold"
+                className="font-semibold tracking-[0.2em] rounded-full px-6 uppercase text-[0.7rem]"
               >
                 <Link href="/sell">Consign</Link>
               </Button>
@@ -154,16 +163,26 @@ export function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center space-x-4">
+          <div className="flex items-center space-x-3 md:hidden">
             {/* Mobile Cart */}
-            <Button asChild variant="ghost" size="icon" className="text-white">
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10"
+            >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">View cart</span>
               </Link>
             </Button>
 
-            <Button asChild variant="ghost" size="icon" className="text-white">
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10"
+            >
               <Link href="/wishlist">
                 <Heart className="h-5 w-5" />
                 <span className="sr-only">View wishlist</span>
@@ -175,7 +194,7 @@ export function Header() {
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold"
+              className="text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
@@ -193,7 +212,7 @@ export function Header() {
         {mobileMenuOpen && (
           <div
             id="mobile-menu"
-            className="md:hidden absolute left-0 right-0 top-full bg-surface-900 border-b border-surface-800 shadow-lg animate-slide-down"
+            className="md:hidden absolute left-0 right-0 top-full bg-lux-black/95 border-b border-white/10 shadow-2xl animate-slide-down"
           >
             <div className="flex flex-col p-4 space-y-2">
               {navigation.map((item) => {
@@ -203,10 +222,10 @@ export function Header() {
                     key={item.name}
                     href={item.href}
                     className={cn(
-                      "text-lg font-light py-3 border-b border-surface-800 last:border-0 tracking-wide transition-colors",
+                    "text-base font-semibold py-3 border-b border-white/10 last:border-0 tracking-[0.2em] uppercase transition-colors",
                       isActive
-                        ? "text-gold-500"
-                        : "text-surface-200 hover:text-white",
+                      ? "text-gold-400"
+                      : "text-lux-pearl/80 hover:text-white",
                     )}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -219,21 +238,21 @@ export function Header() {
               <div className="pt-4 flex flex-col gap-3">
                 <Button
                   asChild
-                  className="w-full bg-gold-500 text-surface-900 hover:bg-gold-400"
+                  className="w-full bg-lux-gold text-lux-black hover:bg-lux-gold-light"
                 >
                   <Link href="/sell">Consign</Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full border-surface-300 text-white hover:bg-surface-800"
+                  className="w-full border-white/20 text-white hover:bg-white/5"
                 >
                   <Link href="/account">My Account</Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full border-surface-300 text-white hover:bg-surface-800"
+                  className="w-full border-white/20 text-white hover:bg-white/5"
                 >
                   <Link href="/wishlist">Wishlist</Link>
                 </Button>
