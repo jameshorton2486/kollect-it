@@ -117,7 +117,7 @@ async function testPublicPages(baseUrl: string) {
   const pages = [
     { path: '/', description: 'Homepage' },
     { path: '/about', description: 'About page' },
-    { path: '/shop', description: 'Shop page' },
+    { path: '/browse', description: 'Shop page' },
     { path: '/categories', description: 'Categories page' },
     { path: '/how-it-works', description: 'How it works' },
     { path: '/contact', description: 'Contact page' },

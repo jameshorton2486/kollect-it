@@ -6,6 +6,39 @@ import Link from "next/link";
 export function Footer() {
   const year = new Date().getFullYear();
 
+  const columnSections = [
+    {
+      title: "Shop",
+      links: [
+        { label: "Home", href: "/" },
+        { label: "Shop All", href: "/browse" },
+        { label: "Browse Catalog", href: "/browse" },
+        { label: "Categories", href: "/categories" },
+        { label: "Product Compare", href: "/compare" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "About", href: "/about" },
+        { label: "How It Works", href: "/how-it-works" },
+        { label: "FAQ", href: "/faq" },
+        { label: "Consign With Us", href: "/sell" },
+        { label: "Contact", href: "/contact" },
+      ],
+    },
+    {
+      title: "Support & Policies",
+      links: [
+        { label: "Shipping & Returns", href: "/shipping-returns" },
+        { label: "Authentication Guarantee", href: "/authentication" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
+        { label: "Cookie Policy", href: "/cookies" },
+      ],
+    },
+  ];
+
   return (
     <footer className="mt-24 border-t border-lux-silver bg-lux-pearl">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -25,6 +58,26 @@ export function Footer() {
                 militaria, and unusual finds. Every piece is hand-selected and
                 described as clearly as possible.
               </p>
+              <div className="mt-4 space-y-1 text-sm text-lux-gray-dark">
+                <p className="font-medium text-lux-black">Kollect-It</p>
+                <p>San Antonio, Texas</p>
+                <p>
+                  <a
+                    href="tel:+14693866065"
+                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
+                  >
+                    469-386-6065
+                  </a>
+                </p>
+                <p>
+                  <a
+                    href="mailto:james@kollect-it.com"
+                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
+                  >
+                    james@kollect-it.com
+                  </a>
+                </p>
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -64,149 +117,25 @@ export function Footer() {
 
           {/* Link columns */}
           <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3">
-            <div className="space-y-3">
-              <h3 className="text-xs font-semibold tracking-wide text-lux-gold uppercase">
-                Shop
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/browse"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Browse All
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/categories"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Categories
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/category/rare-books"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Rare Books
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/category/fine-art"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Fine Art
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/category/militaria"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Militaria
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-xs font-semibold tracking-wide text-lux-gold uppercase">
-                Company
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/about"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/how-it-works"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    How It Works
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/authentication"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Authentication
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/sell"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Sell With Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/contact"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Contact
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-xs font-semibold tracking-wide text-lux-gold uppercase">
-                Support
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/faq"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/shipping-returns"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Shipping &amp; Returns
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/payment"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Payment Options
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy"
-                    className="text-lux-gray-dark hover:text-lux-black transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {columnSections.map((section) => (
+              <div key={section.title} className="space-y-3">
+                <h3 className="text-xs font-semibold tracking-wide text-lux-gold uppercase">
+                  {section.title}
+                </h3>
+                <ul className="space-y-2">
+                  {section.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="text-lux-gray-dark hover:text-lux-black transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 

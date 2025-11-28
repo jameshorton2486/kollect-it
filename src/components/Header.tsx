@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import { Heart, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,12 +27,23 @@ export function Header() {
   }, []);
 
   const navigation = [
-    { name: "Browse", href: "/browse" },
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/browse" },
     { name: "Categories", href: "/categories" },
     { name: "How It Works", href: "/how-it-works" },
+    { name: "FAQ", href: "/faq" },
     { name: "About", href: "/about" },
+    { name: "Consign", href: "/sell" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const isLinkActive = (href: string) => {
+    if (!pathname) return false;
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
 
   return (
     <header
@@ -58,13 +69,13 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
             {navigation.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = isLinkActive(item.href);
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b",
+                    "relative text-sm font-light tracking-[0.08em] uppercase transition-colors pb-1 border-b focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-surface-900",
                     isActive
                       ? "text-lux-ink-soft border-lux-silver"
                       : "text-lux-ink-soft/80 hover:text-lux-ink-soft border-transparent hover:border-lux-silver",
@@ -88,6 +99,19 @@ export function Header() {
               <Link href="/search">
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
+              </Link>
+            </Button>
+
+            {/* Wishlist */}
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="text-lux-ink-soft/80 hover:text-lux-ink-soft hover:bg-surface-800"
+            >
+              <Link href="/wishlist">
+                <Heart className="h-5 w-5" />
+                <span className="sr-only">Wishlist</span>
               </Link>
             </Button>
 
@@ -124,7 +148,7 @@ export function Header() {
                 variant="outline"
                 className="font-normal tracking-wide rounded-full px-6 border-lux-gold text-lux-ink-soft hover:bg-lux-gold hover:text-surface-900"
               >
-                <Link href="/sell">Consign With Us</Link>
+                <Link href="/sell">Consign</Link>
               </Button>
             </div>
           </div>
@@ -135,6 +159,14 @@ export function Header() {
             <Button asChild variant="ghost" size="icon" className="text-white">
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
+                <span className="sr-only">View cart</span>
+              </Link>
+            </Button>
+
+            <Button asChild variant="ghost" size="icon" className="text-white">
+              <Link href="/wishlist">
+                <Heart className="h-5 w-5" />
+                <span className="sr-only">View wishlist</span>
               </Link>
             </Button>
 
@@ -143,8 +175,10 @@ export function Header() {
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white"
+              className="text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {mobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -157,10 +191,13 @@ export function Header() {
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 right-0 top-full bg-surface-900 border-b border-surface-800 shadow-lg animate-slide-down">
+          <div
+            id="mobile-menu"
+            className="md:hidden absolute left-0 right-0 top-full bg-surface-900 border-b border-surface-800 shadow-lg animate-slide-down"
+          >
             <div className="flex flex-col p-4 space-y-2">
               {navigation.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = isLinkActive(item.href);
                 return (
                   <Link
                     key={item.name}
@@ -179,12 +216,12 @@ export function Header() {
               })}
 
               {/* Mobile CTAs */}
-              <div className="pt-4 flex gap-4">
+              <div className="pt-4 flex flex-col gap-3">
                 <Button
                   asChild
                   className="w-full bg-gold-500 text-surface-900 hover:bg-gold-400"
                 >
-                  <Link href="/sell">Consign With Us</Link>
+                  <Link href="/sell">Consign</Link>
                 </Button>
                 <Button
                   asChild
@@ -192,6 +229,13 @@ export function Header() {
                   className="w-full border-surface-300 text-white hover:bg-surface-800"
                 >
                   <Link href="/account">My Account</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-surface-300 text-white hover:bg-surface-800"
+                >
+                  <Link href="/wishlist">Wishlist</Link>
                 </Button>
               </div>
             </div>

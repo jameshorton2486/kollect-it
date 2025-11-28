@@ -76,6 +76,16 @@ export async function POST(request: Request) {
       },
     });
 
+    let emailConfigured = false;
+    let emailModule: Awaited<typeof import("@/lib/email")> | null = null;
+
+    try {
+      emailModule = await import("@/lib/email");
+      emailConfigured = emailModule.isEmailConfigured();
+    } catch (emailLibError) {
+      console.error("Error loading email module:", emailLibError);
+    }
+
     if (existingOrder) {
       // Return existing order
       return NextResponse.json({
@@ -90,6 +100,7 @@ export async function POST(request: Request) {
           })),
           shippingAddress,
         },
+        emailConfigured,
       });
     }
 
@@ -127,35 +138,30 @@ export async function POST(request: Request) {
       },
     });
 
-    // Send confirmation emails
-    try {
-      const { sendOrderConfirmationEmail, sendAdminNewOrderEmail } =
-        await import("@/lib/email");
+    // Send confirmation emails if configured
+    if (emailConfigured && emailModule) {
+      try {
+        const emailData = {
+          orderNumber: order.orderNumber,
+          customerName: metadata.shippingName,
+          customerEmail: metadata.shippingEmail,
+          total: order.total,
+          subtotal: order.subtotal,
+          tax: order.tax,
+          shipping: order.shipping,
+          items: order.items.map((item) => ({
+            title: item.title,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+          shippingAddress,
+        };
 
-      const emailData = {
-        orderNumber: order.orderNumber,
-        customerName: metadata.shippingName,
-        customerEmail: metadata.shippingEmail,
-        total: order.total,
-        subtotal: order.subtotal,
-        tax: order.tax,
-        shipping: order.shipping,
-        items: order.items.map((item) => ({
-          title: item.title,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        shippingAddress,
-      };
-
-      // Send customer confirmation (don't wait for it)
-      sendOrderConfirmationEmail(emailData);
-
-      // Send admin notification (don't wait for it)
-      sendAdminNewOrderEmail(emailData);
-    } catch (emailError) {
-      // Log error but don't fail the order creation
-      console.error("Error sending order emails:", emailError);
+        emailModule.sendOrderConfirmationEmail(emailData);
+        emailModule.sendAdminNewOrderEmail(emailData);
+      } catch (emailError) {
+        console.error("Error sending order emails:", emailError);
+      }
     }
 
     return NextResponse.json({
@@ -170,6 +176,7 @@ export async function POST(request: Request) {
         })),
         shippingAddress,
       },
+      emailConfigured,
     });
   } catch (error) {
     console.error("Error creating order:", error);

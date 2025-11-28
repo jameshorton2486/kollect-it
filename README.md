@@ -432,7 +432,7 @@ Usage example:
 <section className="section-spacing bg-cream">
   <h2 className="text-4xl text-navy font-semibold mb-6">Section Title</h2>
   <p className="text-gray-700">Body copy inherits the global font and sizes.</p>
-  <a className="btn-cta" href="/shop">
+  <a className="btn-cta" href="/browse">
     Browse
   </a>
 </section>

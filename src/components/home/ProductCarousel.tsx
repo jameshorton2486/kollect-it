@@ -54,12 +54,14 @@ export default function ProductCarousel({
               className="p-2 border rounded-lg hover:bg-muted"
             >
               <ChevronLeft className="h-5 w-5" />
+              <span className="sr-only">Scroll left</span>
             </button>
             <button
               onClick={() => scroll("right")}
               className="p-2 border rounded-lg hover:bg-muted"
             >
               <ChevronRight className="h-5 w-5" />
+              <span className="sr-only">Scroll right</span>
             </button>
             {viewAllHref && (
               <Link
@@ -80,7 +82,7 @@ export default function ProductCarousel({
           {products.map((product) => (
             <Link
               key={product.id}
-              href={`/products/${product.id}`}
+              href={`/product/${product.slug}`}
               className="flex-shrink-0 w-64 group"
             >
               <div className="relative aspect-square bg-muted rounded-lg overflow-hidden mb-3">

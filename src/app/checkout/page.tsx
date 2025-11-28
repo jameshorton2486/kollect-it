@@ -38,6 +38,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { data: session } = useSession();
   const { items, itemCount, subtotal, tax, total, clearCart } = useCart();
+  const stripeEnabled = Boolean(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
   const [step, setStep] = useState<"shipping" | "payment">("shipping");
   const [clientSecret, setClientSecret] = useState<string>("");
@@ -133,15 +134,33 @@ export default function CheckoutPage() {
       return;
     }
 
+    if (!stripeEnabled) {
+      setError(
+        "Stripe is not configured in this environment. Add your Stripe test keys to continue.",
+      );
+      return;
+    }
+
     setLoading(true);
 
     try {
       // Create Payment Intent
+      const cartPayload = items.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+      }));
+
+      if (cartPayload.length === 0) {
+        setError("Your cart is empty.");
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch("/api/checkout/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items,
+          items: cartPayload,
           shippingInfo,
           billingInfo: billingInfo.sameAsShipping ? shippingInfo : billingInfo,
         }),
@@ -173,7 +192,7 @@ export default function CheckoutPage() {
     return null; // Will redirect
   }
 
-  const stripePromise = getStripe();
+  const stripePromise = stripeEnabled ? getStripe() : null;
 
   return (
     <div className="checkout-page ki-section">
@@ -625,17 +644,29 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
-                  <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm
-                      clientSecret={clientSecret}
-                      shippingInfo={shippingInfo}
-                      billingInfo={
-                        billingInfo.sameAsShipping ? shippingInfo : billingInfo
-                      }
-                      totalAmount={validatedTotal ?? total}
-                      onSuccess={() => clearCart()}
-                    />
-                  </Elements>
+                  {!stripeEnabled ? (
+                    <div className="checkout-error mt-6">
+                      Stripe is not configured in this environment. Add your
+                      Stripe test keys to <code>.env.local</code> to run the
+                      checkout flow.
+                    </div>
+                  ) : (
+                    stripePromise && (
+                      <Elements stripe={stripePromise} options={{ clientSecret }}>
+                        <CheckoutForm
+                          clientSecret={clientSecret}
+                          shippingInfo={shippingInfo}
+                          billingInfo={
+                            billingInfo.sameAsShipping
+                              ? shippingInfo
+                              : billingInfo
+                          }
+                          totalAmount={validatedTotal ?? total}
+                          onSuccess={() => clearCart()}
+                        />
+                      </Elements>
+                    )
+                  )}
                 </div>
               )}
             </div>

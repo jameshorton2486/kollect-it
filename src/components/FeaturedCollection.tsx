@@ -7,7 +7,7 @@ const FEATURED_ITEMS = [
     subtitle: "Paintings, prints, and works on paper",
     description:
       "Gallery-caliber pieces with documented provenance, spanning American, European, and modern schools.",
-    href: "/categories/fine-art",
+    href: "/category/fine-art",
     imageSrc: "/images/categories/art.svg",
     imageAlt: "Fine art icon",
   },
@@ -16,7 +16,7 @@ const FEATURED_ITEMS = [
     subtitle: "Ephemera, posters, and rare objects",
     description:
       "From early advertising to counterculture posters—objects that capture a moment in time.",
-    href: "/categories/collectibles",
+    href: "/category/collectibles",
     imageSrc: "/images/products/placeholder.svg",
     imageAlt: "Collectible object icon",
   },

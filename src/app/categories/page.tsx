@@ -66,7 +66,7 @@ export default function CategoriesPage() {
             {categories.map((category) => (
               <Link
                 key={category.slug}
-                href={`/categories/${category.slug}`}
+                href={`/category/${category.slug}`}
                 className="group block h-full"
               >
                 <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-surface-200 bg-surface-0 shadow-sm transition-shadow duration-300 hover:shadow-lg">

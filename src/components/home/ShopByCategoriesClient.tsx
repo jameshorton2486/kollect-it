@@ -56,7 +56,7 @@ export default function ShopByCategoriesClient() {
           {categories.map((category) => (
             <Link
               key={category.slug}
-              href={`/categories/${category.slug}`}
+              href={`/category/${category.slug}`}
               className="group flex flex-col gap-4"
             >
               <div className="overflow-hidden rounded-2xl bg-surface-100">

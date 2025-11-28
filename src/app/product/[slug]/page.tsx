@@ -226,7 +226,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         {/* Client-only sticky cart bar via wrapper */}
         <ClientProductLayout
-          product={{ title: product.title, price: product.price }}
+          product={{
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            slug: product.slug,
+            image: product.images[0]?.url || "/placeholder.jpg",
+            categoryName: product.category.name,
+          }}
         >
           {/* no additional client-only content here; StickyCartBar is injected within the wrapper */}
         </ClientProductLayout>

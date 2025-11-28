@@ -123,7 +123,14 @@ export default function RootLayout({
             <WishlistProvider>
               <Header />
               <ClientBody>
-                <div id="main">{children}</div>
+                <main
+                  id="main"
+                  role="main"
+                  tabIndex={-1}
+                  className="outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-pearl"
+                >
+                  {children}
+                </main>
               </ClientBody>
               <Footer />
             </WishlistProvider>

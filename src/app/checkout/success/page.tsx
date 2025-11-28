@@ -29,6 +29,7 @@ function SuccessContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
+  const [emailConfigured, setEmailConfigured] = useState(true);
 
   useEffect(() => {
     if (!paymentIntentId) {
@@ -52,6 +53,9 @@ function SuccessContent() {
         }
 
         setOrderDetails(data.order);
+        setEmailConfigured(
+          data.emailConfigured === undefined ? true : Boolean(data.emailConfigured),
+        );
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -130,9 +134,24 @@ function SuccessContent() {
           {/* Success Message */}
           <h1 className="success-title">Order Confirmed!</h1>
           <p className="success-subtitle">
-            Thank you for your purchase. We've sent a confirmation email to{" "}
-            <strong>{orderDetails.email}</strong>
+            {emailConfigured ? (
+              <>
+                Thank you for your purchase. We&apos;ve sent a confirmation email
+                to <strong>{orderDetails.email}</strong>.
+              </>
+            ) : (
+              <>
+                Thank you for your purchase. Email confirmations aren&apos;t
+                enabled in this environment, so please save this page or copy
+                your order number for your records.
+              </>
+            )}
           </p>
+          {!emailConfigured && (
+            <>
+              {/* TODO: Enable email confirmations once SMTP credentials are configured */}
+            </>
+          )}
 
           {/* Order Number */}
           <div className="success-order-number">
@@ -183,19 +202,35 @@ function SuccessContent() {
           <div className="success-next-steps">
             <h3 className="success-next-title">What's Next?</h3>
             <ul className="success-steps-list">
-              <li>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                You'll receive an email confirmation shortly
-              </li>
+              {emailConfigured ? (
+                <li>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  You&apos;ll receive an email confirmation shortly
+                </li>
+              ) : (
+                <li>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Save your order number; email updates will be enabled soon
+                </li>
+              )}
               <li>
                 <svg
                   width="20"
