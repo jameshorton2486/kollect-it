@@ -189,234 +189,446 @@ export default function CheckoutPage() {
   };
 
   if (itemCount === 0) {
-    return null; // Will redirect
+    return null; // redirect kicks in
   }
 
   const stripePromise = stripeEnabled ? getStripe() : null;
+  const labelClasses =
+    "text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-400";
+  const inputClasses =
+    "w-full rounded-xl border border-border-200 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300 transition";
 
   return (
-    <div className="checkout-page ki-section">
-      {/* Progress Indicator */}
-      <div className="checkout-progress">
-        <div
-          className={`checkout-steps ${step === "shipping" ? "step-1" : "step-2"}`}
-        >
-          <div className="checkout-step-fill" />
-          <div
-            className={`checkout-step ${step === "shipping" ? "active" : "completed"}`}
-          >
-            <div className="checkout-step-circle">1</div>
-            <div className="checkout-step-label">Shipping</div>
-          </div>
-          <div
-            className={`checkout-step ${step === "payment" ? "active" : ""}`}
-          >
-            <div className="checkout-step-circle">2</div>
-            <div className="checkout-step-label">Payment</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="checkout-content">
-        <div className="container mx-auto">
-          <div className="checkout-layout">
-            {/* Left Column - Forms */}
-            <div className="checkout-forms">
-              {error && (
-                <div className="checkout-error">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
+    <div className="min-h-screen bg-surface-50 py-12 sm:py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <header className="space-y-4 border-b border-border-200 pb-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            Secure checkout
+          </p>
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+                Finish your purchase
+              </h1>
+              <p className="mt-3 max-w-2xl text-base text-ink-600">
+                Enter your shipping details, confirm billing, and finalize
+                payment via Stripe. Every order is insured and fully tracked.
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              {["Shipping", "Payment"].map((label, index) => {
+                const isActive =
+                  (index === 0 && step === "shipping") ||
+                  (index === 1 && step === "payment");
+                const isCompleted = index === 0 && step === "payment";
+                return (
+                  <div
+                    key={label}
+                    className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em]"
                   >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                  {error}
+                    <span
+                      className={`flex h-9 w-9 items-center justify-center rounded-full border text-sm ${
+                        isActive
+                          ? "border-ink-900 bg-ink-900 text-white"
+                          : isCompleted
+                            ? "border-gold-500 bg-gold-500/20 text-ink-900"
+                            : "border-border-200 bg-white text-ink-500"
+                      }`}
+                    >
+                      {index + 1}
+                    </span>
+                    <span
+                      className={
+                        isActive || isCompleted ? "text-ink-900" : "text-ink-400"
+                      }
+                    >
+                      {label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </header>
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
+          <section className="space-y-8">
+            {error && (
+              <div className="rounded-2xl border border-semantic-error-500/40 bg-semantic-error-500/5 px-4 py-3 text-sm text-semantic-error-500">
+                {error}
+              </div>
+            )}
+
+            {step === "shipping" && (
+              <div className="rounded-3xl border border-border-200 bg-white/90 p-6 shadow-sm">
+                <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
+                  Shipping information
+                </h2>
+                <p className="mt-1 text-sm text-ink-500">
+                  We ship insured, signature-required parcels worldwide.
+                </p>
+
+                <div className="mt-8 space-y-6">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-fullName">
+                        Full name *
+                      </label>
+                      <input
+                        id="shipping-fullName"
+                        type="text"
+                        value={shippingInfo.fullName}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            fullName: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="Ava Spencer"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-email">
+                        Email *
+                      </label>
+                      <input
+                        id="shipping-email"
+                        type="email"
+                        value={shippingInfo.email}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            email: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="ava@kollect-it.com"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-phone">
+                        Phone *
+                      </label>
+                      <input
+                        id="shipping-phone"
+                        type="tel"
+                        value={shippingInfo.phone}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            phone: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="(555) 123-4567"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-address">
+                        Street *
+                      </label>
+                      <input
+                        id="shipping-address"
+                        type="text"
+                        value={shippingInfo.address}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            address: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="123 Mercer Street"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-city">
+                        City *
+                      </label>
+                      <input
+                        id="shipping-city"
+                        type="text"
+                        value={shippingInfo.city}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            city: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="New York"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-state">
+                        State / region *
+                      </label>
+                      <input
+                        id="shipping-state"
+                        type="text"
+                        value={shippingInfo.state}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            state: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="NY"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-zip">
+                        Postal code *
+                      </label>
+                      <input
+                        id="shipping-zip"
+                        type="text"
+                        value={shippingInfo.zipCode}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            zipCode: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                        placeholder="10012"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClasses} htmlFor="shipping-country">
+                        Country *
+                      </label>
+                      <select
+                        id="shipping-country"
+                        value={shippingInfo.country}
+                        onChange={(e) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            country: e.target.value,
+                          })
+                        }
+                        className={inputClasses}
+                      >
+                        <option>United States</option>
+                        <option>Canada</option>
+                        <option>United Kingdom</option>
+                        <option>Australia</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {session?.user && (
+                    <label className="flex items-center gap-3 text-sm text-ink-500">
+                      <input type="checkbox" className="rounded border-border-200 text-ink-900 focus:ring-gold-300" />
+                      Save this address to my account
+                    </label>
+                  )}
+
+                  <button
+                    onClick={handleContinueToPayment}
+                    disabled={loading}
+                    className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-ink-700 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {loading ? "Processing..." : "Continue to payment"}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </button>
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Shipping Form */}
-              {step === "shipping" && (
-                <div className="checkout-section">
-                  <h2 className="checkout-section-title">
-                    Shipping Information
-                  </h2>
+            {step === "payment" && clientSecret && (
+              <div className="space-y-6 rounded-3xl border border-border-200 bg-white/90 p-6 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
+                      Payment
+                    </h2>
+                    <p className="text-sm text-ink-500">
+                      Review shipping and billing before submitting payment.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setStep("shipping")}
+                    className="text-sm font-semibold text-ink-500 underline-offset-4 hover:text-ink-900 hover:underline"
+                  >
+                    Edit shipping
+                  </button>
+                </div>
 
-                  <div className="checkout-form">
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label
-                          className="form-label"
-                          htmlFor="shipping-fullName"
-                        >
-                          Full Name *
+                <div className="rounded-2xl border border-border-200 bg-surface-50 px-5 py-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+                    Shipping to
+                  </p>
+                  <p className="mt-2 font-semibold text-ink-900">
+                    {shippingInfo.fullName}
+                  </p>
+                  <p className="text-sm text-ink-600">{shippingInfo.address}</p>
+                  <p className="text-sm text-ink-600">
+                    {shippingInfo.city}, {shippingInfo.state} {shippingInfo.zipCode}
+                  </p>
+                </div>
+
+                <label className="flex items-center gap-3 rounded-2xl border border-border-200 bg-surface-50 px-5 py-4 text-sm text-ink-600">
+                  <input
+                    type="checkbox"
+                    checked={billingInfo.sameAsShipping}
+                    onChange={(e) =>
+                      setBillingInfo({
+                        ...billingInfo,
+                        sameAsShipping: e.target.checked,
+                      })
+                    }
+                    className="rounded border-border-200 text-ink-900 focus:ring-gold-300"
+                  />
+                  Billing address matches shipping
+                </label>
+
+                {!billingInfo.sameAsShipping && (
+                  <div className="space-y-4">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className={labelClasses} htmlFor="billing-fullName">
+                          Full name *
                         </label>
                         <input
-                          id="shipping-fullName"
+                          id="billing-fullName"
                           type="text"
-                          required
-                          value={shippingInfo.fullName}
+                          value={billingInfo.fullName}
                           onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
+                            setBillingInfo({
+                              ...billingInfo,
                               fullName: e.target.value,
                             })
                           }
-                          className="form-input"
-                          placeholder="John Doe"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="shipping-email">
-                          Email Address *
-                        </label>
-                        <input
-                          id="shipping-email"
-                          type="email"
+                          className={inputClasses}
+                          placeholder="Ava Spencer"
                           required
-                          value={shippingInfo.email}
-                          onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
-                              email: e.target.value,
-                            })
-                          }
-                          className="form-input"
-                          placeholder="john@example.com"
                         />
                       </div>
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="shipping-phone">
-                          Phone Number *
+                      <div>
+                        <label className={labelClasses} htmlFor="billing-address">
+                          Street *
                         </label>
                         <input
-                          id="shipping-phone"
-                          type="tel"
-                          required
-                          value={shippingInfo.phone}
-                          onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
-                              phone: e.target.value,
-                            })
-                          }
-                          className="form-input"
-                          placeholder="(555) 123-4567"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label
-                          className="form-label"
-                          htmlFor="shipping-address"
-                        >
-                          Street Address *
-                        </label>
-                        <input
-                          id="shipping-address"
+                          id="billing-address"
                           type="text"
-                          required
-                          value={shippingInfo.address}
+                          value={billingInfo.address}
                           onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
+                            setBillingInfo({
+                              ...billingInfo,
                               address: e.target.value,
                             })
                           }
-                          className="form-input"
-                          placeholder="123 Main Street"
+                          className={inputClasses}
+                          placeholder="123 Mercer Street"
+                          required
                         />
                       </div>
                     </div>
 
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="shipping-city">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className={labelClasses} htmlFor="billing-city">
                           City *
                         </label>
                         <input
-                          id="shipping-city"
+                          id="billing-city"
                           type="text"
-                          required
-                          value={shippingInfo.city}
+                          value={billingInfo.city}
                           onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
+                            setBillingInfo({
+                              ...billingInfo,
                               city: e.target.value,
                             })
                           }
-                          className="form-input"
+                          className={inputClasses}
                           placeholder="New York"
+                          required
                         />
                       </div>
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="shipping-state">
+                      <div>
+                        <label className={labelClasses} htmlFor="billing-state">
                           State *
                         </label>
                         <input
-                          id="shipping-state"
+                          id="billing-state"
                           type="text"
-                          required
-                          value={shippingInfo.state}
+                          value={billingInfo.state}
                           onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
+                            setBillingInfo({
+                              ...billingInfo,
                               state: e.target.value,
                             })
                           }
-                          className="form-input"
+                          className={inputClasses}
                           placeholder="NY"
+                          required
                         />
                       </div>
                     </div>
 
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="shipping-zip">
-                          ZIP Code *
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className={labelClasses} htmlFor="billing-zip">
+                          Postal code *
                         </label>
                         <input
-                          id="shipping-zip"
+                          id="billing-zip"
                           type="text"
-                          required
-                          value={shippingInfo.zipCode}
+                          value={billingInfo.zipCode}
                           onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
+                            setBillingInfo({
+                              ...billingInfo,
                               zipCode: e.target.value,
                             })
                           }
-                          className="form-input"
-                          placeholder="10001"
+                          className={inputClasses}
+                          placeholder="10012"
+                          required
                         />
                       </div>
-                      <div className="form-group">
-                        <label
-                          className="form-label"
-                          htmlFor="shipping-country"
-                        >
+                      <div>
+                        <label className={labelClasses} htmlFor="billing-country">
                           Country *
                         </label>
                         <select
-                          id="shipping-country"
-                          value={shippingInfo.country}
+                          id="billing-country"
+                          value={billingInfo.country}
                           onChange={(e) =>
-                            setShippingInfo({
-                              ...shippingInfo,
+                            setBillingInfo({
+                              ...billingInfo,
                               country: e.target.value,
                             })
                           }
-                          className="form-input"
+                          className={inputClasses}
                         >
                           <option>United States</option>
                           <option>Canada</option>
@@ -426,349 +638,136 @@ export default function CheckoutPage() {
                         </select>
                       </div>
                     </div>
-
-                    {session?.user && (
-                      <div className="form-row">
-                        <label className="form-checkbox">
-                          <input type="checkbox" />
-                          <span>Save this address to my account</span>
-                        </label>
-                      </div>
-                    )}
-
-                    <button
-                      onClick={handleContinueToPayment}
-                      disabled={loading}
-                      className="ki-btn-primary"
-                    >
-                      {loading ? "Processing..." : "Continue to Payment"}
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <polyline points="9 18 15 12 9 6" />
-                      </svg>
-                    </button>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Payment Form */}
-              {step === "payment" && clientSecret && (
-                <div className="checkout-section">
-                  <h2 className="checkout-section-title">
-                    Payment Information
-                  </h2>
-
-                  {/* Shipping Summary with Edit */}
-                  <div className="shipping-review">
-                    <div className="shipping-review-header">
-                      <h3>Shipping To</h3>
-                      <button
-                        onClick={() => setStep("shipping")}
-                        className="btn-link"
-                      >
-                        Edit
-                      </button>
-                    </div>
-                    <div className="shipping-review-body">
-                      <p className="font-medium">{shippingInfo.fullName}</p>
-                      <p>{shippingInfo.address}</p>
-                      <p>
-                        {shippingInfo.city}, {shippingInfo.state}{" "}
-                        {shippingInfo.zipCode}
-                      </p>
-                    </div>
+                {!stripeEnabled ? (
+                  <div className="rounded-2xl border border-border-200 bg-surface-50 px-4 py-3 text-sm text-ink-600">
+                    Stripe is not configured in this environment. Add your
+                    publishable and secret keys to <code>.env.local</code> to run
+                    test-mode payments (4242 4242 4242 4242).
                   </div>
-
-                  {/* Billing Address Toggle */}
-                  <div className="billing-toggle">
-                    <label className="form-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={billingInfo.sameAsShipping}
-                        onChange={(e) =>
-                          setBillingInfo({
-                            ...billingInfo,
-                            sameAsShipping: e.target.checked,
-                          })
+                ) : (
+                  stripePromise && (
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                      <CheckoutForm
+                        clientSecret={clientSecret}
+                        shippingInfo={shippingInfo}
+                        billingInfo={
+                          billingInfo.sameAsShipping ? shippingInfo : billingInfo
                         }
+                        totalAmount={validatedTotal ?? total}
+                        onSuccess={() => clearCart()}
                       />
-                      <span>Billing address is same as shipping</span>
-                    </label>
+                    </Elements>
+                  )
+                )}
+              </div>
+            )}
+          </section>
+
+          <aside className="rounded-3xl border border-border-200 bg-white/90 p-6 shadow-lg">
+            <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
+              Order summary
+            </h2>
+            <p className="mt-1 text-sm text-ink-500">
+              {itemCount} {itemCount === 1 ? "item" : "items"} ready to ship
+            </p>
+
+            <div className="mt-6 space-y-4">
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center gap-4 rounded-2xl border border-border-200/70 bg-surface-50 p-3"
+                >
+                  <Image
+                    src={item.image}
+                    alt={`${item.title} thumbnail`}
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-2xl object-cover"
+                    loading="lazy"
+                    quality={85}
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-ink-900 line-clamp-2">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-ink-500">
+                      Qty {item.quantity} · {item.categoryName}
+                    </p>
                   </div>
-
-                  {!billingInfo.sameAsShipping && (
-                    <div className="checkout-form mt-3">
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label
-                            className="form-label"
-                            htmlFor="billing-fullName"
-                          >
-                            Full Name *
-                          </label>
-                          <input
-                            id="billing-fullName"
-                            type="text"
-                            required
-                            value={billingInfo.fullName}
-                            onChange={(e) =>
-                              setBillingInfo({
-                                ...billingInfo,
-                                fullName: e.target.value,
-                              })
-                            }
-                            className="form-input"
-                            placeholder="John Doe"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label
-                            className="form-label"
-                            htmlFor="billing-address"
-                          >
-                            Street Address *
-                          </label>
-                          <input
-                            id="billing-address"
-                            type="text"
-                            required
-                            value={billingInfo.address}
-                            onChange={(e) =>
-                              setBillingInfo({
-                                ...billingInfo,
-                                address: e.target.value,
-                              })
-                            }
-                            className="form-input"
-                            placeholder="123 Main Street"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label className="form-label" htmlFor="billing-city">
-                            City *
-                          </label>
-                          <input
-                            id="billing-city"
-                            type="text"
-                            required
-                            value={billingInfo.city}
-                            onChange={(e) =>
-                              setBillingInfo({
-                                ...billingInfo,
-                                city: e.target.value,
-                              })
-                            }
-                            className="form-input"
-                            placeholder="New York"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label className="form-label" htmlFor="billing-state">
-                            State *
-                          </label>
-                          <input
-                            id="billing-state"
-                            type="text"
-                            required
-                            value={billingInfo.state}
-                            onChange={(e) =>
-                              setBillingInfo({
-                                ...billingInfo,
-                                state: e.target.value,
-                              })
-                            }
-                            className="form-input"
-                            placeholder="NY"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label className="form-label" htmlFor="billing-zip">
-                            ZIP Code *
-                          </label>
-                          <input
-                            id="billing-zip"
-                            type="text"
-                            required
-                            value={billingInfo.zipCode}
-                            onChange={(e) =>
-                              setBillingInfo({
-                                ...billingInfo,
-                                zipCode: e.target.value,
-                              })
-                            }
-                            className="form-input"
-                            placeholder="10001"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label
-                            className="form-label"
-                            htmlFor="billing-country"
-                          >
-                            Country *
-                          </label>
-                          <select
-                            id="billing-country"
-                            value={billingInfo.country}
-                            onChange={(e) =>
-                              setBillingInfo({
-                                ...billingInfo,
-                                country: e.target.value,
-                              })
-                            }
-                            className="form-input"
-                          >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>United Kingdom</option>
-                            <option>Australia</option>
-                            <option>Other</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {!stripeEnabled ? (
-                    <div className="checkout-error mt-6">
-                      Stripe is not configured in this environment. Add your
-                      Stripe test keys to <code>.env.local</code> to run the
-                      checkout flow.
-                    </div>
-                  ) : (
-                    stripePromise && (
-                      <Elements stripe={stripePromise} options={{ clientSecret }}>
-                        <CheckoutForm
-                          clientSecret={clientSecret}
-                          shippingInfo={shippingInfo}
-                          billingInfo={
-                            billingInfo.sameAsShipping
-                              ? shippingInfo
-                              : billingInfo
-                          }
-                          totalAmount={validatedTotal ?? total}
-                          onSuccess={() => clearCart()}
-                        />
-                      </Elements>
-                    )
-                  )}
+                  <p className="text-sm font-semibold text-ink-900">
+                    {formatUSD(item.price * item.quantity)}
+                  </p>
                 </div>
-              )}
+              ))}
             </div>
 
-            {/* Right Column - Order Summary */}
-            <div className="checkout-summary">
-              <h2 className="checkout-summary-title">Order Summary</h2>
-
-              <div className="checkout-summary-items">
-                {items.map((item) => (
-                  <div key={item.id} className="checkout-summary-item">
-                    <Image
-                      src={item.image}
-                      alt={`${item.title} in order summary`}
-                      width={64}
-                      height={64}
-                      className="rounded object-cover"
-                      loading="lazy"
-                      quality={85}
-                      placeholder="blur"
-                      blurDataURL={BLUR_DATA_URL}
-                    />
-                    <div className="checkout-summary-item-info">
-                      <h4>{item.title}</h4>
-                      <p>Qty: {item.quantity}</p>
-                    </div>
-                    <span className="checkout-summary-item-price">
-                      {formatUSD(item.price * item.quantity)}
-                    </span>
-                  </div>
-                ))}
+            <div className="mt-6 space-y-3 text-sm">
+              <div className="flex items-center justify-between text-ink-600">
+                <span>Subtotal</span>
+                <span className="font-semibold text-ink-900">
+                  {formatUSD(subtotal)}
+                </span>
               </div>
-
-              <div className="checkout-summary-divider" />
-
-              <div className="checkout-summary-row">
-                <span>Subtotal ({itemCount} items)</span>
-                <span>{formatUSD(subtotal)}</span>
-              </div>
-
-              <div className="checkout-summary-row">
+              <div className="flex items-center justify-between text-ink-600">
                 <span>Shipping</span>
-                <span className="checkout-shipping-free">Free</span>
+                <span className="text-xs uppercase tracking-[0.28em] text-ink-500">
+                  Calculated at payment
+                </span>
               </div>
-
-              <div className="checkout-summary-row">
-                <span>Tax (8%)</span>
-                <span>{formatUSD(tax)}</span>
+              <div className="flex items-center justify-between text-ink-600">
+                <span>Tax (est.)</span>
+                <span className="font-semibold text-ink-900">
+                  {formatUSD(tax)}
+                </span>
               </div>
+            </div>
 
-              <div className="checkout-summary-divider" />
-
-              <div className="checkout-summary-total">
-                <span>Total</span>
-                <span>{formatUSD(total)}</span>
+            <div className="mt-6 border-t border-border-200 pt-4">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-semibold text-ink-900">
+                  Total
+                </span>
+                <span className="text-2xl font-semibold text-gold-500">
+                  {formatUSD(total)}
+                </span>
               </div>
+            </div>
 
-              <div className="checkout-trust-badges">
-                <div className="trust-badge">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
-                  <span>Secure Checkout</span>
+            <div className="mt-8 space-y-4 rounded-2xl border border-border-200 bg-surface-50 p-4">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-ink-900 text-sm font-semibold text-white">
+                  ✓
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-ink-900">
+                    Stripe test-mode ready
+                  </p>
+                  <p className="text-xs text-ink-500">
+                    Use 4242 4242 4242 4242 with any future expiration to confirm
+                    payment flow.
+                  </p>
                 </div>
-                <div className="trust-badge">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span>30-Day Returns</span>
-                </div>
-                <div className="trust-badge">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-                    <line x1="1" y1="10" x2="23" y2="10" />
-                  </svg>
-                  <span>Powered by Stripe</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-surface-200 text-sm font-semibold text-ink-900">
+                  ✓
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-ink-900">
+                    Fully insured shipping
+                  </p>
+                  <p className="text-xs text-ink-500">
+                    Worldwide coverage with signature confirmation.
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </div>

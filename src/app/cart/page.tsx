@@ -6,7 +6,6 @@ import Image from "next/image";
 import { BLUR_DATA_URL } from "@/lib/image";
 import { formatUSD } from "@/lib/currency";
 import { useEffect, useState } from "react";
-import { AesopSection } from "@/components/AesopSection";
 import { Button } from "@/components/ui/button";
 
 interface SuggestionProduct {
@@ -16,6 +15,70 @@ interface SuggestionProduct {
   price: number;
   images: { url: string }[];
   category: { name: string };
+}
+
+function Recommendations({
+  suggestions,
+  heading,
+}: {
+  suggestions: SuggestionProduct[];
+  heading: string;
+}) {
+  if (!suggestions.length) return null;
+
+  return (
+    <section className="bg-surface-100 py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-10 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            Curated picks
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900">
+            {heading}
+          </h2>
+        </div>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {suggestions.slice(0, 4).map((product) => (
+            <Link
+              key={product.id}
+              href={`/product/${product.slug}`}
+              className="group rounded-2xl border border-border-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-elevated"
+            >
+              <div className="relative mb-4 h-48 w-full overflow-hidden rounded-xl bg-surface-200">
+                {product.images[0] ? (
+                  <Image
+                    src={product.images[0].url}
+                    alt={product.title}
+                    width={300}
+                    height={300}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+                    loading="lazy"
+                    quality={85}
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
+                  />
+                ) : (
+                  <div className="h-full w-full bg-surface-200" />
+                )}
+                <span className="absolute inset-x-4 top-4 inline-flex items-center justify-center rounded-full bg-white/90 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-600">
+                  {product.category?.name || "Featured"}
+                </span>
+              </div>
+              <h3 className="text-lg font-semibold tracking-tight text-ink-900 line-clamp-2 group-hover:text-gold-500">
+                {product.title}
+              </h3>
+              <p className="mt-2 text-sm uppercase tracking-[0.28em] text-ink-400">
+                {product.category?.name}
+              </p>
+              <p className="mt-3 text-xl font-semibold text-gold-500">
+                {formatUSD(product.price)}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default function CartPage() {
@@ -58,165 +121,139 @@ export default function CartPage() {
 
   if (itemCount === 0) {
     return (
-      <>
-        <AesopSection variant="cream">
-          <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4">
-            <div className="max-w-md text-center">
-              <div className="mx-auto mb-6 h-24 w-24 text-ink">
-                <svg
-                  width="96"
-                  height="96"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="mx-auto"
-                >
-                  <circle cx="9" cy="21" r="1" />
-                  <circle cx="20" cy="21" r="1" />
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                </svg>
-              </div>
-              <h1 className="font-serif text-display-lg text-ink-900 mb-3">
-                Your Cart is Empty
-              </h1>
-              <p className="text-ink-700 mb-8 text-body-lg">
-                Explore our curated collection of authenticated antiques and
-                collectibles to get started.
-              </p>
+      <div className="min-h-screen bg-surface-50">
+        <section className="flex items-center justify-center px-4 py-20 sm:py-24">
+          <div className="max-w-xl text-center">
+            <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full border border-border-200 bg-white shadow-sm">
+              <svg
+                width="56"
+                height="56"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-ink-700"
+              >
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+              Cart
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink-900">
+              Your cart is currently empty
+            </h1>
+            <p className="mt-4 text-base text-ink-600">
+              Discover authenticated fine art, militaria, rare books, and more.
+              Items you add will appear here for a seamless checkout.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
                 asChild
                 size="lg"
-                className="bg-gold-600 hover:bg-gold-700"
+                className="rounded-full bg-ink-900 px-8 text-white hover:bg-ink-700"
               >
-                <Link href="/browse">
-                  Browse Collection
-                </Link>
+                <Link href="/browse">Browse the collection</Link>
+              </Button>
+              <Button
+                asChild
+                variant="ghost"
+                className="rounded-full border border-border-200 px-8 text-ink-900 hover:border-ink-700"
+              >
+                <Link href="/categories">Explore categories</Link>
               </Button>
             </div>
           </div>
-        </AesopSection>
+        </section>
 
-        {/* FEATURED ITEMS SECTION */}
-        {suggestions.length > 0 && (
-          <AesopSection variant="sand">
-            <h2 className="font-serif text-display-md text-ink-900 text-center mb-12">
-              Start with These Curated Pieces
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {suggestions.slice(0, 6).map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/product/${p.slug}`}
-                  className="group"
-                >
-                  <div className="h-64 w-full overflow-hidden rounded-lg bg-surface-2 mb-4 relative">
-                    {p.images[0] ? (
-                      <Image
-                        src={p.images[0].url}
-                        alt={p.title}
-                        width={300}
-                        height={300}
-                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                        quality={85}
-                        placeholder="blur"
-                        blurDataURL={BLUR_DATA_URL}
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-surface-2" />
-                    )}
-                    <div className="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded text-sm font-semibold">
-                      New
-                    </div>
-                  </div>
-                  <h3 className="font-serif text-lg text-ink-900 mb-2 group-hover:text-gold-600 transition-colors line-clamp-2">
-                    {p.title}
-                  </h3>
-                  <p className="text-gold-600 font-semibold text-lg">
-                    {formatUSD(p.price)}
-                  </p>
-                  <p className="text-ink-600 text-sm">{p.category?.name}</p>
-                </Link>
-              ))}
-            </div>
-          </AesopSection>
-        )}
-      </>
+        <Recommendations
+          suggestions={suggestions}
+          heading="Start with these curated pieces"
+        />
+      </div>
     );
   }
 
   return (
-    <>
-      {/* HEADER */}
-      <AesopSection variant="cream">
-        <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-surface-50">
+      <section className="border-b border-border-200 bg-white/80">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:py-16">
           <div>
-            <p className="text-[12px] tracking-[0.2em] text-gold uppercase mb-2 font-normal">
-              SHOPPING CART
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+              Shopping cart
             </p>
-            <h1 className="font-serif text-4xl md:text-5xl text-ink">
-              {itemCount} {itemCount === 1 ? "Item" : "Items"}
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+              {itemCount} {itemCount === 1 ? "item" : "items"} secured
             </h1>
+            <p className="mt-3 max-w-2xl text-base text-ink-600">
+              Your selections remain reserved for the next 24 hours. Adjust
+              quantities, review details, and check out when ready.
+            </p>
           </div>
-          <Link
-            href="/browse"
-            className="text-gold font-semibold hover:underline"
-          >
-            Continue Shopping
-          </Link>
+          <div className="flex gap-3">
+            <Button
+              asChild
+              variant="ghost"
+              className="rounded-full border border-border-200 px-6 text-sm text-ink-900 hover:border-ink-700"
+            >
+              <Link href="/browse">Continue shopping</Link>
+            </Button>
+            <Button
+              asChild
+              className="rounded-full bg-gold-500 px-6 text-sm font-semibold text-ink-900 hover:bg-gold-400"
+            >
+              <Link href="/checkout">Skip to checkout</Link>
+            </Button>
+          </div>
         </div>
-      </AesopSection>
+      </section>
 
-      <AesopSection variant="sand">
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* CART ITEMS */}
-          <div className="lg:col-span-2">
-            <div className="space-y-6">
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-6 pb-6 border-b border-surface-2"
-                >
-                  {/* Product Image */}
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+          <div className="space-y-6">
+            {items.map((item) => (
+              <article
+                key={item.id}
+                className="rounded-3xl border border-border-200 bg-white p-5 shadow-sm ring-1 ring-black/2"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row">
                   <Link
                     href={`/product/${item.slug}`}
-                    className="flex-shrink-0 h-32 w-32 rounded-lg overflow-hidden bg-surface-2"
+                    className="flex-shrink-0 overflow-hidden rounded-2xl bg-surface-200 sm:h-32 sm:w-32"
                   >
                     <Image
                       src={item.image}
                       alt={item.title}
-                      width={128}
-                      height={128}
-                      className="h-full w-full object-cover hover:scale-105 transition-transform"
+                      width={160}
+                      height={160}
+                      className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
                     />
                   </Link>
-
-                  {/* Product Details */}
-                  <div className="flex-grow">
-                    <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex flex-1 flex-col gap-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
                       <div>
-                        <p className="text-xs font-semibold text-gold uppercase tracking-wider mb-1">
+                        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.4em] text-ink-400">
                           {item.categoryName}
                         </p>
                         <Link
                           href={`/product/${item.slug}`}
-                          className="font-serif text-lg md:text-xl text-ink hover:text-gold transition-colors block mb-2"
+                          className="mt-1 block text-lg font-semibold tracking-tight text-ink-900 hover:text-gold-500"
                         >
                           {item.title}
                         </Link>
-                        <p className="text-gold font-semibold text-lg">
-                          {formatUSD(item.price)}
+                        <p className="text-sm text-ink-500">
+                          Authenticated &amp; insured shipping
                         </p>
                       </div>
-                      <p className="font-semibold text-ink text-lg whitespace-nowrap">
+                      <p className="text-right text-xl font-semibold text-ink-900 sm:text-2xl">
                         {formatUSD(item.price * item.quantity)}
                       </p>
                     </div>
 
-                    {/* Quantity Control */}
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center border border-surface-2 rounded-lg">
+                    <div className="flex flex-wrap items-center gap-4">
+                      <div className="inline-flex items-center overflow-hidden rounded-full border border-border-200 bg-surface-50 text-sm font-medium text-ink-900">
                         <button
                           onClick={() =>
                             updateQuantity(
@@ -225,197 +262,180 @@ export default function CartPage() {
                             )
                           }
                           aria-label="Decrease quantity"
-                          className="px-4 py-2 hover:bg-surface-1 transition-colors"
+                          className="px-4 py-2 text-2xl leading-none transition hover:bg-white"
                         >
                           −
                         </button>
-                        <span className="w-10 text-center font-semibold">
-                          {item.quantity}
-                        </span>
+                        <span className="px-5 text-base">{item.quantity}</span>
                         <button
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
                           }
                           aria-label="Increase quantity"
-                          className="px-4 py-2 hover:bg-surface-1 transition-colors"
+                          className="px-4 py-2 text-2xl leading-none transition hover:bg-white"
                         >
                           +
                         </button>
                       </div>
+                      <p className="text-sm text-ink-500">
+                        Unit price {formatUSD(item.price)}
+                      </p>
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="text-ink-light hover:text-red-500 transition-colors text-sm font-medium"
+                        className="text-sm font-medium text-ink-500 underline-offset-4 transition hover:text-ink-900 hover:underline"
                       >
                         Remove
                       </button>
                     </div>
-
-                    {/* Estimated Delivery */}
-                    <p className="text-xs text-ink-light mt-3">
-                      ✓ Estimated delivery: 3-5 business days
+                    <p className="text-xs uppercase tracking-[0.35em] text-ink-400">
+                      Estimated delivery: 3–5 business days
                     </p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </article>
+            ))}
 
-            {/* Clear Cart */}
-            <button
-              onClick={clearCart}
-              className="mt-6 text-ink-light hover:text-red-500 transition-colors text-sm font-medium"
-            >
-              Clear entire cart
-            </button>
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-border-200 bg-surface-100 px-6 py-4">
+              <div>
+                <p className="text-sm font-semibold text-ink-900">
+                  Need help editing your cart?
+                </p>
+                <p className="text-xs text-ink-500">
+                  Concierge support is available via{" "}
+                  <a
+                    href="mailto:concierge@kollect-it.com"
+                    className="text-ink-900 underline-offset-4 hover:underline"
+                  >
+                    concierge@kollect-it.com
+                  </a>
+                </p>
+              </div>
+              <button
+                onClick={clearCart}
+                className="rounded-full border border-border-200 px-5 py-2 text-sm font-semibold text-ink-900 transition hover:border-ink-700 hover:text-ink-700"
+              >
+                Clear entire cart
+              </button>
+            </div>
           </div>
 
-          {/* CART SUMMARY */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              {/* Order Summary */}
-              <div className="bg-surface-1 rounded-lg p-8">
-                <h2 className="font-serif text-2xl text-ink mb-6">
-                  Order Summary
-                </h2>
-
-                <div className="space-y-4 mb-6 pb-6 border-b border-surface-2">
-                  <div className="flex justify-between text-ink-light">
-                    <span>
-                      Subtotal ({itemCount} {itemCount === 1 ? "item" : "items"}
-                      )
-                    </span>
-                    <span className="font-medium">{formatUSD(subtotal)}</span>
+          <aside className="lg:pl-6">
+            <div className="sticky top-28 space-y-6">
+              <div className="rounded-3xl border border-border-200 bg-surface-100/80 p-6 shadow-lg backdrop-blur">
+                <div className="mb-6 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+                      Summary
+                    </p>
+                    <h2 className="mt-2 text-2xl font-semibold text-ink-900">
+                      Order total
+                    </h2>
                   </div>
-                  <div className="flex justify-between text-ink-light">
-                    <span>Shipping</span>
-                    <span className="text-sm">Calculated at checkout</span>
-                  </div>
-                  <div className="flex justify-between text-ink-light">
-                    <span>Tax (estimated)</span>
-                    <span className="font-medium">{formatUSD(tax)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mb-6">
-                  <span className="font-serif text-lg text-ink">Total</span>
-                  <span className="font-serif text-2xl text-gold">
+                  <span className="text-3xl font-semibold text-gold-500">
                     {formatUSD(total)}
                   </span>
                 </div>
-
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full bg-gold-600 hover:bg-gold-700 mb-3"
-                >
-                  <Link href="/checkout">
-                    Proceed to Checkout
-                  </Link>
-                </Button>
-
-                <button
-                  onClick={() => (window.location.href = "/browse")}
-                  className="w-full border-2 border-gold text-gold font-semibold py-3 rounded-lg hover:bg-gold hover:text-white transition-colors"
-                >
-                  Continue Shopping
-                </button>
-              </div>
-
-              {/* Trust Badges */}
-              <div className="bg-surface-0 rounded-lg p-6 space-y-3">
-                <div className="flex gap-3 text-sm">
-                  <span className="text-lg">✓</span>
-                  <p>
-                    <strong>Secure Checkout</strong>
-                    <br />
-                    <span className="text-ink-light text-xs">
-                      SSL encrypted
-                    </span>
-                  </p>
-                </div>
-                <div className="flex gap-3 text-sm border-t border-surface-2 pt-3">
-                  <span className="text-lg">✓</span>
-                  <p>
-                    <strong>30-Day Returns</strong>
-                    <br />
-                    <span className="text-ink-light text-xs">
-                      Easy returns policy
-                    </span>
-                  </p>
-                </div>
-                <div className="flex gap-3 text-sm border-t border-surface-2 pt-3">
-                  <span className="text-lg">✓</span>
-                  <p>
-                    <strong>Insured Shipping</strong>
-                    <br />
-                    <span className="text-ink-light text-xs">
-                      Full protection included
-                    </span>
-                  </p>
+                <dl className="space-y-4 border-y border-border-200 py-6 text-sm">
+                  <div className="flex items-center justify-between text-ink-600">
+                    <dt>
+                      Subtotal ({itemCount} {itemCount === 1 ? "item" : "items"})
+                    </dt>
+                    <dd className="font-semibold text-ink-900">
+                      {formatUSD(subtotal)}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between text-ink-600">
+                    <dt>Shipping</dt>
+                    <dd className="text-xs uppercase tracking-[0.28em] text-ink-500">
+                      Calculated at checkout
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between text-ink-600">
+                    <dt>Tax (est.)</dt>
+                    <dd className="font-semibold text-ink-900">
+                      {formatUSD(tax)}
+                    </dd>
+                  </div>
+                </dl>
+                <div className="mt-6 space-y-3">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full rounded-full bg-ink-900 text-white hover:bg-ink-700"
+                  >
+                    <Link href="/checkout">Proceed to checkout</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="w-full rounded-full border border-border-200 text-ink-900 hover:border-ink-700"
+                  >
+                    <Link href="/browse">Keep browsing</Link>
+                  </Button>
                 </div>
               </div>
 
-              {/* Promo Code */}
-              <div className="bg-surface-0 rounded-lg p-6">
-                <label className="block text-sm font-semibold text-ink mb-2">
-                  Promo Code
+              <div className="rounded-3xl border border-border-200 bg-white p-6 shadow-sm">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.35em] text-ink-400">
+                  Trust &amp; assurances
+                </h3>
+                <ul className="mt-4 space-y-4 text-sm text-ink-600">
+                  {[
+                    {
+                      title: "Secure checkout",
+                      body: "SSL encrypted payments backed by Stripe",
+                    },
+                    {
+                      title: "Insured shipping",
+                      body: "Each parcel is fully insured to its purchase value",
+                    },
+                    {
+                      title: "Concierge care",
+                      body: "Dedicated support before, during, and after delivery",
+                    },
+                  ].map((item) => (
+                    <li key={item.title} className="flex gap-3">
+                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-surface-100 text-xs font-semibold text-ink-900">
+                        ✓
+                      </span>
+                      <div>
+                        <p className="font-semibold text-ink-900">{item.title}</p>
+                        <p className="text-xs text-ink-500">{item.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-border-200 bg-white p-6 shadow-sm">
+                <label
+                  htmlFor="promo-code"
+                  className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400"
+                >
+                  Promo code
                 </label>
-                <div className="flex gap-2">
+                <div className="mt-3 flex gap-2">
                   <input
+                    id="promo-code"
                     type="text"
                     placeholder="Enter code"
-                    className="flex-grow px-3 py-2 border border-surface-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold"
+                    className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
                   />
-                  <button className="px-4 py-2 border border-surface-2 rounded-lg hover:bg-surface-1 transition-colors font-medium text-sm">
+                  <button className="rounded-full border border-border-200 px-5 text-sm font-semibold text-ink-900 transition hover:border-ink-700">
                     Apply
                   </button>
                 </div>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
-      </AesopSection>
+      </section>
 
-      {/* RECOMMENDED ITEMS */}
-      {suggestions.length > 0 && (
-        <AesopSection variant="olive">
-          <h2 className="font-serif text-3xl md:text-4xl text-ink text-center mb-12">
-            Complete Your Collection
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {suggestions.slice(0, 4).map((p) => (
-              <Link key={p.id} href={`/product/${p.slug}`} className="group">
-                <div className="h-64 w-full overflow-hidden rounded-lg bg-surface-2 mb-4 relative">
-                  {p.images[0] ? (
-                    <Image
-                      src={p.images[0].url}
-                      alt={p.title}
-                      width={300}
-                      height={300}
-                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                      quality={85}
-                      placeholder="blur"
-                      blurDataURL={BLUR_DATA_URL}
-                    />
-                  ) : (
-                    <div className="h-full w-full bg-surface-2" />
-                  )}
-                </div>
-                <p className="text-xs text-gold font-semibold uppercase tracking-wider mb-1">
-                  {p.category?.name}
-                </p>
-                <h3 className="font-serif text-lg text-ink mb-2 group-hover:text-gold transition-colors line-clamp-2">
-                  {p.title}
-                </h3>
-                <p className="text-gold font-semibold text-lg">
-                  {formatUSD(p.price)}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </AesopSection>
-      )}
-    </>
+      <Recommendations
+        suggestions={suggestions}
+        heading="Complete your collection"
+      />
+    </div>
   );
 }
 

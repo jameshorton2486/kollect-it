@@ -239,11 +239,11 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex items-center justify-center gap-2">
+              <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
                 {currentPage > 1 && (
                   <Link
                     href={buildPageHref(currentPage - 1)}
-                    className="px-4 py-2 text-sm border border-lux-silver rounded-md hover:border-lux-gold hover:text-lux-gold transition-colors"
+                    className="inline-flex items-center rounded-full border border-border-200 px-4 py-2 text-xs font-semibold text-ink-600 transition hover:border-ink-700 hover:text-ink-900"
                   >
                     ← Previous
                   </Link>
@@ -257,10 +257,10 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                     <Link
                       key={pageNumber}
                       href={href}
-                    className={`min-w-[40px] h-10 flex items-center justify-center rounded-md border font-medium text-sm transition-all ${
+                      className={`inline-flex min-w-[40px] items-center justify-center rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
                         isActive
-                          ? "border-lux-gold bg-lux-gold text-white"
-                          : "border-lux-silver text-lux-charcoal hover:border-lux-gold hover:text-lux-gold"
+                          ? "border-gold-500 bg-gold-500 text-ink-900"
+                          : "border-border-200 text-ink-600 hover:border-ink-700 hover:text-ink-900"
                       }`}
                     >
                       {pageNumber}
@@ -271,7 +271,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                 {currentPage < totalPages && (
                   <Link
                     href={buildPageHref(currentPage + 1)}
-                    className="px-4 py-2 text-sm border border-lux-silver rounded-md hover:border-lux-gold hover:text-lux-gold transition-colors"
+                    className="inline-flex items-center rounded-full border border-border-200 px-4 py-2 text-xs font-semibold text-ink-600 transition hover:border-ink-700 hover:text-ink-900"
                   >
                     Next →
                   </Link>
@@ -279,7 +279,6 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
               </div>
             )}
           </div>
-        </div>
       </main>
     </div>
   );

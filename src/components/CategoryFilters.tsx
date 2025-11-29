@@ -84,52 +84,61 @@ export default function CategoryFilters({
 
   return (
     <aside
-      className="hidden lg:block w-64 shrink-0"
+      className="hidden w-64 shrink-0 lg:block"
       role="region"
       aria-label="Filters"
     >
-      <div className="sticky top-24 space-y-6">
-        {/* Filter Header */}
-        <div className="pb-4 border-b border-lux-silver">
-          <h3 className="font-serif text-lg text-lux-charcoal">Refine Results</h3>
+      <div className="sticky top-24 rounded-3xl border border-border-200 bg-white/90 p-5 shadow-lg">
+        <div className="mb-6">
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-400">
+            Refine results
+          </p>
+          <p className="text-sm text-ink-500">
+            Adjust filters to tailor the catalog to your taste.
+          </p>
         </div>
 
-        <fieldset>
-          <legend className="mb-3 text-xs font-semibold uppercase tracking-wider text-lux-gray-dark">
+        <fieldset className="mb-6 space-y-3">
+          <legend className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-300">
             Price
           </legend>
           <div className="flex items-center gap-2">
             <input
               type="number"
-              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
+              className="w-24 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
               value={priceMin}
               min={0}
               onChange={(e) =>
                 setPriceMin(Math.max(0, Number(e.target.value) || 0))
               }
               aria-label="Min price"
+              placeholder="Min"
             />
-            <span className="text-lux-gray-light">–</span>
+            <span className="text-ink-300">—</span>
             <input
               type="number"
-              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
+              className="w-24 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
               value={priceMax}
               min={0}
               onChange={(e) =>
                 setPriceMax(Math.max(0, Number(e.target.value) || 0))
               }
               aria-label="Max price"
+              placeholder="Max"
             />
           </div>
         </fieldset>
 
-        <fieldset>
-          <legend className="mb-3 text-xs font-semibold uppercase tracking-wider text-lux-gray-dark">
+        <fieldset className="mb-6">
+          <legend className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-ink-300">
             Condition
           </legend>
           <div className="space-y-2">
             {CONDITIONS.map((c) => (
-              <label key={c} className="flex items-center gap-3 text-sm cursor-pointer group">
+              <label
+                key={c}
+                className="flex items-center gap-3 rounded-2xl px-3 py-2 text-sm text-ink-700 transition hover:bg-surface-100"
+              >
                 <input
                   type="checkbox"
                   checked={conds.has(c)}
@@ -139,32 +148,32 @@ export default function CategoryFilters({
                     else next.delete(c);
                     setConds(next);
                   }}
-                  className="w-4 h-4 rounded border-lux-silver text-lux-gold focus:ring-lux-gold focus:ring-offset-0 cursor-pointer"
+                  className="h-4 w-4 rounded border-border-200 text-ink-900 focus:ring-gold-300"
                 />
-                <span className="text-lux-charcoal group-hover:text-lux-gold transition-colors">{c}</span>
+                <span className="font-medium">{c}</span>
               </label>
             ))}
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="mb-3 text-xs font-semibold uppercase tracking-wider text-lux-gray-dark">
+          <legend className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-ink-300">
             Year
           </legend>
           <div className="flex items-center gap-2">
             <input
               type="number"
-              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
+              className="w-24 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
               value={yearMin as number | ""}
               min={0}
               onChange={(e) => setYearMin(Number(e.target.value) || "")}
               aria-label="Min year"
               placeholder="From"
             />
-            <span className="text-lux-gray-light">–</span>
+            <span className="text-ink-300">—</span>
             <input
               type="number"
-              className="w-20 rounded-md border border-lux-silver px-3 py-2 text-sm bg-white focus:border-lux-gold focus:ring-1 focus:ring-lux-gold focus:outline-none transition-colors"
+              className="w-24 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
               value={yearMax as number | ""}
               min={0}
               onChange={(e) => setYearMax(Number(e.target.value) || "")}
@@ -174,18 +183,18 @@ export default function CategoryFilters({
           </div>
         </fieldset>
 
-        <div className="flex flex-col gap-3 pt-4">
+        <div className="mt-8 flex flex-col gap-3">
           <button
             onClick={apply}
-            className="w-full bg-lux-gold hover:bg-lux-gold-light text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
+            className="inline-flex w-full items-center justify-center rounded-full bg-ink-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-ink-700"
           >
-            Apply Filters
+            Apply filters
           </button>
           <button
             onClick={clearAll}
-            className="w-full border border-lux-silver hover:border-lux-gold text-lux-charcoal hover:text-lux-gold px-4 py-2.5 rounded-md text-sm transition-colors"
+            className="inline-flex w-full items-center justify-center rounded-full border border-border-200 px-5 py-2.5 text-sm font-semibold text-ink-900 transition hover:border-ink-700 hover:text-ink-700"
           >
-            Clear All
+            Clear all
           </button>
         </div>
       </div>

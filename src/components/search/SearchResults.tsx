@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchFilters from "./SearchFilters";
+import SearchBar from "./SearchBar";
 import { Grid3x3, List, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 
@@ -121,126 +122,161 @@ export default function SearchResults() {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Search Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">
-          {query ? `Search results for "${query}"` : "Search Results"}
-        </h1>
-        <p className="text-muted-foreground">
-          {isLoading ? "Searching..." : `${results.total} items found`}
-        </p>
-      </div>
-
-      {/* Controls */}
-      <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-muted"
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-            Filters
-          </button>
-
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 border rounded-lg"
-          >
-            <option value="relevance">Most Relevant</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="newest">Newest First</option>
-            <option value="popular">Most Popular</option>
-          </select>
+    <div className="min-h-screen bg-surface-50 py-10">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="space-y-6 border-b border-border-200 pb-8">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+              Search
+            </p>
+            <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+              {query ? `Results for “${query}”` : "Search the catalog"}
+            </h1>
+            <p className="text-sm text-ink-600">
+              {isLoading
+                ? "Searching inventory…"
+                : `${results.total} pieces match your criteria`}
+            </p>
+          </div>
+          <SearchBar placeholder="Search fine art, militaria, rare books…" />
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setViewMode("grid")}
-            className={`p-2 border rounded ${viewMode === "grid" ? "bg-primary text-primary-foreground" : ""}`}
-          >
-            <Grid3x3 className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => setViewMode("list")}
-            className={`p-2 border rounded ${viewMode === "list" ? "bg-primary text-primary-foreground" : ""}`}
-          >
-            <List className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex gap-6">
-        {/* Filters Sidebar */}
-        {showFilters && (
-          <aside className="w-64 flex-shrink-0">
-            <SearchFilters
-              filters={filterSections}
-              selectedFilters={selectedFilters}
-              onFilterChange={handleFilterChange}
-              onClearAll={handleClearAll}
-            />
-          </aside>
-        )}
-
-        {/* Results */}
-        <main className="flex-1">
-          {isLoading ? (
-            <div className="text-center py-12">Loading...</div>
-          ) : results.products.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-lg mb-2">No results found</p>
-              <p className="text-muted-foreground">
-                Try adjusting your search or filters
-              </p>
+        <div className="mt-10 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-border-200 bg-white/80 px-5 py-4 shadow-sm">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="inline-flex items-center gap-2 rounded-full border border-border-200 px-4 py-2 text-xs font-semibold text-ink-700 transition hover:border-ink-700 hover:text-ink-900"
+                type="button"
+                aria-label={showFilters ? "Hide filters" : "Show filters"}
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                Filters
+              </button>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Sort search results"
+                className="rounded-full border border-border-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-900 outline-none transition hover:border-ink-700 focus:border-gold-500"
+              >
+                <option value="relevance">Most relevant</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="newest">Newest arrivals</option>
+                <option value="popular">Most popular</option>
+              </select>
             </div>
-          ) : (
-            <div
-              className={
-                viewMode === "grid"
-                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                  : "space-y-4"
-              }
-            >
-              {results.products.map((product) => (
-                <Link
-                  key={product.id}
-                  href={`/products/${product.id}`}
-                  className={`block border rounded-lg overflow-hidden hover:shadow-lg transition-shadow ${
-                    viewMode === "list" ? "flex gap-4" : ""
-                  }`}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border text-sm font-semibold transition ${
+                  viewMode === "grid"
+                    ? "border-gold-500 bg-gold-500/10 text-ink-900"
+                    : "border-border-200 text-ink-400 hover-border-ink-700 hover:text-ink-900"
+                }`}
+                type="button"
+                aria-label={
+                  viewMode === "grid"
+                    ? "Grid view selected"
+                    : "Switch to grid view"
+                }
+              >
+                <Grid3x3 className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border text-sm font-semibold transition ${
+                  viewMode === "list"
+                    ? "border-gold-500 bg-gold-500/10 text-ink-900"
+                    : "border-border-200 text-ink-400 hover:border-ink-700 hover:text-ink-900"
+                }`}
+                type="button"
+                aria-label={
+                  viewMode === "list"
+                    ? "List view selected"
+                    : "Switch to list view"
+                }
+              >
+                <List className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex gap-6">
+            {showFilters && (
+              <aside className="w-64 flex-shrink-0">
+                <SearchFilters
+                  filters={filterSections}
+                  selectedFilters={selectedFilters}
+                  onFilterChange={handleFilterChange}
+                  onClearAll={handleClearAll}
+                />
+              </aside>
+            )}
+
+            <main className="flex-1">
+              {isLoading ? (
+                <div className="rounded-3xl border border-dashed border-border-200 bg-white/70 px-6 py-12 text-center text-sm text-ink-500">
+                  Searching the archive…
+                </div>
+              ) : results.products.length === 0 ? (
+                <div className="rounded-3xl border border-dashed border-border-200 bg-white/70 px-6 py-12 text-center">
+                  <p className="text-lg font-semibold text-ink-900">
+                    No results found
+                  </p>
+                  <p className="mt-2 text-sm text-ink-600">
+                    Adjust your keywords or filters to explore more of the
+                    collection.
+                  </p>
+                </div>
+              ) : (
+                <div
+                  className={
+                    viewMode === "grid"
+                      ? "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+                      : "space-y-4"
+                  }
                 >
-                  <img
-                    src={product.images[0]?.url || "/placeholder.svg"}
-                    alt={product.title}
-                    className={
-                      viewMode === "list"
-                        ? "w-48 h-48 object-cover"
-                        : "w-full h-64 object-cover"
-                    }
-                  />
-                  <div className="p-4 flex-1">
-                    <h3 className="font-semibold mb-2 line-clamp-2">
-                      {product.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {product.condition}
-                    </p>
-                    <p className="text-lg font-bold text-primary mb-2">
-                      ${product.price.toFixed(2)}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {product.category.name}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </main>
+                  {results.products.map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/product/${product.id}`}
+                      className={`group rounded-3xl border border-border-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-elevated ${
+                        viewMode === "list"
+                          ? "flex gap-4 p-4"
+                          : "overflow-hidden"
+                      }`}
+                    >
+                      <img
+                        src={product.images[0]?.url || "/placeholder.svg"}
+                        alt={product.title}
+                        className={
+                          viewMode === "list"
+                            ? "h-36 w-36 rounded-2xl object-cover"
+                            : "h-64 w-full object-cover"
+                        }
+                      />
+                      <div className="p-4">
+                        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-400">
+                          {product.category.name}
+                        </p>
+                        <h3 className="mt-2 text-lg font-semibold tracking-tight text-ink-900 line-clamp-2 group-hover:text-gold-500">
+                          {product.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-ink-500">
+                          Condition: {product.condition}
+                        </p>
+                        <p className="mt-3 text-xl font-semibold text-gold-500">
+                          ${product.price.toFixed(2)}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </main>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -60,62 +60,60 @@ export default function SearchFilters({
   );
 
   return (
-    <div className="bg-background border rounded-lg">
-      {/* Header */}
-      <div className="p-4 border-b flex justify-between items-center">
+    <div className="rounded-3xl border border-border-200 bg-white/90 shadow-lg">
+      <div className="flex items-center justify-between border-b border-border-200 px-5 py-4">
         <div>
-          <h2 className="font-semibold">Filters</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            Filters
+          </p>
           {totalSelected > 0 && (
-            <p className="text-sm text-muted-foreground">
-              {totalSelected} selected
-            </p>
+            <p className="text-sm text-ink-500">{totalSelected} selected</p>
           )}
         </div>
         {totalSelected > 0 && (
           <button
             onClick={onClearAll}
-            className="text-sm text-primary hover:underline"
+            className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-500 underline-offset-4 hover:text-ink-900 hover:underline"
           >
-            Clear all
+            Clear
           </button>
         )}
       </div>
 
-      {/* Filter Sections */}
-      <div className="divide-y">
+      <div className="divide-y divide-border-200">
         {filters.map((section) => {
           const isExpanded = expandedSections[section.id] !== false;
           const sectionValues = selectedFilters[section.id] || [];
 
           return (
-            <div key={section.id} className="p-4">
+            <div key={section.id} className="px-5 py-4">
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex justify-between items-center mb-3"
+                className="flex w-full items-center justify-between text-left"
               >
-                <span className="font-medium">
+                <span className="text-sm font-semibold text-ink-900">
                   {section.title}
                   {sectionValues.length > 0 && (
-                    <span className="ml-2 text-sm text-primary">
+                    <span className="ml-2 text-xs text-ink-400">
                       ({sectionValues.length})
                     </span>
                   )}
                 </span>
                 {isExpanded ? (
-                  <ChevronUp className="h-4 w-4" />
+                  <ChevronUp className="h-4 w-4 text-ink-400" />
                 ) : (
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-4 w-4 text-ink-400" />
                 )}
               </button>
 
               {isExpanded && (
-                <div className="space-y-2">
+                <div className="mt-4 space-y-2">
                   {section.type === "checkbox" && section.options && (
                     <>
                       {section.options.map((option) => (
                         <label
                           key={option.value}
-                          className="flex items-center gap-2 cursor-pointer"
+                          className="flex items-center gap-3 rounded-2xl px-3 py-2 text-sm text-ink-700 transition hover:bg-surface-100"
                         >
                           <input
                             type="checkbox"
@@ -123,12 +121,12 @@ export default function SearchFilters({
                             onChange={() =>
                               handleCheckboxChange(section.id, option.value)
                             }
-                            className="rounded border-border-300 text-cta-600 focus:ring-cta-600"
+                            className="h-4 w-4 rounded border-border-200 text-ink-900 focus:ring-gold-300"
                           />
-                          <span className="flex-1 text-sm">
+                          <span className="flex-1">
                             {option.label}
                             {option.count !== undefined && (
-                              <span className="text-muted-foreground ml-1">
+                              <span className="ml-2 text-xs text-ink-400">
                                 ({option.count})
                               </span>
                             )}
@@ -143,7 +141,7 @@ export default function SearchFilters({
                       {section.options.map((option) => (
                         <label
                           key={option.value}
-                          className="flex items-center gap-2 cursor-pointer"
+                          className="flex items-center gap-3 rounded-2xl px-3 py-2 text-sm text-ink-700 transition hover:bg-surface-100"
                         >
                           <input
                             type="radio"
@@ -152,55 +150,53 @@ export default function SearchFilters({
                             onChange={() =>
                               handleRadioChange(section.id, option.value)
                             }
-                            className="border-border-300 text-cta-600 focus:ring-cta-600"
+                            className="border-border-200 text-ink-900 focus:ring-gold-300"
                           />
-                          <span className="flex-1 text-sm">{option.label}</span>
+                          <span className="flex-1">{option.label}</span>
                         </label>
                       ))}
                     </>
                   )}
 
                   {section.type === "range" && (
-                    <div className="space-y-3">
-                      <div className="flex gap-2">
-                        <input
-                          type="number"
-                          placeholder="Min"
-                          min={section.min}
-                          max={section.max}
-                          value={sectionValues[0] || ""}
-                          onChange={(e) => {
-                            const newValues = [
-                              e.target.value,
-                              sectionValues[1] || "",
-                            ];
-                            onFilterChange(
-                              section.id,
-                              newValues.filter(Boolean),
-                            );
-                          }}
-                          className="flex-1 px-3 py-2 border rounded text-sm"
-                        />
-                        <span className="py-2">-</span>
-                        <input
-                          type="number"
-                          placeholder="Max"
-                          min={section.min}
-                          max={section.max}
-                          value={sectionValues[1] || ""}
-                          onChange={(e) => {
-                            const newValues = [
-                              sectionValues[0] || "",
-                              e.target.value,
-                            ];
-                            onFilterChange(
-                              section.id,
-                              newValues.filter(Boolean),
-                            );
-                          }}
-                          className="flex-1 px-3 py-2 border rounded text-sm"
-                        />
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        placeholder="Min"
+                        min={section.min}
+                        max={section.max}
+                        value={sectionValues[0] || ""}
+                        onChange={(e) => {
+                          const newValues = [
+                            e.target.value,
+                            sectionValues[1] || "",
+                          ];
+                          onFilterChange(
+                            section.id,
+                            newValues.filter(Boolean),
+                          );
+                        }}
+                        className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
+                      />
+                      <span className="text-ink-300">—</span>
+                      <input
+                        type="number"
+                        placeholder="Max"
+                        min={section.min}
+                        max={section.max}
+                        value={sectionValues[1] || ""}
+                        onChange={(e) => {
+                          const newValues = [
+                            sectionValues[0] || "",
+                            e.target.value,
+                          ];
+                          onFilterChange(
+                            section.id,
+                            newValues.filter(Boolean),
+                          );
+                        }}
+                        className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
+                      />
                     </div>
                   )}
                 </div>

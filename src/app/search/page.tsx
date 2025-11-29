@@ -3,11 +3,9 @@ import SearchResults from "@/components/search/SearchResults";
 
 export default function SearchPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Suspense fallback={<div>Loading search results...</div>}>
-        <SearchResults />
-      </Suspense>
-    </div>
+    <Suspense fallback={<div className="px-4 py-12 text-center text-sm text-ink-500">Loading search results...</div>}>
+      <SearchResults />
+    </Suspense>
   );
 }
 

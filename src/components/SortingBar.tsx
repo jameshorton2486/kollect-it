@@ -35,50 +35,53 @@ export default function SortingBar({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-      <div className="font-medium tracking-wider uppercase text-lux-gray">
-        Showing <span className="text-lux-charcoal">{showing}</span> of{" "}
-        <span className="text-lux-charcoal">{total}</span> items
-      </div>
+    <div className="flex flex-wrap items-center justify-between gap-4 rounded-full border border-border-200 bg-surface-100/80 px-5 py-3 text-xs shadow-sm">
+      <p className="font-semibold uppercase tracking-[0.3em] text-ink-400">
+        Showing{" "}
+        <span className="text-ink-900">
+          {showing}/{total}
+        </span>{" "}
+        pieces
+      </p>
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <label
-            htmlFor="sort"
-            className="hidden uppercase tracking-[0.16em] text-lux-gray lg:inline text-xs"
-          >
-            Sort
-          </label>
-          <select
-            id="sort"
-            className="rounded-full border border-lux-silver/60 bg-white px-3 py-1.5 text-xs text-lux-charcoal leading-tight shadow-sm outline-none transition hover:border-lux-gold focus:border-lux-gold cursor-pointer"
-            value={currentSort || "featured"}
-            onChange={(e) => updateParam("sort", e.target.value)}
-          >
-            {sortOptions.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <label htmlFor="sort" className="hidden text-[0.65rem] uppercase tracking-[0.3em] text-ink-400 lg:inline">
+          Sort
+        </label>
+        <select
+          id="sort"
+          className="rounded-full border border-border-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-900 outline-none transition hover:border-ink-700 focus:border-gold-500"
+          value={currentSort || "featured"}
+          onChange={(e) => updateParam("sort", e.target.value)}
+        >
+          {sortOptions.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
 
         <div
-          className="ml-2 hidden md:flex items-center gap-1 border-l border-lux-silver pl-4"
+          className="hidden items-center gap-2 border-l border-border-200 pl-4 md:flex"
           role="group"
           aria-label="View toggle"
         >
           <button
-            className={`rounded-md border px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-lux-gold ${
+            className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-1 focus:ring-gold-500 ${
               currentView === "grid"
-                ? "border-lux-gold text-lux-gold bg-lux-gold/5"
-                : "border-lux-silver text-lux-gray hover:border-lux-gold hover:text-lux-gold"
+                ? "border-gold-500 bg-gold-500/10 text-ink-900"
+                : "border-border-200 text-ink-500 hover:border-ink-700 hover:text-ink-900"
             }`}
             onClick={() => updateParam("view", "grid")}
-            aria-pressed={currentView === "grid"}
+            type="button"
+            aria-label={
+              currentView === "grid"
+                ? "Grid view selected"
+                : "Switch to grid view"
+            }
           >
             <svg
-              className="w-4 h-4"
+              className="h-4 w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -92,16 +95,21 @@ export default function SortingBar({
             </svg>
           </button>
           <button
-            className={`rounded-md border px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-1 focus:ring-lux-gold ${
+            className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-1 focus:ring-gold-500 ${
               currentView === "list"
-                ? "border-lux-gold text-lux-gold bg-lux-gold/5"
-                : "border-lux-silver text-lux-gray hover:border-lux-gold hover:text-lux-gold"
+                ? "border-gold-500 bg-gold-500/10 text-ink-900"
+                : "border-border-200 text-ink-500 hover:border-ink-700 hover:text-ink-900"
             }`}
             onClick={() => updateParam("view", "list")}
-            aria-pressed={currentView === "list"}
+            type="button"
+            aria-label={
+              currentView === "list"
+                ? "List view selected"
+                : "Switch to list view"
+            }
           >
             <svg
-              className="w-4 h-4"
+              className="h-4 w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
