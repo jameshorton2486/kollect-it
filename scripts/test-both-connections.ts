@@ -1,0 +1,69 @@
+#!/usr/bin/env bun
+/**
+ * Quick Database Connection Test - Direct vs Pooler
+ */
+
+import { PrismaClient } from '@prisma/client'
+
+console.log('🔍 Testing Both Connection Methods...\n')
+
+const poolerUrl = process.env.DATABASE_URL
+const directUrl = process.env.DIRECT_URL
+
+console.log('📋 Connection URLs:')
+console.log(`Pooler: ${poolerUrl ? 'Set' : 'Missing'}`)
+console.log(`Direct: ${directUrl ? 'Set' : 'Missing'}`)
+
+// Test 1: Pooler Connection
+console.log('\n🔌 Test 1: Transaction Pooler (6543)')
+console.log('----------------------------------------')
+
+if (!poolerUrl) {
+  console.log('❌ DATABASE_URL is not set. Skipping pooler test.')
+} else {
+  const prismaPooler = new PrismaClient({
+    datasources: { db: { url: poolerUrl } },
+    log: ['error']
+  })
+
+  try {
+    await prismaPooler.$connect()
+    await prismaPooler.$queryRaw`SELECT 1 as test`
+    console.log('✅ Pooler connection SUCCESS!')
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    console.log('❌ Pooler connection FAILED:', message)
+  } finally {
+    await prismaPooler.$disconnect()
+  }
+}
+
+// Test 2: Direct Connection
+console.log('\n🔌 Test 2: Direct Connection (5432)')
+console.log('-----------------------------------')
+
+if (directUrl) {
+  const prismaDirect = new PrismaClient({
+    datasources: { db: { url: directUrl } },
+    log: ['error']
+  })
+
+  try {
+    await prismaDirect.$connect()
+    await prismaDirect.$queryRaw`SELECT 1 as test`
+    console.log('✅ Direct connection SUCCESS!')
+    
+    // If direct works, update DATABASE_URL temporarily
+    console.log('\n💡 Direct connection works! Consider updating DATABASE_URL')
+    
+    await prismaDirect.$disconnect()
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    console.log('❌ Direct connection FAILED:', message)
+    await prismaDirect.$disconnect()
+  }
+} else {
+  console.log('⚠️  DIRECT_URL not configured')
+}
+
+console.log('\n🎯 Diagnosis Complete!')

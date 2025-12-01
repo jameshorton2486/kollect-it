@@ -1,0 +1,582 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   KOLLECT-IT DESIGN TOKENS
+   Updated with Luxury Color Palette
+   ============================================================================= */
+
+@layer base {
+  :root {
+    /* 1stDibs-style refined neutrals */
+    --lux-black: 220 18% 10%;        /* deepest charcoal */
+    --lux-ink: 220 16% 12%;          /* editorial body copy */
+    --lux-ink-soft: 36 16% 92%;      /* parchment background */
+    --lux-charcoal: 220 12% 18%;     /* dark header/footer band */
+    --lux-white: 38 40% 98%;         /* soft white */
+    --lux-pearl: 36 22% 94%;         /* warm pearl */
+    --lux-cream: 40 30% 92%;         /* hero / section background */
+    --lux-gray-light: 28 8% 80%;     /* captions + dividers */
+    --lux-gray: 26 9% 60%;           /* supporting text */
+    --lux-gray-dark: 26 12% 38%;     /* muted headings */
+    --lux-silver: 220 9% 55%;        /* borders/dividers */
+    --lux-silver-soft: 220 10% 78%;  /* light panels */
+
+    /* Accent */
+    --lux-gold: 38 58% 54%;          /* warm gold accent */
+    --lux-gold-light: 38 70% 70%;    /* hover gold */
+
+    /* Surface system */
+    --surface-0: 0 0% 100%;
+    --surface-50: 36 15% 97%;
+    --surface-100: 35 14% 94%;
+    --surface-200: 35 12% 90%;
+    --surface-300: 36 10% 82%;
+    --surface-800: 220 16% 16%;
+    --surface-900: 220 18% 12%;
+
+    /* Ink scale */
+    --ink-400: 26 12% 70%;
+    --ink-500: 26 12% 60%;
+    --ink-600: 26 12% 48%;
+    --ink-700: 26 12% 38%;
+    --ink-800: 26 12% 24%;
+    --ink-900: 220 18% 10%;
+
+    /* Gold scale */
+    --gold-300: 38 65% 66%;
+    --gold-400: 38 62% 60%;
+    --gold-500: 38 58% 54%;
+    --gold-600: 38 58% 46%;
+    --gold-700: 38 58% 40%;
+
+    /* CTA palette repurposed to gold/neutrals */
+    --cta-400: var(--gold-400);
+    --cta-500: var(--gold-500);
+    --cta-600: var(--gold-600);
+    --cta-700: var(--gold-700);
+    --cta-800: 220 18% 18%;
+
+    /* Semantic Colors */
+    --semantic-error-500: 0 65% 55%;      /* classic crimson */
+    --semantic-success-500: 38 50% 45%;   /* muted gold success */
+    --semantic-warning-500: 32 70% 52%;   /* deep amber */
+    --semantic-info-500: 220 10% 40%;     /* slate info */
+
+    /* Border Colors */
+    --border-200: 36 12% 90%;  /* #E8E5E1 - Light border */
+    --border-300: 36 9% 86%;   /* #E0DDD9 - Default border */
+
+    /* Radius System */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius-md: 0.5rem;    /* 8px */
+    --radius-lg: 0.75rem;   /* 12px */
+    --radius-xl: 1rem;      /* 16px */
+    --radius-2xl: 1.5rem;   /* 24px */
+    --radius-full: 9999px;  /* Fully rounded */
+    --radius: var(--radius-md);
+
+    /* Spacing System */
+    --spacing-xs: 0.5rem;    /* 8px */
+    --spacing-sm: 1rem;      /* 16px */
+    --spacing-md: 1.5rem;    /* 24px */
+    --spacing-lg: 2rem;      /* 32px */
+    --spacing-xl: 3rem;      /* 48px */
+    --spacing-2xl: 4rem;     /* 64px */
+    --spacing-3xl: 5rem;     /* 80px */
+
+    /* Vertical rhythm helpers */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+
+    /* Shadow System */
+    --shadow-subtle: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    
+    /* Shadow Colors for Colored Elements */
+    --shadow-gold: 0 4px 12px 0 rgb(184 134 11 / 0.3);
+    --shadow-cta: 0 4px 12px 0 rgb(30 58 95 / 0.3);
+
+    /* Gradient System */
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--lux-cream)) 0%, hsl(var(--lux-pearl)) 100%);
+    --gradient-cream: linear-gradient(180deg, hsl(var(--lux-white)) 0%, hsl(var(--lux-cream)) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--lux-gold-light)) 0%, hsl(var(--lux-gold)) 100%);
+
+    /* shadcn/ui compatibility - Updated to use lux palette */
+    --background: var(--lux-pearl);
+    --foreground: var(--lux-black);
+    --card: var(--lux-white);
+    --card-foreground: var(--lux-black);
+    --popover: var(--lux-white);
+    --popover-foreground: var(--lux-black);
+    --primary: var(--lux-black);
+    --primary-foreground: var(--lux-white);
+    --secondary: var(--lux-gold);
+    --secondary-foreground: var(--lux-black);
+    --muted: var(--lux-ink-soft);
+    --muted-foreground: var(--lux-gray);
+    --accent: var(--lux-gold);
+    --accent-foreground: var(--lux-black);
+    --destructive: var(--semantic-error-500);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--lux-silver);
+    --input: var(--lux-silver);
+    --ring: var(--lux-gold);
+
+    /* Aesop-Inspired Earthy Palette (Legacy) */
+    --aesop-cream: 40 29% 96%;   /* soft parchment */
+    --aesop-sand: 37 23% 90%;    /* warm sand */
+    --aesop-olive: 81 14% 30%;   /* deep olive green */
+    --aesop-charcoal: 0 0% 14%;  /* dark charcoal */
+    --aesop-olive-foreground: 40 29% 96%;
+    --aesop-charcoal-foreground: 96 14% 92%;
+  }
+}
+
+/* Global layout helpers for page sections */
+.section {
+  @apply w-full py-16 md:py-20;
+}
+
+/* Light cream band (good for content) */
+.section-light {
+  @apply bg-lux-cream text-lux-charcoal;
+}
+
+/* Soft neutral band (default) */
+.section-muted {
+  @apply bg-lux-ink-soft text-lux-charcoal;
+}
+
+/* Dark band (hero strips / emphasis) */
+.section-dark {
+  @apply bg-surface-900 text-lux-ink-soft;
+  @apply border-y border-lux-silver/30;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300; /* Lighter for elegance */
+  color: hsl(var(--lux-black));
+  background-color: hsl(var(--lux-pearl));
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ============================================
+   TYPOGRAPHY - Luxury Editorial Style
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400; /* Lighter, more elegant */
+  line-height: 1.2;
+  color: hsl(var(--lux-black));
+  letter-spacing: -0.01em; /* Tighter for modern feel */
+  margin-bottom: 0.6em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Larger */
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 500;
+}
+
+h5 {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Body text variants */
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Lead Text */
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: hsl(var(--lux-gray-dark));
+  font-weight: 300;
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2.5rem;
+  }
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid hsl(var(--lux-gold));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+a {
+  color: hsl(var(--lux-black));
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: hsl(var(--lux-gold));
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* ===========================================
+   KOLLECT-IT SPACING SYSTEM (Phase 1)
+   Standardized spacing for luxury consistency
+   =========================================== */
+
+/* Horizontal Page Padding (Desktop → Mobile) */
+.page-padding {
+  padding-left: 2rem;    /* Desktop: px-8 */
+  padding-right: 2rem;
+}
+
+@media (min-width: 768px) {
+  .page-padding {
+    padding-left: 1.5rem;  /* Tablet: px-6 */
+    padding-right: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-padding {
+    padding-left: 1rem;    /* Mobile: px-4 */
+    padding-right: 1rem;
+  }
+}
+
+/* Vertical Section Spacing */
+.section-tight {
+  padding-top: 3rem;     /* py-12 */
+  padding-bottom: 3rem;
+}
+
+.section-normal {
+  padding-top: 4rem;     /* py-16 */
+  padding-bottom: 4rem;
+}
+
+.section-grand {
+  padding-top: 6rem;     /* py-24 */
+  padding-bottom: 6rem;
+}
+
+/* Legacy Section Spacing (Keep for backwards compatibility, but migrate away) */
+.section-spacing {
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding: 5rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding: 6rem 0;
+  }
+}
+
+/* Standard Grid Gaps */
+.gap-standard {
+  gap: 1.5rem;  /* gap-6 */
+}
+
+.gap-luxury {
+  gap: 2rem;    /* gap-8 */
+}
+
+.gap-hero {
+  gap: 3rem;    /* gap-12 */
+}
+
+/* Card Padding Standards */
+.card-padding-sm {
+  padding: 1rem;  /* p-4 */
+}
+
+.card-padding-md {
+  padding: 1.5rem;  /* p-6 - Luxury default */
+}
+
+/* Shadows */
+.shadow-subtle { box-shadow: var(--shadow-subtle); }
+.shadow-card { box-shadow: var(--shadow-md); }
+.shadow-elevated { box-shadow: var(--shadow-lg); }
+.shadow-modal { box-shadow: var(--shadow-2xl); }
+.shadow-gold { box-shadow: var(--shadow-gold); }
+.shadow-cta { box-shadow: var(--shadow-cta); }
+
+/* Gradients */
+.bg-gradient-subtle { background: var(--gradient-subtle); }
+.bg-gradient-cream { background: var(--gradient-cream); }
+.bg-gradient-gold { background: var(--gradient-gold); }
+
+/* Dividers */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    hsl(var(--lux-silver)) 50%, 
+    transparent 100%
+  );
+}
+
+.divider-gold {
+  height: 2px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    hsl(var(--lux-gold)) 50%, 
+    transparent 100%
+  );
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--lux-gray-light)) hsl(var(--lux-pearl));
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--lux-pearl));
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--lux-gray-light));
+  border-radius: var(--radius-full);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--lux-gray));
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes underlineSlide {
+  from { transform: scaleX(0); transform-origin: left; }
+  to { transform: scaleX(1); transform-origin: left; }
+}
+
+.animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+.animate-slide-up { animation: slideUp 0.6s ease-out; }
+.animate-slide-down { animation: slideDown 0.3s ease-out; }
+.animate-scale-in { animation: scaleIn 0.3s ease-out; }
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--lux-pearl)) 0%,
+    hsl(var(--lux-silver)) 50%,
+    hsl(var(--lux-pearl)) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Animation Delays */
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--lux-pearl)) 25%,
+    hsl(var(--lux-silver)) 50%,
+    hsl(var(--lux-pearl)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
