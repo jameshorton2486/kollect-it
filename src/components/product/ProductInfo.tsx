@@ -63,13 +63,13 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
   return (
     <div className="space-y-8 rounded-3xl border border-border-200 bg-white/95 p-6 shadow-xl shadow-black/5 lg:p-8">
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-300">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-600">
           Collector Release
         </p>
-        <div className="flex flex-wrap items-center gap-3 text-[0.75rem] uppercase tracking-[0.35em] text-ink-400">
+        <div className="flex flex-wrap items-center gap-3 text-[0.75rem] uppercase tracking-[0.35em] text-ink-600">
           <span>{product.category.name}</span>
           {product.condition && (
-            <span className="inline-flex items-center gap-2 text-ink-400">
+            <span className="inline-flex items-center gap-2 text-ink-600">
               <span className="h-1 w-1 rounded-full bg-lux-gold" />
               {product.condition}
             </span>
@@ -83,12 +83,12 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-border-200 bg-surface-50 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-400">
+      <div className="rounded-2xl border border-border-200 bg-lux-pearl p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-600">
           Collector&apos;s Price
         </p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-          <span className="text-3xl font-semibold text-gold-500">
+          <span className="text-3xl font-semibold text-lux-gold">
             {formatUSD0(product.price)}
           </span>
           <span className="text-sm text-ink-500">
@@ -195,13 +195,13 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
       </div>
 
       <div className="rounded-2xl border border-border-200 bg-white/90 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-400">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-600">
           Item Specifications
         </p>
         <div className="mt-4 grid grid-cols-1 gap-4 text-sm text-ink-700 md:grid-cols-2">
           {product.artist && (
             <div>
-              <p className="text-xs uppercase tracking-wide text-ink-400">
+              <p className="text-xs uppercase tracking-wide text-ink-600">
                 Artist / Maker
               </p>
               <p className="mt-1 text-base font-medium text-ink-900">
@@ -211,7 +211,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
           )}
           {product.year && (
             <div>
-              <p className="text-xs uppercase tracking-wide text-ink-400">
+              <p className="text-xs uppercase tracking-wide text-ink-600">
                 Year Created
               </p>
               <p className="mt-1 text-base font-medium text-ink-900">
@@ -221,7 +221,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
           )}
           {product.medium && (
             <div>
-              <p className="text-xs uppercase tracking-wide text-ink-400">
+              <p className="text-xs uppercase tracking-wide text-ink-600">
                 Medium
               </p>
               <p className="mt-1 text-base font-medium text-ink-900">
@@ -231,7 +231,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
           )}
           {product.period && (
             <div>
-              <p className="text-xs uppercase tracking-wide text-ink-400">
+              <p className="text-xs uppercase tracking-wide text-ink-600">
                 Period
               </p>
               <p className="mt-1 text-base font-medium text-ink-900">
@@ -240,12 +240,12 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
             </div>
           )}
           <div>
-            <p className="text-xs uppercase tracking-wide text-ink-400">SKU</p>
+            <p className="text-xs uppercase tracking-wide text-ink-600">SKU</p>
             <p className="mt-1 font-mono text-base text-ink-900">{sku}</p>
           </div>
           {product.condition && (
             <div>
-              <p className="text-xs uppercase tracking-wide text-ink-400">
+              <p className="text-xs uppercase tracking-wide text-ink-600">
                 Condition
               </p>
               <p className="mt-1 inline-flex items-center gap-2 text-base text-ink-900">
@@ -257,8 +257,8 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border-200 bg-surface-50 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-400">
+      <div className="rounded-2xl border border-border-200 bg-lux-pearl p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-600">
           Collector Assurance
         </p>
         <ul className="mt-4 space-y-3 text-sm text-ink-700">

@@ -5,9 +5,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requireAdminAuth } from "@/lib/auth-admin";
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await requireAdminAuth();
+    if (session instanceof Response) return session;
+
     const body = await request.json();
     const { productId, finalPrice } = body;
 

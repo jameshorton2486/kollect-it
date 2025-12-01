@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -7,7 +8,7 @@ import { NextResponse } from "next/server";
  * Returns the session if authenticated as admin, throws error otherwise
  */
 export async function requireAdminAuth() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   
   if (!session?.user?.email) {
     throw new Error("Unauthorized - No session");

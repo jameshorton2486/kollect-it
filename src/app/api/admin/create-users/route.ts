@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { requireAdminAuth } from "@/lib/auth-admin";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +16,9 @@ const users = [
 
 export async function GET() {
   try {
+    const session = await requireAdminAuth();
+    if (session instanceof Response) return session;
+
     const results = [];
     for (const userData of users) {
       const hashedPassword = await bcrypt.hash(userData.password, 10);

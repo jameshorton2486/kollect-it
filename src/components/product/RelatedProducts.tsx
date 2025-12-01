@@ -35,25 +35,25 @@ export default function RelatedProducts({
   };
 
   return (
-    <div className="related-products-section section-spacing py-12 bg-gradient-to-b from-white to-parchment">
-      <div className="container">
+    <div className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-lux-white to-lux-pearl">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Section Header */}
         <div className="mb-8">
-          <p className="text-xs uppercase tracking-wider font-semibold text-gold mb-2">
+          <p className="text-xs uppercase tracking-[0.3em] font-semibold text-lux-gold mb-2">
             Continue Exploring
           </p>
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="related-products-title font-serif text-ink text-3xl md:text-4xl">
+              <h2 className="font-serif text-ink-900 text-3xl md:text-4xl">
                 You May Also Like
               </h2>
-              <p className="text-sm text-ink-secondary mt-2">
+              <p className="text-sm text-ink-600 mt-2">
                 More authenticated pieces from our {categoryName} collection
               </p>
             </div>
             <div className="hidden md:flex gap-2">
               <button
-                className="rounded-full border border-gold-500/30 bg-surface-0 hover:bg-gold-500/10 p-2 transition-colors"
+                className="rounded-full border border-lux-gold/30 bg-lux-white hover:bg-lux-gold/10 p-2 transition-colors"
                 aria-label="Scroll left"
                 onClick={() => scrollByCards(-1)}
               >
@@ -64,13 +64,14 @@ export default function RelatedProducts({
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
+                  className="text-lux-charcoal"
                   aria-hidden="true"
                 >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
               <button
-                className="rounded-full border border-gold-500/30 bg-surface-0 hover:bg-gold-500/10 p-2 transition-colors"
+                className="rounded-full border border-lux-gold/30 bg-lux-white hover:bg-lux-gold/10 p-2 transition-colors"
                 aria-label="Scroll right"
                 onClick={() => scrollByCards(1)}
               >
@@ -81,6 +82,7 @@ export default function RelatedProducts({
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
+                  className="text-lux-charcoal"
                   aria-hidden="true"
                 >
                   <polyline points="9 18 15 12 9 6" />
@@ -99,11 +101,11 @@ export default function RelatedProducts({
             <Link
               key={product.id}
               href={`/product/${product.slug}`}
-              className="related-product-card snap-start shrink-0 w-[240px] group"
+              className="snap-start shrink-0 w-[240px] group"
               data-card="true"
             >
               {/* Product Image Container */}
-              <div className="related-product-image relative h-[200px] w-full overflow-hidden rounded-lg border border-border-200 bg-surface-0">
+              <div className="relative h-[200px] w-full overflow-hidden rounded-lg border border-border-200 bg-lux-white">
                 {product.images[0] ? (
                   <>
                     <Image
@@ -124,8 +126,8 @@ export default function RelatedProducts({
                     ></div>
                   </>
                 ) : (
-                  <div className="related-product-placeholder h-full w-full bg-gradient-to-br from-parchment to-ink-tertiary/10 flex items-center justify-center">
-                    <span className="text-xs text-ink-secondary">No Image</span>
+                  <div className="h-full w-full bg-gradient-to-br from-lux-pearl to-lux-gray-light/10 flex items-center justify-center">
+                    <span className="text-xs text-ink-600">No Image</span>
                   </div>
                 )}
 
@@ -141,14 +143,14 @@ export default function RelatedProducts({
                   >
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                   </svg>
-                  <span className="text-[10px] font-semibold text-ink">
+                  <span className="text-[10px] font-semibold text-ink-900">
                     Auth.
                   </span>
                 </div>
 
                 {/* View Details CTA */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="bg-surface-0/95 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 text-sm font-medium text-ink-900 hover:bg-surface-0">
+                  <div className="bg-lux-white/95 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 text-sm font-medium text-ink-900 hover:bg-lux-white">
                     View Details
                     <svg
                       width="14"
@@ -166,20 +168,20 @@ export default function RelatedProducts({
               </div>
 
               {/* Product Info */}
-              <div className="related-product-info mt-3 space-y-2">
+              <div className="mt-3 space-y-2">
                 {/* Category Badge */}
-                <p className="text-[10px] uppercase tracking-wider font-bold text-gold">
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-lux-gold">
                   {product.category.name}
                 </p>
 
                 {/* Title */}
-                <h3 className="related-product-title font-serif text-sm text-ink line-clamp-2 min-h-[2.5rem] group-hover:text-gold transition-colors">
+                <h3 className="font-serif text-sm text-ink-900 line-clamp-2 min-h-[2.5rem] group-hover:text-lux-gold transition-colors">
                   {product.title}
                 </h3>
 
                 {/* Price */}
                 <div className="flex items-baseline justify-between pt-1">
-                  <p className="related-product-price font-serif text-lg font-bold text-ink">
+                  <p className="font-serif text-lg font-bold text-ink-900">
                     {formatUSD0(product.price)}
                   </p>
                   <svg
@@ -189,7 +191,7 @@ export default function RelatedProducts({
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
-                    className="text-gold opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="text-lux-gold opacity-0 group-hover:opacity-100 transition-opacity"
                     aria-hidden="true"
                   >
                     <polyline points="9 18 15 12 9 6" />
@@ -201,13 +203,13 @@ export default function RelatedProducts({
         </div>
 
         {/* Bottom CTA Section */}
-        <div className="mt-8 rounded-lg border border-gold/20 bg-gradient-to-r from-gold/5 to-transparent p-6 text-center">
-          <p className="text-sm text-ink-secondary mb-3">
+        <div className="mt-8 rounded-lg border border-lux-gold/20 bg-gradient-to-r from-lux-gold/5 to-transparent p-6 text-center">
+          <p className="text-sm text-ink-600 mb-3">
             Didn't find what you're looking for?
           </p>
           <Link
             href="/browse"
-            className="inline-flex items-center gap-2 rounded-full bg-cta hover:bg-cta-hover text-white px-6 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-lux-gold hover:bg-lux-gold-light text-lux-black px-6 py-3 font-medium transition-colors"
           >
             Browse Full Inventory
             <svg
@@ -227,4 +229,3 @@ export default function RelatedProducts({
     </div>
   );
 }
-

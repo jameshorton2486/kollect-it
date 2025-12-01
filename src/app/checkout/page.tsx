@@ -194,12 +194,12 @@ export default function CheckoutPage() {
 
   const stripePromise = stripeEnabled ? getStripe() : null;
   const labelClasses =
-    "text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-400";
+    "text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-600";
   const inputClasses =
-    "w-full rounded-xl border border-border-200 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300 transition";
+    "w-full rounded-xl border border-border-200 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-lux-gray-light focus:border-lux-gold focus:outline-none focus:ring-1 focus:ring-lux-gold transition";
 
   return (
-    <div className="min-h-screen bg-surface-50 py-12 sm:py-16">
+    <div className="min-h-screen bg-lux-pearl py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <header className="space-y-4 border-b border-border-200 pb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">

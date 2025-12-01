@@ -66,10 +66,10 @@ export function Header() {
           {/* Logo - White + Gold for Dark Header */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center group">
-              <span className="font-serif text-3xl font-bold text-white group-hover:text-surface-200 transition-colors tracking-tight">
+              <span className="font-serif text-3xl font-bold text-white group-hover:text-lux-gray-light transition-colors tracking-tight">
                 Kollect
               </span>
-              <span className="font-serif text-3xl font-bold text-gold-500 group-hover:text-gold-400 transition-colors tracking-tight">
+              <span className="font-serif text-3xl font-bold text-lux-gold group-hover:text-lux-gold-light transition-colors tracking-tight">
                 -It
               </span>
             </Link>
@@ -224,7 +224,7 @@ export function Header() {
                     className={cn(
                     "text-base font-semibold py-3 border-b border-white/10 last:border-0 tracking-[0.2em] uppercase transition-colors",
                       isActive
-                      ? "text-gold-400"
+                      ? "text-lux-gold-light"
                       : "text-lux-pearl/80 hover:text-white",
                     )}
                     onClick={() => setMobileMenuOpen(false)}
