@@ -141,7 +141,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
               title: product.title,
               price: product.price,
               slug: product.slug,
-              image: product.images[0]?.url || "/products/placeholder.svg",
+              image: product.images[0]?.url || "/placeholder.svg",
               categoryName: product.category.name,
             }}
             quantity={quantity}
