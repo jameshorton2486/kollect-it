@@ -284,7 +284,7 @@ export default function AccountPage() {
                   />
                   <h3 className="font-serif text-xl">No Orders Yet</h3>
                   <p className="text-ink-700">
-                    You haven&apos;t placed any orders yet.
+                    You haven't placed any orders yet.
                   </p>
                   <Link href="/" className="ki-btn-primary">
                     Start Shopping
@@ -504,3 +504,4 @@ export default function AccountPage() {
     </div>
   );
 }
+

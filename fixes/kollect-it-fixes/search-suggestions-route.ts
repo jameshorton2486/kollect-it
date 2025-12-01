@@ -3,47 +3,48 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.url<any>;
+    const searchParams = request.nextUrl.searchParams;
+    const query = searchParams.get("q") || "";
 
-    const query = searchParams || "";
-
-    if (query.length &lt; 2) {
+    if (query.length < 2) {
       return NextResponse.json({ suggestions: [] });
     }
 
-    // Query for products that match this keyword
+    // Search for products matching the query
     const products = await prisma.product.findMany({
       where: {
         status: "active",
-        title: {
-          contains: query,
-          mode: "insensitive",
-        },
+        OR: [
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } },
+        ],
       },
+      take: 5,
       select: {
         id: true,
         title: true,
         categoryId: true,
         images: true,
       },
-      take: 5,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
-    const suggestions = products.map((product) =&gt; ({
+    const suggestions = products.map((product: any) => ({
       id: product.id,
       name: product.title,
       category: product.categoryId,
-      image: product.images?.[0] || "/placeholder.svg",
+      image: product.images[0] || "/placeholder.svg",
     }));
 
     return NextResponse.json({ suggestions });
   } catch (error) {
-    
-    console.error("Suggestion retrieval error:", error);
-    
+    console.error("Suggestions error:", error);
     return NextResponse.json(
       { error: "Failed to fetch suggestions" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
+

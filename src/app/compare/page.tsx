@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { X } from "lucide-react";
@@ -30,36 +30,37 @@ export default function ComparisonPage() {
       const compareIds = JSON.parse(
         localStorage.getItem("compareProducts") || "[]",
       );
+
       if (compareIds.length === 0) {
         setIsLoading(false);
         return;
       }
 
       const response = await fetch(
-        `/api/products/compare?ids=${compareIds.join(",")}`,
+        `/api/products/compare?ids=${JSON.stringify(compareIds)}`,
       );
+
+      if (!response.ok) throw new Error("Failed to fetch comparison data");
+
       const data = await response.json();
       setProducts(data.products || []);
     } catch (error) {
-      console.error("Failed to fetch comparison:", error);
+      console.error("Error fetch compare products.", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const removeProduct = (productId: string) => {
-    const compareIds = JSON.parse(
-      localStorage.getItem("compareProducts") || "[]",
+    setProducts((productsInfor) =>
+      productsInfor.filter((product) => product.id !== productId),
     );
-    const updated = compareIds.filter((id: string) => id !== productId);
-    localStorage.setItem("compareProducts", JSON.stringify(updated));
-    fetchComparison();
   };
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading comparison...</div>
+      <div className="container mx-auto px-4 py-8 text-center">
+        <p className="text-lg font-medium">Loading product comparison...</p>
       </div>
     );
   }
@@ -67,108 +68,108 @@ export default function ComparisonPage() {
   if (products.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-2">No products to compare</h1>
+        <h1 className="text-3xl font-bold mb-4">No items.</h1>
         <p className="text-muted-foreground mb-6">
-          Add products to compare side-by-side
+          There are no itmem in your comparison right now.
         </p>
         <Link
-          href="/"
-          className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold"
+          href="/browse"
+          className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold hover:bg-primary/90 transition"
         >
-          Start Shopping
+          Browse Products
         </Link>
       </div>
     );
   }
 
   const specs = [
-    { label: "Price", key: "price" },
-    { label: "Category", key: "category" },
-    { label: "Condition", key: "condition" },
-    { label: "Year", key: "year" },
-    { label: "Artist", key: "artist" },
-    { label: "Rarity", key: "rarity" },
+    { label: "Name", key: "title" as const },
+    { label: "Price", key: "price" as const },
+    { label: "Category", key: "category" as const },
+    { label: "Condition", key: "condition" as const },
+    { label: "Year", key: "year" as const },
+    { label: "Artist", key: "artist" as const },
+    { label: "Rarity", key: "rarity" as const },
   ];
+
+  const formatValue = (product: CompareProduct, key: keyof CompareProduct) => {
+    const value = product[key];
+
+    if (key === "price" && typeof value === "number") {
+      return `$${value.toFixed(2)}`;
+    }
+
+    if (key === "category") {
+      return product.category?.name || "Uncategorized";
+    }
+
+    return value || "—";
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Product Comparison</h1>
 
       <div className="overflow-x-auto">
-        <table className="w-full border">
-          <thead>
-            <tr className="bg-muted">
-              <th className="p-4 text-left font-semibold border-r">
-                Specification
-              </th>
-              {products.map((product) => (
-                <th key={product.id} className="p-4 border-r min-w-[250px]">
-                  <div className="relative">
-                    <button
-                      onClick={() => removeProduct(product.id)}
-                      className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                    <Link href={`/products/${product.id}`}>
-                      <div className="relative aspect-square bg-muted rounded mb-3">
-                        <Image
-                          src={product.images[0]?.url || "/placeholder.jpg"}
-                          alt={product.title}
-                          fill
-                          className="object-cover rounded"
-                        />
-                      </div>
-                      <h3 className="font-semibold text-sm line-clamp-2">
-                        {product.title}
-                      </h3>
-                    </Link>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
+        <div className="grid grid-cols-[1.2fr_1.5fr_1.5fr] md:grid-cols-[1fr_repeat(\"${products.length}\", 1fr)] gap-4">
+          {/* First column with spec labels */}
+          <div className="space-y-4">
+            <div className="font-semibold text-base">Product</div>
             {specs.map((spec) => (
-              <tr key={spec.key} className="border-t">
-                <td className="p-4 font-semibold border-r bg-muted/30">
-                  {spec.label}
-                </td>
-                {products.map((product) => (
-                  <td key={product.id} className="p-4 border-r text-center">
-                    {spec.key === "price"
-                      ? `$${product.price.toFixed(2)}`
-                      : spec.key === "category"
-                        ? product.category.name
-                        : (product as any)[spec.key] || "—"}
-                  </td>
-                ))}
-              </tr>
+              <div
+                key={spec.key}
+                className="py-2 border-b border-muted-foreground font-medium"
+              >
+                {spec.label}
+              </div>
             ))}
-            <tr className="border-t">
-              <td className="p-4 font-semibold border-r bg-muted/30">
-                Actions
-              </td>
-              {products.map((product) => (
-                <td key={product.id} className="p-4 border-r">
-                  <div className="space-y-2">
-                    <Link
-                      href={`/products/${product.id}`}
-                      className="block w-full bg-primary text-primary-foreground px-4 py-2 rounded text-center font-semibold hover:bg-primary/90"
-                    >
-                      View Details
-                    </Link>
-                    <button className="w-full border px-4 py-2 rounded font-semibold hover:bg-muted">
-                      Add to Cart
-                    </button>
+          </div>
+
+          {/* Product columns */}
+          {products.map((product) => (
+            <div key={product.id} className="border rounded-lg p-4 relative">
+              <button
+                onClick={() => removeProduct(product.id)}
+                className="absolute top-2 right-2 p-1 rounded-full bg-muted text-foreground hover:bg-muted-foreground hover:text-primary"
+                aria-label="Remove from comparison table"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              <div className="flex flex-col items-center">
+                <div className="relative w-32 h-32 mb-4">
+                  <Image
+                    src={
+                      product.images?.[0]?.url ? product.images[0].url : "/placeholder.svg"
+                    }
+                    alt={product.title}
+                    fill
+                    className="object-cover rounded-md"
+                  />
+                </div>
+                <h2 className="text-base font-semibold text-center mb-2 line-clamp-2">
+                  {product.title}
+                </h2>
+                <p className="text-sm text-muted-foreground mb-2">
+                  {product.category?.name || "Uncategorized"}
+                </p>
+                <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                {specs.map((spec) => (
+                  <div
+                    className="py-1 border-b border-gray-200 text-sm text-center"
+                    key={spec.key}
+                  >
+                    {formatValue(product, spec.key)}
                   </div>
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-

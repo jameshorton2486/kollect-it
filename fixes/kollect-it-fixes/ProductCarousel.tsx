@@ -28,11 +28,11 @@ export default function ProductCarousel({
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: "top" | "bottom") => {
+  const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 300;
       scrollRef.current.scrollBy({
-        left: direction === "top" ? -scrollAmount : scrollAmount,
+        left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
       });
     }
@@ -50,14 +50,14 @@ export default function ProductCarousel({
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() => scroll("top")}
+              onClick={() => scroll("left")}
               className="p-2 border rounded-lg hover:bg-muted"
             >
               <ChevronLeft className="h-5 w-5" />
               <span className="sr-only">Scroll left</span>
             </button>
             <button
-              onClick={() => scroll("bottom")}
+              onClick={() => scroll("right")}
               className="p-2 border rounded-lg hover:bg-muted"
             >
               <ChevronRight className="h-5 w-5" />
@@ -75,7 +75,7 @@ export default function ProductCarousel({
         </div>
 
         <div
-          ref={scoped}
+          ref={scrollRef}
           className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
           style={{ scrollbarWidth: "none" }}
         >
@@ -97,7 +97,7 @@ export default function ProductCarousel({
                 {product.title}
               </h3>
               <p className="text-lg font-bold text-primary">
-                ${product.price.toString()}
+                ${product.price.toFixed(2)}
               </p>
             </Link>
           ))}
@@ -106,3 +106,4 @@ export default function ProductCarousel({
     </section>
   );
 }
+

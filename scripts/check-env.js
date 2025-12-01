@@ -25,7 +25,7 @@ if (missing.length > 0) {
   }
   console.error(
     "\nUpdate your .env.local file and try again.\n" +
-      "Hint: check the DEPO-PRO / Kollect-It env docs we wrote."
+      "Hint: check the Kollect-It environment setup docs."
   );
   process.exit(1);
 }
