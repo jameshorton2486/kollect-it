@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+﻿# Novel Assistant Project
+AI-assisted system for writing novels.
+=======
 # Kollect-It Marketplace
 
 A modern, full-stack Next.js 15 application for the Kollect-It antiques and collectibles marketplace. Built with TypeScript, Prisma, Supabase, and comprehensive e-commerce functionality.
@@ -705,3 +709,4 @@ src/
 ### Built with ❤️ for Kollect-It
 
 _This is a fully functional, production-ready application. The latest 6 products feature works automatically - just add products through the admin panel and they'll appear on the homepage!_
+>>>>>>> 25ce121d7267f9ca9a99ea16101cd2c911aa7c85
