@@ -15,17 +15,15 @@ export function Hero() {
     <section className="bg-lux-pearl">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="space-y-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
-            Kollect-It Marketplace
+          <p className="text-xs uppercase tracking-[0.25em] text-lux-gold mb-4">
+            Exceptional pieces for collectors, designers, and enthusiasts.
           </p>
           <div className="space-y-4">
-            <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-              Curated art, objects, and design with collector-grade detail.
+            <h1 className="font-serif text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+              Art, collectibles, historical pieces, and rare books—curated with care.
             </h1>
-            <p className="text-base leading-relaxed text-ink-700 sm:text-lg">
-              Each listing is photographed, catalogued, and authenticated by our
-              in-house curator so you can acquire confidently—whether it&apos;s a
-              single sculptural object or a full salon wall.
+            <p className="max-w-2xl text-base leading-relaxed text-ink-700 sm:text-lg">
+              Every piece is thoughtfully photographed and reviewed, so you can shop with confidence—whether you&apos;re discovering one standout object or building an entire wall or shelf story.
             </p>
           </div>
 

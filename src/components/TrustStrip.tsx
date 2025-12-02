@@ -1,15 +1,15 @@
 const items = [
   {
     title: "Authenticated Consignments",
-    body: "Every piece is inspected, documented, and photographed in-house before it is published.",
+    body: "Trusted consignments vetted for quality and authenticity",
   },
   {
     title: "Concierge Shipping",
-    body: "Insured carriers, custom packing, and white-glove delivery options for statement works.",
+    body: "White-glove shipping coordination from our team",
   },
   {
-    title: "Secure Checkout",
-    body: "Stripe-powered payments, PCI-compliant processing, and prompt settlement for consignors.",
+    title: "Research & Provenance",
+    body: "Provenance and documentation included whenever available",
   },
 ];
 

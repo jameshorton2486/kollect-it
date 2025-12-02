@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { formatUSD } from "@/lib/currency";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface OrderDetails {
   orderNumber: string;
@@ -68,43 +69,57 @@ function SuccessContent() {
 
   if (loading) {
     return (
-      <div className="success-page">
-        <div className="success-container">
-          <div className="success-loading">
-            <div className="spinner-large"></div>
-            <h2>Processing your order...</h2>
-            <p>Please wait while we confirm your payment</p>
+      <main className="min-h-[60vh] bg-lux-pearl">
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="rounded-2xl border border-border-200 bg-white p-8 text-center shadow-sm sm:p-12">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-lux-gold border-t-transparent"></div>
+            </div>
+            <h2 className="font-serif text-2xl font-semibold tracking-tight text-ink-900">
+              Processing your order...
+            </h2>
+            <p className="mt-2 text-base text-ink-600">
+              Please wait while we confirm your payment
+            </p>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error) {
     return (
-      <div className="success-page">
-        <div className="success-container">
-          <div className="success-error">
-            <svg
-              width="60"
-              height="60"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="15" y1="9" x2="9" y2="15" />
-              <line x1="9" y1="9" x2="15" y2="15" />
-            </svg>
-            <h2>Something went wrong</h2>
-            <p>{error}</p>
-            <Link href="/cart" className="btn-primary">
-              Return to Cart
-            </Link>
+      <main className="min-h-[60vh] bg-lux-pearl">
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="rounded-2xl border border-border-200 bg-white p-8 text-center shadow-sm sm:p-12">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-50">
+              <svg
+                className="h-8 w-8 text-red-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </svg>
+            </div>
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+              Something went wrong
+            </h1>
+            <p className="mt-4 text-base leading-relaxed text-ink-600">{error}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <Button asChild variant="gold" className="rounded-full">
+                <Link href="/cart">Return to Cart</Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full">
+                <Link href="/">Continue Shopping</Link>
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -289,14 +304,18 @@ export default function SuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="success-page">
-          <div className="success-container">
-            <div className="success-loading">
-              <div className="spinner-large"></div>
-              <h2>Loading...</h2>
+        <main className="min-h-[60vh] bg-lux-pearl">
+          <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+            <div className="rounded-2xl border border-border-200 bg-white p-8 text-center shadow-sm sm:p-12">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-lux-gold border-t-transparent"></div>
+              </div>
+              <h2 className="font-serif text-2xl font-semibold tracking-tight text-ink-900">
+                Loading...
+              </h2>
             </div>
           </div>
-        </div>
+        </main>
       }
     >
       <SuccessContent />

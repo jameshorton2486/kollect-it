@@ -8,3 +8,10 @@ credentials/
 token.json
 .venv/
 *.pyc
+# Ignore Next.js build cache
+.next/
+# Ignore local environment files
+.env.local
+.env.production
+
+.env.local

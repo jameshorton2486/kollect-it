@@ -30,10 +30,7 @@ export function Header() {
     { name: "Home", href: "/" },
     { name: "Shop", href: "/browse" },
     { name: "Categories", href: "/categories" },
-    { name: "How It Works", href: "/how-it-works" },
-    { name: "FAQ", href: "/faq" },
     { name: "About", href: "/about" },
-    { name: "Consign", href: "/sell" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -54,9 +51,8 @@ export function Header() {
           : "bg-lux-black"
       )}
     >
-      <div className="hidden border-b border-white/5 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-lux-gray-light/80 sm:flex sm:justify-between">
-        <span>Certified consignments • Worldwide delivery</span>
-        <span className="hidden md:inline">Concierge: james@kollect-it.com</span>
+      <div className="hidden border-b border-white/5 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-lux-gray-light/80 sm:flex sm:justify-end">
+        <a href="mailto:james@kollect-it.com" className="hover:text-white transition-colors">james@kollect-it.com</a>
       </div>
       <nav
         className="mx-auto flex max-w-6xl flex-col px-4 sm:px-6"
@@ -150,16 +146,6 @@ export function Header() {
               </Link>
             </Button>
 
-            {/* Consign CTA - Desktop */}
-            <div className="pl-3">
-              <Button
-                asChild
-                variant="gold"
-                className="font-semibold tracking-[0.2em] rounded-full px-6 uppercase text-[0.7rem]"
-              >
-                <Link href="/sell">Consign</Link>
-              </Button>
-            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -236,12 +222,6 @@ export function Header() {
 
               {/* Mobile CTAs */}
               <div className="pt-4 flex flex-col gap-3">
-                <Button
-                  asChild
-                  className="w-full bg-lux-gold text-lux-black hover:bg-lux-gold-light"
-                >
-                  <Link href="/sell">Consign</Link>
-                </Button>
                 <Button
                   asChild
                   variant="outline"

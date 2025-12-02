@@ -1,0 +1,1 @@
+{"timestamp":"2025-11-26T17:21:52.028Z","level":"error","message":"NextAuth error","context":{"code":"CLIENT_FETCH_ERROR","error":"[object Object]","url":"/api/auth/session","message":"Failed to fetch","client":"true","helpText":"This is a NextAuth internal error. Check NEXTAUTH_SECRET and NEXTAUTH_URL env vars."}}

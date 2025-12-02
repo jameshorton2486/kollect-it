@@ -2,6 +2,7 @@
 
 import { Facebook, Instagram, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -40,7 +41,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="mt-24 border-t border-white/10 bg-lux-charcoal text-lux-pearl">
+    <footer className="mt-24 border-t border-white/10 bg-lux-charcoal text-lux-pearl motion-safe:animate-fade-in">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Main footer content */}
         <div className="grid gap-10 py-12 md:gap-12 md:py-16 lg:grid-cols-[2fr,3fr] lg:py-20">
@@ -53,18 +54,18 @@ export function Footer() {
                   <span className="text-lux-gold">-It</span>
                 </h2>
               </Link>
-              <p className="mt-3 max-w-sm text-sm text-lux-gray-light leading-relaxed">
+              <p className="mt-3 max-w-sm text-sm text-lux-pearl/80 leading-relaxed">
                 A small, collector-run marketplace for antiques, art, books,
                 militaria, and unusual finds. Every piece is hand-selected and
                 described as clearly as possible.
               </p>
-              <div className="mt-4 space-y-1 text-sm text-lux-gray-light">
+              <div className="mt-4 space-y-1 text-sm text-lux-pearl/70">
                 <p className="font-medium text-white">Kollect-It</p>
-                <p className="text-lux-gray-light/90">San Antonio, Texas</p>
+                <p>San Antonio, Texas</p>
                 <p>
                   <a
                     href="tel:+14693866065"
-                    className="text-lux-gray-light hover:text-white transition-colors"
+                    className="hover:text-white transition-colors"
                   >
                     469-386-6065
                   </a>
@@ -72,7 +73,7 @@ export function Footer() {
                 <p>
                   <a
                     href="mailto:james@kollect-it.com"
-                    className="text-lux-gray-light hover:text-white transition-colors"
+                    className="hover:text-white transition-colors"
                   >
                     james@kollect-it.com
                   </a>
@@ -80,9 +81,24 @@ export function Footer() {
               </div>
             </div>
 
+            {/* Interested in Selling Section */}
+            <div className="space-y-3 rounded-lg border border-white/10 bg-white/5 p-4">
+              <h3 className="text-sm font-semibold text-white">Have a piece to consign?</h3>
+              <p className="text-xs text-lux-pearl/80">
+                We work with collectors and estates to place quality pieces.
+              </p>
+              <Button
+                asChild
+                variant="gold"
+                className="w-full rounded-full font-semibold tracking-[0.2em] uppercase text-xs"
+              >
+                <Link href="/sell">Start Consigning</Link>
+              </Button>
+            </div>
+
             <div className="space-y-3">
               <p className="text-sm font-medium text-white tracking-[0.2em] uppercase">
-                Join the collector&apos;s list
+                JOIN THE COLLECTOR&apos;S LIST
               </p>
               <p className="text-xs text-lux-gray-light/90">
                 Occasional updates when new groups of items are listed.
@@ -119,7 +135,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 text-sm text-lux-gray-light sm:grid-cols-3">
             {columnSections.map((section) => (
               <div key={section.title} className="space-y-3">
-                <h3 className="text-xs font-semibold tracking-wide text-lux-gold uppercase">
+                <h3 className="text-xs font-semibold tracking-[0.2em] text-lux-gold uppercase">
                   {section.title}
                 </h3>
                 <ul className="space-y-2">
@@ -127,7 +143,7 @@ export function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="hover:text-white transition-colors"
+                        className="text-lux-pearl hover:text-white transition-colors"
                       >
                         {link.label}
                       </Link>
