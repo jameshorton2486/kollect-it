@@ -25,7 +25,7 @@ interface EnvironmentVariables {
   IMAGEKIT_PRIVATE_KEY: string;
 
   // Stripe
-  STRIPE_PUBLIC_KEY: string;
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: string;
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
 
@@ -81,8 +81,8 @@ function validateEnvVar(
     throw new Error(`Invalid STRIPE_SECRET_KEY: must start with 'sk_'`);
   }
 
-  if (name === "STRIPE_PUBLIC_KEY" && !value.startsWith("pk_")) {
-    throw new Error(`Invalid STRIPE_PUBLIC_KEY: must start with 'pk_'`);
+  if (name === "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY" && !value.startsWith("pk_")) {
+    throw new Error(`Invalid NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: must start with 'pk_'`);
   }
 
   if (name === "NEXTAUTH_SECRET" && value.length < 32) {
@@ -134,9 +134,9 @@ export function getEnv(): Partial<EnvironmentVariables> {
       ),
 
       // Stripe
-      STRIPE_PUBLIC_KEY: validateEnvVar(
-        "STRIPE_PUBLIC_KEY",
-        process.env.STRIPE_PUBLIC_KEY,
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: validateEnvVar(
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
       ),
       STRIPE_SECRET_KEY: validateEnvVar(
         "STRIPE_SECRET_KEY",

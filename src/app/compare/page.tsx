@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { X, Scale } from "lucide-react";
 
 interface CompareProduct {
   id: string;
@@ -28,7 +28,7 @@ export default function ComparisonPage() {
   const fetchComparison = async () => {
     try {
       const compareIds = JSON.parse(
-        localStorage.getItem("compareProducts") || "[]",
+        localStorage.getItem("compareProducts") || "[]"
       );
 
       if (compareIds.length === 0) {
@@ -37,7 +37,7 @@ export default function ComparisonPage() {
       }
 
       const response = await fetch(
-        `/api/products/compare?ids=${JSON.stringify(compareIds)}`,
+        `/api/products/compare?ids=${JSON.stringify(compareIds)}`
       );
 
       if (!response.ok) throw new Error("Failed to fetch comparison data");
@@ -45,46 +45,69 @@ export default function ComparisonPage() {
       const data = await response.json();
       setProducts(data.products || []);
     } catch (error) {
-      console.error("Error fetch compare products.", error);
+      console.error("Error fetching comparison products:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const removeProduct = (productId: string) => {
-    setProducts((productsInfor) =>
-      productsInfor.filter((product) => product.id !== productId),
-    );
+    setProducts((prev) => prev.filter((product) => product.id !== productId));
+    // Also update localStorage
+    const currentIds = JSON.parse(localStorage.getItem("compareProducts") || "[]");
+    const newIds = currentIds.filter((id: string) => id !== productId);
+    localStorage.setItem("compareProducts", JSON.stringify(newIds));
   };
 
+  const clearAll = () => {
+    setProducts([]);
+    localStorage.setItem("compareProducts", "[]");
+  };
+
+  // Loading state
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
-        <p className="text-lg font-medium">Loading product comparison...</p>
-      </div>
+      <main className="min-h-[60vh] bg-lux-pearl">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-lux-gold border-t-transparent"></div>
+            <p className="text-ink-600">Loading comparison...</p>
+          </div>
+        </div>
+      </main>
     );
   }
 
+  // Empty state
   if (products.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold mb-4">No items.</h1>
-        <p className="text-muted-foreground mb-6">
-          There are no itmem in your comparison right now.
-        </p>
-        <Link
-          href="/browse"
-          className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold hover:bg-primary/90 transition"
-        >
-          Browse Products
-        </Link>
-      </div>
+      <main className="min-h-[60vh] bg-lux-pearl">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="text-center max-w-md mx-auto">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-surface-100">
+              <Scale className="h-10 w-10 text-lux-gold" />
+            </div>
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+              No Items to Compare
+            </h1>
+            <p className="mt-4 text-base text-ink-600">
+              Add items to your comparison list while browsing to see them side by side.
+            </p>
+            <div className="mt-8">
+              <Link
+                href="/browse"
+                className="inline-flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black shadow-sm transition-all hover:bg-lux-gold-light"
+              >
+                Browse Products
+              </Link>
+            </div>
+          </div>
+        </div>
+      </main>
     );
   }
 
   const specs = [
-    { label: "Name", key: "title" as const },
-    { label: "Price", key: "price" as const },
     { label: "Category", key: "category" as const },
     { label: "Condition", key: "condition" as const },
     { label: "Year", key: "year" as const },
@@ -95,10 +118,6 @@ export default function ComparisonPage() {
   const formatValue = (product: CompareProduct, key: keyof CompareProduct) => {
     const value = product[key];
 
-    if (key === "price" && typeof value === "number") {
-      return `$${value.toFixed(2)}`;
-    }
-
     if (key === "category") {
       return product.category?.name || "Uncategorized";
     }
@@ -107,69 +126,117 @@ export default function ComparisonPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Product Comparison</h1>
-
-      <div className="overflow-x-auto">
-        <div className="grid grid-cols-[1.2fr_1.5fr_1.5fr] md:grid-cols-[1fr_repeat(\"${products.length}\", 1fr)] gap-4">
-          {/* First column with spec labels */}
-          <div className="space-y-4">
-            <div className="font-semibold text-base">Product</div>
-            {specs.map((spec) => (
-              <div
-                key={spec.key}
-                className="py-2 border-b border-muted-foreground font-medium"
-              >
-                {spec.label}
-              </div>
-            ))}
-          </div>
-
-          {/* Product columns */}
-          {products.map((product) => (
-            <div key={product.id} className="border rounded-lg p-4 relative">
-              <button
-                onClick={() => removeProduct(product.id)}
-                className="absolute top-2 right-2 p-1 rounded-full bg-muted text-foreground hover:bg-muted-foreground hover:text-primary"
-                aria-label="Remove from comparison table"
-              >
-                <X className="h-4 w-4" />
-              </button>
-
-              <div className="flex flex-col items-center">
-                <div className="relative w-32 h-32 mb-4">
-                  <Image
-                    src={
-                      product.images?.[0]?.url ? product.images[0].url : "/placeholder.svg"
-                    }
-                    alt={product.title}
-                    fill
-                    className="object-cover rounded-md"
-                  />
-                </div>
-                <h2 className="text-base font-semibold text-center mb-2 line-clamp-2">
-                  {product.title}
-                </h2>
-                <p className="text-sm text-muted-foreground mb-2">
-                  {product.category?.name || "Uncategorized"}
-                </p>
-                <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
-              </div>
-
-              <div className="mt-4 space-y-2">
-                {specs.map((spec) => (
-                  <div
-                    className="py-1 border-b border-gray-200 text-sm text-center"
-                    key={spec.key}
-                  >
-                    {formatValue(product, spec.key)}
-                  </div>
-                ))}
-              </div>
+    <main className="min-h-screen bg-lux-pearl">
+      {/* Header */}
+      <section className="border-b border-border-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-lux-gold">
+                Side by Side
+              </p>
+              <h1 className="mt-2 font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+                Compare Products
+              </h1>
             </div>
-          ))}
+            <button
+              onClick={clearAll}
+              className="rounded-full border border-border-300 px-4 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-surface-50"
+            >
+              Clear All
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* Comparison Grid */}
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div className="overflow-x-auto">
+          <div className="min-w-[600px]">
+            {/* Product Cards Row */}
+            <div className={`grid gap-4 mb-6 ${
+              products.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' :
+              products.length === 2 ? 'grid-cols-2 max-w-2xl mx-auto' :
+              'grid-cols-3'
+            }`}>
+              {products.map((product) => (
+                <div 
+                  key={product.id} 
+                  className="relative rounded-xl border border-border-200 bg-white p-4 shadow-sm"
+                >
+                  <button
+                    onClick={() => removeProduct(product.id)}
+                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-ink-500 transition-colors hover:bg-red-50 hover:text-red-500"
+                    aria-label="Remove from comparison"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+
+                  <Link href={`/product/${product.id}`} className="block">
+                    <div className="relative mx-auto mb-4 aspect-square w-full max-w-[200px] overflow-hidden rounded-lg bg-surface-100">
+                      <Image
+                        src={product.images?.[0]?.url || "/placeholder.svg"}
+                        alt={product.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <h2 className="text-center font-medium text-ink-900 line-clamp-2 hover:text-lux-gold transition-colors">
+                      {product.title}
+                    </h2>
+                  </Link>
+                  <p className="mt-1 text-center text-sm text-ink-500">
+                    {product.category?.name || "Uncategorized"}
+                  </p>
+                  <p className="mt-2 text-center text-xl font-semibold text-ink-900">
+                    ${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Specs Table */}
+            <div className="rounded-xl border border-border-200 bg-white overflow-hidden">
+              {specs.map((spec, index) => (
+                <div
+                  key={spec.key}
+                  className={`grid ${
+                    products.length === 1 ? 'grid-cols-2' :
+                    products.length === 2 ? 'grid-cols-3' :
+                    'grid-cols-4'
+                  } ${index !== specs.length - 1 ? 'border-b border-border-100' : ''}`}
+                >
+                  <div className="bg-surface-50 px-4 py-3 text-sm font-medium text-ink-500">
+                    {spec.label}
+                  </div>
+                  {products.map((product) => (
+                    <div key={product.id} className="px-4 py-3 text-sm text-ink-700 text-center">
+                      {formatValue(product, spec.key)}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className={`mt-6 grid gap-4 ${
+              products.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' :
+              products.length === 2 ? 'grid-cols-2 max-w-2xl mx-auto' :
+              'grid-cols-3'
+            }`}>
+              {products.map((product) => (
+                <Link
+                  key={product.id}
+                  href={`/product/${product.id}`}
+                  className="flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black transition-all hover:bg-lux-gold-light"
+                >
+                  View Details
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

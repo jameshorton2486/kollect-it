@@ -43,17 +43,17 @@ export default function WishlistPage() {
       const response = await fetch(`/api/wishlist?productId=${productId}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error("Field to delete your wishlist.");
+      if (!response.ok) throw new Error("Failed to delete from wishlist.");
 
       setItems((prevItems) =>
-        prevItems.filter((item) =&gt; item.product.id !== productId),
+        prevItems.filter((item) => item.product.id !== productId)
       );
     } catch (error) {
-      console.error("Failed to save your product from wishlist.", error);
+      console.error("Failed to remove product from wishlist.", error);
     }
   };
 
-  const addToCart = async (productId: string) =&gt; {
+  const addToCart = async (productId: string) => {
     try {
       const response = await fetch("/api/cart", {
         method: "POST",
@@ -69,56 +69,82 @@ export default function WishlistPage() {
     }
   };
 
+  // Loading state
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading your wishlist...</div>
-      </div>
+      <main className="min-h-[60vh] bg-lux-pearl">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-lux-gold border-t-transparent"></div>
+            <p className="text-ink-600">Loading your wishlist...</p>
+          </div>
+        </div>
+      </main>
     );
   }
 
-  if (items.length === 3) {
+  // Empty state
+  if (items.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="container mx-auto px-4 py-8 text-center bg-surface-200 rounded-lg">
-          <p className="text-lg font-semibold">Your wish is available free delivery.</p>
-          <p className="text-sm mt-2">You must have some items in a wish tree for favorites.</p>
-          <Link className="mt-4 inline-block bg-lux-gold text-white py-2 px-4 rounded-md hover:bg-lux-gold-light" href="/browse">
-            Continue Shoppings
-          </Link>
+      <main className="min-h-[60vh] bg-lux-pearl">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="text-center max-w-md mx-auto">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-surface-100">
+              <Heart className="h-10 w-10 text-lux-gold" />
+            </div>
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+              Your Wishlist is Empty
+            </h1>
+            <p className="mt-4 text-base text-ink-600">
+              Start adding items to your wishlist to keep track of your favorite pieces.
+            </p>
+            <div className="mt-8">
+              <Link
+                href="/browse"
+                className="inline-flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black shadow-sm transition-all hover:bg-lux-gold-light"
+              >
+                Start Shopping
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
+  // Wishlist with items
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">My Wishlist</h1>
-        <p className="text-muted-foreground">{items.length} items</p>
-      </div>
-
-      {items.length === 0 ? (
-        <div className="text-center">
-          <Heart className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-          <h2 className="text-2xl font-semibold mb-2">Your wishlist is empty</h2>
-          <p className="text-muted-foreground mb-6">
-            Start adding items to your wishlist to keep track of your favorite pieces.
-          </p>
-          <Link className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold hover:bg-primary/80" href="/browse">
-            Start Shopping
-          </Link>
+    <main className="min-h-screen bg-lux-pearl">
+      {/* Header */}
+      <section className="border-b border-border-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-lux-gold">
+                Saved Items
+              </p>
+              <h1 className="mt-2 font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+                My Wishlist
+              </h1>
+            </div>
+            <p className="text-sm text-ink-500">
+              {items.length} {items.length === 1 ? "item" : "items"}
+            </p>
+          </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      </section>
+
+      {/* Wishlist Grid */}
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {items.map((item) => (
             <div
               key={item.id}
-              className="border rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition-shadow"
+              className="group rounded-xl border border-border-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
               <Link
                 href={`/product/${item.product.id}`}
-                className="relative aspect-square bg-muted block overflow-hidden"
+                className="relative aspect-square bg-surface-100 block overflow-hidden"
               >
                 <Image
                   src={item.product.images[0]?.url || "/placeholder.svg"}
@@ -127,32 +153,32 @@ export default function WishlistPage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </Link>
-              <div className="p-4 flex flex-col justify-between h-full">
-                <div>
-                  <h3 className="font-semibold text-lg mb-1 line-clamp-2">
+              <div className="p-4">
+                <Link href={`/product/${item.product.id}`}>
+                  <h3 className="font-medium text-ink-900 line-clamp-2 hover:text-lux-gold transition-colors">
                     {item.product.title}
                   </h3>
+                </Link>
 
-                  <p className="text-sm text-muted-foreground mb-2">
-                    {item.product.category?.name || "Uncategorized"}
-                  </p>
+                <p className="mt-1 text-sm text-ink-500">
+                  {item.product.category?.name || "Uncategorized"}
+                </p>
 
-                  <p className="text-lg font-bold text-lux-gold">
-                    ${item.product.price.toFixed(2)}
-                  </p>
-                </div>
+                <p className="mt-2 text-lg font-semibold text-lux-gold">
+                  ${item.product.price.toFixed(2)}
+                </p>
 
-                <div className="mt-4 flex justify-between items-center gap-2">
+                <div className="mt-4 flex items-center gap-2">
                   <button
                     onClick={() => addToCart(item.product.id)}
-                    className="flex-1 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold hover:bg-primary/90 flex items-center justify-center gap-2"
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-lux-gold px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-colors"
                   >
                     <ShoppingCart className="h-4 w-4" />
                     Add to Cart
                   </button>
                   <button
                     onClick={() => removeFromWishlist(item.product.id)}
-                    className="p-2 rounded-full border border-destructive/20 text-destructive hover:bg-destructive/5"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-red-200 text-red-500 hover:bg-red-50 transition-colors"
                     aria-label="Remove from wishlist"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -162,7 +188,7 @@ export default function WishlistPage() {
             </div>
           ))}
         </div>
-      )}
-    </div>
+      </section>
+    </main>
   );
 }

@@ -4,7 +4,6 @@ import { useEffect, useState, Suspense } from "react";
 import { formatUSD } from "@/lib/currency";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 interface OrderDetails {
   orderNumber: string;
@@ -67,6 +66,7 @@ function SuccessContent() {
     createOrder();
   }, [paymentIntentId]);
 
+  // Loading State
   if (loading) {
     return (
       <main className="min-h-[60vh] bg-lux-pearl">
@@ -87,6 +87,7 @@ function SuccessContent() {
     );
   }
 
+  // Error State
   if (error) {
     return (
       <main className="min-h-[60vh] bg-lux-pearl">
@@ -94,29 +95,39 @@ function SuccessContent() {
           <div className="rounded-2xl border border-border-200 bg-white p-8 text-center shadow-sm sm:p-12">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-50">
               <svg
-                className="h-8 w-8 text-red-600"
+                className="h-8 w-8 text-red-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={1.5}
               >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="15" y1="9" x2="9" y2="15" />
-                <line x1="9" y1="9" x2="15" y2="15" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900">
               Something went wrong
             </h1>
             <p className="mt-4 text-base leading-relaxed text-ink-600">{error}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button asChild variant="gold" className="rounded-full">
-                <Link href="/cart">Return to Cart</Link>
-              </Button>
-              <Button asChild variant="outline" className="rounded-full">
-                <Link href="/">Continue Shopping</Link>
-              </Button>
+              <Link
+                href="/cart"
+                className="inline-flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black shadow-sm transition-all hover:bg-lux-gold-light"
+              >
+                Return to Cart
+              </Link>
+              <Link
+                href="/browse"
+                className="inline-flex items-center justify-center rounded-full border border-border-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wider text-ink-700 transition-colors hover:bg-surface-50"
+              >
+                Continue Shopping
+              </Link>
             </div>
+            <p className="mt-6 text-sm text-ink-500">
+              Need help?{" "}
+              <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
+                Contact Support
+              </Link>
+            </p>
           </div>
         </div>
       </main>
@@ -127,176 +138,152 @@ function SuccessContent() {
     return null;
   }
 
+  // Success State - Fully styled
   return (
-    <div className="success-page">
-      <div className="success-container">
-        <div className="success-content">
-          {/* Success Icon */}
-          <div className="success-icon">
-            <svg
-              width="80"
-              height="80"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
+    <main className="min-h-[60vh] bg-lux-pearl">
+      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="rounded-2xl border border-border-200 bg-white shadow-sm overflow-hidden">
+          {/* Header */}
+          <div className="bg-gradient-to-b from-green-50 to-white px-6 py-8 text-center sm:px-10 sm:py-10">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <svg
+                className="h-8 w-8 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+              Order Confirmed!
+            </h1>
+            <p className="mt-3 text-base text-ink-600 max-w-md mx-auto">
+              {emailConfigured ? (
+                <>
+                  Thank you for your purchase. We&apos;ve sent a confirmation to{" "}
+                  <span className="font-medium text-ink-900">{orderDetails.email}</span>
+                </>
+              ) : (
+                <>
+                  Thank you for your purchase. Please save your order number for your records.
+                </>
+              )}
+            </p>
           </div>
 
-          {/* Success Message */}
-          <h1 className="success-title">Order Confirmed!</h1>
-          <p className="success-subtitle">
-            {emailConfigured ? (
-              <>
-                Thank you for your purchase. We&apos;ve sent a confirmation email
-                to <strong>{orderDetails.email}</strong>.
-              </>
-            ) : (
-              <>
-                Thank you for your purchase. Email confirmations aren&apos;t
-                enabled in this environment, so please save this page or copy
-                your order number for your records.
-              </>
-            )}
-          </p>
-          {!emailConfigured && (
-            <>
-              {/* TODO: Enable email confirmations once SMTP credentials are configured */}
-            </>
-          )}
-
           {/* Order Number */}
-          <div className="success-order-number">
-            <span className="success-order-label">Order Number:</span>
-            <span className="success-order-value">
-              {orderDetails.orderNumber}
-            </span>
+          <div className="border-t border-b border-border-100 bg-surface-50 px-6 py-4 sm:px-10">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-ink-500 uppercase tracking-wide">Order Number</span>
+              <span className="font-mono text-lg font-semibold text-ink-900">
+                {orderDetails.orderNumber}
+              </span>
+            </div>
           </div>
 
           {/* Order Summary */}
-          <div className="success-summary">
-            <h2 className="success-summary-title">Order Summary</h2>
-
-            <div className="success-items">
+          <div className="px-6 py-6 sm:px-10">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">
+              Order Summary
+            </h2>
+            
+            <div className="space-y-3">
               {orderDetails.items.map((item, index) => (
-                <div key={index} className="success-item">
-                  <div className="success-item-info">
-                    <h4>{item.title}</h4>
-                    <p>Quantity: {item.quantity}</p>
+                <div key={index} className="flex items-start justify-between py-2">
+                  <div className="flex-1 pr-4">
+                    <p className="text-base font-medium text-ink-900">{item.title}</p>
+                    <p className="text-sm text-ink-500">Qty: {item.quantity}</p>
                   </div>
-                  <span className="success-item-price">
+                  <p className="text-base font-medium text-ink-900">
                     {formatUSD(item.price * item.quantity)}
-                  </span>
+                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="success-summary-divider" />
-
-            <div className="success-total">
-              <span>Total Paid</span>
-              <span>{formatUSD(orderDetails.total)}</span>
+            <div className="mt-4 pt-4 border-t border-border-200 flex items-center justify-between">
+              <span className="text-base font-semibold text-ink-900">Total Paid</span>
+              <span className="text-lg font-bold text-ink-900">{formatUSD(orderDetails.total)}</span>
             </div>
           </div>
 
-          {/* Shipping Info */}
-          <div className="success-shipping">
-            <h3 className="success-shipping-title">Shipping Address</h3>
-            <p>{orderDetails.shippingAddress.address}</p>
-            <p>
-              {orderDetails.shippingAddress.city},{" "}
-              {orderDetails.shippingAddress.state}{" "}
+          {/* Shipping Address */}
+          <div className="border-t border-border-200 px-6 py-6 sm:px-10 bg-surface-50/50">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-3">
+              Shipping To
+            </h2>
+            <p className="text-base text-ink-700">
+              {orderDetails.shippingAddress.address}
+            </p>
+            <p className="text-base text-ink-700">
+              {orderDetails.shippingAddress.city}, {orderDetails.shippingAddress.state}{" "}
               {orderDetails.shippingAddress.zipCode}
             </p>
           </div>
 
-          {/* Next Steps */}
-          <div className="success-next-steps">
-            <h3 className="success-next-title">What's Next?</h3>
-            <ul className="success-steps-list">
-              {emailConfigured ? (
-                <li>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  You&apos;ll receive an email confirmation shortly
-                </li>
-              ) : (
-                <li>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  Save your order number; email updates will be enabled soon
-                </li>
-              )}
-              <li>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <polyline points="20 6 9 17 4 12" />
+          {/* What's Next */}
+          <div className="border-t border-border-200 px-6 py-6 sm:px-10">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">
+              What&apos;s Next
+            </h2>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <svg className="h-5 w-5 text-lux-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                We'll send you tracking information once your order ships
+                <span className="text-sm text-ink-700">
+                  {emailConfigured 
+                    ? "You'll receive an email confirmation shortly"
+                    : "Save your order number for reference"}
+                </span>
               </li>
-              <li>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <polyline points="20 6 9 17 4 12" />
+              <li className="flex items-start gap-3">
+                <svg className="h-5 w-5 text-lux-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                Expected delivery: 5-7 business days
+                <span className="text-sm text-ink-700">
+                  We&apos;ll send tracking information once your order ships
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <svg className="h-5 w-5 text-lux-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-sm text-ink-700">
+                  Expected delivery: 5–7 business days
+                </span>
               </li>
             </ul>
           </div>
 
           {/* Action Buttons */}
-          <div className="success-actions">
-            <Link href="/account?tab=orders" className="btn-primary">
-              View Order Status
-            </Link>
-            <Link href="/" className="btn-secondary">
-              Continue Shopping
-            </Link>
-          </div>
-
-          {/* Help Section */}
-          <div className="success-help">
-            <p>
+          <div className="border-t border-border-200 px-6 py-6 sm:px-10 bg-surface-50/50">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/account?tab=orders"
+                className="flex-1 inline-flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black shadow-sm transition-all hover:bg-lux-gold-light"
+              >
+                View Order Status
+              </Link>
+              <Link
+                href="/browse"
+                className="flex-1 inline-flex items-center justify-center rounded-full border border-border-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wider text-ink-700 transition-colors hover:bg-surface-50"
+              >
+                Continue Shopping
+              </Link>
+            </div>
+            <p className="mt-4 text-center text-sm text-ink-500">
               Need help?{" "}
-              <Link href="/contact" className="success-help-link">
+              <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
                 Contact Support
               </Link>
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -322,4 +309,3 @@ export default function SuccessPage() {
     </Suspense>
   );
 }
-
