@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     if (!email) {
       return NextResponse.json(
         { error: "Email is required" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { error: "Please provide a valid email address" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     // Optionally send welcome email
     try {
       const emailModule = await import("@/lib/email");
-
+      
       if (emailModule.isEmailConfigured()) {
         await emailModule.sendNewsletterWelcomeEmail({
           email: normalizedEmail,
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     console.error("[Newsletter] Subscription error:", error);
     return NextResponse.json(
       { error: "Failed to subscribe. Please try again." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -89,19 +89,17 @@ export async function DELETE(request: NextRequest) {
     if (!email) {
       return NextResponse.json(
         { error: "Email is required" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    await prisma.newsletterSubscriber
-      .delete({
-        where: { email: normalizedEmail },
-      })
-      .catch(() => {
-        // Ignore if not found
-      });
+    await prisma.newsletterSubscriber.delete({
+      where: { email: normalizedEmail },
+    }).catch(() => {
+      // Ignore if not found
+    });
 
     console.log(`[Newsletter] Unsubscribed: ${normalizedEmail}`);
 
@@ -113,7 +111,7 @@ export async function DELETE(request: NextRequest) {
     console.error("[Newsletter] Unsubscribe error:", error);
     return NextResponse.json(
       { error: "Failed to unsubscribe. Please try again." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

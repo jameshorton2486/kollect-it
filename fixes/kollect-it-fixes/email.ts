@@ -64,8 +64,8 @@ interface WelcomeEmailData {
 }
 
 interface PasswordResetEmailData {
-  email: string;
   name: string;
+  email: string;
   resetUrl: string;
 }
 
@@ -287,19 +287,13 @@ export async function sendPasswordResetEmail(data: PasswordResetEmailData) {
     }),
   );
 
-  return sendEmail(
-    data.email,
-    "Reset Your Kollect-It Password",
-    html,
-  );
+  return sendEmail(data.email, "Reset Your Kollect-It Password", html);
 }
 
 /**
  * Send password changed confirmation email
  */
-export async function sendPasswordChangedEmail(
-  data: PasswordChangedEmailData,
-) {
+export async function sendPasswordChangedEmail(data: PasswordChangedEmailData) {
   const html = await render(
     PasswordChangedEmail({
       name: data.name,
@@ -307,25 +301,17 @@ export async function sendPasswordChangedEmail(
     }),
   );
 
-  return sendEmail(
-    data.email,
-    "Your Kollect-It Password Was Changed",
-    html,
-  );
+  return sendEmail(data.email, "Your Kollect-It Password Was Changed", html);
 }
 
 /**
  * Send contact form notification to admin
  */
-export async function sendContactNotificationEmail(
-  data: ContactNotificationEmailData,
-) {
+export async function sendContactNotificationEmail(data: ContactNotificationEmailData) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
 
   if (!adminEmail) {
-    console.warn(
-      "[Email] No admin email configured - skipping contact notification",
-    );
+    console.warn("[Email] No admin email configured - skipping contact notification");
     return { success: false, error: "No admin email configured" };
   }
 
@@ -350,9 +336,7 @@ export async function sendContactNotificationEmail(
 /**
  * Send newsletter welcome email
  */
-export async function sendNewsletterWelcomeEmail(
-  data: NewsletterWelcomeEmailData,
-) {
+export async function sendNewsletterWelcomeEmail(data: NewsletterWelcomeEmailData) {
   const html = await render(
     NewsletterWelcomeEmail({
       firstName: data.firstName,
@@ -360,11 +344,7 @@ export async function sendNewsletterWelcomeEmail(
     }),
   );
 
-  return sendEmail(
-    data.email,
-    "Welcome to the Kollect-It Collector's List",
-    html,
-  );
+  return sendEmail(data.email, "Welcome to the Kollect-It Collector's List", html);
 }
 
 /**
@@ -401,4 +381,3 @@ export function getEmailStatus() {
     from: process.env.EMAIL_FROM || "Not configured",
   };
 }
-

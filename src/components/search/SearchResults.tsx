@@ -9,10 +9,11 @@ import Link from "next/link";
 
 interface Product {
   id: string;
+  slug: string;
   title: string;
   price: number;
-  images: { url: string }[];
-  condition: string;
+  images: { url: string; alt?: string | null }[];
+  condition: string | null;
   category: {
     name: string;
   };
@@ -44,13 +45,16 @@ export default function SearchResults() {
 
   useEffect(() => {
     fetchResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, selectedFilters, sortBy]);
 
   const fetchResults = async () => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
-      params.append("q", query);
+      if (query) {
+        params.append("q", query);
+      }
       params.append("sort", sortBy);
 
       Object.entries(selectedFilters).forEach(([key, values]) => {
@@ -58,10 +62,27 @@ export default function SearchResults() {
       });
 
       const response = await fetch(`/api/search?${params}`);
+      
+      if (!response.ok) {
+        throw new Error(`Search failed: ${response.status}`);
+      }
+      
       const data = await response.json();
-      setResults(data);
+      
+      // Ensure data structure matches expected format
+      setResults({
+        products: data.products || [],
+        total: data.total || 0,
+        filters: data.filters || [],
+      });
     } catch (error) {
       console.error("Search failed:", error);
+      // Set empty results on error
+      setResults({
+        products: [],
+        total: 0,
+        filters: [],
+      });
     } finally {
       setIsLoading(false);
     }
@@ -240,7 +261,7 @@ export default function SearchResults() {
                   {results.products.map((product) => (
                     <Link
                       key={product.id}
-                      href={`/product/${product.id}`}
+                      href={`/product/${product.slug}`}
                       className={`group rounded-3xl border border-border-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-elevated ${
                         viewMode === "list"
                           ? "flex gap-4 p-4"
@@ -249,7 +270,7 @@ export default function SearchResults() {
                     >
                       <img
                         src={product.images[0]?.url || "/placeholder.svg"}
-                        alt={product.title}
+                        alt={product.images[0]?.alt || product.title}
                         className={
                           viewMode === "list"
                             ? "h-36 w-36 rounded-2xl object-cover"
@@ -263,9 +284,11 @@ export default function SearchResults() {
                         <h3 className="mt-2 text-lg font-semibold tracking-tight text-ink-900 line-clamp-2 group-hover:text-gold-500">
                           {product.title}
                         </h3>
-                        <p className="mt-1 text-sm text-ink-500">
-                          Condition: {product.condition}
-                        </p>
+                        {product.condition && (
+                          <p className="mt-1 text-sm text-ink-500">
+                            Condition: {product.condition}
+                          </p>
+                        )}
                         <p className="mt-3 text-xl font-semibold text-gold-500">
                           ${product.price.toFixed(2)}
                         </p>

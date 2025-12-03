@@ -14,7 +14,7 @@ export async function GET() {
 
     const reports = await prisma.scheduledReport.findMany({
       where: {
-        userId: session.user.id,
+        userId: session.user?.id,
       },
       select: {
         id: true,
@@ -34,7 +34,7 @@ export async function GET() {
     if (error instanceof Error && error.message.includes("Unauthorized")) {
       return NextResponse.json(
         { error: error.message },
-        { status: 401 },
+        { status: 401 }
       );
     }
     console.error("Error fetching reports:", error);
@@ -47,7 +47,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify admin authentication
     const session = await requireAdminAuth();
+
     const body = await request.json();
     const { name, frequency, format, recipients } = body;
 
@@ -95,7 +97,7 @@ export async function POST(request: NextRequest) {
         format: format || "JSON",
         recipients,
         nextScheduled,
-        userId: session.user.id as string,
+        userId: session.user?.id as string,
         enabled: true,
       },
     });
@@ -105,7 +107,7 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error && error.message.includes("Unauthorized")) {
       return NextResponse.json(
         { error: error.message },
-        { status: 401 },
+        { status: 401 }
       );
     }
     console.error("Error creating report:", error);
@@ -115,4 +117,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

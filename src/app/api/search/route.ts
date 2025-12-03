@@ -16,29 +16,31 @@ export async function GET(request: NextRequest) {
     // Build where clause
     const where: any = {
       status: "active",
-      AND: [],
+      isDraft: false,
     };
 
+    const andConditions: any[] = [];
+
     // Search query
-    if (query) {
-      where.AND.push({
+    if (query && query.trim()) {
+      andConditions.push({
         OR: [
-          { title: { contains: query, mode: "insensitive" } },
-          { description: { contains: query, mode: "insensitive" } },
+          { title: { contains: query.trim(), mode: "insensitive" } },
+          { description: { contains: query.trim(), mode: "insensitive" } },
         ],
       });
     }
 
     // Category filter
     if (categories.length > 0) {
-      where.AND.push({
+      andConditions.push({
         categoryId: { in: categories },
       });
     }
 
     // Condition filter
     if (conditions.length > 0) {
-      where.AND.push({
+      andConditions.push({
         condition: { in: conditions },
       });
     }
@@ -48,7 +50,12 @@ export async function GET(request: NextRequest) {
       const priceFilter: any = {};
       if (minPrice) priceFilter.gte = parseFloat(minPrice);
       if (maxPrice) priceFilter.lte = parseFloat(maxPrice);
-      where.AND.push({ price: priceFilter });
+      andConditions.push({ price: priceFilter });
+    }
+
+    // Only add AND if there are conditions
+    if (andConditions.length > 0) {
+      where.AND = andConditions;
     }
 
     // Sort options
@@ -80,6 +87,17 @@ export async function GET(request: NextRequest) {
             select: {
               name: true,
             },
+          },
+          images: {
+            select: {
+              url: true,
+              alt: true,
+              order: true,
+            },
+            orderBy: {
+              order: "asc",
+            },
+            take: 1,
           },
         },
       }),

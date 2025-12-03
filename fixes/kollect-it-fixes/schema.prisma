@@ -25,8 +25,11 @@ model User {
   state         String?
   zipCode       String?
   country       String?        @default("United States")
-  resetToken    String?        @unique
+  
+  // Password Reset Fields
+  resetToken       String?
   resetTokenExpiry DateTime?
+  
   wishlistItems WishlistItem[]
   cartItems     CartItem[]
   orders        Order[]
@@ -50,7 +53,7 @@ model Category {
 model Product {
   id            String         @id @default(cuid())
   
-  // ✨ NEW: SKU System
+  // ✨ SKU System
   sku           String         @unique
   skuYear       Int?           // For filtering by year
   skuNumber     Int?           // Sequential number tracking
@@ -70,10 +73,10 @@ model Product {
   period        String?        // Historical period
   status        String         @default("active") // "active", "sold", "pending"
   
-  // ✨ NEW: Notes field for structured data
+  // Notes field for structured data
   productNotes  String?        @db.Text  // Raw notes from notes.txt
   
-  // ✨ NEW: Appraisal document URLs
+  // Appraisal document URLs
   appraisalUrls String[]       @default([])
   wishlistItems WishlistItem[]
   cartItems     CartItem[]
@@ -113,8 +116,8 @@ model Product {
   @@index([title])
   @@index([status, createdAt])
   @@index([isDraft])
-  @@index([sku])                    // ✨ NEW: Fast SKU lookups
-  @@index([skuYear, skuNumber])     // ✨ NEW: Year-based queries
+  @@index([sku])
+  @@index([skuYear, skuNumber])
 }
 
 model Image {
@@ -122,7 +125,7 @@ model Image {
   url       String
   alt       String?
   
-  // ✨ NEW: Image classification
+  // Image classification
   imageType String?  // "main", "condition", "signature", "detail", "provenance", etc.
   
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -131,7 +134,7 @@ model Image {
   createdAt DateTime @default(now())
 
   @@index([productId])
-  @@index([productId, order])  // ✨ NEW: Optimize gallery queries
+  @@index([productId, order])
 }
 
 model WishlistItem {
@@ -317,11 +320,15 @@ model Review {
   @@index([createdAt])
 }
 
+// =====================================================
+// NEW MODELS FOR COMPLETE FUNCTIONALITY
+// =====================================================
+
 model NewsletterSubscriber {
   id             String    @id @default(cuid())
   email          String    @unique
   firstName      String?
-  source         String    @default("website")
+  source         String    @default("website") // "website", "checkout", "popup"
   confirmedAt    DateTime?
   unsubscribedAt DateTime?
   createdAt      DateTime  @default(now())

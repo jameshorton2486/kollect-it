@@ -7,8 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 interface SearchSuggestion {
   id: string;
   name: string;
+  slug: string;
   category: string;
-  image: string;
 }
 
 interface SearchBarProps {
@@ -200,20 +200,18 @@ export default function SearchBar({
                   <button
                     key={suggestion.id}
                     type="button"
-                    onClick={() => router.push(`/product/${suggestion.id}`)}
+                    onClick={() => router.push(`/product/${suggestion.slug}`)}
                     className="flex w-full items-center gap-3 rounded-2xl p-2 text-left transition hover:bg-surface-100"
                   >
-                    <img
-                      src={suggestion.image}
-                      alt={suggestion.name}
-                      className="h-12 w-12 rounded-xl object-cover"
-                    />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-200 text-ink-400">
+                      <Search className="h-5 w-5" />
+                    </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-ink-900">
                         {suggestion.name}
                       </p>
                       <p className="text-xs uppercase tracking-[0.3em] text-ink-400">
-                        {suggestion.category}
+                        {suggestion.category || "Product"}
                       </p>
                     </div>
                   </button>

@@ -69,7 +69,7 @@ export default function ContactForm() {
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
       setServerError(
-        err instanceof Error ? err.message : "An error occurred. Please try again.",
+        err instanceof Error ? err.message : "An error occurred. Please try again."
       );
     } finally {
       setSubmitting(false);
@@ -98,11 +98,7 @@ export default function ContactForm() {
         type={type}
         value={form[id]}
         onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}
-        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
-          errors[id]
-            ? "border-red-500 ring-1 ring-red-500"
-            : "border-border-300 focus:border-gold"
-        }`}
+        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors[id] ? "border-red-500 ring-1 ring-red-500" : "border-border-300 focus:border-gold"}`}
         aria-invalid={!!errors[id]}
         aria-describedby={errors[id] ? `${id}-error` : undefined}
       />
@@ -139,7 +135,9 @@ export default function ContactForm() {
         </div>
       ) : (
         <>
-          <h2 className="text-2xl font-semibold mb-6 text-ink">Contact Us</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-ink">
+            Contact Us
+          </h2>
 
           {serverError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
@@ -166,11 +164,7 @@ export default function ContactForm() {
               onChange={(ev) =>
                 setForm((s) => ({ ...s, message: ev.target.value }))
               }
-              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
-                errors.message
-                  ? "border-red-500 ring-1 ring-red-500"
-                  : "border-border-300 focus:border-gold"
-              }`}
+              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${errors.message ? "border-red-500 ring-1 ring-red-500" : "border-border-300 focus:border-gold"}`}
               aria-invalid={!!errors.message}
               aria-describedby={errors.message ? "message-error" : undefined}
             />
