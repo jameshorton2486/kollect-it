@@ -4,6 +4,15 @@ import { AesopSection } from "@/components/AesopSection";
 export const metadata: Metadata = {
   title: "Terms of Service | Kollect-It",
   description: "Terms and conditions for using the Kollect-It marketplace.",
+  alternates: {
+    canonical: "https://kollect-it.com/terms",
+  },
+  openGraph: {
+    title: "Terms of Service | Kollect-It",
+    description: "Terms and conditions for using the Kollect-It marketplace.",
+    url: "https://kollect-it.com/terms",
+    type: "website",
+  },
 };
 
 export default function TermsPage() {
@@ -21,7 +30,7 @@ export default function TermsPage() {
                 1. Acceptance of Terms
               </h2>
               <p className="leading-relaxed text-ink-light">
-                By accessing or using the Kollect-It marketplace, you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use our services.
+                By using Kollect-It, you agree to these terms. I&apos;ve tried to keep them straightforward—if you have questions, feel free to reach out.
               </p>
             </section>
 
@@ -84,7 +93,7 @@ export default function TermsPage() {
                 8. Contact Information
               </h2>
               <p className="leading-relaxed text-ink-light">
-                For any questions regarding these Terms, please contact us at legal@kollect-it.com.
+                Questions about these terms? Contact me at james@kollect-it.com and I&apos;ll be happy to clarify anything.
               </p>
             </section>
           </div>

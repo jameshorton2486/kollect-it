@@ -47,7 +47,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
     return (
       <Link
         href={`/product/${product.id}`}
-        className="group flex gap-4 rounded-xl border border-border-200 bg-white p-4 shadow-clean transition-all duration-luxury hover:shadow-soft hover:-translate-y-0.5 hover:border-border-300 sm:gap-6"
+        className="group flex gap-4 rounded-xl border border-border-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-border-300 sm:gap-6"
       >
         {/* Image */}
         <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-surface-100 sm:h-36 sm:w-36">
@@ -85,7 +85,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         {/* Wishlist button */}
         <button
           onClick={handleWishlistToggle}
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-200 text-ink-400 transition-all duration-luxury hover:border-lux-gold hover:text-lux-gold hover:scale-110 self-start"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-200 text-ink-400 transition-all hover:border-lux-gold hover:text-lux-gold self-start"
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <Heart className={`h-4 w-4 ${isWishlisted ? "fill-lux-gold text-lux-gold" : ""}`} />
@@ -98,7 +98,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   return (
     <Link
       href={`/product/${product.id}`}
-      className="group flex flex-col rounded-xl border border-border-200 bg-white overflow-hidden shadow-clean transition-all duration-luxury hover:shadow-soft hover:-translate-y-1 hover:border-border-300"
+      className="group flex flex-col rounded-xl border border-border-200 bg-white overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-border-300"
     >
       {/* Image container */}
       <div className="relative aspect-square overflow-hidden bg-surface-100">
@@ -114,7 +114,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         {/* Wishlist button overlay */}
         <button
           onClick={handleWishlistToggle}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-ink-500 shadow-clean opacity-0 transition-all duration-luxury group-hover:opacity-100 hover:text-lux-gold hover:scale-110 hover:shadow-soft"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-ink-500 shadow-sm opacity-0 transition-all group-hover:opacity-100 hover:text-lux-gold hover:scale-110"
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <Heart className={`h-4 w-4 ${isWishlisted ? "fill-lux-gold text-lux-gold" : ""}`} />

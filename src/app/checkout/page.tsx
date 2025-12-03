@@ -208,11 +208,10 @@ export default function CheckoutPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-                Finish your purchase
+                Complete your purchase
               </h1>
-              <p className="mt-3 max-w-2xl text-base text-ink-600">
-                Enter your shipping details, confirm billing, and finalize
-                payment via Stripe. Every order is insured and fully tracked.
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-600">
+                Enter your shipping details and complete payment securely. Your order will be carefully packed and shipped with tracking included.
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -265,7 +264,7 @@ export default function CheckoutPage() {
                   Shipping information
                 </h2>
                 <p className="mt-1 text-sm text-ink-500">
-                  We ship insured, signature-required parcels worldwide.
+                  We'll coordinate secure packing and reliable delivery. Tracking information will be sent once your order ships.
                 </p>
 
                 <div className="mt-8 space-y-6">
@@ -472,7 +471,7 @@ export default function CheckoutPage() {
                       Payment
                     </h2>
                     <p className="text-sm text-ink-500">
-                      Review shipping and billing before submitting payment.
+                      Review your order details and complete payment securely.
                     </p>
                   </div>
                   <button
@@ -671,7 +670,7 @@ export default function CheckoutPage() {
               Order summary
             </h2>
             <p className="mt-1 text-sm text-ink-500">
-              {itemCount} {itemCount === 1 ? "item" : "items"} ready to ship
+              {itemCount} {itemCount === 1 ? "piece" : "pieces"} in your order
             </p>
 
             <div className="mt-6 space-y-4">

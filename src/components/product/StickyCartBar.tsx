@@ -59,7 +59,7 @@ export default function StickyCartBar({ product }: StickyCartBarProps) {
           className={`inline-flex min-w-[160px] items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all ${
             added
               ? "bg-lux-gold text-lux-black"
-              : "bg-white text-lux-black hover:bg-lux-gold-light"
+              : "bg-lux-black text-lux-cream hover:bg-lux-charcoal"
           }`}
           onClick={handleAddToCart}
         >

@@ -4,6 +4,18 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Kollect-It | Curated Antiques & Collectibles",
+  description:
+    "Learn about Kollect-It's thoughtful approach to curating fine art, rare books, collectibles, and militaria. Discover our commitment to quality, authenticity, and collector-focused presentation.",
+  alternates: {
+    canonical: "https://kollect-it.com/about",
+  },
+  openGraph: {
+    title: "About Kollect-It",
+    description:
+      "A thoughtful place to discover and share remarkable objects. Learn about our approach to curating authenticated collectibles.",
+    url: "https://kollect-it.com/about",
+    type: "website",
+  },
 };
 
 export default function AboutPage() {
@@ -16,14 +28,10 @@ export default function AboutPage() {
             About Kollect-It
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-lux-cream sm:text-4xl">
-            A considered marketplace for serious collectors.
+            A thoughtful place to discover and share remarkable objects.
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-lux-silver/85">
-            Kollect-It was created for people who care about what an object
-            is, where it has been, and where it is going next. We bring
-            together vetted antiques, fine art, and significant collections
-            with the kind of documentation and presentation usually reserved
-            for private galleries.
+            I started Kollect-It because I believe great pieces deserve thoughtful presentation. Whether you&apos;re building a collection or looking for one special piece, you&apos;ll find clear descriptions, honest condition notes, and the kind of care that comes from someone who genuinely loves these objects.
           </p>
         </div>
       </section>
@@ -36,21 +44,15 @@ export default function AboutPage() {
               The idea
             </h2>
             <p className="mt-2 text-xl font-semibold text-lux-black">
-              Built from the perspective of a collector and a seller.
+              Built from experience on both sides of collecting.
             </p>
           </div>
           <div className="space-y-4 text-sm leading-relaxed text-lux-gray-dark">
             <p>
-              Kollect-It grew out of years spent on both sides of the
-              transaction—assembling collections, managing estates, and
-              navigating auction houses and online marketplaces. We saw how
-              often great objects were undersold by rushed descriptions,
-              poor photography, or missing provenance.
+              I&apos;ve spent years building my own collections, helping families navigate estates, and working with auction houses and dealers. Along the way, I noticed how often wonderful pieces were overlooked because of rushed descriptions, poor photography, or missing context.
             </p>
             <p>
-              This platform is designed to slow things down just enough:
-              better research, better documentation, better presentation—and
-              ultimately, better outcomes for both consignors and buyers.
+              Kollect-It is my way of doing things differently—taking the time to research each piece, photograph it properly, and share what I know about its history and condition. It&apos;s slower, more personal, and I think that makes for better outcomes for everyone involved.
             </p>
           </div>
         </div>
@@ -65,8 +67,7 @@ export default function AboutPage() {
                 What makes Kollect-It different
               </h2>
               <p className="mt-2 text-xl font-semibold text-lux-black">
-                Documentation and presentation are treated as seriously as
-                the objects themselves.
+                I treat documentation and presentation as seriously as the objects themselves.
               </p>
             </div>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 md:mt-0">
@@ -137,7 +138,7 @@ export default function AboutPage() {
             </div>
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-lux-cream">
-                Families &amp; estates
+                Families & estates
               </h3>
               <p className="text-sm leading-relaxed text-lux-silver/85">
                 Navigating a houseful of objects, some obviously important,
@@ -146,7 +147,7 @@ export default function AboutPage() {
             </div>
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-lux-cream">
-                Dealers &amp; advisors
+                Dealers & advisors
               </h3>
               <p className="text-sm leading-relaxed text-lux-silver/85">
                 Partnering on select consignments where our audience, format,
@@ -178,8 +179,7 @@ export default function AboutPage() {
               Have a collection, or thinking about starting one?
             </h2>
             <p className="mt-2 max-w-xl text-sm text-lux-silver/85">
-              We&apos;re happy to look at a single piece, an attic, or
-              anything in-between. Start with a simple conversation.
+              I&apos;m happy to look at a single piece, an attic full of objects, or anything in-between. Let&apos;s start with a conversation.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">

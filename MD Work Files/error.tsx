@@ -37,12 +37,12 @@ export default function Error({
 
         {/* Heading */}
         <h1 className="font-serif text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-          Something went wrong—please try again
+          Something Went Wrong
         </h1>
 
         {/* Friendly message */}
         <p className="mt-4 text-base leading-relaxed text-ink-600">
-          I&apos;m sorry—something unexpected happened. Please try again, or return to browsing. If this keeps happening, let me know and I&apos;ll help sort it out.
+          We encountered an unexpected error. This has been logged and we&apos;ll look into it.
         </p>
 
         {/* Action buttons */}
@@ -54,10 +54,10 @@ export default function Error({
             Try Again
           </button>
           <Link
-            href="/browse"
+            href="/"
             className="inline-flex items-center justify-center rounded-full border border-border-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wider text-ink-700 transition-colors hover:bg-surface-50"
           >
-            Continue Shopping
+            Return Home
           </Link>
         </div>
 
@@ -65,9 +65,9 @@ export default function Error({
         <p className="mt-8 text-sm text-ink-500">
           If this keeps happening,{" "}
           <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
-            let me know
+            let us know
           </Link>{" "}
-          and I&apos;ll help sort it out.
+          and we&apos;ll help sort it out.
         </p>
       </div>
     </main>

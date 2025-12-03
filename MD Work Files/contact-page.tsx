@@ -3,20 +3,6 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact – Kollect-It",
   description: "Get in touch with Kollect-It for questions about items, shipping, or consignment opportunities.",
-  alternates: {
-    canonical: "https://kollect-it.com/contact",
-  },
-  openGraph: {
-    title: "Contact Kollect-It",
-    description: "Get in touch with questions about items, shipping, or consignment opportunities. We respond personally within 24 hours.",
-    url: "https://kollect-it.com/contact",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: "Contact Kollect-It",
-    description: "Get in touch for questions about items, shipping, or consignment opportunities.",
-  },
 };
 
 export default function ContactPage() {
@@ -32,7 +18,7 @@ export default function ContactPage() {
             Contact
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-600">
-            I&apos;d love to hear from you. Whether you have a question about a piece, want to discuss consignment, or just want to say hello—I respond personally to every message, usually within 24 hours.
+            We respond personally to every message and typically reply within 24 hours.
           </p>
         </div>
       </section>
@@ -41,7 +27,9 @@ export default function ContactPage() {
       <section className="mx-auto max-w-3xl px-6 py-12">
         <div className="rounded-2xl border border-border-200 bg-white p-8 shadow-sm sm:p-10">
           <p className="text-lg leading-relaxed text-ink-700">
-            Questions about an item? Interested in consigning something? Just want to chat about collecting? I&apos;m here to help. Since this is a one-person operation, you&apos;ll hear directly from me—no automated responses or customer service scripts.
+            If you have a question about an item, shipping, or a possible
+            consignment, feel free to reach out. I&apos;m a one-person shop, so I
+            respond personally to every message.
           </p>
 
           <div className="mt-8 space-y-5">

@@ -16,11 +16,12 @@ export default function CheckoutCancelPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
             </svg>
           </div>
-          <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">Payment Cancelled</h1>
-          <p className="mt-4 text-base leading-relaxed text-ink-600">No worries - your payment was not processed and your cart items are still saved.</p>
+          <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">Your payment wasn&apos;t completed</h1>
+          <p className="mt-4 text-base leading-relaxed text-ink-600">No worries—your payment wasn&apos;t processed and everything in your cart is still saved. Take your time deciding, or reach out if you have any questions about the pieces you&apos;re considering.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Link href="/cart" className="inline-flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black">Return to Cart</Link>
             <Link href="/browse" className="inline-flex items-center justify-center rounded-full border border-border-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wider text-ink-700">Continue Browsing</Link>
+            <Link href="/checkout" className="inline-flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black">Retry Checkout</Link>
           </div>
         </div>
       </div>

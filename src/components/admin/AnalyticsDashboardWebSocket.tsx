@@ -238,7 +238,7 @@ export function AnalyticsDashboardWebSocket() {
           <h3 className="text-lux-white text-lg font-bold mb-4">Pricing Metrics</h3>
           <div className="space-y-3 text-lux-gray">
             <div className="flex justify-between">
-              <span>Auto-Approved (&gt;85%):</span>
+              <span>Auto-Approved ({'>'}85%):</span>
               <span className="text-green-400 font-semibold">
                 {metrics.pricing.autoApprovedCount}
               </span>
@@ -250,7 +250,7 @@ export function AnalyticsDashboardWebSocket() {
               </span>
             </div>
             <div className="flex justify-between">
-              <span>Low Confidence (&lt;70%):</span>
+              <span>Low Confidence ({'<' }70%):</span>
               <span className="text-red-400 font-semibold">
                 {metrics.pricing.lowConfidenceCount}
               </span>
@@ -318,4 +318,3 @@ export function AnalyticsDashboardWebSocket() {
     </div>
   );
 }
-

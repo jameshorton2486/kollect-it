@@ -2,24 +2,19 @@ import Link from "next/link";
 
 const STEPS = [
   {
-    title: "Consultation & Intake",
+    title: "Review",
     description:
-      "You send initial images or details. We assess authenticity indicators, condition signals, and market relevance.",
+      "We assess each item individually for quality, condition, and market interest.",
   },
   {
-    title: "Authentication & Research",
+    title: "Document",
     description:
-      "We review provenance, maker marks, and comparative sales—building a factual basis that supports buyer confidence.",
+      "We record details and history when available, and photograph each piece carefully.",
   },
   {
-    title: "Preparation & Presentation",
+    title: "Present",
     description:
-      "Pieces are photographed (including condition notes), cataloged with structured attributes, and listed with transparent narratives.",
-  },
-  {
-    title: "Sale & Settlement",
-    description:
-      "Transactions are cleared, funds remitted promptly, and shipping or handoff is coordinated with appropriate care.",
+      "Your item is listed with clear images, honest descriptions, and collector-focused detail.",
   },
 ];
 
@@ -33,12 +28,10 @@ export default function ProcessOverview() {
               Consignment process
             </p>
             <h2 className="text-3xl font-semibold tracking-tight text-ink-900">
-              Structured intake, documentation, and presentation.
+              Our Process
             </h2>
             <p className="text-sm leading-relaxed text-ink-600">
-              From the first photo to final settlement, each milestone is
-              recorded so both consignors and buyers have the paperwork they
-              need.
+              Consignments are reviewed individually based on the item, category, and condition. We evaluate each piece, document what we can, and present it clearly so buyers know exactly what they're purchasing.
             </p>
           </div>
           <p className="text-sm text-ink-500">
@@ -71,7 +64,7 @@ export default function ProcessOverview() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/how-it-works"
+              href="/our-process"
               className="inline-flex items-center rounded-full bg-lux-black px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-lux-charcoal"
             >
               View the full process

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "How It Works | Kollect-It",
+  title: "Our Process | Kollect-It",
   description:
     "Learn how Kollect-It works for collectors and consignors—from browsing and buying to consigning pieces from your own collection.",
 };
@@ -14,7 +14,7 @@ export default function HowItWorksPage() {
         <div className="container mx-auto max-w-5xl grid gap-10 md:grid-cols-[minmax(0,2fr)_minmax(0,1.3fr)] items-center">
           <div className="space-y-6">
             <p className="text-xs font-semibold tracking-[0.24em] uppercase text-lux-silver">
-              How It Works
+              Our Process
             </p>
             <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight">
               A calmer way to{" "}

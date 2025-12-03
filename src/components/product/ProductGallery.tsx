@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, Captions, Play, Square } from "lucide-react";
+import { ChevronLeft, ChevronRight, Captions } from "lucide-react";
 import Image from "next/image";
 
 interface ProductGalleryProps {
@@ -19,7 +19,7 @@ export default function ProductGallery({
     setSelectedImageIndex((prevIndex) => (prevIndex === 0 ? images.length : prevIndex - 1));
   };
 
-  const handleFinishImage = () => {
+  const handleNextImage = () => {
     setSelectedImageIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
@@ -31,60 +31,69 @@ export default function ProductGallery({
       : images[0] ?? { url: "/placeholder.svg", alt: productName };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Main Image */}
-      <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
+      <div className="relative aspect-square bg-surface-100 rounded-2xl overflow-hidden group border border-border-200 p-4">
         <Image
           src={actualImage.url || "/placeholder.svg"}
           alt={actualImage.alt || productName}
           fill
           className="object-contain"
           priority
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
 
-        {/* Iterate Buttons */}
-        {images.length &gt; 1 &amp;&amp; (
+        {/* Navigation Buttons */}
+        {images.length > 1 && (
           <>
             <button
               onClick={handlePreviousImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-background/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+              aria-label="Previous image"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5 text-ink-900" />
             </button>
             <button
-              onClick={handleFinishImage}
-              className="absolute right-4 top-1/2 -translate-y/2 p-2 bg-background/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={handleNextImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+              aria-label="Next image"
             >
-              <Play className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5 text-ink-900" />
             </button>
           </>
         )}
 
-        {/* Subtitle Label */}
-        <div className="absolute bottom-4 left-4 px-3 py-1 bg-background/90 rounded-full text-sm flex items-center gap-2">
-          <Captions className="h-4 w-4" />
-          <span>
-            {selectedImageIndex + 1} / {images.length}
-          </span>
-        </div>
+        {/* Image Counter */}
+        {images.length > 1 && (
+          <div className="absolute bottom-4 left-4 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-ink-700 flex items-center gap-2 shadow-sm">
+            <Captions className="h-3.5 w-3.5" />
+            <span>
+              {selectedImageIndex + 1} / {images.length}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Thumbnails */}
-      {images.length &gt; 1 &amp;&amp; (
-        <div className="grid grid-cols-5 gap-2">
+      {images.length > 1 && (
+        <div className="grid grid-cols-5 gap-4">
           {images.map((image, index) => (
             <button
               key={index}
               onClick={() => setSelectedImageIndex(index)}
-              className={`relative aspect-square rounded-lg overflow-hidden border-2 ${
-                index === selectedImageIndex ? "border-primary" : "border-transparent"
+              className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${
+                index === selectedImageIndex 
+                  ? "border-lux-gold ring-2 ring-lux-gold/20" 
+                  : "border-border-200 hover:border-border-300"
               }`}
+              aria-label={`View image ${index + 1}`}
             >
               <Image
                 src={image.url || "/placeholder.svg"}
-                alt={image.alt || `${productName} ${index + 1}`}  
+                alt={image.alt || `${productName} - image ${index + 1}`}  
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 20vw, 10vw"
               />
             </button>
           ))}

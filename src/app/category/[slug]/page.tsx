@@ -42,11 +42,26 @@ export async function generateMetadata(
     };
   }
 
+  const description = category.description || 
+    `Browse authenticated ${category.name.toLowerCase()} at Kollect-It. Carefully curated and quality-reviewed pieces.`;
+  
   return {
-    title: `${category.name} – Kollect-It`,
-    description:
-      category.description ||
-      `Browse authenticated ${category.name.toLowerCase()} at Kollect-It.`,
+    title: `${category.name} | Kollect-It`,
+    description,
+    alternates: {
+      canonical: `https://kollect-it.com/category/${category.slug}`,
+    },
+    openGraph: {
+      title: `${category.name} | Kollect-It`,
+      description,
+      url: `https://kollect-it.com/category/${category.slug}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: `${category.name} | Kollect-It`,
+      description,
+    },
   };
 }
 
@@ -84,7 +99,7 @@ export default async function CategoryPage(props: CategoryPageProps) {
             </h1>
             <p className="max-w-3xl text-base leading-relaxed text-ink-700 sm:text-lg">
               {category.description ||
-                "Curated inventory from the Kollect-It catalog."}
+                "A carefully selected collection of pieces in this category, each one chosen for its quality, character, or story."}
             </p>
           </div>
         </div>
@@ -99,27 +114,37 @@ export default async function CategoryPage(props: CategoryPageProps) {
                   Available pieces
                 </h2>
                 <p className="text-sm text-ink-600">
-                  Showing {products.length}{" "}
-                  {products.length === 1 ? "item" : "items"} currently on offer.
+                  {products.length === 1 
+                    ? "One piece currently available in this category."
+                    : `${products.length} pieces currently available in this category.`}
                 </p>
               </div>
               <ProductGrid products={products} />
             </>
           ) : (
-            <div className="rounded-2xl border border-dashed border-border-200 bg-surface-50 px-6 py-12 text-sm text-ink-700">
-              <p className="text-base font-semibold text-ink-900">
-                No listings yet
+            <div className="rounded-2xl border border-dashed border-border-200 bg-surface-50 px-6 py-12 text-center">
+              <p className="text-lg font-semibold text-ink-900 mb-2">
+                No pieces available in this category right now
               </p>
-              <p className="mt-2 max-w-2xl">
-                Inventory in this category is still small. Check back soon or{" "}
+              <p className="text-sm text-ink-600 max-w-2xl mx-auto">
+                I&apos;m always adding new pieces to the collection. Check back soon, or{" "}
                 <Link
                   href="/contact"
-                  className="text-lux-gold underline-offset-4 hover:underline"
+                  className="text-lux-gold underline-offset-4 hover:underline font-medium"
                 >
-                  contact me
+                  let me know
                 </Link>{" "}
-                with specifics and I&apos;ll keep an eye out.
+                what you&apos;re looking for and I&apos;ll keep an eye out for similar pieces.
               </p>
+              <div className="mt-6">
+                <Link
+                  href="/browse"
+                  className="inline-flex items-center text-sm font-medium text-lux-gold hover:text-lux-gold-light transition-colors"
+                >
+                  Browse all categories
+                  <span aria-hidden="true" className="ml-2">→</span>
+                </Link>
+              </div>
             </div>
           )}
         </div>

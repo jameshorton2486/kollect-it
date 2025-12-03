@@ -10,28 +10,28 @@ export function Footer() {
     {
       title: "Shop",
       links: [
-        { label: "Shop All", href: "/browse" },
+        { label: "Browse All", href: "/browse" },
         { label: "Categories", href: "/categories" },
-        { label: "Latest Arrivals", href: "/browse?sort=newest" },
+        { label: "New Arrivals", href: "/browse?sort=newest" },
+        { label: "Compare", href: "/compare" },
       ],
     },
     {
       title: "Company",
       links: [
         { label: "About", href: "/about" },
-        { label: "Our Process", href: "/our-process" },
+        { label: "How It Works", href: "/how-it-works" },
         { label: "FAQ", href: "/faq" },
-        { label: "Contact", href: "/contact" },
+        { label: "Consign With Us", href: "/sell" },
       ],
     },
     {
-      title: "Policies",
+      title: "Support",
       links: [
+        { label: "Contact", href: "/contact" },
         { label: "Shipping & Returns", href: "/shipping-returns" },
-        { label: "Authentication Guarantee", href: "/authentication" },
         { label: "Privacy Policy", href: "/privacy" },
         { label: "Terms of Service", href: "/terms" },
-        { label: "Cookie Policy", href: "/cookies" },
       ],
     },
   ];
@@ -50,7 +50,7 @@ export function Footer() {
               </h2>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-white/60">
-              Curated antiques, art, books, militaria, and rare objects — thoughtfully photographed and authenticated.
+              Curated antiques, art, and collectibles—hand-selected and described with care.
             </p>
             
             {/* Contact info */}

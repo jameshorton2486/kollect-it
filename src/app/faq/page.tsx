@@ -1,3 +1,19 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FAQ | Kollect-It",
+  description: "Frequently asked questions about Kollect-It—shipping, returns, authentication, consignment, and more.",
+  alternates: {
+    canonical: "https://kollect-it.com/faq",
+  },
+  openGraph: {
+    title: "FAQ | Kollect-It",
+    description: "Frequently asked questions about shipping, returns, authentication, and consignment.",
+    url: "https://kollect-it.com/faq",
+    type: "website",
+  },
+};
+
 export default function FAQPage() {
   return (
     <div className="min-h-screen bg-surface-50 text-ink-900">
@@ -12,8 +28,7 @@ export default function FAQPage() {
               Do you authenticate items?
             </h2>
             <p>
-              Yes -- everything I list is researched and presented as accurately as I can.
-              If I am unsure about a detail, I say so. I never guess or exaggerate.
+              Yes—everything I list is researched and presented as accurately as I can. If I&apos;m unsure about something, I&apos;ll tell you. I&apos;d rather be honest about uncertainty than make claims I can&apos;t back up.
             </p>
           </section>
 
@@ -32,8 +47,7 @@ export default function FAQPage() {
               Do you accept consignments?
             </h2>
             <p>
-              Sometimes. If you have something unique or unusual, feel free to contact me --
-              I will let you know honestly if it is a good fit.
+              Sometimes, yes. If you have something interesting or unusual, reach out and tell me about it. I&apos;ll be honest about whether it&apos;s a good fit for what I&apos;m building here.
             </p>
           </section>
 

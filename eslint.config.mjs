@@ -11,14 +11,14 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  // Global ignores to avoid linting build output and TypeScript (handled by tsc)
+  // Global ignores to avoid linting build output
   {
     ignores: [
       ".next/**",
       "node_modules/**",
       "build/**",
-      "**/*.ts",
-      "**/*.tsx",
+      "dist/**",
+      "*.config.js", // Config files may use CommonJS
     ],
   },
   // Global rules and plugins (flat config)

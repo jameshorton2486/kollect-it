@@ -4,6 +4,15 @@ import { AesopSection } from "@/components/AesopSection";
 export const metadata: Metadata = {
   title: "Privacy Policy | Kollect-It",
   description: "Kollect-It Privacy Policy outlining how we collect, use, and protect your information.",
+  alternates: {
+    canonical: "https://kollect-it.com/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy | Kollect-It",
+    description: "Learn how Kollect-It collects, uses, and protects your personal information.",
+    url: "https://kollect-it.com/privacy",
+    type: "website",
+  },
 };
 
 export default function PrivacyPage() {
@@ -75,7 +84,7 @@ export default function PrivacyPage() {
                 7. Contact Us
               </h2>
               <p className="leading-relaxed text-ink-light">
-                If you have any questions about this Privacy Policy, please contact us at privacy@kollect-it.com.
+                Questions about privacy? Reach out to me at james@kollect-it.com. I&apos;m happy to explain how I handle your information.
               </p>
             </section>
           </div>

@@ -55,34 +55,34 @@
 ## Phase 1 Task List
 
 ### Global UX
-- [ ] Header & Footer consistency (nav structure, brand colors, mobile menu)
-- [ ] Replace "Sell With Us" with "Consign" across the app
-- [ ] Ensure all nav links work and point to correct pages
+- [x] Header & Footer consistency (nav structure, brand colors, mobile menu)
+- [x] Replace "Sell With Us" with "Consign" across the app
+- [x] Ensure all nav links work and point to correct pages
 
 ### Checkout & Orders
-- [ ] Cart persistence per user/session
-- [ ] Checkout form validation
-- [ ] Stripe test mode integration
-- [ ] Order creation in Prisma after successful payment
-- [ ] Order confirmation email via Resend
+- [x] Cart persistence per user/session
+- [x] Checkout form validation
+- [x] Stripe test mode integration
+- [x] Order creation in Prisma after successful payment
+- [x] Order confirmation email via Resend
 
 ### Product Pages
-- [ ] Product detail page displays all info correctly
-- [ ] Product images work (ImageKit integration)
-- [ ] Add to cart functionality
-- [ ] Related products / recommendations
+- [x] Product detail page displays all info correctly
+- [x] Product images work (ImageKit integration)
+- [x] Add to cart functionality
+- [x] Related products / recommendations
 
 ### Admin
-- [ ] Product approval queue functional
-- [ ] Order management (view, update status)
-- [ ] Basic dashboard metrics
+- [x] Product approval queue functional
+- [x] Order management (view, update status)
+- [x] Basic dashboard metrics
 
 ### Legal & Policy Pages
-- [ ] Privacy Policy
-- [ ] Terms of Service
-- [ ] Shipping & Returns
-- [ ] Authentication Guarantee
-- [ ] Cookie Policy
+- [x] Privacy Policy
+- [x] Terms of Service
+- [x] Shipping & Returns
+- [x] Authentication Guarantee
+- [x] Cookie Policy
 
 ---
 

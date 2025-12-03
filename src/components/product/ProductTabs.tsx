@@ -34,9 +34,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             {product.description}
           </p>
           <p className="mt-4 text-sm text-ink-500">
-            Each piece is catalogued by our curators for provenance, condition,
-            and authenticity. All descriptions aim to reflect the item as
-            accurately as possible.
+            Every piece is researched and evaluated before being listed. Descriptions are clear and honest, so you know exactly what you're purchasing.
           </p>
         </div>
         {product.condition && (
@@ -62,9 +60,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <span className="text-lux-gold">📦</span> Shipping Information
           </h3>
           <p className="text-sm text-ink-600">
-            Complimentary insured shipping on domestic orders over $99. All
-            pieces ship via white-glove carriers with full tracking and
-            signature confirmation.
+            Professional shipping support for all orders. We coordinate secure packing and reliable delivery with tracking included.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
@@ -96,9 +92,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <span className="text-lux-gold">↩</span> Returns & Exchanges
           </h4>
           <p className="text-sm text-ink-600">
-            Returns accepted within 30 days of delivery when items are received
-            in original condition. Our concierge team coordinates return labels
-            and insured pick-up.
+            Returns accepted if an item arrives damaged or is not as described. Contact us within 48 hours of delivery to coordinate a return.
           </p>
         </div>
       </div>
@@ -110,19 +104,17 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <span className="text-lux-gold">✓</span> Authentication Guarantee
           </h3>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Every listing is backed by documentation from our in-house and
-            partner experts. Certificates and provenance files accompany pieces
-            when available.
+            Each piece is researched and evaluated before being listed. Provenance and documentation are included when available.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-border-200 bg-surface-50 p-6">
             <h4 className="mb-4 font-serif text-lg text-ink">Process</h4>
             <ol className="space-y-3 text-sm text-ink-700">
-              <li>1. Specialist inspection & photography</li>
-              <li>2. Provenance research & documentation</li>
-              <li>3. Condition reporting & restoration review</li>
-              <li>4. Market analysis & final cataloguing</li>
+              <li>1. Review for quality, condition, and market interest</li>
+              <li>2. Research provenance and history when available</li>
+              <li>3. Document details and photograph carefully</li>
+              <li>4. Present with clear images and honest descriptions</li>
             </ol>
           </div>
           <div className="rounded-2xl border border-border-200 bg-white p-6">
@@ -146,9 +138,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <span className="text-lux-gold">🛡️</span> Lifetime Guarantee
           </h3>
           <p className="text-sm text-ink-600">
-            If any purchase is ever proven inauthentic, we provide a full refund
-            including original shipping. This protection follows the piece for
-            its lifetime.
+            If you receive an item that doesn&apos;t match its description, contact us immediately. We will investigate and provide a full refund including return shipping if the item is found to be inauthentic or misrepresented.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
@@ -166,7 +156,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
               Making a Claim
             </h4>
             <ol className="space-y-2 text-sm text-ink-700">
-              <li>1. Contact concierge with your documentation</li>
+              <li>1. Contact us with your documentation</li>
               <li>2. Provide third-party findings or lab reports</li>
               <li>3. We coordinate expert review</li>
               <li>4. Refund issued once assessment is confirmed</li>

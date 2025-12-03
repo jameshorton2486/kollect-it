@@ -1,49 +1,43 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   try {
-    const searchParams = request.url<any>;
+    const { searchParams } = new URL(request.url);
+    const query = searchParams.get("q") || "";
 
-    const query = searchParams || "";
-
-    if (query.length &lt; 2) {
+    // FIXED the HTML escape here
+    if (query.length < 2) {
       return NextResponse.json({ suggestions: [] });
     }
 
-    // Query for products that match this keyword
     const products = await prisma.product.findMany({
       where: {
-        status: "active",
         title: {
           contains: query,
           mode: "insensitive",
         },
       },
+      take: 5,
       select: {
         id: true,
         title: true,
+        slug: true,
         categoryId: true,
-        images: true,
       },
-      take: 5,
     });
 
-    const suggestions = products.map((product) =&gt; ({
+    // FIXED the HTML escape here
+    const suggestions = products.map((product) => ({
       id: product.id,
       name: product.title,
       category: product.categoryId,
-      image: product.images?.[0] || "/placeholder.svg",
+      slug: product.slug,
     }));
 
     return NextResponse.json({ suggestions });
   } catch (error) {
-    
-    console.error("Suggestion retrieval error:", error);
-    
-    return NextResponse.json(
-      { error: "Failed to fetch suggestions" },
-      { status: 500 }
-    );
+    console.error("Search suggestions API error:", error);
+    return NextResponse.json({ suggestions: [] });
   }
 }

@@ -4,6 +4,15 @@ import { AesopSection } from "@/components/AesopSection";
 export const metadata: Metadata = {
   title: "Cookie Policy | Kollect-It",
   description: "Information about how Kollect-It uses cookies.",
+  alternates: {
+    canonical: "https://kollect-it.com/cookies",
+  },
+  openGraph: {
+    title: "Cookie Policy | Kollect-It",
+    description: "Learn how Kollect-It uses cookies to improve your experience.",
+    url: "https://kollect-it.com/cookies",
+    type: "website",
+  },
 };
 
 export default function CookiesPage() {
@@ -19,7 +28,7 @@ export default function CookiesPage() {
               <section>
                 <h2 className="text-2xl font-serif font-semibold text-gold-600 mb-4">What Are Cookies?</h2>
                 <p className="text-ink-700 leading-relaxed">
-                  Cookies are small text files that are stored on your device when you visit a website. They help us make the website work properly and improve your user experience.
+                  Cookies are small text files stored on your device when you visit a website. They help the site work properly and improve your experience. I use them thoughtfully and only when necessary.
                 </p>
               </section>
 

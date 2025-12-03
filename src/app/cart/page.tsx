@@ -31,7 +31,7 @@ function Recommendations({
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-10 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
-            Curated picks
+            You might also like
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900">
             {heading}
@@ -143,11 +143,13 @@ export default function CartPage() {
               Cart
             </p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink-900">
-              Your cart is currently empty
+              Your cart is empty
             </h1>
-            <p className="mt-4 text-base text-ink-600">
-              Discover authenticated fine art, militaria, rare books, and more.
-              Items you add will appear here for a seamless checkout.
+            <p className="mt-4 text-base leading-relaxed text-ink-600">
+              Take your time browsing—when you find something you love, it&apos;ll be waiting here for you.
+            </p>
+            <p className="mt-2 text-sm text-ink-500">
+              New pieces are added regularly. Check back often, or let me know what you&apos;re looking for.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
@@ -170,7 +172,7 @@ export default function CartPage() {
 
         <Recommendations
           suggestions={suggestions}
-          heading="Start with these curated pieces"
+          heading="Pieces you might like"
         />
       </div>
     );
@@ -185,11 +187,12 @@ export default function CartPage() {
               Shopping cart
             </p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-              {itemCount} {itemCount === 1 ? "item" : "items"} secured
+              Your cart
             </h1>
             <p className="mt-3 max-w-2xl text-base text-ink-600">
-              Your selections remain reserved for the next 24 hours. Adjust
-              quantities, review details, and check out when ready.
+              {itemCount === 1 
+                ? "One piece waiting for you. Take your time reviewing the details, or proceed to checkout when you're ready."
+                : `${itemCount} pieces waiting for you. Review your selections, adjust quantities if needed, and check out when you're ready.`}
             </p>
           </div>
           <div className="flex gap-3">
@@ -244,7 +247,7 @@ export default function CartPage() {
                           {item.title}
                         </Link>
                         <p className="text-sm text-ink-500">
-                          Authenticated &amp; insured shipping
+                          Authenticated & insured shipping
                         </p>
                       </div>
                       <p className="text-right text-xl font-semibold text-ink-900 sm:text-2xl">
@@ -301,12 +304,12 @@ export default function CartPage() {
                   Need help editing your cart?
                 </p>
                 <p className="text-xs text-ink-500">
-                  Concierge support is available via{" "}
+                  Questions? Reach out at{" "}
                   <a
-                    href="mailto:concierge@kollect-it.com"
+                    href="mailto:james@kollect-it.com"
                     className="text-ink-900 underline-offset-4 hover:underline"
                   >
-                    concierge@kollect-it.com
+                    james@kollect-it.com
                   </a>
                 </p>
               </div>
@@ -377,7 +380,7 @@ export default function CartPage() {
 
               <div className="rounded-3xl border border-border-200 bg-white p-6 shadow-sm">
                 <h3 className="text-sm font-semibold uppercase tracking-[0.35em] text-ink-400">
-                  Trust &amp; assurances
+                  Trust & assurances
                 </h3>
                 <ul className="mt-4 space-y-4 text-sm text-ink-600">
                   {[

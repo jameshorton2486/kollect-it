@@ -174,6 +174,13 @@ const config: Config = {
         "display-lg": ["3rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
         "display-xl": ["3.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
         "display-2xl": ["4rem", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        
+        /* Typography System Tokens */
+        "heading-xl": ["var(--text-heading-xl)", { lineHeight: "1.2", letterSpacing: "-0.02em" }],
+        "heading-lg": ["var(--text-heading-lg)", { lineHeight: "1.25", letterSpacing: "-0.01em" }],
+        "heading-md": ["var(--text-heading-md)", { lineHeight: "1.3", letterSpacing: "0" }],
+        "body": ["var(--text-body)", { lineHeight: "1.6", letterSpacing: "0" }],
+        "body-base": ["var(--text-body-base)", { lineHeight: "1.6", letterSpacing: "0" }],
       },
       
       borderRadius: {
@@ -197,6 +204,9 @@ const config: Config = {
         "section-small": "2rem",
         "section": "4rem",
         "section-large": "6rem",
+        "section-y-sm": "var(--section-y-sm)",
+        "section-y": "var(--section-y)",
+        "section-y-lg": "var(--section-y-lg)",
       },
       
       boxShadow: {
@@ -208,6 +218,9 @@ const config: Config = {
         "card-hover": "0 8px 24px rgba(0, 0, 0, 0.12)",
         elevated: "0 4px 16px rgba(0, 0, 0, 0.15)",
         cta: "0 4px 14px rgba(0, 0, 0, 0.25)",
+        clean: "var(--shadow-clean)",
+        soft: "var(--shadow-soft)",
+        "gold-soft": "var(--shadow-gold-soft)",
       },
       
       keyframes: {
@@ -235,6 +248,14 @@ const config: Config = {
           "0%": { transform: "scaleX(0)", transformOrigin: "left" },
           "100%": { transform: "scaleX(1)", transformOrigin: "left" },
         },
+        lift: {
+          "0%": { transform: "translateY(0)", boxShadow: "var(--shadow-clean)" },
+          "100%": { transform: "translateY(-2px)", boxShadow: "var(--shadow-soft)" },
+        },
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       
       animation: {
@@ -244,6 +265,13 @@ const config: Config = {
         "scale-in": "scaleIn 0.3s ease-out",
         shimmer: "shimmer 1.5s ease-in-out infinite",
         "underline-slide": "underlineSlide 0.3s ease-out forwards",
+        lift: "lift 0.2s ease-out forwards",
+        "fade-in-up": "fadeInUp 0.25s ease-out",
+      },
+      
+      transitionDuration: {
+        "luxury": "200ms",
+        "smooth": "250ms",
       },
     },
   },

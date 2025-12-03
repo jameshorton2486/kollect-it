@@ -1,3 +1,20 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shipping & Returns | Kollect-It",
+  description:
+    "Learn about Kollect-It's shipping policies, return process, and how we ensure your collectibles arrive safely.",
+  alternates: {
+    canonical: "https://kollect-it.com/shipping-returns",
+  },
+  openGraph: {
+    title: "Shipping & Returns | Kollect-It",
+    description: "Information about shipping, returns, and how we pack and ship your collectibles safely.",
+    url: "https://kollect-it.com/shipping-returns",
+    type: "website",
+  },
+};
+
 export default function ShippingReturnsPage() {
   return (
     <div className="min-h-screen bg-surface-50 text-ink-900">
@@ -11,8 +28,7 @@ export default function ShippingReturnsPage() {
           <section>
             <h2 className="text-2xl font-serif font-semibold mb-3">Shipping</h2>
             <p>
-              I pack every item myself and use the right materials for each
-              piece. Fragile items receive extra padding and protection.
+              I pack every item myself—it&apos;s important to me that your piece arrives safely. I use the right materials for each object, and fragile items get extra care with proper padding and protection.
             </p>
 
             <ul className="list-disc list-inside mt-4 space-y-2">
@@ -26,7 +42,7 @@ export default function ShippingReturnsPage() {
             </ul>
 
             <p className="mt-4">
-              If you need something shipped faster, feel free to reach out.
+              Need something shipped faster? Just let me know and I&apos;ll do my best to accommodate.
             </p>
           </section>
 
@@ -42,7 +58,7 @@ export default function ShippingReturnsPage() {
           {/* RETURNS */}
           <section>
             <h2 className="text-2xl font-serif font-semibold mb-3">Returns</h2>
-            <p>I want you to be happy with your purchase.</p>
+            <p>I want you to be happy with what you receive. If something isn&apos;t right, I&apos;ll make it right.</p>
 
             <ul className="list-disc list-inside mt-4 space-y-2">
               <li>
@@ -56,7 +72,7 @@ export default function ShippingReturnsPage() {
               <li>Items must be returned in the same condition they arrived.</li>
             </ul>
 
-            <p className="mt-4">I always handle returns personally and fairly.</p>
+            <p className="mt-4">I handle every return personally—no automated processes, just a conversation about what went wrong and how to fix it.</p>
           </section>
 
           {/* INTERNATIONAL */}
@@ -64,7 +80,7 @@ export default function ShippingReturnsPage() {
             <h2 className="text-2xl font-serif font-semibold mb-3">
               International Shipping
             </h2>
-            <p>Not available at this time, but I&apos;m working on adding it.</p>
+            <p>Not available at this time, but I&apos;m working on making it possible. If you&apos;re interested in international shipping for a specific piece, reach out and we can discuss options.</p>
           </section>
         </div>
       </div>

@@ -157,18 +157,17 @@ function SuccessContent() {
               </svg>
             </div>
             <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
-              Your order is confirmed!
+              Order Confirmed!
             </h1>
             <p className="mt-3 text-base text-ink-600 max-w-md mx-auto">
               {emailConfigured ? (
                 <>
-                  We&apos;ll email shipping details soon to{" "}
+                  Thank you for your purchase. We&apos;ve sent a confirmation to{" "}
                   <span className="font-medium text-ink-900">{orderDetails.email}</span>
-                  . Your pieces will be carefully packed and shipped within 1-2 business days.
                 </>
               ) : (
                 <>
-                  Your order is confirmed. Please save your order number for your records—you&apos;ll receive shipping details soon.
+                  Thank you for your purchase. Please save your order number for your records.
                 </>
               )}
             </p>
@@ -236,8 +235,8 @@ function SuccessContent() {
                 </svg>
                 <span className="text-sm text-ink-700">
                   {emailConfigured 
-                    ? "Check your email for a detailed confirmation"
-                    : "Save your order number—you'll need it for reference"}
+                    ? "You'll receive an email confirmation shortly"
+                    : "Save your order number for reference"}
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -245,7 +244,7 @@ function SuccessContent() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="text-sm text-ink-700">
-                  I&apos;ll send tracking information as soon as your order ships
+                  We&apos;ll send tracking information once your order ships
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -272,7 +271,7 @@ function SuccessContent() {
                 href="/browse"
                 className="flex-1 inline-flex items-center justify-center rounded-full border border-border-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wider text-ink-700 transition-colors hover:bg-surface-50"
               >
-                Continue Browsing
+                Continue Shopping
               </Link>
             </div>
             <p className="mt-4 text-center text-sm text-ink-500">

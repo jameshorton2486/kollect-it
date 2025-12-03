@@ -82,7 +82,7 @@ export default function AddToCartButton({
       onClick={handleAddToCart}
       variant={buttonVariant}
       size={size}
-      className={cn(className, added && addedStyles, "tracking-wide")}
+      className={cn(className, added && addedStyles, "tracking-wide transition-all duration-luxury hover:scale-[1.02] hover:shadow-soft")}
     >
       {added ? (
         <>

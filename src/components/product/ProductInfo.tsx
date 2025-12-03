@@ -63,9 +63,6 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
   return (
     <div className="space-y-8 rounded-3xl border border-border-200 bg-white/95 p-6 shadow-xl shadow-black/5 lg:p-8">
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-600">
-          Collector Release
-        </p>
         <div className="flex flex-wrap items-center gap-3 text-[0.75rem] uppercase tracking-[0.35em] text-ink-600">
           <span>{product.category.name}</span>
           {product.condition && (
@@ -79,20 +76,20 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
           {product.title}
         </h1>
         <p className="text-sm text-ink-500">
-          SKU {sku} · Authenticated &amp; catalogued by Kollect-It curators
+          SKU {sku}
         </p>
       </div>
 
       <div className="rounded-2xl border border-border-200 bg-lux-pearl p-5">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-600">
-          Collector&apos;s Price
+          Price
         </p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
           <span className="text-3xl font-semibold text-lux-gold">
             {formatUSD0(product.price)}
           </span>
           <span className="text-sm text-ink-500">
-            Includes authentication, insured shipping &amp; concierge service
+            Professional shipping support included
           </span>
         </div>
       </div>
@@ -259,14 +256,14 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
 
       <div className="rounded-2xl border border-border-200 bg-lux-pearl p-5">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-600">
-          Collector Assurance
+          Included with Your Purchase
         </p>
         <ul className="mt-4 space-y-3 text-sm text-ink-700">
           {[
-            "Authenticated by Kollect-It curators",
-            "Complimentary insured shipping worldwide",
-            "30-day return window with concierge support",
-            "Secure checkout &amp; white-glove packaging",
+            "Quality-reviewed and researched before listing",
+            "Professional shipping support with secure packing",
+            "Return policy if item is not as described",
+            "Secure checkout and reliable delivery",
           ].map((item) => (
             <li key={item} className="flex items-start gap-3">
               <span className="mt-1 h-2 w-2 rounded-full bg-lux-gold" />

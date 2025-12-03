@@ -50,6 +50,18 @@ export function Header() {
           : "bg-[#0D0D0D]"
       )}
     >
+      {/* Simplified top bar - just email */}
+      <div className="hidden border-b border-white/5 px-4 py-2.5 sm:block">
+        <div className="mx-auto max-w-6xl flex justify-end">
+          <a 
+            href="mailto:james@kollect-it.com" 
+            className="text-[0.7rem] font-medium tracking-[0.2em] text-lux-pearl/70 hover:text-white transition-colors"
+          >
+            james@kollect-it.com
+          </a>
+        </div>
+      </div>
+
       <nav
         className="mx-auto max-w-6xl px-4 sm:px-6"
         aria-label="Main navigation"
@@ -140,14 +152,6 @@ export function Header() {
                 <span className="sr-only">Cart</span>
               </Link>
             </Button>
-
-            {/* Consign Button */}
-            <Button
-              asChild
-              className="ml-4 rounded-full bg-lux-gold px-4 py-2 text-xs font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all"
-            >
-              <Link href="/sell">Consign</Link>
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -233,13 +237,6 @@ export function Header() {
                 >
                   <Search className="h-4 w-4" />
                   Search
-                </Link>
-                <Link
-                  href="/sell"
-                  className="flex items-center gap-3 py-3 text-sm font-semibold text-lux-gold hover:text-lux-gold-light transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Consign
                 </Link>
               </div>
             </div>
