@@ -103,8 +103,9 @@ export default function ContactForm() {
             ? "border-red-500 ring-1 ring-red-500"
             : "border-border-300 focus:border-gold"
         }`}
-        aria-invalid={!!errors[id]}
-        aria-describedby={errors[id] ? `${id}-error` : undefined}
+        {...(errors[id]
+          ? { "aria-invalid": "true", "aria-describedby": `${id}-error` }
+          : {})}
       />
       {errors[id] && (
         <p id={`${id}-error`} className="mt-1 text-sm text-red-600">
@@ -171,8 +172,9 @@ export default function ContactForm() {
                   ? "border-red-500 ring-1 ring-red-500"
                   : "border-border-300 focus:border-gold"
               }`}
-              aria-invalid={!!errors.message}
-              aria-describedby={errors.message ? "message-error" : undefined}
+              {...(errors.message
+                ? { "aria-invalid": "true", "aria-describedby": "message-error" }
+                : {})}
             />
             <div className="flex justify-between items-center mt-1">
               {errors.message && (

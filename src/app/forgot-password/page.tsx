@@ -155,8 +155,9 @@ export default function ForgotPasswordPage() {
                     ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
                     : "border-border-neutral bg-surface-0 focus:outline-none focus:ring-2 focus:ring-cta focus:ring-opacity-50"
                 }`}
-                aria-invalid={!!validationError}
-                aria-describedby={validationError ? "email-error" : undefined}
+                {...(validationError
+                  ? { "aria-invalid": "true", "aria-describedby": "email-error" }
+                  : {})}
               />
             </div>
             {validationError && (
