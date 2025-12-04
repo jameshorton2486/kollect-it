@@ -24,8 +24,8 @@
     --lux-silver-soft: 220 10% 78%;  /* light panels */
 
     /* Accent */
-    --lux-gold: 38 58% 54%;          /* warm gold accent */
-    --lux-gold-light: 38 70% 70%;    /* hover gold */
+    --lux-gold: 46 65% 52%;          /* classic gold accent (#D4AF37) */
+    --lux-gold-light: 46 75% 65%;    /* hover gold */
 
     /* Surface system */
     --surface-0: 0 0% 100%;
@@ -45,11 +45,11 @@
     --ink-900: 220 18% 10%;
 
     /* Gold scale */
-    --gold-300: 38 65% 66%;
-    --gold-400: 38 62% 60%;
-    --gold-500: 38 58% 54%;
-    --gold-600: 38 58% 46%;
-    --gold-700: 38 58% 40%;
+    --gold-300: 46 70% 68%;
+    --gold-400: 46 68% 60%;
+    --gold-500: 46 65% 52%;  /* Primary gold (#D4AF37) */
+    --gold-600: 46 65% 44%;
+    --gold-700: 46 65% 38%;
 
     /* CTA palette repurposed to gold/neutrals */
     --cta-400: var(--gold-400);

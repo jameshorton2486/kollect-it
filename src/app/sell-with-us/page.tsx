@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
-export default function SellWithUsRedirect() {
-  redirect("/sell");
+export default function SellWithUsPage() {
+  redirect('/consign');
 }
-

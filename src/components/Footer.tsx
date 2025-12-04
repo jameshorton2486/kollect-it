@@ -32,6 +32,7 @@ export function Footer() {
         { label: "Privacy Policy", href: "/privacy" },
         { label: "Terms of Service", href: "/terms" },
         { label: "Cookie Policy", href: "/cookies" },
+        { label: "Refund Policy", href: "/refund-policy" },
       ],
     },
   ];
@@ -139,7 +140,7 @@ export function Footer() {
                 <p className="text-sm text-gray-400 mt-0.5">We work with collectors and estates.</p>
               </div>
               <Link
-                href="/sell"
+                href="/consign"
                 className="rounded-full border border-lux-gold/50 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-lux-gold hover:bg-lux-gold hover:text-lux-black transition-all whitespace-nowrap"
               >
                 Start Consigning

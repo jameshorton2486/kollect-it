@@ -146,7 +146,7 @@ export function Header() {
               asChild
               className="ml-4 rounded-full bg-lux-gold px-4 py-2 text-xs font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all"
             >
-              <Link href="/sell">Consign</Link>
+              <Link href="/consign">Consign</Link>
             </Button>
           </div>
 
@@ -235,7 +235,7 @@ export function Header() {
                   Search
                 </Link>
                 <Link
-                  href="/sell"
+                  href="/consign"
                   className="flex items-center gap-3 py-3 text-sm font-semibold text-lux-gold hover:text-lux-gold-light transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >

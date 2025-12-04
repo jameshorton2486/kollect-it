@@ -184,7 +184,7 @@ export default function AboutPage() {
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link
-              href="/sell"
+              href="/consign"
               className="inline-flex items-center rounded-full border border-lux-gold px-5 py-2.5 text-xs font-medium text-lux-cream transition hover:bg-lux-gold hover:text-lux-black"
             >
               Start a consignment conversation
