@@ -49,12 +49,12 @@ export function Footer() {
                 <span className="text-lux-gold">-It</span>
               </h2>
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-white/60">
+            <p className="max-w-xs text-sm leading-relaxed text-gray-300">
               Curated antiques, art, books, militaria, and rare objects — thoughtfully photographed and authenticated.
             </p>
-            
+
             {/* Contact info */}
-            <div className="space-y-1 text-sm text-white/50">
+            <div className="space-y-1 text-sm text-gray-300">
               <p>San Antonio, Texas</p>
               <a
                 href="tel:+14693866065"
@@ -72,16 +72,16 @@ export function Footer() {
 
             {/* Social icons */}
             <div className="flex gap-3 pt-2">
-              <a href="mailto:james@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-white/10 hover:text-white transition-all">
+              <a href="mailto:james@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white transition-all">
                 <Mail className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-white/10 hover:text-white transition-all">
+              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white transition-all">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-white/10 hover:text-white transition-all">
+              <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white transition-all">
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Twitter" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-white/10 hover:text-white transition-all">
+              <a href="#" aria-label="Twitter" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white transition-all">
                 <Twitter className="h-4 w-4" />
               </a>
             </div>
@@ -93,7 +93,7 @@ export function Footer() {
             <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
               {columnSections.map((section) => (
                 <div key={section.title}>
-                  <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-lux-gold mb-3">
+                  <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-lux-gold mb-3">
                     {section.title}
                   </h3>
                   <ul className="space-y-2">
@@ -101,7 +101,7 @@ export function Footer() {
                       <li key={link.label}>
                         <Link
                           href={link.href}
-                          className="text-sm text-white/60 hover:text-white transition-colors"
+                          className="text-sm text-gray-300 hover:text-white transition-colors"
                         >
                           {link.label}
                         </Link>
@@ -117,15 +117,15 @@ export function Footer() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-white">Join the Collector&apos;s List</p>
-                  <p className="text-xs text-white/50 mt-0.5">Updates when new pieces arrive.</p>
+                  <p className="text-sm text-gray-400 mt-0.5">Updates when new pieces arrive.</p>
                 </div>
                 <div className="flex gap-2 sm:w-auto">
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-lux-gold/50 focus:border-lux-gold transition-all"
+                    className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-lux-gold/50 focus:border-lux-gold transition-all"
                   />
-                  <button className="h-9 rounded-full bg-lux-gold px-4 text-xs font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all whitespace-nowrap">
+                  <button className="h-9 rounded-full bg-lux-gold px-4 text-sm font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all whitespace-nowrap">
                     Join
                   </button>
                 </div>
@@ -136,11 +136,11 @@ export function Footer() {
             <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4">
               <div>
                 <p className="text-sm font-medium text-white">Have a piece to consign?</p>
-                <p className="text-xs text-white/50 mt-0.5">We work with collectors and estates.</p>
+                <p className="text-sm text-gray-400 mt-0.5">We work with collectors and estates.</p>
               </div>
               <Link
                 href="/sell"
-                className="rounded-full border border-lux-gold/50 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-lux-gold hover:bg-lux-gold hover:text-lux-black transition-all whitespace-nowrap"
+                className="rounded-full border border-lux-gold/50 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-lux-gold hover:bg-lux-gold hover:text-lux-black transition-all whitespace-nowrap"
               >
                 Start Consigning
               </Link>
@@ -149,7 +149,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar - Minimal */}
-        <div className="border-t border-white/10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-white/40">
+        <div className="border-t border-white/10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-400">
           <p>© {year} Kollect-It. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white transition-colors">

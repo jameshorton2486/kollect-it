@@ -122,43 +122,43 @@ export default function AboutPage() {
             <h2 className="text-sm font-semibold tracking-[0.16em] text-lux-gold uppercase">
               Who we serve
             </h2>
-            <p className="mt-2 text-xl font-semibold text-lux-cream">
+            <p className="mt-2 text-xl font-semibold text-lux-charcoal">
               Collectors, estates, and those in-between.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-lux-cream">
+              <h3 className="text-sm font-semibold text-lux-charcoal">
                 Established collectors
               </h3>
-              <p className="text-sm leading-relaxed text-lux-silver/85">
+              <p className="text-sm leading-relaxed text-lux-gray-dark">
                 Looking to refine or re-balance a collection while keeping a
                 clear record of what has moved, where, and why.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-lux-cream">
+              <h3 className="text-sm font-semibold text-lux-charcoal">
                 Families & estates
               </h3>
-              <p className="text-sm leading-relaxed text-lux-silver/85">
+              <p className="text-sm leading-relaxed text-lux-gray-dark">
                 Navigating a houseful of objects, some obviously important,
                 others quietly so. We help you triage, prioritize, and plan.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-lux-cream">
+              <h3 className="text-sm font-semibold text-lux-charcoal">
                 Dealers & advisors
               </h3>
-              <p className="text-sm leading-relaxed text-lux-silver/85">
+              <p className="text-sm leading-relaxed text-lux-gray-dark">
                 Partnering on select consignments where our audience, format,
                 and research can add value to your existing channels.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-lux-cream">
+              <h3 className="text-sm font-semibold text-lux-charcoal">
                 New collectors
               </h3>
-              <p className="text-sm leading-relaxed text-lux-silver/85">
+              <p className="text-sm leading-relaxed text-lux-gray-dark">
                 People who are ready to move beyond impulse buys and start
                 acquiring with intention, context, and long-term enjoyment in
                 mind.

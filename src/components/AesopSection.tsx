@@ -32,7 +32,7 @@ export function AesopSection({
       ? "text-aesop-olive-foreground"
       : variant === "charcoal"
       ? "text-aesop-charcoal-foreground"
-      : "text-ink";
+      : "text-gray-800";
 
   // Use standardized spacing system
   const container = "container mx-auto section-normal page-padding";

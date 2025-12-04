@@ -29,7 +29,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 1. Acceptance of Terms
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 By using Kollect-It, you agree to these terms. I&apos;ve tried to keep them straightforward—if you have questions, feel free to reach out.
               </p>
             </section>
@@ -38,7 +38,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 2. User Accounts
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.
               </p>
             </section>
@@ -47,7 +47,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 3. Buying and Selling
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 Buyers agree to pay for items purchased. Sellers agree to ship items promptly and accurately describe their condition. All transactions are subject to our authentication process.
               </p>
             </section>
@@ -56,7 +56,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 4. Fees and Payments
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 We charge fees for our services as described in our Fee Schedule. You are responsible for paying all fees and applicable taxes.
               </p>
             </section>
@@ -65,7 +65,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 5. Returns and Refunds
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 Our return policy allows for returns within 30 days if the item is not as described. Please review our full Return Policy for details.
               </p>
             </section>
@@ -74,7 +74,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 6. Intellectual Property
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 The content on Kollect-It, including text, graphics, and logos, is the property of Kollect-It or its licensors and is protected by copyright laws.
               </p>
             </section>
@@ -83,7 +83,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 7. Limitation of Liability
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 Kollect-It shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the services.
               </p>
             </section>
@@ -92,7 +92,7 @@ export default function TermsPage() {
               <h2 className="font-serif text-2xl mb-4 text-gold">
                 8. Contact Information
               </h2>
-              <p className="leading-relaxed text-ink-light">
+              <p className="leading-relaxed text-gray-800">
                 Questions about these terms? Contact me at james@kollect-it.com and I&apos;ll be happy to clarify anything.
               </p>
             </section>

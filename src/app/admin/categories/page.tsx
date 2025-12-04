@@ -150,7 +150,7 @@ export default function CategoriesPage() {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-surface-200">
-                    <span className="text-gray-400">No image</span>
+                    <span className="text-gray-600">No image</span>
                   </div>
                 )}
 

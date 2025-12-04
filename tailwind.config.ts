@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 /* ============================================
    KOLLECT-IT TAILWIND CONFIGURATION
@@ -42,17 +43,8 @@ const config: Config = {
            Gradually migrate to lux palette
            ========================================== */
         
-        /* Ink - Text Colors (Complete Scale) */
-        ink: {
-          400: "hsl(var(--ink-400))",
-          500: "hsl(var(--ink-500))",
-          600: "hsl(var(--ink-600))",
-          700: "hsl(var(--ink-700))",
-          800: "hsl(var(--ink-800))",
-          900: "hsl(var(--ink-900))",
-          DEFAULT: "hsl(var(--ink-900))",
-          light: "hsl(var(--ink-600))", // Alias for lighter text
-        },
+        /* Ink - now aliased to Tailwind gray scale */
+        ink: colors.gray,
         
         /* Gold - Brand Accent (Complete Scale) */
         gold: {
@@ -111,10 +103,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--border-300))",
         },
 
-        /* Additional aliases */
-        "ink-secondary": "hsl(var(--ink-600))",
-        "ink-muted": "hsl(var(--ink-500))",
-        "ink-light": "hsl(var(--ink-600))",
+        /* Additional aliases mapped onto gray scale */
+        "ink-secondary": colors.gray[600],
+        "ink-muted": colors.gray[500],
+        "ink-light": colors.gray[600],
 
         /* shadcn/ui compatibility */
         background: "hsl(var(--background))",
