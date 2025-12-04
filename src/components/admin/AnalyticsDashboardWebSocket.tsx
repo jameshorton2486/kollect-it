@@ -108,12 +108,39 @@ export function AnalyticsDashboardWebSocket() {
     }
   }, [startDate, endDate, autoRefresh, fetchMetrics]);
 
-  if (loading)
+  if (loading && !metrics) {
     return (
-      <div className="text-center text-lux-gray">Loading analytics...</div>
+      <div className="min-h-screen bg-surface-50 p-8">
+        <h1 className="text-2xl font-bold mb-6 text-ink-900">Analytics Dashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-white rounded-lg p-6 animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+              <div className="h-8 bg-gray-200 rounded w-3/4"></div>
+            </div>
+          ))}
+        </div>
+      </div>
     );
-  if (!metrics)
-    return <div className="text-center text-lux-gray">No data available</div>;
+  }
+  
+  if (!metrics) {
+    return (
+      <div className="min-h-screen bg-surface-50 p-8">
+        <h1 className="text-2xl font-bold mb-6 text-ink-900">Analytics Dashboard</h1>
+        <div className="bg-white rounded-lg p-12 text-center">
+          <p className="text-gray-500 text-lg">Analytics data is being compiled.</p>
+          <p className="text-gray-400 text-sm mt-2">Check back soon for insights.</p>
+          <button
+            onClick={() => fetchMetrics()}
+            className="mt-6 px-6 py-2 bg-gold-500 text-white rounded-full hover:bg-gold-600 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

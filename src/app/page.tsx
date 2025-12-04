@@ -39,8 +39,8 @@ export default async function HomePage() {
     title: product.title,
     price: product.price,
     slug: product.slug,
-    image: product.images[0]?.url || "/images/products/placeholder.svg",
-    category: product.category.name,
+    images: product.images.length > 0 ? product.images : [{ url: "/placeholder.svg" }],
+    category: product.category ? { name: product.category.name, slug: product.category.slug } : null,
   }));
 
   return (

@@ -50,15 +50,26 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         className="group flex gap-4 rounded-xl border border-border-200 bg-white p-4 shadow-clean transition-all duration-luxury hover:shadow-soft hover:-translate-y-0.5 hover:border-border-300 sm:gap-6"
       >
         {/* Image */}
-        <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-surface-100 sm:h-36 sm:w-36">
-          <Image
-            src={imageError ? "/placeholder.svg" : imageUrl}
-            alt={product.title}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            onError={() => setImageError(true)}
-            sizes="(max-width: 640px) 112px, 144px"
-          />
+        <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-lux-cream sm:h-36 sm:w-36">
+          {imageError || !imageUrl || imageUrl === "/placeholder.svg" ? (
+            <div className="h-full w-full flex items-center justify-center">
+              <div className="text-center">
+                <svg className="w-8 h-8 mx-auto text-gray-300 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span className="text-xs text-gray-400 block">Image Coming Soon</span>
+              </div>
+            </div>
+          ) : (
+            <Image
+              src={imageUrl}
+              alt={product.title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              onError={() => setImageError(true)}
+              sizes="(max-width: 640px) 112px, 144px"
+            />
+          )}
         </div>
 
         {/* Content */}
@@ -101,15 +112,26 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
       className="group flex flex-col rounded-xl border border-border-200 bg-white overflow-hidden shadow-clean transition-all duration-luxury hover:shadow-soft hover:-translate-y-1 hover:border-border-300"
     >
       {/* Image container */}
-      <div className="relative aspect-square overflow-hidden bg-surface-100">
-        <Image
-          src={imageError ? "/placeholder.svg" : imageUrl}
-          alt={product.title}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-          onError={() => setImageError(true)}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-        />
+      <div className="relative aspect-square overflow-hidden bg-lux-cream">
+        {imageError || !imageUrl || imageUrl === "/placeholder.svg" ? (
+          <div className="h-full w-full flex items-center justify-center">
+            <div className="text-center">
+              <svg className="w-10 h-10 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span className="text-xs text-gray-400 block">Image Coming Soon</span>
+            </div>
+          </div>
+        ) : (
+          <Image
+            src={imageUrl}
+            alt={product.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={() => setImageError(true)}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        )}
         
         {/* Wishlist button overlay */}
         <button
