@@ -185,7 +185,7 @@ export function SellerInquiryManager() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
             <input
               type="text"
               placeholder="Search sellers..."
@@ -197,7 +197,7 @@ export function SellerInquiryManager() {
 
           {/* Status Filter */}
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
             <label htmlFor="status-filter" className="sr-only">
               Filter by status
             </label>
@@ -264,7 +264,7 @@ export function SellerInquiryManager() {
                   <h3 className="font-semibold text-ink-900">
                     {inquiry.sellerName}
                   </h3>
-                  <p className="text-sm text-ink-500">{inquiry.email}</p>
+                  <p className="text-sm text-ink-700">{inquiry.email}</p>
                 </div>
                 <span
                   className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(inquiry.status)}`}
@@ -285,14 +285,14 @@ export function SellerInquiryManager() {
                   {inquiry.itemDescription}
                 </p>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-ink-500">{inquiry.category}</span>
+                  <span className="text-ink-700">{inquiry.category}</span>
                   <span className="font-semibold text-amber-600">
                     ${inquiry.estimatedValue.toLocaleString()}
                   </span>
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t flex items-center justify-between text-xs text-ink-500">
+              <div className="mt-3 pt-3 border-t flex items-center justify-between text-xs text-ink-700">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   {new Date(inquiry.submittedAt).toLocaleDateString()}
@@ -303,7 +303,7 @@ export function SellerInquiryManager() {
           ))}
 
           {filteredInquiries.length === 0 && (
-            <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-500">
+            <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-700">
               No inquiries found matching your filters
             </div>
           )}
@@ -320,23 +320,23 @@ export function SellerInquiryManager() {
               {/* Seller Info */}
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-3">
-                  <User className="w-5 h-5 text-gray-400" />
+                  <User className="w-5 h-5 text-gray-600" />
                   <div>
-                    <p className="text-sm text-ink-500">Seller Name</p>
+                    <p className="text-sm text-ink-700">Seller Name</p>
                     <p className="font-medium">{selectedInquiry.sellerName}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-gray-400" />
+                  <Mail className="w-5 h-5 text-gray-600" />
                   <div>
-                    <p className="text-sm text-ink-500">Email</p>
+                    <p className="text-sm text-ink-700">Email</p>
                     <p className="font-medium">{selectedInquiry.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-gray-400" />
+                  <Phone className="w-5 h-5 text-gray-600" />
                   <div>
-                    <p className="text-sm text-ink-500">Phone</p>
+                    <p className="text-sm text-ink-700">Phone</p>
                     <p className="font-medium">{selectedInquiry.phone}</p>
                   </div>
                 </div>
@@ -455,7 +455,7 @@ export function SellerInquiryManager() {
                     </div>
                   ))}
                   {selectedInquiry.adminNotes.length === 0 && (
-                    <p className="text-sm text-ink-500 italic">No notes yet</p>
+                    <p className="text-sm text-ink-700 italic">No notes yet</p>
                   )}
                 </div>
                 <div className="flex gap-2">
@@ -477,7 +477,7 @@ export function SellerInquiryManager() {
             </div>
           </div>
         ) : (
-          <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-500 lg:sticky lg:top-4">
+          <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-700 lg:sticky lg:top-4">
             Select an inquiry to view details
           </div>
         )}

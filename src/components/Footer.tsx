@@ -118,13 +118,13 @@ export function Footer() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-white">Join the Collector&apos;s List</p>
-                  <p className="text-sm text-gray-400 mt-0.5">Updates when new pieces arrive.</p>
+                  <p className="text-sm text-gray-600 mt-0.5">Updates when new pieces arrive.</p>
                 </div>
                 <div className="flex gap-2 sm:w-auto">
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-lux-gold/50 focus:border-lux-gold transition-all"
+                    className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:ring-1 focus:ring-lux-gold/50 focus:border-lux-gold transition-all"
                   />
                   <button className="h-9 rounded-full bg-lux-gold px-4 text-sm font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all whitespace-nowrap">
                     Join
@@ -137,7 +137,7 @@ export function Footer() {
             <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4">
               <div>
                 <p className="text-sm font-medium text-white">Have a piece to consign?</p>
-                <p className="text-sm text-gray-400 mt-0.5">We work with collectors and estates.</p>
+                <p className="text-sm text-gray-600 mt-0.5">We work with collectors and estates.</p>
               </div>
               <Link
                 href="/consign"
@@ -150,7 +150,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar - Minimal */}
-        <div className="border-t border-white/10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-400">
+        <div className="border-t border-white/10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-600">
           <p>© {year} Kollect-It. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white transition-colors">

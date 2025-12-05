@@ -174,7 +174,7 @@ export function ProductAnalyticsDashboard() {
           <h2 className="text-xl font-semibold text-ink-900 mb-4">
             Sales Velocity
           </h2>
-          <p className="text-sm text-ink-500 mb-4">
+          <p className="text-sm text-ink-700 mb-4">
             Products sold vs listed over time
           </p>
           <ResponsiveContainer width="100%" height={250}>
@@ -206,7 +206,7 @@ export function ProductAnalyticsDashboard() {
           <h2 className="text-xl font-semibold text-ink-900 mb-4">
             Price Distribution
           </h2>
-          <p className="text-sm text-ink-500 mb-4">Products by price range</p>
+          <p className="text-sm text-ink-700 mb-4">Products by price range</p>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={metrics.priceDistribution}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -228,22 +228,22 @@ export function ProductAnalyticsDashboard() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-surface-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Category
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Products
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Sales
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Revenue
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Avg Price
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Conversion
                 </th>
               </tr>
@@ -254,19 +254,19 @@ export function ProductAnalyticsDashboard() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
                     {category.category}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     {category.productCount}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     {category.sales}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
                     ${category.revenue.toFixed(2)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     ${category.avgPrice.toFixed(2)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     {category.productCount > 0
                       ? (
                           (category.sales / category.productCount) *
@@ -291,22 +291,22 @@ export function ProductAnalyticsDashboard() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-surface-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Product
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Views
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Sales
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Revenue
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Conversion
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Days Listed
                 </th>
               </tr>
@@ -317,13 +317,13 @@ export function ProductAnalyticsDashboard() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
                     {product.title}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     <div className="flex items-center gap-1">
                       <Eye size={14} />
                       {product.views}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     {product.sales}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
@@ -336,13 +336,13 @@ export function ProductAnalyticsDashboard() {
                           ? "text-green-600"
                           : product.conversionRate > 2
                             ? "text-yellow-600"
-                            : "text-ink-500"
+                            : "text-ink-700"
                       }`}
                     >
                       {product.conversionRate.toFixed(1)}%
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                     {product.daysListed}
                   </td>
                 </tr>
@@ -389,7 +389,7 @@ export function ProductAnalyticsDashboard() {
                     </div>
                     <p className="text-sm text-ink-600 mt-1">{alert.issue}</p>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-ink-500">
+                  <div className="flex items-center gap-2 text-sm text-ink-700">
                     <Clock size={14} />
                     {alert.daysListed} days
                   </div>
@@ -417,11 +417,11 @@ function MetricCard({
   return (
     <div className="bg-surface-0 rounded-lg shadow p-6">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-sm font-medium text-ink-500">{label}</div>
+        <div className="text-sm font-medium text-ink-700">{label}</div>
         {icon}
       </div>
       <div className="text-3xl font-bold text-ink-900">{value}</div>
-      {subtitle && <div className="text-sm text-ink-500 mt-2">{subtitle}</div>}
+      {subtitle && <div className="text-sm text-ink-700 mt-2">{subtitle}</div>}
     </div>
   );
 }

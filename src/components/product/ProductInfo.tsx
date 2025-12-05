@@ -75,7 +75,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
         <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
           {product.title}
         </h1>
-        <p className="text-sm text-ink-500">
+        <p className="text-sm text-ink-700">
           SKU {sku}
         </p>
       </div>
@@ -88,7 +88,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
           <span className="text-3xl font-semibold text-lux-gold">
             {formatUSD0(product.price)}
           </span>
-          <span className="text-sm text-ink-500">
+          <span className="text-sm text-ink-700">
             Professional shipping support included
           </span>
         </div>

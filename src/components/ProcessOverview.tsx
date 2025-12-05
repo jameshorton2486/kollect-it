@@ -24,7 +24,7 @@ export default function ProcessOverview() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Consignment process
             </p>
             <h2 className="text-3xl font-semibold tracking-tight text-ink-900">
@@ -34,7 +34,7 @@ export default function ProcessOverview() {
               Consignments are reviewed individually based on the item, category, and condition. We evaluate each piece, document what we can, and present it clearly so buyers know exactly what they're purchasing.
             </p>
           </div>
-          <p className="text-sm text-ink-500">
+          <p className="text-sm text-ink-700">
             Transparent documentation reduces returns and keeps collectors
             confident when buying remotely.
           </p>

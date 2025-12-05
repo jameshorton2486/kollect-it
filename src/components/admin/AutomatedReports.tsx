@@ -98,7 +98,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             <Calendar className="text-amber-600" size={32} />
             <div className="text-center">
               <div className="font-medium text-ink-900">Daily Summary</div>
-              <div className="text-xs text-ink-500 mt-1">
+              <div className="text-xs text-ink-700 mt-1">
                 Today's orders & revenue
               </div>
             </div>
@@ -111,7 +111,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             <TrendingUp className="text-blue-600" size={32} />
             <div className="text-center">
               <div className="font-medium text-ink-900">Weekly Report</div>
-              <div className="text-xs text-ink-500 mt-1">
+              <div className="text-xs text-ink-700 mt-1">
                 Last 7 days analysis
               </div>
             </div>
@@ -124,7 +124,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             <FileText className="text-purple-600" size={32} />
             <div className="text-center">
               <div className="font-medium text-ink-900">Monthly Report</div>
-              <div className="text-xs text-ink-500 mt-1">
+              <div className="text-xs text-ink-700 mt-1">
                 Full month breakdown
               </div>
             </div>
@@ -137,7 +137,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             <Clock className="text-green-600" size={32} />
             <div className="text-center">
               <div className="font-medium text-ink-900">Custom Range</div>
-              <div className="text-xs text-ink-500 mt-1">
+              <div className="text-xs text-ink-700 mt-1">
                 Choose date range
               </div>
             </div>
@@ -324,7 +324,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                     </div>
                   </div>
                   {schedule.nextRun && (
-                    <div className="mt-1 text-xs text-ink-500">
+                    <div className="mt-1 text-xs text-ink-700">
                       Next run: {new Date(schedule.nextRun).toLocaleString()}
                     </div>
                   )}
@@ -342,7 +342,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-ink-500">
+          <div className="text-center py-8 text-ink-700">
             <FileText size={48} className="mx-auto mb-3 text-gray-300" />
             <p>No scheduled reports yet</p>
             <p className="text-sm mt-1">

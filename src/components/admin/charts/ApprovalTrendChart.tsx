@@ -30,7 +30,7 @@ interface ApprovalTrendChartProps {
 export function ApprovalTrendChart({ data }: ApprovalTrendChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-ink-500">
+      <div className="h-64 flex items-center justify-center text-ink-700">
         No approval trend data available
       </div>
     );

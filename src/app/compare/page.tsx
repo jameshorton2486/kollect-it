@@ -167,7 +167,7 @@ export default function ComparisonPage() {
                 >
                   <button
                     onClick={() => removeProduct(product.id)}
-                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-ink-500 transition-colors hover:bg-red-50 hover:text-red-500"
+                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-ink-700 transition-colors hover:bg-red-50 hover:text-red-500"
                     aria-label="Remove from comparison"
                   >
                     <X className="h-4 w-4" />
@@ -186,7 +186,7 @@ export default function ComparisonPage() {
                       {product.title}
                     </h2>
                   </Link>
-                  <p className="mt-1 text-center text-sm text-ink-500">
+                  <p className="mt-1 text-center text-sm text-ink-700">
                     {product.category?.name || "Uncategorized"}
                   </p>
                   <p className="mt-2 text-center text-xl font-semibold text-ink-900">
@@ -207,7 +207,7 @@ export default function ComparisonPage() {
                     'grid-cols-4'
                   } ${index !== specs.length - 1 ? 'border-b border-border-100' : ''}`}
                 >
-                  <div className="bg-surface-50 px-4 py-3 text-sm font-medium text-ink-500">
+                  <div className="bg-surface-50 px-4 py-3 text-sm font-medium text-ink-700">
                     {spec.label}
                   </div>
                   {products.map((product) => (

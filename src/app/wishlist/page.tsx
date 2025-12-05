@@ -128,7 +128,7 @@ export default function WishlistPage() {
                 My Wishlist
               </h1>
             </div>
-            <p className="text-sm text-ink-500">
+            <p className="text-sm text-ink-700">
               {items.length} {items.length === 1 ? "item" : "items"}
             </p>
           </div>
@@ -161,7 +161,7 @@ export default function WishlistPage() {
                   </h3>
                 </Link>
 
-                <p className="mt-1 text-sm text-ink-500">
+                <p className="mt-1 text-sm text-ink-700">
                   {item.product.category?.name || "Uncategorized"}
                 </p>
 

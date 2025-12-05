@@ -54,7 +54,7 @@ export default function NotFoundPage() {
         </div>
 
         {/* Help text */}
-        <p className="mt-8 text-sm text-ink-500">
+        <p className="mt-8 text-sm text-ink-700">
           Looking for something specific?{" "}
           <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
             Get in touch

@@ -35,14 +35,14 @@ export function MetricCard({
       ? "text-green-400"
       : trendDirection === "down"
         ? "text-red-400"
-        : "text-gray-400";
+        : "text-gray-600";
 
   const trendIcon =
     trendDirection === "up" ? "↑" : trendDirection === "down" ? "↓" : "→";
 
   return (
     <div className={`${color} border ${borderColor} rounded-lg p-6`}>
-      <p className="text-sm font-medium text-gray-400">{title}</p>
+      <p className="text-sm font-medium text-gray-600">{title}</p>
       <div className="mt-2 flex items-end justify-between">
         <div>
           <p className="text-3xl font-bold text-white">
@@ -53,14 +53,14 @@ export function MetricCard({
                 })
               : value}
           </p>
-          <p className="text-xs text-ink-500 mt-1">{unit}</p>
+          <p className="text-xs text-ink-700 mt-1">{unit}</p>
         </div>
         {trend !== undefined && (
           <div className={`text-right ${trendColor}`}>
             <p className="text-lg font-semibold">
               {trendIcon} {trendPercentage.toFixed(1)}%
             </p>
-            <p className="text-xs text-ink-500">{trendLabel}</p>
+            <p className="text-xs text-ink-700">{trendLabel}</p>
           </div>
         )}
       </div>

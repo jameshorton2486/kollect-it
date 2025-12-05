@@ -40,7 +40,7 @@ export default function ShopByCategoriesClient() {
       <div className="max-w-7xl mx-auto px-6 pt-24 pb-24">
         {/* Heading */}
         <div className="text-center mb-12 md:mb-16">
-          <p className="text-xs font-semibold tracking-[0.22em] text-ink-500 uppercase">
+          <p className="text-xs font-semibold tracking-[0.22em] text-ink-700 uppercase">
             Featured Collections
           </p>
           <h2 className="mt-3 text-3xl md:text-4xl font-light tracking-tight text-ink-900">

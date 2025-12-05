@@ -42,9 +42,9 @@ export async function generateMetadata(
     };
   }
 
-  const description = category.description || 
+  const description = category.description ||
     `Browse authenticated ${category.name.toLowerCase()} at Kollect-It. Carefully curated and quality-reviewed pieces.`;
-  
+
   return {
     title: `${category.name} | Kollect-It`,
     description,
@@ -91,7 +91,7 @@ export default async function CategoryPage(props: CategoryPageProps) {
           </Link>
 
           <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Category
             </p>
             <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
@@ -114,7 +114,7 @@ export default async function CategoryPage(props: CategoryPageProps) {
                   Available pieces
                 </h2>
                 <p className="text-sm text-ink-600">
-                  {products.length === 1 
+                  {products.length === 1
                     ? "One piece currently available in this category."
                     : `${products.length} pieces currently available in this category.`}
                 </p>

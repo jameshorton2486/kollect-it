@@ -27,14 +27,14 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   const handleWishlistToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     try {
       const response = await fetch("/api/wishlist", {
         method: isWishlisted ? "DELETE" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: product.id }),
       });
-      
+
       if (response.ok) {
         setIsWishlisted(!isWishlisted);
       }
@@ -85,7 +85,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         {/* Wishlist button */}
         <button
           onClick={handleWishlistToggle}
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-200 text-ink-400 transition-all hover:border-lux-gold hover:text-lux-gold self-start"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-200 text-ink-700 transition-all hover:border-lux-gold hover:text-lux-gold self-start"
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <Heart className={`h-4 w-4 ${isWishlisted ? "fill-lux-gold text-lux-gold" : ""}`} />
@@ -110,7 +110,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
           onError={() => setImageError(true)}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
-        
+
         {/* Wishlist button overlay */}
         <button
           onClick={handleWishlistToggle}

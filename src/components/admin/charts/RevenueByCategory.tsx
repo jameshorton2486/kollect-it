@@ -30,7 +30,7 @@ const COLORS = ["#D3AF37", "#A17D2F", "#CD7F32", "#C0C0C0", "#FFD700"];
 export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-ink-500">
+      <div className="h-64 flex items-center justify-center text-ink-700">
         No revenue data available
       </div>
     );

@@ -115,7 +115,7 @@ export default function SearchBar({
         }}
         className="flex items-center gap-3 rounded-full border border-border-200 bg-surface-100 px-5 py-2.5 shadow-sm"
       >
-        <Search className="h-4 w-4 text-ink-400" />
+        <Search className="h-4 w-4 text-ink-700" />
         <input
           type="text"
           value={query}
@@ -129,7 +129,7 @@ export default function SearchBar({
             <button
               type="button"
               onClick={handleClear}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border-200 text-ink-500 transition hover:text-ink-900"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border-200 text-ink-700 transition hover:text-ink-900"
               aria-label="Clear search"
             >
               <X className="h-4 w-4" />
@@ -139,7 +139,7 @@ export default function SearchBar({
             <button
               type="button"
               onClick={() => router.push("/search?filters=open")}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border-200 text-ink-500 transition hover:border-ink-700 hover:text-ink-900"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border-200 text-ink-700 transition hover:border-ink-700 hover:text-ink-900"
               aria-label="Open filters"
             >
               <Filter className="h-4 w-4" />
@@ -161,13 +161,13 @@ export default function SearchBar({
             <div className="px-5 py-4">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="flex items-center gap-2 text-sm font-semibold text-ink-900">
-                  <TrendingUp className="h-4 w-4 text-ink-500" />
+                  <TrendingUp className="h-4 w-4 text-ink-700" />
                   Recent searches
                 </h3>
                 <button
                   type="button"
                   onClick={clearRecentSearches}
-                  className="text-xs font-semibold text-ink-400 hover:text-ink-900"
+                  className="text-xs font-semibold text-ink-700 hover:text-ink-900"
                 >
                   Clear
                 </button>
@@ -203,14 +203,14 @@ export default function SearchBar({
                     onClick={() => router.push(`/product/${suggestion.slug}`)}
                     className="flex w-full items-center gap-3 rounded-2xl p-2 text-left transition hover:bg-surface-100"
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-200 text-ink-400">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-200 text-ink-700">
                       <Search className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-ink-900">
                         {suggestion.name}
                       </p>
-                      <p className="text-xs uppercase tracking-[0.3em] text-ink-400">
+                      <p className="text-xs uppercase tracking-[0.3em] text-ink-700">
                         {suggestion.category || "Product"}
                       </p>
                     </div>
@@ -221,13 +221,13 @@ export default function SearchBar({
           )}
 
           {isLoading && (
-            <div className="border-t border-border-200 px-5 py-3 text-center text-sm text-ink-500">
+            <div className="border-t border-border-200 px-5 py-3 text-center text-sm text-ink-700">
               Searching…
             </div>
           )}
 
           {query && !isLoading && suggestions.length === 0 && (
-            <div className="border-t border-border-200 px-5 py-3 text-center text-sm text-ink-500">
+            <div className="border-t border-border-200 px-5 py-3 text-center text-sm text-ink-700">
               No suggestions found
             </div>
           )}
@@ -236,4 +236,3 @@ export default function SearchBar({
     </div>
   );
 }
-

@@ -36,7 +36,7 @@ export default function SortingBar({
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 rounded-full border border-border-200 bg-surface-100/80 px-5 py-3 text-xs shadow-sm">
-      <p className="font-semibold uppercase tracking-[0.3em] text-ink-400">
+      <p className="font-semibold uppercase tracking-[0.3em] text-ink-700">
         Showing{" "}
         <span className="text-ink-900">
           {showing}/{total}
@@ -45,7 +45,7 @@ export default function SortingBar({
       </p>
 
       <div className="flex items-center gap-4">
-        <label htmlFor="sort" className="hidden text-[0.65rem] uppercase tracking-[0.3em] text-ink-400 lg:inline">
+        <label htmlFor="sort" className="hidden text-[0.65rem] uppercase tracking-[0.3em] text-ink-700 lg:inline">
           Sort
         </label>
         <select
@@ -70,7 +70,7 @@ export default function SortingBar({
             className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-1 focus:ring-gold-500 ${
               currentView === "grid"
                 ? "border-gold-500 bg-gold-500/10 text-ink-900"
-                : "border-border-200 text-ink-500 hover:border-ink-700 hover:text-ink-900"
+                : "border-border-200 text-ink-700 hover:border-ink-700 hover:text-ink-900"
             }`}
             onClick={() => updateParam("view", "grid")}
             type="button"
@@ -98,7 +98,7 @@ export default function SortingBar({
             className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-1 focus:ring-gold-500 ${
               currentView === "list"
                 ? "border-gold-500 bg-gold-500/10 text-ink-900"
-                : "border-border-200 text-ink-500 hover:border-ink-700 hover:text-ink-900"
+                : "border-border-200 text-ink-700 hover:border-ink-700 hover:text-ink-900"
             }`}
             onClick={() => updateParam("view", "list")}
             type="button"
@@ -127,4 +127,3 @@ export default function SortingBar({
     </div>
   );
 }
-

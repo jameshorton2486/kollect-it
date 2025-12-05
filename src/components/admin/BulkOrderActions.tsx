@@ -75,7 +75,7 @@ export function BulkOrderActions({
             {allSelected ? (
               <CheckSquare className="text-amber-600" size={20} />
             ) : (
-              <Square className="text-gray-400" size={20} />
+              <Square className="text-gray-600" size={20} />
             )}
             <span className="font-medium">
               {selectedIds.length > 0

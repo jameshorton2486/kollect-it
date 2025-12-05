@@ -90,10 +90,10 @@ export default function CategoryFilters({
     >
       <div className="sticky top-24 rounded-3xl border border-border-200 bg-white/90 p-5 shadow-lg">
         <div className="mb-6">
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-400">
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-700">
             Refine results
           </p>
-          <p className="text-sm text-ink-500">
+          <p className="text-sm text-ink-700">
             Adjust filters to tailor the catalog to your taste.
           </p>
         </div>
@@ -201,4 +201,3 @@ export default function CategoryFilters({
     </aside>
   );
 }
-

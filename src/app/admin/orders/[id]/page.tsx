@@ -190,7 +190,7 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
       case "cancelled":
         return "text-red-800";
       default:
-        return "text-gray-500";
+        return "text-gray-700";
     }
   };
 

@@ -25,7 +25,7 @@ export default function TrafficAnalyticsPage() {
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-ink-500">Loading...</div>
+        <div className="text-ink-700">Loading...</div>
       </div>
     );
   }

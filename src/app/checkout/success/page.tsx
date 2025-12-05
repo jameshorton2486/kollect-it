@@ -122,7 +122,7 @@ function SuccessContent() {
                 Continue Shopping
               </Link>
             </div>
-            <p className="mt-6 text-sm text-ink-500">
+            <p className="mt-6 text-sm text-ink-700">
               Need help?{" "}
               <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
                 Contact Support
@@ -177,7 +177,7 @@ function SuccessContent() {
           {/* Order Number */}
           <div className="border-t border-b border-border-100 bg-surface-50 px-6 py-4 sm:px-10">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-ink-500 uppercase tracking-wide">Order Number</span>
+              <span className="text-sm font-medium text-ink-700 uppercase tracking-wide">Order Number</span>
               <span className="font-mono text-lg font-semibold text-ink-900">
                 {orderDetails.orderNumber}
               </span>
@@ -186,7 +186,7 @@ function SuccessContent() {
 
           {/* Order Summary */}
           <div className="px-6 py-6 sm:px-10">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-700 mb-4">
               Order Summary
             </h2>
             
@@ -195,7 +195,7 @@ function SuccessContent() {
                 <div key={index} className="flex items-start justify-between py-2">
                   <div className="flex-1 pr-4">
                     <p className="text-base font-medium text-ink-900">{item.title}</p>
-                    <p className="text-sm text-ink-500">Qty: {item.quantity}</p>
+                    <p className="text-sm text-ink-700">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-base font-medium text-ink-900">
                     {formatUSD(item.price * item.quantity)}
@@ -212,7 +212,7 @@ function SuccessContent() {
 
           {/* Shipping Address */}
           <div className="border-t border-border-200 px-6 py-6 sm:px-10 bg-surface-50/50">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-700 mb-3">
               Shipping To
             </h2>
             <p className="text-base text-ink-700">
@@ -226,7 +226,7 @@ function SuccessContent() {
 
           {/* What's Next */}
           <div className="border-t border-border-200 px-6 py-6 sm:px-10">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-700 mb-4">
               What&apos;s Next
             </h2>
             <ul className="space-y-3">
@@ -275,7 +275,7 @@ function SuccessContent() {
                 Continue Browsing
               </Link>
             </div>
-            <p className="mt-4 text-center text-sm text-ink-500">
+            <p className="mt-4 text-center text-sm text-ink-700">
               Need help?{" "}
               <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
                 Contact Support

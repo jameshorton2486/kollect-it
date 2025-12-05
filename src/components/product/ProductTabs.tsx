@@ -33,7 +33,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           <p className="text-base text-ink-700 leading-relaxed">
             {product.description}
           </p>
-          <p className="mt-4 text-sm text-ink-500">
+          <p className="mt-4 text-sm text-ink-700">
             Every piece is researched and evaluated before being listed. Descriptions are clear and honest, so you know exactly what you're purchasing.
           </p>
         </div>
@@ -73,7 +73,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
               key={option.label}
               className="rounded-2xl border border-border-200 bg-surface-50 p-4"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-400">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-700">
                 {option.label}
               </p>
               <p className="mt-1 font-serif text-lg text-ink-900">
@@ -181,7 +181,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
               className={`whitespace-nowrap rounded-t-xl border-b-2 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.3em] transition-colors ${
                 isActive
                   ? "border-lux-gold text-ink-900"
-                  : "border-transparent text-ink-400 hover:text-ink-900"
+                  : "border-transparent text-ink-700 hover:text-ink-900"
               }`}
               onClick={() => setActiveTab(tab.id)}
             >
@@ -195,4 +195,3 @@ export default function ProductTabs({ product }: ProductTabsProps) {
     </div>
   );
 }
-

@@ -107,7 +107,7 @@ export function TrafficAnalyticsDashboard() {
 
   if (!metrics) {
     return (
-      <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-500">
+      <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-700">
         Failed to load traffic analytics
       </div>
     );
@@ -121,7 +121,7 @@ export function TrafficAnalyticsDashboard() {
           <h2 className="text-2xl font-bold text-ink-900">
             Traffic & Analytics
           </h2>
-          <p className="text-ink-500 mt-1">
+          <p className="text-ink-700 mt-1">
             Real-time visitor metrics and traffic sources
           </p>
         </div>
@@ -183,7 +183,7 @@ export function TrafficAnalyticsDashboard() {
           <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.totalVisitors.toLocaleString()}
           </div>
-          <div className="text-sm text-ink-500 mt-1">Total Visitors</div>
+          <div className="text-sm text-ink-700 mt-1">Total Visitors</div>
         </div>
 
         <div className="bg-surface-0 rounded-lg shadow p-6">
@@ -193,7 +193,7 @@ export function TrafficAnalyticsDashboard() {
           <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.pageViews.toLocaleString()}
           </div>
-          <div className="text-sm text-ink-500 mt-1">Page Views</div>
+          <div className="text-sm text-ink-700 mt-1">Page Views</div>
         </div>
 
         <div className="bg-surface-0 rounded-lg shadow p-6">
@@ -203,7 +203,7 @@ export function TrafficAnalyticsDashboard() {
           <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.bounceRate}%
           </div>
-          <div className="text-sm text-ink-500 mt-1">Bounce Rate</div>
+          <div className="text-sm text-ink-700 mt-1">Bounce Rate</div>
         </div>
 
         <div className="bg-surface-0 rounded-lg shadow p-6">
@@ -214,7 +214,7 @@ export function TrafficAnalyticsDashboard() {
             {Math.floor(metrics.overview.avgSessionDuration / 60)}m{" "}
             {metrics.overview.avgSessionDuration % 60}s
           </div>
-          <div className="text-sm text-ink-500 mt-1">Avg. Session</div>
+          <div className="text-sm text-ink-700 mt-1">Avg. Session</div>
         </div>
 
         <div className="bg-surface-0 rounded-lg shadow p-6">
@@ -224,7 +224,7 @@ export function TrafficAnalyticsDashboard() {
           <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.conversionRate}%
           </div>
-          <div className="text-sm text-ink-500 mt-1">Conversion Rate</div>
+          <div className="text-sm text-ink-700 mt-1">Conversion Rate</div>
         </div>
       </div>
 
@@ -349,20 +349,20 @@ export function TrafficAnalyticsDashboard() {
               <div key={device.device} className="text-center">
                 {device.device === "Mobile" && (
                   <Smartphone
-                    className="mx-auto text-gray-400 mb-1"
+                    className="mx-auto text-gray-600 mb-1"
                     size={24}
                   />
                 )}
                 {device.device === "Desktop" && (
-                  <Monitor className="mx-auto text-gray-400 mb-1" size={24} />
+                  <Monitor className="mx-auto text-gray-600 mb-1" size={24} />
                 )}
                 {device.device === "Tablet" && (
-                  <BarChart3 className="mx-auto text-gray-400 mb-1" size={24} />
+                  <BarChart3 className="mx-auto text-gray-600 mb-1" size={24} />
                 )}
                 <div className="text-lg font-bold text-ink-900">
                   {device.percentage}%
                 </div>
-                <div className="text-xs text-ink-500">{device.device}</div>
+                <div className="text-xs text-ink-700">{device.device}</div>
               </div>
             ))}
           </div>
@@ -378,16 +378,16 @@ export function TrafficAnalyticsDashboard() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-surface-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Page
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Views
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Avg. Time
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Bounce Rate
                 </th>
               </tr>

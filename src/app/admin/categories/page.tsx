@@ -195,7 +195,7 @@ export default function CategoriesPage() {
                   <h3 className="text-xl font-semibold text-ink-900 mb-1">
                     {category.name}
                   </h3>
-                  <p className="text-sm text-ink-500 mb-3">
+                  <p className="text-sm text-ink-700 mb-3">
                     Slug:{" "}
                     <code className="bg-surface-100 px-2 py-1">
                       {category.slug}
@@ -268,7 +268,7 @@ export default function CategoriesPage() {
                 </div>
 
                 {/* Info */}
-                <div className="mt-4 text-xs text-ink-500">
+                <div className="mt-4 text-xs text-ink-700">
                   <p>
                     Created: {new Date(category.createdAt).toLocaleDateString()}
                   </p>
@@ -285,7 +285,7 @@ export default function CategoriesPage() {
 
         {categories.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-ink-500">No categories found</p>
+            <p className="text-ink-700">No categories found</p>
           </div>
         )}
       </div>

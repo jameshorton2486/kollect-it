@@ -62,7 +62,7 @@ export default function Error({
         </div>
 
         {/* Help text */}
-        <p className="mt-8 text-sm text-ink-500">
+        <p className="mt-8 text-sm text-ink-700">
           If this keeps happening,{" "}
           <Link href="/contact" className="text-lux-gold hover:underline underline-offset-4">
             let me know

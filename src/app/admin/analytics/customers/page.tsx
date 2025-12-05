@@ -115,7 +115,7 @@ export default function CustomerAnalyticsPage() {
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Total Customers
                 </div>
                 <div className="mt-2 text-3xl font-bold text-ink-900">
@@ -127,7 +127,7 @@ export default function CustomerAnalyticsPage() {
               </div>
 
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Retention Rate
                 </div>
                 <div className="mt-2 text-3xl font-bold text-ink-900">
@@ -139,7 +139,7 @@ export default function CustomerAnalyticsPage() {
               </div>
 
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Average Lifetime Value
                 </div>
                 <div className="mt-2 text-3xl font-bold text-ink-900">
@@ -221,7 +221,7 @@ export default function CustomerAnalyticsPage() {
                   >
                     Export Top Customers CSV
                   </button>
-                  <p className="mt-2 text-sm text-ink-500 text-center">
+                  <p className="mt-2 text-sm text-ink-700 text-center">
                     Export top {customerData.topCustomers.length} customers by
                     lifetime value
                   </p>
@@ -238,19 +238,19 @@ export default function CustomerAnalyticsPage() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-surface-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Customer
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Total Spent
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Orders
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         First Order
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Last Order
                       </th>
                     </tr>
@@ -264,13 +264,13 @@ export default function CustomerAnalyticsPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
                           ${customer.totalSpent.toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                           {customer.orderCount}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                           {new Date(customer.firstOrder).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                           {new Date(customer.lastOrder).toLocaleDateString()}
                         </td>
                       </tr>

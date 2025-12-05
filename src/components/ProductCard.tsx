@@ -31,14 +31,14 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   const handleWishlistToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     try {
       const response = await fetch("/api/wishlist", {
         method: isWishlisted ? "DELETE" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: product.id }),
       });
-      
+
       if (response.ok) {
         setIsWishlisted(!isWishlisted);
       }
@@ -61,7 +61,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
                 <svg className="w-8 h-8 mx-auto text-gray-300 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span className="text-xs text-gray-400 block">Image Coming Soon</span>
+                <span className="text-xs text-gray-600 block">Image Coming Soon</span>
               </div>
             </div>
           ) : (
@@ -87,7 +87,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
             <h3 className="mt-1 font-medium text-ink-900 line-clamp-2 group-hover:text-lux-gold transition-colors">
               {product.title}
             </h3>
-            <div className="mt-1 flex flex-wrap gap-2 text-xs text-ink-500">
+            <div className="mt-1 flex flex-wrap gap-2 text-xs text-ink-700">
               {product.condition && <span>{product.condition}</span>}
               {product.year && <span>• {product.year}</span>}
             </div>
@@ -100,7 +100,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         {/* Wishlist button */}
         <button
           onClick={handleWishlistToggle}
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-200 text-ink-400 transition-all duration-luxury hover:border-lux-gold hover:text-lux-gold hover:scale-110 self-start"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-200 text-ink-700 transition-all duration-luxury hover:border-lux-gold hover:text-lux-gold hover:scale-110 self-start"
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <Heart className={`h-4 w-4 ${isWishlisted ? "fill-lux-gold text-lux-gold" : ""}`} />
@@ -123,7 +123,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
               <svg className="w-10 h-10 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span className="text-xs text-gray-400 block">Image Coming Soon</span>
+              <span className="text-xs text-gray-600 block">Image Coming Soon</span>
             </div>
           </div>
         ) : (
@@ -136,11 +136,11 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
         )}
-        
+
         {/* Wishlist button overlay */}
         <button
           onClick={handleWishlistToggle}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-ink-500 shadow-clean opacity-0 transition-all duration-luxury group-hover:opacity-100 hover:text-lux-gold hover:scale-110 hover:shadow-soft"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-ink-700 shadow-clean opacity-0 transition-all duration-luxury group-hover:opacity-100 hover:text-lux-gold hover:scale-110 hover:shadow-soft"
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <Heart className={`h-4 w-4 ${isWishlisted ? "fill-lux-gold text-lux-gold" : ""}`} />
@@ -157,7 +157,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         <h3 className="mt-1 font-medium text-ink-900 line-clamp-2 group-hover:text-lux-gold transition-colors min-h-[2.5rem]">
           {product.title}
         </h3>
-        <div className="mt-1 flex flex-wrap gap-2 text-xs text-ink-500">
+        <div className="mt-1 flex flex-wrap gap-2 text-xs text-ink-700">
           {product.condition && <span>{product.condition}</span>}
           {product.year && <span>• {product.year}</span>}
         </div>

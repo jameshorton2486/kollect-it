@@ -13,7 +13,7 @@ interface CategoryMetricsGridProps {
 export function CategoryMetricsGrid({ data }: CategoryMetricsGridProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="text-center text-ink-500 py-8">
+      <div className="text-center text-ink-700 py-8">
         No category data available
       </div>
     );

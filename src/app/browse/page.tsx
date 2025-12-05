@@ -170,7 +170,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
       <section className="border-b border-border-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-12 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:py-16">
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Browse
             </p>
             <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
@@ -184,7 +184,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
           </div>
 
           <div className="text-sm text-ink-600">
-            <p className="uppercase tracking-[0.3em] text-ink-400">
+            <p className="uppercase tracking-[0.3em] text-ink-700">
               Curated inventory
             </p>
             <p className="mt-2 text-base font-semibold text-ink-900">

@@ -102,7 +102,7 @@ export function DashboardOverview() {
 
   if (!metrics) {
     return (
-      <div className="text-center py-12 text-ink-500">
+      <div className="text-center py-12 text-ink-700">
         No metrics data available
       </div>
     );
@@ -251,12 +251,12 @@ export function DashboardOverview() {
             <h3 className="text-lg font-semibold text-ink-900">
               Avg Order Value
             </h3>
-            <Clock className="text-gray-400" size={20} />
+            <Clock className="text-gray-600" size={20} />
           </div>
           <div className="text-3xl font-bold text-amber-600">
             ${metrics.orders.averageValue.toFixed(2)}
           </div>
-          <p className="mt-2 text-sm text-ink-500">
+          <p className="mt-2 text-sm text-ink-700">
             Based on {metrics.orders.completed} completed orders
           </p>
         </div>
@@ -267,12 +267,12 @@ export function DashboardOverview() {
             <h3 className="text-lg font-semibold text-ink-900">
               Customer Retention
             </h3>
-            <Users className="text-gray-400" size={20} />
+            <Users className="text-gray-600" size={20} />
           </div>
           <div className="text-3xl font-bold text-indigo-600">
             {metrics.customers.returningRate.toFixed(1)}%
           </div>
-          <p className="mt-2 text-sm text-ink-500">
+          <p className="mt-2 text-sm text-ink-700">
             Customers who made repeat purchases
           </p>
         </div>
@@ -283,7 +283,7 @@ export function DashboardOverview() {
             <h3 className="text-lg font-semibold text-ink-900">
               Product Status
             </h3>
-            <Package className="text-gray-400" size={20} />
+            <Package className="text-gray-600" size={20} />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
@@ -319,13 +319,13 @@ export function DashboardOverview() {
           <table className="w-full">
             <thead className="bg-surface-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Product
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Sales
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                   Revenue
                 </th>
               </tr>
@@ -343,7 +343,7 @@ export function DashboardOverview() {
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-ink-500">
+                  <td className="px-6 py-4 text-sm text-ink-700">
                     {product.sales} {product.sales === 1 ? "sale" : "sales"}
                   </td>
                   <td className="px-6 py-4 text-sm font-semibold text-ink-900">
@@ -379,7 +379,7 @@ function MetricCard({
   return (
     <div className="bg-surface-0 rounded-lg shadow p-6">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-ink-500">{title}</h3>
+        <h3 className="text-sm font-medium text-ink-700">{title}</h3>
         {icon}
       </div>
       <div className="text-3xl font-bold text-ink-900 mb-2">{value}</div>
@@ -397,7 +397,7 @@ function MetricCard({
           </span>
         </div>
       )}
-      {subtitle && <p className="text-sm text-ink-500 mt-2">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-ink-700 mt-2">{subtitle}</p>}
     </div>
   );
 }

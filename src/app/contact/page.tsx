@@ -52,7 +52,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-ink-500">Email</p>
+                <p className="text-sm font-semibold uppercase tracking-wide text-ink-700">Email</p>
                 <a
                   href="mailto:james@kollect-it.com"
                   className="mt-1 text-lg text-lux-gold hover:underline underline-offset-4"
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-ink-500">Phone</p>
+                <p className="text-sm font-semibold uppercase tracking-wide text-ink-700">Phone</p>
                 <a
                   href="tel:+14693866065"
                   className="mt-1 text-lg text-ink-900 hover:text-lux-gold transition-colors"
@@ -87,7 +87,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-ink-500">Location</p>
+                <p className="text-sm font-semibold uppercase tracking-wide text-ink-700">Location</p>
                 <p className="mt-1 text-lg text-ink-900">San Antonio, Texas</p>
               </div>
             </div>

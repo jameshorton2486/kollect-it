@@ -116,7 +116,7 @@ export default function ProductImage({
 
       {/* Error state */}
       {hasError && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface-800 text-ink-400">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface-800 text-ink-700">
           <svg
             className="mb-2 h-12 w-12"
             fill="none"
@@ -231,4 +231,3 @@ export function ResponsiveProductImage({
     />
   );
 }
-

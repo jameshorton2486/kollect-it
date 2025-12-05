@@ -222,7 +222,7 @@ export function AdminSettingsPanel() {
                 className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? "border-blue-500 text-blue-600"
-                    : "border-transparent text-ink-500 hover:text-ink-700 hover:border-border-300"
+                    : "border-transparent text-ink-700 hover:text-ink-700 hover:border-border-300"
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -562,7 +562,7 @@ export function AdminSettingsPanel() {
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h4 className="font-medium text-ink-900">{zone.name}</h4>
-                    <p className="text-sm text-ink-500">
+                    <p className="text-sm text-ink-700">
                       Countries: {zone.countries.join(", ")}
                     </p>
                   </div>
@@ -609,16 +609,16 @@ export function AdminSettingsPanel() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-surface-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Region
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Tax Rate
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Apply to Shipping
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-700 uppercase">
                     Actions
                   </th>
                 </tr>
@@ -629,10 +629,10 @@ export function AdminSettingsPanel() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
                       {rate.region}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                       {rate.rate}%
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                       {rate.applyToShipping ? "Yes" : "No"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -665,19 +665,19 @@ export function AdminSettingsPanel() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-surface-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Slug
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Description
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-700 uppercase">
                     Actions
                   </th>
                 </tr>
@@ -688,10 +688,10 @@ export function AdminSettingsPanel() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
                       {category.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                       {category.slug}
                     </td>
-                    <td className="px-6 py-4 text-sm text-ink-500">
+                    <td className="px-6 py-4 text-sm text-ink-700">
                       {category.description}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

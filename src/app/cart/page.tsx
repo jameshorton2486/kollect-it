@@ -30,7 +30,7 @@ function Recommendations({
     <section className="bg-surface-100 py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-10 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
             You might also like
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900">
@@ -67,7 +67,7 @@ function Recommendations({
               <h3 className="text-lg font-semibold tracking-tight text-ink-900 line-clamp-2 group-hover:text-gold-500">
                 {product.title}
               </h3>
-              <p className="mt-2 text-sm uppercase tracking-[0.28em] text-ink-400">
+              <p className="mt-2 text-sm uppercase tracking-[0.28em] text-ink-700">
                 {product.category?.name}
               </p>
               <p className="mt-3 text-xl font-semibold text-gold-500">
@@ -139,7 +139,7 @@ export default function CartPage() {
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
             </div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Cart
             </p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink-900">
@@ -148,7 +148,7 @@ export default function CartPage() {
             <p className="mt-4 text-base leading-relaxed text-ink-600">
               Take your time browsing—when you find something you love, it&apos;ll be waiting here for you.
             </p>
-            <p className="mt-2 text-sm text-ink-500">
+            <p className="mt-2 text-sm text-ink-700">
               New pieces are added regularly. Check back often, or let me know what you&apos;re looking for.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -183,14 +183,14 @@ export default function CartPage() {
       <section className="border-b border-border-200 bg-white/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:py-16">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Shopping cart
             </p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
               Your cart
             </h1>
             <p className="mt-3 max-w-2xl text-base text-ink-600">
-              {itemCount === 1 
+              {itemCount === 1
                 ? "One piece waiting for you. Take your time reviewing the details, or proceed to checkout when you're ready."
                 : `${itemCount} pieces waiting for you. Review your selections, adjust quantities if needed, and check out when you're ready.`}
             </p>
@@ -237,7 +237,7 @@ export default function CartPage() {
                   <div className="flex flex-1 flex-col gap-4">
                     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
                       <div>
-                        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.4em] text-ink-400">
+                        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.4em] text-ink-700">
                           {item.categoryName}
                         </p>
                         <Link
@@ -246,7 +246,7 @@ export default function CartPage() {
                         >
                           {item.title}
                         </Link>
-                        <p className="text-sm text-ink-500">
+                        <p className="text-sm text-ink-700">
                           Authenticated & insured shipping
                         </p>
                       </div>
@@ -280,17 +280,17 @@ export default function CartPage() {
                           +
                         </button>
                       </div>
-                      <p className="text-sm text-ink-500">
+                      <p className="text-sm text-ink-700">
                         Unit price {formatUSD(item.price)}
                       </p>
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="text-sm font-medium text-ink-500 underline-offset-4 transition hover:text-ink-900 hover:underline"
+                        className="text-sm font-medium text-ink-700 underline-offset-4 transition hover:text-ink-900 hover:underline"
                       >
                         Remove
                       </button>
                     </div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-ink-400">
+                    <p className="text-xs uppercase tracking-[0.35em] text-ink-700">
                       Estimated delivery: 3–5 business days
                     </p>
                   </div>
@@ -303,7 +303,7 @@ export default function CartPage() {
                 <p className="text-sm font-semibold text-ink-900">
                   Need help editing your cart?
                 </p>
-                <p className="text-xs text-ink-500">
+                <p className="text-xs text-ink-700">
                   Questions? Reach out at{" "}
                   <a
                     href="mailto:james@kollect-it.com"
@@ -327,7 +327,7 @@ export default function CartPage() {
               <div className="rounded-3xl border border-border-200 bg-surface-100/80 p-6 shadow-lg backdrop-blur">
                 <div className="mb-6 flex items-center justify-between">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
                       Summary
                     </p>
                     <h2 className="mt-2 text-2xl font-semibold text-ink-900">
@@ -349,7 +349,7 @@ export default function CartPage() {
                   </div>
                   <div className="flex items-center justify-between text-ink-600">
                     <dt>Shipping</dt>
-                    <dd className="text-xs uppercase tracking-[0.28em] text-ink-500">
+                    <dd className="text-xs uppercase tracking-[0.28em] text-ink-700">
                       Calculated at checkout
                     </dd>
                   </div>
@@ -379,7 +379,7 @@ export default function CartPage() {
               </div>
 
               <div className="rounded-3xl border border-border-200 bg-white p-6 shadow-sm">
-                <h3 className="text-sm font-semibold uppercase tracking-[0.35em] text-ink-400">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.35em] text-ink-700">
                   Trust & assurances
                 </h3>
                 <ul className="mt-4 space-y-4 text-sm text-ink-600">
@@ -403,7 +403,7 @@ export default function CartPage() {
                       </span>
                       <div>
                         <p className="font-semibold text-ink-900">{item.title}</p>
-                        <p className="text-xs text-ink-500">{item.body}</p>
+                        <p className="text-xs text-ink-700">{item.body}</p>
                       </div>
                     </li>
                   ))}
@@ -413,7 +413,7 @@ export default function CartPage() {
               <div className="rounded-3xl border border-border-200 bg-white p-6 shadow-sm">
                 <label
                   htmlFor="promo-code"
-                  className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400"
+                  className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700"
                 >
                   Promo code
                 </label>
@@ -441,4 +441,3 @@ export default function CartPage() {
     </div>
   );
 }
-

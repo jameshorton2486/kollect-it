@@ -129,8 +129,8 @@ export function AnalyticsDashboardWebSocket() {
       <div className="min-h-screen bg-surface-50 p-8">
         <h1 className="text-2xl font-bold mb-6 text-ink-900">Analytics Dashboard</h1>
         <div className="bg-white rounded-lg p-12 text-center">
-          <p className="text-gray-500 text-lg">Analytics data is being compiled.</p>
-          <p className="text-gray-400 text-sm mt-2">Check back soon for insights.</p>
+          <p className="text-gray-700 text-lg">Analytics data is being compiled.</p>
+          <p className="text-gray-600 text-sm mt-2">Check back soon for insights.</p>
           <button
             onClick={() => fetchMetrics()}
             className="mt-6 px-6 py-2 bg-gold-500 text-white rounded-full hover:bg-gold-600 transition-colors"

@@ -202,7 +202,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-lux-pearl py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <header className="space-y-4 border-b border-border-200 pb-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
             Secure checkout
           </p>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -231,14 +231,14 @@ export default function CheckoutPage() {
                           ? "border-ink-900 bg-ink-900 text-white"
                           : isCompleted
                             ? "border-gold-500 bg-gold-500/20 text-ink-900"
-                            : "border-border-200 bg-white text-ink-500"
+                            : "border-border-200 bg-white text-ink-700"
                       }`}
                     >
                       {index + 1}
                     </span>
                     <span
                       className={
-                        isActive || isCompleted ? "text-ink-900" : "text-ink-400"
+                        isActive || isCompleted ? "text-ink-900" : "text-ink-700"
                       }
                     >
                       {label}
@@ -263,7 +263,7 @@ export default function CheckoutPage() {
                 <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
                   Shipping information
                 </h2>
-                <p className="mt-1 text-sm text-ink-500">
+                <p className="mt-1 text-sm text-ink-700">
                   We'll coordinate secure packing and reliable delivery. Tracking information will be sent once your order ships.
                 </p>
 
@@ -436,7 +436,7 @@ export default function CheckoutPage() {
                   </div>
 
                   {session?.user && (
-                    <label className="flex items-center gap-3 text-sm text-ink-500">
+                    <label className="flex items-center gap-3 text-sm text-ink-700">
                       <input type="checkbox" className="rounded border-border-200 text-ink-900 focus:ring-gold-300" />
                       Save this address to my account
                     </label>
@@ -470,20 +470,20 @@ export default function CheckoutPage() {
                     <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
                       Payment
                     </h2>
-                    <p className="text-sm text-ink-500">
+                    <p className="text-sm text-ink-700">
                       Review your order details and complete payment securely.
                     </p>
                   </div>
                   <button
                     onClick={() => setStep("shipping")}
-                    className="text-sm font-semibold text-ink-500 underline-offset-4 hover:text-ink-900 hover:underline"
+                    className="text-sm font-semibold text-ink-700 underline-offset-4 hover:text-ink-900 hover:underline"
                   >
                     Edit shipping
                   </button>
                 </div>
 
                 <div className="rounded-2xl border border-border-200 bg-surface-50 px-5 py-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
                     Shipping to
                   </p>
                   <p className="mt-2 font-semibold text-ink-900">
@@ -669,7 +669,7 @@ export default function CheckoutPage() {
             <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
               Order summary
             </h2>
-            <p className="mt-1 text-sm text-ink-500">
+            <p className="mt-1 text-sm text-ink-700">
               {itemCount} {itemCount === 1 ? "piece" : "pieces"} in your order
             </p>
 
@@ -694,7 +694,7 @@ export default function CheckoutPage() {
                     <p className="text-sm font-semibold text-ink-900 line-clamp-2">
                       {item.title}
                     </p>
-                    <p className="text-xs text-ink-500">
+                    <p className="text-xs text-ink-700">
                       Qty {item.quantity} · {item.categoryName}
                     </p>
                   </div>
@@ -714,7 +714,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex items-center justify-between text-ink-600">
                 <span>Shipping</span>
-                <span className="text-xs uppercase tracking-[0.28em] text-ink-500">
+                <span className="text-xs uppercase tracking-[0.28em] text-ink-700">
                   Calculated at payment
                 </span>
               </div>
@@ -746,7 +746,7 @@ export default function CheckoutPage() {
                   <p className="text-sm font-semibold text-ink-900">
                     Stripe test-mode ready
                   </p>
-                  <p className="text-xs text-ink-500">
+                  <p className="text-xs text-ink-700">
                     Use 4242 4242 4242 4242 with any future expiration to confirm
                     payment flow.
                   </p>
@@ -760,7 +760,7 @@ export default function CheckoutPage() {
                   <p className="text-sm font-semibold text-ink-900">
                     Fully insured shipping
                   </p>
-                  <p className="text-xs text-ink-500">
+                  <p className="text-xs text-ink-700">
                     Worldwide coverage with signature confirmation.
                   </p>
                 </div>
@@ -772,4 +772,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-

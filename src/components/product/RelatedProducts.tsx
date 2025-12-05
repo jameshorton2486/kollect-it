@@ -127,7 +127,7 @@ export default function RelatedProducts({
                   </>
                 ) : (
                   <div className="h-full w-full bg-gradient-to-br from-lux-pearl to-lux-gray-light/10 flex items-center justify-center">
-                    <span className="text-xs text-gray-400">Image Coming Soon</span>
+                    <span className="text-xs text-gray-600">Image Coming Soon</span>
                   </div>
                 )}
 

@@ -296,7 +296,7 @@ export function ProductUploadForm() {
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">Product Setup</h2>
-            <p className="text-gray-400">Enter basic product information</p>
+            <p className="text-gray-600">Enter basic product information</p>
           </div>
 
           {/* SKU Input */}
@@ -324,7 +324,7 @@ export function ProductUploadForm() {
             {skuError && (
               <p className="text-sm text-red-400 mt-1">{skuError}</p>
             )}
-            <p className="text-xs text-ink-500 mt-1">
+            <p className="text-xs text-ink-700 mt-1">
               Format: SKU-YYYY-XXX (e.g., SKU-2025-001)
             </p>
           </div>
@@ -350,7 +350,7 @@ export function ProductUploadForm() {
           <div>
             <label className="block text-sm font-medium mb-2">
               Product Notes (Optional)
-              <span className="text-ink-500 text-xs ml-2">
+              <span className="text-ink-700 text-xs ml-2">
                 Helps AI generate better descriptions
               </span>
             </label>
@@ -408,7 +408,7 @@ TARGET_PRICE: $1,750`}
                 Add
               </button>
             </div>
-            <p className="text-xs text-ink-500 mt-1">
+            <p className="text-xs text-ink-700 mt-1">
               Press Enter or click Add to add multiple URLs
             </p>
             {appraisalUrls.length > 0 && (
@@ -416,7 +416,7 @@ TARGET_PRICE: $1,750`}
                 {appraisalUrls.map((url, i) => (
                   <li
                     key={i}
-                    className="text-sm text-gray-400 flex items-center gap-2"
+                    className="text-sm text-gray-600 flex items-center gap-2"
                   >
                     <span className="flex-1 truncate">{url}</span>
                     <button
@@ -445,7 +445,7 @@ TARGET_PRICE: $1,750`}
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">Upload Images</h2>
-            <p className="text-gray-400">
+            <p className="text-gray-600">
               Upload all product photos. The system will automatically detect image types and order them.
             </p>
           </div>
@@ -468,7 +468,7 @@ TARGET_PRICE: $1,750`}
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">AI Analysis</h2>
-            <p className="text-gray-400">
+            <p className="text-gray-600">
               Let AI generate product description, pricing, and SEO content
             </p>
           </div>
@@ -478,7 +478,7 @@ TARGET_PRICE: $1,750`}
               <Sparkles className="w-6 h-6 text-gold-500" />
               <div>
                 <p className="font-medium">Ready to analyze</p>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-600">
                   Using {images.length} images and {productNotes ? "product notes" : "no notes"}
                 </p>
               </div>
@@ -510,7 +510,7 @@ TARGET_PRICE: $1,750`}
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">Review & Edit</h2>
-            <p className="text-gray-400">
+            <p className="text-gray-600">
               AI has generated the product listing. Review and adjust as needed.
             </p>
           </div>
@@ -568,7 +568,7 @@ TARGET_PRICE: $1,750`}
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
               />
               {analysis.priceReasoning && (
-                <p className="text-sm text-gray-400 mt-1">{analysis.priceReasoning}</p>
+                <p className="text-sm text-gray-600 mt-1">{analysis.priceReasoning}</p>
               )}
             </div>
 
@@ -581,7 +581,7 @@ TARGET_PRICE: $1,750`}
                 maxLength={60}
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
               />
-              <p className="text-xs text-ink-500 mt-1">
+              <p className="text-xs text-ink-700 mt-1">
                 {formData.seoTitle.length}/60 characters
               </p>
             </div>
@@ -595,7 +595,7 @@ TARGET_PRICE: $1,750`}
                 rows={3}
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
               />
-              <p className="text-xs text-ink-500 mt-1">
+              <p className="text-xs text-ink-700 mt-1">
                 {formData.seoDescription.length}/155 characters
               </p>
             </div>
@@ -631,10 +631,10 @@ TARGET_PRICE: $1,750`}
         <div className="text-center py-12">
           <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Product Created!</h2>
-          <p className="text-gray-400 mb-6">
+          <p className="text-gray-600 mb-6">
             Product {sku} has been created as a draft. Review it in the admin dashboard.
           </p>
-          <p className="text-sm text-ink-500">
+          <p className="text-sm text-ink-700">
             Redirecting to new product form...
           </p>
         </div>

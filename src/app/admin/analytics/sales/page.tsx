@@ -137,7 +137,7 @@ export default function SalesAnalyticsPage() {
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Total Revenue
                 </div>
                 <div className="mt-2 text-3xl font-bold text-ink-900">
@@ -159,7 +159,7 @@ export default function SalesAnalyticsPage() {
               </div>
 
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Total Orders
                 </div>
                 <div className="mt-2 text-3xl font-bold text-ink-900">
@@ -177,7 +177,7 @@ export default function SalesAnalyticsPage() {
               </div>
 
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Average Order Value
                 </div>
                 <div className="mt-2 text-3xl font-bold text-ink-900">
@@ -186,7 +186,7 @@ export default function SalesAnalyticsPage() {
               </div>
 
               <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-500">
+                <div className="text-sm font-medium text-ink-700">
                   Export Data
                 </div>
                 <div className="mt-2 space-y-2">
@@ -260,16 +260,16 @@ export default function SalesAnalyticsPage() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-surface-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Product
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Revenue
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Units Sold
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
                         Orders
                       </th>
                     </tr>
@@ -283,10 +283,10 @@ export default function SalesAnalyticsPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
                           ${product.revenue.toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                           {product.quantity}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
                           {product.orders}
                         </td>
                       </tr>

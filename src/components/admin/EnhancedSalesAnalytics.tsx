@@ -64,7 +64,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
             <h2 className="text-xl font-semibold text-ink-900">
               Revenue Trend
             </h2>
-            <p className="text-sm text-ink-500 mt-1">
+            <p className="text-sm text-ink-700 mt-1">
               Daily revenue over the selected period
             </p>
           </div>
@@ -110,7 +110,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
               <h2 className="text-xl font-semibold text-ink-900">
                 Payment Methods
               </h2>
-              <p className="text-sm text-ink-500 mt-1">
+              <p className="text-sm text-ink-700 mt-1">
                 Distribution by payment type
               </p>
             </div>
@@ -150,7 +150,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
               <h2 className="text-xl font-semibold text-ink-900">
                 Orders by Hour
               </h2>
-              <p className="text-sm text-ink-500 mt-1">
+              <p className="text-sm text-ink-700 mt-1">
                 Peak hour: {peakHour.hour}:00 ({peakHour.orders} orders)
               </p>
             </div>
@@ -184,7 +184,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
               <h2 className="text-xl font-semibold text-ink-900">
                 Shipping Status
               </h2>
-              <p className="text-sm text-ink-500 mt-1">
+              <p className="text-sm text-ink-700 mt-1">
                 Current order fulfillment status
               </p>
             </div>
@@ -248,7 +248,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
               <h2 className="text-xl font-semibold text-ink-900">
                 Orders Over Time
               </h2>
-              <p className="text-sm text-ink-500 mt-1">
+              <p className="text-sm text-ink-700 mt-1">
                 Daily order count trend
               </p>
             </div>

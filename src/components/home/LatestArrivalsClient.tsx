@@ -16,7 +16,7 @@ export default function LatestArrivalsClient({ products }: LatestArrivalsProps) 
       <div className="mx-auto max-w-6xl space-y-8 px-4 sm:px-6">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Just In
             </p>
             <h2 className="text-3xl font-semibold tracking-tight text-ink-900">
@@ -29,7 +29,7 @@ export default function LatestArrivalsClient({ products }: LatestArrivalsProps) 
           </div>
           <Link
             href="/browse"
-            className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.3em] text-ink-500 hover:text-ink-900"
+            className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.3em] text-ink-700 hover:text-ink-900"
           >
             Browse all pieces
             <span aria-hidden="true" className="ml-3">
@@ -47,4 +47,3 @@ export default function LatestArrivalsClient({ products }: LatestArrivalsProps) 
     </section>
   );
 }
-

@@ -62,13 +62,13 @@ export default function SearchResults() {
       });
 
       const response = await fetch(`/api/search?${params}`);
-      
+
       if (!response.ok) {
         throw new Error(`Search failed: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       // Ensure data structure matches expected format
       setResults({
         products: data.products || [],
@@ -147,7 +147,7 @@ export default function SearchResults() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="space-y-6 border-b border-border-200 pb-8">
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
               Search
             </p>
             <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
@@ -193,7 +193,7 @@ export default function SearchResults() {
                 className={`inline-flex h-9 w-9 items-center justify-center rounded-full border text-sm font-semibold transition ${
                   viewMode === "grid"
                     ? "border-gold-500 bg-gold-500/10 text-ink-900"
-                    : "border-border-200 text-ink-400 hover-border-ink-700 hover:text-ink-900"
+                    : "border-border-200 text-ink-700 hover-border-ink-700 hover:text-ink-900"
                 }`}
                 type="button"
                 aria-label={
@@ -209,7 +209,7 @@ export default function SearchResults() {
                 className={`inline-flex h-9 w-9 items-center justify-center rounded-full border text-sm font-semibold transition ${
                   viewMode === "list"
                     ? "border-gold-500 bg-gold-500/10 text-ink-900"
-                    : "border-border-200 text-ink-400 hover:border-ink-700 hover:text-ink-900"
+                    : "border-border-200 text-ink-700 hover:border-ink-700 hover:text-ink-900"
                 }`}
                 type="button"
                 aria-label={
@@ -237,7 +237,7 @@ export default function SearchResults() {
 
             <main className="flex-1">
               {isLoading ? (
-                <div className="rounded-3xl border border-dashed border-border-200 bg-white/70 px-6 py-12 text-center text-sm text-ink-500">
+                <div className="rounded-3xl border border-dashed border-border-200 bg-white/70 px-6 py-12 text-center text-sm text-ink-700">
                   Searching the archive…
                 </div>
               ) : results.products.length === 0 ? (
@@ -278,14 +278,14 @@ export default function SearchResults() {
                         }
                       />
                       <div className="p-4">
-                        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-400">
+                        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-ink-700">
                           {product.category.name}
                         </p>
                         <h3 className="mt-2 text-lg font-semibold tracking-tight text-ink-900 line-clamp-2 group-hover:text-gold-500">
                           {product.title}
                         </h3>
                         {product.condition && (
-                          <p className="mt-1 text-sm text-ink-500">
+                          <p className="mt-1 text-sm text-ink-700">
                             Condition: {product.condition}
                           </p>
                         )}
@@ -304,4 +304,3 @@ export default function SearchResults() {
     </div>
   );
 }
-

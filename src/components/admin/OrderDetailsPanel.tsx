@@ -144,13 +144,13 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
               <h2 className="text-2xl font-bold text-ink-900">
                 Order {order.orderNumber}
               </h2>
-              <p className="text-sm text-ink-500 mt-1">
+              <p className="text-sm text-ink-700 mt-1">
                 {new Date(order.createdAt).toLocaleString()}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-ink-600 text-3xl leading-none"
+              className="text-gray-600 hover:text-ink-600 text-3xl leading-none"
             >
               ×
             </button>
@@ -215,19 +215,19 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
             </h3>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Mail className="text-gray-400" size={18} />
+                <Mail className="text-gray-600" size={18} />
                 <span className="text-ink-700">
                   {order.customerEmail || "No email"}
                 </span>
               </div>
               {order.customerPhone && (
                 <div className="flex items-center gap-2">
-                  <Phone className="text-gray-400" size={18} />
+                  <Phone className="text-gray-600" size={18} />
                   <span className="text-ink-700">{order.customerPhone}</span>
                 </div>
               )}
               <div className="flex items-start gap-2 mt-3">
-                <MapPin className="text-gray-400 mt-1" size={18} />
+                <MapPin className="text-gray-600 mt-1" size={18} />
                 <div className="text-ink-700">
                   <p>{order.shippingAddress.street}</p>
                   <p>
@@ -249,16 +249,16 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-surface-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-ink-500 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-ink-700 uppercase">
                       Product
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-ink-500 uppercase">
+                    <th className="px-4 py-3 text-center text-xs font-medium text-ink-700 uppercase">
                       Qty
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-500 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-700 uppercase">
                       Price
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-500 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-700 uppercase">
                       Total
                     </th>
                   </tr>
@@ -316,7 +316,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
             </h3>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <CreditCard className="text-gray-400" size={18} />
+                <CreditCard className="text-gray-600" size={18} />
                 <span className="text-ink-700 capitalize">
                   {order.paymentMethod}
                 </span>
@@ -354,7 +354,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                       <span className="font-medium text-ink-900 capitalize">
                         {event.status}
                       </span>
-                      <span className="text-xs text-ink-500">
+                      <span className="text-xs text-ink-700">
                         {new Date(event.timestamp).toLocaleString()}
                       </span>
                     </div>
@@ -362,7 +362,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                       <p className="text-sm text-ink-600 mt-1">{event.note}</p>
                     )}
                     {event.user && (
-                      <p className="text-xs text-ink-500 mt-1">
+                      <p className="text-xs text-ink-700 mt-1">
                         By {event.user}
                       </p>
                     )}

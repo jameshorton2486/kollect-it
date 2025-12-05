@@ -247,9 +247,9 @@ export default function ReportScheduler() {
         <h2 className="text-xl font-semibold text-white">Active Reports</h2>
 
         {loading ? (
-          <div className="text-gray-400">Loading reports...</div>
+          <div className="text-gray-600">Loading reports...</div>
         ) : reports.length === 0 ? (
-          <div className="text-gray-400">No scheduled reports yet</div>
+          <div className="text-gray-600">No scheduled reports yet</div>
         ) : (
           <div className="space-y-2">
             {reports.map((report) => (
@@ -270,10 +270,10 @@ export default function ReportScheduler() {
                     <h3 className="text-lg font-semibold text-white">
                       {report.name}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-sm text-gray-600 mt-1">
                       {report.frequency} • {report.format} • {report.recipients}
                     </p>
-                    <p className="text-xs text-ink-500 mt-1">
+                    <p className="text-xs text-ink-700 mt-1">
                       Next: {new Date(report.nextScheduled).toLocaleString()}
                     </p>
                   </div>
@@ -328,7 +328,7 @@ export default function ReportScheduler() {
           </h2>
 
           {auditLogs.length === 0 ? (
-            <div className="text-gray-400">No audit logs yet</div>
+            <div className="text-gray-600">No audit logs yet</div>
           ) : (
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {auditLogs.map((log) => (
@@ -346,7 +346,7 @@ export default function ReportScheduler() {
                     <span className="text-gray-300">
                       {log.status} • {log.recipients}
                     </span>
-                    <span className="text-ink-500">
+                    <span className="text-ink-700">
                       {new Date(log.sentAt).toLocaleString()}
                     </span>
                   </div>

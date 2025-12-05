@@ -67,7 +67,7 @@ export function Hero() {
               documented.” – Private collector
             </div>
           </div>
-          <div className="absolute -left-6 -top-6 hidden rounded-2xl border border-white/50 bg-white/90 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-ink-400 shadow-lg md:block">
+          <div className="absolute -left-6 -top-6 hidden rounded-2xl border border-white/50 bg-white/90 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-ink-700 shadow-lg md:block">
             Curated • Documented • Ready to ship
           </div>
         </div>

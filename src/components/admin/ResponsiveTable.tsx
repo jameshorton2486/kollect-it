@@ -65,7 +65,7 @@ export function ResponsiveTable({
                 <th
                   key={column.key}
                   onClick={() => column.sortable && handleSort(column.key)}
-                  className={`px-6 py-3 text-left text-xs font-medium text-ink-500 uppercase tracking-wider ${
+                  className={`px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider ${
                     column.sortable ? "cursor-pointer hover:bg-surface-100" : ""
                   }`}
                 >
@@ -119,7 +119,7 @@ export function ResponsiveTable({
                 key={column.key}
                 className="flex justify-between items-start"
               >
-                <span className="text-sm font-medium text-ink-500">
+                <span className="text-sm font-medium text-ink-700">
                   {column.mobileLabel || column.label}
                 </span>
                 <span className="text-sm text-ink-900 text-right ml-4">

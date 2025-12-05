@@ -35,7 +35,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
 
         {error.digest && (
           <div className="bg-surface-100 rounded p-3 mb-6">
-            <p className="text-xs text-ink-500 font-mono">
+            <p className="text-xs text-ink-700 font-mono">
               Error ID: {error.digest}
             </p>
           </div>

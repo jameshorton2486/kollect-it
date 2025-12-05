@@ -63,17 +63,17 @@ export default function SearchFilters({
     <div className="rounded-3xl border border-border-200 bg-white/90 shadow-lg">
       <div className="flex items-center justify-between border-b border-border-200 px-5 py-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
             Filters
           </p>
           {totalSelected > 0 && (
-            <p className="text-sm text-ink-500">{totalSelected} selected</p>
+            <p className="text-sm text-ink-700">{totalSelected} selected</p>
           )}
         </div>
         {totalSelected > 0 && (
           <button
             onClick={onClearAll}
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-500 underline-offset-4 hover:text-ink-900 hover:underline"
+            className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-700 underline-offset-4 hover:text-ink-900 hover:underline"
           >
             Clear
           </button>
@@ -94,15 +94,15 @@ export default function SearchFilters({
                 <span className="text-sm font-semibold text-ink-900">
                   {section.title}
                   {sectionValues.length > 0 && (
-                    <span className="ml-2 text-xs text-ink-400">
+                    <span className="ml-2 text-xs text-ink-700">
                       ({sectionValues.length})
                     </span>
                   )}
                 </span>
                 {isExpanded ? (
-                  <ChevronUp className="h-4 w-4 text-ink-400" />
+                  <ChevronUp className="h-4 w-4 text-ink-700" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-ink-400" />
+                  <ChevronDown className="h-4 w-4 text-ink-700" />
                 )}
               </button>
 
@@ -126,7 +126,7 @@ export default function SearchFilters({
                           <span className="flex-1">
                             {option.label}
                             {option.count !== undefined && (
-                              <span className="ml-2 text-xs text-ink-400">
+                              <span className="ml-2 text-xs text-ink-700">
                                 ({option.count})
                               </span>
                             )}
@@ -208,4 +208,3 @@ export default function SearchFilters({
     </div>
   );
 }
-
