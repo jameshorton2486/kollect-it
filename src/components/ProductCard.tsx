@@ -5,16 +5,20 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 
+// Export the type so other components can use it
+export interface ProductCardData {
+  id: string;
+  title: string;
+  price: number;
+  slug: string;
+  condition?: string | null;
+  year?: string | null;
+  images: { url: string }[];
+  category?: { name: string; slug: string } | null;
+}
+
 interface ProductCardProps {
-  product: {
-    id: string;
-    title: string;
-    price: number;
-    condition?: string | null;
-    year?: string | null;
-    images: { url: string }[];
-    category?: { name: string; slug: string } | null;
-  };
+  product: ProductCardData;
   view?: "grid" | "list";
 }
 
@@ -46,7 +50,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   if (view === "list") {
     return (
       <Link
-        href={`/product/${product.id}`}
+        href={`/product/${product.slug}`}
         className="group flex gap-4 rounded-xl border border-border-200 bg-white p-4 shadow-clean transition-all duration-luxury hover:shadow-soft hover:-translate-y-0.5 hover:border-border-300 sm:gap-6"
       >
         {/* Image */}
@@ -108,7 +112,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   // Grid view (default)
   return (
     <Link
-      href={`/product/${product.id}`}
+      href={`/product/${product.slug}`}
       className="group flex flex-col rounded-xl border border-border-200 bg-white overflow-hidden shadow-clean transition-all duration-luxury hover:shadow-soft hover:-translate-y-1 hover:border-border-300"
     >
       {/* Image container */}

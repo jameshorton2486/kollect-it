@@ -3,6 +3,8 @@ import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://kollect-it.com";
+  
+  // Static routes
   const routes: MetadataRoute.Sitemap = [
     {
       url: `${base}/`,
@@ -13,23 +15,78 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${base}/browse`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${base}/shop`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
       priority: 0.9,
     },
     {
       url: `${base}/about`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
+      changeFrequency: "monthly",
+      priority: 0.6,
     },
     {
       url: `${base}/contact`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${base}/consign`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${base}/faq`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.5,
+    },
+    {
+      url: `${base}/how-it-works`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${base}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${base}/terms`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${base}/refund-policy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${base}/shipping-returns`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${base}/cookies`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.2,
     },
   ];
 
+  // Dynamic routes (categories and products)
   try {
     const [categories, products] = await Promise.all([
       prisma.category.findMany({ select: { slug: true, updatedAt: true } }),
@@ -59,4 +116,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return routes;
 }
-

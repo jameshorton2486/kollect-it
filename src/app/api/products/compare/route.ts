@@ -15,7 +15,15 @@ export async function GET(request: NextRequest) {
         id: { in: ids },
         status: "active",
       },
-      include: {
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        price: true,
+        condition: true,
+        year: true,
+        artist: true,
+        rarity: true,
         images: {
           take: 1,
           select: { url: true },

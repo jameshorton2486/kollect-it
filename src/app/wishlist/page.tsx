@@ -9,6 +9,7 @@ interface WishlistItem {
   id: string;
   product: {
     id: string;
+    slug: string;
     title: string;
     price: number;
     images: { url: string }[];
@@ -143,7 +144,7 @@ export default function WishlistPage() {
               className="group rounded-xl border border-border-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
               <Link
-                href={`/product/${item.product.id}`}
+                href={`/product/${item.product.slug}`}
                 className="relative aspect-square bg-surface-100 block overflow-hidden"
               >
                 <Image
@@ -154,7 +155,7 @@ export default function WishlistPage() {
                 />
               </Link>
               <div className="p-4">
-                <Link href={`/product/${item.product.id}`}>
+                <Link href={`/product/${item.product.slug}`}>
                   <h3 className="font-medium text-ink-900 line-clamp-2 hover:text-lux-gold transition-colors">
                     {item.product.title}
                   </h3>

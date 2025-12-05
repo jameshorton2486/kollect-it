@@ -7,6 +7,7 @@ import { X, Scale } from "lucide-react";
 
 interface CompareProduct {
   id: string;
+  slug: string;
   title: string;
   price: number;
   images: { url: string }[];
@@ -172,7 +173,7 @@ export default function ComparisonPage() {
                     <X className="h-4 w-4" />
                   </button>
 
-                  <Link href={`/product/${product.id}`} className="block">
+                  <Link href={`/product/${product.slug}`} className="block">
                     <div className="relative mx-auto mb-4 aspect-square w-full max-w-[200px] overflow-hidden rounded-lg bg-surface-100">
                       <Image
                         src={product.images?.[0]?.url || "/placeholder.svg"}
@@ -227,7 +228,7 @@ export default function ComparisonPage() {
               {products.map((product) => (
                 <Link
                   key={product.id}
-                  href={`/product/${product.id}`}
+                  href={`/product/${product.slug}`}
                   className="flex items-center justify-center rounded-full bg-lux-gold px-6 py-3 text-sm font-semibold uppercase tracking-wider text-lux-black transition-all hover:bg-lux-gold-light"
                 >
                   View Details

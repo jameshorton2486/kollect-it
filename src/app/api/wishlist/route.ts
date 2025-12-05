@@ -25,12 +25,19 @@ export async function GET() {
       where: { userId: user.id },
       include: {
         product: {
-          include: {
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            price: true,
             images: {
               orderBy: { order: "asc" },
               take: 1,
+              select: { url: true },
             },
-            category: true,
+            category: {
+              select: { name: true },
+            },
           },
         },
       },
