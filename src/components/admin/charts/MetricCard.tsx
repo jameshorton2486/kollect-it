@@ -16,7 +16,7 @@ export function MetricCard({
   trend,
   trendLabel,
   color = "bg-gray-900",
-  borderColor = "border-[#D3AF37]",
+  borderColor = "border-gold-500",
 }: MetricCardProps) {
   // Determine trend direction and styling
   let trendDirection: "up" | "down" | "neutral" = "neutral";

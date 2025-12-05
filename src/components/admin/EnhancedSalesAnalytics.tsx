@@ -40,12 +40,12 @@ interface Props {
 }
 
 const COLORS = [
-  "#D3AF37",
-  "#B1874C",
-  "#8B6937",
-  "#C7A85E",
-  "#E5C65A",
-  "#F4E4A6",
+  "#D4AF37", // gold-500
+  "#A6874C", // gold-600
+  "#8B6F37", // gold-700
+  "#C7A85E", // gold-400 equivalent
+  "#E5C65A", // gold-300 equivalent
+  "#F4E4A6", // gold-200 equivalent
 ];
 
 export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
@@ -72,7 +72,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
         </div>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data.dailyRevenue}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 12 }}
@@ -92,9 +92,9 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
             <Line
               type="monotone"
               dataKey="revenue"
-              stroke="#D3AF37"
+              stroke="#D4AF37"
               strokeWidth={2}
-              dot={{ fill: "#D3AF37", r: 4 }}
+              dot={{ fill: "#D4AF37", r: 4 }}
               activeDot={{ r: 6 }}
             />
           </LineChart>
@@ -158,7 +158,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={data.hourlyDistribution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
               <XAxis
                 dataKey="hour"
                 tick={{ fontSize: 12 }}
@@ -256,7 +256,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={data.dailyRevenue}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
               <XAxis
                 dataKey="date"
                 tick={{ fontSize: 12 }}

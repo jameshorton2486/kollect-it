@@ -25,7 +25,7 @@ interface RevenueByCategoryProps {
   data: RevenueByCategory[];
 }
 
-const COLORS = ["#D3AF37", "#A17D2F", "#CD7F32", "#C0C0C0", "#FFD700"];
+const COLORS = ["var(--gold-500)", "var(--gold-600)", "var(--gold-700)", "var(--lux-silver)", "var(--gold-300)"];
 
 export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   if (!data || data.length === 0) {
@@ -42,7 +42,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   }));
 
   return (
-    <div className="border border-[#D3AF37] rounded-lg p-6 bg-gray-900">
+    <div className="border border-gold-500 rounded-lg p-6 bg-gray-900">
       <h3 className="text-white text-lg font-bold mb-4">Revenue by Category</h3>
 
       <ResponsiveContainer width="100%" height={300}>
@@ -54,7 +54,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
             labelLine={false}
             label={({ name }) => name}
             outerRadius={100}
-            fill="#D3AF37"
+            fill="var(--gold-500)"
             dataKey="value"
           >
             {chartData.map((_, index) => (
@@ -67,8 +67,8 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
           <Tooltip
             formatter={(value: number) => `$${value.toFixed(2)}`}
             contentStyle={{
-              backgroundColor: "#1a1a1a",
-              border: "1px solid #D3AF37",
+              backgroundColor: "hsl(var(--ink-900))",
+              border: "1px solid hsl(var(--gold-500))",
               borderRadius: "8px",
               color: "#fff",
             }}
@@ -84,7 +84,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
             className="flex justify-between text-gray-300"
           >
             <span>{item.category}</span>
-            <span className="text-[#D3AF37] font-semibold">
+            <span className="text-gold-500 font-semibold">
               ${item.revenue.toFixed(2)}
             </span>
           </div>

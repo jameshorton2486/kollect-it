@@ -46,8 +46,8 @@ export function Header() {
       className={cn(
         "sticky top-0 z-50 border-b border-white/10 text-lux-white transition-all duration-300",
         isScrolled
-          ? "bg-[#0D0D0D]/95 backdrop-blur-md shadow-lg"
-          : "bg-[#0D0D0D]"
+          ? "bg-lux-black/95 backdrop-blur-md shadow-lg"
+          : "bg-lux-black"
       )}
     >
       <nav
@@ -186,7 +186,7 @@ export function Header() {
         {mobileMenuOpen && (
           <div
             id="mobile-menu"
-            className="md:hidden absolute left-0 right-0 top-full bg-[#0D0D0D] border-b border-white/10 shadow-2xl"
+            className="md:hidden absolute left-0 right-0 top-full bg-lux-black border-b border-white/10 shadow-2xl"
           >
             <div className="flex flex-col px-4 py-4">
               {navigation.map((item) => {

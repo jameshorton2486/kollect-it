@@ -4,6 +4,7 @@ import ProductCard from "./ProductCard";
 
 interface Product {
   id: string;
+  slug: string;
   title: string;
   price: number;
   condition?: string | null;

@@ -179,7 +179,7 @@ export function ProductAnalyticsDashboard() {
           </p>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={metrics.salesVelocity}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
               <XAxis dataKey="period" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
@@ -193,7 +193,7 @@ export function ProductAnalyticsDashboard() {
               <Line
                 type="monotone"
                 dataKey="listed"
-                stroke="#D3AF37"
+                stroke="#D4AF37"
                 strokeWidth={2}
                 name="Listed"
               />
@@ -209,11 +209,11 @@ export function ProductAnalyticsDashboard() {
           <p className="text-sm text-ink-700 mb-4">Products by price range</p>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={metrics.priceDistribution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
               <XAxis dataKey="range" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Bar dataKey="count" fill="#D3AF37" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="count" fill="#D4AF37" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

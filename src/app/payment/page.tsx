@@ -51,10 +51,10 @@ export default function PaymentPage() {
           ))}
         </div>
 
-        <div style={{ backgroundColor: "#3A3A3A", color: "#FFFFFF", padding: "40px", borderRadius: "8px", textAlign: "center" }}>
-          <ShieldCheck size={48} color="#C9A66B" style={{ margin: "0 auto 20px" }} />
-          <h2 style={{ fontFamily: "serif", fontSize: "2rem", marginBottom: "20px", color: "#C9A66B" }}>Security Guarantee</h2>
-          <p style={{ lineHeight: "1.6" }}>
+        <div className="bg-surface-800 text-lux-white p-10 rounded-lg text-center">
+          <ShieldCheck size={48} color="var(--gold-500)" className="mx-auto mb-5" />
+          <h2 className="font-serif text-3xl mb-5 text-gold-500">Security Guarantee</h2>
+          <p className="leading-relaxed">
             Your security is our top priority. All transactions are encrypted using industry-standard SSL technology. 
             We never store your full credit card details on our servers.
           </p>

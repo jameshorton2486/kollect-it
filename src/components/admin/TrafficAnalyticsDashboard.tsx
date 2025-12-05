@@ -63,12 +63,12 @@ interface TrafficMetrics {
 }
 
 const COLORS = [
-  "#D3AF37",
-  "#B1874C",
-  "#8B6937",
-  "#C7A85E",
-  "#E5C65A",
-  "#F4E4A6",
+  "#D4AF37", // gold-500
+  "#A6874C", // gold-600
+  "#8B6F37", // gold-700
+  "#C7A85E", // gold-400 equivalent
+  "#E5C65A", // gold-300 equivalent
+  "#F4E4A6", // gold-200 equivalent
 ];
 
 export function TrafficAnalyticsDashboard() {
@@ -235,7 +235,7 @@ export function TrafficAnalyticsDashboard() {
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={metrics.traffic.daily}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 12 }}
@@ -252,18 +252,18 @@ export function TrafficAnalyticsDashboard() {
             <Line
               type="monotone"
               dataKey="visitors"
-              stroke="#D3AF37"
+              stroke="#D4AF37"
               strokeWidth={2}
               name="Visitors"
-              dot={{ fill: "#D3AF37" }}
+              dot={{ fill: "#D4AF37" }}
             />
             <Line
               type="monotone"
               dataKey="pageViews"
-              stroke="#B1874C"
+              stroke="#A6874C"
               strokeWidth={2}
               name="Page Views"
-              dot={{ fill: "#B1874C" }}
+              dot={{ fill: "#A6874C" }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -337,11 +337,11 @@ export function TrafficAnalyticsDashboard() {
           </div>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={metrics.devices}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
               <XAxis dataKey="device" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Bar dataKey="count" fill="#D3AF37" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="count" fill="#D4AF37" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
           <div className="mt-4 grid grid-cols-3 gap-4">

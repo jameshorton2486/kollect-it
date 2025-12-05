@@ -30,7 +30,7 @@ const items = [
 
 export default function TrustStrip() {
   return (
-    <section className="bg-[#1A1A1A]">
+    <section className="bg-lux-charcoal">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
         <div className="grid gap-6 sm:grid-cols-3 sm:gap-8">
           {items.map((item) => (

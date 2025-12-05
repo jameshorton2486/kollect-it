@@ -63,7 +63,7 @@ interface DashboardMetrics {
   }>;
 }
 
-const COLORS = ["#D3AF37", "#B1874C", "#8B6937", "#C7A85E", "#E5C65A"];
+const COLORS = ["#D4AF37", "#A6874C", "#8B6F37", "#C7A85E", "#E5C65A"]; // gold-500, gold-600, gold-700, gold-400, gold-300
 
 export function DashboardOverview() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
@@ -173,7 +173,7 @@ export function DashboardOverview() {
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={metrics.revenue.dailyRevenue}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
               <XAxis
                 dataKey="date"
                 tick={{ fontSize: 12 }}
@@ -204,9 +204,9 @@ export function DashboardOverview() {
               <Line
                 type="monotone"
                 dataKey="revenue"
-                stroke="#D3AF37"
+                stroke="#D4AF37"
                 strokeWidth={2}
-                dot={{ fill: "#D3AF37", r: 3 }}
+                dot={{ fill: "#D4AF37", r: 3 }}
                 activeDot={{ r: 5 }}
               />
             </LineChart>

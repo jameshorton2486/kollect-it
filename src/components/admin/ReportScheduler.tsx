@@ -146,10 +146,10 @@ export default function ReportScheduler() {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-[#D3AF37]">Scheduled Reports</h1>
+        <h1 className="text-3xl font-bold text-gold-500">Scheduled Reports</h1>
         <button
           onClick={() => setIsCreating(!isCreating)}
-          className="px-4 py-2 bg-[#D3AF37] text-[#1a1a1a] rounded-lg font-semibold hover:bg-[#e4c44d] transition"
+          className="px-4 py-2 bg-gold-500 text-ink-900 rounded-lg font-semibold hover:bg-gold-400 transition"
         >
           {isCreating ? "Cancel" : "+ New Report"}
         </button>
@@ -157,7 +157,7 @@ export default function ReportScheduler() {
 
       {/* Create Form */}
       {isCreating && (
-        <div className="bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]">
+        <div className="bg-surface-800 p-6 rounded-lg border border-gold-500">
           <h2 className="text-xl font-semibold text-white mb-4">
             Create New Report
           </h2>
@@ -173,7 +173,7 @@ export default function ReportScheduler() {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
+                className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
                 placeholder="e.g., Weekly Analytics"
               />
             </div>
@@ -189,7 +189,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, frequency: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
+                  className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
                 >
                   <option value="DAILY">Daily</option>
                   <option value="WEEKLY">Weekly</option>
@@ -207,7 +207,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, format: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
+                  className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
                 >
                   <option value="JSON">JSON</option>
                   <option value="CSV">CSV</option>
@@ -226,7 +226,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, recipients: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#444] rounded text-white"
+                  className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
                   placeholder="email@example.com"
                 />
               </div>
@@ -234,7 +234,7 @@ export default function ReportScheduler() {
 
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-[#667eea] text-white rounded-lg font-semibold hover:bg-[#5568d3] transition"
+              className="w-full px-4 py-2 bg-gold-500 text-ink-900 rounded-lg font-semibold hover:bg-gold-400 transition"
             >
               Create Report
             </button>
@@ -261,8 +261,8 @@ export default function ReportScheduler() {
                 }}
                 className={`p-4 rounded-lg border cursor-pointer transition ${
                   selectedReport?.id === report.id
-                    ? "bg-[#2a2a2a] border-[#D3AF37]"
-                    : "bg-[#1a1a1a] border-[#444] hover:border-[#D3AF37]"
+                    ? "bg-surface-800 border-gold-500"
+                    : "bg-surface-800 border-border-300 hover:border-gold-500"
                 }`}
               >
                 <div className="flex justify-between items-start">
@@ -284,7 +284,7 @@ export default function ReportScheduler() {
                         e.stopPropagation();
                         handleTriggerReport(report.id);
                       }}
-                      className="px-3 py-1 bg-[#667eea] text-white text-sm rounded hover:bg-[#5568d3] transition"
+                      className="px-3 py-1 bg-gold-500 text-ink-900 text-sm rounded hover:bg-gold-400 transition"
                     >
                       Send Now
                     </button>
@@ -322,7 +322,7 @@ export default function ReportScheduler() {
 
       {/* Audit Log */}
       {selectedReport && (
-        <div className="bg-[#2a2a2a] p-6 rounded-lg border border-[#D3AF37]">
+        <div className="bg-surface-800 p-6 rounded-lg border border-gold-500">
           <h2 className="text-xl font-semibold text-white mb-4">
             Audit Log - {selectedReport.name}
           </h2>

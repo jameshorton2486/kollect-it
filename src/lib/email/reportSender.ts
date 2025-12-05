@@ -30,14 +30,14 @@ function generateEmailTemplate(
   <style>
     body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-    .content { background: #f9f9f9; padding: 20px; border-radius: 0 0 8px 8px; }
+    .header { background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+    .content { background: var(--surface-50); padding: 20px; border-radius: 0 0 8px 8px; }
     .metrics { background: white; padding: 15px; border-radius: 4px; margin: 10px 0; }
     .footer { text-align: center; margin-top: 20px; color: #888; font-size: 12px; }
-    .data-preview { background: #f0f0f0; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto; }
+    .data-preview { background: var(--surface-50); padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto; }
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     td { padding: 8px; border-bottom: 1px solid #ddd; }
-    .button { display: inline-block; background: #667eea; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; margin: 10px 0; }
+    .button { display: inline-block; background: var(--gold-500); color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; margin: 10px 0; }
   </style>
 </head>
 <body>
