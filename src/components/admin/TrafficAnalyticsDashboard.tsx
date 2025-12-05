@@ -64,7 +64,7 @@ interface TrafficMetrics {
 
 const COLORS = [
   "#D4AF37", // gold-500
-  "#A6874C", // gold-600
+  "#B8860B", // gold-600
   "#8B6F37", // gold-700
   "#C7A85E", // gold-400 equivalent
   "#E5C65A", // gold-300 equivalent
@@ -235,7 +235,7 @@ export function TrafficAnalyticsDashboard() {
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={metrics.traffic.daily}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 12 }}
@@ -260,10 +260,10 @@ export function TrafficAnalyticsDashboard() {
             <Line
               type="monotone"
               dataKey="pageViews"
-              stroke="#A6874C"
+              stroke="#B8860B"
               strokeWidth={2}
               name="Page Views"
-              dot={{ fill: "#A6874C" }}
+              dot={{ fill: "#B8860B" }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -337,7 +337,7 @@ export function TrafficAnalyticsDashboard() {
           </div>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={metrics.devices}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
               <XAxis dataKey="device" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />

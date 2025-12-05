@@ -25,7 +25,7 @@ interface RevenueByCategoryProps {
   data: RevenueByCategory[];
 }
 
-const COLORS = ["var(--gold-500)", "var(--gold-600)", "var(--gold-700)", "var(--lux-silver)", "var(--gold-300)"];
+const COLORS = ["#D4AF37", "#B8860B", "#CD853F", "#A9A9A9", "#DAA520"];
 
 export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   if (!data || data.length === 0) {
@@ -54,7 +54,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
             labelLine={false}
             label={({ name }) => name}
             outerRadius={100}
-            fill="var(--gold-500)"
+            fill="#D4AF37"
             dataKey="value"
           >
             {chartData.map((_, index) => (
@@ -67,8 +67,8 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
           <Tooltip
             formatter={(value: number) => `$${value.toFixed(2)}`}
             contentStyle={{
-              backgroundColor: "hsl(var(--ink-900))",
-              border: "1px solid hsl(var(--gold-500))",
+              backgroundColor: "#1F2937",
+              border: "1px solid #D4AF37",
               borderRadius: "8px",
               color: "#fff",
             }}

@@ -63,7 +63,7 @@ interface DashboardMetrics {
   }>;
 }
 
-const COLORS = ["#D4AF37", "#A6874C", "#8B6F37", "#C7A85E", "#E5C65A"]; // gold-500, gold-600, gold-700, gold-400, gold-300
+const COLORS = ["#D4AF37", "#B8860B", "#8B7355", "#C9A961", "#DAA520"];
 
 export function DashboardOverview() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
@@ -173,7 +173,7 @@ export function DashboardOverview() {
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={metrics.revenue.dailyRevenue}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
               <XAxis
                 dataKey="date"
                 tick={{ fontSize: 12 }}

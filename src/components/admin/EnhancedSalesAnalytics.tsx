@@ -41,7 +41,7 @@ interface Props {
 
 const COLORS = [
   "#D4AF37", // gold-500
-  "#A6874C", // gold-600
+  "#B8860B", // gold-600
   "#8B6F37", // gold-700
   "#C7A85E", // gold-400 equivalent
   "#E5C65A", // gold-300 equivalent
@@ -72,7 +72,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
         </div>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data.dailyRevenue}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 12 }}
@@ -158,7 +158,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={data.hourlyDistribution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
               <XAxis
                 dataKey="hour"
                 tick={{ fontSize: 12 }}
@@ -256,7 +256,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={data.dailyRevenue}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--surface-200))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
               <XAxis
                 dataKey="date"
                 tick={{ fontSize: 12 }}
