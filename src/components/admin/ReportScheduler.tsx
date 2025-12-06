@@ -173,7 +173,7 @@ export default function ReportScheduler() {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
+                className="w-full px-3 py-2 bg-ink-700 border border-border-300 rounded text-white focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/20"
                 placeholder="e.g., Weekly Analytics"
               />
             </div>
@@ -189,7 +189,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, frequency: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
+                  className="w-full px-3 py-2 bg-ink-700 border border-border-300 rounded text-white focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/20"
                 >
                   <option value="DAILY">Daily</option>
                   <option value="WEEKLY">Weekly</option>
@@ -207,7 +207,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, format: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
+                  className="w-full px-3 py-2 bg-ink-700 border border-border-300 rounded text-white focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/20"
                 >
                   <option value="JSON">JSON</option>
                   <option value="CSV">CSV</option>
@@ -226,7 +226,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, recipients: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-surface-800 border border-border-300 rounded text-white"
+                  className="w-full px-3 py-2 bg-ink-700 border border-border-300 rounded text-white focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/20"
                   placeholder="email@example.com"
                 />
               </div>
@@ -285,6 +285,7 @@ export default function ReportScheduler() {
                         handleTriggerReport(report.id);
                       }}
                       className="px-3 py-1 bg-gold-500 text-ink-900 text-sm rounded hover:bg-gold-400 transition"
+                      aria-label={`Send report "${report.name}" now`}
                     >
                       Send Now
                     </button>
@@ -299,6 +300,7 @@ export default function ReportScheduler() {
                           ? "bg-green-600 text-white hover:bg-green-700"
                           : "bg-gray-600 text-white hover:bg-gray-700"
                       }`}
+                      aria-label={`${report.enabled ? "Disable" : "Enable"} report "${report.name}"`}
                     >
                       {report.enabled ? "Enabled" : "Disabled"}
                     </button>
@@ -309,6 +311,7 @@ export default function ReportScheduler() {
                         handleDeleteReport(report.id);
                       }}
                       className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+                      aria-label={`Delete report "${report.name}"`}
                     >
                       Delete
                     </button>
