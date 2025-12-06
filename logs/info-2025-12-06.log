@@ -1,0 +1,2 @@
+{"timestamp":"2025-12-06T22:49:24.353Z","level":"info","message":"Login attempt started","context":{"emailProvided":true,"passwordProvided":true}}
+{"timestamp":"2025-12-06T22:49:24.775Z","level":"info","message":"Login succeeded","context":{"userId":"cmi4emgzc0000cqn8qlozrzl7","email":"a***@kollect-it.com","role":"admin"}}
