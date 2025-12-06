@@ -28,6 +28,10 @@ function generateEmailTemplate(
 <html>
 <head>
   <style>
+    /* Email template styles - using hex colors intentionally
+     * CSS variables (var(--gold-500)) are NOT supported in email clients (Gmail, Outlook, Apple Mail, etc.)
+     * Using hex colors ensures compatibility across all email clients
+     */
     body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
     .header { background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
@@ -37,6 +41,9 @@ function generateEmailTemplate(
     .data-preview { background: #F3F4F6; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto; }
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     td { padding: 8px; border-bottom: 1px solid #ddd; }
+    /* Email template styles - using hex colors intentionally
+     * CSS variables are not supported in email clients (Gmail, Outlook, etc.)
+     */
     .button { display: inline-block; background: #D4AF37; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; margin: 10px 0; }
   </style>
 </head>
