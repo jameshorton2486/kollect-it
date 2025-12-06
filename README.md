@@ -225,8 +225,8 @@ cd kollect-it-marketplace
 bun install
 
 # Set up environment variables
-cp .env.example .env
-# ⚠️ Edit .env and add a REAL PostgreSQL DATABASE_URL (see SETUP_CHECKLIST.md)
+cp .env.example .env.local
+# ⚠️ Edit .env.local and add a REAL PostgreSQL DATABASE_URL (see ENV_SETUP_GUIDE.md)
 
 # Set up database (first time only)
 bun run db:setup
