@@ -2,7 +2,7 @@
 
 ## ✅ Your .env.local File Location
 
-**Location**: `C:\Users\james\kollect-it-marketplace-1\.env.local`
+**Location**: `.env.local` at the root of your project (e.g., `C:\Users\james\kollect-it-marketplace-1\.env.local`)
 
 This is **CORRECT**! ✅ The `.env.local` file should be at the root of your project.
 
@@ -185,6 +185,7 @@ npx tsx scripts/check-missing-env.ts
 - **Full Variable Reference**: `ENV_VARIABLES_REFERENCE.md`
 - **Auth Setup**: `AUTH_SETUP.md`
 - **What's Missing**: `MISSING_ENV_SUMMARY.md`
+- **Dev vs Prod Guide**: `DEV_VS_PROD_ENV_GUIDE.md`
 
 ---
 

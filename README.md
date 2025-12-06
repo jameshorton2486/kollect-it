@@ -251,18 +251,21 @@ Password: admin123
 
 ### **Environment Variables:**
 
-This project requires several API keys and configurations. See [ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md) for:
+This project requires several API keys and configurations. See [ENV_SETUP_GUIDE.md](./ENV_SETUP_GUIDE.md) for:
 
+- Step-by-step setup instructions
 - Complete list of all required variables
 - Where to get each API key
 - How to set variables locally and on Vercel
 - Security best practices
 
+For a complete reference, see [ENV_VARIABLES_REFERENCE.md](./ENV_VARIABLES_REFERENCE.md).
+
 **Quick setup:**
 
 ```bash
-cp .env.example .env
-# Edit .env and add your API keys (see ENVIRONMENT_VARIABLES.md)
+cp .env.example .env.local
+# Edit .env.local and add your API keys (see ENV_SETUP_GUIDE.md)
 ```
 
 ### **Database Setup:**
