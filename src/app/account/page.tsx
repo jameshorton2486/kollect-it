@@ -11,6 +11,11 @@ import {
   Heart,
   Settings as SettingsIcon,
   LogOut,
+  X,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  CheckCircle2,
 } from "lucide-react";
 import AddToCartButton from "@/components/AddToCartButton";
 import { formatUSD } from "@/lib/currency";
@@ -54,6 +59,37 @@ export default function AccountPage() {
   const [loading, setLoading] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(true);
+
+  // Edit Profile Modal State
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [profileForm, setProfileForm] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+  });
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileMessage, setProfileMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  // Change Password Modal State
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [passwordSaving, setPasswordSaving] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -102,6 +138,118 @@ export default function AccountPage() {
     }
   };
 
+  const handleEditProfile = () => {
+    setProfileForm({
+      name: session?.user?.name || "",
+      phone: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    });
+    setProfileMessage(null);
+    setShowEditProfile(true);
+  };
+
+  const handleSaveProfile = async () => {
+    setProfileSaving(true);
+    setProfileMessage(null);
+
+    try {
+      const response = await fetch("/api/account/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileForm),
+      });
+
+      if (response.ok) {
+        setProfileMessage({
+          type: "success",
+          text: "Profile updated successfully!",
+        });
+        setTimeout(() => {
+          setShowEditProfile(false);
+          window.location.reload();
+        }, 1500);
+      } else {
+        const data = await response.json();
+        setProfileMessage({
+          type: "error",
+          text: data.error || "Failed to update profile",
+        });
+      }
+    } catch (error) {
+      setProfileMessage({
+        type: "error",
+        text: "An error occurred. Please try again.",
+      });
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
+  const handleChangePassword = () => {
+    setPasswordForm({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+    setPasswordMessage(null);
+    setShowChangePassword(true);
+  };
+
+  const handleSavePassword = async () => {
+    if (passwordForm.newPassword.length < 8) {
+      setPasswordMessage({
+        type: "error",
+        text: "New password must be at least 8 characters",
+      });
+      return;
+    }
+
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordMessage({ type: "error", text: "Passwords do not match" });
+      return;
+    }
+
+    setPasswordSaving(true);
+    setPasswordMessage(null);
+
+    try {
+      const response = await fetch("/api/account/password", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      });
+
+      if (response.ok) {
+        setPasswordMessage({
+          type: "success",
+          text: "Password changed successfully!",
+        });
+        setTimeout(() => {
+          setShowChangePassword(false);
+        }, 1500);
+      } else {
+        const data = await response.json();
+        setPasswordMessage({
+          type: "error",
+          text: data.error || "Failed to change password",
+        });
+      }
+    } catch (error) {
+      setPasswordMessage({
+        type: "error",
+        text: "An error occurred. Please try again.",
+      });
+    } finally {
+      setPasswordSaving(false);
+    }
+  };
+
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -143,7 +291,6 @@ export default function AccountPage() {
       {/* Tabs */}
       <div className="border-b border-border-300 bg-surface-0">
         <div className="container">
-          {/* Mobile select */}
           <div className="py-3 md:hidden">
             <label htmlFor="account-tab" className="sr-only">
               Choose section
@@ -160,7 +307,6 @@ export default function AccountPage() {
               <option value="settings">Settings</option>
             </select>
           </div>
-          {/* Desktop tabs */}
           <div
             className="hidden items-stretch gap-8 md:flex"
             role="tablist"
@@ -259,8 +405,18 @@ export default function AccountPage() {
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <button className="ki-btn-primary">Edit Profile</button>
-                <button className="inline-flex items-center justify-center rounded border border-border-300 px-4 py-2 text-[14px] text-ink-900 hover:bg-cream">
+                <button
+                  type="button"
+                  onClick={handleEditProfile}
+                  className="ki-btn-primary"
+                >
+                  Edit Profile
+                </button>
+                <button
+                  type="button"
+                  onClick={handleChangePassword}
+                  className="inline-flex items-center justify-center rounded border border-border-300 px-4 py-2 text-[14px] text-ink-900 hover:bg-cream"
+                >
                   Change Password
                 </button>
               </div>
@@ -278,10 +434,7 @@ export default function AccountPage() {
               <h2 className="mb-4 font-serif text-2xl">Order History</h2>
               {orders.length === 0 ? (
                 <div className="flex flex-col items-center justify-center gap-2 rounded border border-border-300 bg-cream p-8 text-center">
-                  <Receipt
-                    className="text-ink-700"
-                    size={48}
-                  />
+                  <Receipt className="text-ink-700" size={48} />
                   <h3 className="font-serif text-xl">No Orders Yet</h3>
                   <p className="text-ink-700">
                     You haven&apos;t placed any orders yet.
@@ -485,7 +638,7 @@ export default function AccountPage() {
                     onClick={() => {
                       if (
                         confirm(
-                          "Are you sure you want to delete your account? This action cannot be undone.",
+                          "Are you sure you want to delete your account? This action cannot be undone."
                         )
                       ) {
                         alert("Account deletion request submitted.");
@@ -501,6 +654,308 @@ export default function AccountPage() {
           )}
         </div>
       </div>
+
+      {/* Edit Profile Modal */}
+      {showEditProfile && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-serif text-2xl">Edit Profile</h2>
+              <button
+                type="button"
+                onClick={() => setShowEditProfile(false)}
+                className="rounded p-1 hover:bg-gray-100"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {profileMessage && (
+              <div
+                className={`mb-4 flex items-center gap-2 rounded p-3 ${
+                  profileMessage.type === "success"
+                    ? "bg-green-50 text-green-700"
+                    : "bg-red-50 text-red-700"
+                }`}
+              >
+                {profileMessage.type === "success" ? (
+                  <CheckCircle2 size={18} />
+                ) : (
+                  <AlertCircle size={18} />
+                )}
+                {profileMessage.text}
+              </div>
+            )}
+
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="profile-name"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  Name
+                </label>
+                <input
+                  id="profile-name"
+                  type="text"
+                  value={profileForm.name}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, name: e.target.value })
+                  }
+                  className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="profile-phone"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  Phone
+                </label>
+                <input
+                  id="profile-phone"
+                  type="tel"
+                  value={profileForm.phone}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, phone: e.target.value })
+                  }
+                  className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  placeholder="(555) 555-5555"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="profile-address"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  Address
+                </label>
+                <input
+                  id="profile-address"
+                  type="text"
+                  value={profileForm.address}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, address: e.target.value })
+                  }
+                  className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label
+                    htmlFor="profile-city"
+                    className="mb-1 block text-sm font-medium text-gray-700"
+                  >
+                    City
+                  </label>
+                  <input
+                    id="profile-city"
+                    type="text"
+                    value={profileForm.city}
+                    onChange={(e) =>
+                      setProfileForm({ ...profileForm, city: e.target.value })
+                    }
+                    className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="profile-state"
+                    className="mb-1 block text-sm font-medium text-gray-700"
+                  >
+                    State
+                  </label>
+                  <input
+                    id="profile-state"
+                    type="text"
+                    value={profileForm.state}
+                    onChange={(e) =>
+                      setProfileForm({ ...profileForm, state: e.target.value })
+                    }
+                    className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="profile-zip"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  ZIP Code
+                </label>
+                <input
+                  id="profile-zip"
+                  type="text"
+                  value={profileForm.zipCode}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, zipCode: e.target.value })
+                  }
+                  className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowEditProfile(false)}
+                className="rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveProfile}
+                disabled={profileSaving}
+                className="rounded bg-amber-600 px-4 py-2 text-sm text-white hover:bg-amber-700 disabled:opacity-50"
+              >
+                {profileSaving ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Change Password Modal */}
+      {showChangePassword && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-serif text-2xl">Change Password</h2>
+              <button
+                type="button"
+                onClick={() => setShowChangePassword(false)}
+                className="rounded p-1 hover:bg-gray-100"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {passwordMessage && (
+              <div
+                className={`mb-4 flex items-center gap-2 rounded p-3 ${
+                  passwordMessage.type === "success"
+                    ? "bg-green-50 text-green-700"
+                    : "bg-red-50 text-red-700"
+                }`}
+              >
+                {passwordMessage.type === "success" ? (
+                  <CheckCircle2 size={18} />
+                ) : (
+                  <AlertCircle size={18} />
+                )}
+                {passwordMessage.text}
+              </div>
+            )}
+
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="current-password"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  Current Password
+                </label>
+                <div className="relative">
+                  <input
+                    id="current-password"
+                    type={showCurrentPassword ? "text" : "password"}
+                    value={passwordForm.currentPassword}
+                    onChange={(e) =>
+                      setPasswordForm({
+                        ...passwordForm,
+                        currentPassword: e.target.value,
+                      })
+                    }
+                    className="w-full rounded border border-gray-300 bg-white px-3 py-2 pr-10 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showCurrentPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="new-password"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  New Password
+                </label>
+                <div className="relative">
+                  <input
+                    id="new-password"
+                    type={showNewPassword ? "text" : "password"}
+                    value={passwordForm.newPassword}
+                    onChange={(e) =>
+                      setPasswordForm({
+                        ...passwordForm,
+                        newPassword: e.target.value,
+                      })
+                    }
+                    className="w-full rounded border border-gray-300 bg-white px-3 py-2 pr-10 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    placeholder="At least 8 characters"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="confirm-password"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
+                  Confirm New Password
+                </label>
+                <input
+                  id="confirm-password"
+                  type="password"
+                  value={passwordForm.confirmPassword}
+                  onChange={(e) =>
+                    setPasswordForm({
+                      ...passwordForm,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                  className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowChangePassword(false)}
+                className="rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSavePassword}
+                disabled={passwordSaving}
+                className="rounded bg-amber-600 px-4 py-2 text-sm text-white hover:bg-amber-700 disabled:opacity-50"
+              >
+                {passwordSaving ? "Saving..." : "Change Password"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
       sku,                    // ✨ NEW: Required SKU
       imageUrls = [],         // ✨ NEW: Array of image URLs with metadata
       category,
+      categoryId,
+      subcategoryId,
       title,
       description,
       shortDescription,
@@ -86,16 +88,36 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Find category by name
-    const categoryRecord = await prisma.category.findFirst({
-      where: { name: category },
-    });
+    // Find category by ID or name
+    let categoryRecord;
+    if (categoryId) {
+      categoryRecord = await prisma.category.findUnique({
+        where: { id: categoryId },
+      });
+    } else if (category) {
+      categoryRecord = await prisma.category.findFirst({
+        where: { name: category },
+      });
+    }
 
     if (!categoryRecord) {
       return NextResponse.json(
-        { error: `Category not found: ${category}` },
+        { error: `Category not found: ${categoryId || category}` },
         { status: 400 },
       );
+    }
+
+    // Validate subcategory if provided
+    if (subcategoryId) {
+      const subcategory = await prisma.subcategory.findUnique({
+        where: { id: subcategoryId },
+      });
+      if (!subcategory || subcategory.categoryId !== categoryRecord.id) {
+        return NextResponse.json(
+          { error: `Invalid subcategory for category` },
+          { status: 400 },
+        );
+      }
     }
 
     // Generate slug from title
@@ -125,6 +147,7 @@ export async function POST(req: NextRequest) {
         description: description || shortDescription,
         price: suggestedPrice || 0,
         categoryId: categoryRecord.id,
+        subcategoryId: subcategoryId || null,
         productNotes,
         appraisalUrls,
         

@@ -14,11 +14,18 @@ async function getCategoryData(slug: string) {
   return prisma.category.findUnique({
     where: { slug },
     include: {
+      subcategories: {
+        orderBy: { name: "asc" },
+      },
       products: {
-        where: { status: "active" },
+        where: { 
+          status: "active",
+          isDraft: false,
+        },
         include: {
           images: { orderBy: { order: "asc" }, take: 1 },
           category: true,
+          subcategory: true,
         },
         orderBy: { createdAt: "desc" },
       },
@@ -105,13 +112,47 @@ export default async function CategoryPage(props: CategoryPageProps) {
         </div>
       </section>
 
+      {/* Subcategories Section */}
+      {category.subcategories && category.subcategories.length > 0 && (
+        <section className="border-b border-border-200 bg-surface-50">
+          <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+            <h2 className="text-2xl font-semibold tracking-tight text-ink-900 mb-6">
+              Browse by Subcategory
+            </h2>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {category.subcategories.map((sub) => {
+                const subProductCount = products.filter(
+                  (p) => p.subcategoryId === sub.id
+                ).length;
+                return (
+                  <Link
+                    key={sub.id}
+                    href={`/subcategory/${sub.slug}`}
+                    className="group border border-border-200 bg-white p-4 rounded-lg hover:border-lux-gold hover:shadow-soft transition-all"
+                  >
+                    <div className="font-medium text-ink-900 group-hover:text-lux-gold transition-colors">
+                      {sub.name}
+                    </div>
+                    {subProductCount > 0 && (
+                      <div className="text-xs text-ink-600 mt-1">
+                        {subProductCount} {subProductCount === 1 ? "item" : "items"}
+                      </div>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
           {products.length > 0 ? (
             <>
               <div className="mb-10 space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
-                  Available pieces
+                  All {category.name} Pieces
                 </h2>
                 <p className="text-sm text-ink-600">
                   {products.length === 1

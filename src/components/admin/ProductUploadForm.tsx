@@ -36,6 +36,9 @@ export function ProductUploadForm() {
   const [sku, setSku] = useState("");
   const [skuError, setSkuError] = useState("");
   const [category, setCategory] = useState("Collectibles");
+  const [categoryId, setCategoryId] = useState("");
+  const [subcategoryId, setSubcategoryId] = useState("");
+  const [categories, setCategories] = useState<Array<{id: string; name: string; subcategories: Array<{id: string; name: string}>}>>([]);
   const [productNotes, setProductNotes] = useState("");
   const [appraisalUrls, setAppraisalUrls] = useState<string[]>([]);
   const [newAppraisalUrl, setNewAppraisalUrl] = useState("");
@@ -65,10 +68,29 @@ export function ProductUploadForm() {
     seoDescription: "",
   });
 
-  // Auto-suggest SKU on mount
+  // Auto-suggest SKU on mount and fetch categories
   useEffect(() => {
     fetchNextSKU();
+    fetchCategories();
   }, []);
+
+  async function fetchCategories() {
+    try {
+      const res = await fetch("/api/categories");
+      if (res.ok) {
+        const cats = await res.json();
+        setCategories(cats);
+        if (cats.length > 0) {
+          const collectibles = cats.find((c: any) => c.name === "Collectibles") || cats[0];
+          setCategory(collectibles.name);
+          setCategoryId(collectibles.id);
+          setSubcategoryId(collectibles.subcategories?.[0]?.id || "");
+        }
+      }
+    } catch (err) {
+      console.error("Failed to fetch categories:", err);
+    }
+  }
 
   async function fetchNextSKU() {
     try {
@@ -193,6 +215,8 @@ export function ProductUploadForm() {
           sku,
           imageUrls: images,
           category,
+          categoryId,
+          subcategoryId: subcategoryId || undefined,
           ...formData,
           aiAnalysis: analysis,
           productNotes,
@@ -211,7 +235,10 @@ export function ProductUploadForm() {
       // Reset form after delay
       setTimeout(() => {
         setSku("");
-        setCategory("Collectibles");
+        const collectibles = categories.find(c => c.name === "Collectibles") || categories[0];
+        setCategory(collectibles?.name || "Collectibles");
+        setCategoryId(collectibles?.id || "");
+        setSubcategoryId(collectibles?.subcategories?.[0]?.id || "");
         setProductNotes("");
         setAppraisalUrls([]);
         setImages([]);
@@ -335,14 +362,42 @@ export function ProductUploadForm() {
               Category *
             </label>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={categoryId}
+              onChange={(e) => {
+                const selectedCat = categories.find(c => c.id === e.target.value);
+                setCategory(selectedCat?.name || "");
+                setCategoryId(e.target.value);
+                setSubcategoryId(selectedCat?.subcategories?.[0]?.id || "");
+              }}
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
             >
-              <option value="Fine Art">Fine Art</option>
-              <option value="Rare Books">Rare Books</option>
-              <option value="Militaria">Militaria</option>
-              <option value="Collectibles">Collectibles</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Subcategory */}
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Subcategory (Optional)
+            </label>
+            <select
+              value={subcategoryId}
+              onChange={(e) => setSubcategoryId(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+              disabled={!categoryId}
+            >
+              <option value="">Select Subcategory (Optional)</option>
+              {categories
+                .find((c) => c.id === categoryId)
+                ?.subcategories.map((sub) => (
+                  <option key={sub.id} value={sub.id}>
+                    {sub.name}
+                  </option>
+                ))}
             </select>
           </div>
 

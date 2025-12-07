@@ -13,5 +13,7 @@ token.json
 # Ignore local environment files
 .env.local
 .env.production
-
-.env.local
+.env.production.local
+.env.production.check
+.env.*.local
+.vercel
