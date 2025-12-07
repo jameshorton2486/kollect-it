@@ -57,3 +57,4 @@ if (port !== "5432") {
   console.log(`   URL: ${directUrl.substring(0, 60)}...`);
   console.log("\n✨ Your DIRECT_URL is ready for migrations!");
 }
+
