@@ -59,13 +59,13 @@ export function Footer() {
               <p>San Antonio, Texas</p>
               <a
                 href="tel:+14693866065"
-                className="block text-white hover:text-lux-gold transition-colors"
+                className="block hover:text-white transition-colors"
               >
                 469-386-6065
               </a>
               <a
                 href="mailto:james@kollect-it.com"
-                className="block text-white hover:text-lux-gold transition-colors"
+                className="block hover:text-white transition-colors"
               >
                 james@kollect-it.com
               </a>
@@ -118,15 +118,15 @@ export function Footer() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-white">Join the Collector&apos;s List</p>
+
                 </div>
                 <div className="flex gap-2 sm:w-auto">
                   <input
                     type="email"
                     placeholder="Your email"
                     className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-lux-gold/50 focus:border-lux-gold transition-all"
-                    suppressHydrationWarning
                   />
-                  <button className="h-9 rounded-full border border-lux-gold/50 px-4 text-sm font-semibold uppercase tracking-wider text-lux-gold hover:bg-lux-gold hover:text-lux-black transition-all whitespace-nowrap">
+                  <button className="h-9 rounded-full bg-lux-gold px-4 text-sm font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all whitespace-nowrap">
                     Join
                   </button>
                 </div>
@@ -137,6 +137,7 @@ export function Footer() {
             <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4">
               <div>
                 <p className="text-sm font-medium text-white">Have a piece to consign?</p>
+
               </div>
               <Link
                 href="/consign"
@@ -152,13 +153,13 @@ export function Footer() {
         <div className="border-t border-white/10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-white/70">
           <p>© {year} Kollect-It. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href="/privacy" className="text-lux-gold hover:text-lux-gold transition-colors">
+            <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-lux-gold hover:text-lux-gold transition-colors">
+            <Link href="/terms" className="hover:text-white transition-colors">
               Terms
             </Link>
-            <Link href="/cookies" className="text-lux-gold hover:text-lux-gold transition-colors">
+            <Link href="/cookies" className="hover:text-white transition-colors">
               Cookies
             </Link>
           </div>

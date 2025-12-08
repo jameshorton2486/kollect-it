@@ -20,7 +20,7 @@ A modern, full-stack Next.js 15 application for the Kollect-It antiques and coll
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/jameshorton2486/kollect-it.git
+git clone https://github.com/infohorton2486/kollect-it.git
 cd kollect-it
 
 # 2. Install dependencies with Bun (NOT npm!)
@@ -584,12 +584,12 @@ src/
 ## 📊 Performance & Monitoring
 
 ### **Built-in Optimizations:**
-✅ Server-side rendering for SEO and performance  
-✅ Image optimization with Next.js Image component  
-✅ Code splitting and lazy loading  
-✅ Static asset optimization and caching  
-✅ Database query optimization with Prisma  
-✅ CDN delivery for images and static content  
+✅ Server-side rendering for SEO and performance
+✅ Image optimization with Next.js Image component
+✅ Code splitting and lazy loading
+✅ Static asset optimization and caching
+✅ Database query optimization with Prisma
+✅ CDN delivery for images and static content
 
 ### **Monitoring Setup:**
 - **Vercel Analytics**: Built-in performance monitoring
@@ -690,13 +690,13 @@ src/
 
 **Your Kollect-It marketplace includes:**
 
-✅ **Professional E-Commerce Platform** - Complete shopping experience  
-✅ **Secure Payment Processing** - Stripe integration with PCI compliance  
-✅ **Content Management System** - Admin dashboard for inventory  
-✅ **Modern Architecture** - Next.js 15 with TypeScript and performance optimization  
-✅ **Production Ready** - Deployment guides and monitoring setup  
-✅ **Scalable Infrastructure** - CDN, database optimization, and caching  
-✅ **Developer Experience** - Comprehensive documentation and testing  
+✅ **Professional E-Commerce Platform** - Complete shopping experience
+✅ **Secure Payment Processing** - Stripe integration with PCI compliance
+✅ **Content Management System** - Admin dashboard for inventory
+✅ **Modern Architecture** - Next.js 15 with TypeScript and performance optimization
+✅ **Production Ready** - Deployment guides and monitoring setup
+✅ **Scalable Infrastructure** - CDN, database optimization, and caching
+✅ **Developer Experience** - Comprehensive documentation and testing
 
 **🌟 Congratulations! Your marketplace is ready for business.**
 7. **Inventory Management**: Automatic stock updates after purchase

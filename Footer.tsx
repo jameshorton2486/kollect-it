@@ -59,21 +59,21 @@ export function Footer() {
               <p>San Antonio, Texas</p>
               <a
                 href="tel:+14693866065"
-                className="block text-white hover:text-lux-gold transition-colors"
+                className="block hover:text-lux-gold transition-colors"
               >
                 469-386-6065
               </a>
               <a
-                href="mailto:james@kollect-it.com"
-                className="block text-white hover:text-lux-gold transition-colors"
+                href="mailto:info@kollect-it.com"
+                className="block hover:text-lux-gold transition-colors"
               >
-                james@kollect-it.com
+                info@kollect-it.com
               </a>
             </div>
 
             {/* Social icons */}
             <div className="flex gap-3 pt-2">
-              <a href="mailto:james@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 hover:text-lux-gold transition-all">
+              <a href="mailto:info@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 hover:text-lux-gold transition-all">
                 <Mail className="h-4 w-4" />
               </a>
               <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 hover:text-lux-gold transition-all">
@@ -124,9 +124,8 @@ export function Footer() {
                     type="email"
                     placeholder="Your email"
                     className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-lux-gold/50 focus:border-lux-gold transition-all"
-                    suppressHydrationWarning
                   />
-                  <button className="h-9 rounded-full border border-lux-gold/50 px-4 text-sm font-semibold uppercase tracking-wider text-lux-gold hover:bg-lux-gold hover:text-lux-black transition-all whitespace-nowrap">
+                  <button className="h-9 rounded-full bg-lux-gold px-4 text-sm font-semibold uppercase tracking-wider text-lux-black hover:bg-lux-gold-light transition-all whitespace-nowrap">
                     Join
                   </button>
                 </div>
@@ -152,13 +151,13 @@ export function Footer() {
         <div className="border-t border-white/10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-white/70">
           <p>© {year} Kollect-It. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href="/privacy" className="text-lux-gold hover:text-lux-gold transition-colors">
+            <Link href="/privacy" className="hover:text-lux-gold transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-lux-gold hover:text-lux-gold transition-colors">
+            <Link href="/terms" className="hover:text-lux-gold transition-colors">
               Terms
             </Link>
-            <Link href="/cookies" className="text-lux-gold hover:text-lux-gold transition-colors">
+            <Link href="/cookies" className="hover:text-lux-gold transition-colors">
               Cookies
             </Link>
           </div>

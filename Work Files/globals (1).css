@@ -5,17 +5,30 @@
 /* =============================================================================
    KOLLECT-IT DESIGN TOKENS
    Updated with Luxury Color Palette
+   Typography: Cormorant Garamond (serif) + Inter (sans)
+   Version 1.0 — December 2025
    ============================================================================= */
 
 @layer base {
   :root {
+    /* ===========================================
+       TYPOGRAPHY SYSTEM
+       =========================================== */
+    --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-logo: "Archivo Black", sans-serif;
+    --font-aesop: "Tenor Sans", sans-serif;
+
+    /* ===========================================
+       LUXURY COLOR PALETTE (lux-*)
+       =========================================== */
     /* 1stDibs-style refined neutrals */
     --lux-black: 220 18% 10%;        /* deepest charcoal */
     --lux-ink: 220 16% 12%;          /* editorial body copy */
     --lux-ink-soft: 36 16% 92%;      /* parchment background */
     --lux-charcoal: 220 12% 18%;     /* dark header/footer band */
     --lux-white: 38 40% 98%;         /* soft white */
-    --lux-pearl: 36 22% 94%;         /* warm pearl */
+    --lux-pearl: 36 22% 94%;         /* warm pearl - PAGE BACKGROUND */
     --lux-cream: 40 30% 92%;         /* hero / section background */
     --lux-gray-light: 28 8% 80%;     /* captions + dividers */
     --lux-gray: 26 9% 60%;           /* supporting text */
@@ -23,7 +36,7 @@
     --lux-silver: 220 9% 55%;        /* borders/dividers */
     --lux-silver-soft: 220 10% 78%;  /* light panels */
 
-    /* Accent */
+    /* Accent - PRIMARY GOLD */
     --lux-gold: 46 65% 52%;          /* classic gold accent (#D4AF37) */
     --lux-gold-light: 46 75% 65%;    /* hover gold */
 
@@ -163,8 +176,120 @@
   @apply w-full py-16 md:py-20;
 }
 
-/* Typography Utility Classes */
+/* =============================================================================
+   TYPOGRAPHY UTILITY CLASSES — DESIGN SYSTEM v1.0
+   Use these consistently across ALL pages
+   ============================================================================= */
+
 @layer utilities {
+  /* ---------------------------------------------
+     HEADING UTILITIES (Serif - Cormorant Garamond)
+     --------------------------------------------- */
+  
+  /* Page Titles (H1) - Gold accent, largest size */
+  .heading-page {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: hsl(var(--lux-gold));
+  }
+  
+  @media (min-width: 768px) {
+    .heading-page {
+      font-size: 2.6rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-page {
+      font-size: 3.2rem;
+    }
+  }
+
+  /* Section Titles (H2) - Gold accent */
+  .heading-section {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: hsl(var(--lux-gold));
+  }
+  
+  @media (min-width: 768px) {
+    .heading-section {
+      font-size: 2.2rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-section {
+      font-size: 2.6rem;
+    }
+  }
+
+  /* Subsection Headers (H3) - Charcoal */
+  .heading-subsection {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: hsl(var(--lux-charcoal));
+  }
+  
+  @media (min-width: 768px) {
+    .heading-subsection {
+      font-size: 1.6rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-subsection {
+      font-size: 1.8rem;
+    }
+  }
+
+  /* ---------------------------------------------
+     TEXT UTILITIES (Sans - Inter)
+     --------------------------------------------- */
+  
+  /* Labels - Uppercase, small, tracking */
+  .text-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: hsl(var(--lux-gray-light));
+  }
+
+  /* Muted text - Secondary information */
+  .text-muted {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: hsl(var(--lux-gray-light));
+  }
+
+  /* Lead text - Hero subtitles, intro paragraphs */
+  .lead {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    line-height: 1.7;
+    font-weight: 300;
+    color: hsl(var(--lux-gray-dark));
+  }
+  
+  @media (min-width: 768px) {
+    .lead {
+      font-size: 1.35rem;
+    }
+  }
+
+  /* ---------------------------------------------
+     LEGACY TEXT UTILITIES (Keep for compatibility)
+     --------------------------------------------- */
+  
   .text-heading-xl {
     font-size: var(--text-heading-xl);
     line-height: 1.2;
@@ -190,41 +315,6 @@
   }
 }
 
-/* ===================================
-   TYPOGRAPHY UTILITY CLASSES
-   Standardized heading and text styles
-   =================================== */
-
-/* Main page titles - use for h1 on landing pages, category pages */
-.heading-page {
-  @apply text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-lux-gold tracking-tight;
-}
-
-/* Section headers - use for h2 within page sections */
-.heading-section {
-  @apply text-2xl md:text-3xl font-serif font-semibold text-lux-gold;
-}
-
-/* Subsection headers - use for h3 */
-.heading-subsection {
-  @apply text-xl md:text-2xl font-serif font-medium text-lux-cream;
-}
-
-/* Small uppercase labels - use for category tags, metadata labels */
-.text-label {
-  @apply text-xs uppercase tracking-widest font-medium text-lux-gray-light;
-}
-
-/* Body text - primary readable text */
-.text-body {
-  @apply text-base text-lux-cream leading-relaxed;
-}
-
-/* Muted/secondary text */
-.text-muted {
-  @apply text-sm text-lux-gray-light;
-}
-
 /* Section Spacing Utilities */
 @layer utilities {
   .section-y-sm {
@@ -243,6 +333,10 @@
   }
 }
 
+/* =============================================================================
+   SECTION PRESETS
+   ============================================================================= */
+
 /* Light cream band (good for content) */
 .section-light {
   @apply bg-lux-cream text-lux-charcoal;
@@ -259,9 +353,9 @@
   @apply border-y border-lux-silver/30;
 }
 
-/* ============================================
+/* =============================================================================
    BASE STYLES
-   ============================================ */
+   ============================================================================= */
 
 * {
   margin: 0;
@@ -277,29 +371,29 @@ html {
 }
 
 body {
-  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 300; /* Lighter for elegance */
+  font-family: var(--font-sans);
+  font-weight: 400;
   color: hsl(var(--lux-black));
   background-color: hsl(var(--lux-pearl));
   line-height: 1.6;
   min-height: 100vh;
 }
 
-/* ============================================
+/* =============================================================================
    TYPOGRAPHY - Luxury Editorial Style
-   ============================================ */
+   ============================================================================= */
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-weight: 400; /* Lighter, more elegant */
+  font-family: var(--font-serif);
+  font-weight: 400;
   line-height: 1.2;
   color: hsl(var(--lux-black));
-  letter-spacing: -0.01em; /* Tighter for modern feel */
+  letter-spacing: -0.01em;
   margin-bottom: 0.6em;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem); /* Larger */
+  font-size: clamp(2.5rem, 6vw, 4rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
@@ -335,13 +429,13 @@ h6 {
 .text-body-lg {
   font-size: 1.125rem;
   line-height: 1.7;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .text-body {
   font-size: 1rem;
   line-height: 1.6;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .text-body-sm {
@@ -349,17 +443,9 @@ h6 {
   line-height: 1.5;
 }
 
-/* Lead Text */
-.lead {
-  font-size: 1.25rem;
-  line-height: 1.7;
-  color: hsl(var(--lux-gray-dark));
-  font-weight: 300;
-}
-
-/* ============================================
+/* =============================================================================
    CONTAINER
-   ============================================ */
+   ============================================================================= */
 
 .container {
   width: 100%;
@@ -386,9 +472,9 @@ h6 {
   }
 }
 
-/* ============================================
+/* =============================================================================
    FOCUS STATES
-   ============================================ */
+   ============================================================================= */
 
 :focus-visible {
   outline: 2px solid hsl(var(--lux-gold));
@@ -400,9 +486,9 @@ h6 {
   outline: none;
 }
 
-/* ============================================
+/* =============================================================================
    LINKS
-   ============================================ */
+   ============================================================================= */
 
 a {
   color: hsl(var(--lux-black));
@@ -414,52 +500,48 @@ a:hover {
   color: hsl(var(--lux-gold));
 }
 
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-
-/* ===========================================
-   KOLLECT-IT SPACING SYSTEM (Phase 1)
+/* =============================================================================
+   KOLLECT-IT SPACING SYSTEM
    Standardized spacing for luxury consistency
-   =========================================== */
+   ============================================================================= */
 
 /* Horizontal Page Padding (Desktop → Mobile) */
 .page-padding {
-  padding-left: 2rem;    /* Desktop: px-8 */
+  padding-left: 2rem;
   padding-right: 2rem;
 }
 
 @media (min-width: 768px) {
   .page-padding {
-    padding-left: 1.5rem;  /* Tablet: px-6 */
+    padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
 
 @media (max-width: 767px) {
   .page-padding {
-    padding-left: 1rem;    /* Mobile: px-4 */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 }
 
 /* Vertical Section Spacing */
 .section-tight {
-  padding-top: 3rem;     /* py-12 */
+  padding-top: 3rem;
   padding-bottom: 3rem;
 }
 
 .section-normal {
-  padding-top: 4rem;     /* py-16 */
+  padding-top: 4rem;
   padding-bottom: 4rem;
 }
 
 .section-grand {
-  padding-top: 6rem;     /* py-24 */
+  padding-top: 6rem;
   padding-bottom: 6rem;
 }
 
-/* Legacy Section Spacing (Keep for backwards compatibility, but migrate away) */
+/* Legacy Section Spacing (Keep for backwards compatibility) */
 .section-spacing {
   padding: 4rem 0;
 }
@@ -478,24 +560,24 @@ a:hover {
 
 /* Standard Grid Gaps */
 .gap-standard {
-  gap: 1.5rem;  /* gap-6 */
+  gap: 1.5rem;
 }
 
 .gap-luxury {
-  gap: 2rem;    /* gap-8 */
+  gap: 2rem;
 }
 
 .gap-hero {
-  gap: 3rem;    /* gap-12 */
+  gap: 3rem;
 }
 
 /* Card Padding Standards */
 .card-padding-sm {
-  padding: 1rem;  /* p-4 */
+  padding: 1rem;
 }
 
 .card-padding-md {
-  padding: 1.5rem;  /* p-6 - Luxury default */
+  padding: 1.5rem;
 }
 
 /* Shadows */
@@ -505,6 +587,11 @@ a:hover {
 .shadow-modal { box-shadow: var(--shadow-2xl); }
 .shadow-gold { box-shadow: var(--shadow-gold); }
 .shadow-cta { box-shadow: var(--shadow-cta); }
+
+/* Card hover shadows */
+.shadow-card-hover {
+  box-shadow: var(--shadow-lg);
+}
 
 /* Gradients */
 .bg-gradient-subtle { background: var(--gradient-subtle); }
@@ -542,9 +629,9 @@ a:hover {
   box-shadow: var(--shadow-xl);
 }
 
-/* ============================================
+/* =============================================================================
    CUSTOM SCROLLBAR
-   ============================================ */
+   ============================================================================= */
 
 * {
   scrollbar-width: thin;
@@ -568,9 +655,9 @@ a:hover {
   background: hsl(var(--lux-gray));
 }
 
-/* ============================================
+/* =============================================================================
    ANIMATIONS
-   ============================================ */
+   ============================================================================= */
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -642,9 +729,9 @@ a:hover {
 .animation-delay-300 { animation-delay: 300ms; }
 .animation-delay-500 { animation-delay: 500ms; }
 
-/* ============================================
+/* =============================================================================
    LOADING STATES
-   ============================================ */
+   ============================================================================= */
 
 .skeleton {
   background: linear-gradient(
@@ -658,9 +745,9 @@ a:hover {
   border-radius: var(--radius-md);
 }
 
-/* ============================================
+/* =============================================================================
    PRINT STYLES
-   ============================================ */
+   ============================================================================= */
 
 @media print {
   * {
