@@ -190,7 +190,7 @@ export default function ContactForm() {
 
           <button
             type="submit"
-            className="btn-cta w-full py-2.5 font-bold rounded-md bg-cta text-white hover:bg-cta-hover transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="btn-cta w-full py-2.5 font-bold rounded-md bg-cta text-white hover:bg-cta-hover transition-colors duration-200 disabled:bg-surface-300 disabled:cursor-not-allowed"
             disabled={submitting}
           >
             {submitting ? "Sending…" : "Send Message"}

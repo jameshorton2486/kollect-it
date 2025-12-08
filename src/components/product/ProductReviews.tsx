@@ -87,7 +87,7 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                         className={`h-5 w-5 ${
                           star <= Math.round(stats.average)
                             ? "fill-yellow-400 text-yellow-400"
-                            : "text-gray-300"
+                            : "text-lux-gray-light"
                         }`}
                       />
                     ))}
@@ -170,7 +170,7 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                           className={`h-4 w-4 ${
                             star <= review.rating
                               ? "fill-yellow-400 text-yellow-400"
-                              : "text-gray-300"
+                              : "text-lux-gray-light"
                           }`}
                         />
                       ))}
@@ -231,4 +231,3 @@ export default function ProductReviews({ productId }: ReviewsProps) {
     </div>
   );
 }
-
