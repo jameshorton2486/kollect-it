@@ -141,7 +141,6 @@ export default function ComparisonPage() {
             <button
               onClick={clearAll}
               className="btn-secondary rounded-full text-sm"
-              aria-label="Clear all products from comparison"
             >
               Clear All
             </button>
@@ -163,7 +162,7 @@ export default function ComparisonPage() {
                   <button
                     onClick={() => removeProduct(product.id)}
                     className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-lux-cream text-lux-gray-dark transition-colors hover:bg-red-50 hover:text-red-500"
-                    aria-label={`Remove ${product.title} from comparison`}
+                    aria-label="Remove from comparison"
                   >
                     <X className="h-4 w-4" />
                   </button>

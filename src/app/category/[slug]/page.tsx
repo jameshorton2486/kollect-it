@@ -85,26 +85,21 @@ export default async function CategoryPage(props: CategoryPageProps) {
 
   return (
     <main className="bg-lux-pearl text-ink-900">
-      <section className="border-b border-border-200 bg-white">
-        <div className="mx-auto max-w-6xl space-y-6 px-4 py-12 sm:px-6 lg:py-16">
+      <section className="bg-lux-cream section-normal">
+        <div className="container mx-auto max-w-4xl">
           <Link
             href="/categories"
-            className="inline-flex items-center text-sm font-semibold text-ink-600 transition-colors hover:text-ink-900"
+            className="text-label text-lux-gold mb-4 inline-block hover:text-lux-gold-light transition-colors"
           >
-            <span aria-hidden="true" className="mr-2">
-              ←
-            </span>
-            Back to all categories
+            ← Back to all categories
           </Link>
 
           <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-ink-700">
-              Category
-            </p>
-            <h1 className="text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+            <p className="text-label text-lux-gold mb-2">Category</p>
+            <h1 className="heading-page text-lux-black">
               {category.name}
             </h1>
-            <p className="max-w-3xl text-base leading-relaxed text-ink-700 sm:text-lg">
+            <p className="lead max-w-2xl">
               {category.description ||
                 "A carefully selected collection of pieces in this category, each one chosen for its quality, character, or story."}
             </p>
@@ -114,9 +109,9 @@ export default async function CategoryPage(props: CategoryPageProps) {
 
       {/* Subcategories Section */}
       {category.subcategories && category.subcategories.length > 0 && (
-        <section className="border-b border-border-200 bg-surface-50">
-          <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
-            <h2 className="text-2xl font-semibold tracking-tight text-ink-900 mb-6">
+        <section className="bg-lux-pearl section-normal">
+          <div className="container mx-auto max-w-4xl">
+            <h2 className="heading-section text-lux-black mb-6">
               Browse by Subcategory
             </h2>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
@@ -128,13 +123,13 @@ export default async function CategoryPage(props: CategoryPageProps) {
                   <Link
                     key={sub.id}
                     href={`/subcategory/${sub.slug}`}
-                    className="group border border-border-200 bg-white p-4 rounded-lg hover:border-lux-gold hover:shadow-soft transition-all"
+                    className="group border border-lux-silver-soft bg-lux-white p-4 rounded-lg hover:border-lux-gold hover:shadow-soft transition-all"
                   >
-                    <div className="font-medium text-ink-900 group-hover:text-lux-gold transition-colors">
+                    <div className="heading-subsection text-lux-black group-hover:text-lux-gold transition-colors">
                       {sub.name}
                     </div>
                     {subProductCount > 0 && (
-                      <div className="text-xs text-ink-600 mt-1">
+                      <div className="text-muted mt-1">
                         {subProductCount} {subProductCount === 1 ? "item" : "items"}
                       </div>
                     )}
@@ -146,15 +141,15 @@ export default async function CategoryPage(props: CategoryPageProps) {
         </section>
       )}
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+      <section className="bg-lux-pearl section-normal">
+        <div className="container mx-auto max-w-4xl">
           {products.length > 0 ? (
             <>
               <div className="mb-10 space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
+                <h2 className="heading-section text-lux-black">
                   All {category.name} Pieces
                 </h2>
-                <p className="text-sm text-ink-600">
+                <p className="text-muted">
                   {products.length === 1
                     ? "One piece currently available in this category."
                     : `${products.length} pieces currently available in this category.`}
@@ -163,11 +158,11 @@ export default async function CategoryPage(props: CategoryPageProps) {
               <ProductGrid products={products} />
             </>
           ) : (
-            <div className="rounded-2xl border border-dashed border-border-200 bg-surface-50 px-6 py-12 text-center">
-              <p className="text-lg font-semibold text-ink-900 mb-2">
+            <div className="rounded-2xl border border-dashed border-lux-silver-soft bg-lux-cream px-6 py-12 text-center">
+              <p className="heading-subsection text-lux-black mb-2">
                 No pieces available in this category right now
               </p>
-              <p className="text-sm text-ink-600 max-w-2xl mx-auto">
+              <p className="text-muted max-w-2xl mx-auto">
                 I&apos;m always adding new pieces to the collection. Check back soon, or{" "}
                 <Link
                   href="/contact"
@@ -180,10 +175,9 @@ export default async function CategoryPage(props: CategoryPageProps) {
               <div className="mt-6">
                 <Link
                   href="/browse"
-                  className="inline-flex items-center text-sm font-medium text-lux-gold hover:text-lux-gold-light transition-colors"
+                  className="btn-secondary rounded-full"
                 >
                   Browse all categories
-                  <span aria-hidden="true" className="ml-2">→</span>
                 </Link>
               </div>
             </div>

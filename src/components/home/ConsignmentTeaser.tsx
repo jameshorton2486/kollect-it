@@ -15,3 +15,5 @@ export default function ConsignmentTeaser() {
     </section>
   );
 }
+
+

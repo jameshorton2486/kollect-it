@@ -746,6 +746,41 @@ a:hover {
 }
 
 /* =============================================================================
+   BUTTON UTILITY CLASSES
+   Design system button classes for consistent styling
+   ============================================================================= */
+
+@layer utilities {
+  /* Primary Button - Gold background, high emphasis CTA */
+  .btn-primary {
+    @apply inline-flex items-center justify-center whitespace-nowrap;
+    @apply bg-lux-gold text-lux-black border border-lux-gold;
+    @apply font-medium font-sans tracking-wide;
+    @apply px-6 py-2.5 h-11;
+    @apply shadow-sm hover:shadow-lg;
+    @apply transition-all duration-300;
+    @apply hover:bg-lux-gold-light hover:border-lux-gold-light;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply active:bg-lux-gold/90;
+  }
+
+  /* Secondary Button - Gold border, transparent background */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center whitespace-nowrap;
+    @apply border-2 border-lux-gold bg-transparent text-lux-black;
+    @apply font-normal font-sans tracking-wide;
+    @apply px-6 py-2.5 h-11;
+    @apply shadow-sm hover:shadow-lg;
+    @apply transition-all duration-300;
+    @apply hover:bg-lux-gold hover:text-lux-black;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply active:bg-lux-gold/90;
+  }
+}
+
+/* =============================================================================
    PRINT STYLES
    ============================================================================= */
 

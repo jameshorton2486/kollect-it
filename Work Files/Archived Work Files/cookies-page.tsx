@@ -119,8 +119,8 @@ const sections = [
 export default function CookiesPage() {
   return (
     <LegalPageLayout
-      label="Legal"
       title="Cookie Policy"
+      lastUpdated="December 2024"
       sections={sections}
     />
   );

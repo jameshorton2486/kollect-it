@@ -166,7 +166,6 @@ export default function SearchResults() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                aria-label="Sort search results"
                 className="rounded-full border border-lux-silver-soft bg-lux-white px-4 py-2 text-sm font-medium text-lux-black outline-none transition hover:border-lux-gold focus:border-lux-gold focus:ring-1 focus:ring-lux-gold"
               >
                 <option value="relevance">Most Relevant</option>
@@ -179,7 +178,6 @@ export default function SearchResults() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setViewMode("grid")}
-                aria-label={viewMode === "grid" ? "Grid view selected" : "Switch to grid view"}
                 className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
                   viewMode === "grid"
                     ? "border-lux-gold bg-lux-gold/10 text-lux-gold"
@@ -191,7 +189,6 @@ export default function SearchResults() {
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                aria-label={viewMode === "list" ? "List view selected" : "Switch to list view"}
                 className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
                   viewMode === "list"
                     ? "border-lux-gold bg-lux-gold/10 text-lux-gold"

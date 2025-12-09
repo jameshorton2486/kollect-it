@@ -323,13 +323,11 @@ export default function CheckoutPage() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="country" className="text-label text-lux-gray-dark block mb-2">Country *</label>
+                        <label className="text-label text-lux-gray-dark block mb-2">Country *</label>
                         <select
-                          id="country"
                           value={shippingInfo.country}
                           onChange={(e) => setShippingInfo({ ...shippingInfo, country: e.target.value })}
                           className={inputClasses}
-                          aria-label="Select country"
                         >
                           <option>United States</option>
                           <option>Canada</option>

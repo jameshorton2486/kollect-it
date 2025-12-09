@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { AesopSection } from "@/components/AesopSection";
+import LegalPageLayout from "@/components/legal/LegalPageLayout";
 
 export const metadata: Metadata = {
   title: "Terms of Service | Kollect-It",
@@ -15,90 +15,94 @@ export const metadata: Metadata = {
   },
 };
 
+const sections = [
+  {
+    id: "acceptance",
+    title: "1. Acceptance of Terms",
+    content: (
+      <p className="leading-relaxed">
+        By using Kollect-It, you agree to these terms. I&apos;ve tried to keep them straightforward—if you have questions, feel free to reach out.
+      </p>
+    ),
+  },
+  {
+    id: "user-accounts",
+    title: "2. User Accounts",
+    content: (
+      <p className="leading-relaxed">
+        You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.
+      </p>
+    ),
+  },
+  {
+    id: "buying-selling",
+    title: "3. Buying and Selling",
+    content: (
+      <p className="leading-relaxed">
+        Buyers agree to pay for items purchased. Sellers agree to ship items promptly and accurately describe their condition. All transactions are subject to our authentication process.
+      </p>
+    ),
+  },
+  {
+    id: "fees-payments",
+    title: "4. Fees and Payments",
+    content: (
+      <p className="leading-relaxed">
+        We charge fees for our services as described in our Fee Schedule. You are responsible for paying all fees and applicable taxes.
+      </p>
+    ),
+  },
+  {
+    id: "returns-refunds",
+    title: "5. Returns and Refunds",
+    content: (
+      <p className="leading-relaxed">
+        Our return policy allows for returns within 30 days if the item is not as described. Please review our full Return Policy for details.
+      </p>
+    ),
+  },
+  {
+    id: "intellectual-property",
+    title: "6. Intellectual Property",
+    content: (
+      <p className="leading-relaxed">
+        The content on Kollect-It, including text, graphics, and logos, is the property of Kollect-It or its licensors and is protected by copyright laws.
+      </p>
+    ),
+  },
+  {
+    id: "limitation-liability",
+    title: "7. Limitation of Liability",
+    content: (
+      <p className="leading-relaxed">
+        Kollect-It shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the services.
+      </p>
+    ),
+  },
+  {
+    id: "contact",
+    title: "8. Contact Information",
+    content: (
+      <p className="leading-relaxed">
+        Questions about these terms? Contact me at{" "}
+        <a
+          href="mailto:james@kollect-it.com"
+          className="text-lux-gold hover:underline"
+        >
+          james@kollect-it.com
+        </a>{" "}
+        and I&apos;ll be happy to clarify anything.
+      </p>
+    ),
+  },
+];
+
 export default function TermsPage() {
   return (
-    <main>
-      <AesopSection variant="sand">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="font-serif text-4xl md:text-5xl mb-12 pb-6 border-b-2 border-gold">
-            Terms of Service
-          </h1>
-
-          <div className="space-y-10">
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                1. Acceptance of Terms
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                By using Kollect-It, you agree to these terms. I&apos;ve tried to keep them straightforward—if you have questions, feel free to reach out.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                2. User Accounts
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                3. Buying and Selling
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                Buyers agree to pay for items purchased. Sellers agree to ship items promptly and accurately describe their condition. All transactions are subject to our authentication process.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                4. Fees and Payments
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                We charge fees for our services as described in our Fee Schedule. You are responsible for paying all fees and applicable taxes.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                5. Returns and Refunds
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                Our return policy allows for returns within 30 days if the item is not as described. Please review our full Return Policy for details.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                6. Intellectual Property
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                The content on Kollect-It, including text, graphics, and logos, is the property of Kollect-It or its licensors and is protected by copyright laws.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                7. Limitation of Liability
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                Kollect-It shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the services.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="font-serif text-2xl mb-4 text-gold">
-                8. Contact Information
-              </h2>
-              <p className="leading-relaxed text-gray-800">
-                Questions about these terms? Contact me at james@kollect-it.com and I&apos;ll be happy to clarify anything.
-              </p>
-            </section>
-          </div>
-        </div>
-      </AesopSection>
-    </main>
+    <LegalPageLayout
+      label="Legal"
+      title="Terms of Service"
+      sections={sections}
+    />
   );
 }

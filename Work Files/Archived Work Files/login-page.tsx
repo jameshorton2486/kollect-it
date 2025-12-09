@@ -128,7 +128,7 @@ export default function LoginPage() {
                 onChange={handleEmailChange}
                 placeholder="your@email.com"
                 className={inputClasses(!!validationErrors.email)}
-                aria-invalid={validationErrors.email ? "true" : "false"}
+                aria-invalid={validationErrors.email ? "true" : undefined}
                 aria-describedby={validationErrors.email ? "email-error" : undefined}
               />
               {validationErrors.email && (
@@ -163,7 +163,7 @@ export default function LoginPage() {
                   onChange={handlePasswordChange}
                   placeholder="Enter your password"
                   className={inputClasses(!!validationErrors.password)}
-                  {...(validationErrors.password && { "aria-invalid": true })}
+                  aria-invalid={validationErrors.password ? "true" : undefined}
                   aria-describedby={validationErrors.password ? "password-error" : undefined}
                 />
                 <button

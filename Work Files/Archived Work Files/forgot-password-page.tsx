@@ -154,7 +154,7 @@ export default function ForgotPasswordPage() {
                   }}
                   placeholder="your@email.com"
                   className={inputClasses(!!validationError)}
-                  aria-invalid={validationError ? "true" : "false"}
+                  aria-invalid={validationError ? "true" : undefined}
                   aria-describedby={validationError ? "email-error" : undefined}
                 />
               </div>

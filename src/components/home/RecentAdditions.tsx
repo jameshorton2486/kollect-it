@@ -42,3 +42,5 @@ export default function RecentAdditions({ products }: RecentAdditionsProps) {
     </section>
   );
 }
+
+

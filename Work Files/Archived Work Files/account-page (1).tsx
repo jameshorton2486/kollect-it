@@ -445,7 +445,6 @@ export default function AccountPage() {
                       </div>
                       <button
                         onClick={() => setEmailNotifications(!emailNotifications)}
-                        aria-label={emailNotifications ? "Disable email notifications" : "Enable email notifications"}
                         className={`w-12 h-6 rounded-full transition ${
                           emailNotifications ? "bg-lux-gold" : "bg-lux-gray-light"
                         }`}
@@ -464,7 +463,6 @@ export default function AccountPage() {
                       </div>
                       <button
                         onClick={() => setNewsletterSubscribed(!newsletterSubscribed)}
-                        aria-label={newsletterSubscribed ? "Unsubscribe from newsletter" : "Subscribe to newsletter"}
                         className={`w-12 h-6 rounded-full transition ${
                           newsletterSubscribed ? "bg-lux-gold" : "bg-lux-gray-light"
                         }`}
@@ -490,7 +488,7 @@ export default function AccountPage() {
           <div className="w-full max-w-md rounded-xl bg-lux-white p-6 shadow-xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="heading-subsection">Edit Profile</h2>
-              <button onClick={() => setShowEditProfile(false)} aria-label="Close edit profile modal" className="text-lux-gray hover:text-lux-black">
+              <button onClick={() => setShowEditProfile(false)} className="text-lux-gray hover:text-lux-black">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -506,9 +504,8 @@ export default function AccountPage() {
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="profile-name" className="text-label text-lux-gray-dark block mb-1">Name</label>
+                <label className="text-label text-lux-gray-dark block mb-1">Name</label>
                 <input
-                  id="profile-name"
                   type="text"
                   value={profileForm.name}
                   onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
@@ -516,9 +513,8 @@ export default function AccountPage() {
                 />
               </div>
               <div>
-                <label htmlFor="profile-phone" className="text-label text-lux-gray-dark block mb-1">Phone</label>
+                <label className="text-label text-lux-gray-dark block mb-1">Phone</label>
                 <input
-                  id="profile-phone"
                   type="tel"
                   value={profileForm.phone}
                   onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
@@ -545,7 +541,7 @@ export default function AccountPage() {
           <div className="w-full max-w-md rounded-xl bg-lux-white p-6 shadow-xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="heading-subsection">Change Password</h2>
-              <button onClick={() => setShowChangePassword(false)} aria-label="Close change password modal" className="text-lux-gray hover:text-lux-black">
+              <button onClick={() => setShowChangePassword(false)} className="text-lux-gray hover:text-lux-black">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -561,10 +557,9 @@ export default function AccountPage() {
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="current-password" className="text-label text-lux-gray-dark block mb-1">Current Password</label>
+                <label className="text-label text-lux-gray-dark block mb-1">Current Password</label>
                 <div className="relative">
                   <input
-                    id="current-password"
                     type={showCurrentPassword ? "text" : "password"}
                     value={passwordForm.currentPassword}
                     onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
@@ -599,9 +594,8 @@ export default function AccountPage() {
                 </div>
               </div>
               <div>
-                <label htmlFor="confirm-password" className="text-label text-lux-gray-dark block mb-1">Confirm New Password</label>
+                <label className="text-label text-lux-gray-dark block mb-1">Confirm New Password</label>
                 <input
-                  id="confirm-password"
                   type="password"
                   value={passwordForm.confirmPassword}
                   onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
