@@ -6,7 +6,6 @@ import SearchFilters from "./SearchFilters";
 import SearchBar from "./SearchBar";
 import { Grid3x3, List, SlidersHorizontal, Search } from "lucide-react";
 import Link from "next/link";
-import { EmptyState } from "@/components/ui";
 
 interface Product {
   id: string;
@@ -167,7 +166,6 @@ export default function SearchResults() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                aria-label="Sort search results"
                 className="rounded-full border border-lux-silver-soft bg-lux-white px-4 py-2 text-sm font-medium text-lux-black outline-none transition hover:border-lux-gold focus:border-lux-gold focus:ring-1 focus:ring-lux-gold"
               >
                 <option value="relevance">Most Relevant</option>
@@ -180,7 +178,6 @@ export default function SearchResults() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setViewMode("grid")}
-                aria-label={viewMode === "grid" ? "Grid view selected" : "Switch to grid view"}
                 className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
                   viewMode === "grid"
                     ? "border-lux-gold bg-lux-gold/10 text-lux-gold"
@@ -192,7 +189,6 @@ export default function SearchResults() {
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                aria-label={viewMode === "list" ? "List view selected" : "Switch to list view"}
                 className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
                   viewMode === "list"
                     ? "border-lux-gold bg-lux-gold/10 text-lux-gold"
@@ -229,12 +225,23 @@ export default function SearchResults() {
                   <p className="text-lux-gray-dark">Searching the archive…</p>
                 </div>
               ) : results.products.length === 0 ? (
-                <EmptyState
-                  icon={Search}
-                  title="No Results Found"
-                  description={`We couldn't find any items matching "${query}". Try adjusting your search terms or browse our categories.`}
-                  primaryAction={{ label: "Browse All", href: "/browse" }}
-                />
+                <div className="rounded-xl border border-dashed border-lux-silver-soft bg-lux-cream px-6 py-16 text-center">
+                  <h3 className="heading-subsection mb-2">No Results Found</h3>
+                  <p className="text-muted mb-6 max-w-md mx-auto">
+                    We couldn&apos;t find any items matching &quot;{query}&quot;. Try adjusting your search terms or browse our categories.
+                  </p>
+                  <div className="space-y-2">
+                    <p className="text-label text-lux-gray-dark">Suggestions:</p>
+                    <ul className="text-sm text-ink-600 space-y-1">
+                      <li>Check your spelling</li>
+                      <li>Try more general terms</li>
+                      <li>Use fewer keywords</li>
+                    </ul>
+                  </div>
+                  <Link href="/browse" className="btn-primary rounded-full mt-6 inline-flex">
+                    Browse All Items
+                  </Link>
+                </div>
               ) : (
                 <div
                   className={

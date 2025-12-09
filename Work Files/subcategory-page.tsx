@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { Package } from "lucide-react";
 import ProductGrid from "@/components/ProductGrid";
 import { prisma } from "@/lib/prisma";
-import { EmptyState } from "@/components/ui";
 
 interface SubcategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -132,16 +131,35 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
             </>
           ) : (
             /* Empty State */
-            <EmptyState
-              icon={Package}
-              title="No Pieces Available Yet"
-              description="I'm always adding new pieces to the collection. Check back soon, or contact me to let me know what you're looking for and I'll keep an eye out."
-              primaryAction={{ label: "Browse All Categories", href: "/browse" }}
-              secondaryAction={{
-                label: `← Back to ${subcategory.category.name}`,
-                href: `/category/${subcategory.category.slug}`,
-              }}
-            />
+            <div className="bg-lux-white rounded-2xl border border-dashed border-lux-silver-soft px-6 py-16 text-center">
+              <div className="mx-auto w-16 h-16 rounded-full bg-lux-cream flex items-center justify-center mb-6">
+                <Package className="h-8 w-8 text-lux-gray" />
+              </div>
+              <h2 className="heading-section text-lux-black mb-3">
+                No Pieces Available Yet
+              </h2>
+              <p className="lead max-w-xl mx-auto mb-8">
+                I&apos;m always adding new pieces to the collection. Check back soon, or{" "}
+                <Link
+                  href="/contact"
+                  className="text-lux-gold hover:underline underline-offset-4"
+                >
+                  let me know
+                </Link>{" "}
+                what you&apos;re looking for and I&apos;ll keep an eye out.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href={`/category/${subcategory.category.slug}`}
+                  className="btn-secondary rounded-full"
+                >
+                  ← Back to {subcategory.category.name}
+                </Link>
+                <Link href="/browse" className="btn-primary rounded-full">
+                  Browse All Categories
+                </Link>
+              </div>
+            </div>
           )}
         </div>
       </section>

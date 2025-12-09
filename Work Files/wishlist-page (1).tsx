@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Heart, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { EmptyState } from "@/components/ui";
 
 interface WishlistItem {
   id: string;
@@ -88,13 +87,17 @@ export default function WishlistPage() {
     return (
       <main className="min-h-screen bg-lux-pearl">
         <section className="section-grand">
-          <div className="container mx-auto">
-            <EmptyState
-              icon={Heart}
-              title="No Favorites Yet"
-              description="Start adding items to your wishlist to keep track of your favorite pieces."
-              primaryAction={{ label: "Browse Collection", href: "/browse" }}
-            />
+          <div className="container mx-auto text-center max-w-md">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-lux-cream">
+              <Heart className="h-10 w-10 text-lux-gold" />
+            </div>
+            <h1 className="heading-page text-lux-black">Your Wishlist is Empty</h1>
+            <p className="lead mt-4">
+              Start adding items to your wishlist to keep track of your favorite pieces.
+            </p>
+            <Link href="/browse" className="btn-primary rounded-full mt-8 inline-flex">
+              Start Browsing
+            </Link>
           </div>
         </section>
       </main>

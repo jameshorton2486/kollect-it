@@ -7,7 +7,6 @@ import { BLUR_DATA_URL } from "@/lib/image";
 import { formatUSD } from "@/lib/currency";
 import { useEffect, useState } from "react";
 import { ShoppingCart, Minus, Plus, Trash2, ShieldCheck, Truck, Headphones } from "lucide-react";
-import { EmptyState } from "@/components/ui";
 
 interface SuggestionProduct {
   id: string;
@@ -117,14 +116,23 @@ export default function CartPage() {
     return (
       <main className="min-h-screen bg-lux-pearl">
         <section className="section-grand">
-          <div className="container mx-auto">
-            <EmptyState
-              icon={ShoppingCart}
-              title="Your Cart is Empty"
-              description="Take your time browsing—when you find something you love, it'll be waiting here for you."
-              primaryAction={{ label: "Start Shopping", href: "/browse" }}
-              secondaryAction={{ label: "Explore Categories", href: "/categories" }}
-            />
+          <div className="container mx-auto text-center max-w-lg">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-lux-cream border border-lux-silver-soft">
+              <ShoppingCart className="h-10 w-10 text-lux-gold" />
+            </div>
+            <p className="text-label text-lux-gold mb-2">Cart</p>
+            <h1 className="heading-page text-lux-black">Your cart is empty</h1>
+            <p className="lead mt-4">
+              Take your time browsing—when you find something you love, it&apos;ll be waiting here for you.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link href="/browse" className="btn-primary rounded-full">
+                Browse the collection
+              </Link>
+              <Link href="/categories" className="btn-secondary rounded-full">
+                Explore categories
+              </Link>
+            </div>
           </div>
         </section>
 

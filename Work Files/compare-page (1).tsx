@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { X, Scale } from "lucide-react";
-import { EmptyState } from "@/components/ui";
 
 interface CompareProduct {
   id: string;
@@ -96,12 +95,20 @@ export default function ComparisonPage() {
     return (
       <main className="min-h-[60vh] bg-lux-pearl">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <EmptyState
-            icon={Scale}
-            title="No Items to Compare"
-            description="Add items to your comparison list while browsing to see them side by side."
-            primaryAction={{ label: "Browse Products", href: "/browse" }}
-          />
+          <div className="text-center max-w-md mx-auto">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-lux-cream">
+              <Scale className="h-10 w-10 text-lux-gold" />
+            </div>
+            <h1 className="heading-page text-lux-black">No Items to Compare</h1>
+            <p className="lead mt-4">
+              Add items to your comparison list while browsing to see them side by side.
+            </p>
+            <div className="mt-8">
+              <Link href="/browse" className="btn-primary rounded-full">
+                Browse Products
+              </Link>
+            </div>
+          </div>
         </div>
       </main>
     );
@@ -134,7 +141,6 @@ export default function ComparisonPage() {
             <button
               onClick={clearAll}
               className="btn-secondary rounded-full text-sm"
-              aria-label="Clear all products from comparison"
             >
               Clear All
             </button>
@@ -156,7 +162,7 @@ export default function ComparisonPage() {
                   <button
                     onClick={() => removeProduct(product.id)}
                     className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-lux-cream text-lux-gray-dark transition-colors hover:bg-red-50 hover:text-red-500"
-                    aria-label={`Remove ${product.title} from comparison`}
+                    aria-label="Remove from comparison"
                   >
                     <X className="h-4 w-4" />
                   </button>
