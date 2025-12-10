@@ -101,10 +101,10 @@ export default function SearchResults() {
       title: "Category",
       type: "checkbox" as const,
       options: [
-        { value: "fine-art", label: "Fine Art", count: 150 },
-        { value: "rare-books", label: "Rare Books", count: 89 },
-        { value: "collectibles", label: "Collectibles", count: 234 },
-        { value: "militaria", label: "Militaria", count: 67 },
+        { value: "fine-art", label: "Fine Art", count: 0 },
+        { value: "rare-books", label: "Rare Books", count: 0 },
+        { value: "collectibles", label: "Collectibles", count: 0 },
+        { value: "militaria", label: "Militaria", count: 0 },
       ],
     },
     {
@@ -112,11 +112,11 @@ export default function SearchResults() {
       title: "Condition",
       type: "checkbox" as const,
       options: [
-        { value: "mint", label: "Mint", count: 45 },
-        { value: "near-mint", label: "Near Mint", count: 123 },
-        { value: "excellent", label: "Excellent", count: 89 },
-        { value: "good", label: "Good", count: 234 },
-        { value: "fair", label: "Fair", count: 56 },
+        { value: "mint", label: "Mint", count: 0 },
+        { value: "near-mint", label: "Near Mint", count: 0 },
+        { value: "excellent", label: "Excellent", count: 0 },
+        { value: "good", label: "Good", count: 0 },
+        { value: "fair", label: "Fair", count: 0 },
       ],
     },
     {
