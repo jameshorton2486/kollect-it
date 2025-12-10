@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Search, Heart, ShoppingCart, Upload, FileSignature, Tag, CheckCircle } from "lucide-react";
+import { StepCard, StepCardGrid } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "How It Works | Kollect-It",
@@ -120,23 +121,17 @@ export default function HowItWorksPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <StepCardGrid columns={3}>
             {collectorSteps.map((step) => (
-              <div
+              <StepCard
                 key={step.step}
-                className="bg-lux-white rounded-xl border border-lux-silver-soft p-6 shadow-clean"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-lux-cream flex items-center justify-center">
-                    <step.icon className="h-5 w-5 text-lux-gold" />
-                  </div>
-                  <span className="text-label text-lux-gold">Step {step.step}</span>
-                </div>
-                <h3 className="heading-subsection text-lux-black mb-2">{step.title}</h3>
-                <p className="text-ink-600 text-sm leading-relaxed">{step.description}</p>
-              </div>
+                step={step.step}
+                icon={step.icon}
+                title={step.title}
+                description={step.description}
+              />
             ))}
-          </div>
+          </StepCardGrid>
         </div>
       </section>
 
@@ -155,23 +150,18 @@ export default function HowItWorksPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <StepCardGrid columns={3}>
             {consignorSteps.map((step) => (
-              <div
+              <StepCard
                 key={step.step}
-                className="bg-lux-white rounded-xl border border-lux-silver-soft p-6 shadow-clean"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-lux-pearl flex items-center justify-center">
-                    <step.icon className="h-5 w-5 text-lux-gold" />
-                  </div>
-                  <span className="text-label text-lux-gold">Step {step.step}</span>
-                </div>
-                <h3 className="heading-subsection text-lux-black mb-2">{step.title}</h3>
-                <p className="text-ink-600 text-sm leading-relaxed">{step.description}</p>
-              </div>
+                step={step.step}
+                icon={step.icon}
+                title={step.title}
+                description={step.description}
+                variant="alt"
+              />
             ))}
-          </div>
+          </StepCardGrid>
         </div>
       </section>
 

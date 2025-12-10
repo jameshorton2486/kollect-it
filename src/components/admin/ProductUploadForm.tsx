@@ -280,8 +280,8 @@ export function ProductUploadForm() {
                   isComplete
                     ? "bg-green-600"
                     : isActive
-                    ? "bg-gold-600"
-                    : "bg-gray-700"
+                    ? "bg-lux-gold"
+                    : "bg-lux-charcoal"
                 }`}
               >
                 {isComplete ? (
@@ -293,7 +293,7 @@ export function ProductUploadForm() {
               {i < 3 && (
                 <div
                   className={`w-16 h-1 ${
-                    isComplete ? "bg-green-600" : "bg-gray-700"
+                    isComplete ? "bg-green-600" : "bg-lux-charcoal"
                   }`}
                 />
               )}
@@ -323,7 +323,7 @@ export function ProductUploadForm() {
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">Product Setup</h2>
-            <p className="text-gray-600">Enter basic product information</p>
+            <p className="text-ink-600">Enter basic product information</p>
           </div>
 
           {/* SKU Input */}
@@ -337,13 +337,13 @@ export function ProductUploadForm() {
                 value={sku}
                 onChange={(e) => handleSKUChange(e.target.value)}
                 placeholder="SKU-2025-001"
-                className={`flex-1 px-4 py-2 bg-gray-800 border ${
-                  skuError ? "border-red-600" : "border-gray-700"
-                } rounded focus:outline-none focus:border-gold-500`}
+                className={`flex-1 px-4 py-2 bg-lux-charcoal border ${
+                  skuError ? "border-red-600" : "border-lux-charcoal/50"
+                } rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-light`}
               />
               <button
                 onClick={fetchNextSKU}
-                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition"
+                className="px-4 py-2 bg-lux-charcoal/80 hover:bg-lux-charcoal rounded transition text-lux-cream"
               >
                 Auto-suggest
               </button>
@@ -369,7 +369,7 @@ export function ProductUploadForm() {
                 setCategoryId(e.target.value);
                 setSubcategoryId(selectedCat?.subcategories?.[0]?.id || "");
               }}
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+              className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
             >
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
@@ -387,7 +387,7 @@ export function ProductUploadForm() {
             <select
               value={subcategoryId}
               onChange={(e) => setSubcategoryId(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+              className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               disabled={!categoryId}
             >
               <option value="">Select Subcategory (Optional)</option>
@@ -433,7 +433,7 @@ COMPARABLES:
 - Similar copies: $1,500–$2,500
 
 TARGET_PRICE: $1,750`}
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500 font-mono text-sm"
+              className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold font-mono text-sm text-lux-cream placeholder:text-lux-gray-light"
             />
           </div>
 
@@ -448,7 +448,7 @@ TARGET_PRICE: $1,750`}
                 value={newAppraisalUrl}
                 onChange={(e) => setNewAppraisalUrl(e.target.value)}
                 placeholder="https://drive.google.com/file/d/abc123/view"
-                className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                className="flex-1 px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-light"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -458,7 +458,7 @@ TARGET_PRICE: $1,750`}
               />
               <button
                 onClick={handleAddAppraisalUrl}
-                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition"
+                className="px-4 py-2 bg-lux-charcoal/80 hover:bg-lux-charcoal rounded transition text-lux-cream"
               >
                 Add
               </button>
@@ -471,7 +471,7 @@ TARGET_PRICE: $1,750`}
                 {appraisalUrls.map((url, i) => (
                   <li
                     key={i}
-                    className="text-sm text-gray-600 flex items-center gap-2"
+                    className="text-sm text-lux-gray flex items-center gap-2"
                   >
                     <span className="flex-1 truncate">{url}</span>
                     <button
@@ -488,7 +488,7 @@ TARGET_PRICE: $1,750`}
 
           <button
             onClick={handleSetupComplete}
-            className="w-full py-3 bg-gold-600 hover:bg-gold-700 rounded font-medium transition"
+            className="w-full py-3 bg-lux-gold hover:bg-lux-gold-light rounded-full font-medium transition text-lux-black"
           >
             Continue to Image Upload →
           </button>
@@ -500,7 +500,7 @@ TARGET_PRICE: $1,750`}
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">Upload Images</h2>
-            <p className="text-gray-600">
+            <p className="text-ink-600">
               Upload all product photos. The system will automatically detect image types and order them.
             </p>
           </div>
@@ -510,7 +510,7 @@ TARGET_PRICE: $1,750`}
           {images.length > 0 && (
             <button
               onClick={() => setStep("analyze")}
-              className="w-full py-3 bg-gold-600 hover:bg-gold-700 rounded font-medium transition"
+              className="w-full py-3 bg-lux-gold hover:bg-lux-gold-light rounded-full font-medium transition text-lux-black"
             >
               Continue to AI Analysis →
             </button>
@@ -523,17 +523,17 @@ TARGET_PRICE: $1,750`}
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">AI Analysis</h2>
-            <p className="text-gray-600">
+            <p className="text-ink-600">
               Let AI generate product description, pricing, and SEO content
             </p>
           </div>
 
-          <div className="bg-gray-800 p-6 rounded-lg">
+          <div className="bg-lux-charcoal p-6 rounded-xl border border-lux-charcoal/50">
             <div className="flex items-center gap-3 mb-4">
-              <Sparkles className="w-6 h-6 text-gold-500" />
+              <Sparkles className="w-6 h-6 text-lux-gold" />
               <div>
-                <p className="font-medium">Ready to analyze</p>
-                <p className="text-sm text-gray-600">
+                <p className="font-medium text-lux-cream">Ready to analyze</p>
+                <p className="text-sm text-lux-gray-light">
                   Using {images.length} images and {productNotes ? "product notes" : "no notes"}
                 </p>
               </div>
@@ -542,7 +542,7 @@ TARGET_PRICE: $1,750`}
             <button
               onClick={handleAnalyze}
               disabled={analyzing}
-              className="w-full py-3 bg-gold-600 hover:bg-gold-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded font-medium transition flex items-center justify-center gap-2"
+              className="w-full py-3 bg-lux-gold hover:bg-lux-gold-light disabled:bg-lux-charcoal/50 disabled:cursor-not-allowed rounded-full font-medium transition flex items-center justify-center gap-2 text-lux-black"
             >
               {analyzing ? (
                 <>
@@ -565,7 +565,7 @@ TARGET_PRICE: $1,750`}
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold mb-4">Review & Edit</h2>
-            <p className="text-gray-600">
+            <p className="text-ink-600">
               AI has generated the product listing. Review and adjust as needed.
             </p>
           </div>
@@ -578,7 +578,7 @@ TARGET_PRICE: $1,750`}
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               />
             </div>
 
@@ -588,7 +588,7 @@ TARGET_PRICE: $1,750`}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={6}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               />
             </div>
 
@@ -599,7 +599,7 @@ TARGET_PRICE: $1,750`}
                   type="text"
                   value={formData.estimatedEra}
                   onChange={(e) => setFormData({ ...formData, estimatedEra: e.target.value })}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                  className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
                 />
               </div>
 
@@ -609,7 +609,7 @@ TARGET_PRICE: $1,750`}
                   type="text"
                   value={formData.rarity}
                   onChange={(e) => setFormData({ ...formData, rarity: e.target.value })}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                  className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
                 />
               </div>
             </div>
@@ -620,10 +620,10 @@ TARGET_PRICE: $1,750`}
                 type="number"
                 value={formData.suggestedPrice}
                 onChange={(e) => setFormData({ ...formData, suggestedPrice: parseFloat(e.target.value) })}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               />
               {analysis.priceReasoning && (
-                <p className="text-sm text-gray-600 mt-1">{analysis.priceReasoning}</p>
+                <p className="text-sm text-lux-gray-light mt-1">{analysis.priceReasoning}</p>
               )}
             </div>
 
@@ -634,7 +634,7 @@ TARGET_PRICE: $1,750`}
                 value={formData.seoTitle}
                 onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
                 maxLength={60}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               />
               <p className="text-xs text-ink-700 mt-1">
                 {formData.seoTitle.length}/60 characters
@@ -648,7 +648,7 @@ TARGET_PRICE: $1,750`}
                 onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                 maxLength={155}
                 rows={3}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:border-gold-500"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               />
               <p className="text-xs text-ink-700 mt-1">
                 {formData.seoDescription.length}/155 characters
@@ -659,14 +659,14 @@ TARGET_PRICE: $1,750`}
           <div className="flex gap-4">
             <button
               onClick={() => setStep("analyze")}
-              className="flex-1 py-3 bg-gray-700 hover:bg-gray-600 rounded font-medium transition"
+              className="flex-1 py-3 bg-lux-charcoal hover:bg-lux-charcoal/80 rounded-full font-medium transition text-lux-cream"
             >
               ← Re-analyze
             </button>
             <button
               onClick={handleCreateProduct}
               disabled={creating}
-              className="flex-1 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded font-medium transition"
+              className="flex-1 py-3 bg-green-600 hover:bg-green-700 disabled:bg-lux-charcoal/50 disabled:cursor-not-allowed rounded-full font-medium transition text-white"
             >
               {creating ? (
                 <>
@@ -686,7 +686,7 @@ TARGET_PRICE: $1,750`}
         <div className="text-center py-12">
           <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Product Created!</h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-ink-600 mb-6">
             Product {sku} has been created as a draft. Review it in the admin dashboard.
           </p>
           <p className="text-sm text-ink-700">

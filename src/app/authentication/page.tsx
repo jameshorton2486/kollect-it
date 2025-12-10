@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle, Search, Shield, FileText } from "lucide-react";
+import { PageHeader, InfoCard } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Authentication Guarantee | Kollect-It",
@@ -74,46 +75,23 @@ export default function AuthenticationPage() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="bg-lux-cream section-normal border-b border-lux-silver-soft">
-        <div className="container mx-auto max-w-4xl px-4">
-          <p className="text-label text-lux-gold mb-2">Standards</p>
-          <h1 className="heading-page text-lux-black">Authentication Guarantee</h1>
-          <p className="lead mt-4 max-w-2xl">
-            Our commitment to accuracy and transparency. Every piece is researched and 
-            evaluated before being listed.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Standards"
+        title="Authentication Guarantee"
+        description="Our commitment to accuracy and transparency. Every piece is researched and evaluated before being listed."
+      />
 
       {/* Process Section */}
       <section className="bg-lux-pearl section-normal">
         <div className="container mx-auto max-w-4xl px-4 space-y-8">
           {processItems.map((item) => (
-            <div
+            <InfoCard
               key={item.title}
-              className="bg-lux-white rounded-xl border border-lux-silver-soft p-6 md:p-8 shadow-clean"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-lux-cream flex items-center justify-center flex-shrink-0">
-                  <item.icon className="h-6 w-6 text-lux-gold" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="heading-subsection text-lux-black">{item.title}</h2>
-                  <p className="text-ink-600 mt-2 leading-relaxed">{item.description}</p>
-
-                  {item.details.length > 0 && (
-                    <ul className="mt-4 space-y-2">
-                      {item.details.map((detail, index) => (
-                        <li key={index} className="flex items-start gap-2 text-ink-600">
-                          <CheckCircle className="h-4 w-4 text-lux-gold flex-shrink-0 mt-0.5" />
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            </div>
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              details={item.details.length > 0 ? item.details : undefined}
+            />
           ))}
         </div>
       </section>

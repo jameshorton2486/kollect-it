@@ -107,7 +107,7 @@ export function TrafficAnalyticsDashboard() {
 
   if (!metrics) {
     return (
-      <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-700">
+      <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-8 text-center text-ink-600">
         Failed to load traffic analytics
       </div>
     );
@@ -118,10 +118,10 @@ export function TrafficAnalyticsDashboard() {
       {/* Header with Period Selector */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-ink-900">
+          <h2 className="heading-section text-lux-black">
             Traffic & Analytics
           </h2>
-          <p className="text-ink-700 mt-1">
+          <p className="text-ink-600 mt-1">
             Real-time visitor metrics and traffic sources
           </p>
         </div>
@@ -133,7 +133,7 @@ export function TrafficAnalyticsDashboard() {
             id="traffic-period-select"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="px-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+            className="px-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           >
             <option value="1">Last 24 hours</option>
             <option value="7">Last 7 days</option>
@@ -144,12 +144,12 @@ export function TrafficAnalyticsDashboard() {
       </div>
 
       {/* Real-Time Metrics */}
-      <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg shadow p-6 text-white">
+      <div className="bg-gradient-to-r from-lux-gold to-amber-600 rounded-xl shadow-clean p-6 text-lux-black">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold">Real-Time Activity</h3>
+          <h3 className="heading-subsection">Real-Time Activity</h3>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-surface-0 rounded-full animate-pulse"></div>
-            <span className="text-sm">Live</span>
+            <div className="w-2 h-2 bg-lux-white rounded-full animate-pulse"></div>
+            <span className="text-sm font-medium">Live</span>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -157,10 +157,10 @@ export function TrafficAnalyticsDashboard() {
             <div className="text-4xl font-bold">
               {metrics.realTime.activeUsers}
             </div>
-            <div className="text-amber-100 mt-1">Active users right now</div>
+            <div className="text-lux-black/80 mt-1">Active users right now</div>
           </div>
           <div>
-            <div className="text-sm text-amber-100 mb-2">Top Active Pages</div>
+            <div className="text-sm text-lux-black/80 mb-2 font-medium">Top Active Pages</div>
             <div className="space-y-1">
               {metrics.realTime.topPages.map((page, index) => (
                 <div key={index} className="flex justify-between text-sm">
@@ -175,28 +175,28 @@ export function TrafficAnalyticsDashboard() {
 
       {/* Overview Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-2">
             <Users className="text-blue-600" size={24} />
             <TrendingUp className="text-green-600" size={16} />
           </div>
-          <div className="text-2xl font-bold text-ink-900">
+          <div className="text-2xl font-bold text-lux-black">
             {metrics.overview.totalVisitors.toLocaleString()}
           </div>
-          <div className="text-sm text-ink-700 mt-1">Total Visitors</div>
+          <div className="text-sm text-ink-600 mt-1">Total Visitors</div>
         </div>
 
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-2">
             <Eye className="text-purple-600" size={24} />
           </div>
-          <div className="text-2xl font-bold text-ink-900">
+          <div className="text-2xl font-bold text-lux-black">
             {metrics.overview.pageViews.toLocaleString()}
           </div>
-          <div className="text-sm text-ink-700 mt-1">Page Views</div>
+          <div className="text-sm text-ink-600 mt-1">Page Views</div>
         </div>
 
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-2">
             <MousePointerClick className="text-amber-600" size={24} />
           </div>
@@ -272,10 +272,10 @@ export function TrafficAnalyticsDashboard() {
       {/* Traffic Sources & Devices */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Traffic Sources */}
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Globe className="text-amber-600" size={24} />
-            <h3 className="text-xl font-semibold text-ink-900">
+            <Globe className="text-lux-gold" size={24} />
+            <h3 className="heading-subsection text-lux-black">
               Traffic Sources
             </h3>
           </div>

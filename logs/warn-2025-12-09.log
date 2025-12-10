@@ -1,0 +1,4 @@
+{"timestamp":"2025-12-09T21:12:13.719Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-09T21:12:14.369Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-09T22:59:09.337Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-09T23:00:13.345Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}

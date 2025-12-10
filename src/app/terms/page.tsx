@@ -102,6 +102,7 @@ export default function TermsPage() {
     <LegalPageLayout
       label="Legal"
       title="Terms of Service"
+      description="Please read these terms carefully before using Kollect-It."
       sections={sections}
     />
   );

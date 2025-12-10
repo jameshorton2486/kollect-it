@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { PageHeader } from "@/components/ui";
 
 interface Section {
   id: string;
@@ -11,12 +12,14 @@ interface Section {
 interface LegalPageLayoutProps {
   label: string;
   title: string;
+  description?: string;
   sections: Section[];
 }
 
 export default function LegalPageLayout({
   label,
   title,
+  description,
   sections,
 }: LegalPageLayoutProps) {
   const [activeSection, setActiveSection] = useState<string>(sections[0]?.id || "");
@@ -57,12 +60,11 @@ export default function LegalPageLayout({
   return (
     <main className="bg-lux-pearl">
       {/* Header */}
-      <section className="bg-lux-cream section-normal">
-        <div className="container mx-auto max-w-4xl">
-          <p className="text-label text-lux-gold mb-2">{label}</p>
-          <h1 className="heading-page text-lux-black">{title}</h1>
-        </div>
-      </section>
+      <PageHeader
+        label={label}
+        title={title}
+        description={description}
+      />
 
       {/* Content with TOC */}
       <section className="section-normal">

@@ -82,12 +82,12 @@ export default function CustomerAnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-50 py-8">
+    <div className="min-h-screen bg-lux-pearl py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-ink-900">
+            <h1 className="heading-section text-lux-black">
               Customer Analytics
             </h1>
             <p className="mt-2 text-ink-600">
@@ -100,7 +100,7 @@ export default function CustomerAnalyticsPage() {
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
-              className="px-4 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+              className="px-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black shadow-sm focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -114,11 +114,11 @@ export default function CustomerAnalyticsPage() {
           <>
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Total Customers
                 </div>
-                <div className="mt-2 text-3xl font-bold text-ink-900">
+                <div className="mt-2 text-3xl font-bold text-lux-black">
                   {customerData.summary.totalCustomers}
                 </div>
                 <div className="mt-2 text-sm text-ink-600">
@@ -126,11 +126,11 @@ export default function CustomerAnalyticsPage() {
                 </div>
               </div>
 
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Retention Rate
                 </div>
-                <div className="mt-2 text-3xl font-bold text-ink-900">
+                <div className="mt-2 text-3xl font-bold text-lux-black">
                   {customerData.summary.retentionRate.toFixed(1)}%
                 </div>
                 <div className="mt-2 text-sm text-ink-600">
@@ -138,11 +138,11 @@ export default function CustomerAnalyticsPage() {
                 </div>
               </div>
 
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Average Lifetime Value
                 </div>
-                <div className="mt-2 text-3xl font-bold text-ink-900">
+                <div className="mt-2 text-3xl font-bold text-lux-black">
                   ${customerData.summary.averageLifetimeValue.toFixed(2)}
                 </div>
                 <div className="mt-2 text-sm text-ink-600">
@@ -153,21 +153,21 @@ export default function CustomerAnalyticsPage() {
             </div>
 
             {/* Customer Segments */}
-            <div className="bg-surface-0 rounded-lg shadow p-6 mb-8">
-              <h2 className="text-xl font-semibold text-ink-900 mb-4">
+            <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6 mb-8">
+              <h2 className="heading-subsection text-lux-black mb-4">
                 Customer Segments
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* New vs Returning */}
                 <div>
-                  <h3 className="text-sm font-medium text-ink-700 mb-3">
+                  <h3 className="text-sm font-medium text-label text-lux-gray-dark mb-3">
                     New vs Returning
                   </h3>
                   <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-sm mb-1">
                         <span className="text-ink-600">New Customers</span>
-                        <span className="font-medium text-ink-900">
+                        <span className="font-medium text-lux-black">
                           {customerData.summary.newCustomers} (
                           {(
                             (customerData.summary.newCustomers /
@@ -177,7 +177,7 @@ export default function CustomerAnalyticsPage() {
                           %)
                         </span>
                       </div>
-                      <div className="w-full bg-surface-200 rounded-full h-2">
+                      <div className="w-full bg-lux-pearl rounded-full h-2">
                         <div
                           className="bg-green-500 h-2 rounded-full"
                           style={{
@@ -191,7 +191,7 @@ export default function CustomerAnalyticsPage() {
                         <span className="text-ink-600">
                           Returning Customers
                         </span>
-                        <span className="font-medium text-ink-900">
+                        <span className="font-medium text-lux-black">
                           {customerData.summary.returningCustomers} (
                           {(
                             (customerData.summary.returningCustomers /
@@ -201,7 +201,7 @@ export default function CustomerAnalyticsPage() {
                           %)
                         </span>
                       </div>
-                      <div className="w-full bg-surface-200 rounded-full h-2">
+                      <div className="w-full bg-lux-pearl rounded-full h-2">
                         <div
                           className="bg-blue-500 h-2 rounded-full"
                           style={{
@@ -217,11 +217,11 @@ export default function CustomerAnalyticsPage() {
                 <div className="flex flex-col justify-center">
                   <button
                     onClick={handleExportCustomers}
-                    className="px-6 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
+                    className="btn-primary rounded-full"
                   >
                     Export Top Customers CSV
                   </button>
-                  <p className="mt-2 text-sm text-ink-700 text-center">
+                  <p className="mt-2 text-sm text-ink-600 text-center">
                     Export top {customerData.topCustomers.length} customers by
                     lifetime value
                   </p>
@@ -230,47 +230,47 @@ export default function CustomerAnalyticsPage() {
             </div>
 
             {/* Top Customers */}
-            <div className="bg-surface-0 rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold text-ink-900 mb-4">
+            <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+              <h2 className="heading-subsection text-lux-black mb-4">
                 Top Customers by Lifetime Value
               </h2>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-surface-50">
+                <table className="min-w-full divide-y divide-lux-silver-soft">
+                  <thead className="bg-lux-cream">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Customer
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Total Spent
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Orders
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         First Order
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Last Order
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-surface-0 divide-y divide-gray-200">
+                  <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
                     {customerData.topCustomers.map((customer, index) => (
-                      <tr key={index}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
+                      <tr key={index} className="hover:bg-lux-cream/50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-lux-black">
                           {customer.email}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-lux-black">
                           ${customer.totalSpent.toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                           {customer.orderCount}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                           {new Date(customer.firstOrder).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                           {new Date(customer.lastOrder).toLocaleDateString()}
                         </td>
                       </tr>

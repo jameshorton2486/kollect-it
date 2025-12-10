@@ -100,12 +100,12 @@ export default function SalesAnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-50 py-8">
+    <div className="min-h-screen bg-lux-pearl py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-ink-900">
+            <h1 className="heading-section text-lux-black">
               Sales Analytics
             </h1>
             <p className="mt-2 text-ink-600">
@@ -122,7 +122,7 @@ export default function SalesAnalyticsPage() {
               id="period-select"
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
-              className="px-4 py-2 border border-border-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+              className="px-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black shadow-sm focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -136,11 +136,11 @@ export default function SalesAnalyticsPage() {
           <>
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Total Revenue
                 </div>
-                <div className="mt-2 text-3xl font-bold text-ink-900">
+                <div className="mt-2 text-3xl font-bold text-lux-black">
                   $
                   {salesData.summary.totalRevenue.toLocaleString("en-US", {
                     minimumFractionDigits: 2,
@@ -158,11 +158,11 @@ export default function SalesAnalyticsPage() {
                 )}
               </div>
 
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Total Orders
                 </div>
-                <div className="mt-2 text-3xl font-bold text-ink-900">
+                <div className="mt-2 text-3xl font-bold text-lux-black">
                   {salesData.summary.totalOrders}
                 </div>
                 {salesData.summary.orderGrowth !== 0 && (
@@ -176,29 +176,29 @@ export default function SalesAnalyticsPage() {
                 )}
               </div>
 
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Average Order Value
                 </div>
-                <div className="mt-2 text-3xl font-bold text-ink-900">
+                <div className="mt-2 text-3xl font-bold text-lux-black">
                   ${salesData.summary.averageOrderValue.toFixed(2)}
                 </div>
               </div>
 
-              <div className="bg-surface-0 rounded-lg shadow p-6">
-                <div className="text-sm font-medium text-ink-700">
+              <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+                <div className="text-sm font-medium text-label text-lux-gray">
                   Export Data
                 </div>
                 <div className="mt-2 space-y-2">
                   <button
                     onClick={handleExportSales}
-                    className="w-full px-4 py-2 text-sm bg-amber-600 text-white rounded hover:bg-amber-700"
+                    className="btn-primary rounded-full w-full text-sm"
                   >
                     Export Sales CSV
                   </button>
                   <button
                     onClick={handleExportProducts}
-                    className="w-full px-4 py-2 text-sm bg-gray-600 text-white rounded hover:bg-gray-700"
+                    className="w-full px-4 py-2 text-sm bg-lux-charcoal text-lux-cream rounded-full hover:bg-lux-charcoal/80 transition-colors"
                   >
                     Export Products CSV
                   </button>
@@ -220,25 +220,25 @@ export default function SalesAnalyticsPage() {
             </div>
 
             {/* Revenue by Category */}
-            <div className="bg-surface-0 rounded-lg shadow p-6 mb-8">
-              <h2 className="text-xl font-semibold text-ink-900 mb-4">
+            <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6 mb-8">
+              <h2 className="heading-subsection text-lux-black mb-4">
                 Revenue by Category
               </h2>
               <div className="space-y-4">
                 {salesData.categoryData.slice(0, 10).map((category, index) => (
                   <div key={index}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium text-ink-700">
+                      <span className="font-medium text-ink-600">
                         {category.name}
                       </span>
-                      <span className="text-ink-900">
+                      <span className="text-lux-black">
                         ${category.revenue.toFixed(2)} ({category.orders}{" "}
                         orders)
                       </span>
                     </div>
-                    <div className="w-full bg-surface-200 rounded-full h-2">
+                    <div className="w-full bg-lux-pearl rounded-full h-2">
                       <div
-                        className="bg-amber-600 h-2 rounded-full"
+                        className="bg-lux-gold h-2 rounded-full"
                         style={
                           {
                             width: `${(category.revenue / salesData.summary.totalRevenue) * 100}%`,
@@ -252,41 +252,41 @@ export default function SalesAnalyticsPage() {
             </div>
 
             {/* Top Products */}
-            <div className="bg-surface-0 rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold text-ink-900 mb-4">
+            <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+              <h2 className="heading-subsection text-lux-black mb-4">
                 Top 10 Products by Revenue
               </h2>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-surface-50">
+                <table className="min-w-full divide-y divide-lux-silver-soft">
+                  <thead className="bg-lux-cream">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Product
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Revenue
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Units Sold
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                         Orders
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-surface-0 divide-y divide-gray-200">
+                  <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
                     {salesData.topProducts.map((product) => (
-                      <tr key={product.id}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
+                      <tr key={product.id} className="hover:bg-lux-cream/50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-lux-black">
                           {product.title}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-lux-black">
                           ${product.revenue.toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                           {product.quantity}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                           {product.orders}
                         </td>
                       </tr>

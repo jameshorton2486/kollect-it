@@ -135,18 +135,18 @@ export default function AdminProductsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-lux-pearl">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-lux-white border-b border-lux-silver-soft">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-              <p className="text-gray-600">{total} total products</p>
+              <h1 className="text-2xl font-bold text-lux-black">Products</h1>
+              <p className="text-ink-600">{total} total products</p>
             </div>
             <Link
               href="/admin/products/new"
-              className="inline-flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+              className="btn-primary rounded-full inline-flex items-center gap-2"
             >
               <Plus size={20} />
               Add Product
@@ -157,16 +157,16 @@ export default function AdminProductsPage() {
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Filters */}
-        <div className="bg-white rounded-lg border p-4 mb-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft p-4 mb-6 shadow-clean">
           <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-lux-gray-light" size={20} />
               <input
                 type="text"
                 placeholder="Search by title or SKU..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full pl-10 pr-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
               />
             </div>
             <select
@@ -175,7 +175,7 @@ export default function AdminProductsPage() {
                 setStatusFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="px-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
               aria-label="Filter by status"
             >
               <option value="">All Status</option>
@@ -185,7 +185,7 @@ export default function AdminProductsPage() {
             </select>
             <button
               type="submit"
-              className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition"
+              className="btn-primary rounded-lg"
             >
               Search
             </button>
@@ -193,15 +193,15 @@ export default function AdminProductsPage() {
         </div>
 
         {/* Products Table */}
-        <div className="bg-white rounded-lg border overflow-hidden">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft overflow-hidden shadow-clean">
           {products.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <Package className="text-gray-300 mb-4" size={64} />
-              <h3 className="text-xl font-medium text-gray-900 mb-2">No Products Yet</h3>
-              <p className="text-gray-600 mb-4">Get started by adding your first product.</p>
+              <Package className="text-lux-gray-light mb-4" size={64} />
+              <h3 className="text-xl font-medium text-lux-black mb-2">No Products Yet</h3>
+              <p className="text-ink-600 mb-4">Get started by adding your first product.</p>
               <Link
                 href="/admin/products/new"
-                className="inline-flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                className="btn-primary rounded-full inline-flex items-center gap-2"
               >
                 <Plus size={20} />
                 Add Product
@@ -211,22 +211,22 @@ export default function AdminProductsPage() {
             <>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b">
+                  <thead className="bg-lux-cream border-b border-lux-silver-soft">
                     <tr>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Product</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">SKU</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Category</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Price</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Status</th>
-                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-600">Actions</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-label text-lux-gray-dark">Product</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-label text-lux-gray-dark">SKU</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-label text-lux-gray-dark">Category</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-label text-lux-gray-dark">Price</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-label text-lux-gray-dark">Status</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-label text-lux-gray-dark">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y">
+                  <tbody className="divide-y divide-lux-silver-soft">
                     {products.map((product) => (
-                      <tr key={product.id} className="hover:bg-gray-50">
+                      <tr key={product.id} className="hover:bg-lux-cream/50 transition-colors">
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded bg-gray-100 overflow-hidden flex-shrink-0">
+                            <div className="w-12 h-12 rounded bg-lux-pearl overflow-hidden flex-shrink-0">
                               {product.images[0] ? (
                                 <Image
                                   src={product.images[0].url}
@@ -236,25 +236,25 @@ export default function AdminProductsPage() {
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                <div className="w-full h-full flex items-center justify-center text-lux-gray-light">
                                   <Package size={20} />
                                 </div>
                               )}
                             </div>
                             <div className="min-w-0">
-                              <p className="font-medium text-gray-900 truncate">{product.title}</p>
+                              <p className="font-medium text-lux-black truncate">{product.title}</p>
                               {product.isDraft && (
                                 <span className="text-xs text-orange-600">Draft</span>
                               )}
                               {product.featured && (
-                                <span className="text-xs text-amber-600 ml-2">Featured</span>
+                                <span className="text-xs text-lux-gold ml-2">Featured</span>
                               )}
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{product.sku}</td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{product.category.name}</td>
-                        <td className="px-4 py-3 text-sm font-medium">{formatPrice(product.price)}</td>
+                        <td className="px-4 py-3 text-sm text-ink-600">{product.sku}</td>
+                        <td className="px-4 py-3 text-sm text-ink-600">{product.category.name}</td>
+                        <td className="px-4 py-3 text-sm font-medium text-lux-black">{formatPrice(product.price)}</td>
                         <td className="px-4 py-3">
                           <span
                             className={`inline-flex px-2 py-1 text-xs rounded-full ${
@@ -272,14 +272,16 @@ export default function AdminProductsPage() {
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               href={`/admin/products/${product.id}/edit`}
-                              className="p-2 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded"
+                              className="p-2 text-ink-600 hover:text-lux-gold hover:bg-lux-cream rounded transition-colors"
+                              aria-label="Edit product"
                             >
                               <Edit size={18} />
                             </Link>
                             <button
                               onClick={() => handleDelete(product.id, product.title)}
                               disabled={deleting === product.id}
-                              className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded disabled:opacity-50"
+                              className="p-2 text-ink-600 hover:text-red-600 hover:bg-red-50 rounded disabled:opacity-50 transition-colors"
+                              aria-label="Delete product"
                             >
                               {deleting === product.id ? (
                                 <Loader2 className="animate-spin" size={18} />
@@ -297,15 +299,15 @@ export default function AdminProductsPage() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between px-4 py-3 border-t">
-                  <p className="text-sm text-gray-600">
+                <div className="flex items-center justify-between px-4 py-3 border-t border-lux-silver-soft bg-lux-cream">
+                  <p className="text-sm text-ink-600">
                     Page {currentPage} of {totalPages}
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={currentPage === 1}
-                      className="p-2 border rounded hover:bg-gray-50 disabled:opacity-50"
+                      className="p-2 border border-lux-silver-soft rounded hover:bg-lux-pearl disabled:opacity-50 transition-colors"
                       aria-label="Previous page"
                     >
                       <ChevronLeft size={18} />
@@ -313,7 +315,7 @@ export default function AdminProductsPage() {
                     <button
                       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
-                      className="p-2 border rounded hover:bg-gray-50 disabled:opacity-50"
+                      className="p-2 border border-lux-silver-soft rounded hover:bg-lux-pearl disabled:opacity-50 transition-colors"
                       aria-label="Next page"
                     >
                       <ChevronRight size={18} />

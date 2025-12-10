@@ -112,7 +112,7 @@ export function DashboardOverview() {
     <div className="space-y-6">
       {/* Period Selector */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-ink-900">Business Overview</h2>
+        <h2 className="heading-section text-lux-black">Business Overview</h2>
         <div>
           <label htmlFor="period-select" className="sr-only">
             Select time period
@@ -121,7 +121,7 @@ export function DashboardOverview() {
             id="period-select"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="px-4 py-2 border border-border-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            className="px-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black shadow-sm focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
           >
             <option value="7">Last 7 days</option>
             <option value="30">Last 30 days</option>
@@ -167,13 +167,13 @@ export function DashboardOverview() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Chart */}
-        <div className="bg-surface-0 rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4 text-ink-900">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+          <h3 className="heading-subsection text-lux-black mb-4">
             Revenue Trend
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={metrics.revenue.dailyRevenue}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(28 8% 80%)" />
               <XAxis
                 dataKey="date"
                 tick={{ fontSize: 12 }}
@@ -214,8 +214,8 @@ export function DashboardOverview() {
         </div>
 
         {/* Products by Category */}
-        <div className="bg-surface-0 rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4 text-ink-900">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+          <h3 className="heading-subsection text-lux-black mb-4">
             Products by Category
           </h3>
           <ResponsiveContainer width="100%" height={300}>
@@ -246,44 +246,44 @@ export function DashboardOverview() {
       {/* Additional Metrics Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Average Order Value */}
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-ink-900">
+            <h3 className="heading-subsection text-lux-black">
               Avg Order Value
             </h3>
-            <Clock className="text-gray-600" size={20} />
+            <Clock className="text-lux-gray" size={20} />
           </div>
-          <div className="text-3xl font-bold text-amber-600">
+          <div className="text-3xl font-bold text-lux-gold">
             ${metrics.orders.averageValue.toFixed(2)}
           </div>
-          <p className="mt-2 text-sm text-ink-700">
+          <p className="mt-2 text-sm text-ink-600">
             Based on {metrics.orders.completed} completed orders
           </p>
         </div>
 
         {/* Customer Retention */}
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-ink-900">
+            <h3 className="heading-subsection text-lux-black">
               Customer Retention
             </h3>
-            <Users className="text-gray-600" size={20} />
+            <Users className="text-lux-gray" size={20} />
           </div>
-          <div className="text-3xl font-bold text-indigo-600">
+          <div className="text-3xl font-bold text-lux-gold">
             {metrics.customers.returningRate.toFixed(1)}%
           </div>
-          <p className="mt-2 text-sm text-ink-700">
+          <p className="mt-2 text-sm text-ink-600">
             Customers who made repeat purchases
           </p>
         </div>
 
         {/* Product Status Summary */}
-        <div className="bg-surface-0 rounded-lg shadow p-6">
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-ink-900">
+            <h3 className="heading-subsection text-lux-black">
               Product Status
             </h3>
-            <Package className="text-gray-600" size={20} />
+            <Package className="text-lux-gray" size={20} />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
@@ -309,44 +309,44 @@ export function DashboardOverview() {
       </div>
 
       {/* Top Products */}
-      <div className="bg-surface-0 rounded-lg shadow overflow-hidden">
-        <div className="px-6 py-4 border-b border-border-200">
-          <h3 className="text-lg font-semibold text-ink-900">
+      <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean overflow-hidden">
+        <div className="px-6 py-4 border-b border-lux-silver-soft bg-lux-cream">
+          <h3 className="heading-subsection text-lux-black">
             Top Performing Products
           </h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-surface-50">
+            <thead className="bg-lux-cream">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                   Product
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                   Sales
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                   Revenue
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-surface-0 divide-y divide-gray-200">
+            <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
               {metrics.topProducts.map((product, index) => (
-                <tr key={product.id} className="hover:bg-surface-50">
+                <tr key={product.id} className="hover:bg-lux-cream/50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      <span className="text-sm font-medium text-ink-900 mr-2">
+                      <span className="text-sm font-medium text-lux-black mr-2">
                         #{index + 1}
                       </span>
-                      <span className="text-sm text-ink-900">
+                      <span className="text-sm text-lux-black">
                         {product.title}
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-ink-700">
+                  <td className="px-6 py-4 text-sm text-ink-600">
                     {product.sales} {product.sales === 1 ? "sale" : "sales"}
                   </td>
-                  <td className="px-6 py-4 text-sm font-semibold text-ink-900">
+                  <td className="px-6 py-4 text-sm font-semibold text-lux-black">
                     ${product.revenue.toFixed(2)}
                   </td>
                 </tr>
@@ -377,12 +377,12 @@ function MetricCard({
   trendLabel,
 }: MetricCardProps) {
   return (
-    <div className="bg-surface-0 rounded-lg shadow p-6">
+    <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-ink-700">{title}</h3>
+        <h3 className="text-sm font-medium text-label text-lux-gray">{title}</h3>
         {icon}
       </div>
-      <div className="text-3xl font-bold text-ink-900 mb-2">{value}</div>
+      <div className="text-3xl font-bold text-lux-black mb-2">{value}</div>
       {trend !== undefined && (
         <div
           className={`flex items-center text-sm ${trend >= 0 ? "text-green-600" : "text-red-600"}`}
@@ -397,7 +397,7 @@ function MetricCard({
           </span>
         </div>
       )}
-      {subtitle && <p className="text-sm text-ink-700 mt-2">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-ink-600 mt-2">{subtitle}</p>}
     </div>
   );
 }

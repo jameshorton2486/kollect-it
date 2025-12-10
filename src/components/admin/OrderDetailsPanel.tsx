@@ -123,7 +123,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
       case "cancelled":
         return <XCircle className="text-red-600" size={20} />;
       default:
-        return <Clock className="text-ink-600" size={20} />;
+        return <Clock className="text-lux-gray" size={20} />;
     }
   };
 
@@ -136,36 +136,37 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
       />
 
       {/* Panel */}
-      <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-surface-0 shadow-2xl overflow-y-auto">
+      <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-lux-white shadow-2xl overflow-y-auto">
         <div className="p-6">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6 border-b pb-4">
+          <div className="flex items-center justify-between mb-6 border-b border-lux-silver-soft pb-4">
             <div>
-              <h2 className="text-2xl font-bold text-ink-900">
+              <h2 className="heading-section text-lux-black">
                 Order {order.orderNumber}
               </h2>
-              <p className="text-sm text-ink-700 mt-1">
+              <p className="text-sm text-ink-600 mt-1">
                 {new Date(order.createdAt).toLocaleString()}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-600 hover:text-ink-600 text-3xl leading-none"
+              className="text-lux-gray hover:text-lux-gold text-3xl leading-none transition-colors"
+              aria-label="Close panel"
             >
               ×
             </button>
           </div>
 
           {/* Status Update Section */}
-          <div className="mb-6 p-4 bg-surface-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-ink-900 mb-3">
+          <div className="mb-6 p-4 bg-lux-cream rounded-xl border border-lux-silver-soft">
+            <h3 className="heading-subsection text-lux-black mb-3">
               Update Order Status
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
                   htmlFor="status-select"
-                  className="block text-sm font-medium text-ink-700 mb-2"
+                  className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
                 >
                   New Status
                 </label>
@@ -173,7 +174,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   id="status-select"
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 >
                   <option value="pending">Pending</option>
                   <option value="processing">Processing</option>
@@ -185,7 +186,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
               <div>
                 <label
                   htmlFor="internal-note"
-                  className="block text-sm font-medium text-ink-700 mb-2"
+                  className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
                 >
                   Internal Note (Optional)
                 </label>
@@ -195,14 +196,14 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   value={internalNote}
                   onChange={(e) => setInternalNote(e.target.value)}
                   placeholder="Add a note..."
-                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 />
               </div>
             </div>
             <button
               onClick={handleStatusUpdate}
               disabled={isUpdating || newStatus === order.status}
-              className="mt-3 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="mt-3 w-full btn-primary rounded-full disabled:opacity-50"
             >
               {isUpdating ? "Updating..." : "Update Status"}
             </button>
@@ -210,25 +211,25 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Customer Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-ink-900 mb-3">
+            <h3 className="heading-subsection text-lux-black mb-3">
               Customer Information
             </h3>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Mail className="text-gray-600" size={18} />
-                <span className="text-ink-700">
+                <Mail className="text-lux-gray" size={18} />
+                <span className="text-ink-600">
                   {order.customerEmail || "No email"}
                 </span>
               </div>
               {order.customerPhone && (
                 <div className="flex items-center gap-2">
-                  <Phone className="text-gray-600" size={18} />
-                  <span className="text-ink-700">{order.customerPhone}</span>
+                  <Phone className="text-lux-gray" size={18} />
+                  <span className="text-ink-600">{order.customerPhone}</span>
                 </div>
               )}
               <div className="flex items-start gap-2 mt-3">
-                <MapPin className="text-gray-600 mt-1" size={18} />
-                <div className="text-ink-700">
+                <MapPin className="text-lux-gray mt-1" size={18} />
+                <div className="text-ink-600">
                   <p>{order.shippingAddress.street}</p>
                   <p>
                     {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
@@ -242,40 +243,40 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Order Items */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-ink-900 mb-3">
+            <h3 className="heading-subsection text-lux-black mb-3">
               Order Items
             </h3>
-            <div className="border rounded-lg overflow-hidden">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-surface-50">
+            <div className="border border-lux-silver-soft rounded-xl overflow-hidden">
+              <table className="min-w-full divide-y divide-lux-silver-soft">
+                <thead className="bg-lux-cream">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-ink-700 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase">
                       Product
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-ink-700 uppercase">
+                    <th className="px-4 py-3 text-center text-xs font-medium text-label text-lux-gray-dark uppercase">
                       Qty
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-700 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-label text-lux-gray-dark uppercase">
                       Price
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-ink-700 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-label text-lux-gray-dark uppercase">
                       Total
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-surface-0 divide-y divide-gray-200">
+                <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
                   {order.items.map((item) => (
-                    <tr key={item.id}>
-                      <td className="px-4 py-3 text-sm text-ink-900">
+                    <tr key={item.id} className="hover:bg-lux-cream/50 transition-colors">
+                      <td className="px-4 py-3 text-sm text-lux-black">
                         {item.title}
                       </td>
-                      <td className="px-4 py-3 text-sm text-ink-700 text-center">
+                      <td className="px-4 py-3 text-sm text-ink-600 text-center">
                         {item.quantity}
                       </td>
-                      <td className="px-4 py-3 text-sm text-ink-700 text-right">
+                      <td className="px-4 py-3 text-sm text-ink-600 text-right">
                         ${item.price.toFixed(2)}
                       </td>
-                      <td className="px-4 py-3 text-sm font-medium text-ink-900 text-right">
+                      <td className="px-4 py-3 text-sm font-medium text-lux-black text-right">
                         ${(item.price * item.quantity).toFixed(2)}
                       </td>
                     </tr>
@@ -288,21 +289,21 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-ink-600">Subtotal:</span>
-                <span className="font-medium">
+                <span className="font-medium text-lux-black">
                   ${order.subtotal.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-ink-600">Tax:</span>
-                <span className="font-medium">${order.tax.toFixed(2)}</span>
+                <span className="font-medium text-lux-black">${order.tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-ink-600">Shipping:</span>
-                <span className="font-medium">
+                <span className="font-medium text-lux-black">
                   ${order.shipping.toFixed(2)}
                 </span>
               </div>
-              <div className="flex justify-between pt-2 border-t text-lg font-bold">
+              <div className="flex justify-between pt-2 border-t border-lux-silver-soft text-lg font-bold text-lux-black">
                 <span>Total:</span>
                 <span>${order.total.toFixed(2)}</span>
               </div>
@@ -311,13 +312,13 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Payment Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-ink-900 mb-3">
+            <h3 className="heading-subsection text-lux-black mb-3">
               Payment Information
             </h3>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <CreditCard className="text-gray-600" size={18} />
-                <span className="text-ink-700 capitalize">
+                <CreditCard className="text-lux-gray" size={18} />
+                <span className="text-ink-600 capitalize">
                   {order.paymentMethod}
                 </span>
               </div>
@@ -337,7 +338,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Order Timeline */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-ink-900 mb-3">
+            <h3 className="heading-subsection text-lux-black mb-3">
               Order Timeline
             </h3>
             <div className="space-y-4">
@@ -346,15 +347,15 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   <div className="flex flex-col items-center">
                     {getStatusIcon(event.status)}
                     {index < order.timeline.length - 1 && (
-                      <div className="w-0.5 h-full bg-surface-200 mt-2" />
+                      <div className="w-0.5 h-full bg-lux-silver-soft mt-2" />
                     )}
                   </div>
                   <div className="flex-1 pb-4">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-ink-900 capitalize">
+                      <span className="font-medium text-lux-black capitalize">
                         {event.status}
                       </span>
-                      <span className="text-xs text-ink-700">
+                      <span className="text-xs text-lux-gray">
                         {new Date(event.timestamp).toLocaleString()}
                       </span>
                     </div>
@@ -362,7 +363,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                       <p className="text-sm text-ink-600 mt-1">{event.note}</p>
                     )}
                     {event.user && (
-                      <p className="text-xs text-ink-700 mt-1">
+                      <p className="text-xs text-lux-gray mt-1">
                         By {event.user}
                       </p>
                     )}
@@ -374,25 +375,25 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
 
           {/* Email Actions */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-ink-900 mb-3">
+            <h3 className="heading-subsection text-lux-black mb-3">
               Send Email
             </h3>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               <button
                 onClick={() => handleSendEmail("confirmation")}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+                className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 text-sm transition-colors"
               >
                 Order Confirmation
               </button>
               <button
                 onClick={() => handleSendEmail("shipped")}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 text-sm transition-colors"
               >
                 Shipping Notification
               </button>
               <button
                 onClick={() => handleSendEmail("delivered")}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+                className="px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 text-sm transition-colors"
               >
                 Delivery Confirmation
               </button>
@@ -402,11 +403,11 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
           {/* Internal Notes */}
           {order.notes && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-ink-900 mb-3">
+              <h3 className="heading-subsection text-lux-black mb-3">
                 Internal Notes
               </h3>
-              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-sm text-ink-700">{order.notes}</p>
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+                <p className="text-sm text-ink-600">{order.notes}</p>
               </div>
             </div>
           )}

@@ -64,14 +64,14 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-2">
+    <div className="min-h-screen bg-lux-pearl">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-serif font-bold text-ink mb-2">
+          <h1 className="heading-section text-lux-black mb-2">
             Admin Settings
           </h1>
-          <p className="text-ink-secondary">
+          <p className="text-ink-600">
             Configure administrative options and preferences
           </p>
         </div>
@@ -97,16 +97,16 @@ export default function AdminSettingsPage() {
         {/* Settings Sections */}
         <div className="space-y-6">
           {/* Platform Settings */}
-          <div className="bg-surface-0 rounded-lg border border-border-neutral p-6">
-            <h2 className="text-xl font-serif font-bold text-ink mb-4">
+          <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+            <h2 className="heading-subsection text-lux-black mb-4">
               Platform Settings
             </h2>
             <div className="space-y-4">
               {/* Maintenance Mode */}
-              <div className="flex items-center justify-between p-4 bg-surface-2 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-lux-cream rounded-lg">
                 <div>
-                  <h3 className="font-semibold text-ink">Maintenance Mode</h3>
-                  <p className="text-sm text-ink-secondary mt-1">
+                  <h3 className="font-semibold text-lux-black">Maintenance Mode</h3>
+                  <p className="text-sm text-ink-600 mt-1">
                     Temporarily disable public access to the marketplace
                   </p>
                 </div>
@@ -119,17 +119,17 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-lux-silver-soft peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-lux-gold rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-lux-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lux-gold" />
                 </label>
               </div>
 
               {/* Allow New Registrations */}
-              <div className="flex items-center justify-between p-4 bg-surface-2 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-lux-cream rounded-lg">
                 <div>
-                  <h3 className="font-semibold text-ink">
+                  <h3 className="font-semibold text-lux-black">
                     Allow New Registrations
                   </h3>
-                  <p className="text-sm text-ink-secondary mt-1">
+                  <p className="text-sm text-ink-600 mt-1">
                     Let new users create accounts and register
                   </p>
                 </div>
@@ -142,17 +142,17 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-lux-silver-soft peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-lux-gold rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-lux-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lux-gold" />
                 </label>
               </div>
 
               {/* Email Notifications */}
-              <div className="flex items-center justify-between p-4 bg-surface-2 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-lux-cream rounded-lg">
                 <div>
-                  <h3 className="font-semibold text-ink">
+                  <h3 className="font-semibold text-lux-black">
                     Email Notifications
                   </h3>
-                  <p className="text-sm text-ink-secondary mt-1">
+                  <p className="text-sm text-ink-600 mt-1">
                     Send email notifications for orders and updates
                   </p>
                 </div>
@@ -165,17 +165,17 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-lux-silver-soft peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-lux-gold rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-lux-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lux-gold" />
                 </label>
               </div>
 
               {/* Auto-Approve Listings */}
-              <div className="flex items-center justify-between p-4 bg-surface-2 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-lux-cream rounded-lg">
                 <div>
-                  <h3 className="font-semibold text-ink">
+                  <h3 className="font-semibold text-lux-black">
                     Auto-Approve Listings
                   </h3>
-                  <p className="text-sm text-ink-secondary mt-1">
+                  <p className="text-sm text-ink-600 mt-1">
                     Automatically publish new product listings
                   </p>
                 </div>
@@ -188,31 +188,31 @@ export default function AdminSettingsPage() {
                     className="sr-only peer"
                     disabled={saving}
                   />
-                  <div className="w-11 h-6 bg-border-neutral peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cta rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-0 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cta" />
+                  <div className="w-11 h-6 bg-lux-silver-soft peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-lux-gold rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-lux-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lux-gold" />
                 </label>
               </div>
             </div>
           </div>
 
           {/* System Info */}
-          <div className="bg-surface-0 rounded-lg border border-border-neutral p-6">
-            <h2 className="text-xl font-serif font-bold text-ink mb-4">
+          <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+            <h2 className="heading-subsection text-lux-black mb-4">
               System Information
             </h2>
             <div className="space-y-3 text-sm">
-              <div className="flex justify-between items-center py-2 border-b border-border-neutral">
-                <span className="text-ink-secondary">Application Version</span>
-                <span className="font-semibold text-ink">1.0.0</span>
+              <div className="flex justify-between items-center py-2 border-b border-lux-silver-soft">
+                <span className="text-ink-600">Application Version</span>
+                <span className="font-semibold text-lux-black">1.0.0</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-border-neutral">
-                <span className="text-ink-secondary">Database Status</span>
+              <div className="flex justify-between items-center py-2 border-b border-lux-silver-soft">
+                <span className="text-ink-600">Database Status</span>
                 <span className="font-semibold text-emerald-600">
                   Connected
                 </span>
               </div>
               <div className="flex justify-between items-center py-2">
-                <span className="text-ink-secondary">Last Backup</span>
-                <span className="font-semibold text-ink">Today at 2:30 AM</span>
+                <span className="text-ink-600">Last Backup</span>
+                <span className="font-semibold text-lux-black">Today at 2:30 AM</span>
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function AdminSettingsPage() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex items-center gap-2 px-6 py-3 bg-cta text-white rounded-lg hover:bg-cta/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="btn-primary rounded-full flex items-center gap-2 disabled:opacity-50"
             >
               {saving && <Loader className="w-4 h-4 animate-spin" />}
               {saving ? "Saving..." : "Save Settings"}
@@ -237,7 +237,7 @@ export default function AdminSettingsPage() {
                 })
               }
               disabled={saving}
-              className="px-6 py-3 bg-surface-2 text-ink border border-border-neutral rounded-lg hover:bg-surface-3 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="btn-secondary rounded-full disabled:opacity-50"
             >
               Reset to Defaults
             </button>

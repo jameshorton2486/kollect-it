@@ -42,8 +42,8 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   }));
 
   return (
-    <div className="border border-gold-500 rounded-lg p-6 bg-gray-900">
-      <h3 className="text-white text-lg font-bold mb-4">Revenue by Category</h3>
+    <div className="border border-lux-gold rounded-xl p-6 bg-lux-charcoal shadow-clean">
+      <h3 className="text-lux-cream text-lg font-bold mb-4">Revenue by Category</h3>
 
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "About Kollect-It | Curated Antiques & Collectibles",
@@ -21,17 +22,12 @@ export default function AboutPage() {
   return (
     <main className="bg-lux-pearl">
       {/* Hero Story Block */}
-      <section className="bg-lux-cream section-grand">
-        <div className="container mx-auto">
-          <p className="text-label text-lux-gold mb-4">About Kollect-It</p>
-          <h1 className="heading-page text-lux-black max-w-4xl">
-            A thoughtful place to discover and share remarkable objects.
-          </h1>
-          <p className="lead mt-6 max-w-2xl">
-            I started Kollect-It because I believe great pieces deserve thoughtful presentation. Whether you&apos;re building a collection or looking for one special piece, you&apos;ll find clear descriptions, honest condition notes, and the kind of care that comes from someone who genuinely loves these objects.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Our Story"
+        title="About Kollect-It"
+        description="A personal approach to buying and selling antiques, fine art, and collectibles."
+        maxWidth="5xl"
+      />
 
       {/* The Story */}
       <section className="bg-lux-pearl section-normal">

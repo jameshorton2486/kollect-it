@@ -61,21 +61,21 @@ export function BulkOrderActions({
   const allSelected = orders.length > 0 && selectedIds.length === orders.length;
 
   return (
-    <div className="bg-surface-0 border border-border-200 rounded-lg p-4 mb-6">
+    <div className="bg-lux-white border border-lux-silver-soft rounded-xl p-4 mb-6 shadow-clean">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         {/* Select All */}
         <div className="flex items-center gap-3">
           <button
             onClick={onSelectAll}
-            className="flex items-center gap-2 text-sm text-ink-700 hover:text-ink-900"
+            className="flex items-center gap-2 text-sm text-ink-600 hover:text-lux-gold transition-colors"
             aria-label={
               allSelected ? "Deselect all orders" : "Select all orders"
             }
           >
             {allSelected ? (
-              <CheckSquare className="text-amber-600" size={20} />
+              <CheckSquare className="text-lux-gold" size={20} />
             ) : (
-              <Square className="text-gray-600" size={20} />
+              <Square className="text-lux-gray" size={20} />
             )}
             <span className="font-medium">
               {selectedIds.length > 0
@@ -91,7 +91,7 @@ export function BulkOrderActions({
             <select
               value={selectedAction}
               onChange={(e) => setSelectedAction(e.target.value)}
-              className="px-3 py-2 border border-border-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black text-sm focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
               aria-label="Select bulk action"
             >
               <option value="">Choose action...</option>
@@ -107,7 +107,7 @@ export function BulkOrderActions({
             <button
               onClick={handleBulkAction}
               disabled={!selectedAction || isProcessing}
-              className="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm font-medium"
+              className="btn-primary rounded-full text-sm disabled:opacity-50"
             >
               {isProcessing ? "Processing..." : "Apply"}
             </button>
@@ -119,7 +119,7 @@ export function BulkOrderActions({
           <div className="flex items-center gap-2">
             <button
               onClick={() => onBulkAction("export-csv", selectedIds)}
-              className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
+              className="p-2 text-ink-600 hover:text-lux-gold hover:bg-lux-cream rounded-lg transition-colors"
               title="Export selected orders"
               aria-label="Export selected orders to CSV"
             >
@@ -127,7 +127,7 @@ export function BulkOrderActions({
             </button>
             <button
               onClick={() => onBulkAction("send-email", selectedIds)}
-              className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
+              className="p-2 text-ink-600 hover:text-lux-gold hover:bg-lux-cream rounded-lg transition-colors"
               title="Send email to selected orders"
               aria-label="Send email to selected orders"
             >
@@ -135,7 +135,7 @@ export function BulkOrderActions({
             </button>
             <button
               onClick={() => onBulkAction("archive", selectedIds)}
-              className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
+              className="p-2 text-ink-600 hover:text-lux-gold hover:bg-lux-cream rounded-lg transition-colors"
               title="Archive selected orders"
               aria-label="Archive selected orders"
             >
@@ -143,7 +143,7 @@ export function BulkOrderActions({
             </button>
             <button
               onClick={() => onBulkAction("delete", selectedIds)}
-              className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md"
+              className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
               title="Delete selected orders"
               aria-label="Delete selected orders"
             >
@@ -155,7 +155,7 @@ export function BulkOrderActions({
 
       {/* Selection Summary */}
       {selectedIds.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-border-200">
+        <div className="mt-3 pt-3 border-t border-lux-silver-soft">
           <div className="text-sm text-ink-600">
             <span className="font-medium">{selectedIds.length}</span> order(s)
             selected
@@ -163,7 +163,7 @@ export function BulkOrderActions({
             {selectedIds.length > 1 && (
               <button
                 onClick={onSelectAll}
-                className="text-amber-600 hover:text-amber-700 font-medium"
+                className="text-lux-gold hover:text-lux-gold-light font-medium transition-colors"
               >
                 Clear selection
               </button>

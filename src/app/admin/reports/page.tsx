@@ -122,13 +122,13 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-50">
+    <div className="min-h-screen bg-lux-pearl">
       {/* Header */}
-      <div className="bg-surface-0 border-b border-border-200">
+      <div className="bg-lux-white border-b border-lux-silver-soft">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-ink-900">
+              <h1 className="heading-section text-lux-black">
                 Sales Reports
               </h1>
               <p className="mt-2 text-ink-600">
@@ -137,7 +137,7 @@ export default function ReportsPage() {
             </div>
             <Link
               href="/admin/dashboard"
-              className="px-4 py-2 border border-border-300 rounded-md hover:bg-surface-50 text-ink-700"
+              className="btn-secondary rounded-full"
             >
               ← Back to Dashboard
             </Link>

@@ -149,7 +149,7 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
       <div className="admin-page">
         <div className="container py-20 text-center">
           <h2 className="text-2xl font-serif mb-4">Order Not Found</h2>
-          <p className="text-gray-600 mb-6">{error}</p>
+          <p className="text-ink-600 mb-6">{error}</p>
           <Link href="/admin/orders" className="btn-primary">
             Back to Orders
           </Link>
@@ -173,7 +173,7 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
       case "cancelled":
         return "bg-red-800";
       default:
-        return "bg-gray-500";
+        return "bg-lux-charcoal";
     }
   };
 
@@ -190,7 +190,7 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
       case "cancelled":
         return "text-red-800";
       default:
-        return "text-gray-700";
+        return "text-lux-gray";
     }
   };
 

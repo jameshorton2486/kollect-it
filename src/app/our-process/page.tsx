@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Search, Camera, Tag, CheckCircle } from "lucide-react";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Our Process | Kollect-It",
@@ -52,15 +53,11 @@ export default function OurProcessPage() {
   return (
     <main className="bg-lux-pearl">
       {/* Header */}
-      <section className="bg-lux-cream section-normal border-b border-lux-silver-soft">
-        <div className="container mx-auto max-w-4xl">
-          <p className="text-label text-lux-gold mb-2">How We Work</p>
-          <h1 className="heading-page text-lux-black">Our Process</h1>
-          <p className="lead mt-4">
-            Consignments are reviewed individually based on the item, category, and condition. We evaluate each piece, document what we can, and present it clearly so buyers know exactly what they&apos;re purchasing.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="How We Work"
+        title="Our Process"
+        description="From discovery to delivery, here's how we ensure every transaction is smooth and secure."
+      />
 
       {/* Process Steps */}
       <section className="section-normal">

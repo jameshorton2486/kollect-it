@@ -121,11 +121,11 @@ export default function CategoriesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-50 p-6">
+    <div className="min-h-screen bg-lux-pearl p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-ink-900 mb-2">
+          <h1 className="heading-page text-lux-black mb-2">
             Category Management
           </h1>
           <p className="text-ink-600">
@@ -138,10 +138,10 @@ export default function CategoriesPage() {
           {categories.map((category) => (
             <div
               key={category.id}
-              className="bg-surface-0 rounded-lg shadow-md overflow-hidden"
+              className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean overflow-hidden"
             >
               {/* Image Section */}
-              <div className="relative w-full h-48 bg-surface-100 overflow-hidden">
+              <div className="relative w-full h-48 bg-lux-cream overflow-hidden">
                 {category.image ? (
                   <img
                     src={category.image}
@@ -149,8 +149,8 @@ export default function CategoriesPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-surface-200">
-                    <span className="text-gray-600">No image</span>
+                  <div className="w-full h-full flex items-center justify-center bg-lux-pearl">
+                    <span className="text-lux-gray">No image</span>
                   </div>
                 )}
 
@@ -192,12 +192,12 @@ export default function CategoriesPage() {
               {/* Content Section */}
               <div className="p-6">
                 <div className="mb-4">
-                  <h3 className="text-xl font-semibold text-ink-900 mb-1">
+                  <h3 className="heading-subsection text-lux-black mb-1">
                     {category.name}
                   </h3>
-                  <p className="text-sm text-ink-700 mb-3">
+                  <p className="text-sm text-ink-600 mb-3">
                     Slug:{" "}
-                    <code className="bg-surface-100 px-2 py-1">
+                    <code className="bg-lux-cream px-2 py-1 rounded text-lux-black">
                       {category.slug}
                     </code>
                   </p>
@@ -218,7 +218,7 @@ export default function CategoriesPage() {
                           },
                         })
                       }
-                      className="w-full p-2 border border-border-300 rounded text-sm"
+                      className="w-full p-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
                       rows={3}
                     />
                   ) : (
@@ -234,7 +234,7 @@ export default function CategoriesPage() {
                     <>
                       <button
                         onClick={() => handleSaveEdits(category.id)}
-                        className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-medium flex items-center justify-center gap-2 transition-colors"
+                        className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-full text-sm font-medium flex items-center justify-center gap-2 transition-colors"
                       >
                         <Check size={16} />
                         Save
@@ -244,7 +244,7 @@ export default function CategoriesPage() {
                           setEditingId(null);
                           setEditValues({});
                         }}
-                        className="flex-1 bg-gray-300 hover:bg-gray-400 text-ink-900 px-3 py-2 rounded text-sm font-medium flex items-center justify-center gap-2 transition-colors"
+                        className="btn-secondary rounded-full flex-1 flex items-center justify-center gap-2"
                       >
                         <X size={16} />
                         Cancel
@@ -260,7 +260,7 @@ export default function CategoriesPage() {
                           },
                         });
                       }}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors"
+                      className="btn-primary rounded-full flex-1"
                     >
                       Edit Description
                     </button>
@@ -268,7 +268,7 @@ export default function CategoriesPage() {
                 </div>
 
                 {/* Info */}
-                <div className="mt-4 text-xs text-ink-700">
+                <div className="mt-4 text-xs text-lux-gray">
                   <p>
                     Created: {new Date(category.createdAt).toLocaleDateString()}
                   </p>
@@ -285,7 +285,7 @@ export default function CategoriesPage() {
 
         {categories.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-ink-700">No categories found</p>
+            <p className="text-ink-600">No categories found</p>
           </div>
         )}
       </div>

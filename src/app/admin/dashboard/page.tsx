@@ -202,38 +202,38 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-2">
+    <div className="min-h-screen bg-lux-pearl">
       {/* Header */}
-      <header className="bg-surface-0 shadow-sm border-b">
+      <header className="bg-lux-charcoal shadow-sm border-b border-lux-charcoal/50">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-serif font-bold text-ink">
+              <h1 className="text-2xl font-serif font-bold text-lux-cream">
                 Kollect-It Admin Dashboard
               </h1>
-              <p className="text-sm text-ink-secondary mt-1">
+              <p className="text-sm text-lux-cream/80 mt-1">
                 Welcome back, {session.user.name || session.user.email}
               </p>
-              <p className="text-xs text-ink-muted">
+              <p className="text-xs text-lux-gray-light">
                 {new Date().toLocaleString()}
               </p>
             </div>
             <div className="flex gap-4">
               <button
                 onClick={() => router.push("/admin/orders")}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                className="btn-primary rounded-full"
               >
                 Manage Orders
               </button>
               <button
                 onClick={() => window.open("/", "_blank")}
-                className="px-4 py-2 text-ink-secondary hover:text-ink transition"
+                className="px-4 py-2 text-lux-cream/80 hover:text-lux-gold transition"
               >
                 View Site
               </button>
               <button
                 onClick={() => signOut({ callbackUrl: "/admin/login" })}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition"
               >
                 Sign Out
               </button>
@@ -283,37 +283,37 @@ export default function AdminDashboard() {
         <div className="mb-6 flex flex-wrap gap-3">
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-semibold"
+            className="btn-primary rounded-full inline-flex items-center gap-2"
           >
             <Plus size={18} /> {showAddForm ? "Cancel" : "Add New Product"}
           </button>
           <button
             onClick={() => setShowAIUpload(!showAIUpload)}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-semibold"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition font-semibold"
           >
             <Plus size={18} /> {showAIUpload ? "Cancel" : "AI Create Product"}
           </button>
           <button
             onClick={() => router.push("/admin/orders")}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
+            className="btn-secondary rounded-full inline-flex items-center gap-2"
           >
             <ShoppingBag size={18} /> Manage Orders
           </button>
           <button
             onClick={() => router.push("/admin/customers")}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
+            className="btn-secondary rounded-full inline-flex items-center gap-2"
           >
             <Users size={18} /> View Customers
           </button>
           <button
             onClick={() => router.push("/admin/settings")}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
+            className="btn-secondary rounded-full inline-flex items-center gap-2"
           >
             <Settings size={18} /> Settings
           </button>
           <button
             onClick={handleExportProducts}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-border-neutral rounded-lg hover:bg-surface-2"
+            className="btn-secondary rounded-full inline-flex items-center gap-2"
             title="Export filtered products as CSV"
           >
             <Download size={18} /> Export CSV
@@ -334,8 +334,8 @@ export default function AdminDashboard() {
 
         {/* AI Product Upload Form */}
         {showAIUpload && (
-          <div className="bg-surface-0 rounded-lg shadow p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4 text-amber-600">
+          <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6 mb-6">
+            <h2 className="heading-subsection mb-4 text-lux-gold">
               AI-Powered Product Creation
             </h2>
             <p className="text-sm text-ink-600 mb-4">
@@ -347,9 +347,9 @@ export default function AdminDashboard() {
         )}
 
         {/* Products Table */}
-        <div className="bg-surface-0 rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <h2 className="text-lg font-semibold">Products</h2>
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean overflow-hidden">
+          <div className="px-6 py-4 border-b border-lux-silver-soft bg-lux-cream flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <h2 className="heading-subsection text-lux-black">Products</h2>
             <div className="flex flex-wrap items-center gap-3">
               <input
                 type="text"
@@ -359,7 +359,7 @@ export default function AdminDashboard() {
                   setPage(1);
                 }}
                 placeholder="Search products..."
-                className="w-64 max-w-full px-3 py-2 border border-border-neutral rounded-md focus:outline-none focus:ring-2 focus:ring-cta-ring focus:border-cta"
+                className="w-64 max-w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 aria-label="Search products"
               />
               <select
@@ -368,7 +368,7 @@ export default function AdminDashboard() {
                   setStatusFilter(e.target.value as typeof statusFilter);
                   setPage(1);
                 }}
-                className="px-3 py-2 border border-border-neutral rounded-md"
+                className="px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 aria-label="Filter by status"
               >
                 <option value="all">All Statuses</option>
@@ -380,31 +380,31 @@ export default function AdminDashboard() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-surface-2">
+              <thead className="bg-lux-cream border-b border-lux-silver-soft">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Product
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Category
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Price
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Date Added
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-surface-0 divide-y divide-border-neutral">
+              <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
                 {pagedProducts.map((product: Product) => (
-                  <tr key={product.id} className="hover:bg-surface-2">
+                  <tr key={product.id} className="hover:bg-lux-cream/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         {product.images[0] && (
@@ -442,7 +442,7 @@ export default function AdminDashboard() {
                         {product.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-lux-gray">
                       {new Date(product.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -459,18 +459,18 @@ export default function AdminDashboard() {
             </table>
           </div>
           {/* Pagination */}
-          <div className="flex items-center justify-between px-6 py-4 border-t text-sm">
-            <div>Page {page}</div>
+          <div className="flex items-center justify-between px-6 py-4 border-t border-lux-silver-soft bg-lux-cream text-sm">
+            <div className="text-ink-600">Page {page}</div>
             <div className="flex gap-2">
               <button
-                className="px-3 py-1 border rounded disabled:opacity-50"
+                className="px-3 py-1 border border-lux-silver-soft rounded hover:bg-lux-pearl disabled:opacity-50 transition-colors"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
               >
                 Previous
               </button>
               <button
-                className="px-3 py-1 border rounded disabled:opacity-50"
+                className="px-3 py-1 border border-lux-silver-soft rounded hover:bg-lux-pearl disabled:opacity-50 transition-colors"
                 onClick={() => setPage((p) => p + 1)}
                 disabled={hasNoNextPage}
               >
@@ -481,38 +481,38 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-surface-0 rounded-lg shadow overflow-hidden mt-8">
-          <div className="px-6 py-4 border-b flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Recent Orders</h2>
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean overflow-hidden mt-8">
+          <div className="px-6 py-4 border-b border-lux-silver-soft bg-lux-cream flex items-center justify-between">
+            <h2 className="heading-subsection text-lux-black">Recent Orders</h2>
             <button
               onClick={() => router.push("/admin/orders")}
-              className="text-sm text-blue-600 hover:underline"
+              className="text-sm text-lux-gold hover:underline"
             >
               View All Orders
             </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-surface-2">
+              <thead className="bg-lux-cream border-b border-lux-silver-soft">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Order #
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Customer
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Total
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-label text-lux-gray-dark uppercase tracking-wider">
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-surface-0 divide-y divide-border-neutral">
+              <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
                 {orders.slice(0, 10).map((order: Order) => {
                   const statusClass =
                     order.status === "delivered"
@@ -522,16 +522,16 @@ export default function AdminDashboard() {
                         : order.status === "processing" ||
                             order.status === "paid"
                           ? "bg-amber-100 text-amber-900"
-                          : "bg-surface-1 text-ink";
+                          : "bg-lux-cream text-lux-black";
                   return (
-                    <tr key={order.id} className="hover:bg-surface-2">
-                      <td className="px-6 py-4 whitespace-nowrap font-medium">
+                    <tr key={order.id} className="hover:bg-lux-cream/50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap font-medium text-lux-black">
                         {order.orderNumber}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-secondary">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-600">
                         {order.customerName || "Guest"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-lux-gray">
                         {new Date(order.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap font-semibold">
@@ -573,13 +573,13 @@ function StatCard({
       : highlight === "blue"
         ? "text-blue-600"
         : highlight === "amber"
-          ? "text-amber-700"
+          ? "text-lux-gold"
           : highlight === "emerald"
             ? "text-emerald-700"
-            : "text-ink";
+            : "text-lux-black";
   return (
-    <div className="bg-surface-0 rounded-lg shadow p-6">
-      <div className="flex items-center gap-3 text-sm font-medium text-ink-secondary">
+    <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+      <div className="flex items-center gap-3 text-sm font-medium text-label text-lux-gray">
         {icon}
         <span>{label}</span>
       </div>
@@ -670,13 +670,13 @@ function ProductForm({
   };
 
   return (
-    <div className="bg-surface-0 rounded-lg shadow p-6 mb-6">
-      <h3 className="text-lg font-semibold mb-4">Add New Product</h3>
+    <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6 mb-6">
+      <h3 className="heading-subsection text-lux-black mb-4">Add New Product</h3>
       <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
         <div className="col-span-2">
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Title
           </label>
@@ -688,14 +688,14 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           />
         </div>
 
         <div className="col-span-2">
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Description
           </label>
@@ -707,14 +707,14 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
           />
         </div>
 
         <div>
           <label
             htmlFor="price"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Price
           </label>
@@ -726,14 +726,14 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, price: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           />
         </div>
 
         <div>
           <label
             htmlFor="category"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Category
           </label>
@@ -744,7 +744,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, categoryId: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           >
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
@@ -757,7 +757,7 @@ function ProductForm({
         <div>
           <label
             htmlFor="condition"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Condition
           </label>
@@ -767,7 +767,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, condition: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           >
             <option>Fine</option>
             <option>Very Good</option>
@@ -779,7 +779,7 @@ function ProductForm({
         <div>
           <label
             htmlFor="year"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Year
           </label>
@@ -788,7 +788,7 @@ function ProductForm({
             id="year"
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., 1920, c. 1850, 19th Century"
           />
         </div>
@@ -796,7 +796,7 @@ function ProductForm({
         <div>
           <label
             htmlFor="artist"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Artist/Maker
           </label>
@@ -807,7 +807,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, artist: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., John Smith, Unknown"
           />
         </div>
@@ -815,7 +815,7 @@ function ProductForm({
         <div>
           <label
             htmlFor="medium"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Medium/Material
           </label>
@@ -826,7 +826,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, medium: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., Oil on Canvas, Sterling Silver"
           />
         </div>
@@ -834,7 +834,7 @@ function ProductForm({
         <div>
           <label
             htmlFor="period"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Period/Era
           </label>
@@ -845,7 +845,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, period: e.target.value })
             }
-            className="w-full px-4 py-2 border border-border-neutral rounded-lg focus:ring-2 focus:ring-cta-ring focus:border-cta"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., Victorian, Art Deco, WWII"
           />
         </div>
@@ -857,7 +857,7 @@ function ProductForm({
         >
           <div
             id="product-images-label"
-            className="block text-sm font-medium text-ink-secondary mb-2"
+            className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
           >
             Product Images
           </div>
@@ -872,9 +872,9 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, featured: e.target.checked })
             }
-            className="w-4 h-4 text-amber-600 border-border-neutral rounded focus:ring-cta-ring"
+            className="w-4 h-4 text-lux-gold border-lux-silver-soft rounded focus:ring-lux-gold"
           />
-          <label htmlFor="featured" className="ml-2 text-sm text-ink-secondary">
+          <label htmlFor="featured" className="ml-2 text-sm text-ink-600">
             Feature this product on homepage
           </label>
         </div>
@@ -883,14 +883,14 @@ function ProductForm({
           <button
             type="submit"
             disabled={submitting}
-            className="px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition disabled:opacity-50"
+            className="btn-primary rounded-full disabled:opacity-50"
           >
             {submitting ? "Creating..." : "Create Product"}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-2 bg-surface-2 text-ink-secondary rounded-lg hover:bg-surface-3 transition"
+            className="btn-secondary rounded-full"
           >
             Cancel
           </button>

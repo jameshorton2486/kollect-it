@@ -121,6 +121,7 @@ export default function CookiesPage() {
     <LegalPageLayout
       label="Legal"
       title="Cookie Policy"
+      description="How we use cookies and similar technologies."
       sections={sections}
     />
   );

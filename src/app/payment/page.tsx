@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { CreditCard, Wallet, Landmark, CalendarClock, ShieldCheck } from "lucide-react";
+import { PageHeader, InfoCard } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Payment Options | Kollect-It",
@@ -54,44 +55,24 @@ export default function PaymentPage() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="bg-lux-cream section-normal border-b border-lux-silver-soft">
-        <div className="container mx-auto max-w-4xl px-4">
-          <p className="text-label text-lux-gold mb-2">Secure Checkout</p>
-          <h1 className="heading-page text-lux-black">Payment Options</h1>
-          <p className="lead mt-4 max-w-2xl">
-            Multiple secure payment methods to suit your needs. All transactions are 
-            encrypted and protected.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Secure Checkout"
+        title="Payment Options"
+        description="Multiple secure payment methods to suit your needs. All transactions are encrypted and protected."
+      />
 
       {/* Payment Methods Grid */}
       <section className="bg-lux-pearl section-normal">
         <div className="container mx-auto max-w-4xl px-4">
           <div className="grid gap-6 md:grid-cols-2">
             {paymentMethods.map((method) => (
-              <div
+              <InfoCard
                 key={method.title}
-                className="bg-lux-white rounded-xl border border-lux-silver-soft p-6 shadow-clean"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-lux-cream flex items-center justify-center flex-shrink-0">
-                    <method.icon className="h-6 w-6 text-lux-gold" />
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="heading-subsection text-lux-black">{method.title}</h2>
-                    <p className="text-ink-600 mt-1 text-sm">{method.description}</p>
-                    <ul className="mt-4 space-y-2">
-                      {method.features.map((feature, index) => (
-                        <li key={index} className="flex items-center gap-2 text-sm text-ink-600">
-                          <span className="w-1.5 h-1.5 rounded-full bg-lux-gold flex-shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                icon={method.icon}
+                title={method.title}
+                description={method.description}
+                details={method.features}
+              />
             ))}
           </div>
         </div>

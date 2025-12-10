@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default function AnalyticsPage() {
   return (
-    <div className="min-h-screen bg-surface-50 p-6">
+    <div className="min-h-screen bg-lux-pearl p-6">
       <AnalyticsDashboardWebSocket />
     </div>
   );

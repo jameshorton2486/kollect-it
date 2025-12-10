@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Truck, MapPin, RotateCcw, Globe } from "lucide-react";
+import { PageHeader, InfoCard } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Shipping & Returns | Kollect-It",
@@ -65,49 +66,24 @@ export default function ShippingReturnsPage() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="bg-lux-cream section-normal border-b border-lux-silver-soft">
-        <div className="container mx-auto max-w-4xl px-4">
-          <p className="text-label text-lux-gold mb-2">Policies</p>
-          <h1 className="heading-page text-lux-black">Shipping & Returns</h1>
-          <p className="lead mt-4 max-w-2xl">
-            Clear, simple, and customer-first policies. Every piece is packed with care and shipped with full tracking.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Policies"
+        title="Shipping & Returns"
+        description="Clear, simple, and customer-first policies. Every piece is packed with care and shipped with full tracking."
+      />
 
       {/* Policy Cards */}
       <section className="bg-lux-pearl section-normal">
         <div className="container mx-auto max-w-4xl px-4 space-y-8">
           {policies.map((policy) => (
-            <div
+            <InfoCard
               key={policy.title}
-              className="bg-lux-white rounded-xl border border-lux-silver-soft p-6 md:p-8 shadow-clean"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-lux-cream flex items-center justify-center flex-shrink-0">
-                  <policy.icon className="h-6 w-6 text-lux-gold" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="heading-subsection text-lux-black">{policy.title}</h2>
-                  <p className="text-ink-600 mt-2 leading-relaxed">{policy.description}</p>
-
-                  {policy.details.length > 0 && (
-                    <ul className="mt-4 space-y-2">
-                      {policy.details.map((detail, index) => (
-                        <li key={index} className="flex items-start gap-2 text-ink-600">
-                          <span className="text-lux-gold mt-1">•</span>
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-                  {policy.note && (
-                    <p className="mt-4 text-sm text-lux-gray italic">{policy.note}</p>
-                  )}
-                </div>
-              </div>
-            </div>
+              icon={policy.icon}
+              title={policy.title}
+              description={policy.description}
+              details={policy.details.length > 0 ? policy.details : undefined}
+              note={policy.note || undefined}
+            />
           ))}
         </div>
       </section>

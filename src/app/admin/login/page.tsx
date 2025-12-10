@@ -47,14 +47,14 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-lux-pearl px-4">
       <div className="w-full max-w-md">
-        <div className="bg-surface-0 rounded-2xl shadow-xl p-8">
+        <div className="bg-lux-white rounded-2xl border border-lux-silver-soft shadow-clean p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-serif font-bold text-slate-900 mb-2">
+            <h1 className="heading-page text-lux-black mb-2">
               Kollect-It Admin
             </h1>
-            <p className="text-slate-600">Sign in to manage your inventory</p>
+            <p className="text-ink-600">Sign in to manage your inventory</p>
           </div>
 
           {error && (
@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
               >
                 Email Address
               </label>
@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+                className="w-full px-4 py-3 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent transition"
                 placeholder="admin@kollect-it.com"
               />
             </div>
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
               >
                 Password
               </label>
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+                className="w-full px-4 py-3 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent transition"
                 placeholder="••••••••"
               />
             </div>
@@ -103,13 +103,13 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold py-3 rounded-lg hover:from-amber-700 hover:to-amber-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary rounded-full w-full disabled:opacity-50"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-slate-500">
+          <div className="mt-6 text-center text-sm text-lux-gray">
             <p>Use your Kollect-It admin email and password.</p>
             <p className="mt-1 text-xs">
               Example: <span className="font-mono">admin@kollect-it.com</span>

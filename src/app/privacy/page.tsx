@@ -93,6 +93,7 @@ export default function PrivacyPage() {
     <LegalPageLayout
       label="Legal"
       title="Privacy Policy"
+      description="How we collect, use, and protect your information."
       sections={sections}
     />
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Contact – Kollect-It",
@@ -19,15 +20,11 @@ export default function ContactPage() {
   return (
     <main className="bg-lux-pearl">
       {/* Header Section */}
-      <section className="bg-lux-cream section-normal">
-        <div className="container mx-auto max-w-4xl">
-          <p className="text-label text-lux-gold mb-2">Get in Touch</p>
-          <h1 className="heading-page text-lux-black">Contact</h1>
-          <p className="lead mt-4 max-w-2xl">
-            I&apos;d love to hear from you. Whether you have a question about a piece, want to discuss consignment, or just want to say hello—I respond personally to every message, usually within 24 hours.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Get in Touch"
+        title="Contact Us"
+        description="Have a question about an item, interested in consigning, or just want to say hello?"
+      />
 
       {/* Contact Content */}
       <section className="section-normal">

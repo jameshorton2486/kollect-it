@@ -23,7 +23,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
     "details",
   );
 
-  const tabPanels: Record<(typeof tabs)[number]["id"], JSX.Element> = {
+  const tabPanels: Record<(typeof tabs)[number]["id"], React.ReactElement> = {
     details: (
       <div className="space-y-6">
         <div className="rounded-2xl border border-border-200 bg-white p-6">

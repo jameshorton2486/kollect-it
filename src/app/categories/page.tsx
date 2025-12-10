@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Categories | Kollect-It",
@@ -48,15 +49,12 @@ export default function CategoriesPage() {
   return (
     <main className="bg-lux-pearl">
       {/* Header */}
-      <section className="bg-lux-cream section-normal border-b border-lux-silver-soft">
-        <div className="container mx-auto">
-          <p className="text-label text-lux-gold mb-2">Browse</p>
-          <h1 className="heading-page text-lux-black">Explore the Collection by Category</h1>
-          <p className="lead mt-4 max-w-3xl">
-            I keep inventory focused so you can browse by interest. Each category is curated one piece at a time and updates as new finds come in.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Browse"
+        title="All Categories"
+        description="Explore our curated collection across all categories."
+        maxWidth="6xl"
+      />
 
       {/* Categories Grid */}
       <section className="section-normal">

@@ -86,19 +86,19 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
   return (
     <div className="space-y-6">
       {/* Quick Generate Reports */}
-      <div className="bg-surface-0 rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-ink-900 mb-4">
+      <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+        <h2 className="heading-subsection text-lux-black mb-4">
           Generate Reports
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <button
             onClick={() => onGenerate("daily-summary")}
-            className="flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-amber-500 hover:bg-amber-50 transition"
+            className="flex flex-col items-center gap-3 p-4 border-2 border-lux-silver-soft rounded-xl hover:border-lux-gold hover:bg-lux-cream transition"
           >
-            <Calendar className="text-amber-600" size={32} />
+            <Calendar className="text-lux-gold" size={32} />
             <div className="text-center">
-              <div className="font-medium text-ink-900">Daily Summary</div>
-              <div className="text-xs text-ink-700 mt-1">
+              <div className="font-medium text-lux-black">Daily Summary</div>
+              <div className="text-xs text-ink-600 mt-1">
                 Today's orders & revenue
               </div>
             </div>
@@ -106,12 +106,12 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
 
           <button
             onClick={() => onGenerate("weekly-summary")}
-            className="flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition"
+            className="flex flex-col items-center gap-3 p-4 border-2 border-lux-silver-soft rounded-xl hover:border-blue-500 hover:bg-blue-50 transition"
           >
             <TrendingUp className="text-blue-600" size={32} />
             <div className="text-center">
-              <div className="font-medium text-ink-900">Weekly Report</div>
-              <div className="text-xs text-ink-700 mt-1">
+              <div className="font-medium text-lux-black">Weekly Report</div>
+              <div className="text-xs text-ink-600 mt-1">
                 Last 7 days analysis
               </div>
             </div>
@@ -119,12 +119,12 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
 
           <button
             onClick={() => onGenerate("monthly-summary")}
-            className="flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition"
+            className="flex flex-col items-center gap-3 p-4 border-2 border-lux-silver-soft rounded-xl hover:border-purple-500 hover:bg-purple-50 transition"
           >
             <FileText className="text-purple-600" size={32} />
             <div className="text-center">
-              <div className="font-medium text-ink-900">Monthly Report</div>
-              <div className="text-xs text-ink-700 mt-1">
+              <div className="font-medium text-lux-black">Monthly Report</div>
+              <div className="text-xs text-ink-600 mt-1">
                 Full month breakdown
               </div>
             </div>
@@ -132,12 +132,12 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
 
           <button
             onClick={() => onGenerate("custom")}
-            className="flex flex-col items-center gap-3 p-4 border-2 border-border-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition"
+            className="flex flex-col items-center gap-3 p-4 border-2 border-lux-silver-soft rounded-xl hover:border-green-500 hover:bg-green-50 transition"
           >
             <Clock className="text-green-600" size={32} />
             <div className="text-center">
-              <div className="font-medium text-ink-900">Custom Range</div>
-              <div className="text-xs text-ink-700 mt-1">
+              <div className="font-medium text-lux-black">Custom Range</div>
+              <div className="text-xs text-ink-600 mt-1">
                 Choose date range
               </div>
             </div>
@@ -146,14 +146,14 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
       </div>
 
       {/* Scheduled Reports */}
-      <div className="bg-surface-0 rounded-lg shadow p-6">
+      <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-ink-900">
+          <h2 className="heading-subsection text-lux-black">
             Scheduled Reports
           </h2>
           <button
             onClick={() => setShowScheduleForm(!showScheduleForm)}
-            className="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 text-sm font-medium"
+            className="btn-primary rounded-full text-sm"
           >
             {showScheduleForm ? "Cancel" : "+ New Schedule"}
           </button>
@@ -163,13 +163,13 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
         {showScheduleForm && (
           <form
             onSubmit={handleSubmit}
-            className="mb-6 p-4 bg-surface-50 rounded-lg border border-border-200"
+            className="mb-6 p-4 bg-lux-cream rounded-xl border border-lux-silver-soft"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
                   htmlFor="report-name"
-                  className="block text-sm font-medium text-ink-700 mb-2"
+                  className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
                 >
                   Report Name
                 </label>
@@ -181,7 +181,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   placeholder="e.g., Weekly Sales Report"
-                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   required
                 />
               </div>
@@ -189,7 +189,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
               <div>
                 <label
                   htmlFor="frequency-select"
-                  className="block text-sm font-medium text-ink-700 mb-2"
+                  className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
                 >
                   Frequency
                 </label>
@@ -205,7 +205,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                         | "monthly",
                     })
                   }
-                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 >
                   <option value="daily">Daily</option>
                   <option value="weekly">Weekly</option>
@@ -216,7 +216,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
               <div>
                 <label
                   htmlFor="recipients"
-                  className="block text-sm font-medium text-ink-700 mb-2"
+                  className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
                 >
                   Recipients (comma-separated)
                 </label>
@@ -228,7 +228,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                     setFormData({ ...formData, recipients: e.target.value })
                   }
                   placeholder="admin@example.com, manager@example.com"
-                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   required
                 />
               </div>
@@ -236,7 +236,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
               <div>
                 <label
                   htmlFor="format-select"
-                  className="block text-sm font-medium text-ink-700 mb-2"
+                  className="block text-sm font-medium text-label text-lux-gray-dark mb-2"
                 >
                   Format
                 </label>
@@ -249,7 +249,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                       format: e.target.value as "csv" | "pdf" | "excel",
                     })
                   }
-                  className="w-full px-3 py-2 border border-border-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 >
                   <option value="pdf">PDF</option>
                   <option value="csv">CSV</option>
@@ -269,9 +269,9 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                       includeCharts: e.target.checked,
                     })
                   }
-                  className="rounded text-amber-600 focus:ring-amber-500"
+                  className="rounded text-lux-gold border-lux-silver-soft focus:ring-lux-gold"
                 />
-                <span className="text-sm text-ink-700">
+                <span className="text-sm text-ink-600">
                   Include charts and visualizations
                 </span>
               </label>
@@ -279,7 +279,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
 
             <button
               type="submit"
-              className="mt-4 w-full px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 font-medium"
+              className="mt-4 w-full btn-primary rounded-full"
             >
               Create Schedule
             </button>
@@ -292,18 +292,18 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             {schedules.map((schedule) => (
               <div
                 key={schedule.id}
-                className="flex items-center justify-between p-4 border border-border-200 rounded-lg hover:bg-surface-50"
+                className="flex items-center justify-between p-4 border border-lux-silver-soft rounded-xl hover:bg-lux-cream transition-colors"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
-                    <h3 className="font-medium text-ink-900">
+                    <h3 className="font-medium text-lux-black">
                       {schedule.name}
                     </h3>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
                         schedule.active
                           ? "bg-green-100 text-green-800"
-                          : "bg-surface-100 text-ink-600"
+                          : "bg-lux-cream text-ink-600"
                       }`}
                     >
                       {schedule.active ? "Active" : "Paused"}
@@ -324,14 +324,14 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                     </div>
                   </div>
                   {schedule.nextRun && (
-                    <div className="mt-1 text-xs text-ink-700">
+                    <div className="mt-1 text-xs text-lux-gray">
                       Next run: {new Date(schedule.nextRun).toLocaleString()}
                     </div>
                   )}
                 </div>
                 <div className="flex items-center gap-2">
                   <button
-                    className="p-2 text-ink-600 hover:text-ink-900 hover:bg-surface-100 rounded-md"
+                    className="p-2 text-ink-600 hover:text-lux-gold hover:bg-lux-cream rounded-lg transition-colors"
                     aria-label="Download report"
                     title="Download report"
                   >
@@ -342,8 +342,8 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-ink-700">
-            <FileText size={48} className="mx-auto mb-3 text-gray-300" />
+          <div className="text-center py-8 text-ink-600">
+            <FileText size={48} className="mx-auto mb-3 text-lux-gray-light" />
             <p>No scheduled reports yet</p>
             <p className="text-sm mt-1">
               Create your first automated report schedule

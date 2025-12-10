@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "FAQ | Kollect-It",
@@ -82,15 +83,11 @@ export default function FAQPage() {
   return (
     <main className="bg-lux-pearl">
       {/* Header */}
-      <section className="bg-lux-cream section-normal border-b border-lux-silver-soft">
-        <div className="container mx-auto max-w-4xl">
-          <p className="text-label text-lux-gold mb-2">Help</p>
-          <h1 className="heading-page text-lux-black">Frequently Asked Questions</h1>
-          <p className="lead mt-4">
-            Find answers to common questions about buying, shipping, returns, and consignment.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Support"
+        title="Frequently Asked Questions"
+        description="Find answers to common questions about buying, selling, and shipping."
+      />
 
       {/* FAQ Content */}
       <section className="section-normal">

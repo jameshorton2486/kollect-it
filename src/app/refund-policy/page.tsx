@@ -140,6 +140,7 @@ export default function RefundPolicyPage() {
     <LegalPageLayout
       label="Legal"
       title="Refund Policy"
+      description="Our commitment to your satisfaction."
       sections={sections}
     />
   );

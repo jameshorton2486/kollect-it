@@ -110,13 +110,13 @@ export function AnalyticsDashboardWebSocket() {
 
   if (loading && !metrics) {
     return (
-      <div className="min-h-screen bg-surface-50 p-8">
-        <h1 className="text-2xl font-bold mb-6 text-ink-900">Analytics Dashboard</h1>
+      <div className="min-h-screen bg-lux-pearl p-8">
+        <h1 className="heading-section text-lux-black mb-6">Analytics Dashboard</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white rounded-lg p-6 animate-pulse">
-              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
-              <div className="h-8 bg-gray-200 rounded w-3/4"></div>
+            <div key={i} className="bg-lux-white rounded-xl border border-lux-silver-soft p-6 animate-pulse">
+              <div className="h-4 bg-lux-cream rounded w-1/2 mb-4"></div>
+              <div className="h-8 bg-lux-cream rounded w-3/4"></div>
             </div>
           ))}
         </div>
@@ -126,14 +126,14 @@ export function AnalyticsDashboardWebSocket() {
   
   if (!metrics) {
     return (
-      <div className="min-h-screen bg-surface-50 p-8">
-        <h1 className="text-2xl font-bold mb-6 text-ink-900">Analytics Dashboard</h1>
-        <div className="bg-white rounded-lg p-12 text-center">
-          <p className="text-gray-700 text-lg">Analytics data is being compiled.</p>
-          <p className="text-gray-600 text-sm mt-2">Check back soon for insights.</p>
+      <div className="min-h-screen bg-lux-pearl p-8">
+        <h1 className="heading-section text-lux-black mb-6">Analytics Dashboard</h1>
+        <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-12 text-center">
+          <p className="text-ink-600 text-lg">Analytics data is being compiled.</p>
+          <p className="text-lux-gray text-sm mt-2">Check back soon for insights.</p>
           <button
             onClick={() => fetchMetrics()}
-            className="mt-6 px-6 py-2 bg-gold-500 text-white rounded-full hover:bg-gold-600 transition-colors"
+            className="btn-primary rounded-full mt-6"
           >
             Retry
           </button>
@@ -332,7 +332,7 @@ export function AnalyticsDashboardWebSocket() {
           {metrics.revenue.revenueByCategory.map((cat) => (
             <div
               key={cat.category}
-              className="flex justify-between text-lux-gray pb-2 border-b border-gray-700"
+              className="flex justify-between text-lux-gray pb-2 border-b border-lux-silver-soft"
             >
               <span>{cat.category}</span>
               <span className="text-lux-gold font-semibold">

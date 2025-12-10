@@ -75,7 +75,7 @@ export default function ProductCarousel({
         </div>
 
         <div
-          ref={scoped}
+          ref={scrollRef}
           className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
           style={{ scrollbarWidth: "none" }}
         >

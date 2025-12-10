@@ -15,8 +15,8 @@ export function MetricCard({
   prefix = "",
   trend,
   trendLabel,
-  color = "bg-gray-900",
-  borderColor = "border-gold-500",
+  color = "bg-lux-charcoal",
+  borderColor = "border-lux-gold",
 }: MetricCardProps) {
   // Determine trend direction and styling
   let trendDirection: "up" | "down" | "neutral" = "neutral";
@@ -35,17 +35,17 @@ export function MetricCard({
       ? "text-green-400"
       : trendDirection === "down"
         ? "text-red-400"
-        : "text-gray-600";
+        : "text-lux-gray";
 
   const trendIcon =
     trendDirection === "up" ? "↑" : trendDirection === "down" ? "↓" : "→";
 
   return (
-    <div className={`${color} border ${borderColor} rounded-lg p-6`}>
-      <p className="text-sm font-medium text-gray-600">{title}</p>
+    <div className={`${color} border ${borderColor} rounded-xl p-6 shadow-clean`}>
+      <p className="text-sm font-medium text-label text-lux-cream">{title}</p>
       <div className="mt-2 flex items-end justify-between">
         <div>
-          <p className="text-3xl font-bold text-white">
+          <p className="text-3xl font-bold text-lux-cream">
             {prefix}
             {typeof value === "number"
               ? value.toLocaleString("en-US", {
@@ -53,14 +53,14 @@ export function MetricCard({
                 })
               : value}
           </p>
-          <p className="text-xs text-ink-700 mt-1">{unit}</p>
+          <p className="text-xs text-lux-gray-light mt-1">{unit}</p>
         </div>
         {trend !== undefined && (
           <div className={`text-right ${trendColor}`}>
             <p className="text-lg font-semibold">
               {trendIcon} {trendPercentage.toFixed(1)}%
             </p>
-            <p className="text-xs text-ink-700">{trendLabel}</p>
+            <p className="text-xs text-lux-gray-light">{trendLabel}</p>
           </div>
         )}
       </div>

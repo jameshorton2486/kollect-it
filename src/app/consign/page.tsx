@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { Camera, FileSearch, Handshake } from "lucide-react";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Consign With Kollect-It | Sell Your Collectibles",
@@ -51,15 +52,12 @@ export default function ConsignPage() {
   return (
     <main className="bg-lux-pearl">
       {/* Header */}
-      <section className="bg-lux-cream section-grand">
-        <div className="container mx-auto max-w-4xl">
-          <p className="text-label text-lux-gold mb-2">Consignment</p>
-          <h1 className="heading-page text-lux-black">Consign With Us</h1>
-          <p className="lead mt-4">
-            If you have a piece you&apos;re thinking about selling, I may be able to help. I&apos;m a one-person shop, so I only take on a small number of consignments, but I&apos;m always interested in quality items with character, history, or strong design.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label="Sell With Us"
+        title="Consign Your Collection"
+        description="Partner with Kollect-It to find the right buyers for your antiques and collectibles."
+        maxWidth="5xl"
+      />
 
       {/* What We're Looking For */}
       <section className="bg-lux-pearl section-normal">

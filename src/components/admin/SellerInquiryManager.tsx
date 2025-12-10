@@ -150,9 +150,9 @@ export function SellerInquiryManager() {
       reviewing: "bg-blue-100 text-blue-800",
       approved: "bg-green-100 text-green-800",
       rejected: "bg-red-100 text-red-800",
-      completed: "bg-surface-100 text-ink-800",
+      completed: "bg-lux-cream text-lux-black",
     };
-    return colors[status as keyof typeof colors] || "bg-surface-100 text-ink-800";
+    return colors[status as keyof typeof colors] || "bg-lux-cream text-lux-black";
   };
 
   const getStatusIcon = (status: string) => {
@@ -177,27 +177,27 @@ export function SellerInquiryManager() {
   return (
     <div className="space-y-6">
       {/* Header & Filters */}
-      <div className="bg-surface-0 rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold text-ink-900 mb-6">
+      <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+        <h2 className="heading-section text-lux-black mb-6">
           Seller Inquiries & Consignments
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-lux-gray w-5 h-5" />
             <input
               type="text"
               placeholder="Search sellers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             />
           </div>
 
           {/* Status Filter */}
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-lux-gray w-5 h-5" />
             <label htmlFor="status-filter" className="sr-only">
               Filter by status
             </label>
@@ -205,7 +205,7 @@ export function SellerInquiryManager() {
               id="status-filter"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="pending">Pending</option>
@@ -225,7 +225,7 @@ export function SellerInquiryManager() {
               id="type-filter"
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full px-4 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             >
               <option value="all">All Types</option>
               <option value="consignment">Consignment</option>
@@ -236,9 +236,9 @@ export function SellerInquiryManager() {
           </div>
 
           {/* Stats */}
-          <div className="flex items-center justify-center bg-amber-50 rounded-lg px-4 py-2">
+          <div className="flex items-center justify-center bg-lux-cream rounded-xl border border-lux-silver-soft px-4 py-2">
             <span className="text-sm text-ink-600">Total: </span>
-            <span className="ml-2 text-xl font-bold text-amber-600">
+            <span className="ml-2 text-xl font-bold text-lux-gold">
               {filteredInquiries.length}
             </span>
           </div>
@@ -253,18 +253,18 @@ export function SellerInquiryManager() {
             <div
               key={inquiry.id}
               onClick={() => setSelectedInquiry(inquiry)}
-              className={`bg-surface-0 rounded-lg shadow p-4 cursor-pointer transition-all hover:shadow-md ${
+              className={`bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-4 cursor-pointer transition-all hover:shadow-lg hover:border-lux-gold ${
                 selectedInquiry?.id === inquiry.id
-                  ? "ring-2 ring-amber-500"
+                  ? "ring-2 ring-lux-gold border-lux-gold"
                   : ""
               }`}
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-ink-900">
+                  <h3 className="font-semibold text-lux-black">
                     {inquiry.sellerName}
                   </h3>
-                  <p className="text-sm text-ink-700">{inquiry.email}</p>
+                  <p className="text-sm text-ink-600">{inquiry.email}</p>
                 </div>
                 <span
                   className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(inquiry.status)}`}
@@ -281,18 +281,18 @@ export function SellerInquiryManager() {
                     {inquiry.inquiryType.replace("-", " ")}
                   </span>
                 </div>
-                <p className="text-sm text-ink-700 line-clamp-2">
+                <p className="text-sm text-ink-600 line-clamp-2">
                   {inquiry.itemDescription}
                 </p>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-ink-700">{inquiry.category}</span>
-                  <span className="font-semibold text-amber-600">
+                  <span className="text-ink-600">{inquiry.category}</span>
+                  <span className="font-semibold text-lux-gold">
                     ${inquiry.estimatedValue.toLocaleString()}
                   </span>
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t flex items-center justify-between text-xs text-ink-700">
+              <div className="mt-3 pt-3 border-t border-lux-silver-soft flex items-center justify-between text-xs text-lux-gray">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   {new Date(inquiry.submittedAt).toLocaleDateString()}
@@ -303,7 +303,7 @@ export function SellerInquiryManager() {
           ))}
 
           {filteredInquiries.length === 0 && (
-            <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-700">
+            <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-8 text-center text-ink-600">
               No inquiries found matching your filters
             </div>
           )}
@@ -311,65 +311,65 @@ export function SellerInquiryManager() {
 
         {/* Inquiry Details Panel */}
         {selectedInquiry ? (
-          <div className="bg-surface-0 rounded-lg shadow p-6 space-y-6 lg:sticky lg:top-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+          <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6 space-y-6 lg:sticky lg:top-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
             <div>
-              <h3 className="text-xl font-bold text-ink-900 mb-4">
+              <h3 className="heading-subsection text-lux-black mb-4">
                 Inquiry Details
               </h3>
 
               {/* Seller Info */}
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-3">
-                  <User className="w-5 h-5 text-gray-600" />
+                  <User className="w-5 h-5 text-lux-gray" />
                   <div>
-                    <p className="text-sm text-ink-700">Seller Name</p>
-                    <p className="font-medium">{selectedInquiry.sellerName}</p>
+                    <p className="text-sm text-label text-lux-gray-dark">Seller Name</p>
+                    <p className="font-medium text-lux-black">{selectedInquiry.sellerName}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-gray-600" />
+                  <Mail className="w-5 h-5 text-lux-gray" />
                   <div>
-                    <p className="text-sm text-ink-700">Email</p>
-                    <p className="font-medium">{selectedInquiry.email}</p>
+                    <p className="text-sm text-label text-lux-gray-dark">Email</p>
+                    <p className="font-medium text-lux-black">{selectedInquiry.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-gray-600" />
+                  <Phone className="w-5 h-5 text-lux-gray" />
                   <div>
-                    <p className="text-sm text-ink-700">Phone</p>
-                    <p className="font-medium">{selectedInquiry.phone}</p>
+                    <p className="text-sm text-label text-lux-gray-dark">Phone</p>
+                    <p className="font-medium text-lux-black">{selectedInquiry.phone}</p>
                   </div>
                 </div>
               </div>
 
               {/* Item Details */}
               <div className="mb-6">
-                <h4 className="font-semibold text-ink-900 mb-3">
+                <h4 className="heading-subsection text-lux-black mb-3">
                   Item Information
                 </h4>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-ink-600">Type:</span>
-                    <span className="font-medium capitalize">
+                    <span className="font-medium text-lux-black capitalize">
                       {selectedInquiry.inquiryType.replace("-", " ")}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-ink-600">Category:</span>
-                    <span className="font-medium">
+                    <span className="font-medium text-lux-black">
                       {selectedInquiry.category}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-ink-600">Estimated Value:</span>
-                    <span className="font-semibold text-amber-600">
+                    <span className="font-semibold text-lux-gold">
                       ${selectedInquiry.estimatedValue.toLocaleString()}
                     </span>
                   </div>
                 </div>
                 <div className="mt-3">
-                  <p className="text-sm text-ink-600 mb-1">Description:</p>
-                  <p className="text-ink-900">
+                  <p className="text-sm text-label text-lux-gray-dark mb-1">Description:</p>
+                  <p className="text-lux-black">
                     {selectedInquiry.itemDescription}
                   </p>
                 </div>
@@ -377,7 +377,7 @@ export function SellerInquiryManager() {
 
               {/* Status Actions */}
               <div className="mb-6">
-                <h4 className="font-semibold text-ink-900 mb-3">
+                <h4 className="heading-subsection text-lux-black mb-3">
                   Update Status
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -385,7 +385,7 @@ export function SellerInquiryManager() {
                     onClick={() =>
                       updateInquiryStatus(selectedInquiry.id, "reviewing")
                     }
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 text-sm transition-colors"
                   >
                     Mark Reviewing
                   </button>
@@ -393,7 +393,7 @@ export function SellerInquiryManager() {
                     onClick={() =>
                       updateInquiryStatus(selectedInquiry.id, "approved")
                     }
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
+                    className="px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 text-sm transition-colors"
                   >
                     Approve
                   </button>
@@ -401,7 +401,7 @@ export function SellerInquiryManager() {
                     onClick={() =>
                       updateInquiryStatus(selectedInquiry.id, "rejected")
                     }
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                    className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 text-sm transition-colors"
                   >
                     Reject
                   </button>
@@ -409,7 +409,7 @@ export function SellerInquiryManager() {
                     onClick={() =>
                       updateInquiryStatus(selectedInquiry.id, "completed")
                     }
-                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm"
+                    className="px-4 py-2 bg-lux-charcoal text-lux-cream rounded-full hover:bg-lux-charcoal/80 text-sm transition-colors"
                   >
                     Complete
                   </button>
@@ -418,25 +418,25 @@ export function SellerInquiryManager() {
 
               {/* Email Actions */}
               <div className="mb-6">
-                <h4 className="font-semibold text-ink-900 mb-3">Send Email</h4>
+                <h4 className="heading-subsection text-lux-black mb-3">Send Email</h4>
                 <div className="space-y-2">
                   <button
                     onClick={() =>
                       sendEmail(selectedInquiry.id, "acknowledgment")
                     }
-                    className="w-full px-4 py-2 border border-border-300 rounded-lg hover:bg-surface-50 text-sm"
+                    className="btn-secondary rounded-full w-full text-sm"
                   >
                     Send Acknowledgment
                   </button>
                   <button
                     onClick={() => sendEmail(selectedInquiry.id, "approval")}
-                    className="w-full px-4 py-2 border border-border-300 rounded-lg hover:bg-surface-50 text-sm"
+                    className="btn-secondary rounded-full w-full text-sm"
                   >
                     Send Approval Email
                   </button>
                   <button
                     onClick={() => sendEmail(selectedInquiry.id, "rejection")}
-                    className="w-full px-4 py-2 border border-border-300 rounded-lg hover:bg-surface-50 text-sm"
+                    className="btn-secondary rounded-full w-full text-sm"
                   >
                     Send Rejection Email
                   </button>
@@ -445,17 +445,17 @@ export function SellerInquiryManager() {
 
               {/* Admin Notes */}
               <div>
-                <h4 className="font-semibold text-ink-900 mb-3">
+                <h4 className="heading-subsection text-lux-black mb-3">
                   Admin Notes
                 </h4>
                 <div className="space-y-2 mb-3 max-h-40 overflow-y-auto">
                   {selectedInquiry.adminNotes.map((note, index) => (
-                    <div key={index} className="bg-surface-50 rounded p-2 text-sm">
+                    <div key={index} className="bg-lux-cream rounded-lg p-2 text-sm text-lux-black">
                       {note}
                     </div>
                   ))}
                   {selectedInquiry.adminNotes.length === 0 && (
-                    <p className="text-sm text-ink-700 italic">No notes yet</p>
+                    <p className="text-sm text-lux-gray italic">No notes yet</p>
                   )}
                 </div>
                 <div className="flex gap-2">
@@ -464,11 +464,11 @@ export function SellerInquiryManager() {
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
                     placeholder="Add a note..."
-                    className="flex-1 px-3 py-2 border border-border-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   />
                   <button
                     onClick={addAdminNote}
-                    className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700"
+                    className="btn-primary rounded-full"
                   >
                     Add
                   </button>
@@ -477,7 +477,7 @@ export function SellerInquiryManager() {
             </div>
           </div>
         ) : (
-          <div className="bg-surface-0 rounded-lg shadow p-8 text-center text-ink-700 lg:sticky lg:top-4">
+          <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-8 text-center text-ink-600 lg:sticky lg:top-4">
             Select an inquiry to view details
           </div>
         )}
