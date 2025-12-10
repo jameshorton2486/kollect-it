@@ -17,3 +17,6 @@ token.json
 .env.production.check
 .env.*.local
 .vercel
+# Ignore log files
+logs/
+*.log

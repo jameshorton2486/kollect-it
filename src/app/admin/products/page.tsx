@@ -37,7 +37,7 @@ interface ProductsResponse {
 }
 
 export default function AdminProductsPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);

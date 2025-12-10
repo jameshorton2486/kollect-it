@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 
 // GET /api/admin/products/[id] - Get single product
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -119,7 +119,7 @@ export async function PUT(
 
 // DELETE /api/admin/products/[id] - Delete product
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {

@@ -22,22 +22,16 @@ const THRESHOLDS = {
 /**
  * Sends a metric to your analytics service
  * Update this function to integrate with your analytics provider
- * (Google Analytics, Datadog, New Relic, etc.)
+ * (Datadog, New Relic, etc.)
  */
 function sendMetricToAnalytics(metricName: string, value: number) {
-  // Example: Send to Google Analytics
-  if (typeof window !== "undefined" && (window as any).gtag) {
-    (window as any).gtag("event", metricName, {
-      value: Math.round(value),
-      event_category: "Web Vitals",
-      non_interaction: true,
-    });
-  }
-
   // Log to console in development
   if (process.env.NODE_ENV === "development") {
     console.log(`[Web Vitals] ${metricName}:`, `${Math.round(value)}ms`);
   }
+  
+  // TODO: Integrate with your analytics provider here
+  // Example: Send to Datadog, New Relic, or custom analytics endpoint
 }
 
 /**

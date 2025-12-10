@@ -36,7 +36,6 @@ const RECOMMENDED_VARS = [
 
 // Optional variables (nice to have but not critical)
 const OPTIONAL_VARS = [
-  'NEXT_PUBLIC_GA_ID',  // Google Analytics
   'VERCEL_URL',  // Auto-detected on Vercel
 ];
 

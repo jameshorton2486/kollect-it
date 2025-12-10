@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Loader, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
-import { MultiImageUpload } from "./MultiImageUpload";
+import MultiImageUpload from "./MultiImageUpload";
 import { validateSKU } from "@/lib/utils/image-parser";
 
 interface AnalysisResult {
@@ -328,11 +328,12 @@ export function ProductUploadForm() {
 
           {/* SKU Input */}
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label htmlFor="product-sku" className="block text-sm font-medium mb-2">
               SKU *
             </label>
             <div className="flex gap-2">
               <input
+                id="product-sku"
                 type="text"
                 value={sku}
                 onChange={(e) => handleSKUChange(e.target.value)}
@@ -340,6 +341,7 @@ export function ProductUploadForm() {
                 className={`flex-1 px-4 py-2 bg-lux-charcoal border ${
                   skuError ? "border-red-600" : "border-lux-charcoal/50"
                 } rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-light`}
+                aria-label="Product SKU"
               />
               <button
                 onClick={fetchNextSKU}
@@ -358,10 +360,11 @@ export function ProductUploadForm() {
 
           {/* Category */}
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label htmlFor="category-select" className="block text-sm font-medium mb-2">
               Category *
             </label>
             <select
+              id="category-select"
               value={categoryId}
               onChange={(e) => {
                 const selectedCat = categories.find(c => c.id === e.target.value);
@@ -370,6 +373,7 @@ export function ProductUploadForm() {
                 setSubcategoryId(selectedCat?.subcategories?.[0]?.id || "");
               }}
               className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+              aria-label="Select product category"
             >
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
@@ -381,12 +385,14 @@ export function ProductUploadForm() {
 
           {/* Subcategory */}
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label htmlFor="subcategory-select" className="block text-sm font-medium mb-2">
               Subcategory (Optional)
             </label>
             <select
+              id="subcategory-select"
               value={subcategoryId}
               onChange={(e) => setSubcategoryId(e.target.value)}
+              aria-label="Select product subcategory"
               className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               disabled={!categoryId}
             >
@@ -403,16 +409,18 @@ export function ProductUploadForm() {
 
           {/* Product Notes */}
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label htmlFor="product-notes" className="block text-sm font-medium mb-2">
               Product Notes (Optional)
               <span className="text-ink-700 text-xs ml-2">
                 Helps AI generate better descriptions
               </span>
             </label>
             <textarea
+              id="product-notes"
               value={productNotes}
               onChange={(e) => setProductNotes(e.target.value)}
               rows={10}
+              aria-label="Product notes for AI analysis"
               placeholder={`Paste your notes.txt content here, or type details like:
 
 ACQUISITION:
@@ -439,15 +447,17 @@ TARGET_PRICE: $1,750`}
 
           {/* Appraisal URLs */}
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label htmlFor="appraisal-url" className="block text-sm font-medium mb-2">
               Appraisal Document URLs (Optional)
             </label>
             <div className="flex gap-2">
               <input
+                id="appraisal-url"
                 type="text"
                 value={newAppraisalUrl}
                 onChange={(e) => setNewAppraisalUrl(e.target.value)}
                 placeholder="https://drive.google.com/file/d/abc123/view"
+                aria-label="Appraisal document URL"
                 className="flex-1 px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-light"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -573,54 +583,64 @@ TARGET_PRICE: $1,750`}
           {/* Form fields */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label htmlFor="product-title" className="block text-sm font-medium mb-2">Title</label>
               <input
+                id="product-title"
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                aria-label="Product title"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Description</label>
+              <label htmlFor="product-description" className="block text-sm font-medium mb-2">Description</label>
               <textarea
+                id="product-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={6}
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                aria-label="Product description"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Era</label>
+                <label htmlFor="product-era" className="block text-sm font-medium mb-2">Era</label>
                 <input
+                  id="product-era"
                   type="text"
                   value={formData.estimatedEra}
                   onChange={(e) => setFormData({ ...formData, estimatedEra: e.target.value })}
                   className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                  aria-label="Product estimated era"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Rarity</label>
+                <label htmlFor="product-rarity" className="block text-sm font-medium mb-2">Rarity</label>
                 <input
+                  id="product-rarity"
                   type="text"
                   value={formData.rarity}
                   onChange={(e) => setFormData({ ...formData, rarity: e.target.value })}
                   className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                  aria-label="Product rarity"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Suggested Price</label>
+              <label htmlFor="product-price" className="block text-sm font-medium mb-2">Suggested Price</label>
               <input
+                id="product-price"
                 type="number"
                 value={formData.suggestedPrice}
                 onChange={(e) => setFormData({ ...formData, suggestedPrice: parseFloat(e.target.value) })}
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                aria-label="Suggested product price"
               />
               {analysis.priceReasoning && (
                 <p className="text-sm text-lux-gray-light mt-1">{analysis.priceReasoning}</p>
@@ -628,13 +648,15 @@ TARGET_PRICE: $1,750`}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">SEO Title</label>
+              <label htmlFor="seo-title" className="block text-sm font-medium mb-2">SEO Title</label>
               <input
+                id="seo-title"
                 type="text"
                 value={formData.seoTitle}
                 onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
                 maxLength={60}
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                aria-label="SEO title for product"
               />
               <p className="text-xs text-ink-700 mt-1">
                 {formData.seoTitle.length}/60 characters
@@ -642,13 +664,15 @@ TARGET_PRICE: $1,750`}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">SEO Description</label>
+              <label htmlFor="seo-description" className="block text-sm font-medium mb-2">SEO Description</label>
               <textarea
+                id="seo-description"
                 value={formData.seoDescription}
                 onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                 maxLength={155}
                 rows={3}
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
+                aria-label="SEO description for product"
               />
               <p className="text-xs text-ink-700 mt-1">
                 {formData.seoDescription.length}/155 characters

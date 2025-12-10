@@ -37,9 +37,6 @@ export const performanceConfig = {
   // Script optimization
   scripts: {
     // Third-party scripts configuration
-    gtag: {
-      strategy: "afterInteractive" as const, // Load after page interactive
-    },
     stripe: {
       strategy: "beforeInteractive" as const, // Load critical payment scripts early
     },

@@ -35,9 +35,6 @@ interface EnvironmentVariables {
 
   // Email (Google Workspace integration pending)
   NEXT_PUBLIC_APP_EMAIL: string;
-
-  // Google Analytics (optional)
-  NEXT_PUBLIC_GA_ID?: string;
 }
 
 let validatedEnv: Partial<EnvironmentVariables> | null = null;
@@ -162,13 +159,6 @@ export function getEnv(): Partial<EnvironmentVariables> {
         "NEXT_PUBLIC_APP_EMAIL",
         process.env.NEXT_PUBLIC_APP_EMAIL,
       ),
-
-      // Google Analytics (optional)
-      NEXT_PUBLIC_GA_ID: validateEnvVar(
-        "NEXT_PUBLIC_GA_ID",
-        process.env.NEXT_PUBLIC_GA_ID,
-        false,
-      ),
     };
 
     return validatedEnv;
@@ -213,4 +203,3 @@ export function isDevelopment(): boolean {
 export function isProduction(): boolean {
   return getEnv().NODE_ENV === "production";
 }
-
