@@ -19,7 +19,6 @@ import {
   Package,
   ShoppingBag,
 } from "lucide-react";
-import AddToCartButton from "@/components/AddToCartButton";
 import { formatUSD } from "@/lib/currency";
 
 interface WishlistItem {

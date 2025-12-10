@@ -26,7 +26,6 @@ export function ContactNotificationEmail({
   subject,
   message,
   submissionId,
-  siteUrl,
 }: ContactNotificationEmailProps) {
   return (
     <Html>

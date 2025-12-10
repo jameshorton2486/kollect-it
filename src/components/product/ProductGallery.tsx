@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, Captions } from "lucide-react";
 import Image from "next/image";
 
 interface ProductGalleryProps {
-  images: { url: string; alt?: string }[];
+  images: { url: string; alt?: string | null }[];
   productName: string;
 }
 
@@ -82,15 +82,15 @@ export default function ProductGallery({
               key={index}
               onClick={() => setSelectedImageIndex(index)}
               className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${
-                index === selectedImageIndex 
-                  ? "border-lux-gold ring-2 ring-lux-gold/20" 
+                index === selectedImageIndex
+                  ? "border-lux-gold ring-2 ring-lux-gold/20"
                   : "border-border-200 hover:border-border-300"
               }`}
               aria-label={`View image ${index + 1}`}
             >
               <Image
                 src={image.url || "/placeholder.svg"}
-                alt={image.alt || `${productName} - image ${index + 1}`}  
+                alt={image.alt || `${productName} - image ${index + 1}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 20vw, 10vw"

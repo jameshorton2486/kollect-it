@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Loader2, Save, ImagePlus } from "lucide-react";
+import { ArrowLeft, Loader2, Save } from "lucide-react";
 
 interface Subcategory {
   id: string;
@@ -62,8 +62,8 @@ export default function NewProductPage() {
           const cats = await catRes.json();
           setCategories(Array.isArray(cats) ? cats : []);
           if (cats.length > 0) {
-            setForm((f) => ({ 
-              ...f, 
+            setForm((f) => ({
+              ...f,
               categoryId: cats[0].id,
               subcategoryId: cats[0].subcategories?.[0]?.id || ""
             }));
@@ -222,8 +222,8 @@ export default function NewProductPage() {
                   value={form.categoryId}
                   onChange={(e) => {
                     const selectedCat = categories.find(c => c.id === e.target.value);
-                    setForm({ 
-                      ...form, 
+                    setForm({
+                      ...form,
                       categoryId: e.target.value,
                       subcategoryId: selectedCat?.subcategories?.[0]?.id || ""
                     });

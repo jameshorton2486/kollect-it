@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle, Search, Shield, FileText } from "lucide-react";
+import { Search, Shield, FileText } from "lucide-react";
 import { PageHeader, InfoCard } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -126,8 +126,8 @@ export default function AuthenticationPage() {
         <div className="container mx-auto text-center px-4">
           <h2 className="heading-section text-lux-gold mb-4">Questions about authenticity?</h2>
           <p className="text-lux-cream/80 mb-8 max-w-xl mx-auto">
-            Have questions about an item&apos;s authenticity or want to see additional 
-            documentation? I&apos;m here to help. Reach out and I&apos;ll provide whatever 
+            Have questions about an item&apos;s authenticity or want to see additional
+            documentation? I&apos;m here to help. Reach out and I&apos;ll provide whatever
             information I can to give you confidence in your purchase.
           </p>
           <Link href="/contact" className="btn-primary rounded-full">

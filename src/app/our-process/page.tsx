@@ -63,7 +63,7 @@ export default function OurProcessPage() {
       <section className="section-normal">
         <div className="container mx-auto max-w-4xl">
           <div className="space-y-8">
-            {steps.map((step, index) => (
+             {steps.map((step) => (
               <div
                 key={step.number}
                 className="flex gap-6 bg-lux-white rounded-xl border border-lux-silver-soft p-6 shadow-clean"

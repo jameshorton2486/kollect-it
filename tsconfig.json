@@ -46,6 +46,10 @@
     "e2e",
     "vitest.config.ts",
     "vitest.setup.ts",
-    "scripts"
+    "scripts",
+    "Work Files",
+    "archive",
+    "docs",
+    "backups"
   ]
 }

@@ -81,10 +81,10 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
         {data.map((item) => (
           <div
             key={item.category}
-            className="flex justify-between text-gray-300"
+            className="flex justify-between text-lux-cream"
           >
             <span>{item.category}</span>
-            <span className="text-gold-500 font-semibold">
+            <span className="text-lux-gold font-semibold">
               ${item.revenue.toFixed(2)}
             </span>
           </div>

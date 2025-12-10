@@ -45,6 +45,9 @@ export async function getRecommendations(
             take: 1,
             select: { url: true },
           },
+          category: {
+            select: { name: true },
+          },
         },
         orderBy: {
           createdAt: "desc",
@@ -101,6 +104,9 @@ export async function getRecommendations(
           take: 1,
           select: { url: true },
         },
+        category: {
+          select: { name: true },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -113,4 +119,3 @@ export async function getRecommendations(
     return [];
   }
 }
-

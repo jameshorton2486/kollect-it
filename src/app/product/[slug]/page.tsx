@@ -56,7 +56,7 @@ export async function generateMetadata(
       canonical: canonicalUrl,
     },
     openGraph: {
-      type: "product",
+      type: "website",
       title: product.title,
       description,
       url: canonicalUrl,
@@ -176,7 +176,7 @@ export default async function ProductPage(props: ProductPageProps) {
               slug: p.slug,
               price: p.price,
               images: p.images || [],
-              category: { name: p.category?.name || "Featured" },
+              category: { name: "Featured" },
             }))}
             categoryName={product.category.name}
           />

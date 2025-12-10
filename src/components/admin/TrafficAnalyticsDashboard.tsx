@@ -229,13 +229,13 @@ export function TrafficAnalyticsDashboard() {
       </div>
 
       {/* Traffic Trend Chart */}
-      <div className="bg-surface-0 rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-ink-900 mb-4">
+      <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
+        <h3 className="heading-subsection text-lux-black mb-4">
           Traffic Trend
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={metrics.traffic.daily}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(28 8% 80%)" />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 12 }}
