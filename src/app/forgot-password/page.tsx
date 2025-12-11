@@ -78,7 +78,7 @@ export default function ForgotPasswordPage() {
               If an account exists for <strong className="text-lux-black">{email}</strong>,
               we&apos;ve sent password reset instructions to that address.
             </p>
-            <p className="text-muted mt-4">
+            <p className="text-lux-gray-dark mt-4">
               Didn&apos;t receive the email? Check your spam folder or{" "}
               <button
                 onClick={() => {
@@ -154,8 +154,7 @@ export default function ForgotPasswordPage() {
                   }}
                   placeholder="your@email.com"
                   className={inputClasses(!!validationError)}
-                  aria-invalid={validationError ? "true" : "false"}
-                  aria-describedby={validationError ? "email-error" : undefined}
+                  {...(validationError ? { "aria-invalid": "true", "aria-describedby": "email-error" } : {})}
                 />
               </div>
               {validationError && (

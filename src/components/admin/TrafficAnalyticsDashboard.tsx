@@ -100,7 +100,7 @@ export function TrafficAnalyticsDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-lux-gold"></div>
       </div>
     );
   }
@@ -144,7 +144,7 @@ export function TrafficAnalyticsDashboard() {
       </div>
 
       {/* Real-Time Metrics */}
-      <div className="bg-gradient-to-r from-lux-gold to-amber-600 rounded-xl shadow-clean p-6 text-lux-black">
+      <div className="bg-gradient-to-r from-lux-gold to-lux-gold-light rounded-xl shadow-clean p-6 text-lux-black">
         <div className="flex items-center justify-between mb-4">
           <h3 className="heading-subsection">Real-Time Activity</h3>
           <div className="flex items-center gap-2">
@@ -198,7 +198,7 @@ export function TrafficAnalyticsDashboard() {
 
         <div className="bg-lux-white rounded-xl border border-lux-silver-soft shadow-clean p-6">
           <div className="flex items-center justify-between mb-2">
-            <MousePointerClick className="text-amber-600" size={24} />
+            <MousePointerClick className="text-lux-gold" size={24} />
           </div>
           <div className="text-2xl font-bold text-ink-900">
             {metrics.overview.bounceRate}%
@@ -308,12 +308,14 @@ export function TrafficAnalyticsDashboard() {
                 className="flex items-center justify-between text-sm"
               >
                 <div className="flex items-center gap-2">
+                  {/* Dynamic color from array - inline style required for chart colors */}
+                  {/* @ts-ignore - Microsoft Edge Tools: Dynamic inline style required */}
                   <div
                     className="w-3 h-3 rounded-full"
-                    // eslint-disable-next-line @next/next/no-inline-styles
                     style={
                       {
-                        backgroundColor: COLORS[index % COLORS.length],
+                        "--chart-color": COLORS[index % COLORS.length],
+                        backgroundColor: "var(--chart-color)",
                       } as React.CSSProperties
                     }
                   />
@@ -330,7 +332,7 @@ export function TrafficAnalyticsDashboard() {
         {/* Device Breakdown */}
         <div className="bg-surface-0 rounded-lg shadow p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Smartphone className="text-amber-600" size={24} />
+            <Smartphone className="text-lux-gold" size={24} />
             <h3 className="text-xl font-semibold text-ink-900">
               Device Breakdown
             </h3>
@@ -349,15 +351,15 @@ export function TrafficAnalyticsDashboard() {
               <div key={device.device} className="text-center">
                 {device.device === "Mobile" && (
                   <Smartphone
-                    className="mx-auto text-gray-600 mb-1"
+                    className="mx-auto text-lux-gray-dark mb-1"
                     size={24}
                   />
                 )}
                 {device.device === "Desktop" && (
-                  <Monitor className="mx-auto text-gray-600 mb-1" size={24} />
+                  <Monitor className="mx-auto text-lux-gray-dark mb-1" size={24} />
                 )}
                 {device.device === "Tablet" && (
-                  <BarChart3 className="mx-auto text-gray-600 mb-1" size={24} />
+                  <BarChart3 className="mx-auto text-lux-gray-dark mb-1" size={24} />
                 )}
                 <div className="text-lg font-bold text-ink-900">
                   {device.percentage}%
@@ -375,7 +377,7 @@ export function TrafficAnalyticsDashboard() {
           Top Performing Pages
         </h3>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-border-200">
             <thead className="bg-surface-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
@@ -392,7 +394,7 @@ export function TrafficAnalyticsDashboard() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-surface-0 divide-y divide-gray-200">
+            <tbody className="bg-surface-0 divide-y divide-border-200">
               {metrics.topPages.map((page, index) => (
                 <tr key={index}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-900">
@@ -444,9 +446,10 @@ export function TrafficAnalyticsDashboard() {
                   </div>
                 </div>
                 <div className="w-full bg-surface-200 rounded-full h-4">
+                  {/* Dynamic width percentage - inline style required for progress bar */}
+                  {/* eslint-disable-next-line @next/next/no-inline-styles */}
                   <div
-                    className="bg-gradient-to-r from-amber-500 to-amber-600 h-4 rounded-full flex items-center justify-end pr-2"
-                    // eslint-disable-next-line @next/next/no-inline-styles
+                    className="bg-gradient-to-r from-lux-gold to-lux-gold-light h-4 rounded-full flex items-center justify-end pr-2 transition-all duration-300"
                     style={{ width: `${percentage}%` } as React.CSSProperties}
                   >
                     <span className="text-xs text-white font-medium">

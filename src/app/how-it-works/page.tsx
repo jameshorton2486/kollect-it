@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Search, Heart, ShoppingCart, Upload, FileSignature, Tag, CheckCircle } from "lucide-react";
-import { StepCard, StepCardGrid } from "@/components/ui";
+import { StepCard } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "How It Works | Kollect-It",
@@ -121,7 +121,7 @@ export default function HowItWorksPage() {
             </p>
           </div>
 
-          <StepCardGrid columns={3}>
+          <div className="grid md:grid-cols-3 gap-6">
             {collectorSteps.map((step) => (
               <StepCard
                 key={step.step}
@@ -131,7 +131,7 @@ export default function HowItWorksPage() {
                 description={step.description}
               />
             ))}
-          </StepCardGrid>
+          </div>
         </div>
       </section>
 
@@ -150,7 +150,7 @@ export default function HowItWorksPage() {
             </p>
           </div>
 
-          <StepCardGrid columns={3}>
+          <div className="grid md:grid-cols-3 gap-6">
             {consignorSteps.map((step) => (
               <StepCard
                 key={step.step}
@@ -158,10 +158,9 @@ export default function HowItWorksPage() {
                 icon={step.icon}
                 title={step.title}
                 description={step.description}
-                variant="alt"
               />
             ))}
-          </StepCardGrid>
+          </div>
         </div>
       </section>
 

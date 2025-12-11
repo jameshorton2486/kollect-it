@@ -16,7 +16,18 @@ export { Section } from "./section";
 
 // Card Components
 export { InfoCard } from "./InfoCard";
-export { StepCard, StepCardGrid } from "./StepCard";
+export { StepCard } from "./StepCard";
+export { FeatureCard } from "./FeatureCard";
+
+// Heading Components
+export { SectionHeading } from "./SectionHeading";
+
+// Interactive Components
+export { FAQAccordion } from "./FAQAccordion";
+export { FilterCheckbox } from "./FilterCheckbox";
+export { FilterPanel } from "./FilterPanel";
+export { Breadcrumbs } from "./Breadcrumbs";
+export { CTASection } from "./CTASection";
 
 // Button Component
 export { Button, buttonVariants } from "./button";

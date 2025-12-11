@@ -78,10 +78,10 @@ export default function LegalPageLayout({
                     <button
                       key={section.id}
                       onClick={() => scrollToSection(section.id)}
-                      className={`block w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                      className={`block w-full text-left px-3 py-2 rounded text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 ${
                         activeSection === section.id
-                          ? "text-lux-gold font-medium bg-lux-cream"
-                          : "text-ink-700 hover:text-lux-gold hover:bg-lux-cream/50"
+                          ? "text-lux-gold font-medium bg-lux-cream border-l-2 border-lux-gold pl-4"
+                          : "text-ink-700 hover:text-lux-gold hover:bg-lux-cream/50 pl-4"
                       }`}
                     >
                       {section.title}
@@ -101,9 +101,18 @@ export default function LegalPageLayout({
                     className="scroll-mt-24"
                   >
                     <h2 className="heading-section text-lux-black mb-4">
-                      {section.title}
+                      {section.title.split('.').length > 1 ? (
+                        <>
+                          <span className="text-lux-gold">{section.title.split('.')[0]}.</span>
+                          {section.title.substring(section.title.indexOf('.') + 1)}
+                        </>
+                      ) : (
+                        section.title
+                      )}
                     </h2>
-                    <div className="text-ink-600 space-y-4">{section.content}</div>
+                    <div className="text-ink-600 space-y-4 prose prose-lg max-w-none [&_a]:text-lux-gold [&_a]:hover:text-lux-gold-light [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:marker:text-lux-gold">
+                      {section.content}
+                    </div>
                   </section>
                 ))}
               </div>

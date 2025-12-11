@@ -219,7 +219,7 @@ export function AnalyticsDashboard() {
           {metrics.revenue.revenueByCategory.map((cat) => (
             <div
               key={cat.category}
-              className="flex justify-between text-lux-gray pb-2 border-b border-gray-700"
+              className="flex justify-between text-lux-gray pb-2 border-b border-lux-silver"
             >
               <span>{cat.category}</span>
               <span className="text-lux-gold font-semibold">
@@ -232,4 +232,3 @@ export function AnalyticsDashboard() {
     </div>
   );
 }
-

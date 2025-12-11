@@ -159,12 +159,12 @@ export default function EditProductPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-lux-pearl flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Product Not Found</h1>
+          <h1 className="text-2xl font-bold text-lux-black mb-2">Product Not Found</h1>
           <Link
             href="/admin/products"
-            className="text-amber-600 hover:text-amber-700"
+            className="text-lux-gold hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
           >
             Back to Products
           </Link>
@@ -174,19 +174,19 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-lux-pearl">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-3xl mx-auto px-4 py-6">
           <Link
             href="/admin/products"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
+            className="inline-flex items-center gap-2 text-ink-600 hover:text-lux-black mb-4 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
           >
             <ArrowLeft size={20} />
             Back to Products
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Edit Product</h1>
-          <p className="text-gray-600">SKU: <span className="font-mono font-medium">{product.sku}</span></p>
+          <h1 className="text-2xl font-bold text-lux-black">Edit Product</h1>
+          <p className="text-ink-600">SKU: <span className="font-mono font-medium">{product.sku}</span></p>
         </div>
       </div>
 
@@ -196,11 +196,11 @@ export default function EditProductPage() {
             <div className="bg-red-50 text-red-700 p-4 rounded-lg">{error}</div>
           )}
 
-          <div className="bg-white rounded-lg border p-6 space-y-4">
+          <div className="bg-white rounded-lg border border-border-200 shadow-clean p-6 space-y-4">
             <h2 className="font-semibold text-lg">Basic Information</h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                 Title *
               </label>
               <input
@@ -208,27 +208,27 @@ export default function EditProductPage() {
                 required
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                 placeholder="Product title"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                 Description
               </label>
               <textarea
                 rows={4}
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                 placeholder="Product description"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Price *
                 </label>
                 <input
@@ -238,20 +238,20 @@ export default function EditProductPage() {
                   min="0"
                   value={form.price}
                   onChange={(e) => setForm({ ...form, price: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   placeholder="0.00"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Category *
                 </label>
                 <select
                   required
                   value={form.categoryId}
                   onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   aria-label="Category"
                 >
                   {categories.map((cat) => (
@@ -265,13 +265,13 @@ export default function EditProductPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Condition
                 </label>
                 <select
                   value={form.condition}
                   onChange={(e) => setForm({ ...form, condition: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   aria-label="Condition"
                 >
                   <option value="Fine">Fine</option>
@@ -282,13 +282,13 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Status
                 </label>
                 <select
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   aria-label="Status"
                 >
                   <option value="active">Active</option>
@@ -299,32 +299,32 @@ export default function EditProductPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg border p-6 space-y-4">
+          <div className="bg-white rounded-lg border border-border-200 shadow-clean p-6 space-y-4">
             <h2 className="font-semibold text-lg">Additional Details</h2>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Year
                 </label>
                 <input
                   type="text"
                   value={form.year}
                   onChange={(e) => setForm({ ...form, year: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   placeholder="e.g., 1920"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Artist/Maker
                 </label>
                 <input
                   type="text"
                   value={form.artist}
                   onChange={(e) => setForm({ ...form, artist: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   placeholder="Artist or maker name"
                 />
               </div>
@@ -332,40 +332,40 @@ export default function EditProductPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Medium
                 </label>
                 <input
                   type="text"
                   value={form.medium}
                   onChange={(e) => setForm({ ...form, medium: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   placeholder="e.g., Oil on canvas"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-lux-gray-dark mb-1">
                   Period
                 </label>
                 <input
                   type="text"
                   value={form.period}
                   onChange={(e) => setForm({ ...form, period: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
                   placeholder="e.g., Art Deco"
                 />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg border p-6 space-y-4">
+          <div className="bg-white rounded-lg border border-border-200 shadow-clean p-6 space-y-4">
             <label className="flex items-center gap-3">
               <input
                 type="checkbox"
                 checked={form.featured}
                 onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-                className="w-5 h-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
+                className="w-5 h-5 rounded border-border-300 text-lux-gold focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
               />
               <span className="font-medium">Featured Product</span>
             </label>
@@ -374,11 +374,11 @@ export default function EditProductPage() {
                 type="checkbox"
                 checked={!form.isDraft}
                 onChange={(e) => setForm({ ...form, isDraft: !e.target.checked })}
-                className="w-5 h-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
+                className="w-5 h-5 rounded border-border-300 text-lux-gold focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
               />
               <div>
                 <span className="font-medium">Publish immediately</span>
-                <p className="text-sm text-lux-gray-dark">
+                <p className="text-sm text-lux-gray">
                   Uncheck to save as draft
                 </p>
               </div>
@@ -388,14 +388,14 @@ export default function EditProductPage() {
           <div className="flex justify-end gap-4">
             <Link
               href="/admin/products"
-              className="px-6 py-2 border rounded-lg hover:bg-gray-50"
+              className="px-6 py-2 border border-border-300 rounded-lg hover:bg-surface-50 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-lux-gold text-lux-charcoal rounded-lg hover:bg-lux-gold-light transition-colors duration-200 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
             >
               {saving ? (
                 <Loader2 className="animate-spin" size={20} />

@@ -129,7 +129,7 @@ export function ProductAnalyticsDashboard() {
             id="product-period-select"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-4 py-2 border border-border-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lux-gold"
           >
             <option value="7">Last 7 days</option>
             <option value="30">Last 30 days</option>
@@ -154,7 +154,7 @@ export function ProductAnalyticsDashboard() {
           subtitle={`${((metrics.overview.soldProducts / metrics.overview.totalProducts) * 100).toFixed(1)}% of total`}
         />
         <MetricCard
-          icon={<DollarSign className="text-amber-600" size={24} />}
+          icon={<DollarSign className="text-lux-gold" size={24} />}
           label="Total Inventory Value"
           value={`$${metrics.overview.totalValue.toLocaleString()}`}
           subtitle={`Avg: $${metrics.overview.averagePrice.toFixed(2)}`}

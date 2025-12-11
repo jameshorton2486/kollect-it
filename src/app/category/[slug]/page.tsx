@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { Package } from "lucide-react";
 import { notFound } from "next/navigation";
 import ProductGrid from "@/components/ProductGrid";
 import { prisma } from "@/lib/prisma";
+import { PageHeader, EmptyState } from "@/components/ui";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -85,27 +87,20 @@ export default async function CategoryPage(props: CategoryPageProps) {
 
   return (
     <main className="bg-lux-pearl text-ink-900">
-      <section className="bg-lux-cream section-normal">
-        <div className="container mx-auto max-w-4xl">
-          <Link
-            href="/categories"
-            className="text-label text-lux-gold mb-4 inline-block hover:text-lux-gold-light transition-colors"
-          >
-            ← Back to all categories
-          </Link>
-
-          <div className="space-y-4">
-            <p className="text-label text-lux-gold mb-2">Category</p>
-            <h1 className="heading-page text-lux-black">
-              {category.name}
-            </h1>
-            <p className="lead max-w-2xl">
-              {category.description ||
-                "A carefully selected collection of pieces in this category, each one chosen for its quality, character, or story."}
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        label="Category"
+        title={category.name}
+        description={
+          category.description ||
+          "A carefully selected collection of pieces in this category, each one chosen for its quality, character, or story."
+        }
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Categories", href: "/categories" },
+          { label: category.name, href: `/category/${category.slug}` },
+        ]}
+        maxWidth="4xl"
+      />
 
       {/* Subcategories Section */}
       {category.subcategories && category.subcategories.length > 0 && (
@@ -129,7 +124,7 @@ export default async function CategoryPage(props: CategoryPageProps) {
                       {sub.name}
                     </div>
                     {subProductCount > 0 && (
-                      <div className="text-muted mt-1">
+                      <div className="text-lux-gray-dark mt-1">
                         {subProductCount} {subProductCount === 1 ? "item" : "items"}
                       </div>
                     )}
@@ -149,7 +144,7 @@ export default async function CategoryPage(props: CategoryPageProps) {
                 <h2 className="heading-section text-lux-black">
                   All {category.name} Pieces
                 </h2>
-                <p className="text-muted">
+                <p className="text-lux-gray-dark">
                   {products.length === 1
                     ? "One piece currently available in this category."
                     : `${products.length} pieces currently available in this category.`}
@@ -158,29 +153,13 @@ export default async function CategoryPage(props: CategoryPageProps) {
               <ProductGrid products={products} />
             </>
           ) : (
-            <div className="rounded-2xl border border-dashed border-lux-silver-soft bg-lux-cream px-6 py-12 text-center">
-              <p className="heading-subsection text-lux-black mb-2">
-                No pieces available in this category right now
-              </p>
-              <p className="text-muted max-w-2xl mx-auto">
-                I&apos;m always adding new pieces to the collection. Check back soon, or{" "}
-                <Link
-                  href="/contact"
-                  className="text-lux-gold underline-offset-4 hover:underline font-medium"
-                >
-                  let me know
-                </Link>{" "}
-                what you&apos;re looking for and I&apos;ll keep an eye out for similar pieces.
-              </p>
-              <div className="mt-6">
-                <Link
-                  href="/browse"
-                  className="btn-secondary rounded-full"
-                >
-                  Browse all categories
-                </Link>
-              </div>
-            </div>
+            <EmptyState
+              icon={Package}
+              title="No pieces available in this category right now"
+              description="I'm always adding new pieces to the collection. Check back soon, or let me know what you're looking for and I'll keep an eye out for similar pieces."
+              primaryAction={{ label: "Contact Me", href: "/contact" }}
+              secondaryAction={{ label: "Browse All Categories", href: "/browse" }}
+            />
           )}
         </div>
       </section>

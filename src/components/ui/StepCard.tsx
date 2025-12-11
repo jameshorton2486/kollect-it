@@ -1,31 +1,29 @@
 import { LucideIcon } from "lucide-react";
 
 interface StepCardProps {
-  /** Step number (e.g., "01", "1", or "Step 1") */
-  step: string | number;
+  /** Step number (1, 2, 3, etc.) */
+  step: number | string;
   /** Lucide icon to display */
-  icon: LucideIcon;
+  icon?: LucideIcon;
   /** Step title */
   title: string;
   /** Step description */
   description: string;
-  /** Background color variant */
-  variant?: "default" | "alt";
   /** Additional CSS classes */
   className?: string;
 }
 
 /**
- * StepCard - A card component for displaying process steps
- * 
- * Used for: How it works sections, onboarding flows, process explanations
- * 
+ * StepCard - A numbered step card with optional icon
+ *
+ * Used for: Process steps, how-it-works sections, numbered lists
+ *
  * @example
  * <StepCard
- *   step="01"
+ *   step={1}
  *   icon={Search}
- *   title="Browse"
- *   description="Explore our curated collection of fine art and collectibles."
+ *   title="Browse the Collection"
+ *   description="Explore our curated selection of authenticated pieces."
  * />
  */
 export function StepCard({
@@ -33,62 +31,27 @@ export function StepCard({
   icon: Icon,
   title,
   description,
-  variant = "default",
   className = "",
 }: StepCardProps) {
-  // Format step number
-  const formattedStep = typeof step === "number" 
-    ? step.toString().padStart(2, "0") 
-    : step;
-
-  const bgClass = variant === "alt" ? "bg-lux-pearl" : "bg-lux-cream";
-
   return (
-    <div
-      className={`bg-lux-white rounded-xl border border-lux-silver-soft p-6 shadow-clean ${className}`}
-    >
-      {/* Header with Step and Icon */}
-      <div className="flex items-center gap-3 mb-4">
-        <div
-          className={`w-10 h-10 rounded-full ${bgClass} flex items-center justify-center`}
-        >
-          <Icon className="h-5 w-5 text-lux-gold" aria-hidden="true" />
+    <div className={`space-y-4 ${className}`}>
+      {/* Step Number & Icon */}
+      <div className="flex items-center gap-4">
+        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-lux-gold text-lux-black font-serif font-bold text-lg flex items-center justify-center">
+          {step}
         </div>
-        <span className="text-label text-lux-gold">Step {formattedStep}</span>
+        {Icon && (
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-lux-cream flex items-center justify-center">
+            <Icon className="h-5 w-5 text-lux-gold" aria-hidden="true" />
+          </div>
+        )}
       </div>
 
-      {/* Title */}
-      <h3 className="heading-subsection text-lux-black mb-2">{title}</h3>
-
-      {/* Description */}
-      <p className="text-ink-600 text-sm leading-relaxed">{description}</p>
-    </div>
-  );
-}
-
-/**
- * StepCardGrid - A container for displaying multiple StepCards in a grid
- */
-interface StepCardGridProps {
-  children: React.ReactNode;
-  columns?: 2 | 3 | 4;
-  className?: string;
-}
-
-export function StepCardGrid({
-  children,
-  columns = 3,
-  className = "",
-}: StepCardGridProps) {
-  const colsClass = {
-    2: "md:grid-cols-2",
-    3: "md:grid-cols-3",
-    4: "md:grid-cols-2 lg:grid-cols-4",
-  }[columns];
-
-  return (
-    <div className={`grid gap-6 ${colsClass} ${className}`}>
-      {children}
+      {/* Content */}
+      <div>
+        <h3 className="heading-subsection text-lux-black mb-2">{title}</h3>
+        <p className="text-ink-700 leading-relaxed">{description}</p>
+      </div>
     </div>
   );
 }

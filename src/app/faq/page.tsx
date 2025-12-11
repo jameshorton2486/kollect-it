@@ -111,7 +111,7 @@ export default function FAQPage() {
                         </span>
                       </summary>
                       <div className="px-6 pb-6">
-                        <p className="text-ink-600 leading-relaxed">{faq.answer}</p>
+                        <p className="text-ink-700 leading-relaxed">{faq.answer}</p>
                       </div>
                     </details>
                   ))}
@@ -126,7 +126,7 @@ export default function FAQPage() {
       <section className="bg-lux-cream section-normal">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="heading-section text-lux-black mb-4">Still Have Questions?</h2>
-          <p className="text-ink-600 mb-8 max-w-xl mx-auto">
+          <p className="text-ink-700 mb-8 max-w-xl mx-auto">
             Can&apos;t find what you&apos;re looking for? I&apos;m happy to help. Reach out and I&apos;ll get back to you within 24 hours.
           </p>
           <Link href="/contact" className="btn-primary rounded-full">

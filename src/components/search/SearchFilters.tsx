@@ -121,7 +121,7 @@ export default function SearchFilters({
                             onChange={() =>
                               handleCheckboxChange(section.id, option.value)
                             }
-                            className="h-4 w-4 rounded border-border-200 text-ink-900 focus:ring-gold-300"
+                            className="h-4 w-4 rounded border-border-200 text-ink-900 focus:ring-lux-gold"
                           />
                           <span className="flex-1">
                             {option.label}
@@ -150,7 +150,7 @@ export default function SearchFilters({
                             onChange={() =>
                               handleRadioChange(section.id, option.value)
                             }
-                            className="border-border-200 text-ink-900 focus:ring-gold-300"
+                            className="border-border-200 text-ink-900 focus:ring-lux-gold"
                           />
                           <span className="flex-1">{option.label}</span>
                         </label>
@@ -176,7 +176,7 @@ export default function SearchFilters({
                             newValues.filter(Boolean),
                           );
                         }}
-                        className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
+                        className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-lux-gold focus:outline-none focus:ring-1 focus:ring-lux-gold"
                       />
                       <span className="text-ink-300">—</span>
                       <input
@@ -195,7 +195,7 @@ export default function SearchFilters({
                             newValues.filter(Boolean),
                           );
                         }}
-                        className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-300"
+                        className="flex-1 rounded-full border border-border-200 bg-surface-50 px-4 py-2 text-sm text-ink-900 placeholder:text-ink-300 focus:border-lux-gold focus:outline-none focus:ring-1 focus:ring-lux-gold"
                       />
                     </div>
                   )}

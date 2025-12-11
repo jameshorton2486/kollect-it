@@ -229,7 +229,7 @@ export default function AccountPage() {
       <main className="min-h-screen bg-lux-pearl">
         <div className="container mx-auto py-20 text-center">
           <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-lux-gold border-t-transparent" />
-          <p className="mt-4 text-muted">Loading your account...</p>
+          <p className="mt-4 text-lux-gray-dark">Loading your account...</p>
         </div>
       </main>
     );
@@ -259,7 +259,7 @@ export default function AccountPage() {
                 <Package className="h-5 w-5 text-lux-gold" />
                 <div>
                   <p className="text-2xl font-serif font-semibold text-lux-black">{orders.length}</p>
-                  <p className="text-muted">Orders</p>
+                  <p className="text-lux-gray-dark">Orders</p>
                 </div>
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function AccountPage() {
                 <Heart className="h-5 w-5 text-lux-gold" />
                 <div>
                   <p className="text-2xl font-serif font-semibold text-lux-black">{wishlist.length}</p>
-                  <p className="text-muted">Wishlist</p>
+                  <p className="text-lux-gray-dark">Wishlist</p>
                 </div>
               </div>
             </div>
@@ -362,7 +362,7 @@ export default function AccountPage() {
                           <div className="flex justify-between items-start mb-2">
                             <div>
                               <p className="text-label text-lux-gold">Order #{order.orderNumber}</p>
-                              <p className="text-muted">
+                              <p className="text-lux-gray-dark">
                                 {new Date(order.createdAt).toLocaleDateString()}
                               </p>
                             </div>
@@ -440,7 +440,7 @@ export default function AccountPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-lux-black">Email Notifications</p>
-                        <p className="text-muted">Receive updates about your orders</p>
+                        <p className="text-lux-gray-dark">Receive updates about your orders</p>
                       </div>
                       <button
                         onClick={() => setEmailNotifications(!emailNotifications)}
@@ -459,7 +459,7 @@ export default function AccountPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-lux-black">Newsletter</p>
-                        <p className="text-muted">Get updates on new arrivals</p>
+                        <p className="text-lux-gray-dark">Get updates on new arrivals</p>
                       </div>
                       <button
                         onClick={() => setNewsletterSubscribed(!newsletterSubscribed)}

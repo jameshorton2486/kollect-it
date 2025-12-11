@@ -1,10 +1,12 @@
 import { Metadata } from "next";
 import type { Prisma } from "@prisma/client";
 import Link from "next/link";
+import { SlidersHorizontal } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import SortingBar from "@/components/SortingBar";
 import CategoryFilters from "@/components/CategoryFilters";
 import ProductCard from "@/components/ProductCard";
+import { EmptyState } from "@/components/ui";
 
 export const revalidate = 60;
 
@@ -199,7 +201,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
             <div className="flex-1">
               {/* Sort Bar */}
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-lux-silver-soft">
-                <p className="text-muted">
+                <p className="text-lux-gray-dark">
                   Showing {pagedProducts.length} of {totalFiltered} items
                 </p>
                 <SortingBar
@@ -228,15 +230,12 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-xl border border-dashed border-lux-silver-soft bg-lux-cream px-6 py-16 text-center">
-                  <h3 className="heading-subsection mb-2">No items match your filters</h3>
-                  <p className="text-muted mb-6 max-w-md mx-auto">
-                    Try adjusting your filters or clearing them to see more of the collection.
-                  </p>
-                  <Link href="/browse" className="btn-primary rounded-full">
-                    Clear Filters
-                  </Link>
-                </div>
+                <EmptyState
+                  icon={SlidersHorizontal}
+                  title="No items match your filters"
+                  description="Try adjusting your filters or clearing them to see more of the collection."
+                  primaryAction={{ label: "Clear Filters", href: "/browse" }}
+                />
               )}
 
               {/* Pagination */}

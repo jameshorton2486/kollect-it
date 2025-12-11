@@ -101,7 +101,7 @@ export default function ContactForm() {
         className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
           errors[id]
             ? "border-red-500 ring-1 ring-red-500"
-            : "border-border-300 focus:border-gold"
+            : "border-border-300 focus:border-lux-gold focus:ring-2 focus:ring-lux-gold focus:ring-offset-2"
         }`}
         {...(errors[id]
           ? { "aria-invalid": "true", "aria-describedby": `${id}-error` }
@@ -120,7 +120,7 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded border border-border-300 bg-cream p-6 shadow-lg"
+      className="rounded-lg border border-border-200 bg-lux-white p-6 shadow-clean"
     >
       {sent ? (
         <div className="text-center p-8">
@@ -132,7 +132,7 @@ export default function ContactForm() {
           </p>
           <button
             onClick={() => setSent(false)}
-            className="mt-6 text-sm text-ink underline hover:text-gold"
+            className="mt-6 text-sm text-ink underline hover:text-lux-gold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
             type="button"
           >
             Send another message
@@ -140,7 +140,7 @@ export default function ContactForm() {
         </div>
       ) : (
         <>
-          <h2 className="text-2xl font-semibold mb-6 text-ink">Contact Us</h2>
+          <h2 className="font-serif text-2xl font-semibold mb-6 text-lux-black">Contact Us</h2>
 
           {serverError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
@@ -170,7 +170,7 @@ export default function ContactForm() {
               className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
                 errors.message
                   ? "border-red-500 ring-1 ring-red-500"
-                  : "border-border-300 focus:border-gold"
+                  : "border-border-300 focus:border-lux-gold focus:ring-2 focus:ring-lux-gold focus:ring-offset-2"
               }`}
               {...(errors.message
                 ? { "aria-invalid": "true", "aria-describedby": "message-error" }
@@ -190,7 +190,7 @@ export default function ContactForm() {
 
           <button
             type="submit"
-            className="btn-cta w-full py-2.5 font-bold rounded-md bg-cta text-white hover:bg-cta-hover transition-colors duration-200 disabled:bg-surface-300 disabled:cursor-not-allowed"
+            className="w-full py-3 font-semibold rounded-lg bg-lux-gold text-lux-charcoal hover:bg-lux-gold-light transition-colors duration-200 disabled:bg-surface-300 disabled:text-lux-gray disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
             disabled={submitting}
           >
             {submitting ? "Sending…" : "Send Message"}

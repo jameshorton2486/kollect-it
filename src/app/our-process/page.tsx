@@ -78,7 +78,7 @@ export default function OurProcessPage() {
                     <span className="text-label text-lux-gold">{step.number}</span>
                     <h2 className="heading-subsection text-lux-black">{step.title}</h2>
                   </div>
-                  <p className="text-ink-600 leading-relaxed">{step.description}</p>
+                  <p className="text-ink-700 leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -90,7 +90,7 @@ export default function OurProcessPage() {
       <section className="bg-lux-cream section-normal">
         <div className="container mx-auto max-w-4xl">
           <h2 className="heading-section text-lux-gold mb-6">What You Can Expect</h2>
-          <p className="text-ink-600 mb-8">Every listing includes:</p>
+          <p className="text-ink-700 mb-8">Every listing includes:</p>
           <div className="grid sm:grid-cols-2 gap-4">
             {expectations.map((item) => (
               <div

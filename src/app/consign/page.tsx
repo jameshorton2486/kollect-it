@@ -63,7 +63,7 @@ export default function ConsignPage() {
       <section className="bg-lux-pearl section-normal">
         <div className="container mx-auto max-w-4xl">
           <h2 className="heading-section text-lux-black mb-6">What We Accept</h2>
-          <p className="text-ink-600 mb-6">
+          <p className="text-ink-700 mb-6">
             I&apos;m most interested in pieces that fit the focus of the site:
           </p>
           <ul className="grid sm:grid-cols-2 gap-4">
@@ -75,11 +75,11 @@ export default function ConsignPage() {
             ].map((item) => (
               <li key={item} className="flex items-start gap-3">
                 <span className="h-2 w-2 rounded-full bg-lux-gold mt-2 flex-shrink-0" />
-                <span className="text-ink-600">{item}</span>
+                <span className="text-ink-700">{item}</span>
               </li>
             ))}
           </ul>
-          <p className="text-muted mt-6">
+          <p className="text-lux-gray-dark mt-6">
             Items should generally be valued at $500 or more. If you&apos;re not sure whether something is a fit, you can always ask.
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function ConsignPage() {
                 </div>
                 <p className="text-label text-lux-gold mb-2">Step {index + 1}</p>
                 <h3 className="heading-subsection mb-2">{step.title}</h3>
-                <p className="text-muted">{step.description}</p>
+                <p className="text-lux-gray-dark">{step.description}</p>
               </div>
             ))}
           </div>
@@ -113,7 +113,7 @@ export default function ConsignPage() {
           <h2 className="heading-section text-lux-black mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-ink-600 mb-8 max-w-xl mx-auto">
+          <p className="text-ink-700 mb-8 max-w-xl mx-auto">
             Take a few photos, note any damage or repairs, and send everything through the contact page with a short note about the piece.
           </p>
           <Link href="/contact" className="btn-primary rounded-full px-8">
@@ -136,7 +136,7 @@ export default function ConsignPage() {
                 className="bg-lux-white rounded-lg border border-lux-silver-soft p-6"
               >
                 <h3 className="heading-subsection text-lg mb-2">{faq.question}</h3>
-                <p className="text-muted">{faq.answer}</p>
+                <p className="text-lux-gray-dark">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -149,7 +149,7 @@ export default function ConsignPage() {
           <h2 className="heading-section text-lux-black mb-6">
             When Consignment Isn&apos;t a Fit
           </h2>
-          <p className="text-ink-600 mb-6">
+          <p className="text-ink-700 mb-6">
             Sometimes consignment isn&apos;t the best option. For example:
           </p>
           <ul className="space-y-3">
@@ -160,11 +160,11 @@ export default function ConsignPage() {
             ].map((item) => (
               <li key={item} className="flex items-start gap-3">
                 <span className="h-2 w-2 rounded-full bg-lux-gray mt-2 flex-shrink-0" />
-                <span className="text-ink-600">{item}</span>
+                <span className="text-ink-700">{item}</span>
               </li>
             ))}
           </ul>
-          <p className="text-muted mt-6">
+          <p className="text-lux-gray-dark mt-6">
             If that&apos;s the case, I&apos;ll let you know and, if possible, suggest other options you might explore.
           </p>
         </div>

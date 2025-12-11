@@ -58,7 +58,7 @@ export function EmptyState({
 
       {/* Description */}
       {description && (
-        <p className="lead max-w-md text-ink-600">{description}</p>
+        <p className="lead max-w-md text-ink-700">{description}</p>
       )}
 
       {/* Actions */}

@@ -51,7 +51,7 @@ export function CategoryMetricsGrid({ data }: CategoryMetricsGridProps) {
           {data.map((item: CategoryMetrics) => (
             <tr
               key={item.name}
-              className="border-b border-gray-100 hover:bg-surface-50"
+              className="border-b border-border-100 hover:bg-surface-50 transition-colors duration-200"
             >
               <td className="py-3 px-4 text-ink-900 font-medium">
                 {item.name}
@@ -98,4 +98,3 @@ export function CategoryMetricsGrid({ data }: CategoryMetricsGridProps) {
     </div>
   );
 }
-

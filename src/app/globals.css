@@ -287,6 +287,54 @@
   }
 
   /* ---------------------------------------------
+     LUXURY TRANSITION UTILITIES
+     --------------------------------------------- */
+  
+  /* Standard luxury transition */
+  .luxury-transition {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  /* Hover lift effect for cards */
+  .hover-lift {
+    @apply hover:-translate-y-1 hover:shadow-soft transition-all duration-200;
+  }
+
+  /* Hover glow effect for gold elements */
+  .hover-glow {
+    @apply hover:shadow-gold-soft transition-shadow duration-200;
+  }
+
+  /* Card hover shadow */
+  .shadow-card-hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ---------------------------------------------
+     LUXURY MOTION SYSTEM
+     --------------------------------------------- */
+  
+  /* Luxury transition - smooth, premium feel */
+  .luxury-transition {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  /* Hover lift effect for cards */
+  .hover-lift {
+    @apply hover:-translate-y-1 hover:shadow-soft transition-all duration-200;
+  }
+
+  /* Hover glow effect for gold elements */
+  .hover-glow {
+    @apply hover:shadow-gold-soft transition-shadow duration-200;
+  }
+
+  /* Card hover shadow */
+  .shadow-card-hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ---------------------------------------------
      LEGACY TEXT UTILITIES (Keep for compatibility)
      --------------------------------------------- */
   

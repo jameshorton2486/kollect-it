@@ -188,7 +188,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
                 Current order fulfillment status
               </p>
             </div>
-            <Package className="text-amber-600" size={24} />
+            <Package className="text-lux-gold" size={24} />
           </div>
           <div className="flex justify-center">
             <ResponsiveContainer width="100%" height={250}>

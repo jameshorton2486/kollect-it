@@ -39,7 +39,7 @@ export default function AboutPage() {
                 Built from experience on both sides of collecting.
               </h2>
             </div>
-            <div className="space-y-4 text-ink-600">
+            <div className="space-y-4 text-ink-700">
               <p>
                 I&apos;ve spent years building my own collections, helping families navigate estates, and working with auction houses and dealers. Along the way, I noticed how often wonderful pieces were overlooked because of rushed descriptions, poor photography, or missing context.
               </p>
@@ -139,7 +139,7 @@ export default function AboutPage() {
               <h2 className="heading-section text-lux-cream">
                 Have a collection, or thinking about starting one?
               </h2>
-              <p className="text-muted mt-4 max-w-xl">
+              <p className="text-lux-cream/80 mt-4 max-w-xl">
                 I&apos;m happy to look at a single piece, an attic full of objects, or anything in-between. Let&apos;s start with a conversation.
               </p>
             </div>
