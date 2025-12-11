@@ -5,6 +5,8 @@ import { useState } from "react";
 interface Product {
   description: string;
   condition: string | null;
+  provenanceDocUrl: string | null;
+  appraisalDocUrl: string | null;
 }
 
 interface ProductTabsProps {
@@ -107,6 +109,59 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             Each piece is researched and evaluated before being listed. Provenance and documentation are included when available.
           </p>
         </div>
+
+        {/* Documentation Section - Only show if documents exist */}
+        {(product.provenanceDocUrl || product.appraisalDocUrl) && (
+          <div className="rounded-2xl border border-border-200 bg-white p-6">
+            <h4 className="mb-4 flex items-center gap-2 font-serif text-lg text-ink">
+              <span className="text-lux-gold">📄</span> Documentation
+            </h4>
+            <div className="space-y-3">
+              {product.provenanceDocUrl && (
+                <a
+                  href={product.provenanceDocUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-4 rounded-xl border border-border-200 bg-surface-50 hover:bg-surface-100 transition-colors group"
+                >
+                  <span className="text-2xl">📄</span>
+                  <div className="flex-1">
+                    <p className="font-medium text-ink-900 group-hover:text-lux-gold transition-colors">
+                      View Provenance Certificate
+                    </p>
+                    <p className="text-xs text-ink-600 mt-1">
+                      Opens in new tab
+                    </p>
+                  </div>
+                  <span className="text-lux-gold opacity-0 group-hover:opacity-100 transition-opacity">
+                    →
+                  </span>
+                </a>
+              )}
+              {product.appraisalDocUrl && (
+                <a
+                  href={product.appraisalDocUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-4 rounded-xl border border-border-200 bg-surface-50 hover:bg-surface-100 transition-colors group"
+                >
+                  <span className="text-2xl">📄</span>
+                  <div className="flex-1">
+                    <p className="font-medium text-ink-900 group-hover:text-lux-gold transition-colors">
+                      View Appraisal Report
+                    </p>
+                    <p className="text-xs text-ink-600 mt-1">
+                      Opens in new tab
+                    </p>
+                  </div>
+                  <span className="text-lux-gold opacity-0 group-hover:opacity-100 transition-opacity">
+                    →
+                  </span>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-border-200 bg-surface-50 p-6">
             <h4 className="mb-4 font-serif text-lg text-ink">Process</h4>
@@ -169,15 +224,23 @@ export default function ProductTabs({ product }: ProductTabsProps) {
 
   return (
     <div className="rounded-3xl border border-border-200 bg-white/95 p-6 shadow-lg shadow-black/5">
-      <div className="mb-6 flex flex-wrap gap-2 border-b border-border-200 pb-2">
+      <div
+        role="tablist"
+        aria-label="Product information tabs"
+        className="mb-6 flex flex-wrap gap-2 border-b border-border-200 pb-2"
+      >
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
+          const tabId = `${tab.id}-tab`;
+          const panelId = `${tab.id}-panel`;
           return (
             <button
               key={tab.id}
+              id={tabId}
               type="button"
               role="tab"
-              aria-selected={isActive}
+              {...(isActive ? { "aria-selected": "true" } : { "aria-selected": "false" })}
+              aria-controls={panelId}
               className={`whitespace-nowrap rounded-t-xl border-b-2 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.3em] transition-colors ${
                 isActive
                   ? "border-lux-gold text-ink-900"
@@ -191,7 +254,22 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           );
         })}
       </div>
-      <div role="tabpanel">{tabPanels[activeTab]}</div>
+      {tabs.map((tab) => {
+        const isActive = activeTab === tab.id;
+        const tabId = `${tab.id}-tab`;
+        const panelId = `${tab.id}-panel`;
+        return (
+          <div
+            key={tab.id}
+            role="tabpanel"
+            id={panelId}
+            aria-labelledby={tabId}
+            hidden={!isActive}
+          >
+            {isActive && tabPanels[tab.id]}
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -175,7 +175,7 @@ export default function NewProductPage() {
                 required
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 placeholder="Product title"
               />
             </div>
@@ -189,7 +189,7 @@ export default function NewProductPage() {
                 rows={4}
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
+                className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
                 placeholder="Product description"
               />
             </div>
@@ -207,7 +207,7 @@ export default function NewProductPage() {
                   min="0"
                   value={form.price}
                   onChange={(e) => setForm({ ...form, price: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   placeholder="0.00"
                 />
               </div>
@@ -312,7 +312,7 @@ export default function NewProductPage() {
                 id="imageUrl"
                 value={form.imageUrl}
                 onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-                className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 placeholder="https://example.com/image.jpg"
               />
               <p className="text-sm text-lux-gray mt-1">
@@ -334,7 +334,7 @@ export default function NewProductPage() {
                   id="year"
                   value={form.year}
                   onChange={(e) => setForm({ ...form, year: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   placeholder="e.g., 1920"
                 />
               </div>
@@ -348,7 +348,7 @@ export default function NewProductPage() {
                   id="artist"
                   value={form.artist}
                   onChange={(e) => setForm({ ...form, artist: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   placeholder="Artist or maker name"
                 />
               </div>
@@ -364,7 +364,7 @@ export default function NewProductPage() {
                   id="medium"
                   value={form.medium}
                   onChange={(e) => setForm({ ...form, medium: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   placeholder="e.g., Oil on canvas"
                 />
               </div>
@@ -378,7 +378,7 @@ export default function NewProductPage() {
                   id="period"
                   value={form.period}
                   onChange={(e) => setForm({ ...form, period: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   placeholder="e.g., Art Deco"
                 />
               </div>

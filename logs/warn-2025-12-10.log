@@ -28,3 +28,19 @@
 {"timestamp":"2025-12-10T13:14:14.841Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
 {"timestamp":"2025-12-10T13:14:20.876Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
 {"timestamp":"2025-12-10T13:14:31.474Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T14:41:09.275Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T14:41:10.249Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T18:15:40.552Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T18:15:59.998Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T18:16:26.835Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T18:16:27.576Z","level":"warn","message":"Login failed: incorrect password","context":{"userId":"cmi4emhre0003cqn8zcp8czuy","email":"i***@kollect-it.com","userRole":"admin"}}
+{"timestamp":"2025-12-10T18:21:32.267Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T18:21:34.277Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T18:21:36.567Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:16:02.505Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:16:02.924Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:20:03.793Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:20:04.586Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:47:07.947Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:47:09.086Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}
+{"timestamp":"2025-12-10T20:47:12.096Z","level":"warn","message":"NextAuth warning","context":{"code":"DEBUG_ENABLED"}}

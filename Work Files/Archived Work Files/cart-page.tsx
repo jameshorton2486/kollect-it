@@ -347,7 +347,7 @@ export default function CartPage() {
                     id="promo-code"
                     type="text"
                     placeholder="Enter code"
-                    className="flex-1 px-4 py-2 rounded-full border border-lux-silver-soft bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold"
+                    className="flex-1 px-4 py-2 rounded-full border border-lux-silver-soft bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold"
                   />
                   <button className="btn-secondary rounded-full px-5">
                     Apply

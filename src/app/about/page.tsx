@@ -64,25 +64,25 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-2 gap-8">
             <div className="space-y-3">
               <h3 className="heading-subsection">Authentication First</h3>
-              <p className="text-muted">
+              <p className="text-lux-gray-dark">
                 We focus on objects with clear attribution, strong provenance, or enough context to make a confident case. When something is uncertain, we say so—and price it accordingly.
               </p>
             </div>
             <div className="space-y-3">
               <h3 className="heading-subsection">Archival Presentation</h3>
-              <p className="text-muted">
+              <p className="text-lux-gray-dark">
                 Photography, layout, and language are chosen to feel more like a thoughtfully printed catalog than a scrolling feed.
               </p>
             </div>
             <div className="space-y-3">
               <h3 className="heading-subsection">Consignor-First Structure</h3>
-              <p className="text-muted">
+              <p className="text-lux-gray-dark">
                 We partner with estates, dealers, and private collectors to place pieces where they&apos;ll be understood and appreciated, not just sold quickly.
               </p>
             </div>
             <div className="space-y-3">
               <h3 className="heading-subsection">Transparent Communication</h3>
-              <p className="text-muted">
+              <p className="text-lux-gray-dark">
                 You see how we&apos;re describing your pieces, how buyers are responding, and how final prices are reached.
               </p>
             </div>
@@ -103,25 +103,25 @@ export default function AboutPage() {
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="space-y-2">
                 <h3 className="heading-subsection">Established Collectors</h3>
-                <p className="text-muted">
+                <p className="text-lux-gray-dark">
                   Looking to refine or re-balance a collection while keeping a clear record of what has moved, where, and why.
                 </p>
               </div>
               <div className="space-y-2">
                 <h3 className="heading-subsection">Families & Estates</h3>
-                <p className="text-muted">
+                <p className="text-lux-gray-dark">
                   Navigating a houseful of objects, some obviously important, others quietly so. We help you triage, prioritize, and plan.
                 </p>
               </div>
               <div className="space-y-2">
                 <h3 className="heading-subsection">Dealers & Advisors</h3>
-                <p className="text-muted">
+                <p className="text-lux-gray-dark">
                   Partnering on select consignments where our audience, format, and research can add value to your existing channels.
                 </p>
               </div>
               <div className="space-y-2">
                 <h3 className="heading-subsection">New Collectors</h3>
-                <p className="text-muted">
+                <p className="text-lux-gray-dark">
                   People who are ready to move beyond impulse buys and start acquiring with intention, context, and long-term enjoyment in mind.
                 </p>
               </div>

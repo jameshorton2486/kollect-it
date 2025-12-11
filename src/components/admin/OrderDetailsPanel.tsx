@@ -196,7 +196,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   value={internalNote}
                   onChange={(e) => setInternalNote(e.target.value)}
                   placeholder="Add a note..."
-                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 />
               </div>
             </div>
@@ -416,4 +416,3 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
     </div>
   );
 }
-

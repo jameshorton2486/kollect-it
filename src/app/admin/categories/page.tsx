@@ -218,7 +218,7 @@ export default function CategoriesPage() {
                           },
                         })
                       }
-                      className="w-full p-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
+                      className="w-full p-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
                       rows={3}
                     />
                   ) : (
@@ -292,4 +292,3 @@ export default function CategoriesPage() {
     </div>
   );
 }
-

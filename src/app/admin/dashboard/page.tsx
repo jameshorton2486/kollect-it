@@ -214,7 +214,7 @@ export default function AdminDashboard() {
               <p className="text-sm text-lux-cream/80 mt-1">
                 Welcome back, {session.user.name || session.user.email}
               </p>
-              <p className="text-xs text-lux-gray-light">
+              <p className="text-xs text-lux-gray-dark">
                 {new Date().toLocaleString()}
               </p>
             </div>
@@ -359,7 +359,7 @@ export default function AdminDashboard() {
                   setPage(1);
                 }}
                 placeholder="Search products..."
-                className="w-64 max-w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                className="w-64 max-w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                 aria-label="Search products"
               />
               <select
@@ -688,7 +688,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           />
         </div>
 
@@ -707,7 +707,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent resize-none"
           />
         </div>
 
@@ -726,7 +726,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, price: e.target.value })
             }
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
           />
         </div>
 
@@ -788,7 +788,7 @@ function ProductForm({
             id="year"
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., 1920, c. 1850, 19th Century"
           />
         </div>
@@ -807,7 +807,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, artist: e.target.value })
             }
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., John Smith, Unknown"
           />
         </div>
@@ -826,7 +826,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, medium: e.target.value })
             }
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., Oil on Canvas, Sterling Silver"
           />
         </div>
@@ -845,7 +845,7 @@ function ProductForm({
             onChange={(e) =>
               setFormData({ ...formData, period: e.target.value })
             }
-            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+            className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
             placeholder="e.g., Victorian, Art Deco, WWII"
           />
         </div>
@@ -899,4 +899,3 @@ function ProductForm({
     </div>
   );
 }
-

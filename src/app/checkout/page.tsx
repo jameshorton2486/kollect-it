@@ -173,7 +173,7 @@ export default function CheckoutPage() {
   const stripePromise = stripeEnabled ? getStripe() : null;
 
   const inputClasses =
-    "w-full px-4 py-3 rounded-lg border border-lux-silver-soft bg-lux-white text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold transition";
+    "w-full px-4 py-3 rounded-lg border border-lux-silver-soft bg-lux-white text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold transition";
 
   return (
     <main className="min-h-screen bg-lux-pearl">

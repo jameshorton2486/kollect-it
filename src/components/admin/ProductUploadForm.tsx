@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Loader, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
 import MultiImageUpload from "./MultiImageUpload";
+import SingleDocumentUpload from "./SingleDocumentUpload";
 import { validateSKU } from "@/lib/utils/image-parser";
 
 interface AnalysisResult {
@@ -31,7 +32,7 @@ interface UploadedImage {
 
 export function ProductUploadForm() {
   const [step, setStep] = useState<"setup" | "upload" | "analyze" | "edit" | "success">("setup");
-  
+
   // Step 1: Setup (SKU + Category + Notes)
   const [sku, setSku] = useState("");
   const [skuError, setSkuError] = useState("");
@@ -42,14 +43,18 @@ export function ProductUploadForm() {
   const [productNotes, setProductNotes] = useState("");
   const [appraisalUrls, setAppraisalUrls] = useState<string[]>([]);
   const [newAppraisalUrl, setNewAppraisalUrl] = useState("");
-  
+
   // Step 2: Images
   const [images, setImages] = useState<UploadedImage[]>([]);
-  
+
+  // Step 2.5: Documents (Optional)
+  const [provenanceDocUrl, setProvenanceDocUrl] = useState<string | null>(null);
+  const [appraisalDocUrl, setAppraisalDocUrl] = useState<string | null>(null);
+
   // Step 3: AI Analysis
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
-  
+
   // Step 4: Edit & Create
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string>("");
@@ -106,7 +111,7 @@ export function ProductUploadForm() {
 
   function handleSKUChange(value: string) {
     setSku(value);
-    
+
     // Validate on change
     if (value) {
       const validation = validateSKU(value);
@@ -221,6 +226,8 @@ export function ProductUploadForm() {
           aiAnalysis: analysis,
           productNotes,
           appraisalUrls,
+          appraisalDocUrl: appraisalDocUrl || undefined,
+          provenanceDocUrl: provenanceDocUrl || undefined,
           isDraft: true,
         }),
       });
@@ -242,6 +249,8 @@ export function ProductUploadForm() {
         setProductNotes("");
         setAppraisalUrls([]);
         setImages([]);
+        setProvenanceDocUrl(null);
+        setAppraisalDocUrl(null);
         setAnalysis(null);
         setFormData({
           title: "",
@@ -272,7 +281,7 @@ export function ProductUploadForm() {
           const stepIndex = ["setup", "upload", "analyze", "edit"].indexOf(step);
           const isActive = i === stepIndex;
           const isComplete = i < stepIndex;
-          
+
           return (
             <div key={s} className="flex items-center">
               <div
@@ -340,7 +349,7 @@ export function ProductUploadForm() {
                 placeholder="SKU-2025-001"
                 className={`flex-1 px-4 py-2 bg-lux-charcoal border ${
                   skuError ? "border-red-600" : "border-lux-charcoal/50"
-                } rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-light`}
+                } rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-dark`}
                 aria-label="Product SKU"
               />
               <button
@@ -441,7 +450,7 @@ COMPARABLES:
 - Similar copies: $1,500–$2,500
 
 TARGET_PRICE: $1,750`}
-              className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold font-mono text-sm text-lux-cream placeholder:text-lux-gray-light"
+              className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold font-mono text-sm text-lux-cream placeholder:text-lux-gray-dark"
             />
           </div>
 
@@ -458,7 +467,7 @@ TARGET_PRICE: $1,750`}
                 onChange={(e) => setNewAppraisalUrl(e.target.value)}
                 placeholder="https://drive.google.com/file/d/abc123/view"
                 aria-label="Appraisal document URL"
-                className="flex-1 px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-light"
+                className="flex-1 px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-dark"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -517,6 +526,34 @@ TARGET_PRICE: $1,750`}
 
           <MultiImageUpload onImagesUploaded={handleImagesUploaded} />
 
+          {/* Documentation Section (Optional) */}
+          <div className="mt-8 pt-8 border-t border-lux-charcoal/30">
+            <div>
+              <h3 className="text-lg font-semibold mb-2 text-lux-cream">Documentation (Optional)</h3>
+              <p className="text-sm text-lux-gray-dark mb-4">
+                Upload provenance certificates or appraisal documents to support product authenticity.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <SingleDocumentUpload
+                label="Provenance Document"
+                value={provenanceDocUrl}
+                onChange={setProvenanceDocUrl}
+                accept=".pdf,.jpg,.jpeg,.png,.webp"
+                maxSizeMB={10}
+              />
+
+              <SingleDocumentUpload
+                label="Third-Party Appraisal"
+                value={appraisalDocUrl}
+                onChange={setAppraisalDocUrl}
+                accept=".pdf,.jpg,.jpeg,.png,.webp"
+                maxSizeMB={10}
+              />
+            </div>
+          </div>
+
           {images.length > 0 && (
             <button
               onClick={() => setStep("analyze")}
@@ -543,7 +580,7 @@ TARGET_PRICE: $1,750`}
               <Sparkles className="w-6 h-6 text-lux-gold" />
               <div>
                 <p className="font-medium text-lux-cream">Ready to analyze</p>
-                <p className="text-sm text-lux-gray-light">
+                <p className="text-sm text-lux-gray-dark">
                   Using {images.length} images and {productNotes ? "product notes" : "no notes"}
                 </p>
               </div>
@@ -643,7 +680,7 @@ TARGET_PRICE: $1,750`}
                 aria-label="Suggested product price"
               />
               {analysis.priceReasoning && (
-                <p className="text-sm text-lux-gray-light mt-1">{analysis.priceReasoning}</p>
+                <p className="text-sm text-lux-gray-dark mt-1">{analysis.priceReasoning}</p>
               )}
             </div>
 
@@ -721,4 +758,3 @@ TARGET_PRICE: $1,750`}
     </div>
   );
 }
-

@@ -49,6 +49,8 @@ export async function POST(req: NextRequest) {
       isDraft = true,
       productNotes,           // ✨ NEW: Raw notes
       appraisalUrls = [],     // ✨ NEW: PDF links
+      appraisalDocUrl,       // ✨ NEW: Uploaded appraisal document URL
+      provenanceDocUrl,       // ✨ NEW: Uploaded provenance document URL
     } = body;
 
     console.log(`\n📦 [API] Create product request`);
@@ -150,6 +152,8 @@ export async function POST(req: NextRequest) {
         subcategoryId: subcategoryId || null,
         productNotes,
         appraisalUrls,
+        appraisalDocUrl: appraisalDocUrl || null,
+        provenanceDocUrl: provenanceDocUrl || null,
         
         // AI-generated fields
         estimatedEra,

@@ -159,13 +159,13 @@ export default function AdminProductsPage() {
         <div className="bg-lux-white rounded-xl border border-lux-silver-soft p-4 mb-6 shadow-clean">
           <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-lux-gray-light" size={20} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-lux-gray-dark" size={20} />
               <input
                 type="text"
                 placeholder="Search by title or SKU..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
               />
             </div>
             <select
@@ -195,7 +195,7 @@ export default function AdminProductsPage() {
         <div className="bg-lux-white rounded-xl border border-lux-silver-soft overflow-hidden shadow-clean">
           {products.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <Package className="text-lux-gray-light mb-4" size={64} />
+              <Package className="text-lux-gray-dark mb-4" size={64} />
               <h3 className="text-xl font-medium text-lux-black mb-2">No Products Yet</h3>
               <p className="text-ink-600 mb-4">Get started by adding your first product.</p>
               <Link
@@ -235,7 +235,7 @@ export default function AdminProductsPage() {
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-lux-gray-light">
+                                <div className="w-full h-full flex items-center justify-center text-lux-gray-dark">
                                   <Package size={20} />
                                 </div>
                               )}

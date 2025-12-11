@@ -135,7 +135,7 @@ function ResetPasswordForm() {
     `w-full pl-10 pr-10 py-3 rounded-lg border transition-all ${
       hasError
         ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
-        : "border-lux-silver-soft bg-lux-white text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
+        : "border-lux-silver-soft bg-lux-white text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
     }`;
 
   // Loading state while verifying token
@@ -277,7 +277,7 @@ function ResetPasswordForm() {
                   {passwordStrength.map((req) => (
                     <div key={req.label} className="flex items-center gap-2 text-xs">
                       <Check
-                        className={`h-3 w-3 ${req.met ? "text-green-500" : "text-lux-gray-light"}`}
+                        className={`h-3 w-3 ${req.met ? "text-green-500" : "text-lux-gray-dark"}`}
                       />
                       <span className={req.met ? "text-green-600" : "text-lux-gray"}>
                         {req.label}

@@ -27,7 +27,7 @@ export default function ValueBar() {
             <div key={item.title} className="space-y-3">
               <item.icon className="mx-auto h-8 w-8 text-lux-gold" strokeWidth={1.5} />
               <h3 className="heading-subsection text-lux-charcoal">{item.title}</h3>
-              <p className="text-muted">{item.caption}</p>
+              <p className="text-lux-gray-dark">{item.caption}</p>
             </div>
           ))}
         </div>

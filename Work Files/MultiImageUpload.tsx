@@ -206,7 +206,7 @@ export function MultiImageUpload({
           </div>
         ) : (
           <div className="flex flex-col items-center gap-3">
-            <Upload className="w-12 h-12 text-lux-gray-light" />
+            <Upload className="w-12 h-12 text-lux-gray-dark" />
             <h3 className="text-lg font-medium text-lux-black">
               Drag & Drop Images Here
             </h3>
@@ -218,7 +218,7 @@ export function MultiImageUpload({
             >
               Browse Files
             </button>
-            <p className="text-sm text-lux-gray-light mt-2">
+            <p className="text-sm text-lux-gray-dark mt-2">
               Max {maxImages} images • Supports JPG, PNG, WebP
             </p>
           </div>

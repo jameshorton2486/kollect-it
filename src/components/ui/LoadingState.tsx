@@ -39,7 +39,7 @@ export function LoadingState({
         aria-label="Loading"
       >
         <div className="w-10 h-10 border-4 border-lux-gold/30 border-t-lux-gold rounded-full animate-spin" />
-        {text && <p className="text-muted">{text}</p>}
+        {text && <p className="text-lux-gray-dark">{text}</p>}
         <span className="sr-only">Loading...</span>
       </div>
     );

@@ -22,9 +22,9 @@ interface PageHeaderProps {
 
 /**
  * PageHeader - A standardized header component for all pages
- * 
+ *
  * Provides consistent styling for page titles, descriptions, and breadcrumbs.
- * 
+ *
  * @example
  * <PageHeader
  *   label="Fine Art"
@@ -65,7 +65,7 @@ export function PageHeader({
             {breadcrumbs.map((crumb, index) => (
               <span key={crumb.href} className="flex items-center gap-2">
                 {index > 0 && (
-                  <span className="text-lux-gray-light" aria-hidden="true">
+                  <span className="text-lux-gray-dark" aria-hidden="true">
                     /
                   </span>
                 )}

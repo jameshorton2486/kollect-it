@@ -18,6 +18,8 @@
     "db:seed": "bun x prisma db seed",
     "db:studio": "bun x prisma studio",
     "db:setup": "bun x prisma generate && bun x prisma migrate dev --name init && bun x prisma db seed",
+    "clean": "npx rimraf .next node_modules/.prisma",
+    "dev:fresh": "npm run clean && npx prisma generate && npm run dev",
     "postinstall": "bun x prisma generate",
     "health-check": "bun run scripts/health-check.ts",
     "verify-production": "bun run health-check && bun run typecheck && bun run build",

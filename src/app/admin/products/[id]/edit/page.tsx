@@ -378,7 +378,7 @@ export default function EditProductPage() {
               />
               <div>
                 <span className="font-medium">Publish immediately</span>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-lux-gray-dark">
                   Uncheck to save as draft
                 </p>
               </div>

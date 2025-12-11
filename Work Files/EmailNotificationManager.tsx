@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Mail, 
-  Bell, 
-  Settings, 
-  Send, 
-  Clock, 
-  CheckCircle2, 
+import {
+  Mail,
+  Bell,
+  Settings,
+  Send,
+  Clock,
+  CheckCircle2,
   AlertCircle,
   FileText,
   Loader
@@ -107,18 +107,18 @@ export function EmailNotificationManager() {
   const handleToggleSetting = async (settingId: string) => {
     setSaving(true);
     setError("");
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 500));
-    
-    setSettings(prev => 
-      prev.map(setting => 
-        setting.id === settingId 
+
+    setSettings(prev =>
+      prev.map(setting =>
+        setting.id === settingId
           ? { ...setting, enabled: !setting.enabled }
           : setting
       )
     );
-    
+
     setSaving(false);
     setSuccess("Settings updated");
     setTimeout(() => setSuccess(""), 3000);
@@ -127,7 +127,7 @@ export function EmailNotificationManager() {
   const handleTestEmail = async (templateId: string) => {
     setLoading(true);
     setError("");
-    
+
     try {
       // Simulate sending test email
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -217,7 +217,7 @@ export function EmailNotificationManager() {
                   <div>
                     <h3 className="font-semibold text-lux-black">{template.name}</h3>
                     <p className="text-sm text-lux-gray mt-1">{template.description}</p>
-                    <p className="text-sm text-lux-gray-light mt-2">
+                    <p className="text-sm text-lux-gray-dark mt-2">
                       Subject: {template.subject}
                     </p>
                   </div>

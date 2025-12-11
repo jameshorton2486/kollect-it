@@ -50,12 +50,12 @@ export function Footer() {
                 <span className="text-lux-gold">-It</span>
               </h2>
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-lux-gray-light">
+            <p className="max-w-xs text-sm leading-relaxed text-lux-gray-dark">
               Curated antiques, art, books, militaria, and rare objects — thoughtfully photographed and authenticated.
             </p>
 
             {/* Contact info */}
-            <div className="space-y-1 text-sm text-lux-gray-light">
+            <div className="space-y-1 text-sm text-lux-gray-dark">
               <p>San Antonio, Texas</p>
               <a
                 href="tel:+14693866065"
@@ -73,16 +73,16 @@ export function Footer() {
 
             {/* Social icons */}
             <div className="flex gap-3 pt-2">
-              <a href="mailto:james@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-light hover:bg-white/20 hover:text-white transition-all">
+              <a href="mailto:james@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-dark hover:bg-white/20 hover:text-white transition-all">
                 <Mail className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-light hover:bg-white/20 hover:text-white transition-all">
+              <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-dark hover:bg-white/20 hover:text-white transition-all">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-light hover:bg-white/20 hover:text-white transition-all">
+              <a href="#" aria-label="Facebook" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-dark hover:bg-white/20 hover:text-white transition-all">
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Twitter" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-light hover:bg-white/20 hover:text-white transition-all">
+              <a href="#" aria-label="Twitter" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-gray-dark hover:bg-white/20 hover:text-white transition-all">
                 <Twitter className="h-4 w-4" />
               </a>
             </div>
@@ -102,7 +102,7 @@ export function Footer() {
                       <li key={link.label}>
                         <Link
                           href={link.href}
-                          className="text-sm text-lux-gray-light hover:text-white transition-colors"
+                          className="text-sm text-lux-gray-dark hover:text-white transition-colors"
                         >
                           {link.label}
                         </Link>

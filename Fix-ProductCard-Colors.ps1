@@ -1,23 +1,23 @@
-<# 
+<#
 .SYNOPSIS
     Fixes color inconsistencies in ProductCard.tsx
-    
+
 .DESCRIPTION
     This script standardizes the color system in ProductCard.tsx by replacing
     Tailwind gray-* classes with the Kollect-It design system ink-* and lux-* classes.
-    
+
     Changes made:
-    - text-gray-300 -> text-lux-gray-light (for placeholder icons)
+    - text-gray-300 -> text-lux-gray-dark (for placeholder icons)
     - text-gray-600 -> text-ink-600 (for secondary/muted text)
-    
+
 .NOTES
     Author: Claude (Anthropic)
     Date: December 2024
     For: Kollect-It Style Consistency Project
-    
+
 .EXAMPLE
     .\Fix-ProductCard-Colors.ps1
-    
+
 .EXAMPLE
     .\Fix-ProductCard-Colors.ps1 -WhatIf
     Shows what changes would be made without actually making them
@@ -27,7 +27,7 @@
 param(
     [Parameter()]
     [string]$ProjectRoot = ".",
-    
+
     [Parameter()]
     [switch]$NoBackup
 )
@@ -41,7 +41,7 @@ $Replacements = @(
     @{
         Description = "Placeholder icon color (subtle gray for icons)"
         Find = 'text-gray-300'
-        Replace = 'text-lux-gray-light'
+        Replace = 'text-lux-gray-dark'
     },
     @{
         Description = "Secondary text color (muted text)"
@@ -117,10 +117,10 @@ if (-not $NoBackup) {
     if (-not (Test-Path $BackupPath)) {
         New-Item -ItemType Directory -Path $BackupPath -Force | Out-Null
     }
-    
+
     $Timestamp = Get-Date -Format "yyyy-MM-dd_HHmmss"
     $BackupFile = Join-Path $BackupPath "ProductCard_$Timestamp.tsx.bak"
-    
+
     if ($PSCmdlet.ShouldProcess($FilePath, "Create backup")) {
         Copy-Item $FilePath $BackupFile
         Write-ColorOutput "`nBackup created: $(Get-RelativePath $BackupFile)" "Gray"
@@ -133,7 +133,7 @@ Write-ColorOutput "----------------" "Yellow"
 
 foreach ($replacement in $Replacements) {
     $beforeCount = ([regex]::Matches($ModifiedContent, [regex]::Escape($replacement.Find))).Count
-    
+
     if ($beforeCount -gt 0) {
         $changeDesc = "$($replacement.Find) -> $($replacement.Replace)"
         if ($PSCmdlet.ShouldProcess($changeDesc, "Replace")) {
@@ -161,7 +161,7 @@ if (-not $NoBackup -and $BackupFile -and -not $WhatIfPreference) {
 
 Write-ColorOutput "`nCOLOR MAPPING REFERENCE" "Yellow"
 Write-ColorOutput "-----------------------" "Yellow"
-Write-ColorOutput "  text-gray-300 -> text-lux-gray-light  (HSL 28 8% 80%  - Hex #cdc9c6)" "Gray"
+Write-ColorOutput "  text-gray-300 -> text-lux-gray-dark  (HSL 28 8% 80%  - Hex #cdc9c6)" "Gray"
 Write-ColorOutput "  text-gray-600 -> text-ink-600         (HSL 26 12% 48% - Hex #7f7971)" "Gray"
 
 Write-ColorOutput "`nNEXT STEPS" "Cyan"

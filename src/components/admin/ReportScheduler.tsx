@@ -174,7 +174,7 @@ export default function ReportScheduler() {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="w-full px-3 py-2 bg-lux-charcoal/80 border border-lux-gold/50 rounded-lg text-lux-cream placeholder:text-lux-gray-light focus:border-lux-gold focus:outline-none focus:ring-2 focus:ring-lux-gold"
+                className="w-full px-3 py-2 bg-lux-charcoal/80 border border-lux-gold/50 rounded-lg text-lux-cream placeholder:text-lux-gray-dark focus:border-lux-gold focus:outline-none focus:ring-2 focus:ring-lux-gold"
                 placeholder="e.g., Weekly Analytics"
               />
             </div>
@@ -230,7 +230,7 @@ export default function ReportScheduler() {
                   onChange={(e) =>
                     setFormData({ ...formData, recipients: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-lux-charcoal/80 border border-lux-gold/50 rounded-lg text-lux-cream placeholder:text-lux-gray-light focus:border-lux-gold focus:outline-none focus:ring-2 focus:ring-lux-gold"
+                  className="w-full px-3 py-2 bg-lux-charcoal/80 border border-lux-gold/50 rounded-lg text-lux-cream placeholder:text-lux-gray-dark focus:border-lux-gold focus:outline-none focus:ring-2 focus:ring-lux-gold"
                   placeholder="email@example.com"
                 />
               </div>
@@ -274,7 +274,7 @@ export default function ReportScheduler() {
                     <h3 className="text-lg font-semibold text-lux-cream">
                       {report.name}
                     </h3>
-                    <p className="text-sm text-lux-gray-light mt-1">
+                    <p className="text-sm text-lux-gray-dark mt-1">
                       {report.frequency} • {report.format} • {report.recipients}
                     </p>
                     <p className="text-xs text-lux-gray mt-1">
@@ -369,4 +369,3 @@ export default function ReportScheduler() {
     </div>
   );
 }
-

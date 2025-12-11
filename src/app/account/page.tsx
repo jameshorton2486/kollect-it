@@ -346,7 +346,7 @@ export default function AccountPage() {
                   <h2 className="heading-section text-lux-black mb-6">Order History</h2>
                   {orders.length === 0 ? (
                     <div className="text-center py-12">
-                      <ShoppingBag className="h-12 w-12 text-lux-gray-light mx-auto mb-4" />
+                      <ShoppingBag className="h-12 w-12 text-lux-gray-dark mx-auto mb-4" />
                       <p className="text-lux-gray-dark mb-4">No orders yet</p>
                       <Link href="/browse" className="btn-primary rounded-full">
                         Start Shopping
@@ -386,7 +386,7 @@ export default function AccountPage() {
                   <h2 className="heading-section text-lux-black mb-6">Saved Items</h2>
                   {wishlist.length === 0 ? (
                     <div className="text-center py-12">
-                      <Heart className="h-12 w-12 text-lux-gray-light mx-auto mb-4" />
+                      <Heart className="h-12 w-12 text-lux-gray-dark mx-auto mb-4" />
                       <p className="text-lux-gray-dark mb-4">No saved items yet</p>
                       <Link href="/browse" className="btn-primary rounded-full">
                         Browse Collection

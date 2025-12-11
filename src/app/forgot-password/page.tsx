@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
     `w-full pl-10 pr-4 py-3 rounded-lg border transition-all ${
       hasError
         ? "border-red-500 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
-        : "border-lux-silver-soft bg-lux-white text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
+        : "border-lux-silver-soft bg-lux-white text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-lux-gold"
     }`;
 
   // Success State
@@ -75,7 +75,7 @@ export default function ForgotPasswordPage() {
 
             <h1 className="heading-section text-lux-black">Check Your Email</h1>
             <p className="lead mt-4">
-              If an account exists for <strong className="text-lux-black">{email}</strong>, 
+              If an account exists for <strong className="text-lux-black">{email}</strong>,
               we&apos;ve sent password reset instructions to that address.
             </p>
             <p className="text-muted mt-4">

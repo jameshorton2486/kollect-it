@@ -91,14 +91,14 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
             <Link href="/browse" className="hover:text-lux-gold transition-colors">
               Browse
             </Link>
-            <span className="text-lux-gray-light">/</span>
+            <span className="text-lux-gray-dark">/</span>
             <Link
               href={`/category/${subcategory.category.slug}`}
               className="hover:text-lux-gold transition-colors"
             >
               {subcategory.category.name}
             </Link>
-            <span className="text-lux-gray-light">/</span>
+            <span className="text-lux-gray-dark">/</span>
             <span className="text-lux-black font-medium">{subcategory.name}</span>
           </nav>
 
@@ -108,7 +108,7 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
           </p>
           <h1 className="heading-page text-lux-black">{subcategory.name}</h1>
           <p className="lead mt-4 max-w-3xl">
-            A carefully selected collection of {subcategory.name.toLowerCase()} pieces, 
+            A carefully selected collection of {subcategory.name.toLowerCase()} pieces,
             each one chosen for its quality, character, or story.
           </p>
         </div>

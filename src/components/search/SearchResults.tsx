@@ -137,7 +137,7 @@ export default function SearchResults() {
           <h1 className="heading-page text-lux-black">
             {query ? `Results for "${query}"` : "Search the Catalog"}
           </h1>
-          <p className="text-muted mt-4">
+          <p className="text-lux-gray-dark mt-4">
             {isLoading
               ? "Searching inventory…"
               : `${results.total} pieces match your criteria`}
@@ -268,7 +268,7 @@ export default function SearchResults() {
                           {product.title}
                         </h3>
                         {product.condition && (
-                          <p className="text-muted mt-1">
+                          <p className="text-lux-gray-dark mt-1">
                             Condition: {product.condition}
                           </p>
                         )}

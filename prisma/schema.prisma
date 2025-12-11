@@ -92,6 +92,8 @@ model Product {
   seoDescription      String?
   seoTitle            String?
   appraisalUrls       String[]             @default([])
+  appraisalDocUrl     String?              @map("appraisal_doc_url")
+  provenanceDocUrl    String?              @map("provenance_doc_url")
   productNotes        String?
   sku                 String               @unique
   skuNumber           Int?

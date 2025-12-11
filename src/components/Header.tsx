@@ -52,21 +52,21 @@ export default function Header() {
         className="container mx-auto px-4 sm:px-6"
         aria-label="Main navigation"
       >
-        <div className="flex h-18 items-center justify-between gap-6 py-5">
+        <div className="flex h-18 items-center justify-between gap-6 py-4">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center group">
-              <span className="font-serif text-2xl sm:text-3xl font-bold text-lux-cream group-hover:text-lux-white transition-colors tracking-tight">
+              <span className="font-serif text-2xl sm:text-3xl font-bold text-lux-cream group-hover:text-lux-white transition-colors duration-200 tracking-tight">
                 Kollect
               </span>
-              <span className="font-serif text-2xl sm:text-3xl font-bold text-lux-gold group-hover:text-lux-gold-light transition-colors tracking-tight">
+              <span className="font-serif text-2xl sm:text-3xl font-bold text-lux-gold group-hover:text-lux-gold-light transition-colors duration-200 tracking-tight">
                 -It
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:gap-8 lg:gap-10">
+          <div className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
             {navigation.map((item) => {
               const isActive = isLinkActive(item.href);
               return (
@@ -74,10 +74,10 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "relative text-xs font-medium tracking-widest uppercase transition-all duration-200 py-1",
+                    "relative font-serif text-heading-xs tracking-wide transition-colors duration-200 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal",
                     isActive
                       ? "text-lux-cream"
-                      : "text-lux-cream/70 hover:text-lux-gold-light",
+                      : "text-lux-cream hover:text-lux-gold-light",
                   )}
                 >
                   {item.name}
@@ -90,15 +90,15 @@ export default function Header() {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-6">
             <Button
               asChild
               variant="ghost"
               size="icon"
-              className="h-10 w-10 text-lux-cream/70 hover:text-lux-gold-light hover:bg-white/5 rounded-full"
+              className="h-10 w-10 text-lux-cream hover:text-lux-gold-light hover:bg-white/5 rounded-full transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
             >
               <Link href="/search">
-                <Search className="h-[18px] w-[18px]" />
+                <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
               </Link>
             </Button>
@@ -107,10 +107,10 @@ export default function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="h-10 w-10 text-lux-cream/70 hover:text-lux-gold-light hover:bg-white/5 rounded-full"
+              className="h-10 w-10 text-lux-cream hover:text-lux-gold-light hover:bg-white/5 rounded-full transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
             >
               <Link href="/wishlist">
-                <Heart className="h-[18px] w-[18px]" />
+                <Heart className="h-5 w-5" />
                 <span className="sr-only">Wishlist</span>
               </Link>
             </Button>
@@ -119,10 +119,10 @@ export default function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="h-10 w-10 text-lux-cream/70 hover:text-lux-gold-light hover:bg-white/5 rounded-full"
+              className="h-10 w-10 text-lux-cream hover:text-lux-gold-light hover:bg-white/5 rounded-full transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
             >
               <Link href="/account">
-                <User className="h-[18px] w-[18px]" />
+                <User className="h-5 w-5" />
                 <span className="sr-only">Account</span>
               </Link>
             </Button>
@@ -131,10 +131,10 @@ export default function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="h-10 w-10 text-lux-cream/70 hover:text-lux-gold-light hover:bg-white/5 rounded-full relative"
+              className="h-10 w-10 text-lux-cream hover:text-lux-gold-light hover:bg-white/5 rounded-full relative transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
             >
               <Link href="/cart">
-                <ShoppingCart className="h-[18px] w-[18px]" />
+                <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">Cart</span>
               </Link>
             </Button>
@@ -142,7 +142,7 @@ export default function Header() {
             {/* Consign Button */}
             <Button
               asChild
-              className="ml-4 rounded-full bg-lux-gold px-5 py-2 text-xs font-semibold uppercase tracking-wider text-lux-charcoal hover:bg-lux-gold-light transition-all"
+              className="ml-4 rounded-full bg-lux-gold px-5 py-2 text-xs font-semibold uppercase tracking-wider text-lux-charcoal hover:bg-lux-gold-light hover:scale-[1.02] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
             >
               <Link href="/consign">Consign</Link>
             </Button>
@@ -154,7 +154,7 @@ export default function Header() {
               asChild
               variant="ghost"
               size="icon"
-              className="h-10 w-10 text-lux-cream hover:bg-white/10 rounded-full"
+              className="h-10 w-10 text-lux-cream hover:text-lux-gold-light hover:bg-white/10 rounded-full transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
             >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
@@ -166,7 +166,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="h-10 w-10 text-lux-cream hover:bg-white/10 rounded-full"
+              className="h-10 w-10 text-lux-cream hover:text-lux-gold-light hover:bg-white/10 rounded-full transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
@@ -186,7 +186,7 @@ export default function Header() {
             id="mobile-menu"
             className="md:hidden absolute left-0 right-0 top-full bg-lux-charcoal border-b border-white/10 shadow-2xl"
           >
-            <div className="flex flex-col px-4 py-4">
+            <nav className="flex flex-col px-4 py-4" aria-label="Mobile navigation">
               {navigation.map((item) => {
                 const isActive = isLinkActive(item.href);
                 return (
@@ -194,10 +194,10 @@ export default function Header() {
                     key={item.name}
                     href={item.href}
                     className={cn(
-                      "text-base font-medium py-3.5 border-b border-white/5 last:border-0 tracking-widest uppercase transition-colors",
+                      "font-serif text-base py-3.5 border-b border-white/5 last:border-0 tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal",
                       isActive
                         ? "text-lux-gold"
-                        : "text-lux-cream/80 hover:text-lux-gold-light",
+                        : "text-lux-cream hover:text-lux-gold-light",
                     )}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -210,37 +210,37 @@ export default function Header() {
               <div className="pt-4 mt-2 border-t border-white/10 flex flex-col gap-2">
                 <Link
                   href="/account"
-                  className="flex items-center gap-3 py-3 text-sm text-lux-cream/70 hover:text-lux-gold-light transition-colors"
+                  className="flex items-center gap-3 py-3 text-sm text-lux-cream hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <User className="h-4 w-4" />
+                  <User className="h-5 w-5 text-lux-cream" />
                   My Account
                 </Link>
                 <Link
                   href="/wishlist"
-                  className="flex items-center gap-3 py-3 text-sm text-lux-cream/70 hover:text-lux-gold-light transition-colors"
+                  className="flex items-center gap-3 py-3 text-sm text-lux-cream hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Heart className="h-4 w-4" />
+                  <Heart className="h-5 w-5 text-lux-cream" />
                   Wishlist
                 </Link>
                 <Link
                   href="/search"
-                  className="flex items-center gap-3 py-3 text-sm text-lux-cream/70 hover:text-lux-gold-light transition-colors"
+                  className="flex items-center gap-3 py-3 text-sm text-lux-cream hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Search className="h-4 w-4" />
+                  <Search className="h-5 w-5 text-lux-cream" />
                   Search
                 </Link>
                 <Link
                   href="/consign"
-                  className="flex items-center gap-3 py-3 text-sm font-semibold text-lux-gold hover:text-lux-gold-light transition-colors"
+                  className="flex items-center gap-3 py-3 text-sm font-semibold text-lux-gold hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Consign
                 </Link>
               </div>
-            </div>
+            </nav>
           </div>
         )}
       </nav>

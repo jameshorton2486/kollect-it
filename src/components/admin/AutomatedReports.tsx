@@ -181,7 +181,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   placeholder="e.g., Weekly Sales Report"
-                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   required
                 />
               </div>
@@ -228,7 +228,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
                     setFormData({ ...formData, recipients: e.target.value })
                   }
                   placeholder="admin@example.com, manager@example.com"
-                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-light focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
+                  className="w-full px-3 py-2 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black placeholder:text-lux-gray-dark focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                   required
                 />
               </div>
@@ -343,7 +343,7 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
           </div>
         ) : (
           <div className="text-center py-8 text-ink-600">
-            <FileText size={48} className="mx-auto mb-3 text-lux-gray-light" />
+            <FileText size={48} className="mx-auto mb-3 text-lux-gray-dark" />
             <p>No scheduled reports yet</p>
             <p className="text-sm mt-1">
               Create your first automated report schedule
@@ -354,4 +354,3 @@ export function AutomatedReports({ schedules, onSchedule, onGenerate }: Props) {
     </div>
   );
 }
-

@@ -19,7 +19,7 @@ export default function RecentAdditions({ products }: RecentAdditionsProps) {
           <div>
             <p className="text-label text-lux-gold mb-2">Just In</p>
             <h2 className="heading-section text-lux-black">Recent Additions</h2>
-            <p className="text-muted mt-2">
+            <p className="text-lux-gray-dark mt-2">
               Fresh consignments and estate finds, published within the last few days.
             </p>
           </div>
