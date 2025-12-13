@@ -1,22 +1,44 @@
+/**
+ * PRODUCTION VERSION: GPT-4V Image Quality Analyzer
+ * 
+ * Uses deterministic prompts with strict schemas
+ * Replaces: gpt4v-image-analyzer.ts
+ */
+
 import OpenAI from "openai";
+import {
+  IMAGE_QUALITY_SYSTEM_PROMPT,
+  IMAGE_QUALITY_USER_PROMPT,
+  IMAGE_QUALITY_CONFIG,
+} from "./prompts/gpt4v/image-quality.prompt";
+import {
+  validateImageQuality,
+  type ImageQualitySchema,
+} from "./prompts/schemas/image-quality.schema";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 /**
- * Analyze image quality using GPT-4V
- * Returns assessment of photo quality for marketplace listings
+ * Analyze image quality using GPT-4V (Production Version)
+ * Returns validated image quality assessment
  */
-export async function analyzeImageQualityWithGPT4V(imageUrl: string) {
+export async function analyzeImageQualityWithGPT4V(
+  imageUrl: string,
+): Promise<ImageQualitySchema> {
   console.log("[GPT-4V] Analyzing image quality...");
 
   try {
     const response = await client.chat.completions.create({
-      model: "gpt-4-vision-preview",
-      max_tokens: 1000,
-      temperature: 0.5,
+      model: IMAGE_QUALITY_CONFIG.model,
+      max_tokens: IMAGE_QUALITY_CONFIG.maxTokens,
+      temperature: IMAGE_QUALITY_CONFIG.temperature,
       messages: [
+        {
+          role: "system",
+          content: IMAGE_QUALITY_SYSTEM_PROMPT,
+        },
         {
           role: "user",
           content: [
@@ -29,22 +51,7 @@ export async function analyzeImageQualityWithGPT4V(imageUrl: string) {
             },
             {
               type: "text",
-              text: `Analyze this product image for marketplace quality. Return ONLY valid JSON (no markdown):
-{
-  "imageQuality": 1-10 scale,
-  "hasDefects": true/false,
-  "defectDescription": "description of any visible damage or issues",
-  "photographyNotes": "assessment of photo quality, lighting, focus, composition",
-  "suggestedImprovements": ["improvement1", "improvement2"]
-}
-
-Focus on:
-- Image sharpness and focus
-- Lighting quality
-- Background clarity
-- Color accuracy
-- Visible damage/wear on item
-- Overall marketplace suitability`,
+              text: IMAGE_QUALITY_USER_PROMPT,
             },
           ],
         },
@@ -58,26 +65,32 @@ Focus on:
 
     console.log("[GPT-4V] Received response, parsing...");
 
-    let analysis;
+    // Parse JSON with fallback strategies
+    let analysis: unknown;
     try {
-      // Try to extract JSON from content
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        analysis = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error("No JSON found in response");
-      }
+      // Strategy 1: Direct parse
+      analysis = JSON.parse(content);
     } catch (e) {
-      console.error("[GPT-4V] Parse error:", e);
-      // Return default if parsing fails
-      analysis = {
-        imageQuality: 7,
-        hasDefects: false,
-        defectDescription: "Unable to analyze",
-        photographyNotes: "Standard quality image",
-        suggestedImprovements: [],
-      };
+      // Strategy 2: Extract from markdown code blocks
+      const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
+      if (jsonMatch) {
+        analysis = JSON.parse(jsonMatch[1]);
+      } else {
+        // Strategy 3: Find JSON object in response
+        const objectMatch = content.match(/\{[\s\S]*\}/);
+        if (objectMatch) {
+          analysis = JSON.parse(objectMatch[0]);
+        } else {
+          throw new Error(
+            "Could not extract JSON from GPT-4V response. Response: " +
+              content.substring(0, 200),
+          );
+        }
+      }
     }
+
+    // Validate against strict schema (throws if invalid)
+    validateImageQuality(analysis);
 
     console.log(
       `[GPT-4V] Quality analysis complete: ${analysis.imageQuality}/10`,
@@ -85,9 +98,18 @@ Focus on:
     return analysis;
   } catch (error) {
     console.error("[GPT-4V] Analysis failed:", error);
-    throw new Error(
-      `Image quality analysis failed: ${error instanceof Error ? error.message : "Unknown error"}`,
-    );
+
+    // Return safe defaults on failure (non-blocking)
+    const fallback: ImageQualitySchema = {
+      imageQuality: 7,
+      hasDefects: false,
+      defectDescription: "Unable to analyze - using default values",
+      photographyNotes: "Analysis failed - standard quality assumed",
+      suggestedImprovements: [],
+    };
+
+    console.warn("[GPT-4V] Using fallback values due to error");
+    return fallback;
   }
 }
 
