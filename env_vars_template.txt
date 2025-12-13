@@ -1,0 +1,78 @@
+# Environment Variables Template for Product Application
+# Copy and paste these into your .env file or environment configuration
+
+# ============================================
+# MAPPED FROM KOLLECT-IT MARKETPLACE
+# ============================================
+
+# ImageKit Configuration
+IMAGEKIT_PUBLIC_KEY="public_VXbQaaBamq31ti9cdFzPAfxQa78="
+IMAGEKIT_PRIVATE_KEY="private_3E7NSDvt2NdY1hq6btGWa4VTRZI="
+
+# Anthropic/Claude API Key
+# ✅ Get from website .env.local (CLAUDE_API_KEY) or Anthropic dashboard
+# Use the same value for ANTHROPIC_API_KEY in your product app
+ANTHROPIC_API_KEY="sk-ant-xxxxxxxxxxxxxxxx"
+
+# Service API Key
+# ⚠️ IMPORTANT: SERVICE_API_KEY is a CUSTOM shared secret
+# 
+# What it IS:
+# - A simple shared secret used ONLY for machine-to-machine authentication
+# - Between: kollect-it-product-application (Python) ⟷ kollect-it website API route
+# - Purpose: Authorize product creation requests from the desktop app
+#
+# What it is NOT:
+# ❌ Supabase service role key (too powerful, unnecessary)
+# ❌ Supabase anon key
+# ❌ ImageKit key
+# ❌ Claude/Anthropic key
+#
+# MUST match the value in website .env.local (see below)
+SERVICE_API_KEY="kollect-it-product-service-2025"
+
+# Production Flag
+# Maps to NODE_ENV - set to "production" or "true" for production
+USE_PRODUCTION="false"
+# Alternative values: "true" for production, "false" for development
+# Or use: NODE_ENV="production" / NODE_ENV="development"
+
+# AI Temperature
+# NOTE: This doesn't exist in the marketplace app yet
+# Based on the new prompt system, recommended value is 0.3 for deterministic behavior
+AI_TEMPERATURE="0.3"
+# Recommended values:
+# - 0.3 for deterministic/production (current system default)
+# - 0.7 for more creative responses
+# - 0.0 for maximum determinism
+
+# ============================================
+# PYTHON CODE TEMPLATE
+# ============================================
+# Use this in your Python application:
+#
+# env_vars = {
+#     "SERVICE_API_KEY": os.getenv("SERVICE_API_KEY", ""),
+#     "IMAGEKIT_PUBLIC_KEY": os.getenv("IMAGEKIT_PUBLIC_KEY", ""),
+#     "IMAGEKIT_PRIVATE_KEY": os.getenv("IMAGEKIT_PRIVATE_KEY", ""),
+#     "ANTHROPIC_API_KEY": os.getenv("ANTHROPIC_API_KEY", ""),
+#     "USE_PRODUCTION": os.getenv("USE_PRODUCTION", "false"),
+#     "AI_TEMPERATURE": os.getenv("AI_TEMPERATURE", "0.3"),
+# }
+
+# ============================================
+# ✅ ALL VALUES READY TO USE
+# ============================================
+# All values above are complete and ready to copy into your product app .env file
+#
+# IMPORTANT: SERVICE_API_KEY must match the value in website .env.local
+# Both should be: "kollect-it-product-service-2025"
+
+# ============================================
+# ADDITIONAL NOTES
+# ============================================
+# - ImageKit keys are ready to use (from .env files)
+# - AI_TEMPERATURE is set to 0.3 (production default from new prompt system)
+# - USE_PRODUCTION defaults to "false" (set to "true" for production)
+# - Make sure to add these to your .env file or environment variables
+
