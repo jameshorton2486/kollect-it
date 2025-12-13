@@ -44,10 +44,10 @@ export function Footer() {
         <div className="grid gap-8 py-16 lg:grid-cols-[1.5fr,2.5fr]">
           {/* Brand section */}
           <div className="space-y-4">
-            <Link href="/" className="inline-block">
-              <h2 className="font-serif text-xl tracking-tight">
-                <span className="text-lux-cream">Kollect</span>
-                <span className="text-lux-gold">-It</span>
+            <Link href="/" className="inline-block group">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
+                <span className="text-lux-gold group-hover:text-lux-gold-light transition-colors duration-200">Kollect</span>
+                <span className="text-lux-gold group-hover:text-lux-gold-light transition-colors duration-200">-It</span>
               </h2>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-lux-cream">
