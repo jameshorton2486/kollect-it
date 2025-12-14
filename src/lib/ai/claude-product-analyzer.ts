@@ -5,7 +5,6 @@
  * Replaces: claude-product-analyzer.ts
  */
 
-import Anthropic from "@anthropic-ai/sdk";
 import {
   PRODUCT_ANALYSIS_SYSTEM_PROMPT,
   buildProductAnalysisUserPrompt,
@@ -16,14 +15,14 @@ import {
   validateProductAnalysis,
   type ProductAnalysisSchema,
 } from "./prompts/schemas/product-analysis.schema";
-
-const client = new Anthropic({
-  apiKey: process.env.CLAUDE_API_KEY,
-});
+import { getAnthropicClient } from "./client";
 
 /**
  * Analyze a product image using Claude AI (Production Version)
  * Returns structured product metadata validated against strict schema
+ * 
+ * Note: Anthropic client is lazy-loaded inside the function to prevent
+ * execution during Next.js build time (which doesn't have API keys)
  */
 export async function analyzeProductImageWithClaude(
   imageUrl: string,
@@ -44,6 +43,9 @@ export async function analyzeProductImageWithClaude(
   const userPrompt = buildProductAnalysisUserPrompt(input);
 
   try {
+    // Lazy-load Anthropic client to prevent execution during build
+    const client = await getAnthropicClient();
+    
     const response = await client.messages.create({
       model: PRODUCT_ANALYSIS_CONFIG.model,
       max_tokens: PRODUCT_ANALYSIS_CONFIG.maxTokens,

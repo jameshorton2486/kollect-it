@@ -14,6 +14,7 @@ import {
   validateImageQuality,
   type ImageQualitySchema,
 } from "./prompts/schemas/image-quality.schema";
+import { getOpenAIClient } from "./client";
 
 /**
  * Analyze image quality using GPT-4V (Production Version)
@@ -40,11 +41,8 @@ export async function analyzeImageQualityWithGPT4V(
   }
 
   try {
-    // Dynamic import to prevent execution during build
-    const OpenAI = (await import("openai")).default;
-    const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
+    // Use shared client helper (lazy-loaded, safe for build)
+    const client = await getOpenAIClient();
 
     const response = await client.chat.completions.create({
       model: IMAGE_QUALITY_CONFIG.model,
