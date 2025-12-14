@@ -11,8 +11,6 @@
  * - Strict validation on output
  */
 
-import type { ProductAnalysisSchema } from "../schemas/product-analysis.schema";
-
 export interface ProductAnalysisPromptInput {
   imageUrl: string;
   category: string;

@@ -11,8 +11,6 @@
  * - Strict validation on output
  */
 
-import type { ImageQualitySchema } from "../schemas/image-quality.schema";
-
 /**
  * System prompt - defines GPT-4V's role and constraints
  */

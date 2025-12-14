@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { FilterCheckbox } from "./FilterCheckbox";
 import { cn } from "@/lib/utils";
 

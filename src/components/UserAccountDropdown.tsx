@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import { User, LogOut, Package, Heart, LayoutDashboard } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function UserAccountDropdown() {
   const { data: session, status } = useSession();
@@ -25,19 +27,7 @@ export default function UserAccountDropdown() {
 
   if (status === "loading") {
     return (
-      <div className="user-account-loading text-white">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </div>
+      <div className="h-10 w-10 rounded-full bg-white/10 animate-pulse" />
     );
   }
 
@@ -46,156 +36,94 @@ export default function UserAccountDropdown() {
       <Link
         href="/login"
         aria-label="Account"
-        className="header-account-link text-white"
+        className="h-10 w-10 flex items-center justify-center text-lux-cream hover:text-lux-gold-light hover:bg-white/5 rounded-full transition-colors duration-200"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
+        <User className="h-5 w-5" />
       </Link>
     );
   }
 
   return (
-    <div className="account-dropdown" ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="account-dropdown-trigger text-white"
+        className={cn(
+          "h-10 w-10 flex items-center justify-center rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal",
+          isOpen ? "text-lux-gold bg-white/10" : "text-lux-cream hover:text-lux-gold-light hover:bg-white/5"
+        )}
         aria-label="Account menu"
+        aria-expanded={isOpen}
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
+        <User className="h-5 w-5" />
       </button>
 
       {isOpen && (
-        <div className="account-dropdown-menu active">
-          <div className="account-dropdown-header">
-            {session.user.name || session.user.email}
+        <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-lux-charcoal border border-white/10 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+          <div className="px-4 py-3 border-b border-white/10">
+            <p className="text-sm text-lux-cream truncate font-medium">
+              {session.user.name || "User"}
+            </p>
+            <p className="text-xs text-lux-silver truncate">
+              {session.user.email}
+            </p>
           </div>
 
-          <Link
-            href="/account"
-            className="account-dropdown-item"
-            onClick={() => setIsOpen(false)}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+          <div className="py-1">
+            <Link
+              href="/account"
+              className="flex items-center px-4 py-2 text-sm text-lux-cream hover:bg-white/5 hover:text-lux-gold transition-colors"
+              onClick={() => setIsOpen(false)}
             >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            My Account
-          </Link>
+              <User className="mr-3 h-4 w-4" />
+              My Account
+            </Link>
 
-          <Link
-            href="/account?tab=orders"
-            className="account-dropdown-item"
-            onClick={() => setIsOpen(false)}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+            <Link
+              href="/account?tab=orders"
+              className="flex items-center px-4 py-2 text-sm text-lux-cream hover:bg-white/5 hover:text-lux-gold transition-colors"
+              onClick={() => setIsOpen(false)}
             >
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-            </svg>
-            Orders
-          </Link>
+              <Package className="mr-3 h-4 w-4" />
+              Orders
+            </Link>
 
-          <Link
-            href="/account?tab=wishlist"
-            className="account-dropdown-item"
-            onClick={() => setIsOpen(false)}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+            <Link
+              href="/wishlist"
+              className="flex items-center px-4 py-2 text-sm text-lux-cream hover:bg-white/5 hover:text-lux-gold transition-colors"
+              onClick={() => setIsOpen(false)}
             >
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-            Wishlist
-          </Link>
+              <Heart className="mr-3 h-4 w-4" />
+              Wishlist
+            </Link>
 
-          {session.user.role === "admin" && (
-            <>
-              <div className="account-dropdown-divider" />
-              <Link
-                href="/admin/dashboard"
-                className="account-dropdown-item"
-                onClick={() => setIsOpen(false)}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+            {session.user.role === "admin" && (
+              <>
+                <div className="border-t border-white/10 my-1" />
+                <Link
+                  href="/admin/dashboard"
+                  className="flex items-center px-4 py-2 text-sm text-lux-cream hover:bg-white/5 hover:text-lux-gold transition-colors"
+                  onClick={() => setIsOpen(false)}
                 >
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <path d="M3 9h18" />
-                  <path d="M9 21V9" />
-                </svg>
-                Admin Dashboard
-              </Link>
-            </>
-          )}
+                  <LayoutDashboard className="mr-3 h-4 w-4" />
+                  Admin Dashboard
+                </Link>
+              </>
+            )}
 
-          <div className="account-dropdown-divider" />
-
-          <button
-            onClick={() => {
-              setIsOpen(false);
-              signOut({ callbackUrl: "/" });
-            }}
-            className="account-dropdown-item account-dropdown-signout"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+            <div className="border-t border-white/10 my-1" />
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                signOut({ callbackUrl: "/" });
+              }}
+              className="flex w-full items-center px-4 py-2 text-sm text-lux-cream hover:bg-white/5 hover:text-lux-gold transition-colors"
             >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-            Sign Out
-          </button>
+              <LogOut className="mr-3 h-4 w-4" />
+              Sign Out
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
-

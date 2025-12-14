@@ -19,6 +19,8 @@ const eslintConfig = [
       "build/**",
       "dist/**",
       "*.config.js", // Config files may use CommonJS
+      "*.config.ts", // TypeScript config files
+      "*.config.mjs", // Module config files
     ],
   },
   // Global rules and plugins (flat config)
