@@ -1,4 +1,4 @@
-﻿__pycache__/
+__pycache__/
 node_modules/
 .env
 .vscode/
@@ -20,3 +20,22 @@ token.json
 # Ignore log files and error summary
 logs/
 *.log
+
+# Ignore IDE files
+.idea/
+*.code-workspace
+.vscode/
+
+# Ignore backup and temporary files
+*.bak
+*.backup
+*.old
+*.tmp
+*.disabled
+*~
+
+# Ignore npm lock file (using Bun)
+package-lock.json
+
+# Ignore zip files
+*.zip

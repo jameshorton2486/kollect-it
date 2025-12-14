@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Loader, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
+import { Loader, AlertCircle, CheckCircle2, Sparkles, Copy } from "lucide-react";
 import MultiImageUpload from "./MultiImageUpload";
 import SingleDocumentUpload from "./SingleDocumentUpload";
 import { validateSKU } from "@/lib/utils/image-parser";
@@ -201,6 +201,45 @@ export function ProductUploadForm() {
     } finally {
       setAnalyzing(false);
     }
+  }
+
+  function handleCopyAllProductInfo() {
+    const selectedCategory = categories.find(c => c.id === categoryId);
+    const selectedSubcategory = selectedCategory?.subcategories.find(s => s.id === subcategoryId);
+
+    const productInfo = `PRODUCT INFORMATION - ${sku}
+===============================
+
+SKU: ${sku}
+Category: ${selectedCategory?.name || category}
+Subcategory: ${selectedSubcategory?.name || "N/A"}
+
+TITLE: ${formData.title || ""}
+
+DESCRIPTION:
+${formData.description || ""}
+
+ERA: ${formData.estimatedEra || ""}
+RARITY: ${formData.rarity || ""}
+AUTHENTICITY: ${formData.authenticity || ""}
+SUGGESTED PRICE: $${formData.suggestedPrice.toFixed(2) || "0.00"}
+
+SEO TITLE: ${formData.seoTitle || ""}
+
+SEO DESCRIPTION:
+${formData.seoDescription || ""}
+
+${productNotes ? `PRODUCT NOTES:\n${productNotes}\n` : ""}
+${appraisalUrls.length > 0 ? `APPRAISAL URLS:\n${appraisalUrls.join("\n")}\n` : ""}
+${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
+
+    navigator.clipboard.writeText(productInfo).then(() => {
+      setSuccess("All product information copied to clipboard!");
+      setTimeout(() => setSuccess(""), 3000);
+    }).catch((err) => {
+      setError("Failed to copy to clipboard. Please select and copy manually.");
+      console.error("Copy failed:", err);
+    });
   }
 
   async function handleCreateProduct() {
@@ -715,6 +754,19 @@ TARGET_PRICE: $1,750`}
                 {formData.seoDescription.length}/155 characters
               </p>
             </div>
+          </div>
+
+          {/* Copy All Button */}
+          <div className="flex justify-end">
+            <button
+              onClick={handleCopyAllProductInfo}
+              type="button"
+              className="flex items-center gap-2 px-4 py-2 bg-lux-charcoal hover:bg-lux-charcoal/80 rounded-lg font-medium transition text-lux-cream text-sm"
+              title="Copy all product information to clipboard"
+            >
+              <Copy className="w-4 h-4" />
+              Copy All Product Info
+            </button>
           </div>
 
           <div className="flex gap-4">
