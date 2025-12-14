@@ -6,6 +6,9 @@ import { rateLimiters } from "@/lib/rate-limit";
 import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
 import { cache, cacheKeys, cacheTTL } from "@/lib/cache";
 
+// Force dynamic rendering - prevents Next.js from trying to statically analyze this route
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     // Apply security middleware

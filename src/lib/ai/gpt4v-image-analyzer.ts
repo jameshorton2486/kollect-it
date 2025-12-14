@@ -5,7 +5,6 @@
  * Replaces: gpt4v-image-analyzer.ts
  */
 
-import OpenAI from "openai";
 import {
   IMAGE_QUALITY_SYSTEM_PROMPT,
   IMAGE_QUALITY_USER_PROMPT,
@@ -16,20 +15,37 @@ import {
   type ImageQualitySchema,
 } from "./prompts/schemas/image-quality.schema";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 /**
  * Analyze image quality using GPT-4V (Production Version)
  * Returns validated image quality assessment
+ * 
+ * Note: OpenAI client is lazy-loaded inside the function to prevent
+ * execution during Next.js build time (which doesn't have API keys)
  */
 export async function analyzeImageQualityWithGPT4V(
   imageUrl: string,
 ): Promise<ImageQualitySchema> {
   console.log("[GPT-4V] Analyzing image quality...");
 
+  // Lazy-load OpenAI to prevent execution during build
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn("[GPT-4V] OPENAI_API_KEY not configured, using fallback");
+    return {
+      imageQuality: 7,
+      hasDefects: false,
+      defectDescription: "OpenAI not configured - using default values",
+      photographyNotes: "OpenAI API key missing - standard quality assumed",
+      suggestedImprovements: [],
+    };
+  }
+
   try {
+    // Dynamic import to prevent execution during build
+    const OpenAI = (await import("openai")).default;
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const response = await client.chat.completions.create({
       model: IMAGE_QUALITY_CONFIG.model,
       max_tokens: IMAGE_QUALITY_CONFIG.maxTokens,
