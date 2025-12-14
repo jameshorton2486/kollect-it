@@ -205,7 +205,7 @@ export function ProductUploadForm() {
 
   function handleCopyAllProductInfo() {
     const selectedCategory = categories.find(c => c.id === categoryId);
-    const selectedSubcategory = selectedCategory?.subcategories.find(s => s.id === subcategoryId);
+    const selectedSubcategory = selectedCategory?.subcategories?.find(s => s.id === subcategoryId);
 
     const productInfo = `PRODUCT INFORMATION - ${sku}
 ===============================
