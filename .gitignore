@@ -1,4 +1,4 @@
-__pycache__/
+﻿__pycache__/
 node_modules/
 .env
 .vscode/
@@ -38,8 +38,11 @@ logs/
 *.disabled
 *~
 
-# Ignore npm lock file (using Bun)
+# Ignore npm lock file (usinsg Bun)
 package-lock.json
 
 # Ignore zip files
 *.zip
+
+# Ignore Work Files Folder
+work_files/

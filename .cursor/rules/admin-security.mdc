@@ -1,0 +1,99 @@
+# Admin Security Rules
+
+## 🚨 CRITICAL ADMIN SECURITY REQUIREMENTS
+
+When working with admin-related code:
+
+### ❌ NEVER DO
+- Hardcode admin credentials (passwords, emails) in code
+- Commit default admin passwords to Git
+- Document default credentials in README or public docs
+- Skip server-side authentication checks
+- Rely on client-side role checks alone
+- Expose admin endpoints without authentication
+
+### ✅ ALWAYS DO
+
+1. **Use Environment Variables for Admin Setup:**
+```ts
+// ✅ GOOD: Use environment variables
+const adminEmail = process.env.ADMIN_EMAIL || prompt("Admin email:");
+const adminPassword = process.env.ADMIN_PASSWORD || prompt("Admin password:");
+
+// ❌ BAD: Hardcoded credentials
+const adminPassword = "admin123";
+```
+
+2. **Protect All Admin Routes Server-Side:**
+```ts
+import { requireAdminAuth } from "@/lib/auth-admin";
+
+export async function POST(req: Request) {
+  // ✅ GOOD: Server-side check
+  const session = await requireAdminAuth();
+  
+  // ❌ BAD: Client-side check only
+  if (userRole !== "admin") return; // Client-side only
+}
+```
+
+3. **Use Authentication Helper:**
+```ts
+// ✅ GOOD: Use shared helper
+import { requireAdminAuth } from "@/lib/auth-admin";
+const session = await requireAdminAuth();
+
+// ⚠️ ACCEPTABLE: Inline check (but prefer helper)
+const session = await getServerSession(authOptions);
+if (!session?.user || (session.user as any).role !== "admin") {
+  return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+}
+```
+
+4. **Remove Default Credentials from Documentation:**
+```markdown
+<!-- ❌ BAD: Default credentials in README -->
+Email: admin@kollect-it.com
+Password: admin123
+
+<!-- ✅ GOOD: Instructions without credentials -->
+See scripts/create-admin.ts to create an admin user.
+```
+
+## 📁 Applies to:
+
+- `scripts/create-admin*.ts`
+- `scripts/create-*-users.ts`
+- `src/app/api/admin/**`
+- `prisma/seed.ts`
+- `README.md`
+- Any admin setup scripts
+
+## ❗ Enforcement
+
+If Cursor detects:
+- Hardcoded passwords in `.ts` files (except seed.ts which is dev-only)
+- Default credentials in `README.md` or public documentation
+- Admin routes without server-side authentication
+- Client-side-only role checks
+
+It MUST:
+1. Flag the security issue
+2. Suggest using environment variables
+3. Recommend using `requireAdminAuth()` helper
+4. Warn about committing credentials to Git
+
+**Failure to follow these rules WILL create security vulnerabilities.**
+
+## 🔐 Default Credential Detection
+
+The following patterns are known insecure defaults that MUST be changed:
+- `password: "admin123"`
+- `password: "admin"`
+- `email: "admin@kollect-it.com"` with default password
+- Any password in scripts that can run in production
+
+If detected, Cursor should:
+1. Warn about security risk
+2. Suggest environment variable approach
+3. Recommend changing credentials in production database
