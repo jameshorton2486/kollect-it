@@ -183,12 +183,20 @@ bun run dev
 - **Admin Dashboard**: [http://localhost:3000/admin](http://localhost:3000/admin)
 - **API Docs**: [http://localhost:3000/api/health](http://localhost:3000/api/health)
 
-### **Default Admin Credentials:**
+### **Admin Setup:**
+
+Create admin users using secure environment variables:
+
+```bash
+# Set admin credentials in .env.local
+ADMIN_EMAIL=admin@kollect-it.com
+ADMIN_PASSWORD=your-secure-password-here
+
+# Run admin creation script
+bun run scripts/create-admin.ts
 ```
-Email: admin@kollect-it.com
-Password: admin123
-```
-**⚠️ SECURITY:** Change these credentials before production deployment!
+
+**⚠️ SECURITY:** Always use strong, unique passwords. Never commit credentials to version control.
 
 1. **Detailed Product Pages**
 
@@ -238,12 +246,9 @@ Visit:
 
 ### **Admin Login Credentials:**
 
-```text
-Email: admin@kollect-it.com
-Password: admin123
-```
+Admin credentials must be created using the setup script. See [Admin Setup](#admin-setup) below.
 
-**⚠️ IMPORTANT:** Change these credentials before deploying to production!
+**⚠️ SECURITY:** Never use default credentials in production. Always create admin users with secure passwords.
 
 ### **Environment Variables:**
 
@@ -310,7 +315,7 @@ SMTP_PASSWORD="your-app-password"
 
 # Admin Configuration
 ADMIN_EMAIL="admin@kollect-it.com"
-ADMIN_PASSWORD="admin123"
+ADMIN_PASSWORD="your-secure-password-here"  # ⚠️ CHANGE THIS - Use a strong, unique password
 ```
 
 ### **⚠️ Security Notes:**

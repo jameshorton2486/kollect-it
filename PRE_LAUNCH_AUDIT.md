@@ -53,7 +53,7 @@
 
 #### AI Services (Optional)
 - `OPENAI_API_KEY` - For product analysis
-- `CLAUDE_API_KEY` - For product analysis
+- `ANTHROPIC_API_KEY` - For product analysis
 
 **Action Required:**
 - ✅ Verify all variables are set in `.env.local` (local) and Vercel (production)
@@ -356,7 +356,7 @@ bun x prisma studio
 - [ ] `NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY` - Valid key
 - [ ] `IMAGEKIT_PRIVATE_KEY` - Valid key
 - [ ] `STRIPE_SECRET_KEY` - Valid key (if using payments)
-- [ ] `OPENAI_API_KEY` / `CLAUDE_API_KEY` - Valid keys (if using AI)
+- [ ] `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` - Valid keys (if using AI)
 
 #### 3. **Test Image Upload**
 

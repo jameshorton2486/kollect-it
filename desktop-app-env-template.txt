@@ -7,7 +7,7 @@ IMAGEKIT_PUBLIC_KEY=public_VXbQaaBamq31ti9cdFzPAfxQa78=
 IMAGEKIT_PRIVATE_KEY=private_3E7NSDvt2NdY1hq6btGWa4VTRZI=
 
 # --- Anthropic / Claude ---
-# Get this from website .env.local (CLAUDE_API_KEY) or Anthropic dashboard
+# Get this from website .env.local (ANTHROPIC_API_KEY) or Anthropic dashboard
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxx
 
 # --- Internal Service Auth ---
