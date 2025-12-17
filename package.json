@@ -44,7 +44,10 @@
     "setup:admin": "bun run scripts/setup-james-admin.ts",
     "error-summary:last-hour": "bun run scripts/generate-error-summary.ts --last=1h",
     "error-summary:last-30min": "bun run scripts/generate-error-summary.ts --last=30m",
-    "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h"
+    "error-summary:today": "bun run scripts/generate-error-summary.ts --last=24h",
+    "repo:hygiene": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/repo-hygiene.ps1",
+    "precommit:check": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/precommit-check.ps1",
+    "prepare": "bunx husky"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "0.70.1",
@@ -98,6 +101,7 @@
     "prisma": "^5.22.0",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "husky": "^9.0.0"
   }
 }
