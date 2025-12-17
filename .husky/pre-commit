@@ -1,0 +1,22 @@
+#!/bin/sh
+# Husky pre-commit: block committing forbidden directories
+# Shell script (sh), not PowerShell
+
+# Source Husky helper if present
+HUSKY_SH="$(dirname "$0")/_/husky.sh"
+if [ -f "$HUSKY_SH" ]; then
+  . "$HUSKY_SH"
+fi
+
+echo "Pre-commit repo safety check..."
+
+FORBIDDEN=".next .idea .venv .vercel"
+
+for dir in $FORBIDDEN; do
+  if [ -d "$dir" ]; then
+    echo "ERROR: $dir must not be committed"
+    exit 1
+  fi
+done
+
+echo "Repo safe to commit"
