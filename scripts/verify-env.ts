@@ -106,7 +106,7 @@ const tests: EnvTest[] = [
     description: "Anthropic Claude API key",
   },
   {
-    key: "OPEN_AI_KEY",
+    key: "OPENAI_API_KEY",
     required: true,
     test: async (val) => val.startsWith("sk-proj-"),
     description: "OpenAI API key",
