@@ -33,8 +33,8 @@
 **Risk:** Medium (development-only, but no production check)
 ```typescript
 const USERS: SeedUser[] = [
-  { email: "admin@kollect-it.com", password: "KollectIt@2025Admin", ... },
-  { email: "James@kollect-it.com", password: "James@KI-2025", ... },
+  { email: "admin@example.com", password: "[REDACTED]", ... },
+  { email: "user@example.com", password: "[REDACTED]", ... },
   // ... more hardcoded passwords
 ];
 ```
@@ -45,7 +45,7 @@ const USERS: SeedUser[] = [
 **Risk:** Medium (development-only, but no production check)
 ```typescript
 const users = [
-  { email: "admin@kollect-it.com", password: "KollectIt@2025Admin", ... },
+  { email: "admin@example.com", password: "[REDACTED]", ... },
   // ... more hardcoded passwords
 ];
 ```
@@ -56,7 +56,7 @@ const users = [
 **Risk:** Low (test script only, not used for creation)
 ```typescript
 const credentialsToTest = [
-  { email: "admin@kollect-it.com", password: "KollectIt@2025Admin" },
+  { email: "admin@example.com", password: "[REDACTED]" },
   // ...
 ];
 ```
@@ -124,7 +124,7 @@ recipients: ["admin@kollect-it.com"],
 **Can you post products?** ✅ **YES** - IF:
 
 1. ✅ You've changed the admin password using `scripts/create-admin.ts`
-2. ✅ Old default credentials (`admin@kollect-it.com` / `admin123`) no longer work
+2. ✅ Old default credentials no longer work
 3. ✅ All API routes are protected (✅ they are)
 4. ✅ Admin role comes from database (✅ it does)
 

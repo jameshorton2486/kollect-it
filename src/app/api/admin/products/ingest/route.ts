@@ -1,4 +1,4 @@
-// app/api/admin/products/ingest/route.ts
+// src/app/api/admin/products/ingest/route.ts
 // Product Ingestion API - Receives products from Desktop App
 // Creates products as DRAFT for admin review
 
@@ -366,3 +366,4 @@ export async function GET(request: NextRequest) {
     categories: categories
   });
 }
+

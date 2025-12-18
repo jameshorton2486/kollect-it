@@ -19,7 +19,7 @@ const envVars = {
   "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT": "✅ ImageKit endpoint",
   "IMAGEKIT_PRIVATE_KEY": "✅ ImageKit private key",
   "ANTHROPIC_API_KEY": "✅ Anthropic Claude API",
-  "OPEN_AI_KEY": "✅ OpenAI API",
+  "OPENAI_API_KEY": "✅ OpenAI API",
   "RESEND_API_KEY": "✅ Resend email service",
   "EMAIL_FROM": "✅ Email sender",
   "ADMIN_EMAIL": "✅ Admin email",

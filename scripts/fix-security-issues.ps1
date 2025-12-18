@@ -42,8 +42,8 @@ if (Test-Path $verifyScript) {
 
 # 4) Scan for leftover secrets
 Write-Host "Scanning for possible leaked credentials..."
-$patterns = 'password\s*:', 'admin@', '@kollect-it', 'API_KEY\s*='
-$hits = Select-String -Path "*.md","scripts/*.ts" -Pattern $patterns -SimpleMatch -Recurse
+$patterns = 'password:', 'admin@kollect-it', 'API_KEY='
+$hits = Select-String -Path "*.md","scripts/*.ts" -Pattern $patterns -Recurse
 if ($hits) {
     Write-Host "Possible sensitive strings still found:"
     $hits | ForEach-Object { Write-Host "  -> $($_.Path):$($_.LineNumber)" }

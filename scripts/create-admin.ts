@@ -42,7 +42,7 @@ async function main() {
   
   if (!password) {
     console.log("💡 Tip: Set ADMIN_PASSWORD environment variable to avoid prompts");
-    password = await promptInput("Admin password (will be hidden): ");
+    password = await promptInput("Admin password (input will be visible): ");
     
     // For security, prompt for confirmation
     const confirmPassword = await promptInput("Confirm password: ");

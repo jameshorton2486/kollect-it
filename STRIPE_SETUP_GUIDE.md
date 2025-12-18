@@ -6,7 +6,7 @@ The keys you provided don't match Stripe's format:
 
 - ❌ `mk_1SVEOm2S5gMz990a4obbuG4p` - Invalid (should start with `pk_` or `sk_`)
 - ❌ `mk_1SVEk12S5gMz990aLGfyCnAX` - Invalid (should start with `pk_` or `sk_`)
-- ✅ `pk_live_51SVEOj2S5gMz990aFW1rKsR3VoBdXJQLGLkusApOrB6ejmHTwBnBsvXHRHqiIFk0cGdEAjgCmH17PhOUWjqRX2uG007EtPSUJb` - Valid publishable key
+- ✅ `pk_live_YOUR_KEY_HERE` - Valid publishable key format
 
 ## 📋 **How to Get Correct Stripe Keys**
 
@@ -19,7 +19,7 @@ The keys you provided don't match Stripe's format:
 
 ### Step 2: Add Test Keys to `.env.local`
 
-Open `c:\Users\james\kollect-it-marketplace-1\.env.local` and add:
+Open `<project-root>/.env.local` and add:
 
 ```env
 # Stripe - TEST Keys (for local development)

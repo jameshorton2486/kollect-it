@@ -3,19 +3,18 @@ import type { NextRequest } from "next/server";
 import { logger } from "@/lib/logger";
 
 export function middleware(req: NextRequest) {
-  const start = Date.now();
   const url = req.nextUrl.clone();
   const method = req.method;
 
   // Proceed with the request
   const res = NextResponse.next();
 
-  const duration = Date.now() - start;
   // Structured request log
+  // Note: durationMs only reflects middleware execution time, not full request duration
   logger.info("Request", {
     method,
     path: url.pathname,
-    durationMs: duration,
+    timestamp: new Date().toISOString(),
   });
 
   return res;
