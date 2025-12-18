@@ -93,22 +93,23 @@ export const logger = {
   warn: (message: string, ctx?: LogContext) => write("warn", message, ctx),
   error: (message: string, ctx?: LogContext, err?: unknown) =>
     write("error", message, ctx, err),
-  
-  // Enhanced auth-specific logging
-  authAttempt: (email: string, success: boolean, reason?: string) => {
+
+  // Enhanced auth-specific logging - slot-safe with optional parameters
+  authAttempt: (email: string | null | undefined, success: boolean, reason?: string) => {
+    const safeEmail = email || "unknown";
     write("info", "Auth attempt", {
-      email: redactValue(email),
+      email: redactValue(safeEmail),
       success,
       reason,
       timestamp: new Date().toISOString(),
     });
   },
-  
-  authError: (message: string, email: string, error?: unknown) => {
+
+  authError: (message: string, email?: string | null, error?: unknown) => {
+    const safeEmail = email || "unknown";
     write("error", message, {
-      email: redactValue(email),
+      email: redactValue(safeEmail),
       errorType: error instanceof Error ? error.name : typeof error,
     }, error);
   },
 };
-

@@ -27,6 +27,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { revenueFormatter } from "@/lib/utils/recharts-formatters";
 
 interface DashboardMetrics {
   revenue: {
@@ -189,10 +190,7 @@ export function DashboardOverview() {
                 tickFormatter={(value) => `$${value}`}
               />
               <Tooltip
-                formatter={(value: number) => [
-                  `$${value.toFixed(2)}`,
-                  "Revenue",
-                ]}
+                formatter={revenueFormatter}
                 labelFormatter={(label) =>
                   new Date(label).toLocaleDateString("en-US", {
                     month: "long",
@@ -401,4 +399,3 @@ function MetricCard({
     </div>
   );
 }
-

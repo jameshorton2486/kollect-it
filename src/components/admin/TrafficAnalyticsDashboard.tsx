@@ -245,10 +245,6 @@ export function TrafficAnalyticsDashboard() {
               }}
             />
             <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip
-              formatter={(value: number) => [value, ""]}
-              labelFormatter={(label) => new Date(label).toLocaleDateString()}
-            />
             <Line
               type="monotone"
               dataKey="visitors"
@@ -465,4 +461,3 @@ export function TrafficAnalyticsDashboard() {
     </div>
   );
 }
-

@@ -35,6 +35,9 @@ interface EnvironmentVariables {
 
   // Email (Google Workspace integration pending)
   NEXT_PUBLIC_APP_EMAIL: string;
+
+  // Product ingest API (server-only)
+  PRODUCT_INGEST_API_KEY: string;
 }
 
 let validatedEnv: Partial<EnvironmentVariables> | null = null;
@@ -84,6 +87,10 @@ function validateEnvVar(
 
   if (name === "NEXTAUTH_SECRET" && value.length < 32) {
     throw new Error("NEXTAUTH_SECRET must be at least 32 characters long");
+  }
+
+  if (name === "PRODUCT_INGEST_API_KEY" && value.length < 16) {
+    throw new Error("PRODUCT_INGEST_API_KEY must be at least 16 characters long");
   }
 
   return value;
@@ -158,6 +165,12 @@ export function getEnv(): Partial<EnvironmentVariables> {
       NEXT_PUBLIC_APP_EMAIL: validateEnvVar(
         "NEXT_PUBLIC_APP_EMAIL",
         process.env.NEXT_PUBLIC_APP_EMAIL,
+      ),
+
+      // Product ingest API (server-only)
+      PRODUCT_INGEST_API_KEY: validateEnvVar(
+        "PRODUCT_INGEST_API_KEY",
+        process.env.PRODUCT_INGEST_API_KEY,
       ),
     };
 
