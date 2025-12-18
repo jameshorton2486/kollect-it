@@ -33,7 +33,15 @@ async function main() {
   console.log("⚠️  Running in development mode only");
 
   // Create admin user (DEV/TEST ONLY)
-  const hashedPassword = await bcrypt.hash("admin123", 10);
+  // SECURITY: Production seeding is blocked above. For production, use scripts/create-admin.ts
+  // SECURITY: Password MUST come from environment variable - no defaults allowed
+  const defaultDevPassword = process.env.ADMIN_PASSWORD;
+  if (!defaultDevPassword) {
+    throw new Error("ADMIN_PASSWORD environment variable is required. Set ADMIN_PASSWORD in .env.local before seeding.");
+  }
+  console.log("✅ Using ADMIN_PASSWORD from environment variable.");
+  
+  const hashedPassword = await bcrypt.hash(defaultDevPassword, 10);
   const admin = await prisma.user.upsert({
     where: { email: "admin@kollect-it.com" },
     update: {},
@@ -45,6 +53,7 @@ async function main() {
     },
   });
   console.log("✅ Admin user created:", admin.email);
+  console.log("⚠️  WARNING: Change this password before production use!");
 
   // Create categories
   const categories = [

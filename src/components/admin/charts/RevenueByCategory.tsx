@@ -13,6 +13,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { currencyFormatter } from "@/lib/utils/recharts-formatters";
 
 interface RevenueByCategory {
   category: string;
@@ -65,7 +66,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value: number) => `$${value.toFixed(2)}`}
+            formatter={currencyFormatter}
             contentStyle={{
               backgroundColor: "#1F2937",
               border: "1px solid #D4AF37",
@@ -93,4 +94,3 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
     </div>
   );
 }
-

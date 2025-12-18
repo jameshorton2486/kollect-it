@@ -49,12 +49,12 @@ export async function getOpenAIClient(): Promise<OpenAI> {
 /**
  * Get Anthropic client instance
  * 
- * @throws Error if CLAUDE_API_KEY is not configured
+ * @throws Error if ANTHROPIC_API_KEY is not configured
  * @returns Anthropic client instance
  */
 export async function getAnthropicClient(): Promise<Anthropic> {
-  if (!process.env.CLAUDE_API_KEY) {
-    throw new Error("CLAUDE_API_KEY is not configured");
+  if (!process.env.ANTHROPIC_API_KEY) {
+    throw new Error("ANTHROPIC_API_KEY is not configured");
   }
 
   if (cachedAnthropicClient) {
@@ -65,7 +65,7 @@ export async function getAnthropicClient(): Promise<Anthropic> {
   const Anthropic = (await import("@anthropic-ai/sdk")).default;
 
   cachedAnthropicClient = new Anthropic({
-    apiKey: process.env.CLAUDE_API_KEY,
+    apiKey: process.env.ANTHROPIC_API_KEY,
   });
 
   return cachedAnthropicClient;
@@ -82,5 +82,5 @@ export function isOpenAIConfigured(): boolean {
  * Check if Anthropic is configured (for diagnostics)
  */
 export function isAnthropicConfigured(): boolean {
-  return !!process.env.CLAUDE_API_KEY;
+  return !!process.env.ANTHROPIC_API_KEY;
 }

@@ -2,7 +2,7 @@
 Write-Host "🔧 Adding NEXTAUTH_URL to Vercel..." -ForegroundColor Cyan
 Write-Host ""
 
-$productionUrl = "https://kollect-it-marketplace-1.vercel.app"
+$productionUrl = "https://kollect-it.vercel.app"
 
 Write-Host "Adding NEXTAUTH_URL for production environment..." -ForegroundColor Yellow
 Write-Host "Value: $productionUrl" -ForegroundColor White

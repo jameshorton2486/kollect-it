@@ -19,6 +19,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import { revenueFormatter, ordersFormatter } from "@/lib/utils/recharts-formatters";
 import {
   TrendingUp,
   TrendingDown,
@@ -86,7 +87,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
               tickFormatter={(value) => `$${value}`}
             />
             <Tooltip
-              formatter={(value: number) => [`$${value.toFixed(2)}`, "Revenue"]}
+              formatter={revenueFormatter}
               labelFormatter={(label) => new Date(label).toLocaleDateString()}
             />
             <Line
@@ -165,9 +166,9 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
                 tickFormatter={(value) => `${value}:00`}
               />
               <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip
-                formatter={(value: number) => [`${value} orders`, "Orders"]}
-                labelFormatter={(label) => `${label}:00`}
+            <Tooltip
+              formatter={ordersFormatter}
+              labelFormatter={(label) => `${label}:00`}
               />
               <Bar dataKey="orders" fill="#9333EA" radius={[4, 4, 0, 0]} />
             </BarChart>
@@ -267,7 +268,7 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
               />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip
-                formatter={(value: number) => [`${value} orders`, "Orders"]}
+                formatter={ordersFormatter}
                 labelFormatter={(label) => new Date(label).toLocaleDateString()}
               />
               <Line
@@ -284,4 +285,3 @@ export function EnhancedSalesAnalytics({ data, period: _period }: Props) {
     </div>
   );
 }
-

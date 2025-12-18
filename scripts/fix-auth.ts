@@ -19,8 +19,14 @@ async function main() {
   
   // 2. Check/create admin user
   console.log('2️⃣ Checking admin user...');
-  const adminEmail = 'admin@kollect-it.com';
-  const adminPassword = 'KollectIt@2025Admin';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@kollect-it.com';
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  
+  if (!adminPassword) {
+    console.error('❌ ERROR: ADMIN_PASSWORD environment variable is required');
+    console.error('   Set ADMIN_PASSWORD in .env.local before running this script');
+    process.exit(1);
+  }
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
   
   const admin = await prisma.user.upsert({
@@ -92,7 +98,7 @@ async function main() {
   console.log('\n📋 Login Credentials:');
   console.log('─'.repeat(50));
   console.log(`   Email:    ${adminEmail}`);
-  console.log(`   Password: ${adminPassword}`);
+  console.log(`   Password: [Set via ADMIN_PASSWORD environment variable]`);
   console.log('─'.repeat(50));
   console.log('\n🌐 Login at:');
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';

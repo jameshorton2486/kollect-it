@@ -10,7 +10,7 @@ vercel env ls
 Write-Host ""
 
 # Production URL
-$productionUrl = "https://kollect-it-marketplace-1.vercel.app"
+$productionUrl = "https://kollect-it.vercel.app"
 
 Write-Host "🔍 Checking for NEXTAUTH_URL..." -ForegroundColor Yellow
 $nextAuthUrl = vercel env ls | Select-String "NEXTAUTH_URL"
@@ -23,7 +23,7 @@ if (-not $nextAuthUrl) {
     Write-Host ""
     Write-Host "   When prompted, enter: $productionUrl" -ForegroundColor White
     Write-Host ""
-    
+
     $add = Read-Host "Would you like to add it now? (y/n)"
     if ($add -eq "y" -or $add -eq "Y") {
         Write-Host ""

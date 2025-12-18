@@ -3,17 +3,58 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-const users = [
-  { email: "admin@kollect-it.com", password: "KollectIt@2025Admin", name: "Admin User" },
-  { email: "James@kollect-it.com", password: "James@KI-2025", name: "James Horton" },
-  { email: "billing@kollect-it.com", password: "billing@KI-2025", name: "Billing Dept" },
-  { email: "info@kollect-it.com", password: "info@KI-2025", name: "Info" },
-  { email: "support@kollect-it.com", password: "support@KI-2025", name: "Support" },
-  { email: "jameshorton2486@gmail.com", password: "james@KI-2025", name: "James Personal" },
-];
+/**
+ * SECURITY: This script requires environment variables for all passwords
+ * No hardcoded passwords are allowed
+ * 
+ * Required environment variables:
+ * - ADMIN_PASSWORD
+ * - JAMES_PASSWORD
+ * - BILLING_PASSWORD
+ * - INFO_PASSWORD
+ * - SUPPORT_PASSWORD
+ * - JAMES_PERSONAL_PASSWORD (for jameshorton2486@gmail.com)
+ */
+
+const getUsers = () => {
+  const requiredPasswords = {
+    ADMIN: process.env.ADMIN_PASSWORD,
+    JAMES: process.env.JAMES_PASSWORD,
+    BILLING: process.env.BILLING_PASSWORD,
+    INFO: process.env.INFO_PASSWORD,
+    SUPPORT: process.env.SUPPORT_PASSWORD,
+    JAMES_PERSONAL: process.env.JAMES_PERSONAL_PASSWORD,
+  };
+
+  const missing = Object.entries(requiredPasswords)
+    .filter(([_, value]) => !value)
+    .map(([key]) => {
+      if (key === "JAMES_PERSONAL") return "JAMES_PERSONAL_PASSWORD";
+      return `${key}_PASSWORD`;
+    });
+
+  if (missing.length > 0) {
+    throw new Error(
+      `Missing required environment variables: ${missing.join(", ")}\n` +
+      "Set these in .env.local before running this script."
+    );
+  }
+
+  return [
+    { email: "admin@kollect-it.com", password: requiredPasswords.ADMIN!, name: "Admin User" },
+    { email: "James@kollect-it.com", password: requiredPasswords.JAMES!, name: "James Horton" },
+    { email: "billing@kollect-it.com", password: requiredPasswords.BILLING!, name: "Billing Dept" },
+    { email: "info@kollect-it.com", password: requiredPasswords.INFO!, name: "Info" },
+    { email: "support@kollect-it.com", password: requiredPasswords.SUPPORT!, name: "Support" },
+    { email: "jameshorton2486@gmail.com", password: requiredPasswords.JAMES_PERSONAL!, name: "James Personal" },
+  ];
+};
 
 async function main() {
   console.log("🔐 Setting up team logins...");
+  
+  // Get users (will throw if env vars are missing)
+  const users = getUsers();
 
   for (const user of users) {
     // Normalize email to lowercase to avoid case-sensitivity issues

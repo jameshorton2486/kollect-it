@@ -4,17 +4,66 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-const credentialsToTest = [
-  { email: "admin@kollect-it.com", password: "KollectIt@2025Admin" },
-  { email: "James@kollect-it.com", password: "James@KI-2025" },
-  { email: "billing@kollect-it.com", password: "billing@KI-2025" },
-  { email: "info@kollect-it.com", password: "info@KI-2025" },
-  { email: "support@kollect-it.com", password: "support@KI-2025" },
-  { email: "jameshorton2486@gmail.com", password: "james@KI-2025" },
-];
+/**
+ * TEST SCRIPT: Tests login credentials against database
+ * 
+ * SECURITY NOTE: This script tests credentials from environment variables only
+ * Passwords are NOT hardcoded - they must be provided via env vars
+ * 
+ * Required environment variables:
+ * - ADMIN_PASSWORD
+ * - JAMES_PASSWORD
+ * - BILLING_PASSWORD
+ * - INFO_PASSWORD
+ * - SUPPORT_PASSWORD
+ * - JAMES_PERSONAL_PASSWORD (for jameshorton2486@gmail.com)
+ */
+
+const getCredentialsToTest = () => {
+  const passwords = {
+    ADMIN: process.env.ADMIN_PASSWORD,
+    JAMES: process.env.JAMES_PASSWORD,
+    BILLING: process.env.BILLING_PASSWORD,
+    INFO: process.env.INFO_PASSWORD,
+    SUPPORT: process.env.SUPPORT_PASSWORD,
+    JAMES_PERSONAL: process.env.JAMES_PERSONAL_PASSWORD,
+  };
+
+  // For testing, we allow partial credentials - just warn if missing
+  const warnings: string[] = [];
+  Object.entries(passwords).forEach(([key, value]) => {
+    if (!value) {
+      const envVarName = key === "JAMES_PERSONAL" ? "JAMES_PERSONAL_PASSWORD" : `${key}_PASSWORD`;
+      warnings.push(`   - ${envVarName}`);
+    }
+  });
+
+  if (warnings.length > 0) {
+    console.warn("⚠️  WARNING: Some password environment variables are not set:");
+    warnings.forEach(w => console.warn(w));
+    console.warn("   Credentials with missing passwords will be skipped.\n");
+  }
+
+  const credentials = [];
+  if (passwords.ADMIN) credentials.push({ email: "admin@kollect-it.com", password: passwords.ADMIN });
+  if (passwords.JAMES) credentials.push({ email: "James@kollect-it.com", password: passwords.JAMES });
+  if (passwords.BILLING) credentials.push({ email: "billing@kollect-it.com", password: passwords.BILLING });
+  if (passwords.INFO) credentials.push({ email: "info@kollect-it.com", password: passwords.INFO });
+  if (passwords.SUPPORT) credentials.push({ email: "support@kollect-it.com", password: passwords.SUPPORT });
+  if (passwords.JAMES_PERSONAL) credentials.push({ email: "jameshorton2486@gmail.com", password: passwords.JAMES_PERSONAL });
+
+  if (credentials.length === 0) {
+    throw new Error("No credentials provided via environment variables. Set at least one *_PASSWORD env var.");
+  }
+
+  return credentials;
+};
 
 async function main() {
   console.log("🔍 Testing credentials against database...");
+  console.log("💡 This script uses passwords from environment variables only\n");
+  
+  const credentialsToTest = getCredentialsToTest();
   
   for (const cred of credentialsToTest) {
     const normalizedEmail = cred.email.toLowerCase();

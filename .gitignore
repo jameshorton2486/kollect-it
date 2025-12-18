@@ -22,7 +22,8 @@ tsconfig.tsbuildinfo
 .env.*.local
 .vercel
 # Ignore log files and error summary
-logs/
+logs/*
+!logs/.gitkeep
 *.log
 
 # Ignore IDE files
@@ -43,3 +44,8 @@ package-lock.json
 
 # Ignore zip files
 *.zip
+.vercel/
+
+# Backups: ignore all contents except README
+backups/*
+!backups/README.md

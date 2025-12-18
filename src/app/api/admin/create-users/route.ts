@@ -5,31 +5,70 @@ import { requireAdminAuth } from "@/lib/auth-admin";
 
 const prisma = new PrismaClient();
 
-const users = [
-  { email: "admin@kollect-it.com", password: "KollectIt@2025Admin", name: "Admin User", role: "admin" },
-  { email: "James@kollect-it.com", password: "James@KI-2025", name: "James Horton", role: "admin" },
-  { email: "billing@kollect-it.com", password: "billing@KI-2025", name: "Billing Department", role: "admin" },
-  { email: "info@kollect-it.com", password: "info@KI-2025", name: "Info Support", role: "admin" },
-  { email: "support@kollect-it.com", password: "support@KI-2025", name: "Customer Support", role: "admin" },
-  { email: "jameshorton2486@gmail.com", password: "james@KI-2025", name: "James Horton (Personal)", role: "admin" },
-];
+/**
+ * SECURITY WARNING: This endpoint should only be used in development
+ * It contains hardcoded credentials for convenience during setup
+ * 
+ * For production:
+ * 1. Use scripts/create-admin.ts with environment variables
+ * 2. Or remove this endpoint entirely
+ * 3. Never commit actual passwords to version control
+ */
+
+/**
+ * DEPRECATED: This endpoint should not be used in production
+ * 
+ * RECOMMENDATION: Use scripts/create-admin.ts instead for secure admin creation
+ * 
+ * This endpoint creates a single admin user using environment variables:
+ * - ADMIN_EMAIL (defaults to admin@kollect-it.com if not set)
+ * - ADMIN_PASSWORD (REQUIRED - will fail if not set)
+ * - ADMIN_NAME (defaults to "Admin User" if not set)
+ * 
+ * SECURITY: This endpoint is disabled in production. For production, use the script.
+ */
+const getAdminUser = () => {
+  const password = process.env.ADMIN_PASSWORD;
+  if (!password || password === "CHANGE_THIS_BEFORE_PRODUCTION") {
+    throw new Error("ADMIN_PASSWORD environment variable must be set. This endpoint requires explicit password configuration.");
+  }
+
+  return {
+    email: process.env.ADMIN_EMAIL || "admin@kollect-it.com",
+    password,
+    name: process.env.ADMIN_NAME || "Admin User",
+    role: "admin" as const,
+  };
+};
 
 export async function GET() {
+  // SECURITY: Block this endpoint in production
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json(
+      { error: "This endpoint is disabled in production. Use scripts/create-admin.ts instead." },
+      { status: 403 }
+    );
+  }
+
   try {
     const session = await requireAdminAuth();
     if (session instanceof Response) return session;
 
-    const results = [];
-    for (const userData of users) {
-      const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const user = await prisma.user.upsert({
-        where: { email: userData.email },
-        update: { password: hashedPassword, role: userData.role, name: userData.name },
-        create: { email: userData.email, password: hashedPassword, name: userData.name, role: userData.role },
-      });
-      results.push({ email: user.email, id: user.id, name: user.name, role: user.role });
-    }
-    return NextResponse.json({ success: true, message: "Users created", users: results });
+    // Get admin user from environment variables (will throw if not properly configured)
+    const userData = getAdminUser();
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    const user = await prisma.user.upsert({
+      where: { email: userData.email },
+      update: { password: hashedPassword, role: userData.role, name: userData.name },
+      create: { email: userData.email, password: hashedPassword, name: userData.name, role: userData.role },
+    });
+    
+    return NextResponse.json({ 
+      success: true, 
+      message: "Admin user created/updated", 
+      users: [{ email: user.email, id: user.id, name: user.name, role: user.role }],
+      note: "For additional users, use scripts/create-admin.ts"
+    });
   } catch (error) {
     return NextResponse.json({ success: false, error: error instanceof Error ? error.message : "Unknown error" }, { status: 500 });
   } finally {

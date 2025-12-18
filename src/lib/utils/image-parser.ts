@@ -1,12 +1,21 @@
 /**
  * Parse image filename to detect type and suggest order
  * Used for smart image ordering in galleries
+ * Slot-safe: handles null/undefined input gracefully
  */
-export function parseImageMetadata(filename: string): {
+export function parseImageMetadata(filename: string | null | undefined): {
   type: string;
   order: number;
   suggestedAlt: string;
 } {
+  if (!filename) {
+    return {
+      type: "unknown",
+      order: 999,
+      suggestedAlt: "Product image",
+    };
+  }
+
   const lower = filename.toLowerCase();
   const baseName = filename.replace(/\.[^/.]+$/, ""); // Remove extension
 
@@ -118,19 +127,32 @@ export function parseImageMetadata(filename: string): {
 /**
  * Extract number from filename like "condition-01.jpg" → 1
  */
-function extractNumber(filename: string): number {
+/**
+ * Extract number from filename string
+ * Slot-safe: handles null/undefined input gracefully
+ */
+function extractNumber(filename: string | null | undefined): number {
+  if (!filename) return 0;
   const match = filename.match(/(\d+)/);
   return match ? parseInt(match[1], 10) : 0;
 }
 
 /**
  * Validate SKU format: SKU-YYYY-XXX
+ * Slot-safe: handles null/undefined input gracefully
  */
-export function validateSKU(sku: string): {
+export function validateSKU(sku: string | null | undefined): {
   valid: boolean;
   error?: string;
   parsed?: { year: number; number: number };
 } {
+  if (!sku) {
+    return {
+      valid: false,
+      error: "SKU is required",
+    };
+  }
+
   const pattern = /^SKU-(\d{4})-(\d{3})$/;
   const match = sku.match(pattern);
 
@@ -167,7 +189,10 @@ export function validateSKU(sku: string): {
 
 /**
  * Format SKU from components
+ * Slot-safe: handles null/undefined inputs gracefully
  */
-export function formatSKU(year: number, number: number): string {
-  return `SKU-${year}-${number.toString().padStart(3, "0")}`;
+export function formatSKU(year: number | null | undefined, number: number | null | undefined): string {
+  const safeYear = year ?? new Date().getFullYear();
+  const safeNumber = number ?? 1;
+  return `SKU-${safeYear}-${safeNumber.toString().padStart(3, "0")}`;
 }
