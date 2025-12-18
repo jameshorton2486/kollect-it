@@ -7,7 +7,8 @@ if (Test-Path $gitignore) {
     $utf8NoBom = New-Object System.Text.UTF8Encoding $false
     [System.IO.File]::WriteAllText($gitignore, $content, $utf8NoBom)
     Write-Host "Removed BOM from .gitignore"
-} else {
+}
+else {
     Write-Host ".gitignore not found"
 }
 
@@ -21,7 +22,8 @@ if (Test-Path $auditFile) {
         -replace '(?i)(admin123|KollectIt@2025Admin|KI-2025|James@KI-2025)', '[REDACTED]'
     Set-Content $auditFile $audit -Encoding UTF8
     Write-Host "Redacted credentials from PRE_LAUNCH_AUDIT.md"
-} else {
+}
+else {
     Write-Host "PRE_LAUNCH_AUDIT.md not found"
 }
 
@@ -33,23 +35,26 @@ if (Test-Path $verifyScript) {
         $verify = $verify -replace 'process\.exit\(0\)', 'process.exit(1)'
         Set-Content $verifyScript $verify -Encoding UTF8
         Write-Host "Hardened verify-admin-security.ts to fail safely"
-    } else {
+    }
+    else {
         Write-Host "verify-admin-security.ts already hardened"
     }
-} else {
+}
+else {
     Write-Host "verify-admin-security.ts not found (skipping)"
 }
 
 # 4) Scan for leftover secrets
 Write-Host "Scanning for possible leaked credentials..."
 $patterns = 'password:', 'admin@kollect-it', 'API_KEY='
-$hits = Select-String -Path "*.md","scripts/*.ts" -Pattern $patterns -Recurse
+$hits = Select-String -Path "*.md", "scripts/*.ts" -Pattern $patterns -Recurse
 if ($hits) {
     Write-Host "Possible sensitive strings still found:"
     $hits | ForEach-Object { Write-Host "  -> $($_.Path):$($_.LineNumber)" }
     Write-Host "Fix these manually before merging."
     exit 1
-} else {
+}
+else {
     Write-Host "No obvious credentials detected"
 }
 
@@ -67,9 +72,11 @@ if ($pathsToAdd.Count -gt 0) {
     if ($hasChanges) {
         git commit -m "fix(security): harden gitignore, redact audit credentials, fail admin checks safely"
         Write-Host "Security fixes applied and committed successfully!"
-    } else {
+    }
+    else {
         Write-Host "No changes to commit"
     }
-} else {
+}
+else {
     Write-Host "No target files found to stage"
 }
