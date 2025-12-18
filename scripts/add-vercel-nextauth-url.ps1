@@ -2,7 +2,7 @@
 Write-Host "🔧 Adding NEXTAUTH_URL to Vercel..." -ForegroundColor Cyan
 Write-Host ""
 
-$productionUrl = "https://kollect-it-marketplace-1.vercel.app"
+$productionUrl = "https://kollect-it.vercel.app"
 
 Write-Host "Adding NEXTAUTH_URL for production environment..." -ForegroundColor Yellow
 Write-Host "Value: $productionUrl" -ForegroundColor White
@@ -21,12 +21,12 @@ try {
     # Create a temporary file with the value
     $tempFile = [System.IO.Path]::GetTempFileName()
     $productionUrl | Out-File -FilePath $tempFile -Encoding utf8 -NoNewline
-    
+
     Write-Host "Attempting to add via command..." -ForegroundColor Yellow
     Get-Content $tempFile | vercel env add NEXTAUTH_URL production
-    
+
     Remove-Item $tempFile -ErrorAction SilentlyContinue
-    
+
     Write-Host ""
     Write-Host "✅ NEXTAUTH_URL added successfully!" -ForegroundColor Green
 } catch {
