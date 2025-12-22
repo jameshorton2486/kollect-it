@@ -92,7 +92,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       prisma.category.findMany({ select: { slug: true, updatedAt: true } }),
       prisma.product.findMany({
         select: { slug: true, updatedAt: true },
-        where: { status: "active" },
+        where: { 
+          status: "active",
+          isDraft: false, // Exclude draft products from sitemap
+        },
       }),
     ]);
 

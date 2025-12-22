@@ -59,6 +59,8 @@ export function ProductUploadForm() {
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Form state for editing AI suggestions
   const [formData, setFormData] = useState({
@@ -78,6 +80,14 @@ export function ProductUploadForm() {
     fetchNextSKU();
     fetchCategories();
   }, []);
+
+  // Reset unsaved changes when step changes
+  useEffect(() => {
+    if (step !== "edit") {
+      setHasUnsavedChanges(false);
+      setLastSaved(null);
+    }
+  }, [step]);
 
   async function fetchCategories() {
     try {
@@ -196,6 +206,8 @@ export function ProductUploadForm() {
         seoDescription: data.seoDescription,
       });
       setStep("edit");
+      // Mark as ready to edit (no unsaved changes initially)
+      setHasUnsavedChanges(false);
     } catch (err) {
       setError(`Analysis failed: ${err instanceof Error ? err.message : "Try again"}`);
     } finally {
@@ -242,9 +254,25 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
     });
   }
 
-  async function handleCreateProduct() {
+  async function handleCreateProduct(isDraft: boolean = true) {
     if (!analysis) {
       setError("Please run AI analysis first");
+      return;
+    }
+
+    // Validate required fields
+    if (!formData.title || formData.title.trim().length === 0) {
+      setError("Product title is required");
+      return;
+    }
+
+    if (!formData.suggestedPrice || formData.suggestedPrice <= 0) {
+      setError("Product price must be greater than 0");
+      return;
+    }
+
+    if (images.length === 0) {
+      setError("At least one image is required");
       return;
     }
 
@@ -267,7 +295,7 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
           appraisalUrls,
           appraisalDocUrl: appraisalDocUrl || undefined,
           provenanceDocUrl: provenanceDocUrl || undefined,
-          isDraft: true,
+          isDraft,
         }),
       });
 
@@ -276,6 +304,8 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
         throw new Error(data.error || "Creation failed");
       }
 
+      setLastSaved(new Date());
+      setHasUnsavedChanges(false);
       setStep("success");
 
       // Reset form after delay
@@ -563,7 +593,11 @@ TARGET_PRICE: $1,750`}
             </p>
           </div>
 
-          <MultiImageUpload onImagesUploaded={handleImagesUploaded} />
+          <MultiImageUpload 
+            onImagesUploaded={handleImagesUploaded}
+            sku={sku}
+            productTitle={formData.title}
+          />
 
           {/* Documentation Section (Optional) */}
           <div className="mt-8 pt-8 border-t border-lux-charcoal/30">
@@ -659,15 +693,27 @@ TARGET_PRICE: $1,750`}
           {/* Form fields */}
           <div className="space-y-4">
             <div>
-              <label htmlFor="product-title" className="block text-sm font-medium mb-2">Title</label>
+              <label htmlFor="product-title" className="block text-sm font-medium mb-2">
+                Title *
+                {formData.title.length > 0 && (
+                  <span className="text-xs text-lux-gray-dark ml-2">
+                    ({formData.title.length} characters)
+                  </span>
+                )}
+              </label>
               <input
                 id="product-title"
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                required
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
                 aria-label="Product title"
+                aria-required="true"
               />
+              {formData.title.length === 0 && (
+                <p className="text-xs text-red-400 mt-1">Title is required</p>
+              )}
             </div>
 
             <div>
@@ -709,49 +755,71 @@ TARGET_PRICE: $1,750`}
             </div>
 
             <div>
-              <label htmlFor="product-price" className="block text-sm font-medium mb-2">Suggested Price</label>
+              <label htmlFor="product-price" className="block text-sm font-medium mb-2">
+                Suggested Price *
+                {formData.suggestedPrice > 0 && (
+                  <span className="text-xs text-lux-gray-dark ml-2">
+                    ${formData.suggestedPrice.toFixed(2)}
+                  </span>
+                )}
+              </label>
               <input
                 id="product-price"
                 type="number"
-                value={formData.suggestedPrice}
-                onChange={(e) => setFormData({ ...formData, suggestedPrice: parseFloat(e.target.value) })}
+                min="0"
+                step="0.01"
+                value={formData.suggestedPrice || ''}
+                onChange={(e) => setFormData({ ...formData, suggestedPrice: parseFloat(e.target.value) || 0 })}
+                required
                 className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
                 aria-label="Suggested product price"
+                aria-required="true"
               />
               {analysis.priceReasoning && (
                 <p className="text-sm text-lux-gray-dark mt-1">{analysis.priceReasoning}</p>
               )}
+              {formData.suggestedPrice <= 0 && (
+                <p className="text-xs text-red-400 mt-1">Price must be greater than 0</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="seo-title" className="block text-sm font-medium mb-2">SEO Title</label>
+              <label htmlFor="seo-title" className="block text-sm font-medium mb-2">
+                SEO Title
+                <span className="text-xs text-lux-gray-dark ml-2">(Optional - auto-generated if empty)</span>
+              </label>
               <input
                 id="seo-title"
                 type="text"
                 value={formData.seoTitle}
                 onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
                 maxLength={60}
-                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
-                aria-label="SEO title for product"
+                placeholder="Auto-generated from product title"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-dark"
+                aria-label="SEO title for product (optimal: 50-60 characters)"
               />
-              <p className="text-xs text-ink-700 mt-1">
-                {formData.seoTitle.length}/60 characters
+              <p className={`text-xs mt-1 ${formData.seoTitle.length > 60 ? 'text-red-400' : formData.seoTitle.length > 50 ? 'text-lux-gold' : 'text-ink-700'}`}>
+                {formData.seoTitle.length}/60 characters {formData.seoTitle.length > 60 && '(too long)'}
               </p>
             </div>
 
             <div>
-              <label htmlFor="seo-description" className="block text-sm font-medium mb-2">SEO Description</label>
+              <label htmlFor="seo-description" className="block text-sm font-medium mb-2">
+                SEO Description
+                <span className="text-xs text-lux-gray-dark ml-2">(Optional - auto-generated if empty)</span>
+              </label>
               <textarea
                 id="seo-description"
                 value={formData.seoDescription}
                 onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                 maxLength={155}
                 rows={3}
-                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
-                aria-label="SEO description for product"
+                placeholder="Auto-generated from product description"
+                className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-dark"
+                aria-label="SEO description for product (optimal: 120-155 characters)"
               />
-              <p className="text-xs text-ink-700 mt-1">
-                {formData.seoDescription.length}/155 characters
+              <p className={`text-xs mt-1 ${formData.seoDescription.length > 155 ? 'text-red-400' : formData.seoDescription.length > 120 ? 'text-lux-gold' : 'text-ink-700'}`}>
+                {formData.seoDescription.length}/155 characters {formData.seoDescription.length > 155 && '(too long)'}
               </p>
             </div>
           </div>
@@ -769,27 +837,61 @@ TARGET_PRICE: $1,750`}
             </button>
           </div>
 
-          <div className="flex gap-4">
-            <button
-              onClick={() => setStep("analyze")}
-              className="flex-1 py-3 bg-lux-charcoal hover:bg-lux-charcoal/80 rounded-full font-medium transition text-lux-cream"
-            >
-              ← Re-analyze
-            </button>
-            <button
-              onClick={handleCreateProduct}
-              disabled={creating}
-              className="flex-1 py-3 bg-green-600 hover:bg-green-700 disabled:bg-lux-charcoal/50 disabled:cursor-not-allowed rounded-full font-medium transition text-white"
-            >
-              {creating ? (
-                <>
-                  <Loader className="w-5 h-5 animate-spin inline mr-2" />
-                  Creating...
-                </>
-              ) : (
-                "Create Product (Draft)"
-              )}
-            </button>
+          {/* Sticky Save Bar */}
+          <div className="sticky bottom-0 bg-lux-charcoal border-t border-lux-gold/20 py-4 -mx-6 px-6 mt-8 z-10">
+            <div className="flex items-center justify-between gap-4">
+              {/* Left: Auto-save indicator */}
+              <div className="flex items-center gap-3">
+                {lastSaved && (
+                  <span className="text-sm text-lux-gray">
+                    Last saved: {lastSaved.toLocaleTimeString()}
+                  </span>
+                )}
+                {hasUnsavedChanges && (
+                  <span className="text-sm text-lux-gold">
+                    • Unsaved changes
+                  </span>
+                )}
+              </div>
+
+              {/* Right: Action buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setStep("analyze")}
+                  className="px-6 py-2 bg-lux-charcoal/80 hover:bg-lux-charcoal rounded-lg font-medium transition text-lux-cream border border-lux-charcoal/50"
+                >
+                  ← Re-analyze
+                </button>
+                <button
+                  onClick={() => handleCreateProduct(true)}
+                  disabled={creating}
+                  className="px-6 py-2 bg-lux-gray-dark hover:bg-lux-gray disabled:bg-lux-charcoal/50 disabled:cursor-not-allowed rounded-lg font-medium transition text-lux-cream"
+                >
+                  {creating ? (
+                    <>
+                      <Loader className="w-4 h-4 animate-spin inline mr-2" />
+                      Saving...
+                    </>
+                  ) : (
+                    "Save Draft"
+                  )}
+                </button>
+                <button
+                  onClick={() => handleCreateProduct(false)}
+                  disabled={creating}
+                  className="px-6 py-2 bg-lux-gold hover:bg-lux-gold-light disabled:bg-lux-charcoal/50 disabled:cursor-not-allowed rounded-lg font-medium transition text-lux-black"
+                >
+                  {creating ? (
+                    <>
+                      <Loader className="w-4 h-4 animate-spin inline mr-2" />
+                      Publishing...
+                    </>
+                  ) : (
+                    "Publish"
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
