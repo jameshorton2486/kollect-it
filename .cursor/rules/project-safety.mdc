@@ -1,0 +1,24 @@
+---
+description: Project safety and refactor rules
+globs: ["**/*"]
+---
+
+# Project Safety Rules
+
+You are working in a production-bound application.
+
+## You MUST:
+- Add new files instead of modifying existing ones unless instructed
+- Move deprecated files to /archive instead of deleting
+- Preserve function names and public APIs
+- Favor backward compatibility
+
+## You MUST NOT:
+- Delete files
+- Rename functions used by UI or AI flows
+- Inline large refactors in a single step
+- Change runtime behavior without verification instructions
+
+## Required Workflow
+- One phase at a time
+- Each phase must include a verification step
