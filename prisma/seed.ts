@@ -66,8 +66,8 @@ async function main() {
         "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80",
     },
     {
-      name: "Antique Books",
-      slug: "antique-books",
+      name: "Rare Books & Manuscripts",
+      slug: "rare-books",
       description:
         "Scarce first editions, beautifully bound volumes, and literary treasures for discerning bibliophiles",
       image:
@@ -104,8 +104,8 @@ async function main() {
   const fineArtCategory = await prisma.category.findUnique({
     where: { slug: "fine-art" },
   });
-  const antiqueBookCategory = await prisma.category.findUnique({
-    where: { slug: "antique-books" },
+  const rareBooksCategory = await prisma.category.findUnique({
+    where: { slug: "rare-books" },
   });
   const collectiblesCategory = await prisma.category.findUnique({
     where: { slug: "collectibles" },
@@ -144,7 +144,7 @@ async function main() {
     console.log("✅ Sample product created:", product1.title);
   }
 
-  if (antiqueBookCategory) {
+  if (rareBooksCategory) {
     const product2 = await prisma.product.create({
       data: {
         sku: "BK-1856-001",
@@ -155,7 +155,7 @@ async function main() {
         description:
           "A beautiful leather-bound edition of Shakespeare's complete works from 1856.",
         price: 3200,
-        categoryId: antiqueBookCategory.id,
+        categoryId: rareBooksCategory.id,
         condition: "Very Good",
         year: "1856",
         period: "Victorian",

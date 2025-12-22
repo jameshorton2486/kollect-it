@@ -25,9 +25,12 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  // Fetch latest products
+  // Fetch latest products (only published, non-draft)
   const latestProducts = await prisma.product.findMany({
-    where: { status: "active" },
+    where: { 
+      status: "active",
+      isDraft: false,
+    },
     include: {
       images: { orderBy: { order: "asc" }, take: 1 },
       category: true,

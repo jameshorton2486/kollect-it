@@ -55,10 +55,11 @@ export async function generateMetadata(
         `Authenticated ${product.category.name.toLowerCase()} from Kollect-It. Carefully curated and quality-reviewed.`
       );
 
-  // Get primary image (first image) for OpenGraph - use ImageKit transformation if available
+  // Get primary image (first image) for OpenGraph - use ImageKit transformation
+  const { getProductDetailImageUrl } = await import("@/lib/image-helpers");
   const baseImageUrl = product.images[0]?.url || "/og-default.jpg";
-  const imageUrl = baseImageUrl.includes('imagekit.io') 
-    ? `${baseImageUrl}?tr=w-1200,h-1200,fo-auto,q-85` 
+  const imageUrl = baseImageUrl !== "/og-default.jpg" 
+    ? getProductDetailImageUrl(baseImageUrl)
     : baseImageUrl;
   const canonicalUrl = generateCanonicalUrl(product.slug);
 
