@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useState } from "react";
+import { getProductGridImageUrl, getProductImageAltText } from "@/lib/image-helpers";
 
 // Export the type so other components can use it
 export interface ProductCardData {
@@ -26,7 +27,9 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const imageUrl = product.images?.[0]?.url || "/placeholder.svg";
+  const rawImageUrl = product.images?.[0]?.url || "/placeholder.svg";
+  const imageUrl = getProductGridImageUrl(rawImageUrl);
+  const altText = getProductImageAltText(product.title, 0, true);
 
   const handleWishlistToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -67,7 +70,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
           ) : (
             <Image
               src={imageUrl}
-              alt={product.title}
+              alt={altText}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               onError={() => setImageError(true)}
@@ -129,7 +132,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         ) : (
           <Image
             src={imageUrl}
-            alt={product.title}
+            alt={altText}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             onError={() => setImageError(true)}

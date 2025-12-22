@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import { Grid3x3, List, SlidersHorizontal, Search } from "lucide-react";
 import Link from "next/link";
 import { EmptyState } from "@/components/ui";
+import { getProductGridImageUrl, getProductImageAltText } from "@/lib/image-helpers";
 
 interface Product {
   id: string;
@@ -252,8 +253,8 @@ export default function SearchResults() {
                       }`}
                     >
                       <img
-                        src={product.images[0]?.url || "/placeholder.svg"}
-                        alt={product.images[0]?.alt || product.title}
+                        src={getProductGridImageUrl(product.images[0]?.url || "/placeholder.svg")}
+                        alt={product.images[0]?.alt || getProductImageAltText(product.title, 0, true)}
                         className={
                           viewMode === "list"
                             ? "h-32 w-32 rounded-lg object-cover"

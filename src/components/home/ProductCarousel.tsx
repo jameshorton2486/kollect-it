@@ -4,6 +4,7 @@ import { useRef } from "react"; // Removed unused useState
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getProductGridImageUrl, getProductImageAltText } from "@/lib/image-helpers";
 
 interface Product {
   id: string;
@@ -87,8 +88,8 @@ export default function ProductCarousel({
             >
               <div className="relative aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                 <Image
-                  src={product.images[0]?.url || "/placeholder.svg"}
-                  alt={product.title}
+                  src={getProductGridImageUrl(product.images[0]?.url || "/placeholder.svg")}
+                  alt={getProductImageAltText(product.title, 0, true)}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform"
                 />

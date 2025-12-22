@@ -64,18 +64,18 @@ export function getImageKitUrl(path: string, transformation?: string): string {
  * - q: Quality (80-85 recommended for WebP)
  */
 export const imageTransformations = {
-  /** Admin preview thumbnails - 400px square */
-  admin_preview: "w-400,h-400,fo-auto,q-80",
+  /** Admin preview thumbnails - 400px square, WebP format */
+  admin_preview: "w-400,h-400,fo-auto,q-80,f-webp",
   
-  /** Product grid - 600px square crop for consistent grid */
-  product_grid: "w-600,h-600,fo-auto,c-at_max,q-85",
+  /** Product grid - 600px square crop for consistent grid, WebP format */
+  product_grid: "w-600,h-600,fo-auto,c-at_max,q-85,f-webp",
   
-  /** Product detail page - 2000px max width */
-  product_detail: "w-2000,fo-auto,q-85",
+  /** Product detail page - 2000px max width, WebP format */
+  product_detail: "w-2000,fo-auto,q-85,f-webp",
   
   /** Legacy presets (for backward compatibility) */
-  thumbnail: "w-400,h-400,fo-auto,q-80",
-  productCard: "w-600,h-600,fo-auto,q-85",
-  gallery: "w-1600,h-1600,fo-auto,q-95",
+  thumbnail: "w-400,h-400,fo-auto,q-80,f-webp",
+  productCard: "w-600,h-600,fo-auto,q-85,f-webp",
+  gallery: "w-1600,h-1600,fo-auto,q-95,f-webp",
 };
 

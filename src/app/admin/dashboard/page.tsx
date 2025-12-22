@@ -17,6 +17,7 @@ import {
   Users,
   Download,
 } from "lucide-react";
+import { getAdminPreviewImageUrl } from "@/lib/image-helpers";
 
 interface Product {
   id: string;
@@ -409,7 +410,7 @@ export default function AdminDashboard() {
                       <div className="flex items-center">
                         {product.images[0] && (
                           <img
-                            src={product.images[0].url}
+                            src={getAdminPreviewImageUrl(product.images[0].url)}
                             alt={product.title}
                             className="w-12 h-12 rounded object-cover mr-3"
                           />

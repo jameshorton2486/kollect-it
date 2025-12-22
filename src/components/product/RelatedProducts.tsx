@@ -5,6 +5,7 @@ import Image from "next/image";
 import { BLUR_DATA_URL } from "@/lib/image";
 import { useRef } from "react";
 import { formatUSD0 } from "@/lib/currency";
+import { getProductGridImageUrl, getProductImageAltText } from "@/lib/image-helpers";
 
 interface Product {
   id: string;
@@ -109,8 +110,8 @@ export default function RelatedProducts({
                 {product.images[0] ? (
                   <>
                     <Image
-                      src={product.images[0].url}
-                      alt={`${product.title} - ${product.category.name}`}
+                      src={getProductGridImageUrl(product.images[0].url)}
+                      alt={getProductImageAltText(product.title, 0, true)}
                       width={300}
                       height={200}
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"

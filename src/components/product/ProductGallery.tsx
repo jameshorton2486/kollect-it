@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Captions } from "lucide-react";
 import Image from "next/image";
+import { getProductDetailImageUrl, getAdminPreviewImageUrl, getProductImageAltText } from "@/lib/image-helpers";
 
 interface ProductGalleryProps {
   images: { url: string; alt?: string | null }[];
@@ -30,13 +31,17 @@ export default function ProductGallery({
       ? images[selectedImageIndex]
       : images[0] ?? { url: "/placeholder.svg", alt: productName };
 
+  // Apply ImageKit transformations
+  const mainImageUrl = getProductDetailImageUrl(actualImage.url || "/placeholder.svg");
+  const mainImageAlt = actualImage.alt || getProductImageAltText(productName, selectedImageIndex, selectedImageIndex === 0);
+
   return (
     <div className="space-y-6">
       {/* Main Image */}
       <div className="relative aspect-square bg-surface-100 rounded-2xl overflow-hidden group border border-border-200 p-4">
         <Image
-          src={actualImage.url || "/placeholder.svg"}
-          alt={actualImage.alt || productName}
+          src={mainImageUrl}
+          alt={mainImageAlt}
           fill
           className="object-contain"
           priority
@@ -89,8 +94,8 @@ export default function ProductGallery({
               aria-label={`View image ${index + 1}`}
             >
               <Image
-                src={image.url || "/placeholder.svg"}
-                alt={image.alt || `${productName} - image ${index + 1}`}
+                src={getAdminPreviewImageUrl(image.url || "/placeholder.svg")}
+                alt={image.alt || getProductImageAltText(productName, index, false)}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 20vw, 10vw"
