@@ -5,25 +5,25 @@ const categories = [
   {
     name: "Fine Art",
     slug: "fine-art",
-    image: "/images/categories/fine-art.webp",
+    image: "/images/categories/fine-art.png",
     description: "Paintings, prints, and sculptures",
   },
   {
     name: "Rare Books",
     slug: "rare-books",
-    image: "/images/categories/rare-books.webp",
+    image: "/images/categories/rare-books.png",
     description: "First editions and collectible volumes",
   },
   {
     name: "Collectibles",
     slug: "collectibles",
-    image: "/images/categories/collectibles.webp",
+    image: "/images/categories/collectibles.png",
     description: "Curated objects and curiosities",
   },
   {
     name: "Militaria",
     slug: "militaria",
-    image: "/images/categories/militaria.webp",
+    image: "/images/categories/militaria.png",
     description: "Historical military artifacts",
   },
 ];
