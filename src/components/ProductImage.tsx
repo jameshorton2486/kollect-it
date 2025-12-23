@@ -26,7 +26,7 @@
  * ```
  */
 
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import type { ProductImageProps } from "../../types/imagekit";
 

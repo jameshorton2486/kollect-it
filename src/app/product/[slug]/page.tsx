@@ -44,11 +44,11 @@ export async function generateMetadata(
   }
 
   // Use SEO fields if available, otherwise generate from product data
-  const seoTitle = product.seoTitle 
+  const seoTitle = product.seoTitle
     ? `${product.seoTitle} | Kollect-It`
     : generateSeoTitle(product.title);
-  
-  const seoDescription = product.seoDescription 
+
+  const seoDescription = product.seoDescription
     ? product.seoDescription
     : generateSeoDescription(
         product.description,
@@ -58,13 +58,13 @@ export async function generateMetadata(
   // Get primary image (first image) for OpenGraph - use ImageKit transformation
   const { getProductDetailImageUrl } = await import("@/lib/image-helpers");
   const baseImageUrl = product.images[0]?.url || "/og-default.jpg";
-  const imageUrl = baseImageUrl !== "/og-default.jpg" 
+  const imageUrl = baseImageUrl !== "/og-default.jpg"
     ? getProductDetailImageUrl(baseImageUrl)
     : baseImageUrl;
   const canonicalUrl = generateCanonicalUrl(product.slug);
 
   // Add noindex for draft products
-  const robots = product.isDraft 
+  const robots = product.isDraft
     ? { index: false, follow: false }
     : undefined;
 
@@ -116,6 +116,8 @@ export default async function ProductPage(props: ProductPageProps) {
     { label: product.category.name, href: `/category/${product.category.slug}` },
     { label: product.title },
   ];
+
+  const canonicalUrl = generateCanonicalUrl(product.slug);
 
   const stickyProductData = {
     id: product.id,

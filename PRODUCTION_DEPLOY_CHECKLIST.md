@@ -115,6 +115,7 @@ bun run build
   - `payment_intent.payment_failed`
   - `charge.refunded`
   - `charge.dispute.created`
+- [ ] See [Stripe Webhook Setup Guide](./docs/STRIPE_WEBHOOK_SETUP.md) for detailed instructions
 
 #### Environment
 - [ ] `.env.local` NOT committed to Git

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import React from "react";
 
 /**
  * Interface defining the structure of the form state.

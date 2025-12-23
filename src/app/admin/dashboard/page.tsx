@@ -26,6 +26,7 @@ interface Product {
   category: { name: string };
   images: { url: string }[];
   status: string;
+  isDraft: boolean;
   createdAt: string;
 }
 

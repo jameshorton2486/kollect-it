@@ -16,6 +16,7 @@ const eslintConfig = [
     ignores: [
       ".next/**",
       "node_modules/**",
+      "work_files/**",
       "build/**",
       "dist/**",
       "*.config.js", // Config files may use CommonJS
