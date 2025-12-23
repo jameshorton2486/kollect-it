@@ -62,7 +62,7 @@ export default function Hero() {
               <p className="text-sm text-ink-600 italic">
                 "Every detail documented, every piece tells a story."
               </p>
-              <p className="text-label mt-1">— Private Collector</p>
+              <p className="text-label text-lux-gray-dark mt-1">— Private Collector</p>
             </div>
           </div>
           
