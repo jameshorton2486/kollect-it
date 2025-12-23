@@ -58,11 +58,24 @@ export function getImageKitUrl(path: string, transformation?: string): string {
 
 /**
  * Common transformation presets
+ * 
+ * Format: w-width,h-height,fo-auto (fit outside auto),q-quality
+ * - fo-auto: Maintains aspect ratio, fits within bounds
+ * - q: Quality (80-85 recommended for WebP)
  */
 export const imageTransformations = {
-  thumbnail: "w-400,h-400,fo-auto,q-80",
-  productCard: "w-600,h-600,fo-auto,q-85",
-  productDetail: "w-1200,h-1200,fo-auto,q-90",
-  gallery: "w-1600,h-1600,fo-auto,q-95",
+  /** Admin preview thumbnails - 400px square, WebP format */
+  admin_preview: "w-400,h-400,fo-auto,q-80,f-webp",
+  
+  /** Product grid - 600px square crop for consistent grid, WebP format */
+  product_grid: "w-600,h-600,fo-auto,c-at_max,q-85,f-webp",
+  
+  /** Product detail page - 2000px max width, WebP format */
+  product_detail: "w-2000,fo-auto,q-85,f-webp",
+  
+  /** Legacy presets (for backward compatibility) */
+  thumbnail: "w-400,h-400,fo-auto,q-80,f-webp",
+  productCard: "w-600,h-600,fo-auto,q-85,f-webp",
+  gallery: "w-1600,h-1600,fo-auto,q-95,f-webp",
 };
 

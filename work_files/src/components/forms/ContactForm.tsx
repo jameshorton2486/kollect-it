@@ -1,0 +1,202 @@
+"use client";
+
+import { useState } from "react";
+import React from "react";
+
+/**
+ * Interface defining the structure of the form state.
+ */
+interface FormState {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+/**
+ * A reusable, accessible, and validated Contact Form component.
+ * Now properly integrated with the /api/contact endpoint.
+ */
+export default function ContactForm() {
+  // --- State Initialization ---
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState<Partial<FormState>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  // --- Validation Logic ---
+  const validate = (f: FormState): Partial<FormState> => {
+    const e: Partial<FormState> = {};
+    if (!f.name.trim()) e.name = "Name is required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email))
+      e.email = "Valid email required";
+    if (!f.subject.trim()) e.subject = "Subject is required";
+    if (f.message.trim().length < 10)
+      e.message = "Message must be at least 10 characters";
+    return e;
+  };
+
+  // --- Submission Handler ---
+  const onSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+    setServerError("");
+    const validationErrors = validate(form);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
+
+    setSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      setSent(true);
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setServerError(
+        err instanceof Error ? err.message : "An error occurred. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // --- Reusable Input Component for Name, Email, Subject ---
+  const Input = ({
+    id,
+    label,
+    type = "text",
+  }: {
+    id: keyof FormState;
+    label: string;
+    type?: string;
+  }) => (
+    <div className="mb-4">
+      <label
+        htmlFor={id}
+        className="mb-1 block text-sm font-medium text-ink-900"
+      >
+        {label}
+      </label>
+      <input
+        id={id}
+        type={type}
+        value={form[id]}
+        onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}
+        className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
+          errors[id]
+            ? "border-red-500 ring-1 ring-red-500"
+            : "border-border-300 focus:border-lux-gold focus:ring-2 focus:ring-lux-gold focus:ring-offset-2"
+        }`}
+        {...(errors[id]
+          ? { "aria-invalid": "true", "aria-describedby": `${id}-error` }
+          : {})}
+      />
+      {errors[id] && (
+        <p id={`${id}-error`} className="mt-1 text-sm text-red-600">
+          {errors[id]}
+        </p>
+      )}
+    </div>
+  );
+
+  // --- Main Component Render ---
+  return (
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className="rounded-lg border border-border-200 bg-lux-white p-6 shadow-clean"
+    >
+      {sent ? (
+        <div className="text-center p-8">
+          <h3 className="font-serif text-3xl font-bold text-ink">
+            Message Sent Successfully! 🎉
+          </h3>
+          <p className="mt-3 text-lg text-ink-900">
+            We appreciate you reaching out. We'll get back to you shortly.
+          </p>
+          <button
+            onClick={() => setSent(false)}
+            className="mt-6 text-sm text-ink underline hover:text-lux-gold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
+            type="button"
+          >
+            Send another message
+          </button>
+        </div>
+      ) : (
+        <>
+          <h2 className="font-serif text-2xl font-semibold mb-6 text-lux-black">Contact Us</h2>
+
+          {serverError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+              {serverError}
+            </div>
+          )}
+
+          <Input id="name" label="Name *" />
+          <Input id="email" label="Email *" type="email" />
+          <Input id="subject" label="Subject *" />
+
+          <div className="mb-4">
+            <label
+              htmlFor="message"
+              className="mb-1 block text-sm font-medium text-ink-900"
+            >
+              Message *
+            </label>
+            <textarea
+              id="message"
+              rows={6}
+              maxLength={5000}
+              value={form.message}
+              onChange={(ev) =>
+                setForm((s) => ({ ...s, message: ev.target.value }))
+              }
+              className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
+                errors.message
+                  ? "border-red-500 ring-1 ring-red-500"
+                  : "border-border-300 focus:border-lux-gold focus:ring-2 focus:ring-lux-gold focus:ring-offset-2"
+              }`}
+              {...(errors.message
+                ? { "aria-invalid": "true", "aria-describedby": "message-error" }
+                : {})}
+            />
+            <div className="flex justify-between items-center mt-1">
+              {errors.message && (
+                <p id="message-error" className="text-sm text-red-600">
+                  {errors.message}
+                </p>
+              )}
+              <div className="ml-auto text-xs text-ink-700">
+                {form.message.length} / 5000
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 font-semibold rounded-lg bg-lux-gold text-lux-charcoal hover:bg-lux-gold-light transition-colors duration-200 disabled:bg-surface-300 disabled:text-lux-gray disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2"
+            disabled={submitting}
+          >
+            {submitting ? "Sending…" : "Send Message"}
+          </button>
+        </>
+      )}
+    </form>
+  );
+}

@@ -8,14 +8,280 @@ import { getRequestId } from "@/lib/request-context";
 import { respondError } from "@/lib/api-error";
 
 /**
- * Stripe Webhook Handler
- * Processes Stripe events for payment confirmations
- *
- * IMPORTANT: Webhook secret must be set in production
- * Get from: Stripe Dashboard → Developers → Webhooks
+ * Stripe Webhook Handler (Hardened Production Version)
+ * 
+ * Required Events:
+ * - checkout.session.completed
+ * - payment_intent.succeeded
+ * - payment_intent.payment_failed
+ * 
+ * Recommended Events:
+ * - charge.refunded
+ * - charge.dispute.created
+ * 
+ * Security Features:
+ * - Signature verification (mandatory in production)
+ * - Idempotency protection (prevents duplicate processing)
+ * - Event logging and audit trail
+ * - Graceful error handling
  */
 
+export const dynamic = "force-dynamic";
+
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
+
+/**
+ * Check if event has already been processed (idempotency)
+ */
+async function isEventProcessed(stripeEventId: string): Promise<boolean> {
+  const existing = await prisma.stripeWebhookEvent.findUnique({
+    where: { stripeEventId },
+    select: { processed: true },
+  });
+  return existing?.processed ?? false;
+}
+
+/**
+ * Mark event as processed
+ */
+async function markEventProcessed(
+  stripeEventId: string,
+  eventType: string,
+  payload: unknown,
+  error?: string,
+): Promise<void> {
+  await prisma.stripeWebhookEvent.upsert({
+    where: { stripeEventId },
+    create: {
+      stripeEventId,
+      eventType,
+      processed: !error,
+      processedAt: !error ? new Date() : null,
+      payload: payload as object,
+      error: error || null,
+    },
+    update: {
+      processed: !error,
+      processedAt: !error ? new Date() : null,
+      error: error || null,
+    },
+  });
+}
+
+/**
+ * Handle checkout.session.completed event
+ * Creates order when checkout session is completed
+ */
+async function handleCheckoutSessionCompleted(
+  session: Stripe.Checkout.Session,
+  requestId: string,
+): Promise<void> {
+  logger.info("Processing checkout.session.completed", {
+    requestId,
+    sessionId: session.id,
+    customerEmail: session.customer_email,
+  });
+
+  // Extract order metadata from session
+  const orderId = session.metadata?.orderId;
+  const paymentIntentId = session.payment_intent as string | null;
+
+  if (!orderId) {
+    logger.warn("Checkout session missing orderId in metadata", {
+      requestId,
+      sessionId: session.id,
+    });
+    return;
+  }
+
+  // Update order with checkout session information
+  await prisma.order.update({
+    where: { id: orderId },
+    data: {
+      paymentStatus: "paid",
+      status: "processing",
+      customerEmail: session.customer_email || undefined,
+      paymentMethod: paymentIntentId || undefined,
+    },
+  });
+
+  logger.info("Order updated from checkout session", {
+    requestId,
+    orderId,
+    sessionId: session.id,
+  });
+}
+
+/**
+ * Handle payment_intent.succeeded event
+ */
+async function handlePaymentIntentSucceeded(
+  paymentIntent: Stripe.PaymentIntent,
+  requestId: string,
+): Promise<void> {
+  logger.info("Processing payment_intent.succeeded", {
+    requestId,
+    paymentIntentId: paymentIntent.id,
+    amount: paymentIntent.amount,
+  });
+
+  const orderId = paymentIntent.metadata?.orderId;
+  if (!orderId) {
+    logger.warn("PaymentIntent missing orderId in metadata", {
+      requestId,
+      paymentIntentId: paymentIntent.id,
+    });
+    return;
+  }
+
+  // Find order by paymentIntentId if orderId not in metadata
+  const order = await prisma.order.findFirst({
+    where: {
+      OR: [
+        { id: orderId },
+        { paymentMethod: paymentIntent.id },
+      ],
+    },
+  });
+
+  if (order) {
+    await prisma.order.update({
+      where: { id: order.id },
+      data: {
+        paymentStatus: "paid",
+        status: "processing",
+      },
+    });
+
+    logger.info("Order updated to paid", {
+      requestId,
+      orderId: order.id,
+      paymentIntentId: paymentIntent.id,
+    });
+  } else {
+    logger.warn("Order not found for payment intent", {
+      requestId,
+      orderId,
+      paymentIntentId: paymentIntent.id,
+    });
+  }
+}
+
+/**
+ * Handle payment_intent.payment_failed event
+ */
+async function handlePaymentIntentFailed(
+  paymentIntent: Stripe.PaymentIntent,
+  requestId: string,
+): Promise<void> {
+  logger.warn("Processing payment_intent.payment_failed", {
+    requestId,
+    paymentIntentId: paymentIntent.id,
+    failureCode: paymentIntent.last_payment_error?.code,
+  });
+
+  const orderId = paymentIntent.metadata?.orderId;
+  if (!orderId) {
+    // Try to find by paymentIntentId
+    const order = await prisma.order.findFirst({
+      where: { paymentMethod: paymentIntent.id },
+    });
+
+    if (order) {
+      await prisma.order.update({
+        where: { id: order.id },
+        data: { paymentStatus: "failed" },
+      });
+      logger.info("Order marked as failed", {
+        requestId,
+        orderId: order.id,
+      });
+    }
+    return;
+  }
+
+  await prisma.order.update({
+    where: { id: orderId },
+    data: { paymentStatus: "failed" },
+  });
+
+  logger.info("Order marked as failed", {
+    requestId,
+    orderId,
+  });
+}
+
+/**
+ * Handle charge.refunded event
+ */
+async function handleChargeRefunded(
+  charge: Stripe.Charge,
+  requestId: string,
+): Promise<void> {
+  logger.info("Processing charge.refunded", {
+    requestId,
+    chargeId: charge.id,
+    amount: charge.amount_refunded,
+  });
+
+  // Find order by payment intent
+  const paymentIntentId = charge.payment_intent as string;
+  if (!paymentIntentId) {
+    logger.warn("Charge missing payment_intent", {
+      requestId,
+      chargeId: charge.id,
+    });
+    return;
+  }
+
+  const order = await prisma.order.findFirst({
+    where: { paymentMethod: paymentIntentId },
+  });
+
+  if (order) {
+    await prisma.order.update({
+      where: { id: order.id },
+      data: {
+        paymentStatus: "refunded",
+        status: "refunded",
+        notes: `Refunded: ${charge.amount_refunded / 100} ${charge.currency.toUpperCase()}. ${order.notes || ""}`.trim(),
+      },
+    });
+
+    logger.info("Order marked as refunded", {
+      requestId,
+      orderId: order.id,
+      chargeId: charge.id,
+    });
+  }
+}
+
+/**
+ * Handle charge.dispute.created event
+ */
+async function handleChargeDisputeCreated(
+  dispute: Stripe.Dispute,
+  requestId: string,
+): Promise<void> {
+  logger.warn("Processing charge.dispute.created", {
+    requestId,
+    disputeId: dispute.id,
+    chargeId: dispute.charge,
+    reason: dispute.reason,
+  });
+
+  // Find order by charge/payment intent
+  const chargeId = dispute.charge as string;
+  // Note: We'd need to query Stripe to get payment_intent from charge
+  // For now, log the dispute for manual review
+  logger.warn("Charge dispute requires manual review", {
+    requestId,
+    disputeId: dispute.id,
+    chargeId,
+    reason: dispute.reason,
+    amount: dispute.amount,
+  });
+}
 
 export async function POST(request: Request) {
   const requestId = getRequestId(request);
@@ -29,26 +295,25 @@ export async function POST(request: Request) {
     );
   }
 
+  // Get raw body (must be string for signature verification)
   const body = await request.text();
   const headersList = await headers();
   const signature = headersList.get("stripe-signature");
 
   if (!signature) {
     logger.warn("Stripe webhook missing signature", { requestId });
-    const res = NextResponse.json(
+    return NextResponse.json(
       { error: "Missing signature", requestId },
-      { status: 400 },
+      { status: 400, headers: { "X-Request-ID": requestId } },
     );
-    res.headers.set("X-Request-ID", requestId);
-    return res;
   }
 
-  // Verify webhook signature
-  let event: any; // Using any for Stripe Event type compatibility
+  // Verify webhook signature (MANDATORY in production)
+  let event: Stripe.Event;
 
   try {
     if (!webhookSecret) {
-      if (process.env.NODE_ENV !== "development") {
+      if (process.env.NODE_ENV === "production") {
         logger.error("Stripe webhook secret missing in production", {
           requestId,
         });
@@ -62,7 +327,7 @@ export async function POST(request: Request) {
         "STRIPE_WEBHOOK_SECRET not set - verification disabled (dev only)",
         { requestId },
       );
-      event = JSON.parse(body) as any; // Using any for compatibility
+      event = JSON.parse(body) as Stripe.Event;
     } else {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     }
@@ -72,90 +337,95 @@ export async function POST(request: Request) {
       { requestId },
       err,
     );
-    const res = NextResponse.json(
+    return NextResponse.json(
       { error: "Invalid signature", requestId },
-      { status: 400 },
+      { status: 400, headers: { "X-Request-ID": requestId } },
     );
-    res.headers.set("X-Request-ID", requestId);
-    return res;
   }
 
-  logger.info("Stripe webhook received", { requestId, type: event.type });
+  logger.info("Stripe webhook received", {
+    requestId,
+    type: event.type,
+    eventId: event.id,
+  });
 
-  // Handle the event
+  // Check idempotency - has this event been processed already?
+  const alreadyProcessed = await isEventProcessed(event.id);
+  if (alreadyProcessed) {
+    logger.info("Stripe webhook event already processed (idempotency)", {
+      requestId,
+      eventId: event.id,
+      eventType: event.type,
+    });
+    return NextResponse.json(
+      { received: true, duplicate: true, requestId },
+      { headers: { "X-Request-ID": requestId } },
+    );
+  }
+
+  // Process the event
   try {
     switch (event.type) {
-      case "payment_intent.succeeded":
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        logger.info("PaymentIntent succeeded", {
+      case "checkout.session.completed":
+        await handleCheckoutSessionCompleted(
+          event.data.object as Stripe.Checkout.Session,
           requestId,
-          paymentIntentId: paymentIntent.id,
-        });
+        );
+        break;
 
-        // Update order status in database
-        // Note: You may need to add stripePaymentIntentId field to Order model
-        if (paymentIntent.metadata?.orderId) {
-          await prisma.order.update({
-            where: { id: paymentIntent.metadata.orderId },
-            data: {
-              paymentStatus: "paid",
-              status: "processing",
-            },
-          });
-          logger.info("Order updated to paid", {
-            requestId,
-            orderId: paymentIntent.metadata.orderId,
-          });
-        }
+      case "payment_intent.succeeded":
+        await handlePaymentIntentSucceeded(
+          event.data.object as Stripe.PaymentIntent,
+          requestId,
+        );
         break;
 
       case "payment_intent.payment_failed":
-        const failedPayment = event.data.object as Stripe.PaymentIntent;
-        logger.warn("PaymentIntent failed", {
+        await handlePaymentIntentFailed(
+          event.data.object as Stripe.PaymentIntent,
           requestId,
-          paymentIntentId: failedPayment.id,
-        });
-
-        // Update order to failed status
-        if (failedPayment.metadata?.orderId) {
-          await prisma.order.update({
-            where: { id: failedPayment.metadata.orderId },
-            data: {
-              paymentStatus: "failed",
-            },
-          });
-          logger.info("Order marked as failed", {
-            requestId,
-            orderId: failedPayment.metadata.orderId,
-          });
-        }
+        );
         break;
 
-      case "charge.succeeded":
-        const charge = event.data.object as any; // Using any for compatibility
-        logger.info("Charge succeeded", { requestId, chargeId: charge.id });
+      case "charge.refunded":
+        await handleChargeRefunded(
+          event.data.object as Stripe.Charge,
+          requestId,
+        );
         break;
 
-      case "charge.failed":
-        const failedCharge = event.data.object as any; // Using any for compatibility
-        logger.warn("Charge failed", { requestId, chargeId: failedCharge.id });
+      case "charge.dispute.created":
+        await handleChargeDisputeCreated(
+          event.data.object as Stripe.Dispute,
+          requestId,
+        );
         break;
 
       default:
-        logger.info("Unhandled Stripe event type", {
+        logger.info("Unhandled Stripe event type (logged but not processed)", {
           requestId,
           type: event.type,
+          eventId: event.id,
         });
     }
-    const res = NextResponse.json({ received: true, requestId });
-    res.headers.set("X-Request-ID", requestId);
-    return res;
+
+    // Mark event as successfully processed
+    await markEventProcessed(event.id, event.type, event.data.object);
+
+    return NextResponse.json(
+      { received: true, requestId },
+      { headers: { "X-Request-ID": requestId } },
+    );
   } catch (error) {
-    logger.error("Error processing Stripe webhook", { requestId }, error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    logger.error("Error processing Stripe webhook", { requestId, eventId: event.id }, error);
+
+    // Mark event as failed (will be logged for manual review)
+    await markEventProcessed(event.id, event.type, event.data.object, errorMessage);
+
     return respondError(request, error, {
       status: 500,
       code: "webhook_processing_failed",
     });
   }
 }
-

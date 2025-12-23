@@ -31,11 +31,15 @@ interface UploadedImage {
 interface MultiImageUploadProps {
   onImagesUploaded: (images: UploadedImage[]) => void;
   maxImages?: number;
+  sku?: string; // For auto-renaming uploaded files
+  productTitle?: string; // For auto-generating alt text
 }
 
 export function MultiImageUpload({
   onImagesUploaded,
   maxImages = 10,
+  sku,
+  productTitle,
 }: MultiImageUploadProps) {
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -67,15 +71,36 @@ export function MultiImageUpload({
     }
   };
 
-  const uploadToImageKit = async (file: File): Promise<UploadedImage | null> => {
+  const uploadToImageKit = async (
+    file: File,
+    sku?: string,
+    productTitle?: string,
+    index?: number,
+  ): Promise<UploadedImage | null> => {
     try {
+      // Validate and optimize image (resize + convert to WebP if needed)
+      const { validateAndOptimizeImage, generateAltText } = await import("@/lib/image-validation");
+      
+      let optimizedFile: File;
+      try {
+        optimizedFile = await validateAndOptimizeImage(file, sku);
+      } catch (error) {
+        console.error("Image validation/optimization failed:", error);
+        throw new Error(error instanceof Error ? error.message : "Failed to process image");
+      }
+
       const authRes = await fetch("/api/imagekit-auth");
       if (!authRes.ok) throw new Error("Auth failed");
       const { token, expire, signature } = await authRes.json();
 
+      // Generate alt text from product title or filename
+      const altText = productTitle 
+        ? generateAltText(productTitle, index || 0, index === 0)
+        : optimizedFile.name.replace(/\.[^/.]+$/, "");
+
       const formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileName", file.name);
+      formData.append("file", optimizedFile);
+      formData.append("fileName", optimizedFile.name);
       formData.append("token", token);
       formData.append("expire", String(expire));
       formData.append("signature", signature);
@@ -85,6 +110,11 @@ export function MultiImageUpload({
       );
       formData.append("folder", "/products");
       formData.append("useUniqueFileName", "true");
+      
+      // Add custom metadata for alt text
+      formData.append("customMetadata", JSON.stringify({
+        alt_text: altText,
+      }));
 
       const response = await fetch(
         "https://upload.imagekit.io/api/v1/files/upload",
@@ -93,13 +123,16 @@ export function MultiImageUpload({
           body: formData,
         }
       );
-      if (!response.ok) throw new Error("Upload failed");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Upload failed: ${errorText}`);
+      }
       const data = await response.json();
 
       return {
         url: data.url,
         type: "gallery",
-        alt: file.name.replace(/\.[^/.]+$/, ""),
+        alt: altText,
         order: 0,
       };
     } catch (error) {
@@ -121,7 +154,9 @@ export function MultiImageUpload({
     setUploading(true);
 
     try {
-      const uploadPromises = filesToUpload.map((file) => uploadToImageKit(file));
+      const uploadPromises = filesToUpload.map((file, index) => 
+        uploadToImageKit(file, sku, productTitle, images.length + index)
+      );
       const results = await Promise.all(uploadPromises);
       const successfulUploads = results.filter(
         (result) => result !== null
@@ -191,10 +226,10 @@ export function MultiImageUpload({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp,image/avif"
           multiple
           aria-label="Upload images"
-          title="Upload images"
+          title="Upload images (JPEG, PNG, WebP, AVIF - auto-converted to WebP)"
           onChange={(e) => handleFileChange(e.target.files)}
           className="hidden"
         />
@@ -219,7 +254,7 @@ export function MultiImageUpload({
               Browse Files
             </button>
             <p className="text-sm text-lux-gray-dark mt-2">
-              Max {maxImages} images • Supports JPG, PNG, WebP
+              Max {maxImages} images • Auto-converts to WebP • Max 2000px width
             </p>
           </div>
         )}

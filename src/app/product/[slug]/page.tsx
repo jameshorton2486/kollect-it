@@ -8,6 +8,7 @@ import RelatedProducts from "@/components/product/RelatedProducts";
 import ClientProductLayout from "@/components/product/ClientProductLayout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getRecommendations } from "@/lib/recommendations";
+import { generateSeoTitle, generateSeoDescription, generateCanonicalUrl } from "@/lib/seo";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -42,23 +43,42 @@ export async function generateMetadata(
     };
   }
 
-  const description =
-    product.description.slice(0, 160) ||
-    `Authenticated ${product.category.name.toLowerCase()} from Kollect-It. Carefully curated and quality-reviewed.`;
+  // Use SEO fields if available, otherwise generate from product data
+  const seoTitle = product.seoTitle 
+    ? `${product.seoTitle} | Kollect-It`
+    : generateSeoTitle(product.title);
+  
+  const seoDescription = product.seoDescription 
+    ? product.seoDescription
+    : generateSeoDescription(
+        product.description,
+        `Authenticated ${product.category.name.toLowerCase()} from Kollect-It. Carefully curated and quality-reviewed.`
+      );
 
-  const imageUrl = product.images[0]?.url || "/og-default.jpg";
-  const canonicalUrl = `https://kollect-it.com/product/${product.slug}`;
+  // Get primary image (first image) for OpenGraph - use ImageKit transformation
+  const { getProductDetailImageUrl } = await import("@/lib/image-helpers");
+  const baseImageUrl = product.images[0]?.url || "/og-default.jpg";
+  const imageUrl = baseImageUrl !== "/og-default.jpg" 
+    ? getProductDetailImageUrl(baseImageUrl)
+    : baseImageUrl;
+  const canonicalUrl = generateCanonicalUrl(product.slug);
+
+  // Add noindex for draft products
+  const robots = product.isDraft 
+    ? { index: false, follow: false }
+    : undefined;
 
   return {
-    title: `${product.title} | Kollect-It`,
-    description,
+    title: seoTitle,
+    description: seoDescription,
+    robots,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
       type: "website",
-      title: product.title,
-      description,
+      title: product.seoTitle || product.title,
+      description: seoDescription,
       url: canonicalUrl,
       siteName: "Kollect-It",
       images: [
@@ -72,8 +92,8 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      title: product.title,
-      description,
+      title: product.seoTitle || product.title,
+      description: seoDescription,
       images: [imageUrl],
     },
   };
@@ -106,28 +126,33 @@ export default async function ProductPage(props: ProductPageProps) {
     categoryName: product.category.name,
   };
 
-  // Generate structured data (JSON-LD)
+  // Generate structured data (JSON-LD) - Enhanced with SEO fields
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
-    description: product.description,
+    description: product.seoDescription || product.description,
     image: product.images.map((img) => img.url),
+    sku: product.sku,
     offers: {
       "@type": "Offer",
-      price: product.price,
+      price: product.price.toString(),
       priceCurrency: "USD",
-      availability: product.status === "active" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      url: `https://kollect-it.com/product/${product.slug}`,
+      availability: product.status === "active" && !product.isDraft
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      url: canonicalUrl,
+      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
     },
     category: product.category.name,
     brand: {
       "@type": "Brand",
       name: "Kollect-It",
     },
-    ...(product.condition && { itemCondition: product.condition }),
-    ...(product.year && { releaseDate: product.year }),
+    ...(product.condition && { itemCondition: `https://schema.org/${product.condition}Condition` }),
+    ...(product.year && { productionDate: product.year }),
     ...(product.artist && { manufacturer: { "@type": "Organization", name: product.artist } }),
+    ...(product.rarity && { additionalProperty: { "@type": "PropertyValue", name: "rarity", value: product.rarity } }),
   };
 
   return (

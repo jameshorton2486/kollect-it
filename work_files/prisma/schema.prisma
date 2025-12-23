@@ -1,0 +1,319 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id               String            @id @default(cuid())
+  name             String?
+  email            String            @unique
+  emailVerified    DateTime?
+  password         String?
+  image            String?
+  role             String            @default("user")
+  phone            String?
+  address          String?
+  city             String?
+  state            String?
+  zipCode          String?
+  country          String?           @default("United States")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  cartItems        CartItem[]
+  orders           Order[]
+  reviews          Review[]
+  scheduledReports ScheduledReport[]
+  wishlistItems    WishlistItem[]
+}
+
+model Category {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  slug          String         @unique
+  description   String?
+  image         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  subcategories Subcategory[]
+  products      Product[]
+}
+
+model Subcategory {
+  id         String    @id @default(cuid())
+  name       String
+  slug       String    @unique
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@index([slug])
+}
+
+model Product {
+  id                  String               @id @default(cuid())
+  title               String
+  slug                String               @unique
+  description         String
+  price               Float
+  category            Category             @relation(fields: [categoryId], references: [id])
+  categoryId          String
+  subcategory         Subcategory?          @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+  subcategoryId       String?
+  featured            Boolean              @default(false)
+  condition           String?
+  year                String?
+  artist              String?
+  medium              String?
+  period              String?
+  status              String               @default("active")
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  aiAnalysis          Json?
+  authenticity        String?
+  calculatedPrice     Float?
+  estimatedEra        String?
+  investmentPotential String?
+  isDraft             Boolean              @default(true)
+  keywords            String[]             @default([])
+  priceConfidence     Float?
+  pricingReasoning    String?
+  publishedAt         DateTime?
+  rarity              String?
+  seoDescription      String?
+  seoTitle            String?
+  appraisalUrls       String[]             @default([])
+  appraisalDocUrl     String?              @map("appraisal_doc_url")
+  provenanceDocUrl    String?              @map("provenance_doc_url")
+  productNotes        String?
+  sku                 String               @unique
+  skuNumber           Int?
+  skuYear             Int?
+  aiGeneratedProducts AIGeneratedProduct[]
+  cartItems           CartItem[]
+  images              Image[]
+  orderItems          OrderItem[]
+  reviews             Review[]
+  wishlistItems       WishlistItem[]
+
+  @@index([categoryId])
+  @@index([subcategoryId])
+  @@index([createdAt])
+  @@index([featured])
+  @@index([title])
+  @@index([status, createdAt])
+  @@index([isDraft])
+  @@index([sku])
+  @@index([skuYear, skuNumber])
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  productId String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  imageType String?
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([productId, order])
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  orderNumber      String      @unique
+  userId           String?
+  status           String      @default("pending")
+  subtotal         Float
+  tax              Float
+  shipping         Float       @default(0)
+  total            Float
+  customerName     String?
+  customerEmail    String?
+  customerPhone    String?
+  shippingAddress  String
+  shippingCity     String
+  shippingState    String
+  shippingZip      String
+  shippingCountry  String
+  trackingNumber   String?
+  shippingLabelUrl String?
+  carrier          String?
+  paymentMethod    String?
+  paymentStatus    String      @default("pending")
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  user             User?       @relation(fields: [userId], references: [id])
+  items            OrderItem[]
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  title     String
+  price     Float
+  quantity  Int
+  createdAt DateTime @default(now())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model AIGeneratedProduct {
+  id                String    @id @default(cuid())
+  googleDriveId     String?
+  imageUrl          String?
+  aiTitle           String    @db.VarChar(500)
+  aiDescription     String
+  aiCategory        String
+  aiCondition       String    @default("GOOD")
+  aiEstimatedAge    String?
+  aiRarity          String?
+  imageQualityScore Float?
+  authenticityScore Float?
+  imageAnalysis     Json?
+  suggestedPrice    Float
+  priceLowRange     Float
+  priceHighRange    Float
+  priceConfidence   Float
+  pricingAnalysis   Json
+  status            String    @default("PENDING")
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  rejectionReason   String?
+  productId         String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  product           Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([reviewedBy])
+  @@index([productId])
+  @@index([status, createdAt])
+}
+
+model ScheduledReport {
+  id            String           @id @default(cuid())
+  userId        String
+  name          String
+  frequency     String
+  format        String           @default("JSON")
+  recipients    String
+  lastSent      DateTime?
+  nextScheduled DateTime
+  enabled       Boolean          @default(true)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  auditLogs     ReportAuditLog[]
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([nextScheduled])
+  @@index([enabled])
+  @@index([frequency])
+}
+
+model ReportAuditLog {
+  id         String          @id @default(cuid())
+  reportId   String
+  recipients String
+  status     String          @default("PENDING")
+  error      String?
+  sentAt     DateTime        @default(now())
+  report     ScheduledReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+  @@index([sentAt])
+  @@index([status])
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  rating    Int
+  title     String?
+  comment   String
+  images    String[] @default([])
+  helpful   Int      @default(0)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([userId])
+  @@index([rating])
+  @@index([createdAt])
+}
+
+model NewsletterSubscriber {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  firstName      String?
+  source         String?   @default("website")
+  confirmedAt    DateTime?
+  unsubscribedAt DateTime?
+  createdAt      DateTime  @default(now())
+}
+
+model ContactSubmission {
+  id        String    @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  read      Boolean   @default(false)
+  repliedAt DateTime?
+  createdAt DateTime  @default(now())
+}

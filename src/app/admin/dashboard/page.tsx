@@ -17,6 +17,7 @@ import {
   Users,
   Download,
 } from "lucide-react";
+import { getAdminPreviewImageUrl } from "@/lib/image-helpers";
 
 interface Product {
   id: string;
@@ -409,7 +410,7 @@ export default function AdminDashboard() {
                       <div className="flex items-center">
                         {product.images[0] && (
                           <img
-                            src={product.images[0].url}
+                            src={getAdminPreviewImageUrl(product.images[0].url)}
                             alt={product.title}
                             className="w-12 h-12 rounded object-cover mr-3"
                           />
@@ -430,17 +431,24 @@ export default function AdminDashboard() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          product.status === "active"
-                            ? "bg-green-100 text-green-800"
-                            : product.status === "sold"
-                              ? "bg-blue-100 text-blue-800"
-                              : "bg-yellow-100 text-yellow-800"
-                        }`}
-                      >
-                        {product.status}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            product.status === "active"
+                              ? "bg-green-100 text-green-800"
+                              : product.status === "sold"
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-yellow-100 text-yellow-800"
+                          }`}
+                        >
+                          {product.status}
+                        </span>
+                        {product.isDraft && (
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                            Draft
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-lux-gray">
                       {new Date(product.createdAt).toLocaleDateString()}
