@@ -1,0 +1,59 @@
+name: Domain Guardrails
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  domain-guardrails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ─────────────────────────────
+      # IMAGE PIPELINE GUARDS
+      # ─────────────────────────────
+
+      - name: Block raw image exposure
+        run: |
+          RAW=$(git grep -E 'uploads/|raw-images/|temp-images/' || true)
+          if [ -n "$RAW" ]; then
+            echo "❌ Raw image references detected:"
+            echo "$RAW"
+            exit 1
+          fi
+
+      - name: Enforce single image ingestion path
+        run: |
+          ENDPOINTS=$(git grep -E 'uploadImage|handleImageUpload|processImage' || true)
+          COUNT=$(echo "$ENDPOINTS" | wc -l)
+          if [ "$COUNT" -gt 1 ]; then
+            echo "❌ Multiple image ingestion paths detected:"
+            echo "$ENDPOINTS"
+            exit 1
+          fi
+
+      # ─────────────────────────────
+      # SKU GUARDS
+      # ─────────────────────────────
+
+      - name: Block SKU mutation on update
+        run: |
+          MUTATION=$(git grep -E 'sku\s*=' -- app lib || true)
+          if [ -n "$MUTATION" ]; then
+            echo "❌ SKU mutation detected:"
+            echo "$MUTATION"
+            exit 1
+          fi
+
+      - name: Enforce single SKU authority
+        run: |
+          SKU_REGEX=$(git grep -E 'SKU-[0-9]{4}' || true)
+          COUNT=$(echo "$SKU_REGEX" | wc -l)
+          if [ "$COUNT" -gt 1 ]; then
+            echo "❌ Multiple SKU format definitions detected:"
+            echo "$SKU_REGEX"
+            exit 1
+          fi
