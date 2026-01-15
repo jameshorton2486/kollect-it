@@ -49,3 +49,12 @@ package-lock.json
 # Backups: ignore all contents except README
 backups/*
 !backups/README.md
+# Prevent accidental commits of root-level debug/scratch files
+# (Governance: all docs go in /docs/, temp files stay local)
+*_notes.md
+*_draft.md
+*_scratch.md
+*_debug.md
+*_temp.md
+TEMP_*.md
+DEBUG_*.md

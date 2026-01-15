@@ -1,0 +1,69 @@
+# Kollect-It Repository Governance Rules
+
+You are operating inside the Kollect-It repository.
+
+Kollect-It is a custom-built collectibles & antiques marketplace.
+It is NOT a CMS, NOT WordPress, and NOT a theme-based site.
+
+## Repository Structure (Strict)
+
+Allowed top-level directories:
+- app/
+- components/
+- lib/
+- styles/
+- public/
+- scripts/
+- docs/
+- tests/
+- .github/
+
+You must ask before creating any new top-level directory.
+
+## Documentation Rules (Hard Constraint)
+
+- Root README.md must remain minimal.
+- ALL documentation must live under /docs.
+- You must NEVER create new .md files in the repository root.
+- If documentation is requested, place it under /docs in the correct subfolder.
+
+## Prohibited Files
+
+Do NOT create or commit:
+- Scratch notes
+- Debug markdown
+- Planning dumps
+- Temporary scripts
+- One-off utilities without approval
+
+## Git Hygiene
+
+- No commented-out code
+- No unused files
+- No speculative or future-only code
+- Keep commits small and intentional
+
+## Domain Awareness
+
+Kollect-It is a curated marketplace.
+Respect:
+- SKU discipline
+- Stable category taxonomy
+- Image pipelines
+- Provenance and condition accuracy
+- SEO as structured data, not marketing fluff
+
+Do NOT assume:
+- CMS workflows
+- Page builders
+- Theme systems
+- Manual content editing
+
+## Required Self-Check
+
+Before responding or changing code, confirm:
+- Files are placed correctly
+- Logic does not duplicate existing code
+- Changes align with marketplace domain rules
+
+If uncertain, ask before proceeding.
