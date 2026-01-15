@@ -64,9 +64,9 @@ The root `README.md` must contain **ONLY**:
 - One-paragraph description
 - Link to `docs/README.md`
 
-❌ **No architecture**  
-❌ **No setup guides**  
-❌ **No design notes**  
+❌ **No architecture**
+❌ **No setup guides**
+❌ **No design notes**
 ❌ **No roadmaps**
 
 ### 2️⃣ docs/README.md (Single Source of Truth)
@@ -208,5 +208,5 @@ Before proposing or applying changes, the AI must internally verify:
 
 ---
 
-**Last Updated:** December 2024  
+**Last Updated:** December 2024
 **Version:** 1.0
