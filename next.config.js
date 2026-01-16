@@ -23,9 +23,8 @@ const nextConfig = {
   poweredByHeader: false, // Remove X-Powered-By header
 
   // Type/lint enforcement
-  eslint: {
-    ignoreDuringBuilds: !isCI,
-  },
+  // Note: ESLint config removed - Next.js 16 no longer supports eslint in next.config.js
+  // Linting is now handled via eslint.config.mjs and CI pipelines
   typescript: {
     ignoreBuildErrors: !isCI,
   },
