@@ -1,20 +1,12 @@
-<<<<<<< Updated upstream
-﻿import { redirect } from "next/navigation";
-=======
 "use client";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
->>>>>>> Stashed changes
 
 // Force dynamic rendering - do not prerender this admin page
 export const dynamic = "force-dynamic";
 
-<<<<<<< Updated upstream
-export default function EmailSettingsPage() {
-  redirect("/admin/settings");
-=======
 /**
  * Admin Email Settings Page
  * Placeholder page for email configuration settings
@@ -63,5 +55,4 @@ export default function AdminEmailSettingsPage() {
       </div>
     </div>
   );
->>>>>>> Stashed changes
 }
