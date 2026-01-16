@@ -1,23 +1,41 @@
 #!/bin/sh
-# Husky pre-commit: block committing forbidden directories
-# Shell script (sh), not PowerShell
+set -e
 
-# Source Husky helper if present
-HUSKY_SH="$(dirname "$0")/_/husky.sh"
-if [ -f "$HUSKY_SH" ]; then
-  . "$HUSKY_SH"
+echo "🔍 Kollect-It pre-commit checks..."
+
+# Block root-level markdown (except README.md)
+ROOT_MD=$(git diff --cached --name-only | grep -E '^[^/]+\.md$' | grep -v '^README\.md$' || true)
+if [ -n "$ROOT_MD" ]; then
+  echo "❌ ERROR: Root-level markdown files are not allowed."
+  echo "$ROOT_MD"
+  echo "Please move these files to /docs or remove them."
+  exit 1
 fi
 
-echo "Pre-commit repo safety check..."
+# Block scratch / temp files
+SCRATCH=$(git diff --cached --name-only | grep -E '(scratch|draft|notes|temp|_notes|_draft|_scratch)' | grep -v 'work_files/' || true)
+if [ -n "$SCRATCH" ]; then
+  echo "❌ ERROR: Scratch or draft files detected."
+  echo "$SCRATCH"
+  echo "Please remove these files or move them to work_files/ if needed."
+  exit 1
+fi
 
-# Check staged files instead of directory existence
+# Block commented-out code (simple heuristic)
+COMMENTED=$(git diff --cached | grep -E '^\+.*(//|/\*)' | grep -iE '(todo|remove|temp|delete|deprecated)' | head -5 || true)
+if [ -n "$COMMENTED" ]; then
+  echo "⚠️  WARNING: Possible commented-out or temporary code detected."
+  echo "$COMMENTED"
+  echo "Please review and remove commented code before committing."
+fi
+
+# Existing repo safety check
 FORBIDDEN_PATTERNS=".next/ .idea/ .venv/ .vercel/ node_modules/"
-
 for pattern in $FORBIDDEN_PATTERNS; do
-  if git diff --cached --name-only | grep -q "^$pattern"; then
-    echo "ERROR: Files in $pattern must not be committed"
+  if git diff --cached --name-only | grep -q "^$pattern" 2>/dev/null; then
+    echo "❌ ERROR: Files in $pattern must not be committed"
     exit 1
   fi
 done
 
-echo "Repo safe to commit"
+echo "✅ Kollect-It repo checks passed."

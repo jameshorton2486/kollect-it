@@ -26,6 +26,7 @@
     "error-summary": "bun run scripts/generate-error-summary.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:governance": "bun test tests/governance",
     "setup:imagekit": "bun run scripts/setup-imagekit-sync.ts",
     "sync-images": "bun run scripts/sync-drive-to-imagekit.ts",
     "sync-images:watch": "bun run --watch scripts/sync-drive-to-imagekit.ts",
