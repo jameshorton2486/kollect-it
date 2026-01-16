@@ -1,10 +1,10 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+set -e
 
 echo "🔍 Kollect-It pre-commit checks..."
 
 # Block root-level markdown (except README.md)
-ROOT_MD=$(git diff --cached --name-only | grep -E '^[^/]+\.md$' | grep -v '^README\.md$')
+ROOT_MD=$(git diff --cached --name-only | grep -E '^[^/]+\.md$' | grep -v '^README\.md$' || true)
 if [ -n "$ROOT_MD" ]; then
   echo "❌ ERROR: Root-level markdown files are not allowed."
   echo "$ROOT_MD"
@@ -13,7 +13,7 @@ if [ -n "$ROOT_MD" ]; then
 fi
 
 # Block scratch / temp files
-SCRATCH=$(git diff --cached --name-only | grep -E '(scratch|draft|notes|temp|_notes|_draft|_scratch)' | grep -v 'work_files/')
+SCRATCH=$(git diff --cached --name-only | grep -E '(scratch|draft|notes|temp|_notes|_draft|_scratch)' | grep -v 'work_files/' || true)
 if [ -n "$SCRATCH" ]; then
   echo "❌ ERROR: Scratch or draft files detected."
   echo "$SCRATCH"
@@ -22,7 +22,7 @@ if [ -n "$SCRATCH" ]; then
 fi
 
 # Block commented-out code (simple heuristic)
-COMMENTED=$(git diff --cached | grep -E '^\+.*(//|/\*)' | grep -iE '(todo|remove|temp|delete|deprecated)' | head -5)
+COMMENTED=$(git diff --cached | grep -E '^\+.*(//|/\*)' | grep -iE '(todo|remove|temp|delete|deprecated)' | head -5 || true)
 if [ -n "$COMMENTED" ]; then
   echo "⚠️  WARNING: Possible commented-out or temporary code detected."
   echo "$COMMENTED"
@@ -32,7 +32,7 @@ fi
 # Existing repo safety check
 FORBIDDEN_PATTERNS=".next/ .idea/ .venv/ .vercel/ node_modules/"
 for pattern in $FORBIDDEN_PATTERNS; do
-  if git diff --cached --name-only | grep -q "^$pattern"; then
+  if git diff --cached --name-only | grep -q "^$pattern" 2>/dev/null; then
     echo "❌ ERROR: Files in $pattern must not be committed"
     exit 1
   fi
