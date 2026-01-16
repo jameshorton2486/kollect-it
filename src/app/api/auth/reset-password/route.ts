@@ -2,27 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import { rateLimiters } from "@/lib/rate-limit";
+import { applySecurityHeaders } from "@/lib/security";
+
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
 
 /**
  * POST /api/auth/reset-password
  * Resets user password using valid reset token
+ * SECURITY: Protected with strict rate limiting (5 attempts per 15 minutes)
  */
 export async function POST(request: NextRequest) {
   try {
+    // Apply strict rate limiting (5 attempts per 15 minutes)
+    const rateLimitCheck = await rateLimiters.strict(request);
+    if (rateLimitCheck) {
+      return applySecurityHeaders(rateLimitCheck);
+    }
     const { token, password } = await request.json();
 
     if (!token || !password) {
-      return NextResponse.json(
-        { error: "Token and password are required" },
-        { status: 400 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "Token and password are required" },
+          { status: 400 },
+        ),
       );
     }
 
     // FIXED: Standardized to 8 characters minimum
     if (password.length < 8) {
-      return NextResponse.json(
-        { error: "Password must be at least 8 characters long" },
-        { status: 400 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "Password must be at least 8 characters long" },
+          { status: 400 },
+        ),
       );
     }
 
@@ -43,9 +58,11 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json(
-        { error: "Invalid or expired reset token" },
-        { status: 400 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "Invalid or expired reset token" },
+          { status: 400 },
+        ),
       );
     }
 
@@ -82,15 +99,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      message: "Password reset successfully",
-    });
+    return applySecurityHeaders(
+      NextResponse.json({
+        success: true,
+        message: "Password reset successfully",
+      }),
+    );
   } catch (error) {
     console.error("[Auth] Reset password error:", error);
-    return NextResponse.json(
-      { error: "An error occurred. Please try again." },
-      { status: 500 },
+    return applySecurityHeaders(
+      NextResponse.json(
+        { error: "An error occurred. Please try again." },
+        { status: 500 },
+      ),
     );
   }
 }

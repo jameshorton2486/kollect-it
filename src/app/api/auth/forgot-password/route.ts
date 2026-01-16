@@ -1,26 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { rateLimiters } from "@/lib/rate-limit";
+import { applySecurityHeaders } from "@/lib/security";
+
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
 
 /**
  * POST /api/auth/forgot-password
  * Generates a password reset token and sends reset email
+ * SECURITY: Protected with strict rate limiting (5 attempts per 15 minutes)
  */
 export async function POST(request: NextRequest) {
   try {
+    // Apply strict rate limiting (5 attempts per 15 minutes)
+    const rateLimitCheck = await rateLimiters.strict(request);
+    if (rateLimitCheck) {
+      return applySecurityHeaders(rateLimitCheck);
+    }
     const { email } = await request.json();
 
     if (!email) {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "Email is required" },
+          { status: 400 },
+        ),
       );
     }
 
     // Always return success to prevent email enumeration attacks
-    const successResponse = NextResponse.json({
-      message: "If an account exists with this email, you will receive reset instructions.",
-    });
+    const successResponse = applySecurityHeaders(
+      NextResponse.json({
+        message: "If an account exists with this email, you will receive reset instructions.",
+      }),
+    );
 
     // Find user by email
     const user = await prisma.user.findUnique({
@@ -90,9 +105,11 @@ export async function POST(request: NextRequest) {
     return successResponse;
   } catch (error) {
     console.error("[Auth] Forgot password error:", error);
-    return NextResponse.json(
-      { error: "An error occurred. Please try again." },
-      { status: 500 },
+    return applySecurityHeaders(
+      NextResponse.json(
+        { error: "An error occurred. Please try again." },
+        { status: 500 },
+      ),
     );
   }
 }
