@@ -1,23 +1,37 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { rateLimiters } from "@/lib/rate-limit";
+import { applySecurityHeaders } from "@/lib/security";
 
-export async function POST(request: Request) {
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
+
+export async function POST(request: NextRequest) {
   try {
+    // Apply strict rate limiting (5 attempts per 15 minutes)
+    const rateLimitCheck = await rateLimiters.strict(request);
+    if (rateLimitCheck) {
+      return applySecurityHeaders(rateLimitCheck);
+    }
     const { name, email, password } = await request.json();
 
     // Validation
     if (!name || !email || !password) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "Missing required fields" },
+          { status: 400 },
+        ),
       );
     }
 
     if (password.length < 6) {
-      return NextResponse.json(
-        { error: "Password must be at least 6 characters" },
-        { status: 400 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "Password must be at least 6 characters" },
+          { status: 400 },
+        ),
       );
     }
 
@@ -27,9 +41,11 @@ export async function POST(request: Request) {
     });
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: "User with this email already exists" },
-        { status: 409 },
+      return applySecurityHeaders(
+        NextResponse.json(
+          { error: "User with this email already exists" },
+          { status: 409 },
+        ),
       );
     }
 
@@ -53,16 +69,18 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "User created successfully", user },
       { status: 201 },
     );
+    return applySecurityHeaders(response);
   } catch (error) {
     console.error("Registration error:", error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
     );
+    return applySecurityHeaders(errorResponse);
   }
 }
 
