@@ -125,4 +125,102 @@ describe("Image Pipeline Governance", () => {
     // This test flags actual transformation logic, not preview
     expect(violations).toHaveLength(0);
   });
+
+  test("image upload endpoints validate requirements", async () => {
+    const uploadEndpoints: string[] = [];
+    const missingValidations: Array<{ file: string; missing: string }> = [];
+    
+    // Find all image upload API routes
+    const files = await glob([
+      "src/app/api/**/upload*/**/*.ts",
+      "src/app/api/**/image*/**/*.ts",
+      "src/app/api/**/categories/upload-image/**/*.ts",
+    ], {
+      ignore: ["**/node_modules/**", "**/.next/**", "**/work_files/**", "**/*.test.*", "**/*.spec.*"],
+    });
+
+    for (const file of files) {
+      const content = await readFile(file, "utf-8");
+      
+      // Check if this is an upload endpoint
+      if (content.includes("POST") && (
+        content.includes("upload") || 
+        content.includes("image") ||
+        content.includes("FormData")
+      )) {
+        uploadEndpoints.push(file);
+        
+        // Check for required validations per ADR-0005
+        const hasResolutionCheck = /resolution|width|height|min.*size|size.*validation/i.test(content);
+        const hasNamingCheck = /filename|naming|name.*pattern|naming.*convention/i.test(content);
+        const hasSKUBinding = /sku.*binding|sku.*validation|product.*id.*image/i.test(content);
+        
+        if (!hasResolutionCheck) {
+          missingValidations.push({ file, missing: "Resolution validation" });
+        }
+        if (!hasNamingCheck) {
+          missingValidations.push({ file, missing: "Naming convention validation" });
+        }
+        // SKU binding is optional for category images
+        if (file.includes("categories")) {
+          // Skip SKU binding check for category uploads
+        } else if (!hasSKUBinding) {
+          missingValidations.push({ file, missing: "SKU → image binding validation" });
+        }
+      }
+    }
+
+    // Document missing validations
+    if (missingValidations.length > 0) {
+      console.warn("\n⚠️  Image upload endpoints missing validations (per ADR-0005):");
+      missingValidations.forEach(({ file, missing }) => 
+        console.warn(`  - ${file}: Missing ${missing}`)
+      );
+      console.warn("  → These should be added in Phase 2 of image pipeline enforcement");
+    }
+
+    // For now, we document violations but don't fail
+    // This will be enforced after Phase 2 refactoring
+  });
+
+  test("SKU binding validation exists for product images", async () => {
+    const violations: string[] = [];
+    
+    // Find product image upload endpoints
+    const files = await glob([
+      "src/app/api/**/products/**/*.ts",
+      "src/components/admin/**/*Image*.tsx",
+    ], {
+      ignore: ["**/node_modules/**", "**/.next/**", "**/work_files/**", "**/*.test.*", "**/*.spec.*"],
+    });
+
+    for (const file of files) {
+      const content = await readFile(file, "utf-8");
+      
+      // Check if this handles product image uploads
+      if (content.includes("image") && (
+        content.includes("upload") || 
+        content.includes("ImageKit") ||
+        content.includes("product")
+      )) {
+        // Check for SKU or product ID validation
+        const hasProductId = /product.*id|productId|sku.*validation/i.test(content);
+        const hasSKUCheck = /validateSKU|sku.*format|sku.*binding/i.test(content);
+        
+        // If it's a product image upload but doesn't validate SKU/product binding
+        if (!hasProductId && !hasSKUCheck && !file.includes("category")) {
+          violations.push(`${file}: Product image upload missing SKU/product binding validation`);
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.warn("\n⚠️  Product image uploads missing SKU binding (per ADR-0005):");
+      violations.forEach(v => console.warn(`  - ${v}`));
+      console.warn("  → Should validate SKU → image binding before upload");
+    }
+
+    // For now, we document violations but don't fail
+    // This will be enforced after Phase 2 refactoring
+  });
 });
