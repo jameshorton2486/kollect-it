@@ -180,9 +180,18 @@ export function getEnv(): Partial<EnvironmentVariables> {
     if (error instanceof Error) {
       console.error(error.message);
     }
-    throw new Error(
-      "Invalid environment configuration. Please check your .env.local file.",
-    );
+    
+    // In production, fail fast
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        "Invalid environment configuration. Please check your .env.local file.",
+      );
+    }
+    
+    // In development/preview, allow partial env with warnings
+    console.warn("⚠️ Continuing in development mode with partial environment variables");
+    validatedEnv = process.env as unknown as Partial<EnvironmentVariables>;
+    return validatedEnv;
   }
 }
 
