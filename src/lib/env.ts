@@ -216,3 +216,42 @@ export function isDevelopment(): boolean {
 export function isProduction(): boolean {
   return getEnv().NODE_ENV === "production";
 }
+
+/**
+ * Get client-safe environment variables
+ * Returns safe fallback values in development if validation fails
+ */
+export function getClientEnv(): {
+  NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: string;
+  NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: string;
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: string;
+  NEXT_PUBLIC_APP_EMAIL: string;
+} {
+  const env = getEnv();
+  
+  // Return validated values or safe fallbacks in development
+  if (process.env.NODE_ENV === 'production') {
+    // Production: all client env vars must be set
+    if (!env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ||
+        !env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ||
+        !env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
+        !env.NEXT_PUBLIC_APP_EMAIL) {
+      throw new Error('Missing required NEXT_PUBLIC_* environment variables in production');
+    }
+    
+    return {
+      NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
+      NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+      NEXT_PUBLIC_APP_EMAIL: env.NEXT_PUBLIC_APP_EMAIL,
+    };
+  }
+  
+  // Development: return values or empty strings as fallback
+  return {
+    NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || '',
+    NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || '',
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
+    NEXT_PUBLIC_APP_EMAIL: env.NEXT_PUBLIC_APP_EMAIL || '',
+  };
+}
