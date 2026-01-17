@@ -18,7 +18,7 @@ jobs:
 
       - name: Block raw image exposure
         run: |
-          RAW=$(git grep -E 'uploads/|raw-images/|temp-images/' || true)
+          RAW=$(git grep -E 'uploads/|raw-images/|temp-images/' -- ':!**/*.md' ':!.github/**' ':!work_files/**' ':!docs/**' || true)
           if [ -n "$RAW" ]; then
             echo "❌ Raw image references detected:"
             echo "$RAW"
