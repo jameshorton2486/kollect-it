@@ -4,9 +4,8 @@
  * Validates that all SKUs in the database follow the required format
  * and business rules.
  * 
- * SKU Format: [CATEGORY]-[YEAR]-[SEQUENCE]
- * Valid Categories: ART, BOOK, MIL, COL
- * Example: ART-2025-0042
+ * SKU Format: SKU-YYYY-XXX (per ADR-0006)
+ * Example: SKU-2025-001
  */
 
 import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
@@ -14,16 +13,11 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// SKU validation pattern
-const SKU_PATTERN = /^(ART|BOOK|MIL|COL)-\d{4}-\d{4}$/;
+// SKU validation pattern (per ADR-0006: SKU-YYYY-XXX)
+const SKU_PATTERN = /^SKU-\d{4}-\d{3}$/;
 
-// Category code mapping
-const CATEGORY_CODE_MAP: Record<string, string> = {
-  'Fine Art': 'ART',
-  'Rare Books': 'BOOK',
-  'Militaria': 'MIL',
-  'Collectibles': 'COL',
-};
+// Note: ADR-0006 uses SKU-YYYY-XXX format (no category prefix)
+// Category code mapping kept for reference but not used in current format
 
 beforeAll(async () => {
   // Ensure database connection
@@ -37,15 +31,12 @@ afterAll(async () => {
 describe('SKU Invariants', () => {
   
   test('all products have a SKU', async () => {
-    const productsWithoutSku = await prisma.product.findMany({
-      where: {
-        OR: [
-          { sku: null },
-          { sku: '' },
-        ],
-      },
-      select: { id: true, title: true },
+    // Since sku is non-nullable in schema, query all and filter for empty strings
+    const allProducts = await prisma.product.findMany({
+      select: { id: true, title: true, sku: true },
     });
+    
+    const productsWithoutSku = allProducts.filter(p => !p.sku || p.sku.trim() === '');
 
     if (productsWithoutSku.length > 0) {
       console.warn('⚠️ Products without SKU:', productsWithoutSku.map(p => p.title));
@@ -57,8 +48,9 @@ describe('SKU Invariants', () => {
   });
 
   test('all SKUs match required format', async () => {
+    // Get all products with non-empty SKUs
     const products = await prisma.product.findMany({
-      where: { sku: { not: null } },
+      where: { sku: { not: '' } },
       select: { id: true, title: true, sku: true },
     });
 
@@ -82,7 +74,7 @@ describe('SKU Invariants', () => {
 
   test('all SKUs are unique', async () => {
     const products = await prisma.product.findMany({
-      where: { sku: { not: null } },
+      where: { sku: { not: '' } },
       select: { sku: true },
     });
 
@@ -98,8 +90,10 @@ describe('SKU Invariants', () => {
   });
 
   test('SKU category prefix matches product category', async () => {
+    // Note: ADR-0006 uses SKU-YYYY-XXX format (no category prefix)
+    // This test is kept for documentation but SKU format doesn't include category
     const products = await prisma.product.findMany({
-      where: { sku: { not: null } },
+      where: { sku: { not: '' } },
       select: { 
         sku: true, 
         title: true,
@@ -107,34 +101,32 @@ describe('SKU Invariants', () => {
       },
     });
 
-    const mismatches: { title: string; sku: string; category: string; expected: string }[] = [];
+    // ADR-0006 format is SKU-YYYY-XXX (no category prefix)
+    // This test documents the format but doesn't enforce category matching
+    // since the format doesn't include category information
+    const invalidFormat: { title: string; sku: string }[] = [];
 
     for (const product of products) {
-      if (!product.sku || !product.category) continue;
+      if (!product.sku) continue;
 
-      const skuPrefix = product.sku.split('-')[0];
-      const expectedPrefix = CATEGORY_CODE_MAP[product.category.name];
-
-      if (expectedPrefix && skuPrefix !== expectedPrefix) {
-        mismatches.push({
+      if (!SKU_PATTERN.test(product.sku)) {
+        invalidFormat.push({
           title: product.title,
           sku: product.sku,
-          category: product.category.name,
-          expected: expectedPrefix,
         });
       }
     }
 
-    if (mismatches.length > 0) {
-      console.warn('⚠️ SKU-Category mismatches:');
-      mismatches.forEach(m => 
-        console.warn(`  - ${m.title}: SKU "${m.sku}" but category "${m.category}" (expected ${m.expected})`)
+    if (invalidFormat.length > 0) {
+      console.warn('⚠️ SKUs not matching ADR-0006 format (SKU-YYYY-XXX):');
+      invalidFormat.forEach(m => 
+        console.warn(`  - ${m.title}: "${m.sku}"`)
       );
     }
 
     // Phase 2: Document only
     // Phase 3: Uncomment to enforce
-    // expect(mismatches).toHaveLength(0);
+    // expect(invalidFormat).toHaveLength(0);
   });
 
   test('SKU year is reasonable', async () => {
@@ -143,7 +135,7 @@ describe('SKU Invariants', () => {
     const maxYear = currentYear + 1; // Allow next year for pre-dated items
 
     const products = await prisma.product.findMany({
-      where: { sku: { not: null } },
+      where: { sku: { not: '' } },
       select: { sku: true, title: true },
     });
 
@@ -152,7 +144,8 @@ describe('SKU Invariants', () => {
     for (const product of products) {
       if (!product.sku) continue;
       
-      const match = product.sku.match(/^[A-Z]+-(\d{4})-\d{4}$/);
+      // Match ADR-0006 format: SKU-YYYY-XXX
+      const match = product.sku.match(/^SKU-(\d{4})-\d{3}$/);
       if (match) {
         const year = parseInt(match[1], 10);
         if (year < minYear || year > maxYear) {

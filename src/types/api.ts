@@ -54,10 +54,17 @@ export function successResponse<T>(data: T, message?: string): ApiResponse<T> {
  * Create an error response
  */
 export function errorResponse(error: string, code?: string): ApiResponse<never> {
-  return {
+  const response: ApiResponse<never> = {
     success: false,
     error,
   };
+  
+  // Include code if provided
+  if (code) {
+    (response as any).code = code;
+  }
+  
+  return response;
 }
 
 /**

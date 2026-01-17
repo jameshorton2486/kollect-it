@@ -66,10 +66,14 @@ export function getClientEnv(): ClientEnv {
 
     if (process.env.NODE_ENV === 'production') {
       throw new Error('Client environment validation failed.');
+    } else {
+      console.warn('⚠️ Continuing in development mode with invalid env vars');
+      // Return partial env in development
+      return clientEnv as unknown as ClientEnv;
     }
   }
 
-  clientEnvCache = result.data!;
+  clientEnvCache = result.data;
   return clientEnvCache;
 }
 
