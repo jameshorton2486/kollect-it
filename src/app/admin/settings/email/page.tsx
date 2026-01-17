@@ -4,9 +4,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-// Force dynamic rendering - do not prerender this admin page
-export const dynamic = "force-dynamic";
-
 /**
  * Admin Email Settings Page
  * Placeholder page for email configuration settings
