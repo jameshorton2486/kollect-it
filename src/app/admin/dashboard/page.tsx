@@ -27,6 +27,7 @@ interface Product {
   images: { url: string }[];
   status: string;
   createdAt: string;
+  isDraft: boolean;
 }
 
 interface Category {
@@ -907,3 +908,4 @@ function ProductForm({
     </div>
   );
 }
+

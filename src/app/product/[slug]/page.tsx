@@ -127,6 +127,7 @@ export default async function ProductPage(props: ProductPageProps) {
   };
 
   // Generate structured data (JSON-LD) - Enhanced with SEO fields
+  const canonicalUrl = generateCanonicalUrl(`/product/${product.slug}`);
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Product",

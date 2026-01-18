@@ -4,7 +4,6 @@
  * Approval Trend Chart Component
  */
 
-import React from "react";
 import {
   LineChart,
   Line,

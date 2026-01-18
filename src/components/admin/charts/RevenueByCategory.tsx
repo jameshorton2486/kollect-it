@@ -4,7 +4,6 @@
  * Revenue by Category Chart
  */
 
-import React from "react";
 import {
   PieChart,
   Pie,

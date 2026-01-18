@@ -4,7 +4,7 @@
 # ============================================================
 
 $Downloads = "C:\Users\james\Downloads"
-$RepoRoot  = "C:\Users\james\kollect-it-marketplace-1"
+$RepoRoot  = "C:\Users\james\kollect-it"
 
 # Destination folders
 $Folders = @{
