@@ -16,7 +16,9 @@ export default function AdminLoginPage() {
     setError("");
     setLoading(true);
 
-    console.log("🔐 Login attempt started", { email, hasPassword: !!password });
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔐 Login attempt started", { email, hasPassword: !!password });
+    }
 
     try {
       const result = await signIn("credentials", {
@@ -25,17 +27,25 @@ export default function AdminLoginPage() {
         redirect: false,
       });
 
-      console.log("🔐 SignIn result:", result);
+      if (process.env.NODE_ENV === "development") {
+        console.log("🔐 SignIn result:", result);
+      }
 
       if (result?.error) {
-        console.error("🔐 Login failed:", result.error);
+        if (process.env.NODE_ENV === "development") {
+          console.error("🔐 Login failed:", result.error);
+        }
         setError("Invalid email or password");
       } else if (result?.ok) {
-        console.log("🔐 Login succeeded, redirecting to dashboard");
+        if (process.env.NODE_ENV === "development") {
+          console.log("🔐 Login succeeded, redirecting to dashboard");
+        }
         router.push("/admin/dashboard");
         router.refresh();
       } else {
-        console.warn("🔐 Unexpected signIn result:", result);
+        if (process.env.NODE_ENV === "development") {
+          console.warn("🔐 Unexpected signIn result:", result);
+        }
         setError("Unexpected response from server");
       }
     } catch (err) {

@@ -193,7 +193,7 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                         <img
                           key={idx}
                           src={img}
-                          alt="Review"
+                          alt={`Review image ${idx + 1} from ${review.user.name}`}
                           className="w-20 h-20 object-cover rounded"
                         />
                       ))}
