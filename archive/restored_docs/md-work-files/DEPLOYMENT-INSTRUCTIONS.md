@@ -77,19 +77,19 @@ This package contains 12 updated files addressing the comprehensive site audit:
 
 ```powershell
 # Components
-Copy-Item "Header.tsx" "C:\Users\james\kollect-it-marketplace-1\src\components\Header.tsx" -Force
-Copy-Item "Footer.tsx" "C:\Users\james\kollect-it-marketplace-1\src\components\Footer.tsx" -Force
-Copy-Item "TrustStrip.tsx" "C:\Users\james\kollect-it-marketplace-1\src\components\TrustStrip.tsx" -Force
-Copy-Item "ProductCard.tsx" "C:\Users\james\kollect-it-marketplace-1\src\components\ProductCard.tsx" -Force
-Copy-Item "ProductGrid.tsx" "C:\Users\james\kollect-it-marketplace-1\src\components\ProductGrid.tsx" -Force
+Copy-Item "Header.tsx" "C:\Users\james\kollect-it\src\components\Header.tsx" -Force
+Copy-Item "Footer.tsx" "C:\Users\james\kollect-it\src\components\Footer.tsx" -Force
+Copy-Item "TrustStrip.tsx" "C:\Users\james\kollect-it\src\components\TrustStrip.tsx" -Force
+Copy-Item "ProductCard.tsx" "C:\Users\james\kollect-it\src\components\ProductCard.tsx" -Force
+Copy-Item "ProductGrid.tsx" "C:\Users\james\kollect-it\src\components\ProductGrid.tsx" -Force
 
 # Pages
-Copy-Item "not-found.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\not-found.tsx" -Force
-Copy-Item "error.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\error.tsx" -Force
-Copy-Item "contact-page.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\contact\page.tsx" -Force
-Copy-Item "checkout-success-page.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\checkout\success\page.tsx" -Force
-Copy-Item "wishlist-page.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\wishlist\page.tsx" -Force
-Copy-Item "compare-page.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\compare\page.tsx" -Force
+Copy-Item "not-found.tsx" "C:\Users\james\kollect-it\src\app\not-found.tsx" -Force
+Copy-Item "error.tsx" "C:\Users\james\kollect-it\src\app\error.tsx" -Force
+Copy-Item "contact-page.tsx" "C:\Users\james\kollect-it\src\app\contact\page.tsx" -Force
+Copy-Item "checkout-success-page.tsx" "C:\Users\james\kollect-it\src\app\checkout\success\page.tsx" -Force
+Copy-Item "wishlist-page.tsx" "C:\Users\james\kollect-it\src\app\wishlist\page.tsx" -Force
+Copy-Item "compare-page.tsx" "C:\Users\james\kollect-it\src\app\compare\page.tsx" -Force
 ```
 
 ### Option 2: VS Code / Cursor
@@ -104,7 +104,7 @@ Copy-Item "compare-page.tsx" "C:\Users\james\kollect-it-marketplace-1\src\app\co
 ## Testing Locally
 
 ```powershell
-cd C:\Users\james\kollect-it-marketplace-1
+cd C:\Users\james\kollect-it
 npm run dev
 ```
 

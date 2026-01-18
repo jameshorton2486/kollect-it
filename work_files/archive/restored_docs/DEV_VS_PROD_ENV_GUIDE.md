@@ -73,7 +73,7 @@ Add production credentials to **Vercel Environment Variables**:
 
 | Aspect | Development (.env.local) | Production (Vercel) |
 |--------|-------------------------|---------------------|
-| **Location** | `C:\Users\james\kollect-it-marketplace-1\.env.local` | Vercel Dashboard |
+| **Location** | `C:\Users\james\kollect-it\.env.local` | Vercel Dashboard |
 | **Stripe Keys** | Test keys (`pk_test_`, `sk_test_`) | Live keys (`pk_live_`, `sk_live_`) |
 | **Database** | Development database | Production database |
 | **NEXTAUTH_URL** | `http://localhost:3000` | `https://your-domain.com` |

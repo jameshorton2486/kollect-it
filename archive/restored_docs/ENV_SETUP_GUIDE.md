@@ -2,7 +2,7 @@
 
 ## ✅ Your .env.local File Location
 
-**Location**: `C:\Users\james\kollect-it-marketplace-1\.env.local`
+**Location**: `C:\Users\james\kollect-it\.env.local`
 
 This is **CORRECT**! ✅ The `.env.local` file should be at the root of your project.
 

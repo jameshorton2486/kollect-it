@@ -16,7 +16,7 @@ All the code changes are done! The Edit Profile and Change Password buttons are 
 
 1. **Open a terminal/command prompt** in your project folder:
    ```
-   C:\Users\james\kollect-it-marketplace-1
+   C:\Users\james\kollect-it
    ```
 
 2. **Start the development server**:
