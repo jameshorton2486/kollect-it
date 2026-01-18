@@ -15,7 +15,7 @@ IMAGEKIT_PRIVATE_KEY="private_3E7NSDvt2NdY1hq6btGWa4VTRZI="
 ANTHROPIC_API_KEY="sk-ant-xxxxxxxxxxxxxxxx"
 
 # Service API Key
-# ⚠️ IMPORTANT: SERVICE_API_KEY is a CUSTOM shared secret
+# ⚠️ IMPORTANT: PRODUCT_INGEST_API_KEY is a CUSTOM shared secret
 # 
 # What it IS:
 # - A simple shared secret used ONLY for machine-to-machine authentication
@@ -29,7 +29,7 @@ ANTHROPIC_API_KEY="sk-ant-xxxxxxxxxxxxxxxx"
 # ❌ Claude/Anthropic key
 #
 # MUST match the value in website .env.local (see below)
-SERVICE_API_KEY="kollect-it-product-service-2025"
+PRODUCT_INGEST_API_KEY="kollect-it-product-service-2025"
 
 # Production Flag
 # Maps to NODE_ENV - set to "production" or "true" for production
@@ -52,7 +52,7 @@ AI_TEMPERATURE="0.3"
 # Use this in your Python application:
 #
 # env_vars = {
-#     "SERVICE_API_KEY": os.getenv("SERVICE_API_KEY", ""),
+#     "PRODUCT_INGEST_API_KEY": os.getenv("PRODUCT_INGEST_API_KEY", ""),
 #     "IMAGEKIT_PUBLIC_KEY": os.getenv("IMAGEKIT_PUBLIC_KEY", ""),
 #     "IMAGEKIT_PRIVATE_KEY": os.getenv("IMAGEKIT_PRIVATE_KEY", ""),
 #     "ANTHROPIC_API_KEY": os.getenv("ANTHROPIC_API_KEY", ""),
@@ -65,7 +65,7 @@ AI_TEMPERATURE="0.3"
 # ============================================
 # All values above are complete and ready to copy into your product app .env file
 #
-# IMPORTANT: SERVICE_API_KEY must match the value in website .env.local
+# IMPORTANT: PRODUCT_INGEST_API_KEY must match the value in website .env.local
 # Both should be: "kollect-it-product-service-2025"
 
 # ============================================
