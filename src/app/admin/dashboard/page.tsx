@@ -444,7 +444,7 @@ export default function AdminDashboard() {
                           {product.status}
                         </span>
                         {product.isDraft && (
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lux-cream text-lux-gray-dark">
                             Draft
                           </span>
                         )}
