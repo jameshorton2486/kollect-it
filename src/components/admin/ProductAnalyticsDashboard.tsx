@@ -225,7 +225,7 @@ export function ProductAnalyticsDashboard() {
           Category Performance
         </h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-border-200">
             <thead className="bg-surface-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
@@ -248,7 +248,7 @@ export function ProductAnalyticsDashboard() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-surface-0 divide-y divide-gray-200">
+            <tbody className="bg-surface-0 divide-y divide-border-200">
               {metrics.categoryPerformance.map((category) => (
                 <tr key={category.category}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
@@ -288,7 +288,7 @@ export function ProductAnalyticsDashboard() {
           Top Performing Products
         </h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-border-200">
             <thead className="bg-surface-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-ink-700 uppercase tracking-wider">
@@ -311,7 +311,7 @@ export function ProductAnalyticsDashboard() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-surface-0 divide-y divide-gray-200">
+            <tbody className="bg-surface-0 divide-y divide-border-200">
               {metrics.performance.slice(0, 10).map((product) => (
                 <tr key={product.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-ink-900">
