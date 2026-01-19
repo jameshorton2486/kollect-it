@@ -124,6 +124,7 @@ export function Footer() {
                   <input
                     type="email"
                     placeholder="Your email"
+                    aria-label="Email address for newsletter"
                     suppressHydrationWarning
                     className="h-9 flex-1 sm:w-40 rounded-full border border-white/10 bg-white/5 px-3 text-sm text-lux-cream placeholder:text-lux-gray-light focus:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal focus:border-lux-gold transition-all"
                   />
