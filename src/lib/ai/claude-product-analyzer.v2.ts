@@ -69,8 +69,12 @@ export async function analyzeProductImageWithClaude(
 
     // Extract text response
     const content = response.content[0];
-    if (content.type !== "text") {
+    if (!content || content.type !== "text") {
       throw new Error("Claude did not return text response");
+    }
+
+    if (!("text" in content)) {
+      throw new Error("Claude response content does not contain text");
     }
 
     console.log("[Claude] Received response, parsing JSON...");
@@ -83,7 +87,7 @@ export async function analyzeProductImageWithClaude(
     } catch (e) {
       // Strategy 2: Extract from markdown code blocks
       const jsonMatch = content.text.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
-      if (jsonMatch) {
+      if (jsonMatch && jsonMatch[1]) {
         analysis = JSON.parse(jsonMatch[1]);
       } else {
         // Strategy 3: Find JSON object in response

@@ -91,7 +91,7 @@ export async function analyzeProductImageWithClaude(
     } catch (e) {
       // Strategy 2: Extract from markdown code blocks
       const jsonMatch = content.text.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
-      if (jsonMatch) {
+      if (jsonMatch && jsonMatch[1]) {
         analysis = JSON.parse(jsonMatch[1]);
       } else {
         // Strategy 3: Find JSON object in response
