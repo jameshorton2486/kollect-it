@@ -85,8 +85,35 @@ export default async function CategoryPage(props: CategoryPageProps) {
 
   const products = category.products;
 
+  // CollectionPage structured data for SEO
+  const categoryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: category.name,
+    description: category.description || `Browse ${category.name} at Kollect-It`,
+    url: `https://kollect-it.com/category/${category.slug}`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Kollect-It",
+      url: "https://kollect-it.com",
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: products.length,
+      itemListElement: products.slice(0, 10).map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `https://kollect-it.com/product/${product.slug}`,
+      })),
+    },
+  };
+
   return (
     <main className="bg-lux-pearl text-ink-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+      />
       <PageHeader
         label="Category"
         title={category.name}
