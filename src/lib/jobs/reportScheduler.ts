@@ -36,8 +36,8 @@ export function getNextRunMs(cronExpression: string): number {
   // For simplicity, calculate next run:
   // If time has passed today, use tomorrow
   // Otherwise use today
-  const targetHour = parseInt(hour) || 9;
-  const targetMinute = parseInt(minute) || 0;
+  const targetHour = hour ? parseInt(hour, 10) : 9;
+  const targetMinute = minute ? parseInt(minute, 10) : 0;
 
   next.setHours(targetHour, targetMinute, 0, 0);
 

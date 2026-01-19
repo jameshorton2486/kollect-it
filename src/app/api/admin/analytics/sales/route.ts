@@ -85,8 +85,11 @@ export async function GET(request: NextRequest) {
     // Revenue by day
     const revenueByDay = orders.reduce(
       (acc, order) => {
-        const date = order.createdAt.toISOString().split("T")[0];
-        acc[date] = (acc[date] || 0) + order.total;
+        const dateParts = order.createdAt.toISOString().split("T");
+        const date = dateParts[0];
+        if (date) {
+          acc[date] = (acc[date] || 0) + order.total;
+        }
         return acc;
       },
       {} as Record<string, number>,

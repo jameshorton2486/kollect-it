@@ -81,6 +81,8 @@ export class ImageKitSyncService {
 
     for (let i = 0; i < product.photos.length; i++) {
       const photo = product.photos[i];
+      if (!photo) continue;
+      
       const sequenceOrder = photo.sequence_order ?? i;
 
       try {

@@ -177,6 +177,10 @@ export function ProductUploadForm() {
       // Use the first image (main) for AI analysis
       const mainImage = images.find(img => img.type === "main") || images[0];
 
+      if (!mainImage) {
+        throw new Error("At least one image is required for AI analysis");
+      }
+
       const res = await fetch("/api/admin/products/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -72,7 +72,12 @@ export async function analyzeImageQualityWithGPT4V(
       ],
     });
 
-    const content = response.choices[0].message.content;
+    const firstChoice = response.choices[0];
+    if (!firstChoice) {
+      throw new Error("No response choices from GPT-4V");
+    }
+    
+    const content = firstChoice.message.content;
     if (!content) {
       throw new Error("No response from GPT-4V");
     }
@@ -87,7 +92,7 @@ export async function analyzeImageQualityWithGPT4V(
     } catch (e) {
       // Strategy 2: Extract from markdown code blocks
       const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
-      if (jsonMatch) {
+      if (jsonMatch && jsonMatch[1]) {
         analysis = JSON.parse(jsonMatch[1]);
       } else {
         // Strategy 3: Find JSON object in response
