@@ -12,7 +12,9 @@ export function formatUSD(amount: number | string | null | undefined): string {
     // Fallback
     const fixed = Number(num).toFixed(2);
     const parts = fixed.split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (parts[0]) {
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     return `$${parts.join(".")}`;
   }
 }

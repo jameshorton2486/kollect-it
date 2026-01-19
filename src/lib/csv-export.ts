@@ -58,7 +58,8 @@ export function formatCurrency(value: number): string {
  */
 export function formatDate(value: string | Date): string {
   const date = typeof value === "string" ? new Date(value) : value;
-  return date.toISOString().split("T")[0]; // YYYY-MM-DD
+  const dateStr = date.toISOString().split("T")[0];
+  return dateStr || ""; // YYYY-MM-DD
 }
 
 /**

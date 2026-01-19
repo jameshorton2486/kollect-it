@@ -45,6 +45,14 @@ function calculateHistoricalPrice(comps: number[] | undefined): {
   const q1 = sortedComps[Math.floor(sortedComps.length / 4)];
   const q3 = sortedComps[Math.floor((sortedComps.length * 3) / 4)];
 
+  if (median === undefined || q1 === undefined || q3 === undefined) {
+    return {
+      price: 0,
+      confidence: 0,
+      reasoning: "Insufficient comparable data",
+    };
+  }
+
   // Weight median higher for stability
   const historicalPrice = median * 0.5 + ((q1 + q3) / 2) * 0.5;
 
@@ -115,8 +123,10 @@ function calculateAIPrice(
   // Category multiplier
   const catMult =
     categoryBaseMultiplier[category] ?? categoryBaseMultiplier["default"];
-  multipliers["category"] = catMult;
-  totalMultiplier *= catMult;
+  if (catMult !== undefined) {
+    multipliers["category"] = catMult;
+    totalMultiplier *= catMult;
+  }
 
   // Condition multiplier
   const condMult = conditionMultiplier[condition as ProductCondition] ?? 1.0;
@@ -264,7 +274,7 @@ export async function calculatePriceWithConfidence(
     categoryBaseMultiplier[input.category] ?? categoryBaseMultiplier["default"];
   const marketPricing = calculateMarketPrice(
     input.marketTrendData,
-    categoryMultiplier,
+    categoryMultiplier ?? categoryBaseMultiplier["default"] ?? 1.0,
   );
 
   // Step 4: Calculate confidence factors

@@ -114,7 +114,9 @@ export function initWebVitalsTracking() {
           const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
 
-          sendMetricToAnalytics("FCP", lastEntry.startTime);
+          if (lastEntry) {
+            sendMetricToAnalytics("FCP", lastEntry.startTime);
+          }
           fcpObserver.disconnect();
         });
 

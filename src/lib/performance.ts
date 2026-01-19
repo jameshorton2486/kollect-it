@@ -131,14 +131,18 @@ class PerformanceMonitor {
       .sort((a, b) => a - b);
     const sum = durations.reduce((acc, d) => acc + d, 0);
 
+    const p50Index = Math.floor(durations.length * 0.5);
+    const p95Index = Math.floor(durations.length * 0.95);
+    const p99Index = Math.floor(durations.length * 0.99);
+    
     return {
       count: durations.length,
       avg: sum / durations.length,
-      min: durations[0],
-      max: durations[durations.length - 1],
-      p50: durations[Math.floor(durations.length * 0.5)],
-      p95: durations[Math.floor(durations.length * 0.95)],
-      p99: durations[Math.floor(durations.length * 0.99)],
+      min: durations[0] ?? 0,
+      max: durations[durations.length - 1] ?? 0,
+      p50: durations[p50Index] ?? 0,
+      p95: durations[p95Index] ?? 0,
+      p99: durations[p99Index] ?? 0,
     };
   }
 
