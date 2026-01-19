@@ -66,6 +66,21 @@ export async function POST(request: Request) {
       metadata.shippingAddress || "{}",
     ) as ShippingAddress;
 
+    // Validate required metadata fields
+    if (!metadata.subtotal || !metadata.tax || !metadata.shipping || !metadata.total) {
+      return NextResponse.json(
+        { error: "Missing required order metadata" },
+        { status: 400 },
+      );
+    }
+
+    if (!metadata.shippingName || !metadata.shippingEmail) {
+      return NextResponse.json(
+        { error: "Missing required customer information" },
+        { status: 400 },
+      );
+    }
+
     // Generate order number
     const orderNumber = `KI-${Date.now()}-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
 
@@ -104,19 +119,32 @@ export async function POST(request: Request) {
       });
     }
 
+    // Parse numeric values with validation
+    const subtotal = parseFloat(metadata.subtotal);
+    const tax = parseFloat(metadata.tax);
+    const shipping = parseFloat(metadata.shipping);
+    const total = parseFloat(metadata.total);
+
+    if (isNaN(subtotal) || isNaN(tax) || isNaN(shipping) || isNaN(total)) {
+      return NextResponse.json(
+        { error: "Invalid numeric values in order metadata" },
+        { status: 400 },
+      );
+    }
+
     // Create order in database
     const order = await prisma.order.create({
       data: {
         orderNumber,
         userId: userId || undefined,
         status: "processing",
-        subtotal: parseFloat(metadata.subtotal),
-        tax: parseFloat(metadata.tax),
-        shipping: parseFloat(metadata.shipping),
-        total: parseFloat(metadata.total),
+        subtotal,
+        tax,
+        shipping,
+        total,
         customerName: metadata.shippingName,
         customerEmail: metadata.shippingEmail,
-        customerPhone: metadata.shippingPhone,
+        customerPhone: metadata.shippingPhone || undefined,
         shippingAddress: shippingAddress.address,
         shippingCity: shippingAddress.city,
         shippingState: shippingAddress.state,
@@ -141,6 +169,7 @@ export async function POST(request: Request) {
     // Send confirmation emails if configured
     if (emailConfigured && emailModule) {
       try {
+        // Ensure all required fields are present for email
         const emailData = {
           orderNumber: order.orderNumber,
           customerName: metadata.shippingName,
