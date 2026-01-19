@@ -31,6 +31,10 @@ export default function ProductGallery({
       ? images[selectedImageIndex]
       : images[0] ?? { url: "/placeholder.svg", alt: productName };
 
+  if (!actualImage) {
+    return null;
+  }
+
   // Apply ImageKit transformations
   const mainImageUrl = getProductDetailImageUrl(actualImage.url || "/placeholder.svg");
   const mainImageAlt = actualImage.alt || getProductImageAltText(productName, selectedImageIndex, selectedImageIndex === 0);

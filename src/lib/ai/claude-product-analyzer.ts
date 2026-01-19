@@ -73,8 +73,12 @@ export async function analyzeProductImageWithClaude(
 
     // Extract text response
     const content = response.content[0];
-    if (content.type !== "text") {
+    if (!content || content.type !== "text") {
       throw new Error("Claude did not return text response");
+    }
+
+    if (!("text" in content)) {
+      throw new Error("Claude response content does not contain text");
     }
 
     console.log("[Claude] Received response, parsing JSON...");
