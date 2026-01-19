@@ -399,6 +399,7 @@ export async function getApprovalTrends(
         averagePrice: 500 + Math.random() * 1000, // Mock
       });
     }
+  }
 
   return trends;
 }
