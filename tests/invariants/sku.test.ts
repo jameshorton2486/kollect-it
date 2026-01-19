@@ -39,12 +39,20 @@ afterAll(async () => {
 describe('SKU Invariants', () => {
   
   test('all products have a SKU', async () => {
+<<<<<<< HEAD
     // Check for null or empty SKU using different Prisma filter syntax
+=======
+    // Since sku is non-nullable in schema, query all and filter for empty strings
+>>>>>>> origin/chore/sync-local-changes
     const allProducts = await prisma.product.findMany({
       select: { id: true, title: true, sku: true },
     });
     
+<<<<<<< HEAD
     const productsWithoutSku = allProducts.filter(p => !p.sku || p.sku === '');
+=======
+    const productsWithoutSku = allProducts.filter(p => !p.sku || p.sku.trim() === '');
+>>>>>>> origin/chore/sync-local-changes
 
     if (productsWithoutSku.length > 0) {
       console.warn('⚠️ Products without SKU:', productsWithoutSku.map(p => p.title));
@@ -56,8 +64,14 @@ describe('SKU Invariants', () => {
   });
 
   test('all SKUs match required format', async () => {
+<<<<<<< HEAD
     const products = await prisma.product.findMany({
       where: { sku: { not: { equals: '' } } },
+=======
+    // Get all products with non-empty SKUs
+    const products = await prisma.product.findMany({
+      where: { sku: { not: '' } },
+>>>>>>> origin/chore/sync-local-changes
       select: { id: true, title: true, sku: true },
     });
 
@@ -81,7 +95,11 @@ describe('SKU Invariants', () => {
 
   test('all SKUs are unique', async () => {
     const products = await prisma.product.findMany({
+<<<<<<< HEAD
       where: { sku: { not: { equals: '' } } },
+=======
+      where: { sku: { not: '' } },
+>>>>>>> origin/chore/sync-local-changes
       select: { sku: true },
     });
 
@@ -97,6 +115,7 @@ describe('SKU Invariants', () => {
   });
 
   test('SKU category prefix matches product category', async () => {
+<<<<<<< HEAD
     const products = await prisma.product.findMany({
       where: { sku: { not: { equals: '' } } },
       select: {
@@ -123,20 +142,56 @@ describe('SKU Invariants', () => {
           sku: product.sku,
           category: product.category.name,
           expected: expectedPrefixes.join(' or '),
+=======
+    // Note: ADR-0006 uses SKU-YYYY-XXX format (no category prefix)
+    // This test is kept for documentation but SKU format doesn't include category
+    const products = await prisma.product.findMany({
+      where: { sku: { not: '' } },
+      select: { 
+        sku: true, 
+        title: true,
+        category: { select: { name: true } } 
+      },
+    });
+
+    // ADR-0006 format is SKU-YYYY-XXX (no category prefix)
+    // This test documents the format but doesn't enforce category matching
+    // since the format doesn't include category information
+    const invalidFormat: { title: string; sku: string }[] = [];
+
+    for (const product of products) {
+      if (!product.sku) continue;
+
+      if (!SKU_PATTERN.test(product.sku)) {
+        invalidFormat.push({
+          title: product.title,
+          sku: product.sku,
+>>>>>>> origin/chore/sync-local-changes
         });
       }
     }
 
+<<<<<<< HEAD
     if (mismatches.length > 0) {
       console.warn('⚠️ SKU-Category mismatches:');
       mismatches.forEach(m => 
         console.warn(`  - ${m.title}: SKU "${m.sku}" but category "${m.category}" (expected ${m.expected})`)
+=======
+    if (invalidFormat.length > 0) {
+      console.warn('⚠️ SKUs not matching ADR-0006 format (SKU-YYYY-XXX):');
+      invalidFormat.forEach(m => 
+        console.warn(`  - ${m.title}: "${m.sku}"`)
+>>>>>>> origin/chore/sync-local-changes
       );
     }
 
     // Phase 2: Document only
     // Phase 3: Uncomment to enforce
+<<<<<<< HEAD
     // expect(mismatches).toHaveLength(0);
+=======
+    // expect(invalidFormat).toHaveLength(0);
+>>>>>>> origin/chore/sync-local-changes
   });
 
   test('SKU year is reasonable', async () => {
@@ -145,7 +200,11 @@ describe('SKU Invariants', () => {
     const maxYear = currentYear + 1; // Allow next year for pre-dated items
 
     const products = await prisma.product.findMany({
+<<<<<<< HEAD
       where: { sku: { not: { equals: '' } } },
+=======
+      where: { sku: { not: '' } },
+>>>>>>> origin/chore/sync-local-changes
       select: { sku: true, title: true },
     });
 
@@ -154,7 +213,12 @@ describe('SKU Invariants', () => {
     for (const product of products) {
       if (!product.sku) continue;
       
+<<<<<<< HEAD
       const match = product.sku.match(/^[A-Z]+-(\d{4})-\d{4}$/);
+=======
+      // Match ADR-0006 format: SKU-YYYY-XXX
+      const match = product.sku.match(/^SKU-(\d{4})-\d{3}$/);
+>>>>>>> origin/chore/sync-local-changes
       if (match) {
         const year = parseInt(match[1], 10);
         if (year < minYear || year > maxYear) {
