@@ -56,6 +56,10 @@ const config: Config = {
           "silver-soft": "hsl(var(--lux-silver-soft))",
           gold: "hsl(var(--lux-gold))",
           "gold-light": "hsl(var(--lux-gold-light))",
+          carbon: "hsl(var(--lux-carbon))",
+          espresso: "hsl(var(--lux-espresso))",
+          sage: "hsl(var(--lux-sage))",
+          taupe: "hsl(var(--lux-taupe))",
         },
 
         /* ==========================================

@@ -40,6 +40,12 @@
     --lux-gold: 46 65% 52%;          /* classic gold accent (#D4AF37) */
     --lux-gold-light: 46 75% 65%;    /* hover gold */
 
+    /* Extended luxury colors for admin/category overlays */
+    --lux-carbon: 220 16% 14%;          /* deep carbon for admin panels */
+    --lux-espresso: 25 35% 20%;         /* warm espresso brown for overlays */
+    --lux-sage: 120 15% 35%;            /* muted sage green for nature categories */
+    --lux-taupe: 30 10% 45%;            /* neutral taupe for subtle overlays */
+
     /* Surface system */
     --surface-0: 0 0% 100%;
     --surface-50: 36 15% 97%;
