@@ -4,7 +4,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       { userAgent: "*", allow: "/" },
-      { userAgent: "*", disallow: ["/admin"] },
+      { userAgent: "*", disallow: ["/admin", "/api", "/checkout", "/account"] },
     ],
     sitemap: "https://kollect-it.com/sitemap.xml",
     host: "https://kollect-it.com",
