@@ -6,6 +6,25 @@ import tailwindcssAnimate from "tailwindcss-animate";
    KOLLECT-IT TAILWIND CONFIGURATION
    Updated with Luxury Color Palette
    Synced with globals.css CSS variables
+   ============================================
+   
+   PALETTE HIERARCHY (IMPORTANT):
+   
+   PRIMARY PALETTE (Use for all new work):
+   - lux-* : Luxury color palette (PRIMARY - use for all new components)
+     Examples: lux-gold, lux-pearl, lux-charcoal, lux-cream
+   
+   LEGACY PALETTE (Compatibility only - migrate to lux-*):
+   - ink-* : Text colors (aliased to gray scale)
+   - surface-* : Background surfaces
+   - border-* : Border colors
+   - gold-* : Gold scale (use lux-gold instead)
+   - cta-* : Call-to-action colors
+   
+   DEPRECATED (Do NOT use in new code):
+   - aesop-* : Aesop-inspired palette (DEPRECATED - use lux-* equivalents)
+     Migration: aesop-cream → lux-cream, aesop-charcoal → lux-charcoal
+   
    ============================================ */
 
 const config: Config = {
