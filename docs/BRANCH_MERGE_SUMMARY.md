@@ -47,9 +47,48 @@
 
 ---
 
+### 3. ✅ `chore/sync-local-changes` → `main`
+
+**Merge Commit:** `bf56bf4`  
+**Status:** ✅ **MERGED AND PUSHED**
+
+**Changes:**
+- Fixed PR #9 failures and limited scope
+- Added @eslint/js dependency for ESLint config
+- Added invariant tests and type safety improvements
+- Added comprehensive domain leakage audit report
+- Fixed critical issues: gray classes, empty files, loading state
+- Added ADR-0006 SKU enforcement and enhanced governance tests
+- Restored corrupted backticks in copilot instructions
+
+**Conflicts Resolved:**
+- `src/types/api.ts` - Kept `code` field from `fix/core-invariants-and-env`
+- `tests/invariants/sku.test.ts` - Kept ADR-0003 SKU format (category-based)
+- `src/app/admin/dashboard/page.tsx` - Kept main version
+
+**Commits Merged:**
+- `bc56e2e` - chore(ci): fix PR #9 failures and limit scope
+- `dc2b73e` - fix: add @eslint/js dependency for ESLint config
+- `df8a14f` - chore(quality): add invariant tests and type safety improvements
+- `66a8a96` - docs: add comprehensive domain leakage audit report
+- `b38ad1b` - fix: resolve critical issues - gray classes, empty files, loading state
+- `0c1bcc2` - feat: add ADR-0006 SKU enforcement and enhance governance tests
+- `eaf343c` - fix: restore corrupted backticks and escape sequences in copilot instructions
+- `53a7adb` - chore: sync local changes
+
+---
+
 ## Skipped Branches
 
 ### `fix/ci-stability-clean`
+**Status:** ⚠️ **SKIPPED**  
+**Reason:** No commits ahead of main (already merged or empty)
+
+### `fix/homepage-images-contrast`
+**Status:** ⚠️ **SKIPPED**  
+**Reason:** No commits ahead of main (already merged or empty)
+
+### `chore/pre-hardening-sync`
 **Status:** ⚠️ **SKIPPED**  
 **Reason:** No commits ahead of main (already merged or empty)
 
@@ -97,11 +136,20 @@
 
 ## Summary
 
-**Branches Merged:** 2  
-**Branches Skipped:** 1  
-**Conflicts Resolved:** 1 (documentation only)  
+**Branches Merged:** 3  
+**Branches Skipped:** 3  
+**Conflicts Resolved:** 4 (1 documentation, 3 code files)  
 **Build Status:** ✅ Passing  
 **Repository Status:** ✅ Clean and synced
+
+### Final Main Branch State
+
+**Latest Commits:**
+1. `bf56bf4` - Merge branch 'chore/sync-local-changes' into main
+2. `bda5b67` - docs: add branch merge summary
+3. `2bed096` - Merge branch 'fix/core-invariants-and-env' into main
+4. `25859f9` - Merge branch 'lux-palette-docs-39246' into main
+5. `eaecff6` - docs: add TODO directory status verification
 
 ---
 
