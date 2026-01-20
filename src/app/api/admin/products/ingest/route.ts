@@ -28,7 +28,6 @@ interface IngestPayload {
   seoDescription?: string;
   seoKeywords?: string[];
   era?: string;
-  origin?: string;
   year?: string;
   artist?: string;
   medium?: string;
@@ -45,7 +44,6 @@ interface IngestPayload {
     confidence: string;
     notes?: string;
   };
-  source?: string;
 }
 
 // Generate URL-safe slug from title
@@ -87,6 +85,39 @@ function validatePayload(data: unknown): { valid: boolean; errors: string[] } {
   return { valid: errors.length === 0, errors };
 }
 
+// Validate SKU format: KOL-YYYY-NNNN
+function validateSkuFormat(sku: string): { valid: boolean; error?: string } {
+  const SKU_PATTERN = /^KOL-20[2-9][0-9]-[0-9]{4}$/;
+  
+  if (!SKU_PATTERN.test(sku)) {
+    return {
+      valid: false,
+      error: `Invalid SKU format: "${sku}". Expected format: KOL-YYYY-NNNN (e.g., KOL-2026-0001)`
+    };
+  }
+  
+  // Additional semantic validation
+  const parts = sku.split('-');
+  const yearPart = parts[1];
+  if (!yearPart) {
+    return {
+      valid: false,
+      error: `Invalid SKU format: "${sku}". Missing year component`
+    };
+  }
+  const year = parseInt(yearPart, 10);
+  const currentYear = new Date().getFullYear();
+  
+  if (year > currentYear + 1) {
+    return {
+      valid: false,
+      error: `SKU year ${year} is too far in the future. Maximum allowed: ${currentYear + 1}`
+    };
+  }
+  
+  return { valid: true };
+}
+
 export async function POST(request: NextRequest) {
   try {
     // =========================================
@@ -120,6 +151,22 @@ export async function POST(request: NextRequest) {
     if (!validation.valid) {
       return NextResponse.json(
         { error: 'Validation failed', details: validation.errors },
+        { status: 400 }
+      );
+    }
+
+    // =========================================
+    // 2b. Validate SKU format
+    // =========================================
+    const skuValidation = validateSkuFormat(payload.sku);
+    if (!skuValidation.valid) {
+      return NextResponse.json(
+        {
+          error: 'Invalid SKU format',
+          message: skuValidation.error,
+          expectedFormat: 'KOL-YYYY-NNNN',
+          examples: ['KOL-2026-0001', 'KOL-2025-0042']
+        },
         { status: 400 }
       );
     }
