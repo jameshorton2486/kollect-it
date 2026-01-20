@@ -12,8 +12,8 @@ if [ -n "$ROOT_MD" ]; then
   exit 1
 fi
 
-# Block scratch / temp files
-SCRATCH=$(git diff --cached --name-only | grep -E '(scratch|draft|notes|temp|_notes|_draft|_scratch)' | grep -v 'work_files/' || true)
+# Block scratch / temp files (but allow legitimate template JSON files)
+SCRATCH=$(git diff --cached --name-only | grep -E '(scratch|draft|notes|temp|_notes|_draft|_scratch)' | grep -v 'work_files/' | grep -v 'product-application/desktop-app/templates/.*\.json$' || true)
 if [ -n "$SCRATCH" ]; then
   echo "❌ ERROR: Scratch or draft files detected."
   echo "$SCRATCH"

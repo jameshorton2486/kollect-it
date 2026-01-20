@@ -155,7 +155,8 @@ export function createCursorPagination<T extends { id: string }>(
 ): CursorPaginationResult<T> {
   const hasMore = data.length > limit;
   const items = hasMore ? data.slice(0, limit) : data;
-  const nextCursor = hasMore ? items[items.length - 1].id : null;
+  const lastItem = items[items.length - 1];
+  const nextCursor = hasMore && lastItem ? lastItem.id : null;
 
   return {
     data: items,

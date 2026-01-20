@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /admin
-Disallow: /api
-
-Host: https://kollect-it.com
-Sitemap: https://kollect-it.com/sitemap.xml

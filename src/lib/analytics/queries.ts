@@ -157,8 +157,11 @@ export async function getPricingAnalysis(
     }
     // Mock deviation calculation
     const deviation = Math.random() * 10; // 0-10%
-    categoryDeviations[product.aiCategory].deviations.push(deviation);
-    categoryDeviations[product.aiCategory].count++;
+    const categoryData = categoryDeviations[product.aiCategory];
+    if (categoryData) {
+      categoryData.deviations.push(deviation);
+      categoryData.count++;
+    }
   });
 
   const categoriesByDeviation = Object.entries(categoryDeviations).map(
@@ -272,7 +275,7 @@ export async function getProductPerformance(
     .map((cat) => ({
       category: cat.name,
       growthRate: Math.random() * 20 - 5, // Mock: -5% to +15%
-      productCount: categoryMetrics[cat.name].count,
+      productCount: categoryMetrics[cat.name]?.count ?? 0,
     }));
 
   return {
@@ -386,13 +389,16 @@ export async function getApprovalTrends(
       },
     });
 
-    trends.push({
-      date: date.toISOString().split("T")[0],
-      approvalsCount,
-      rejectionsCount,
-      averageConfidence: 75 + Math.random() * 20, // Mock
-      averagePrice: 500 + Math.random() * 1000, // Mock
-    });
+    const dateStr = date.toISOString().split("T")[0];
+    if (dateStr) {
+      trends.push({
+        date: dateStr,
+        approvalsCount,
+        rejectionsCount,
+        averageConfidence: 75 + Math.random() * 20, // Mock
+        averagePrice: 500 + Math.random() * 1000, // Mock
+      });
+    }
   }
 
   return trends;
@@ -796,7 +802,10 @@ export async function getAnalyticsSummary(
   ]);
 
   return {
-    dateRange: { startDate, endDate },
+    dateRange: { 
+      startDate: startDate || "", 
+      endDate: endDate || "" 
+    },
     approvalMetrics,
     pricingAnalysis,
     productPerformance,

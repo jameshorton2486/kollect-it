@@ -40,6 +40,7 @@ export default function HeroBanner({ banners }: HeroBannerProps) {
   if (banners.length === 0) return null;
 
   const currentBanner = banners[currentIndex];
+  if (!currentBanner) return null;
 
   return (
     <section className="relative h-[500px] bg-lux-gray-light">

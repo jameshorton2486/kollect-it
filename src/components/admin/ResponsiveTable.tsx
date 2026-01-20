@@ -58,7 +58,7 @@ export function ResponsiveTable({
     <>
       {/* Desktop Table */}
       <div className="hidden md:block overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-border-200">
           <thead className="bg-surface-50">
             <tr>
               {columns.map((column) => (
@@ -83,7 +83,7 @@ export function ResponsiveTable({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-surface-0 divide-y divide-gray-200">
+          <tbody className="bg-surface-0 divide-y divide-border-200">
             {sortedData.map((row) => (
               <tr
                 key={row[keyField]}

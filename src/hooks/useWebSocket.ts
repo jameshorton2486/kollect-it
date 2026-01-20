@@ -38,7 +38,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
       );
 
       newSocket.on("connect", () => {
-        console.log("WebSocket connected");
+        if (process.env.NODE_ENV === "development") {
+          console.log("WebSocket connected");
+        }
         setConnected(true);
         setError(null);
 
@@ -55,7 +57,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
       });
 
       newSocket.on("disconnect", () => {
-        console.log("WebSocket disconnected");
+        if (process.env.NODE_ENV === "development") {
+          console.log("WebSocket disconnected");
+        }
         setConnected(false);
       });
 

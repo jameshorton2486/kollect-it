@@ -49,8 +49,34 @@ export default async function HomePage() {
     category: product.category ? { name: product.category.name, slug: product.category.slug } : null,
   }));
 
+  // Organization schema for SEO
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Kollect-It",
+    url: "https://kollect-it.com",
+    logo: "https://kollect-it.com/logo.png",
+    description: "Curated marketplace for fine antiques, rare books, collectibles, and militaria.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "San Antonio",
+      addressRegion: "TX",
+      addressCountry: "US",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+1-469-386-6065",
+      contactType: "customer service",
+      email: "info@kollect-it.com",
+    },
+  };
+
   return (
     <main role="main" className="bg-lux-pearl">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
       {/* Section 1: Hero */}
       <Hero />
       

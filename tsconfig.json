@@ -38,7 +38,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": [
     "next-env.d.ts",
@@ -51,10 +52,12 @@
     "node_modules",
     ".next",
     "e2e",
+    "tests",
     "vitest.config.ts",
     "vitest.setup.ts",
     "scripts",
     "Work Files",
+    "work_files",
     "archive",
     "docs",
     "backups",

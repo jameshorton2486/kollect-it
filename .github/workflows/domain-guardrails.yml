@@ -57,3 +57,17 @@ jobs:
             echo "$SKU_REGEX"
             exit 1
           fi
+
+      # ─────────────────────────────
+      # MERGE CONFLICT GUARDS
+      # ─────────────────────────────
+
+      - name: Block merge conflict markers
+        run: |
+          CONFLICTS=$(git grep -E '<<<<<<<|=======|>>>>>>>' -- ':!**/*.md' ':!.github/**' ':!archive/**' ':!docs/**' ':!work_files/**' || true)
+          if [ -n "$CONFLICTS" ]; then
+            echo "❌ Merge conflict markers detected:"
+            echo "$CONFLICTS"
+            exit 1
+          fi
+          echo "✅ No merge conflict markers found"

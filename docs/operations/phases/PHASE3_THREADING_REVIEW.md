@@ -132,4 +132,4 @@ Unlike desktop applications, web applications have different concurrency models:
 - UI freeze risks assessed (all Low)
 - No fixes required
 - Documentation created</content>
-<parameter name="filePath">c:\Users\james\kollect-it-marketplace-1\PHASE3_THREADING_REVIEW.md
+<parameter name="filePath">c:\Users\james\kollect-it\PHASE3_THREADING_REVIEW.md

@@ -5,7 +5,7 @@ export default function Testimonials() {
       author: "Margaret",
       title: "Collector",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-1.jpg",
+      image: "https://ik.imagekit.io/kollectit/testimonial-1.jpg?tr=w-400",
     },
     {
       quote:
@@ -13,14 +13,14 @@ export default function Testimonials() {
       author: "Luis",
       title: "Estate Buyer",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-2.jpg",
+      image: "https://ik.imagekit.io/kollectit/testimonial-2.jpg?tr=w-400",
     },
     {
       quote: "Professional shipping, wonderful experience.",
       author: "Michiko",
       title: "Interior Designer",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-3.jpg",
+      image: "https://ik.imagekit.io/kollectit/testimonial-3.jpg?tr=w-400",
     },
     {
       quote:
@@ -28,7 +28,7 @@ export default function Testimonials() {
       author: "James",
       title: "Private Collector",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-4.jpg",
+      image: "https://ik.imagekit.io/kollectit/testimonial-4.jpg?tr=w-400",
     },
   ];
 

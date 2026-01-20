@@ -216,8 +216,14 @@ export async function POST(request: NextRequest) {
     let skuNumber: number | null = null;
 
     if (skuParts.length >= 3) {
-      skuYear = parseInt(skuParts[1], 10) || null;
-      skuNumber = parseInt(skuParts[2], 10) || null;
+      const yearPart = skuParts[1];
+      const numberPart = skuParts[2];
+      if (yearPart) {
+        skuYear = parseInt(yearPart, 10) || null;
+      }
+      if (numberPart) {
+        skuNumber = parseInt(numberPart, 10) || null;
+      }
     }
 
     // =========================================

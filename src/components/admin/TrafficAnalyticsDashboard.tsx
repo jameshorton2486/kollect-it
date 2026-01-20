@@ -419,11 +419,12 @@ export function TrafficAnalyticsDashboard() {
         </h3>
         <div className="space-y-4">
           {metrics.conversions.funnelSteps.map((step, index) => {
+            const firstStep = metrics.conversions.funnelSteps[0];
             const percentage =
-              index === 0
+              index === 0 || !firstStep
                 ? 100
                 : Math.round(
-                    (step.users / metrics.conversions.funnelSteps[0].users) *
+                    (step.users / firstStep.users) *
                       100,
                   );
             return (

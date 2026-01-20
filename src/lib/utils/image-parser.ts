@@ -134,7 +134,7 @@ export function parseImageMetadata(filename: string | null | undefined): {
 function extractNumber(filename: string | null | undefined): number {
   if (!filename) return 0;
   const match = filename.match(/(\d+)/);
-  return match ? parseInt(match[1], 10) : 0;
+  return match && match[1] ? parseInt(match[1], 10) : 0;
 }
 
 /**
@@ -163,8 +163,17 @@ export function validateSKU(sku: string | null | undefined): {
     };
   }
 
-  const year = parseInt(match[1], 10);
-  const number = parseInt(match[2], 10);
+  const yearStr = match[1];
+  const numberStr = match[2];
+  if (!yearStr || !numberStr) {
+    return {
+      valid: false,
+      error: "Invalid SKU format",
+    };
+  }
+  
+  const year = parseInt(yearStr, 10);
+  const number = parseInt(numberStr, 10);
 
   const currentYear = new Date().getFullYear();
   if (year < 2020 || year > currentYear + 1) {
