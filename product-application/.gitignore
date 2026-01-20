@@ -1,0 +1,100 @@
+# ==========================
+# Dependencies & Libraries
+# ==========================
+node_modules/
+# Ignore npm lock file (using Bun)
+package-lock.json
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# ==========================
+# Framework Builds
+# ==========================
+# Next.js
+.next/
+.vercel
+
+# TypeScript
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# ==========================
+# Environment & Secrets
+# ==========================
+# Local env files
+.env
+.env.local
+.env.production
+.env.production.local
+.env.production.check
+.env.*.local
+
+# Credentials
+credentials/
+token.json
+desktop-app/certs/
+
+# ==========================
+# IDE & Editor Configuration
+# ==========================
+.idea/
+.vscode/
+*.code-workspace
+
+# ==========================
+# OS & System Files
+# ==========================
+Thumbs.db
+.DS_Store
+
+# ==========================
+# Logs & Debugging
+# ==========================
+logs/
+*.log
+
+# ==========================
+# Backups, Temp & Archives
+# ==========================
+*.bak
+*.backup
+*.old
+*.tmp
+*.disabled
+*~
+*.zip
+
+# ==========================
+# Local Work Artifacts
+# ==========================
+work_files/
+desktop-app/processed/**/*.webp
+desktop-app/temp/**/*.webp
+
+# Ignore user-specific config files (store only examples in repo)
+desktop-app/config/config.json
+desktop-app/config/sku_state.json
+
+# Config files with user data (don't commit secrets)
+desktop-app/config/config.json
+desktop-app/config/sku_state.json
+desktop-app/config/user_preferences.json
+
+# Logs
+desktop-app/logs/*.log
+
+desktop-app/processed/
+desktop-app/temp/
+config/config.json
+config/sku_state.json
+config/user_preferences.json
+
+# User-specific config files
+config/config.json
+config/sku_state.json
+config/user_preferences.json
+
+/output/

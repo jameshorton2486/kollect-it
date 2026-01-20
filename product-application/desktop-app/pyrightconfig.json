@@ -1,0 +1,11 @@
+{
+  "include": ["*.py", "modules/*.py"],
+  "exclude": ["**/__pycache__", ".venv"],
+  "reportOptionalMemberAccess": false,
+  "reportOptionalCall": false,
+  "reportOptionalSubscript": false,
+  "reportArgumentType": false,
+  "reportCallIssue": false,
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "off"
+}
