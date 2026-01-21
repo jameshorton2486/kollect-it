@@ -1,0 +1,5 @@
+.vercel
+config/.env.secrets
+config/.env.*
+*.secrets
+logs/
