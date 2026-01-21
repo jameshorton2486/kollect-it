@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminAuth } from "@/lib/auth-admin";
-import { formatSKU, validateSKU } from "@/lib/utils/image-parser";
+import { formatSKU } from "@/lib/utils/image-parser";
 
 interface BulkApproveRequest {
   productIds: string[];
@@ -63,6 +63,14 @@ export async function POST(request: NextRequest) {
       categories.map((c) => [c.name.toLowerCase(), c.id]),
     );
 
+    // Get starting SKU number for this year
+    const bulkYear = new Date().getFullYear();
+    const maxSku = await prisma.product.aggregate({
+      _max: { skuNumber: true },
+      where: { skuYear: bulkYear }
+    });
+    let nextSkuNumber = (maxSku._max.skuNumber || 0) + 1;
+
     // Process each product
     for (const aiProduct of aiProducts) {
       try {
@@ -100,35 +108,14 @@ export async function POST(request: NextRequest) {
           Math.random().toString(36).substring(7);
 
         // Generate SKU using centralized format (SKU-YYYY-XXX)
-        const year = new Date().getFullYear();
-        
-        // Get max SKU number for this year, accounting for products already processed in this batch
-        const maxSku = await prisma.product.aggregate({
-          _max: { skuNumber: true },
-          where: { skuYear: year }
-        });
-        const skuNumber = (maxSku._max.skuNumber || 0) + results.approved + 1;
-        const sku = formatSKU(year, skuNumber);
-
-        // Validate SKU format
-        const skuValidation = validateSKU(sku);
-        if (!skuValidation.valid) {
-          throw new Error(`Invalid SKU format: ${skuValidation.error}`);
-        }
-
-        // Check SKU uniqueness
-        const existingSKU = await prisma.product.findUnique({
-          where: { sku },
-        });
-        if (existingSKU) {
-          throw new Error(`SKU ${sku} already exists`);
-        }
+        const skuNumber = nextSkuNumber++;
+        const sku = formatSKU(bulkYear, skuNumber);
 
         // Create product
         const product = await prisma.product.create({
           data: {
             sku: sku,
-            skuYear: year,
+            skuYear: bulkYear,
             skuNumber: skuNumber,
             title: aiProduct.aiTitle,
             slug,

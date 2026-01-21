@@ -95,6 +95,8 @@ model Product {
   appraisalDocUrl     String?              @map("appraisal_doc_url")
   provenanceDocUrl    String?              @map("provenance_doc_url")
   productNotes        String?
+  origin              String?
+  source              String?
   sku                 String               @unique
   skuNumber           Int?
   skuYear             Int?

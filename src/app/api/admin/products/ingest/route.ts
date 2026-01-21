@@ -34,6 +34,8 @@ interface IngestPayload {
   period?: string;
   rarity?: string;
   productNotes?: string;
+  origin?: string;
+  source?: string;
   aiAnalysis?: Record<string, unknown>;
   priceConfidence?: number;
   pricingReasoning?: string;
@@ -306,6 +308,8 @@ export async function POST(request: NextRequest) {
         period: payload.period || payload.era || null,
         rarity: payload.rarity || null,
         productNotes: payload.productNotes || null,
+        origin: payload.origin || null,
+        source: payload.source || null,
         seoTitle: payload.seoTitle || payload.title,
         seoDescription: payload.seoDescription || payload.description.substring(0, 160),
         keywords: payload.seoKeywords || [],

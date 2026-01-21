@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkAdminAuth } from "@/lib/auth-helpers";
+import { formatSKU } from "@/lib/utils/image-parser";
 import { Prisma } from "@prisma/client";
 import { logger } from "@/lib/logger";
 import { getRequestId } from "@/lib/request-context";
@@ -8,7 +9,6 @@ import { respondError } from "@/lib/api-error";
 import { rateLimiters } from "@/lib/rate-limit";
 import { applySecurityHeaders } from "@/lib/security";
 import { cache, cacheKeys, cacheTTL } from "@/lib/cache";
-import { formatSKU, validateSKU } from "@/lib/utils/image-parser";
 
 // GET /api/products - Get all products
 export async function GET(request: NextRequest) {
@@ -130,34 +130,12 @@ export async function POST(request: NextRequest) {
 
     // Generate SKU using centralized format (SKU-YYYY-XXX)
     const skuYear = new Date().getFullYear();
-    
-    // Get max SKU number for this year to ensure uniqueness
     const maxSku = await prisma.product.aggregate({
       _max: { skuNumber: true },
       where: { skuYear: skuYear }
     });
     const skuNumber = (maxSku._max.skuNumber || 0) + 1;
     const sku = formatSKU(skuYear, skuNumber);
-
-    // Validate SKU format
-    const skuValidation = validateSKU(sku);
-    if (!skuValidation.valid) {
-      return NextResponse.json(
-        { error: skuValidation.error },
-        { status: 400 }
-      );
-    }
-
-    // Check SKU uniqueness
-    const existingSKU = await prisma.product.findUnique({
-      where: { sku },
-    });
-    if (existingSKU) {
-      return NextResponse.json(
-        { error: `SKU ${sku} already exists` },
-        { status: 400 }
-      );
-    }
 
     const product = await prisma.product.create({
       data: {

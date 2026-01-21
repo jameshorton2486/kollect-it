@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminAuth } from "@/lib/auth-admin";
-import { formatSKU, validateSKU } from "@/lib/utils/image-parser";
+import { formatSKU } from "@/lib/utils/image-parser";
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,34 +64,12 @@ export async function POST(request: NextRequest) {
 
     // Generate SKU using centralized format (SKU-YYYY-XXX)
     const year = new Date().getFullYear();
-    
-    // Get max SKU number for this year to ensure uniqueness
     const maxSku = await prisma.product.aggregate({
       _max: { skuNumber: true },
       where: { skuYear: year }
     });
     const skuNumber = (maxSku._max.skuNumber || 0) + 1;
     const sku = formatSKU(year, skuNumber);
-
-    // Validate SKU format
-    const skuValidation = validateSKU(sku);
-    if (!skuValidation.valid) {
-      return NextResponse.json(
-        { error: skuValidation.error },
-        { status: 400 }
-      );
-    }
-
-    // Check SKU uniqueness
-    const existingSKU = await prisma.product.findUnique({
-      where: { sku },
-    });
-    if (existingSKU) {
-      return NextResponse.json(
-        { error: `SKU ${sku} already exists` },
-        { status: 400 }
-      );
-    }
 
     const product = await prisma.product.create({
       data: {
