@@ -14,20 +14,19 @@
 |----------|---------------|-------------|--------|
 | `/api/admin/products/ingest` | ✅ `validateSkuFormat()` | `KOL-YYYY-NNNN` | ✅ **SAFE** |
 | `/api/admin/products/create` | ✅ `validateSKU()` | `SKU-YYYY-XXX` | ✅ **SAFE** |
-| `/api/products` | ❌ **NONE** | `YYYY-XXXXX` (legacy) | ❌ **MUST FIX** |
-| `/api/admin/products/approve` | ❌ **NONE** | `YYYY-XXXXX` (legacy) | ❌ **MUST FIX** |
-| `/api/admin/products/bulk-approve` | ❌ **NONE** | `YYYY-XXXXX` (legacy) | ❌ **MUST FIX** |
+| `/api/products` | ✅ `validateSKU()` + `formatSKU()` | `SKU-YYYY-XXX` | ✅ **FIXED** |
+| `/api/admin/products/approve` | ✅ `validateSKU()` + `formatSKU()` | `SKU-YYYY-XXX` | ✅ **FIXED** |
+| `/api/admin/products/bulk-approve` | ✅ `validateSKU()` + `formatSKU()` | `SKU-YYYY-XXX` | ✅ **FIXED** |
 
 ### Critical Issues Found
 
-**Issue 1: Legacy SKU Format in 3 Endpoints**
-- **Files:**
-  - `src/app/api/products/route.ts` (line 130-133)
-  - `src/app/api/admin/products/approve/route.ts` (line 64-67)
-  - `src/app/api/admin/products/bulk-approve/route.ts` (line 101-104)
-- **Problem:** These endpoints generate SKUs in `YYYY-XXXXX` format without validation
-- **Risk:** SKU collisions, format inconsistency, data integrity issues
-- **Fix Required:** Add `validateSKU()` or `formatSKU()` calls before product creation
+**Issue 1: Legacy SKU Format in 3 Endpoints** ✅ **RESOLVED**
+- **Files Fixed:**
+  - `src/app/api/products/route.ts` - Now uses `formatSKU()` and `validateSKU()`
+  - `src/app/api/admin/products/approve/route.ts` - Now uses `formatSKU()` and `validateSKU()`
+  - `src/app/api/admin/products/bulk-approve/route.ts` - Now uses `formatSKU()` and `validateSKU()`
+- **Solution:** All endpoints now generate `SKU-YYYY-XXX` format with validation and uniqueness checks
+- **Status:** ✅ All product creation paths now enforce SKU validation
 
 **Issue 2: SKU Format Inconsistency**
 - Ingest route expects: `KOL-YYYY-NNNN` (4 digits)
@@ -37,8 +36,10 @@
 
 ### Recommendations
 
-1. **Immediate (Blocking):** Add SKU validation to 3 legacy endpoints
+1. ~~**Immediate (Blocking):** Add SKU validation to 3 legacy endpoints~~ ✅ **COMPLETED**
 2. **Short-term:** Standardize SKU format across all endpoints
+   - **Note:** Ingest route uses `KOL-YYYY-NNNN`, other routes use `SKU-YYYY-XXX`
+   - **Action:** Decide on single canonical format (recommend standardizing to one)
 3. **Long-term:** Deprecate `/api/products` endpoint if unused
 
 ---
@@ -108,14 +109,16 @@ The user's prompt mentioned "Product schema includes origin and source fields" b
 - Stripe integration (no schema conflicts)
 - Origin/source fields (don't exist, no issues)
 
-### ❌ Must Fix Before Launch
+### ✅ Previously Identified Issues - NOW FIXED
 
-1. **Add SKU validation to 3 legacy endpoints:**
-   - `src/app/api/products/route.ts`
-   - `src/app/api/admin/products/approve/route.ts`
-   - `src/app/api/admin/products/bulk-approve/route.ts`
+1. ~~**Add SKU validation to 3 legacy endpoints**~~ ✅ **COMPLETED**
+   - All endpoints now use `formatSKU()` and `validateSKU()`
+   - SKU uniqueness checks added
+   - Sequential SKU generation implemented
 
-2. **Standardize SKU format** (recommend `KOL-YYYY-NNNN` to match ingest)
+2. **Standardize SKU format** (Future enhancement)
+   - **Current State:** Ingest uses `KOL-YYYY-NNNN`, others use `SKU-YYYY-XXX`
+   - **Recommendation:** Standardize on one format (non-blocking for launch)
 
 ### ⚠️ Needs Manual Verification
 
