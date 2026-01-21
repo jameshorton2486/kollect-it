@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminAuth } from "@/lib/auth-admin";
+import { formatSKU, validateSKU } from "@/lib/utils/image-parser";
 
 export async function POST(request: NextRequest) {
   try {
@@ -61,16 +62,42 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    // Generate SKU: YYYY-XXXXX format (year + 5 digit random)
+    // Generate SKU using centralized format (SKU-YYYY-XXX)
     const year = new Date().getFullYear();
-    const randomNum = Math.floor(10000 + Math.random() * 90000);
-    const sku = `${year}-${randomNum}`;
+    
+    // Get max SKU number for this year to ensure uniqueness
+    const maxSku = await prisma.product.aggregate({
+      _max: { skuNumber: true },
+      where: { skuYear: year }
+    });
+    const skuNumber = (maxSku._max.skuNumber || 0) + 1;
+    const sku = formatSKU(year, skuNumber);
+
+    // Validate SKU format
+    const skuValidation = validateSKU(sku);
+    if (!skuValidation.valid) {
+      return NextResponse.json(
+        { error: skuValidation.error },
+        { status: 400 }
+      );
+    }
+
+    // Check SKU uniqueness
+    const existingSKU = await prisma.product.findUnique({
+      where: { sku },
+    });
+    if (existingSKU) {
+      return NextResponse.json(
+        { error: `SKU ${sku} already exists` },
+        { status: 400 }
+      );
+    }
 
     const product = await prisma.product.create({
       data: {
         sku: sku,
         skuYear: year,
-        skuNumber: randomNum,
+        skuNumber: skuNumber,
         title: aiProduct.aiTitle,
         slug: slug + "-" + Math.random().toString(36).substring(7),
         description: aiProduct.aiDescription,

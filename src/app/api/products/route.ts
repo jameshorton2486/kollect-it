@@ -8,6 +8,7 @@ import { respondError } from "@/lib/api-error";
 import { rateLimiters } from "@/lib/rate-limit";
 import { applySecurityHeaders } from "@/lib/security";
 import { cache, cacheKeys, cacheTTL } from "@/lib/cache";
+import { formatSKU, validateSKU } from "@/lib/utils/image-parser";
 
 // GET /api/products - Get all products
 export async function GET(request: NextRequest) {
@@ -127,10 +128,36 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-    // Generate SKU: YYYY-XXXXX format (year + 5 digit random)
+    // Generate SKU using centralized format (SKU-YYYY-XXX)
     const skuYear = new Date().getFullYear();
-    const skuNumber = Math.floor(10000 + Math.random() * 90000);
-    const sku = `${skuYear}-${skuNumber}`;
+    
+    // Get max SKU number for this year to ensure uniqueness
+    const maxSku = await prisma.product.aggregate({
+      _max: { skuNumber: true },
+      where: { skuYear: skuYear }
+    });
+    const skuNumber = (maxSku._max.skuNumber || 0) + 1;
+    const sku = formatSKU(skuYear, skuNumber);
+
+    // Validate SKU format
+    const skuValidation = validateSKU(sku);
+    if (!skuValidation.valid) {
+      return NextResponse.json(
+        { error: skuValidation.error },
+        { status: 400 }
+      );
+    }
+
+    // Check SKU uniqueness
+    const existingSKU = await prisma.product.findUnique({
+      where: { sku },
+    });
+    if (existingSKU) {
+      return NextResponse.json(
+        { error: `SKU ${sku} already exists` },
+        { status: 400 }
+      );
+    }
 
     const product = await prisma.product.create({
       data: {
