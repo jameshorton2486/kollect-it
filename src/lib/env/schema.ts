@@ -47,10 +47,10 @@ export const serverEnvSchema = z.object({
   // Email
   RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
 
-  // Internal Services
-  SERVICE_API_KEY: z
+  // Internal Services (Desktop App API Auth)
+  PRODUCT_INGEST_API_KEY: z
     .string()
-    .min(16, 'SERVICE_API_KEY must be at least 16 characters'),
+    .min(16, 'PRODUCT_INGEST_API_KEY must be at least 16 characters'),
 
   // Optional
   NODE_ENV: z
@@ -92,5 +92,5 @@ export const SERVER_ONLY_VAR_NAMES = [
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
   'RESEND_API_KEY',
-  'SERVICE_API_KEY',
+  'PRODUCT_INGEST_API_KEY',
 ] as const;
