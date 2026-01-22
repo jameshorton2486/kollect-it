@@ -110,6 +110,9 @@ except Exception:
 # Use centralized environment loader
 from modules.env_loader import get_required_env, get_env
 
+# Import conservative valuation prompts
+from modules.valuation_prompt import VALUATION_SYSTEM_PROMPT, DESCRIPTION_SYSTEM_PROMPT
+
 # Try to import Anthropic SDK
 try:
     from anthropic import Anthropic
@@ -493,7 +496,8 @@ Return a JSON object with ALL of these fields filled in:
         "low": estimated_low_price_usd,
         "high": estimated_high_price_usd,
         "recommended": recommended_listing_price,
-        "confidence": "Low/Medium/High"
+        "confidence": "Tier 1 / Tier 2 / Tier 3",
+        "notes": "Brief justification - if over $500, must cite evidence"
     }}
 }}
 
@@ -504,9 +508,8 @@ Choose the most appropriate category and subcategory from the provided list."""
         
         messages = [{"role": "user", "content": content}]
         
-        system = """You are an expert antiques and collectibles appraiser with decades of experience.
-Analyze images carefully and provide accurate, detailed information for product listings.
-Always respond with valid JSON only, no additional text or markdown formatting."""
+        # Use conservative description system prompt for field suggestions
+        system = DESCRIPTION_SYSTEM_PROMPT
         
         result = self._make_api_request(messages, system)
         
@@ -624,8 +627,8 @@ Return a JSON object with:
         "low": conservative_estimate_usd,
         "high": optimistic_estimate_usd,
         "recommended": recommended_listing_price,
-        "confidence": "Low/Medium/High",
-        "notes": "Brief pricing rationale"
+        "confidence": "Tier 1 (Verified Market) / Tier 2 (Strong Analog) / Tier 3 (Speculative)",
+        "notes": "Brief pricing rationale - if over $500, must cite evidence (auction comps, rarity, etc.)"
     }}
 }}
 
@@ -634,10 +637,8 @@ Respond with valid JSON only."""
         content.append({"type": "text", "text": prompt})
         messages = [{"role": "user", "content": content}]
         
-        system = f"""You are an expert antiques dealer with 30 years experience in {category}.
-Write compelling, accurate descriptions that highlight key features and appeal to collectors.
-Your descriptions are SEO-optimized and professional.
-Always respond with valid JSON only."""
+        # Use conservative description system prompt
+        system = DESCRIPTION_SYSTEM_PROMPT
         
         result = self._make_api_request(messages, system)
         
@@ -655,60 +656,101 @@ Always respond with valid JSON only."""
         product_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """
-        Generate price research and valuation.
+        Generate price research and valuation using conservative, evidence-based methodology.
+        
+        Uses the authoritative VALUATION_SYSTEM_PROMPT to enforce:
+        - Conservative pricing (no $500+ without evidence)
+        - Confidence tiers (Tier 1/2/3)
+        - Market evidence requirements
+        - Legal and reputational safety
         
         Args:
             product_data: Product information dictionary
             
         Returns:
-            Dictionary with valuation range and notes
+            Dictionary with valuation range, confidence tier, and justification
         """
         content = []
         
-        # Add images
+        # Add images (up to 5 for better context)
         images = product_data.get("images", [])
-        for img_path in images[:3]:
+        for img_path in images[:5]:
             img_data = self._encode_image(img_path)
             if img_data:
                 content.append(img_data)
         
-        prompt = f"""Provide a market valuation for this collectible item.
+        # Build comprehensive prompt with all available data
+        user_notes = product_data.get("notes", "")
+        known_sales = product_data.get("known_sales", "")
+        provenance = product_data.get("provenance", "")
+        
+        prompt = f"""Analyze this collectible item and provide a conservative, evidence-based valuation.
 
-Item Details:
+ITEM DETAILS:
 - Title: {product_data.get('title', 'Unknown')}
 - Category: {product_data.get('category', 'Unknown')}
 - Condition: {product_data.get('condition', 'Unknown')}
-- Era: {product_data.get('era', 'Unknown')}
+- Era/Period: {product_data.get('era', 'Unknown')}
+- Origin: {product_data.get('origin', 'Unknown')}
 - Description: {product_data.get('description', 'Not provided')[:500]}
 
-Return JSON:
+ADDITIONAL INFORMATION:
+{f"- User Notes: {user_notes}" if user_notes else ""}
+{f"- Known Sales: {known_sales}" if known_sales else ""}
+{f"- Provenance: {provenance}" if provenance else ""}
+
+REQUIRED OUTPUT (JSON format):
 {{
-    "low": minimum_reasonable_price_usd,
-    "high": maximum_reasonable_price_usd,
-    "recommended": suggested_listing_price,
-    "confidence": "Low/Medium/High",
-    "notes": "Brief market analysis",
-    "comparable_sales": "Reference to similar items if known",
+    "item_description": "Clear, factual, professional description (2-3 paragraphs)",
+    "condition_assessment": "Honest assessment of wear, repairs, losses, or uncertainty",
+    "market_evidence": "List known auction comps OR state 'No confirmed comps found'. If analogs used, explain relevance.",
+    "confidence_tier": "Tier 1 (Verified Market) / Tier 2 (Strong Analog) / Tier 3 (Speculative)",
+    "valuation_range": {{
+        "low": minimum_conservative_price_usd,
+        "high": maximum_conservative_price_usd,
+        "recommended": recommended_listing_price_usd
+    }},
+    "valuation_justification": "Short explanation tying evidence to value. If speculative, state assumptions clearly.",
+    "comparable_sales": "Reference to similar items if known, or 'None found'",
     "market_demand": "cold/moderate/hot",
-    "factors": ["factors", "affecting", "value"]
+    "factors": ["key", "factors", "affecting", "value"]
 }}
 
-Respond with valid JSON only."""
+CRITICAL RULES:
+- If value exceeds $500, you MUST justify with: auction comps, rarity, institutional demand, or provenance
+- Default to lower confidence tier if evidence is weak
+- Use auction prices, NOT retail asking prices
+- Be conservative - prefer being correct over optimistic
+
+Respond with valid JSON only, no markdown formatting."""
 
         content.append({"type": "text", "text": prompt})
         messages = [{"role": "user", "content": content}]
         
-        system = """You are an expert antiques appraiser providing market valuations.
-Base estimates on current market conditions for similar items.
-Be conservative but realistic. Always respond with valid JSON only."""
-        
-        result = self._make_api_request(messages, system)
+        # Use the authoritative conservative valuation system prompt
+        result = self._make_api_request(messages, VALUATION_SYSTEM_PROMPT)
         
         if result and result.get("success"):
             parsed = self._parse_json_response(result.get("text", ""))
             if parsed:
-                logger.info("Valuation generated successfully")
-                return parsed
+                # Normalize response format for backward compatibility
+                normalized = {
+                    "low": parsed.get("valuation_range", {}).get("low", parsed.get("low", 0)),
+                    "high": parsed.get("valuation_range", {}).get("high", parsed.get("high", 0)),
+                    "recommended": parsed.get("valuation_range", {}).get("recommended", parsed.get("recommended", 0)),
+                    "confidence": parsed.get("confidence_tier", parsed.get("confidence", "Medium")),
+                    "notes": parsed.get("valuation_justification", parsed.get("notes", "")),
+                    "comparable_sales": parsed.get("comparable_sales", ""),
+                    "market_demand": parsed.get("market_demand", "moderate"),
+                    "factors": parsed.get("factors", []),
+                    # Include full structured response
+                    "item_description": parsed.get("item_description", ""),
+                    "condition_assessment": parsed.get("condition_assessment", ""),
+                    "market_evidence": parsed.get("market_evidence", ""),
+                    "confidence_tier": parsed.get("confidence_tier", "Tier 3")
+                }
+                logger.info(f"Valuation generated: ${normalized['low']}-${normalized['high']}, {normalized['confidence_tier']}")
+                return normalized
         
         logger.warning("Valuation generation failed")
         return None
