@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkAdminAuth } from "@/lib/auth-helpers";
-import { formatSKU } from "@/lib/utils/image-parser";
+import { validateSKU, formatSKU as formatSkuNew } from "@/lib/sku-validation";
 import { Prisma } from "@prisma/client";
 import { logger } from "@/lib/logger";
 import { getRequestId } from "@/lib/request-context";
@@ -43,8 +43,13 @@ export async function GET(request: NextRequest) {
       return applySecurityHeaders(response);
     }
 
+    // =================================================================
+    // CRITICAL FIX: Filter out draft products from public listings
+    // Defense-in-depth: check both status AND isDraft
+    // =================================================================
     const where: Prisma.ProductWhereInput = {
       status: "active",
+      isDraft: false,  // <-- ADDED: Explicit draft exclusion
     };
 
     if (category) {
@@ -120,6 +125,8 @@ export async function POST(request: NextRequest) {
       period,
       featured,
       images,
+      sku: providedSku,  // Allow admin to provide SKU
+      categoryPrefix,    // Allow admin to specify category prefix
     } = body;
 
     // Generate slug from title
@@ -128,14 +135,41 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-    // Generate SKU using centralized format (SKU-YYYY-XXX)
-    const skuYear = new Date().getFullYear();
-    const maxSku = await prisma.product.aggregate({
-      _max: { skuNumber: true },
-      where: { skuYear: skuYear }
-    });
-    const skuNumber = (maxSku._max.skuNumber || 0) + 1;
-    const sku = formatSKU(skuYear, skuNumber);
+    // =================================================================
+    // SKU GENERATION - Use unified format (PREFIX-YYYY-NNNN)
+    // =================================================================
+    let sku: string;
+    let skuYear: number;
+    let skuNumber: number;
+
+    if (providedSku) {
+      // Validate provided SKU
+      const validation = validateSKU(providedSku);
+      if (!validation.valid) {
+        return NextResponse.json(
+          { error: validation.error },
+          { status: 400 }
+        );
+      }
+      sku = validation.parsed!.formatted;
+      skuYear = validation.parsed!.year;
+      skuNumber = validation.parsed!.sequence;
+    } else {
+      // Generate new SKU
+      skuYear = new Date().getFullYear();
+      const prefix = categoryPrefix || 'KOL';
+      
+      // Find max SKU number for this prefix and year
+      const maxSku = await prisma.product.aggregate({
+        _max: { skuNumber: true },
+        where: { 
+          skuYear: skuYear,
+          sku: { startsWith: `${prefix.toUpperCase()}-${skuYear}-` }
+        }
+      });
+      skuNumber = (maxSku._max.skuNumber || 0) + 1;
+      sku = formatSkuNew(prefix, skuYear, skuNumber);
+    }
 
     const product = await prisma.product.create({
       data: {
@@ -153,6 +187,9 @@ export async function POST(request: NextRequest) {
         medium,
         period,
         featured: featured || false,
+        // Admin-created products are active by default (not drafts)
+        status: 'active',
+        isDraft: false,
         images: {
           create:
             (images as ImageInput[] | undefined)?.map((img, index) => ({
@@ -183,4 +220,3 @@ export async function POST(request: NextRequest) {
     });
   }
 }
-

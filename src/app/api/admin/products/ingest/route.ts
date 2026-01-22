@@ -1,6 +1,9 @@
 // src/app/api/admin/products/ingest/route.ts
 // Product Ingestion API - Receives products from Desktop App
 // Creates products as DRAFT for admin review
+// 
+// FIX APPLIED: status changed from 'active' to 'draft' to prevent public visibility
+// FIX APPLIED: SKU validation now accepts PREFIX-YYYY-NNNN format (3-4 letter category prefix)
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
@@ -87,37 +90,51 @@ function validatePayload(data: unknown): { valid: boolean; errors: string[] } {
   return { valid: errors.length === 0, errors };
 }
 
-// Validate SKU format: KOL-YYYY-NNNN
-function validateSkuFormat(sku: string): { valid: boolean; error?: string } {
-  const SKU_PATTERN = /^KOL-20[2-9][0-9]-[0-9]{4}$/;
+// =============================================================================
+// UNIFIED SKU VALIDATION - Accepts PREFIX-YYYY-NNNN format
+// Supports both desktop app format (MILI-2025-0001) and KOL format (KOL-2025-0001)
+// =============================================================================
+function validateSkuFormat(sku: string): { valid: boolean; error?: string; parsed?: { prefix: string; year: number; sequence: number } } {
+  // Pattern: 3-4 uppercase letters, hyphen, 4-digit year (2020-2099), hyphen, 4-digit sequence
+  const SKU_PATTERN = /^([A-Z]{3,4})-(\d{4})-(\d{4})$/;
   
-  if (!SKU_PATTERN.test(sku)) {
+  const match = sku.toUpperCase().match(SKU_PATTERN);
+  
+  if (!match) {
     return {
       valid: false,
-      error: `Invalid SKU format: "${sku}". Expected format: KOL-YYYY-NNNN (e.g., KOL-2026-0001)`
+      error: `Invalid SKU format: "${sku}". Expected format: PREFIX-YYYY-NNNN (e.g., MILI-2026-0001, COLL-2025-0042, KOL-2026-0001)`
     };
   }
   
-  // Additional semantic validation
-  const parts = sku.split('-');
-  const yearPart = parts[1];
-  if (!yearPart) {
-    return {
-      valid: false,
-      error: `Invalid SKU format: "${sku}". Missing year component`
-    };
-  }
-  const year = parseInt(yearPart, 10);
+  const prefix = match[1] as string;
+  const yearStr = match[2] as string;
+  const sequenceStr = match[3] as string;
+  
+  const year = parseInt(yearStr, 10);
+  const sequence = parseInt(sequenceStr, 10);
   const currentYear = new Date().getFullYear();
   
-  if (year > currentYear + 1) {
+  // Validate year range
+  if (year < 2020 || year > currentYear + 1) {
     return {
       valid: false,
-      error: `SKU year ${year} is too far in the future. Maximum allowed: ${currentYear + 1}`
+      error: `SKU year ${year} is invalid. Must be between 2020 and ${currentYear + 1}`
     };
   }
   
-  return { valid: true };
+  // Validate sequence (must be 1-9999)
+  if (sequence < 1 || sequence > 9999) {
+    return {
+      valid: false,
+      error: `SKU sequence ${sequence} is invalid. Must be between 0001 and 9999`
+    };
+  }
+  
+  return { 
+    valid: true,
+    parsed: { prefix, year, sequence }
+  };
 }
 
 export async function POST(request: NextRequest) {
@@ -158,7 +175,7 @@ export async function POST(request: NextRequest) {
     }
 
     // =========================================
-    // 2b. Validate SKU format
+    // 2b. Validate SKU format (UNIFIED - accepts PREFIX-YYYY-NNNN)
     // =========================================
     const skuValidation = validateSkuFormat(payload.sku);
     if (!skuValidation.valid) {
@@ -166,8 +183,8 @@ export async function POST(request: NextRequest) {
         {
           error: 'Invalid SKU format',
           message: skuValidation.error,
-          expectedFormat: 'KOL-YYYY-NNNN',
-          examples: ['KOL-2026-0001', 'KOL-2025-0042']
+          expectedFormat: 'PREFIX-YYYY-NNNN',
+          examples: ['MILI-2026-0001', 'COLL-2025-0042', 'BOOK-2025-0001', 'KOL-2026-0001']
         },
         { status: 400 }
       );
@@ -179,7 +196,7 @@ export async function POST(request: NextRequest) {
     // 3. Check for duplicate SKU
     // =========================================
     const existingProduct = await prisma.product.findUnique({
-      where: { sku: payload.sku }
+      where: { sku: payload.sku.toUpperCase() }
     });
 
     if (existingProduct) {
@@ -258,22 +275,10 @@ export async function POST(request: NextRequest) {
     }
 
     // =========================================
-    // 7. Parse SKU components
+    // 7. Parse SKU components (from validated data)
     // =========================================
-    const skuParts = payload.sku.split('-');
-    let skuYear: number | null = null;
-    let skuNumber: number | null = null;
-
-    if (skuParts.length >= 3) {
-      const yearPart = skuParts[1];
-      const numberPart = skuParts[2];
-      if (yearPart) {
-        skuYear = parseInt(yearPart, 10) || null;
-      }
-      if (numberPart) {
-        skuNumber = parseInt(numberPart, 10) || null;
-      }
-    }
+    const skuYear = skuValidation.parsed?.year ?? null;
+    const skuNumber = skuValidation.parsed?.sequence ?? null;
 
     // =========================================
     // 8. Build AI analysis JSON
@@ -291,10 +296,13 @@ export async function POST(request: NextRequest) {
 
     // =========================================
     // 9. Create product (as DRAFT)
-    // =========================================
+    // =================================================================
+    // CRITICAL FIX: status is now 'draft' not 'active'
+    // This prevents draft products from appearing in public listings
+    // =================================================================
     const product = await prisma.product.create({
       data: {
-        sku: payload.sku,
+        sku: payload.sku.toUpperCase(),
         title: payload.title,
         slug: slug,
         description: payload.description,
@@ -318,9 +326,12 @@ export async function POST(request: NextRequest) {
         pricingReasoning: payload.pricingReasoning || null,
         estimatedEra: payload.era || null,
 
-        // CRITICAL: Always create as draft
+        // =================================================================
+        // CRITICAL FIX: Draft products now have status: 'draft'
+        // Public API filters on status: 'active', so drafts won't appear
+        // =================================================================
         isDraft: true,
-        status: 'active',
+        status: 'draft',  // <-- CHANGED from 'active' to 'draft'
         featured: false,
 
         // SKU parsing
@@ -329,7 +340,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    console.log(`[INGEST] Created product: ${product.id}`);
+    console.log(`[INGEST] Created draft product: ${product.id}`);
 
     // =========================================
     // 10. Create images
@@ -360,13 +371,14 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Product created as draft',
+      message: 'Product created as draft (not publicly visible until approved)',
       product: {
         id: product.id,
         sku: product.sku,
         title: product.title,
         slug: product.slug,
         isDraft: product.isDraft,
+        status: product.status,  // Now 'draft'
         price: product.price,
         imageCount: payload.images.length
       },
@@ -376,7 +388,7 @@ export async function POST(request: NextRequest) {
         public: publicUrl,
         publicFull: `https://kollect-it.com${publicUrl}`
       },
-      nextStep: 'Review and publish in admin panel'
+      nextStep: 'Review and publish in admin panel (change status to active)'
     }, { status: 201 });
 
   } catch (error) {
@@ -419,10 +431,9 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({
     status: 'ok',
-    version: '1.0.0',
+    version: '1.1.0',  // Version bump for fix
+    skuFormat: 'PREFIX-YYYY-NNNN',
+    skuExamples: ['MILI-2026-0001', 'COLL-2025-0042', 'BOOK-2025-0001'],
     categories: categories
   });
 }
-
-
-
