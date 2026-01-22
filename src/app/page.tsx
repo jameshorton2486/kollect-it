@@ -3,10 +3,11 @@ import RecentAdditions from "@/components/home/RecentAdditions";
 import CategoryGrid from "@/components/home/CategoryGrid";
 import ValueBar from "@/components/home/ValueBar";
 import ConsignmentTeaser from "@/components/home/ConsignmentTeaser";
-import { prisma } from "@/lib/prisma";
 import { Metadata } from "next";
 
-export const revalidate = 60;
+// Force dynamic rendering - fetch fresh data on each request
+// This prevents build-time database calls that fail without DATABASE_URL
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Kollect-It | Curated Fine Art, Rare Books & Collectibles",
@@ -24,20 +25,41 @@ export const metadata: Metadata = {
   },
 };
 
+// Helper function to safely fetch products
+async function getLatestProducts() {
+  // Check if DATABASE_URL is available
+  if (!process.env.DATABASE_URL) {
+    console.warn("DATABASE_URL not set - returning empty products array");
+    return [];
+  }
+
+  try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import("@/lib/prisma");
+    
+    const products = await prisma.product.findMany({
+      where: { 
+        status: "active",
+        isDraft: false,
+      },
+      include: {
+        images: { orderBy: { order: "asc" }, take: 1 },
+        category: true,
+      },
+      orderBy: { createdAt: "desc" },
+      take: 8,
+    });
+    
+    return products;
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    return [];
+  }
+}
+
 export default async function HomePage() {
-  // Fetch latest products (only published, non-draft)
-  const latestProducts = await prisma.product.findMany({
-    where: { 
-      status: "active",
-      isDraft: false,
-    },
-    include: {
-      images: { orderBy: { order: "asc" }, take: 1 },
-      category: true,
-    },
-    orderBy: { createdAt: "desc" },
-    take: 8,
-  });
+  // Fetch latest products with error handling
+  const latestProducts = await getLatestProducts();
 
   // Transform to card data format
   const latestCardData = latestProducts.map((product) => ({

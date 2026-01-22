@@ -1,6 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
 import { PrismaClient } from "@prisma/client";
+
+// Note: Don't manually load dotenv here!
+// - Next.js automatically loads .env.local for local development
+// - Vercel automatically injects environment variables for production
+// Manual dotenv.config() can interfere with these automatic mechanisms
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
