@@ -30,7 +30,7 @@ export async function GET() {
             slug: true,
             title: true,
             price: true,
-            images: {
+            Image: {
               orderBy: { order: "asc" },
               take: 1,
               select: { url: true },
@@ -160,4 +160,3 @@ export async function DELETE(request: Request) {
     );
   }
 }
-

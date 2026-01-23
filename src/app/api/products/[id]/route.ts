@@ -18,7 +18,7 @@ export async function GET(
     const product = await prisma.product.findUnique({
       where: { id },
       include: {
-        images: {
+        Image: {
           orderBy: { order: "asc" },
         },
         category: true,

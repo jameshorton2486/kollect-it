@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
               name: true,
             },
           },
-          images: {
+          Image: {
             select: {
               url: true,
               alt: true,
@@ -119,4 +119,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

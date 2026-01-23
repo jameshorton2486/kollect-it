@@ -41,7 +41,7 @@ export async function getRecommendations(
         },
         take: limit,
         include: {
-          images: {
+          Image: {
             take: 1,
             select: { url: true },
           },
@@ -79,7 +79,7 @@ export async function getRecommendations(
         },
         take: limit,
         include: {
-          images: {
+          Image: {
             take: 1,
             select: { url: true },
           },
@@ -100,7 +100,7 @@ export async function getRecommendations(
       },
       take: limit,
       include: {
-        images: {
+        Image: {
           take: 1,
           select: { url: true },
         },

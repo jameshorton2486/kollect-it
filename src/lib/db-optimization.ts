@@ -81,7 +81,7 @@ export const optimizedQueries = {
           price: true,
           category: true,
           status: true,
-          images: true,
+          Image: true,
           createdAt: true,
         },
         orderBy: { createdAt: "desc" },
@@ -188,7 +188,7 @@ export const optimizedQueries = {
 
         // Revenue by day
         prisma.$queryRaw`
-        SELECT 
+        SELECT
           DATE("createdAt") as date,
           COUNT(*) as order_count,
           SUM(total) as revenue
@@ -299,4 +299,3 @@ export const maintenance = {
     };
   },
 };
-
