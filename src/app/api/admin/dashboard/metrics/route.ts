@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
         paymentStatus: "paid",
       },
       include: {
-        items: {
+        OrderItem: {
           include: {
             product: true,
           },
@@ -176,7 +176,7 @@ export async function GET(request: NextRequest) {
     >();
 
     orders.forEach((order: any) => {
-      order.items.forEach((item: any) => {
+      order.OrderItem.forEach((item: any) => {
         if (item.product) {
           const existing = productSales.get(item.product.id) || {
             title: item.product.title,

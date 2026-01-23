@@ -204,8 +204,8 @@ export async function getProductPerformance(
 ): Promise<ProductPerformance> {
   const allProducts = await prisma.product.findMany({
     include: {
-      category: true,
-      orderItems: true,
+      Category: true,
+      OrderItem: true,
     },
   });
 
@@ -222,7 +222,7 @@ export async function getProductPerformance(
     };
   }
 
-  const soldProducts = allProducts.filter((p) => p.orderItems.length > 0);
+  const soldProducts = allProducts.filter((p) => p.OrderItem.length > 0);
   const sellThroughRate = (soldProducts.length / allProducts.length) * 100;
 
   const avgSellingPrice =
@@ -236,12 +236,12 @@ export async function getProductPerformance(
   > = {};
 
   allProducts.forEach((p) => {
-    const catName = p.category?.name || "Unknown";
+    const catName = p.Category?.name || "Unknown";
     if (!categoryMetrics[catName]) {
       categoryMetrics[catName] = { count: 0, sold: 0, revenue: 0 };
     }
     categoryMetrics[catName].count++;
-    if (p.orderItems.length > 0) {
+    if (p.OrderItem.length > 0) {
       categoryMetrics[catName].sold++;
       categoryMetrics[catName].revenue += p.price;
     }
@@ -302,7 +302,7 @@ export async function getRevenueInsights(
         include: {
           product: {
             include: {
-              category: true,
+              Category: true,
             },
           },
         },
@@ -321,8 +321,8 @@ export async function getRevenueInsights(
   > = {};
 
   orders.forEach((order) => {
-    order.items.forEach((item) => {
-      const catName = item.product.category?.name || "Unknown";
+    order.OrderItem.forEach((item) => {
+      const catName = item.product.Category?.name || "Unknown";
       if (!revenueByCategory[catName]) {
         revenueByCategory[catName] = { revenue: 0, productsSold: 0 };
       }
@@ -414,7 +414,7 @@ export async function getCategoryMetrics(
     include: {
       products: {
         include: {
-          orderItems: true,
+          OrderItem: true,
         },
       },
     },
@@ -423,10 +423,10 @@ export async function getCategoryMetrics(
   const metrics = categories.map((cat) => {
     const productCount = cat.products.length;
     const soldCount = cat.products.filter(
-      (p) => p.orderItems.length > 0,
+      (p) => p.OrderItem.length > 0,
     ).length;
     const totalRevenue = cat.products.reduce(
-      (sum, p) => sum + p.price * p.orderItems.length,
+      (sum, p) => sum + p.price * p.OrderItem.length,
       0,
     );
 
@@ -469,7 +469,7 @@ export async function getRevenueMetrics(
         items: {
           include: {
             product: {
-              include: { category: true },
+              include: { Category: true },
             },
           },
         },
@@ -482,8 +482,8 @@ export async function getRevenueMetrics(
     // Revenue by category
     const categoryMap = new Map();
     orders.forEach((order) => {
-      order.items.forEach((item) => {
-        const categoryName = item.product.category.name;
+      order.OrderItem.forEach((item) => {
+        const categoryName = item.product.Category.name;
         if (!categoryMap.has(categoryName)) {
           categoryMap.set(categoryName, {
             category: categoryName,
@@ -600,7 +600,7 @@ export async function getPricingMetrics(
 export async function getProductMetrics(): Promise<any> {
   try {
     const products = await prisma.product.findMany({
-      include: { category: true },
+      include: { Category: true },
     });
 
     const totalProducts = products.length;
@@ -610,15 +610,15 @@ export async function getProductMetrics(): Promise<any> {
 
     const categoryMap = new Map();
     products.forEach((p) => {
-      if (!categoryMap.has(p.category.name)) {
-        categoryMap.set(p.category.name, {
-          category: p.category.name,
+      if (!categoryMap.has(p.Category.name)) {
+        categoryMap.set(p.Category.name, {
+          category: p.Category.name,
           count: 0,
           totalPrice: 0,
           revenue: 0,
         });
       }
-      const entry = categoryMap.get(p.category.name);
+      const entry = categoryMap.get(p.Category.name);
       entry.count++;
       entry.totalPrice += p.price;
     });

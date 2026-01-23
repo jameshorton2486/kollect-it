@@ -67,8 +67,8 @@ export async function GET(request: NextRequest) {
     const products = await prisma.product.findMany({
       where,
       include: {
-        images: { orderBy: { order: "asc" } },
-        category: true,
+        Image: { orderBy: { order: "asc" } },
+        Category: true,
       },
       orderBy: { createdAt: "desc" },
       take,
@@ -190,7 +190,7 @@ export async function POST(request: NextRequest) {
         // Admin-created products are active by default (not drafts)
         status: 'active',
         isDraft: false,
-        images: {
+        Image: {
           create:
             (images as ImageInput[] | undefined)?.map((img, index) => ({
               url: img.url,
@@ -200,8 +200,8 @@ export async function POST(request: NextRequest) {
         },
       },
       include: {
-        images: true,
-        category: true,
+        Image: true,
+        Category: true,
       },
     });
 

@@ -23,8 +23,8 @@ interface Product {
   id: string;
   title: string;
   price: number;
-  category: { name: string };
-  images: { url: string }[];
+  Category: { name: string };
+  Image: { url: string }[];
   status: string;
   createdAt: string;
   isDraft: boolean;
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
     return products.filter((p) => {
       const matchesQuery = q
         ? p.title.toLowerCase().includes(q) ||
-          p.category.name.toLowerCase().includes(q)
+          p.Category.name.toLowerCase().includes(q)
         : true;
       const matchesStatus =
         statusFilter === "all" ? true : p.status === statusFilter;
@@ -165,7 +165,7 @@ export default function AdminDashboard() {
       ["Title", "Category", "Price", "Status", "Date Added"],
       ...filteredProducts.map((product) => [
         product.title,
-        product.category.name,
+        product.Category.name,
         `$${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
         product.status,
         new Date(product.createdAt).toLocaleDateString(),
@@ -409,9 +409,9 @@ export default function AdminDashboard() {
                   <tr key={product.id} className="hover:bg-lux-cream/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        {product.images[0] && (
+                        {product.Image[0] && (
                           <img
-                            src={getAdminPreviewImageUrl(product.images[0].url)}
+                            src={getAdminPreviewImageUrl(product.Image[0].url)}
                             alt={product.title}
                             className="w-12 h-12 rounded object-cover mr-3"
                           />
@@ -423,7 +423,7 @@ export default function AdminDashboard() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="text-sm text-ink">
-                        {product.category.name}
+                        {product.Category.name}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

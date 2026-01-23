@@ -43,8 +43,8 @@ async function getLatestProducts() {
         isDraft: false,
       },
       include: {
-        images: { orderBy: { order: "asc" }, take: 1 },
-        category: true,
+        Image: { orderBy: { order: "asc" }, take: 1 },
+        Category: true,
       },
       orderBy: { createdAt: "desc" },
       take: 8,
@@ -67,8 +67,8 @@ export default async function HomePage() {
     title: product.title,
     price: product.price,
     slug: product.slug,
-    images: product.images.length > 0 ? product.images : [{ url: "/placeholder.svg" }],
-    category: product.category ? { name: product.category.name, slug: product.category.slug } : null,
+    images: product.Image.length > 0 ? product.Image : [{ url: "/placeholder.svg" }],
+    category: product.Category ? { name: product.Category.name, slug: product.Category.slug } : null,
   }));
 
   // Organization schema for SEO

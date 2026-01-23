@@ -14,7 +14,7 @@ export interface ProductCardData {
   slug: string;
   condition?: string | null;
   year?: string | null;
-  images: { url: string }[];
+  Image: { url: string }[];
   category?: { name: string; slug: string } | null;
 }
 
@@ -27,7 +27,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const rawImageUrl = product.images?.[0]?.url || "/placeholder.svg";
+  const rawImageUrl = product.Image?.[0]?.url || "/placeholder.svg";
   const imageUrl = getProductGridImageUrl(rawImageUrl);
   const altText = getProductImageAltText(product.title, 0, true);
 
@@ -82,9 +82,9 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         {/* Content */}
         <div className="flex flex-1 flex-col justify-between py-1">
           <div>
-            {product.category && (
+            {product.Category && (
               <p className="text-xs font-medium uppercase tracking-wider text-lux-gold">
-                {product.category.name}
+                {product.Category.name}
               </p>
             )}
             <h3 className="mt-1 font-medium text-ink-900 line-clamp-2 group-hover:text-lux-gold transition-colors">
@@ -152,9 +152,9 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-4">
-        {product.category && (
+        {product.Category && (
           <p className="text-xs font-medium uppercase tracking-wider text-lux-gold">
-            {product.category.name}
+            {product.Category.name}
           </p>
         )}
         <h3 className="mt-1 font-medium text-ink-900 line-clamp-2 group-hover:text-lux-gold transition-colors min-h-[2.5rem]">

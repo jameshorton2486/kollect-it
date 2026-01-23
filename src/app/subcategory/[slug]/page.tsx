@@ -17,16 +17,16 @@ async function getSubcategoryData(slug: string) {
   return prisma.subcategory.findUnique({
     where: { slug },
     include: {
-      category: true,
+      Category: true,
       products: {
         where: {
           status: "active",
           isDraft: false,
         },
         include: {
-          images: { orderBy: { order: "asc" }, take: 1 },
-          category: true,
-          subcategory: true,
+          Image: { orderBy: { order: "asc" }, take: 1 },
+          Category: true,
+          subCategory: true,
         },
         orderBy: { createdAt: "desc" },
       },
@@ -39,7 +39,7 @@ export async function generateMetadata(props: SubcategoryPageProps): Promise<Met
   const { slug } = await params;
   const subcategory = await prisma.subcategory.findUnique({
     where: { slug },
-    include: { category: true },
+    include: { Category: true },
   });
 
   if (!subcategory) {

@@ -83,11 +83,11 @@ async function getAllProducts(
   const products = await prisma.product.findMany({
     where,
     include: {
-      images: {
+      Image: {
         orderBy: { order: "asc" },
         take: 1,
       },
-      category: true,
+      Category: true,
     },
     orderBy,
   });
@@ -223,8 +223,8 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                         title: product.title,
                         price: product.price,
                         slug: product.slug,
-                        images: product.images.length > 0 ? product.images : [{ url: "/placeholder.svg" }],
-                        category: product.category ? { name: product.category.name, slug: product.category.slug } : null,
+                        images: product.Image.length > 0 ? product.Image : [{ url: "/placeholder.svg" }],
+                        category: product.Category ? { name: product.Category.name, slug: product.Category.slug } : null,
                       }}
                     />
                   ))}

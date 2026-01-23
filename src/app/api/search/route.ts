@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
         skip: (page - 1) * limit,
         take: limit,
         include: {
-          category: {
+          Category: {
             select: {
               name: true,
             },

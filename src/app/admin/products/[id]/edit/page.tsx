@@ -26,8 +26,8 @@ interface Product {
   artist: string | null;
   medium: string | null;
   period: string | null;
-  category: { id: string; name: string };
-  images: { url: string; id: string }[];
+  Category: { id: string; name: string };
+  Image: { url: string; id: string }[];
 }
 
 export default function EditProductPage() {

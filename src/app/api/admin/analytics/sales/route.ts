@@ -54,14 +54,14 @@ export async function GET(request: NextRequest) {
         paymentStatus: "paid",
       },
       include: {
-        items: {
+        OrderItem: {
           include: {
-            product: {
+            Product: {
               select: {
                 id: true,
                 title: true,
                 categoryId: true,
-                category: {
+                Category: {
                   select: {
                     id: true,
                     name: true,
@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
     // Revenue by category
     const revenueByCategory = orders.reduce(
       (acc, order) => {
-        order.items.forEach((item) => {
+        order.OrderItem.forEach((item) => {
           const categoryName = item.product?.category?.name || "Uncategorized";
           const categoryId = item.product?.categoryId || "unknown";
           if (!acc[categoryId]) {
@@ -123,7 +123,7 @@ export async function GET(request: NextRequest) {
     // Top products by revenue
     const productRevenue = orders.reduce(
       (acc, order) => {
-        order.items.forEach((item) => {
+        order.OrderItem.forEach((item) => {
           if (!item.product) return;
           const productId = item.product.id;
           if (!acc[productId]) {

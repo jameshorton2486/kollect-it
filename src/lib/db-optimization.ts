@@ -79,7 +79,7 @@ export const optimizedQueries = {
           id: true,
           title: true,
           price: true,
-          category: true,
+          Category: true,
           status: true,
           Image: true,
           createdAt: true,

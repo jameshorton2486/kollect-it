@@ -15,7 +15,7 @@ export async function GET() {
       include: {
         product: {
           include: {
-            images: {
+            Image: {
               take: 1,
               select: { url: true },
             },

@@ -9,7 +9,7 @@ interface Product {
   price: number;
   condition?: string | null;
   year?: string | null;
-  images: { url: string }[];
+  Image: { url: string }[];
   category?: { name: string; slug: string } | null;
 }
 

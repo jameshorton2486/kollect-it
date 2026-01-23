@@ -7,7 +7,7 @@
 
 export const performanceConfig = {
   // Image optimization settings
-  images: {
+  Image: {
     // Quality levels for different image types
     heroQuality: 75, // Hero section images (most critical, but quality reduced for speed)
     productQuality: 80, // Product images

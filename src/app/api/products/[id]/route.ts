@@ -21,7 +21,7 @@ export async function GET(
         Image: {
           orderBy: { order: "asc" },
         },
-        category: true,
+        Category: true,
       },
     });
 
@@ -88,7 +88,7 @@ export async function PUT(
         period,
         featured,
         status,
-        images: images
+        Image: images
           ? {
               create: (images as ImageInput[]).map((img, index) => ({
                 url: img.url,
@@ -99,8 +99,8 @@ export async function PUT(
           : undefined,
       },
       include: {
-        images: true,
-        category: true,
+        Image: true,
+        Category: true,
       },
     });
 

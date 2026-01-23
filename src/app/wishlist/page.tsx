@@ -13,8 +13,8 @@ interface WishlistItem {
     slug: string;
     title: string;
     price: number;
-    images: { url: string }[];
-    category: { name: string };
+    Image: { url: string }[];
+    Category: { name: string };
   };
 }
 
@@ -133,7 +133,7 @@ export default function WishlistPage() {
                   className="relative aspect-square bg-lux-pearl block overflow-hidden"
                 >
                   <Image
-                    src={item.product.images[0]?.url || "/placeholder.svg"}
+                    src={item.product.Image[0]?.url || "/placeholder.svg"}
                     alt={item.product.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -141,7 +141,7 @@ export default function WishlistPage() {
                 </Link>
                 <div className="p-4">
                   <p className="text-label text-lux-gold">
-                    {item.product.category?.name || "Featured"}
+                    {item.product.Category?.name || "Featured"}
                   </p>
                   <Link href={`/product/${item.product.slug}`}>
                     <h3 className="font-serif font-medium text-lux-black line-clamp-2 mt-1 hover:text-lux-gold transition-colors">

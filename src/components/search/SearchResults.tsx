@@ -14,9 +14,9 @@ interface Product {
   slug: string;
   title: string;
   price: number;
-  images: { url: string; alt?: string | null }[];
+  Image: { url: string; alt?: string | null }[];
   condition: string | null;
-  category: {
+  Category: {
     name: string;
   };
 }
@@ -253,8 +253,8 @@ export default function SearchResults() {
                       }`}
                     >
                       <img
-                        src={getProductGridImageUrl(product.images[0]?.url || "/placeholder.svg")}
-                        alt={product.images[0]?.alt || getProductImageAltText(product.title, 0, true)}
+                        src={getProductGridImageUrl(product.Image[0]?.url || "/placeholder.svg")}
+                        alt={product.Image[0]?.alt || getProductImageAltText(product.title, 0, true)}
                         className={
                           viewMode === "list"
                             ? "h-32 w-32 rounded-lg object-cover"
@@ -263,7 +263,7 @@ export default function SearchResults() {
                       />
                       <div className={viewMode === "list" ? "flex-1" : "p-4"}>
                         <p className="text-label text-lux-gold">
-                          {product.category.name}
+                          {product.Category.name}
                         </p>
                         <h3 className="mt-1 font-serif text-lg font-medium text-lux-black line-clamp-2 group-hover:text-lux-gold transition-colors">
                           {product.title}

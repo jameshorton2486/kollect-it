@@ -30,7 +30,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        items: {
+        OrderItem: {
           include: {
             product: {
               select: {
@@ -96,7 +96,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
         carrier: carrier || null,
       },
       include: {
-        items: {
+        OrderItem: {
           include: {
             product: {
               select: {

@@ -29,8 +29,8 @@ interface WishlistItem {
     title: string;
     slug: string;
     price: number;
-    images: { url: string }[];
-    category: { name: string };
+    Image: { url: string }[];
+    Category: { name: string };
     status: string;
   };
 }
@@ -402,7 +402,7 @@ export default function AccountPage() {
                           <Link href={`/product/${item.product.slug}`}>
                             <div className="aspect-square relative bg-lux-pearl">
                               <Image
-                                src={item.product.images[0]?.url || "/placeholder.svg"}
+                                src={item.product.Image[0]?.url || "/placeholder.svg"}
                                 alt={item.product.title}
                                 fill
                                 className="object-cover"

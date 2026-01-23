@@ -132,12 +132,12 @@ async function main() {
         medium: "Oil on Canvas",
         period: "19th Century",
         featured: true,
-        images: {
-          create: {
+        Image: {
+          create: [{
             url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
             alt: "Classical Landscape Oil Painting",
             order: 0,
-          },
+          }],
         },
       },
     });
@@ -160,12 +160,12 @@ async function main() {
         year: "1856",
         period: "Victorian",
         featured: true,
-        images: {
-          create: {
+        Image: {
+          create: [{
             url: "https://images.unsplash.com/photo-1589998059171-988d887df646?w=800&q=80",
             alt: "Shakespeare First Folio",
             order: 0,
-          },
+          }],
         },
       },
     });
@@ -188,12 +188,12 @@ async function main() {
         year: "1920s",
         period: "Art Deco",
         featured: true,
-        images: {
-          create: {
+        Image: {
+          create: [{
             url: "https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=800&q=80",
             alt: "Vintage Pocket Watch",
             order: 0,
-          },
+          }],
         },
       },
     });
@@ -216,7 +216,7 @@ async function main() {
         year: "1914-1918",
         period: "WWI",
         featured: true,
-        images: {
+        Image: {
           create: {
             url: "https://images.unsplash.com/photo-1611329857570-f02f340e7378?w=800&q=80",
             alt: "WWI Medal Group",

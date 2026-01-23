@@ -45,12 +45,12 @@ export async function POST(request: NextRequest) {
         paymentStatus: "paid",
       },
       include: {
-        items: {
+        OrderItem: {
           include: {
             product: {
               select: {
                 title: true,
-                category: {
+                Category: {
                   select: {
                     name: true,
                   },
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     >();
 
     orders.forEach((order: any) => {
-      order.items.forEach((item: any) => {
+      order.OrderItem.forEach((item: any) => {
         const key = item.productId;
         const existing = productSales.get(key) || {
           title: item.product?.title || "Unknown",
@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
         total: order.total,
         status: order.status,
         createdAt: order.createdAt,
-        itemCount: order.items.reduce(
+        itemCount: order.OrderItem.reduce(
           (sum: number, item: any) => sum + item.quantity,
           0,
         ),

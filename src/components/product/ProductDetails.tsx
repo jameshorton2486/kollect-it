@@ -18,7 +18,7 @@ interface ProductDetailsProps {
     price: number;
     condition: string;
     description: string;
-    category: { name: string };
+    Category: { name: string };
     year?: string;
     artist?: string;
     rarity?: string;
@@ -94,7 +94,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </div>
         <div>
           <span className="text-muted-foreground">Category:</span>{" "}
-          <span className="font-medium">{product.category.name}</span>
+          <span className="font-medium">{product.Category.name}</span>
         </div>
         {product.year && (
           <div>

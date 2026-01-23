@@ -24,8 +24,8 @@ interface Product {
   status: string;
   isDraft: boolean;
   featured: boolean;
-  category: { id: string; name: string };
-  images: { url: string }[];
+  Category: { id: string; name: string };
+  Image: { url: string }[];
   createdAt: string;
 }
 
@@ -226,9 +226,9 @@ export default function AdminProductsPage() {
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
                             <div className="w-12 h-12 rounded bg-lux-pearl overflow-hidden flex-shrink-0">
-                              {product.images[0] ? (
+                              {product.Image[0] ? (
                                 <Image
-                                  src={product.images[0].url}
+                                  src={product.Image[0].url}
                                   alt={product.title}
                                   width={48}
                                   height={48}
@@ -252,7 +252,7 @@ export default function AdminProductsPage() {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-sm text-ink-600">{product.sku}</td>
-                        <td className="px-4 py-3 text-sm text-ink-600">{product.category.name}</td>
+                        <td className="px-4 py-3 text-sm text-ink-600">{product.Category.name}</td>
                         <td className="px-4 py-3 text-sm font-medium text-lux-black">{formatPrice(product.price)}</td>
                         <td className="px-4 py-3">
                           <span

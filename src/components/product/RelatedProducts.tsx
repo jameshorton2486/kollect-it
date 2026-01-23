@@ -12,8 +12,8 @@ interface Product {
   title: string;
   slug: string;
   price: number;
-  images: { url: string }[];
-  category: { name: string };
+  Image: { url: string }[];
+  Category: { name: string };
 }
 
 interface RelatedProductsProps {
@@ -107,10 +107,10 @@ export default function RelatedProducts({
             >
               {/* Product Image Container */}
               <div className="relative h-[200px] w-full overflow-hidden rounded-lg border border-border-200 bg-lux-white">
-                {product.images[0] ? (
+                {product.Image[0] ? (
                   <>
                     <Image
-                      src={getProductGridImageUrl(product.images[0].url)}
+                      src={getProductGridImageUrl(product.Image[0].url)}
                       alt={getProductImageAltText(product.title, 0, true)}
                       width={300}
                       height={200}
@@ -172,7 +172,7 @@ export default function RelatedProducts({
               <div className="mt-3 space-y-2">
                 {/* Category Badge */}
                 <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-lux-gold">
-                  {product.category.name}
+                  {product.Category.name}
                 </p>
 
                 {/* Title */}

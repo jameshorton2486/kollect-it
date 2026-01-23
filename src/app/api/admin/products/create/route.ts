@@ -166,7 +166,7 @@ export async function POST(req: NextRequest) {
         isDraft,
 
         // Create images relation
-        images: {
+        Image: {
           create: imageUrls.map((img: any, index: number) => ({
             url: img.url,
             alt: img.alt || `${title} - Image ${index + 1}`,
@@ -176,8 +176,8 @@ export async function POST(req: NextRequest) {
         },
       },
       include: {
-        images: true,
-        category: true,
+        Image: true,
+        Category: true,
       },
     });
 

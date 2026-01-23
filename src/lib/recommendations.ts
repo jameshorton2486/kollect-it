@@ -45,7 +45,7 @@ export async function getRecommendations(
             take: 1,
             select: { url: true },
           },
-          category: {
+          Category: {
             select: { name: true },
           },
         },
@@ -104,7 +104,7 @@ export async function getRecommendations(
           take: 1,
           select: { url: true },
         },
-        category: {
+        Category: {
           select: { name: true },
         },
       },

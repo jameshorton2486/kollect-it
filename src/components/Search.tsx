@@ -79,8 +79,8 @@ export default function Search() {
             title: p.title,
             slug: p.slug,
             price: p.price,
-            images: p.images,
-            category: p.category ?? null,
+            images: p.Image,
+            category: p.Category ?? null,
           }));
         setResults(mapped);
       } catch (e) {
@@ -245,7 +245,7 @@ export default function Search() {
           {query.trim().length >= 2 && !loading && results.length > 0 && (
             <ul className="max-h-80 space-y-1 overflow-auto">
               {results.map((p) => {
-                const raw = p.images?.[0]?.url || "/placeholder.svg";
+                const raw = p.Image?.[0]?.url || "/placeholder.svg";
                 const img = raw;
                 return (
                   <li key={p.id}>
@@ -273,7 +273,7 @@ export default function Search() {
                           {p.title}
                         </div>
                         <div className="truncate text-[11px] uppercase tracking-wide text-gold">
-                          {p.category?.name ?? ""}
+                          {p.Category?.name ?? ""}
                         </div>
                       </div>
                       <div className="shrink-0 text-[14px] font-semibold text-gold">

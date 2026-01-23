@@ -156,7 +156,7 @@ export async function getFilteredPricingMetrics(filters: FilterOptions) {
       suggestedPrice: true,
       finalPrice: true,
       priceConfidence: true,
-      category: true,
+      Category: true,
     },
     take: filters.limit || 50,
     skip: filters.offset || 0,
@@ -179,17 +179,17 @@ export async function getFilteredPricingMetrics(filters: FilterOptions) {
     const confidence = product.priceConfidence || 0;
     totalAccuracy += confidence;
 
-    if (!accuracyByCategory[product.category]) {
-      accuracyByCategory[product.category] = {
-        category: product.category,
+    if (!accuracyByCategory[product.Category]) {
+      accuracyByCategory[product.Category] = {
+        category: product.Category,
         averageConfidence: 0,
         count: 0,
         totalConfidence: 0,
       };
     }
 
-    accuracyByCategory[product.category].totalConfidence += confidence;
-    accuracyByCategory[product.category].count += 1;
+    accuracyByCategory[product.Category].totalConfidence += confidence;
+    accuracyByCategory[product.Category].count += 1;
 
     // Calculate deviation if both prices exist
     if (product.suggestedPrice && product.finalPrice) {
@@ -243,7 +243,7 @@ export async function getFilteredProductMetrics(filters: FilterOptions) {
     select: {
       id: true,
       name: true,
-      category: true,
+      Category: true,
       price: true,
       createdAt: true,
     },
@@ -256,10 +256,10 @@ export async function getFilteredProductMetrics(filters: FilterOptions) {
 
   const byCategory: any = {};
   for (const product of products) {
-    if (!byCategory[product.category]) {
-      byCategory[product.category] = 0;
+    if (!byCategory[product.Category]) {
+      byCategory[product.Category] = 0;
     }
-    byCategory[product.category] += 1;
+    byCategory[product.Category] += 1;
   }
 
   return {

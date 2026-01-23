@@ -6,6 +6,16 @@ import { prisma } from "@/lib/prisma";
 // GET - Fetch user's wishlist
 export async function GET() {
   try {
+    // Debug: Check database connection
+    const hasDbUrl = !!process.env.DATABASE_URL;
+    const dbUrlLength = process.env.DATABASE_URL?.length || 0;
+    
+    console.log("[WISHLIST] Database check:", {
+      hasDbUrl,
+      dbUrlLength,
+      dbUrlPreview: process.env.DATABASE_URL?.substring(0, 30) + "...",
+    });
+
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.email) {
@@ -35,7 +45,7 @@ export async function GET() {
               take: 1,
               select: { url: true },
             },
-            category: {
+            Category: {
               select: { name: true },
             },
           },
@@ -45,10 +55,40 @@ export async function GET() {
     });
 
     return NextResponse.json(wishlistItems);
-  } catch (error) {
-    console.error("Error fetching wishlist:", error);
+  } catch (error: any) {
+    console.error("[WISHLIST] Error details:", {
+      message: error?.message,
+      code: error?.code,
+      name: error?.name,
+      stack: error?.stack?.split('\n').slice(0, 3),
+    });
+    
+    // More specific error messages
+    if (error?.code === 'P1001' || error?.message?.includes('Can\'t reach database')) {
+      return NextResponse.json(
+        { 
+          error: "Database connection failed",
+          details: "DATABASE_URL may be incorrect or database is unreachable"
+        },
+        { status: 503 },
+      );
+    }
+    
+    if (error?.code === 'P1000' || error?.message?.includes('authentication')) {
+      return NextResponse.json(
+        { 
+          error: "Database authentication failed",
+          details: "Check DATABASE_URL credentials"
+        },
+        { status: 503 },
+      );
+    }
+
     return NextResponse.json(
-      { error: "Internal server error" },
+      { 
+        error: "Internal server error",
+        details: process.env.NODE_ENV === 'development' ? error?.message : undefined
+      },
       { status: 500 },
     );
   }

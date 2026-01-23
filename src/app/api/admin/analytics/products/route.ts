@@ -30,10 +30,10 @@ export async function GET(request: NextRequest) {
     // Fetch all products with order items
     const products = await prisma.product.findMany({
       include: {
-        category: true,
-        orderItems: {
+        Category: true,
+        OrderItem: {
           where: {
-            order: {
+            Order: {
               paymentStatus: "paid",
               createdAt: {
                 gte: startDate,
@@ -41,12 +41,12 @@ export async function GET(request: NextRequest) {
             },
           },
           include: {
-            order: true,
+            Order: true,
           },
         },
         _count: {
           select: {
-            orderItems: true,
+            OrderItem: true,
           },
         },
       },
@@ -65,8 +65,8 @@ export async function GET(request: NextRequest) {
     // Product performance
     const performance = products
       .map((product) => {
-        const sales = product.orderItems.length;
-        const revenue = product.orderItems.reduce(
+        const sales = product.OrderItem.length;
+        const revenue = product.OrderItem.reduce(
           (sum: number, item: any) => sum + item.price * item.quantity,
           0,
         );
@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
     >();
 
     products.forEach((product) => {
-      const categoryName = product.category?.name || "Uncategorized";
+      const categoryName = product.Category?.name || "Uncategorized";
       const existing = categoryMap.get(categoryName) || {
         category: categoryName,
         productCount: 0,
@@ -114,8 +114,8 @@ export async function GET(request: NextRequest) {
 
       existing.productCount += 1;
       existing.totalPrice += product.price;
-      existing.sales += product.orderItems.length;
-      existing.revenue += product.orderItems.reduce(
+      existing.sales += product.OrderItem.length;
+      existing.revenue += product.OrderItem.reduce(
         (sum: number, item: any) => sum + item.price * item.quantity,
         0,
       );
@@ -139,7 +139,7 @@ export async function GET(request: NextRequest) {
         );
         return (
           product.status === "active" &&
-          (daysListed > 90 || product.orderItems.length === 0)
+          (daysListed > 90 || product.OrderItem.length === 0)
         );
       })
       .map((product) => {
@@ -151,13 +151,13 @@ export async function GET(request: NextRequest) {
         let issue = "";
         let severity: "high" | "medium" | "low" = "low";
 
-        if (daysListed > 180 && product.orderItems.length === 0) {
+        if (daysListed > 180 && product.OrderItem.length === 0) {
           issue = "No sales in 180+ days - consider repricing or promotion";
           severity = "high";
-        } else if (daysListed > 90 && product.orderItems.length === 0) {
+        } else if (daysListed > 90 && product.OrderItem.length === 0) {
           issue = "No sales in 90+ days - review pricing strategy";
           severity = "medium";
-        } else if (product.orderItems.length === 0) {
+        } else if (product.OrderItem.length === 0) {
           issue = "No sales yet - monitor performance";
           severity = "low";
         }

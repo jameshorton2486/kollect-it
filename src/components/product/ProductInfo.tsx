@@ -15,8 +15,8 @@ interface Product {
   artist: string | null;
   medium: string | null;
   period: string | null;
-  category: { name: string };
-  images: { url: string }[];
+  Category: { name: string };
+  Image: { url: string }[];
 }
 
 interface ProductInfoProps {
@@ -64,7 +64,7 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
     <div className="space-y-8 rounded-3xl border border-border-200 bg-white/95 p-6 shadow-xl shadow-black/5 lg:p-8">
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-3 text-[0.75rem] uppercase tracking-[0.35em] text-ink-600">
-          <span>{product.category.name}</span>
+          <span>{product.Category.name}</span>
           {product.condition && (
             <span className="inline-flex items-center gap-2 text-ink-600">
               <span className="h-1 w-1 rounded-full bg-lux-gold" />
@@ -138,8 +138,8 @@ export default function ProductInfo({ product, sku }: ProductInfoProps) {
               title: product.title,
               price: product.price,
               slug: product.slug,
-              image: product.images[0]?.url || "/placeholder.svg",
-              categoryName: product.category.name,
+              image: product.Image[0]?.url || "/placeholder.svg",
+              categoryName: product.Category.name,
             }}
             quantity={quantity}
             className=" w-full sm:flex-1"

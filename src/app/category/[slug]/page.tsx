@@ -25,9 +25,9 @@ async function getCategoryData(slug: string) {
           isDraft: false,
         },
         include: {
-          images: { orderBy: { order: "asc" }, take: 1 },
-          category: true,
-          subcategory: true,
+          Image: { orderBy: { order: "asc" }, take: 1 },
+          Category: true,
+          Subcategory: true,
         },
         orderBy: { createdAt: "desc" },
       },

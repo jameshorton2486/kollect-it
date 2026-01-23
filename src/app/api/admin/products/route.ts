@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
       prisma.product.findMany({
         where,
         include: {
-          category: { select: { id: true, name: true } },
-          images: { orderBy: { order: "asc" }, take: 1 },
+          Category: { select: { id: true, name: true } },
+          Image: { orderBy: { order: "asc" }, take: 1 },
         },
         orderBy: { createdAt: "desc" },
         skip,

@@ -14,8 +14,8 @@ interface SuggestionProduct {
   title: string;
   slug: string;
   price: number;
-  images: { url: string }[];
-  category: { name: string };
+  Image: { url: string }[];
+  Category: { name: string };
 }
 
 function Recommendations({
@@ -42,9 +42,9 @@ function Recommendations({
               className="group bg-lux-white rounded-lg border border-lux-silver-soft p-4 shadow-clean hover:shadow-soft transition-all hover:-translate-y-1"
             >
               <div className="relative aspect-square mb-4 overflow-hidden rounded-lg bg-lux-pearl">
-                {product.images[0] ? (
+                {product.Image[0] ? (
                   <Image
-                    src={product.images[0].url}
+                    src={product.Image[0].url}
                     alt={product.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -57,7 +57,7 @@ function Recommendations({
                   <div className="w-full h-full bg-lux-pearl" />
                 )}
                 <span className="absolute top-3 left-3 px-2 py-1 bg-lux-white/90 text-label text-lux-gold rounded">
-                  {product.category?.name || "Featured"}
+                  {product.Category?.name || "Featured"}
                 </span>
               </div>
               <h3 className="font-serif font-medium text-lux-black line-clamp-2 group-hover:text-lux-gold transition-colors">
@@ -193,7 +193,7 @@ export default function CartPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between gap-4">
                         <div>
-                          <p className="text-label text-lux-gold">{item.categoryName}</p>
+                          <p className="text-label text-lux-gold">{item.CategoryName}</p>
                           <Link
                             href={`/product/${item.slug}`}
                             className="font-serif text-lg font-medium text-lux-black hover:text-lux-gold transition-colors line-clamp-2"

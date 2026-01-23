@@ -18,8 +18,8 @@ export async function GET(
     const product = await prisma.product.findUnique({
       where: { id },
       include: {
-        category: true,
-        images: { orderBy: { order: "asc" } },
+        Category: true,
+        Image: { orderBy: { order: "asc" } },
       },
     });
 
@@ -102,8 +102,8 @@ export async function PUT(
       where: { id },
       data: updateData,
       include: {
-        category: true,
-        images: { orderBy: { order: "asc" } },
+        Category: true,
+        Image: { orderBy: { order: "asc" } },
       },
     });
 

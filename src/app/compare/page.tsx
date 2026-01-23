@@ -11,12 +11,12 @@ interface CompareProduct {
   slug: string;
   title: string;
   price: number;
-  images: { url: string }[];
+  Image: { url: string }[];
   condition?: string;
   year?: string;
   artist?: string;
   rarity?: string;
-  category: { name: string };
+  Category: { name: string };
 }
 
 export default function ComparisonPage() {
@@ -72,7 +72,7 @@ export default function ComparisonPage() {
   const formatValue = (product: CompareProduct, key: keyof CompareProduct): string => {
     const value = product[key];
     if (key === "category") {
-      return product.category?.name || "Uncategorized";
+      return product.Category?.name || "Uncategorized";
     }
     if (key === "price") {
       return `$${product.price.toLocaleString()}`;
@@ -170,7 +170,7 @@ export default function ComparisonPage() {
                   <Link href={`/product/${product.slug}`} className="block">
                     <div className="relative mx-auto mb-4 aspect-square w-full max-w-[200px] overflow-hidden rounded-lg bg-lux-cream">
                       <Image
-                        src={product.images?.[0]?.url || "/placeholder.svg"}
+                        src={product.Image?.[0]?.url || "/placeholder.svg"}
                         alt={product.title}
                         fill
                         className="object-cover"
@@ -181,7 +181,7 @@ export default function ComparisonPage() {
                     </h2>
                   </Link>
                   <p className="mt-1 text-center text-sm text-ink-600">
-                    {product.category?.name || "Uncategorized"}
+                    {product.Category?.name || "Uncategorized"}
                   </p>
                   <p className="mt-2 text-center text-xl font-semibold text-lux-black">
                     ${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}

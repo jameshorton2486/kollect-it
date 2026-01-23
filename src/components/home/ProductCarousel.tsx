@@ -11,7 +11,7 @@ interface Product {
   title: string;
   slug: string;
   price: number;
-  images: { url: string }[];
+  Image: { url: string }[];
 }
 
 interface ProductCarouselProps {
@@ -88,7 +88,7 @@ export default function ProductCarousel({
             >
               <div className="relative aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                 <Image
-                  src={getProductGridImageUrl(product.images[0]?.url || "/placeholder.svg")}
+                  src={getProductGridImageUrl(product.Image[0]?.url || "/placeholder.svg")}
                   alt={getProductImageAltText(product.title, 0, true)}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform"

@@ -20,10 +20,10 @@ async function getProduct(slug: string) {
   const product = await prisma.product.findUnique({
     where: { slug },
     include: {
-      images: {
+      Image: {
         orderBy: { order: "asc" },
       },
-      category: true,
+      Category: true,
     },
   });
 
@@ -52,12 +52,12 @@ export async function generateMetadata(
     ? product.seoDescription
     : generateSeoDescription(
         product.description,
-        `Authenticated ${product.category.name.toLowerCase()} from Kollect-It. Carefully curated and quality-reviewed.`
+        `Authenticated ${product.Category.name.toLowerCase()} from Kollect-It. Carefully curated and quality-reviewed.`
       );
 
   // Get primary image (first image) for OpenGraph - use ImageKit transformation
   const { getProductDetailImageUrl } = await import("@/lib/image-helpers");
-  const baseImageUrl = product.images[0]?.url || "/og-default.jpg";
+  const baseImageUrl = product.Image[0]?.url || "/og-default.jpg";
   const imageUrl = baseImageUrl !== "/og-default.jpg" 
     ? getProductDetailImageUrl(baseImageUrl)
     : baseImageUrl;
@@ -113,7 +113,7 @@ export default async function ProductPage(props: ProductPageProps) {
 
   const breadcrumbs = [
     { label: "Home", href: "/" },
-    { label: product.category.name, href: `/category/${product.category.slug}` },
+    { label: product.Category.name, href: `/category/${product.Category.slug}` },
     { label: product.title },
   ];
 
@@ -122,8 +122,8 @@ export default async function ProductPage(props: ProductPageProps) {
     title: product.title,
     price: product.price,
     slug: product.slug,
-    image: product.images[0]?.url || "/placeholder.svg",
-    categoryName: product.category.name,
+    image: product.Image[0]?.url || "/placeholder.svg",
+    categoryName: product.Category.name,
   };
 
   // Generate structured data (JSON-LD) - Enhanced with SEO fields
@@ -133,7 +133,7 @@ export default async function ProductPage(props: ProductPageProps) {
     "@type": "Product",
     name: product.title,
     description: product.seoDescription || product.description,
-    image: product.images.map((img) => img.url),
+    image: product.Image.map((img) => img.url),
     sku: product.sku,
     offers: {
       "@type": "Offer",
@@ -145,7 +145,7 @@ export default async function ProductPage(props: ProductPageProps) {
       url: canonicalUrl,
       priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
     },
-    category: product.category.name,
+    category: product.Category.name,
     brand: {
       "@type": "Brand",
       name: "Kollect-It",
@@ -176,7 +176,7 @@ export default async function ProductPage(props: ProductPageProps) {
             {/* Left Column - Images */}
             <div>
               <ProductGallery
-                images={product.images}
+                images={product.Image}
                 productName={product.title}
               />
             </div>
@@ -201,10 +201,10 @@ export default async function ProductPage(props: ProductPageProps) {
               title: p.title,
               slug: p.slug,
               price: p.price,
-              images: p.images || [],
-              category: { name: "Featured" },
+              images: p.Image || [],
+              Category: { name: "Featured" },
             }))}
-            categoryName={product.category.name}
+            categoryName={product.Category.name}
           />
         )}
       </main>

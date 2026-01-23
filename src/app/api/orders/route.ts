@@ -5,6 +5,16 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
+    // Debug: Check database connection
+    const hasDbUrl = !!process.env.DATABASE_URL;
+    const dbUrlLength = process.env.DATABASE_URL?.length || 0;
+    
+    console.log("[ORDERS] Database check:", {
+      hasDbUrl,
+      dbUrlLength,
+      dbUrlPreview: process.env.DATABASE_URL?.substring(0, 30) + "...",
+    });
+
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.email) {
@@ -23,16 +33,46 @@ export async function GET() {
     const orders = await prisma.order.findMany({
       where: { userId: user.id },
       include: {
-        items: true,
+        OrderItem: true,
       },
       orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(orders);
-  } catch (error) {
-    console.error("Error fetching orders:", error);
+  } catch (error: any) {
+    console.error("[ORDERS] Error details:", {
+      message: error?.message,
+      code: error?.code,
+      name: error?.name,
+      stack: error?.stack?.split('\n').slice(0, 3),
+    });
+    
+    // More specific error messages
+    if (error?.code === 'P1001' || error?.message?.includes('Can\'t reach database')) {
+      return NextResponse.json(
+        { 
+          error: "Database connection failed",
+          details: "DATABASE_URL may be incorrect or database is unreachable"
+        },
+        { status: 503 },
+      );
+    }
+    
+    if (error?.code === 'P1000' || error?.message?.includes('authentication')) {
+      return NextResponse.json(
+        { 
+          error: "Database authentication failed",
+          details: "Check DATABASE_URL credentials"
+        },
+        { status: 503 },
+      );
+    }
+
     return NextResponse.json(
-      { error: "Internal server error" },
+      { 
+        error: "Internal server error",
+        details: process.env.NODE_ENV === 'development' ? error?.message : undefined
+      },
       { status: 500 },
     );
   }

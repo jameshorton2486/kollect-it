@@ -22,7 +22,7 @@ interface IngestPayload {
   condition?: string;
   category: string;        // Category slug or name
   subcategory?: string;    // Subcategory slug or name
-  images: {
+  Image: {
     url: string;
     alt?: string;
     order: number;

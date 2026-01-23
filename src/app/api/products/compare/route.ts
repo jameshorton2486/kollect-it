@@ -24,11 +24,11 @@ export async function GET(request: NextRequest) {
         year: true,
         artist: true,
         rarity: true,
-        images: {
+        Image: {
           take: 1,
           select: { url: true },
         },
-        category: {
+        Category: {
           select: { name: true },
         },
       },
