@@ -127,6 +127,7 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleEmailChange}
                 placeholder="your@email.com"
+                autoComplete="email"
                 className={inputClasses(!!validationErrors.email)}
                 aria-invalid={validationErrors.email ? "true" : "false"}
                 aria-describedby={validationErrors.email ? "email-error" : undefined}
@@ -162,6 +163,7 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={handlePasswordChange}
                   placeholder="Enter your password"
+                  autoComplete="current-password"
                   className={inputClasses(!!validationErrors.password)}
                   {...(validationErrors.password && { "aria-invalid": true })}
                   aria-describedby={validationErrors.password ? "password-error" : undefined}

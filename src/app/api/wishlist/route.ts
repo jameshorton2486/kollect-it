@@ -6,16 +6,6 @@ import { prisma } from "@/lib/prisma";
 // GET - Fetch user's wishlist
 export async function GET() {
   try {
-    // Debug: Check database connection
-    const hasDbUrl = !!process.env.DATABASE_URL;
-    const dbUrlLength = process.env.DATABASE_URL?.length || 0;
-    
-    console.log("[WISHLIST] Database check:", {
-      hasDbUrl,
-      dbUrlLength,
-      dbUrlPreview: process.env.DATABASE_URL?.substring(0, 30) + "...",
-    });
-
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.email) {

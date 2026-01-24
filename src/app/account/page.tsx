@@ -511,6 +511,7 @@ export default function AccountPage() {
                   type="text"
                   value={profileForm.name}
                   onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
+                  autoComplete="name"
                   className="w-full px-4 py-2 border border-lux-silver-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-lux-gold"
                 />
               </div>
@@ -521,6 +522,7 @@ export default function AccountPage() {
                   type="tel"
                   value={profileForm.phone}
                   onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
+                  autoComplete="tel"
                   className="w-full px-4 py-2 border border-lux-silver-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-lux-gold"
                 />
               </div>
@@ -567,6 +569,7 @@ export default function AccountPage() {
                     type={showCurrentPassword ? "text" : "password"}
                     value={passwordForm.currentPassword}
                     onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
+                    autoComplete="current-password"
                     className="w-full px-4 py-2 pr-10 border border-lux-silver-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-lux-gold"
                   />
                   <button
@@ -585,6 +588,7 @@ export default function AccountPage() {
                     type={showNewPassword ? "text" : "password"}
                     value={passwordForm.newPassword}
                     onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                    autoComplete="new-password"
                     className="w-full px-4 py-2 pr-10 border border-lux-silver-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-lux-gold"
                     placeholder="At least 8 characters"
                   />
@@ -604,6 +608,7 @@ export default function AccountPage() {
                   type="password"
                   value={passwordForm.confirmPassword}
                   onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                  autoComplete="new-password"
                   className="w-full px-4 py-2 border border-lux-silver-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-lux-gold"
                 />
               </div>

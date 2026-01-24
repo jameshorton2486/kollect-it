@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
  */
 export const RECOMMENDED_INDEXES = `
 -- Product indexes
-CREATE INDEX IF NOT EXISTS idx_products_category ON "Product"("category");
+CREATE INDEX IF NOT EXISTS idx_products_category ON "Product"("categoryId");
 CREATE INDEX IF NOT EXISTS idx_products_status ON "Product"("status");
 CREATE INDEX IF NOT EXISTS idx_products_created_at ON "Product"("createdAt" DESC);
 CREATE INDEX IF NOT EXISTS idx_products_price ON "Product"("price");
@@ -41,7 +41,7 @@ CREATE INDEX IF NOT EXISTS idx_sessions_expires ON "Session"("expires");
 
 -- Composite indexes for common queries
 CREATE INDEX IF NOT EXISTS idx_orders_user_status ON "Order"("userId", "status");
-CREATE INDEX IF NOT EXISTS idx_products_category_status ON "Product"("category", "status");
+CREATE INDEX IF NOT EXISTS idx_products_category_status ON "Product"("categoryId", "status");
 `;
 
 /**
@@ -64,7 +64,7 @@ export const optimizedQueries = {
     const skip = (page - 1) * limit;
 
     const where: any = {};
-    if (filters?.category) where.category = filters.category;
+    if (filters?.category) where.categoryId = filters.category;
     if (filters?.status) where.status = filters.status;
     if (filters?.minPrice || filters?.maxPrice) {
       where.price = {};

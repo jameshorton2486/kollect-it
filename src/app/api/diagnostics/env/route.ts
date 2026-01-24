@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 /**
  * Environment Variable Diagnostics
@@ -12,6 +14,13 @@ import { NextResponse } from "next/server";
  */
 
 export async function GET() {
+  if (process.env.NODE_ENV === "production") {
+    const session = await getServerSession(authOptions);
+    if (!session?.user || session.user.role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+  }
+
   // Define all required environment variables
   const requiredVars = [
     "DATABASE_URL",

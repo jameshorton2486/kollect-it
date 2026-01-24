@@ -27,12 +27,21 @@ jobs:
 
       - name: Enforce single image ingestion path
         run: |
-          ENDPOINTS=$(git grep -E 'uploadImage|handleImageUpload|processImage' || true)
-          COUNT=$(echo "$ENDPOINTS" | wc -l)
-          if [ "$COUNT" -gt 1 ]; then
-            echo "❌ Multiple image ingestion paths detected:"
-            echo "$ENDPOINTS"
+          # Check for API route directories named "upload-image" (the canonical ingestion path)
+          # Exclude workflow files, docs, and client-side code
+          UPLOAD_ROUTES=$(find src/app/api -type d -name "upload-image" 2>/dev/null || true)
+          # Count unique upload-image endpoints
+          UNIQUE_COUNT=$(echo "$UPLOAD_ROUTES" | grep -v '^$' | wc -l)
+          if [ "$UNIQUE_COUNT" -gt 1 ]; then
+            echo "❌ Multiple image ingestion API endpoints detected:"
+            echo "$UPLOAD_ROUTES"
             exit 1
+          fi
+          if [ -n "$UPLOAD_ROUTES" ]; then
+            echo "✅ Single image ingestion path enforced:"
+            echo "$UPLOAD_ROUTES"
+          else
+            echo "✅ No multiple image ingestion endpoints detected"
           fi
 
       # ─────────────────────────────

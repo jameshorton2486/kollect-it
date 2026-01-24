@@ -162,6 +162,7 @@ export default function RegisterPage() {
                 value={formData.name}
                 onChange={handleFieldChange("name")}
                 placeholder="John Doe"
+                autoComplete="name"
                 className={inputClasses(!!validationErrors.name)}
               />
               {validationErrors.name && (
@@ -181,6 +182,7 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleFieldChange("email")}
                 placeholder="your@email.com"
+                autoComplete="email"
                 className={inputClasses(!!validationErrors.email)}
               />
               {validationErrors.email && (
@@ -202,6 +204,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleFieldChange("password")}
                   placeholder="Create a password"
+                  autoComplete="new-password"
                   className={inputClasses(!!validationErrors.password)}
                 />
                 <button

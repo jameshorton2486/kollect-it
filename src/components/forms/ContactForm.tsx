@@ -98,6 +98,7 @@ export default function ContactForm() {
         type={type}
         value={form[id]}
         onChange={(ev) => setForm((s) => ({ ...s, [id]: ev.target.value }))}
+        autoComplete={id === "email" ? "email" : id === "name" ? "name" : "off"}
         className={`w-full rounded border px-3 py-2 outline-none transition-colors duration-150 ${
           errors[id]
             ? "border-red-500 ring-1 ring-red-500"

@@ -54,9 +54,40 @@ if (-not $nextAuthSecret) {
 }
 
 Write-Host ""
+Write-Host "� Checking for PRODUCT_INGEST_API_KEY..." -ForegroundColor Yellow
+$ingestKey = vercel env ls | Select-String "PRODUCT_INGEST_API_KEY"
+
+if (-not $ingestKey) {
+    Write-Host "⚠️  PRODUCT_INGEST_API_KEY not found in Vercel" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "📌 Adding PRODUCT_INGEST_API_KEY to all Vercel environments..." -ForegroundColor Cyan
+    Write-Host "   Key: kollect-it-product-service-2025" -ForegroundColor White
+    Write-Host ""
+
+    # Create a temporary script to provide the key value non-interactively
+    $ingestKeyValue = "kollect-it-product-service-2025"
+    Write-Host "   Running: vercel env add PRODUCT_INGEST_API_KEY" -ForegroundColor Gray
+
+    # Note: vercel env add is interactive, so we document the manual process
+    Write-Host ""
+    Write-Host "   ⚠️  Manual Setup Required:" -ForegroundColor Yellow
+    Write-Host "      1. Go to: https://vercel.com/dashboard" -ForegroundColor White
+    Write-Host "      2. Select project: kollect-it-marketplace-1" -ForegroundColor White
+    Write-Host "      3. Settings → Environment Variables" -ForegroundColor White
+    Write-Host "      4. Click 'Add New'" -ForegroundColor White
+    Write-Host "      5. Name: PRODUCT_INGEST_API_KEY" -ForegroundColor White
+    Write-Host "      6. Value: kollect-it-product-service-2025" -ForegroundColor White
+    Write-Host "      7. Select: Production, Preview, Development" -ForegroundColor White
+    Write-Host "      8. Click 'Add'" -ForegroundColor White
+} else {
+    Write-Host "✅ PRODUCT_INGEST_API_KEY found" -ForegroundColor Green
+}
+
+Write-Host ""
 Write-Host "📋 Required Environment Variables Checklist:" -ForegroundColor Cyan
 Write-Host "   ✅ NEXTAUTH_URL (should be: $productionUrl)" -ForegroundColor $(if ($nextAuthUrl) { "Green" } else { "Red" })
 Write-Host "   $(if ($nextAuthSecret) { '✅' } else { '❌' }) NEXTAUTH_SECRET" -ForegroundColor $(if ($nextAuthSecret) { "Green" } else { "Red" })
+Write-Host "   $(if ($ingestKey) { '✅' } else { '❌' }) PRODUCT_INGEST_API_KEY" -ForegroundColor $(if ($ingestKey) { "Green" } else { "Yellow" })
 Write-Host "   ✅ DATABASE_URL" -ForegroundColor Yellow
 Write-Host "   ✅ DIRECT_URL" -ForegroundColor Yellow
 Write-Host ""

@@ -8,6 +8,8 @@
  */
 
 import { NextResponse, NextRequest } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import ImageKitSyncService from "@/lib/imagekit-sync";
 
 interface ProductJson {
@@ -27,7 +29,26 @@ interface RequestBody {
   product_json: ProductJson;
 }
 
+async function isAuthorized(request: NextRequest): Promise<boolean> {
+  const apiKeyHeader = request.headers.get("x-api-key");
+  const authHeader = request.headers.get("authorization");
+  const providedKey = apiKeyHeader || authHeader?.replace("Bearer ", "");
+  const ingestKey = process.env.PRODUCT_INGEST_API_KEY;
+
+  if (providedKey && ingestKey && providedKey === ingestKey) {
+    return true;
+  }
+
+  const session = await getServerSession(authOptions);
+  return !!session?.user && session.user.role === "admin";
+}
+
 export async function POST(request: NextRequest) {
+  const authorized = await isAuthorized(request);
+  if (!authorized) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = (await request.json()) as RequestBody;
 

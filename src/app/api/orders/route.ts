@@ -5,16 +5,6 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    // Debug: Check database connection
-    const hasDbUrl = !!process.env.DATABASE_URL;
-    const dbUrlLength = process.env.DATABASE_URL?.length || 0;
-    
-    console.log("[ORDERS] Database check:", {
-      hasDbUrl,
-      dbUrlLength,
-      dbUrlPreview: process.env.DATABASE_URL?.substring(0, 30) + "...",
-    });
-
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.email) {

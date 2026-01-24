@@ -94,8 +94,16 @@ export async function PATCH(request: NextRequest) {
 
     const { itemId, quantity } = await request.json();
 
-    const updated = await prisma.cartItem.update({
+    const existing = await prisma.cartItem.findFirst({
       where: { id: itemId, userId: session.user.id },
+    });
+
+    if (!existing) {
+      return NextResponse.json({ error: "Item not found" }, { status: 404 });
+    }
+
+    const updated = await prisma.cartItem.update({
+      where: { id: existing.id },
       data: { quantity },
     });
 
@@ -120,9 +128,13 @@ export async function DELETE(request: NextRequest) {
     const itemId = searchParams.get("itemId");
 
     if (itemId) {
-      await prisma.cartItem.delete({
+      const result = await prisma.cartItem.deleteMany({
         where: { id: itemId, userId: session.user.id },
       });
+
+      if (result.count === 0) {
+        return NextResponse.json({ error: "Item not found" }, { status: 404 });
+      }
     } else {
       // Clear entire cart
       await prisma.cartItem.deleteMany({

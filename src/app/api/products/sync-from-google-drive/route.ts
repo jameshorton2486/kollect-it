@@ -9,6 +9,8 @@
 
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import * as fs from "fs";
 
 interface ProductJson {
@@ -79,7 +81,26 @@ async function downloadProductJson(
   });
 }
 
-export async function POST() {
+async function isAuthorized(request: Request): Promise<boolean> {
+  const apiKeyHeader = request.headers.get("x-api-key");
+  const authHeader = request.headers.get("authorization");
+  const providedKey = apiKeyHeader || authHeader?.replace("Bearer ", "");
+  const ingestKey = process.env.PRODUCT_INGEST_API_KEY;
+
+  if (providedKey && ingestKey && providedKey === ingestKey) {
+    return true;
+  }
+
+  const session = await getServerSession(authOptions);
+  return !!session?.user && session.user.role === "admin";
+}
+
+export async function POST(request: Request) {
+  const authorized = await isAuthorized(request);
+  if (!authorized) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const folderIdtoSync = process.env.GOOGLE_DRIVE_FOLDER_ID;
 

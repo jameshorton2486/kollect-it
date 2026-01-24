@@ -245,6 +245,7 @@ export default function CheckoutPage() {
                           onChange={(e) => setShippingInfo({ ...shippingInfo, fullName: e.target.value })}
                           className={inputClasses}
                           placeholder="John Smith"
+                          autoComplete="name"
                           required
                         />
                       </div>
@@ -256,6 +257,7 @@ export default function CheckoutPage() {
                           onChange={(e) => setShippingInfo({ ...shippingInfo, email: e.target.value })}
                           className={inputClasses}
                           placeholder="john@example.com"
+                          autoComplete="email"
                           required
                         />
                       </div>
@@ -269,6 +271,7 @@ export default function CheckoutPage() {
                         onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
                         className={inputClasses}
                         placeholder="(555) 555-5555"
+                        autoComplete="tel"
                         required
                       />
                     </div>
@@ -281,6 +284,7 @@ export default function CheckoutPage() {
                         onChange={(e) => setShippingInfo({ ...shippingInfo, address: e.target.value })}
                         className={inputClasses}
                         placeholder="123 Main Street"
+                        autoComplete="street-address"
                         required
                       />
                     </div>
@@ -294,6 +298,7 @@ export default function CheckoutPage() {
                           onChange={(e) => setShippingInfo({ ...shippingInfo, city: e.target.value })}
                           className={inputClasses}
                           placeholder="New York"
+                          autoComplete="address-level2"
                           required
                         />
                       </div>
@@ -305,6 +310,7 @@ export default function CheckoutPage() {
                           onChange={(e) => setShippingInfo({ ...shippingInfo, state: e.target.value })}
                           className={inputClasses}
                           placeholder="NY"
+                          autoComplete="address-level1"
                           required
                         />
                       </div>
@@ -319,6 +325,7 @@ export default function CheckoutPage() {
                           onChange={(e) => setShippingInfo({ ...shippingInfo, zipCode: e.target.value })}
                           className={inputClasses}
                           placeholder="10001"
+                          autoComplete="postal-code"
                           required
                         />
                       </div>
@@ -329,6 +336,7 @@ export default function CheckoutPage() {
                           value={shippingInfo.country}
                           onChange={(e) => setShippingInfo({ ...shippingInfo, country: e.target.value })}
                           className={inputClasses}
+                          autoComplete="country"
                           aria-label="Select country"
                         >
                           <option>United States</option>

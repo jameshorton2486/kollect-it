@@ -1,0 +1,74 @@
+# Kollect-It Cursor Rules
+
+## Git Workflow Commands
+
+When the user types any of these commands, execute the corresponding git workflow:
+
+### @git-deploy or "deploy my changes"
+1. git add .
+2. Analyze changes and generate conventional commit message (feat:, fix:, docs:, chore:, etc.)
+3. git commit -m "[generated message]"
+4. git push origin [current-branch]
+
+### @git-save or "save my changes"
+1. git add .
+2. Generate commit message from diff
+3. git commit -m "[generated message]"
+
+### @git-pr or "create pull request"
+1. git add .
+2. git commit -m "[generated message]"
+3. git push origin [current-branch]
+4. gh pr create --base main --head [current-branch] --title "[title]" --body "[summary]"
+
+### @git-deploy-vercel or "deploy to vercel" or "deploy to production"
+1. git add .
+2. git commit -m "[generated message]"
+3. git push origin main
+4. vercel --prod
+
+### @git-sync or "sync with main"
+1. git fetch origin
+2. git pull origin main
+3. git push origin [current-branch]
+
+### @git-status or "git status"
+1. git status
+2. git log --oneline -5
+3. Summarize current state
+
+### @git-undo or "undo last commit"
+1. git reset --soft HEAD~1
+2. git status
+
+### @git-feature [name] or "create feature branch"
+1. git checkout main
+2. git pull origin main
+3. git checkout -b feature/[name]
+
+## Commit Message Convention
+
+Always use conventional commits:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation
+- style: Formatting
+- refactor: Code restructuring
+- test: Tests
+- chore: Maintenance
+- hotfix: Urgent fix
+- audit: Security/code audit
+
+## Project Context
+
+This is Kollect-It, a luxury antiques marketplace built with:
+- Next.js 16 (App Router)
+- TypeScript
+- Prisma ORM
+- Supabase PostgreSQL
+- NextAuth.js
+- Stripe payments
+- Vercel deployment
+
+Repository: kollect-it
+Production URL: https://kollect-it.com

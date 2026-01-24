@@ -100,6 +100,7 @@ export default function ContactPage() {
                     type="text"
                     id="name"
                     name="name"
+                    autoComplete="name"
                     className="w-full px-4 py-3 rounded-lg border border-lux-silver-soft bg-lux-pearl focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                     placeholder="Your name"
                   />
@@ -113,6 +114,7 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     name="email"
+                    autoComplete="email"
                     className="w-full px-4 py-3 rounded-lg border border-lux-silver-soft bg-lux-pearl focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
                     placeholder="your@email.com"
                   />

@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 
 export default function NotFoundPage() {
   // Log 404 occurrence (server component)
-  logger.warn("Route not found", {});
+  if (process.env.NEXT_PHASE !== "phase-production-build") {
+    logger.warn("Route not found", {});
+  }
   return (
     <main className="min-h-[70vh] bg-gradient-to-b from-lux-pearl to-white flex items-center justify-center px-4">
       <div className="max-w-lg text-center">
