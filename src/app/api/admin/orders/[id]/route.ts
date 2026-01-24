@@ -32,7 +32,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
       include: {
         OrderItem: {
           include: {
-            product: {
+            Product: {
               select: {
                 slug: true,
               },
@@ -98,7 +98,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
       include: {
         OrderItem: {
           include: {
-            product: {
+            Product: {
               select: {
                 slug: true,
               },

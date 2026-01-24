@@ -62,7 +62,7 @@ async function executeReport(reportId: string): Promise<void> {
   try {
     const report = await (prisma as any).scheduledReport.findUnique({
       where: { id: reportId },
-      include: { user: true },
+      include: { User: true },
     });
 
     if (!report) {
@@ -204,4 +204,3 @@ export async function getSchedulerHealth() {
         : 0,
   };
 }
-

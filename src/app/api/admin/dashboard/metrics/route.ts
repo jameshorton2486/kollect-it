@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireAdminAuth } from "@/lib/auth-admin";
 
 /**
  * Dashboard Metrics API
@@ -9,8 +10,22 @@ import { requireAdminAuth } from "@/lib/auth-admin";
 
 export async function GET(request: NextRequest) {
   try {
-    // Require admin authentication
-    await requireAdminAuth();
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { role: true },
+    });
+
+    if (!user || user.role !== "admin") {
+      return NextResponse.json(
+        { error: "Admin access required" },
+        { status: 403 },
+      );
+    }
     const { searchParams } = new URL(request.url);
     const period = parseInt(searchParams.get("period") || "30");
 
@@ -33,7 +48,7 @@ export async function GET(request: NextRequest) {
       include: {
         OrderItem: {
           include: {
-            product: true,
+            Product: true,
           },
         },
       },
@@ -119,14 +134,14 @@ export async function GET(request: NextRequest) {
     const categories = await prisma.category.findMany({
       include: {
         _count: {
-          select: { products: true },
+          select: { Product: true },
         },
       },
     });
 
     const productsByCategory = categories.map((cat: any) => ({
       name: cat.name,
-      count: cat._count.products,
+      count: cat._count.Product,
     }));
 
     // Customer metrics
@@ -142,7 +157,7 @@ export async function GET(request: NextRequest) {
     // Calculate returning customer rate
     const customersWithOrders = await prisma.user.findMany({
       where: {
-        orders: {
+        Order: {
           some: {
             paymentStatus: "paid",
           },
@@ -151,7 +166,7 @@ export async function GET(request: NextRequest) {
       include: {
         _count: {
           select: {
-            orders: {
+            Order: {
               where: {
                 paymentStatus: "paid",
               },
@@ -162,7 +177,7 @@ export async function GET(request: NextRequest) {
     });
 
     const returningCustomers = customersWithOrders.filter(
-      (u: any) => u._count.orders > 1,
+      (u: any) => u._count.Order > 1,
     ).length;
     const returningRate =
       customersWithOrders.length > 0
@@ -177,15 +192,15 @@ export async function GET(request: NextRequest) {
 
     orders.forEach((order: any) => {
       order.OrderItem.forEach((item: any) => {
-        if (item.product) {
-          const existing = productSales.get(item.product.id) || {
-            title: item.product.title,
+        if (item.Product) {
+          const existing = productSales.get(item.Product.id) || {
+            title: item.Product.title,
             sales: 0,
             revenue: 0,
           };
           existing.sales += item.quantity;
           existing.revenue += item.price * item.quantity;
-          productSales.set(item.product.id, existing);
+          productSales.set(item.Product.id, existing);
         }
       });
     });

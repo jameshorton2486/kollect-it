@@ -48,7 +48,7 @@ interface DetailedOrder {
   shipping: number;
   createdAt: string;
   updatedAt: string;
-  items: OrderItem[];
+  OrderItem: OrderItem[];
   timeline: OrderTimeline[];
   shippingAddress: {
     street: string;
@@ -265,7 +265,7 @@ export function OrderDetailsPanel({ order, onClose, onUpdate }: Props) {
                   </tr>
                 </thead>
                 <tbody className="bg-lux-white divide-y divide-lux-silver-soft">
-                  {order.items.map((item) => (
+                  {order.OrderItem.map((item) => (
                     <tr key={item.id} className="hover:bg-lux-cream/50 transition-colors">
                       <td className="px-4 py-3 text-sm text-lux-black">
                         {item.title}

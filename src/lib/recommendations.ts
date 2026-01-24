@@ -11,7 +11,7 @@ export async function getRecommendations(
       // Get user's purchase and view history
       const userOrders = await prisma.orderItem.findMany({
         where: {
-          order: { userId },
+          Order: { userId },
         },
         select: { productId: true },
         distinct: ["productId"],

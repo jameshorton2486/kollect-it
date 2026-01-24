@@ -24,7 +24,7 @@ import { formatUSD } from "@/lib/currency";
 interface WishlistItem {
   id: string;
   productId: string;
-  product: {
+  Product: {
     id: string;
     title: string;
     slug: string;
@@ -41,7 +41,7 @@ interface Order {
   status: string;
   total: number;
   createdAt: string;
-  items: {
+  OrderItem: {
     id: string;
     title: string;
     price: number;
@@ -399,24 +399,24 @@ export default function AccountPage() {
                           key={item.id}
                           className="border border-lux-silver-soft rounded-lg overflow-hidden"
                         >
-                          <Link href={`/product/${item.product.slug}`}>
+                          <Link href={`/product/${item.Product.slug}`}>
                             <div className="aspect-square relative bg-lux-pearl">
                               <Image
-                                src={item.product.Image[0]?.url || "/placeholder.svg"}
-                                alt={item.product.title}
+                                src={item.Product.Image[0]?.url || "/placeholder.svg"}
+                                alt={item.Product.title}
                                 fill
                                 className="object-cover"
                               />
                             </div>
                           </Link>
                           <div className="p-4">
-                            <Link href={`/product/${item.product.slug}`}>
+                            <Link href={`/product/${item.Product.slug}`}>
                               <h3 className="font-medium text-lux-black hover:text-lux-gold line-clamp-1">
-                                {item.product.title}
+                                {item.Product.title}
                               </h3>
                             </Link>
                             <p className="text-lg font-semibold text-lux-gold mt-1">
-                              {formatUSD(item.product.price)}
+                              {formatUSD(item.Product.price)}
                             </p>
                             <button
                               onClick={() => removeFromWishlist(item.productId)}

@@ -15,7 +15,7 @@ interface Order {
   total: number;
   paymentStatus: string;
   createdAt: string;
-  items: {
+  OrderItem: {
     id: string;
     quantity: number;
   }[];
@@ -121,7 +121,7 @@ export default function AdminOrdersPage() {
         order.customerName || "Guest",
         order.customerEmail || "",
         new Date(order.createdAt).toLocaleDateString(),
-        order.items.reduce((sum, item) => sum + item.quantity, 0),
+        order.OrderItem.reduce((sum, item) => sum + item.quantity, 0),
         `$${order.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
         order.paymentStatus,
         order.status,
@@ -447,7 +447,7 @@ export default function AdminOrdersPage() {
                       </td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                       <td>
-                        {order.items.reduce(
+                        {order.OrderItem.reduce(
                           (sum, item) => sum + item.quantity,
                           0,
                         )}{" "}

@@ -13,7 +13,7 @@ export async function GET() {
     const cartItems = await prisma.cartItem.findMany({
       where: { userId: session.user.id },
       include: {
-        product: {
+        Product: {
           include: {
             Image: {
               take: 1,
@@ -25,8 +25,8 @@ export async function GET() {
     });
 
     const total = cartItems.reduce(
-      (sum: number, item: { product: { price: number }; quantity: number }) =>
-        sum + item.product.price * item.quantity,
+      (sum: number, item: { Product: { price: number }; quantity: number }) =>
+        sum + item.Product.price * item.quantity,
       0,
     );
 
@@ -139,4 +139,3 @@ export async function DELETE(request: NextRequest) {
     );
   }
 }
-

@@ -11,7 +11,7 @@ interface Review {
   helpful: number;
   verified: boolean;
   createdAt: string;
-  user: {
+  User: {
     name: string;
     image?: string;
   };
@@ -150,11 +150,11 @@ export default function ProductReviews({ productId }: ReviewsProps) {
             <div key={review.id} className="border-b pb-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-lux-cream rounded-full flex items-center justify-center font-semibold text-lux-black">
-                  {review.user.name?.[0]}
+                  {review.User.name?.[0]}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-semibold">{review.user.name}</span>
+                    <span className="font-semibold">{review.User.name}</span>
                     {review.verified && (
                       <span className="flex items-center gap-1 text-xs text-lux-gold">
                         <CheckCircle className="h-3 w-3" />
@@ -193,7 +193,7 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                         <img
                           key={idx}
                           src={img}
-                          alt={`Review image ${idx + 1} from ${review.user.name}`}
+                          alt={`Review image ${idx + 1} from ${review.User.name}`}
                           className="w-20 h-20 object-cover rounded"
                         />
                       ))}

@@ -10,7 +10,7 @@ interface OrderItem {
   title: string;
   price: number;
   quantity: number;
-  product: {
+  Product: {
     slug: string;
   };
 }
@@ -38,7 +38,7 @@ interface Order {
   shippingCountry: string;
   createdAt: string;
   updatedAt: string;
-  items: OrderItem[];
+  OrderItem: OrderItem[];
 }
 
 interface OrderDetailPageProps {
@@ -276,11 +276,11 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
               <div className="admin-order-section">
                 <h2 className="admin-section-title">Order Items</h2>
                 <div className="order-items-list">
-                  {order.items.map((item) => (
+                  {order.OrderItem.map((item) => (
                     <div key={item.id} className="order-item-row">
                       <div className="order-item-info">
                         <Link
-                          href={`/product/${item.product.slug}`}
+                          href={`/product/${item.Product.slug}`}
                           className="order-item-title"
                         >
                           {item.title}

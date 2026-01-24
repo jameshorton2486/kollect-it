@@ -103,8 +103,9 @@ export async function GET(request: NextRequest) {
     const revenueByCategory = orders.reduce(
       (acc, order) => {
         order.OrderItem.forEach((item) => {
-          const categoryName = item.product?.category?.name || "Uncategorized";
-          const categoryId = item.product?.categoryId || "unknown";
+          const categoryName =
+            item.Product?.Category?.name || "Uncategorized";
+          const categoryId = item.Product?.categoryId || "unknown";
           if (!acc[categoryId]) {
             acc[categoryId] = { name: categoryName, revenue: 0, orders: 0 };
           }
@@ -124,8 +125,8 @@ export async function GET(request: NextRequest) {
     const productRevenue = orders.reduce(
       (acc, order) => {
         order.OrderItem.forEach((item) => {
-          if (!item.product) return;
-          const productId = item.product.id;
+          if (!item.Product) return;
+          const productId = item.Product.id;
           if (!acc[productId]) {
             acc[productId] = {
               id: productId,
@@ -279,4 +280,3 @@ export async function GET(request: NextRequest) {
     return applySecurityHeaders(response);
   }
 }
-

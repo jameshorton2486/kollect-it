@@ -6,6 +6,8 @@
 // FIX APPLIED: SKU validation now accepts PREFIX-YYYY-NNNN format (3-4 letter category prefix)
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from "@prisma/client";
 
@@ -142,8 +144,9 @@ export async function POST(request: NextRequest) {
     // =========================================
     // 1. Authenticate request
     // =========================================
+    const apiKeyHeader = request.headers.get('x-api-key');
     const authHeader = request.headers.get('authorization');
-    const providedKey = authHeader?.replace('Bearer ', '');
+    const providedKey = apiKeyHeader || authHeader?.replace('Bearer ', '');
 
     if (!INGEST_API_KEY) {
       console.error('[INGEST] PRODUCT_INGEST_API_KEY not configured');
@@ -153,12 +156,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!providedKey || providedKey !== INGEST_API_KEY) {
-      console.warn('[INGEST] Unauthorized request attempt');
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+    if (providedKey) {
+      if (providedKey !== INGEST_API_KEY) {
+        console.warn('[INGEST] Unauthorized request attempt');
+        return NextResponse.json(
+          { error: 'Unauthorized' },
+          { status: 401 }
+        );
+      }
+    } else {
+      const session = await getServerSession(authOptions);
+      if (!session?.user?.email) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { role: true },
+      });
+
+      if (!user || user.role !== 'admin') {
+        return NextResponse.json(
+          { error: 'Admin access required' },
+          { status: 403 }
+        );
+      }
     }
 
     // =========================================
@@ -406,11 +428,31 @@ export async function POST(request: NextRequest) {
 
 // GET - Check API status
 export async function GET(request: NextRequest) {
+  const apiKeyHeader = request.headers.get('x-api-key');
   const authHeader = request.headers.get('authorization');
-  const providedKey = authHeader?.replace('Bearer ', '');
+  const providedKey = apiKeyHeader || authHeader?.replace('Bearer ', '');
 
-  if (!providedKey || providedKey !== INGEST_API_KEY) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (providedKey) {
+    if (providedKey !== INGEST_API_KEY) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+  } else {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { role: true },
+    });
+
+    if (!user || user.role !== 'admin') {
+      return NextResponse.json(
+        { error: 'Admin access required' },
+        { status: 403 }
+      );
+    }
   }
 
   // Return available categories for desktop app
@@ -419,7 +461,7 @@ export async function GET(request: NextRequest) {
       id: true,
       name: true,
       slug: true,
-      subcategories: {
+      Subcategory: {
         select: {
           id: true,
           name: true,

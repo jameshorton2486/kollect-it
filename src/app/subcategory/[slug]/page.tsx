@@ -18,7 +18,7 @@ async function getSubcategoryData(slug: string) {
     where: { slug },
     include: {
       Category: true,
-      products: {
+      Product: {
         where: {
           status: "active",
           isDraft: false,
@@ -26,7 +26,7 @@ async function getSubcategoryData(slug: string) {
         include: {
           Image: { orderBy: { order: "asc" }, take: 1 },
           Category: true,
-          subCategory: true,
+          Subcategory: true,
         },
         orderBy: { createdAt: "desc" },
       },
@@ -49,23 +49,23 @@ export async function generateMetadata(props: SubcategoryPageProps): Promise<Met
     };
   }
 
-  const description = `Browse ${subcategory.name.toLowerCase()} in ${subcategory.category.name.toLowerCase()} at Kollect-It. Carefully curated and quality-reviewed pieces.`;
+  const description = `Browse ${subcategory.name.toLowerCase()} in ${subcategory.Category.name.toLowerCase()} at Kollect-It. Carefully curated and quality-reviewed pieces.`;
 
   return {
-    title: `${subcategory.name} | ${subcategory.category.name} | Kollect-It`,
+    title: `${subcategory.name} | ${subcategory.Category.name} | Kollect-It`,
     description,
     alternates: {
       canonical: `https://kollect-it.com/subcategory/${subcategory.slug}`,
     },
     openGraph: {
-      title: `${subcategory.name} | ${subcategory.category.name} | Kollect-It`,
+      title: `${subcategory.name} | ${subcategory.Category.name} | Kollect-It`,
       description,
       url: `https://kollect-it.com/subcategory/${subcategory.slug}`,
       type: "website",
     },
     twitter: {
       card: "summary",
-      title: `${subcategory.name} | ${subcategory.category.name} | Kollect-It`,
+      title: `${subcategory.name} | ${subcategory.Category.name} | Kollect-It`,
       description,
     },
   };
@@ -80,7 +80,7 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
     notFound();
   }
 
-  const products = subcategory.products;
+  const products = subcategory.Product;
 
   return (
     <main className="flex-1">
@@ -94,10 +94,10 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
             </Link>
             <span className="text-lux-gray-dark">/</span>
             <Link
-              href={`/category/${subcategory.category.slug}`}
+              href={`/category/${subcategory.Category.slug}`}
               className="hover:text-lux-gold transition-colors"
             >
-              {subcategory.category.name}
+              {subcategory.Category.name}
             </Link>
             <span className="text-lux-gray-dark">/</span>
             <span className="text-lux-black font-medium">{subcategory.name}</span>
@@ -105,7 +105,7 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
 
           {/* Header */}
           <p className="text-label text-lux-gold mb-2">
-            {subcategory.category.name}
+            {subcategory.Category.name}
           </p>
           <h1 className="heading-page text-lux-black">{subcategory.name}</h1>
           <p className="lead mt-4 max-w-3xl">
@@ -138,8 +138,8 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
               description="I'm always adding new pieces to the collection. Check back soon, or contact me to let me know what you're looking for and I'll keep an eye out."
               primaryAction={{ label: "Browse All Categories", href: "/browse" }}
               secondaryAction={{
-                label: `← Back to ${subcategory.category.name}`,
-                href: `/category/${subcategory.category.slug}`,
+                label: `← Back to ${subcategory.Category.name}`,
+                href: `/category/${subcategory.Category.slug}`,
               }}
             />
           )}
@@ -148,3 +148,4 @@ export default async function SubcategoryPage(props: SubcategoryPageProps) {
     </main>
   );
 }
+

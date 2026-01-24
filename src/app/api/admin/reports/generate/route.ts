@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       include: {
         OrderItem: {
           include: {
-            product: {
+            Product: {
               select: {
                 title: true,
                 Category: {
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       order.OrderItem.forEach((item: any) => {
         const key = item.productId;
         const existing = productSales.get(key) || {
-          title: item.product?.title || "Unknown",
+          title: item.Product?.title || "Unknown",
           quantity: 0,
           revenue: 0,
         };

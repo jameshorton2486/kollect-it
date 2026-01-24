@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       prisma.review.findMany({
         where,
         include: {
-          user: {
+          User: {
             select: {
               name: true,
               image: true,
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
     const hasPurchased = await prisma.orderItem.findFirst({
       where: {
         productId,
-        order: {
+        Order: {
           userId: session.user.id,
           status: "COMPLETED",
         },

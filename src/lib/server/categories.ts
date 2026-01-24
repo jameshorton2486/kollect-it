@@ -107,12 +107,12 @@ export async function getCategoryBySlug(slug: string) {
       include: {
         _count: {
           select: {
-            products: {
+            Product: {
               where: { status: "active" },
             },
           },
         },
-        products: {
+        Product: {
           where: { status: "active" },
           select: {
             id: true,
@@ -196,7 +196,7 @@ export async function getCategoriesWithCount() {
         image: true,
         _count: {
           select: {
-            products: {
+            Product: {
               where: { status: "active" },
             },
           },
@@ -207,7 +207,7 @@ export async function getCategoriesWithCount() {
 
     return categories.map((cat) => ({
       ...cat,
-      productCount: cat._count.products,
+      productCount: cat._count.Product,
     }));
   } catch (error) {
     console.error("[Category Count Error]", {

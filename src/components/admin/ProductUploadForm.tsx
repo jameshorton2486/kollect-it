@@ -39,7 +39,7 @@ export function ProductUploadForm() {
   const [category, setCategory] = useState("Collectibles");
   const [categoryId, setCategoryId] = useState("");
   const [subcategoryId, setSubcategoryId] = useState("");
-  const [categories, setCategories] = useState<Array<{id: string; name: string; subcategories: Array<{id: string; name: string}>}>>([]);
+  const [categories, setCategories] = useState<Array<{id: string; name: string; Subcategory: Array<{id: string; name: string}>}>>([]);
   const [productNotes, setProductNotes] = useState("");
   const [appraisalUrls, setAppraisalUrls] = useState<string[]>([]);
   const [newAppraisalUrl, setNewAppraisalUrl] = useState("");
@@ -99,7 +99,7 @@ export function ProductUploadForm() {
           const collectibles = cats.find((c: any) => c.name === "Collectibles") || cats[0];
           setCategory(collectibles.name);
           setCategoryId(collectibles.id);
-          setSubcategoryId(collectibles.subcategories?.[0]?.id || "");
+          setSubcategoryId(collectibles.Subcategory?.[0]?.id || "");
         }
       }
     } catch (err) {
@@ -221,7 +221,7 @@ export function ProductUploadForm() {
 
   function handleCopyAllProductInfo() {
     const selectedCategory = categories.find(c => c.id === categoryId);
-    const selectedSubcategory = selectedCategory?.subcategories?.find(s => s.id === subcategoryId);
+    const selectedSubcategory = selectedCategory?.Subcategory?.find(s => s.id === subcategoryId);
 
     const productInfo = `PRODUCT INFORMATION - ${sku}
 ===============================
@@ -318,7 +318,7 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
         const collectibles = categories.find(c => c.name === "Collectibles") || categories[0];
         setCategory(collectibles?.name || "Collectibles");
         setCategoryId(collectibles?.id || "");
-        setSubcategoryId(collectibles?.subcategories?.[0]?.id || "");
+        setSubcategoryId(collectibles?.Subcategory?.[0]?.id || "");
         setProductNotes("");
         setAppraisalUrls([]);
         setImages([]);
@@ -452,7 +452,7 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
                 const selectedCat = categories.find(c => c.id === e.target.value);
                 setCategory(selectedCat?.name || "");
                 setCategoryId(e.target.value);
-                setSubcategoryId(selectedCat?.subcategories?.[0]?.id || "");
+                setSubcategoryId(selectedCat?.Subcategory?.[0]?.id || "");
               }}
               className="w-full px-4 py-2 bg-lux-charcoal border border-lux-charcoal/50 rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream"
               aria-label="Select product category"
@@ -481,7 +481,7 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
               <option value="">Select Subcategory (Optional)</option>
               {categories
                 .find((c) => c.id === categoryId)
-                ?.subcategories.map((sub) => (
+                ?.Subcategory.map((sub) => (
                   <option key={sub.id} value={sub.id}>
                     {sub.name}
                   </option>

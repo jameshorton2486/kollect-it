@@ -138,7 +138,7 @@ export const optimizedQueries = {
           total: true,
           paymentStatus: true,
           createdAt: true,
-          user: {
+          User: {
             select: {
               id: true,
               name: true,
@@ -146,7 +146,7 @@ export const optimizedQueries = {
             },
           },
           _count: {
-            select: { items: true },
+            select: { OrderItem: true },
           },
         },
         orderBy: { createdAt: "desc" },
@@ -204,7 +204,7 @@ export const optimizedQueries = {
         prisma.orderItem.groupBy({
           by: ["productId"],
           where: {
-            order: {
+            Order: {
               createdAt: { gte: dateFrom, lte: dateTo },
               status: { not: "cancelled" },
             },

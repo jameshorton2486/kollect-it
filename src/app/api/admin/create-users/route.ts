@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { requireAdminAuth } from "@/lib/auth-admin";
+import { authOptions } from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
@@ -51,8 +52,22 @@ export async function GET() {
   }
 
   try {
-    const session = await requireAdminAuth();
-    if (session instanceof Response) return session;
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const adminUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { role: true },
+    });
+
+    if (!adminUser || adminUser.role !== "admin") {
+      return NextResponse.json(
+        { error: "Admin access required" },
+        { status: 403 },
+      );
+    }
 
     // Get admin user from environment variables (will throw if not properly configured)
     const userData = getAdminUser();

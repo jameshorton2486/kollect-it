@@ -15,9 +15,9 @@ import type {
  * Product with all relations loaded
  */
 export type ProductWithRelations = Product & {
-  category: Category;
-  subcategory: Subcategory | null;
-  images: Image[];
+  Category: Category;
+  Subcategory: Subcategory | null;
+  Image: Image[];
 };
 
 /**
@@ -27,8 +27,8 @@ export type ProductListItem = Pick<
   Product,
   'id' | 'title' | 'slug' | 'price' | 'condition' | 'year'
 > & {
-  images: Pick<Image, 'url'>[];
-  category: Pick<Category, 'name' | 'slug'> | null;
+  Image: Pick<Image, 'url'>[];
+  Category: Pick<Category, 'name' | 'slug'> | null;
 };
 
 /**

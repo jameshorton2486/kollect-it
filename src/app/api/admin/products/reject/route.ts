@@ -4,13 +4,28 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireAdminAuth } from "@/lib/auth-admin";
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await requireAdminAuth();
-    if (session instanceof Response) return session;
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { role: true },
+    });
+
+    if (!user || user.role !== "admin") {
+      return NextResponse.json(
+        { error: "Admin access required" },
+        { status: 403 },
+      );
+    }
 
     const body = await request.json();
     const { productId, reason } = body;

@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/ui";
 
 interface WishlistItem {
   id: string;
-  product: {
+  Product: {
     id: string;
     slug: string;
     title: string;
@@ -48,7 +48,7 @@ export default function WishlistPage() {
       if (!response.ok) throw new Error("Failed to delete from wishlist.");
 
       setItems((prevItems) =>
-        prevItems.filter((item) => item.product.id !== productId)
+        prevItems.filter((item) => item.Product.id !== productId)
       );
     } catch (error) {
       console.error("Failed to remove product from wishlist.", error);
@@ -129,40 +129,40 @@ export default function WishlistPage() {
                 className="group bg-lux-white rounded-lg border border-lux-silver-soft overflow-hidden shadow-clean hover:shadow-soft transition-shadow"
               >
                 <Link
-                  href={`/product/${item.product.slug}`}
+                  href={`/product/${item.Product.slug}`}
                   className="relative aspect-square bg-lux-pearl block overflow-hidden"
                 >
                   <Image
-                    src={item.product.Image[0]?.url || "/placeholder.svg"}
-                    alt={item.product.title}
+                    src={item.Product.Image[0]?.url || "/placeholder.svg"}
+                    alt={item.Product.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </Link>
                 <div className="p-4">
                   <p className="text-label text-lux-gold">
-                    {item.product.Category?.name || "Featured"}
+                    {item.Product.Category?.name || "Featured"}
                   </p>
-                  <Link href={`/product/${item.product.slug}`}>
+                  <Link href={`/product/${item.Product.slug}`}>
                     <h3 className="font-serif font-medium text-lux-black line-clamp-2 mt-1 hover:text-lux-gold transition-colors">
-                      {item.product.title}
+                      {item.Product.title}
                     </h3>
                   </Link>
 
                   <p className="mt-2 text-xl font-semibold text-lux-gold">
-                    ${item.product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                    ${item.Product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                   </p>
 
                   <div className="mt-4 flex items-center gap-2">
                     <button
-                      onClick={() => addToCart(item.product.id)}
+                      onClick={() => addToCart(item.Product.id)}
                       className="flex-1 btn-primary rounded-full text-xs py-2.5"
                     >
                       <ShoppingCart className="h-4 w-4 mr-1 inline" />
                       Add to Cart
                     </button>
                     <button
-                      onClick={() => removeFromWishlist(item.product.id)}
+                      onClick={() => removeFromWishlist(item.Product.id)}
                       className="flex h-10 w-10 items-center justify-center rounded-full border border-red-200 text-red-500 hover:bg-red-50 transition-colors"
                       aria-label="Remove from wishlist"
                     >

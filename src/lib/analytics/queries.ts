@@ -298,9 +298,9 @@ export async function getRevenueInsights(
 ): Promise<RevenueInsights> {
   const orders = await prisma.order.findMany({
     include: {
-      items: {
+      OrderItem: {
         include: {
-          product: {
+          Product: {
             include: {
               Category: true,
             },
@@ -322,7 +322,7 @@ export async function getRevenueInsights(
 
   orders.forEach((order) => {
     order.OrderItem.forEach((item) => {
-      const catName = item.product.Category?.name || "Unknown";
+      const catName = item.Product.Category?.name || "Unknown";
       if (!revenueByCategory[catName]) {
         revenueByCategory[catName] = { revenue: 0, productsSold: 0 };
       }
@@ -412,7 +412,7 @@ export async function getCategoryMetrics(
 ): Promise<CategoryMetrics[]> {
   const categories = await prisma.category.findMany({
     include: {
-      products: {
+      Product: {
         include: {
           OrderItem: true,
         },
@@ -421,11 +421,11 @@ export async function getCategoryMetrics(
   });
 
   const metrics = categories.map((cat) => {
-    const productCount = cat.products.length;
-    const soldCount = cat.products.filter(
+    const productCount = cat.Product.length;
+    const soldCount = cat.Product.filter(
       (p) => p.OrderItem.length > 0,
     ).length;
-    const totalRevenue = cat.products.reduce(
+    const totalRevenue = cat.Product.reduce(
       (sum, p) => sum + p.price * p.OrderItem.length,
       0,
     );
@@ -435,9 +435,9 @@ export async function getCategoryMetrics(
       productCount,
       approvalRate: 85 + Math.random() * 10, // Mock
       averagePrice:
-        cat.products.length > 0
-          ? cat.products.reduce((sum, p) => sum + p.price, 0) /
-            cat.products.length
+        cat.Product.length > 0
+          ? cat.Product.reduce((sum, p) => sum + p.price, 0) /
+            cat.Product.length
           : 0,
       averageConfidence: 80 + Math.random() * 15, // Mock
       revenue: totalRevenue,
@@ -466,9 +466,9 @@ export async function getRevenueMetrics(
         paymentStatus: "COMPLETED",
       },
       include: {
-        items: {
+        OrderItem: {
           include: {
-            product: {
+            Product: {
               include: { Category: true },
             },
           },
@@ -483,7 +483,7 @@ export async function getRevenueMetrics(
     const categoryMap = new Map();
     orders.forEach((order) => {
       order.OrderItem.forEach((item) => {
-        const categoryName = item.product.Category.name;
+        const categoryName = item.Product.Category.name;
         if (!categoryMap.has(categoryName)) {
           categoryMap.set(categoryName, {
             category: categoryName,
@@ -815,4 +815,3 @@ export async function getAnalyticsSummary(
     timestamp: now,
   };
 }
-

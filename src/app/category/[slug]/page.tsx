@@ -16,10 +16,10 @@ async function getCategoryData(slug: string) {
   return prisma.category.findUnique({
     where: { slug },
     include: {
-      subcategories: {
+      Subcategory: {
         orderBy: { name: "asc" },
       },
-      products: {
+      Product: {
         where: { 
           status: "active",
           isDraft: false,
@@ -83,7 +83,7 @@ export default async function CategoryPage(props: CategoryPageProps) {
     notFound();
   }
 
-  const products = category.products;
+  const products = category.Product;
 
   // CollectionPage structured data for SEO
   const categoryJsonLd = {
@@ -130,14 +130,14 @@ export default async function CategoryPage(props: CategoryPageProps) {
       />
 
       {/* Subcategories Section */}
-      {category.subcategories && category.subcategories.length > 0 && (
+      {category.Subcategory && category.Subcategory.length > 0 && (
         <section className="bg-lux-pearl section-normal">
           <div className="container mx-auto max-w-4xl">
             <h2 className="heading-section text-lux-black mb-6">
               Browse by Subcategory
             </h2>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {category.subcategories.map((sub) => {
+              {category.Subcategory.map((sub) => {
                 const subProductCount = products.filter(
                   (p) => p.subcategoryId === sub.id
                 ).length;

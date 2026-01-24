@@ -152,7 +152,7 @@ export async function POST(request: Request) {
         shippingCountry: shippingAddress.country,
         paymentMethod: paymentIntentId,
         paymentStatus: "paid",
-        items: {
+        OrderItem: {
           create: items.map((item) => ({
             productId: item.id,
             title: item.title,
@@ -162,7 +162,7 @@ export async function POST(request: Request) {
         },
       },
       include: {
-        items: true,
+        OrderItem: true,
       },
     });
 
@@ -178,7 +178,7 @@ export async function POST(request: Request) {
           subtotal: order.subtotal,
           tax: order.tax,
           shipping: order.shipping,
-          items: order.items.map((item) => ({
+          items: order.OrderItem.map((item) => ({
             title: item.title,
             price: item.price,
             quantity: item.quantity,
@@ -198,7 +198,7 @@ export async function POST(request: Request) {
         orderNumber: order.orderNumber,
         email: metadata.shippingEmail,
         total: order.total,
-        items: order.items.map((item) => ({
+        items: order.OrderItem.map((item) => ({
           title: item.title,
           quantity: item.quantity,
           price: item.price,
@@ -218,4 +218,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

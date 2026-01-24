@@ -15,7 +15,7 @@ interface Subcategory {
 interface Category {
   id: string;
   name: string;
-  subcategories: Subcategory[];
+  Subcategory: Subcategory[];
 }
 
 export default function NewProductPage() {
@@ -65,7 +65,7 @@ export default function NewProductPage() {
             setForm((f) => ({
               ...f,
               categoryId: cats[0].id,
-              subcategoryId: cats[0].subcategories?.[0]?.id || ""
+              subcategoryId: cats[0].Subcategory?.[0]?.id || ""
             }));
           }
         }
@@ -225,7 +225,7 @@ export default function NewProductPage() {
                     setForm({
                       ...form,
                       categoryId: e.target.value,
-                      subcategoryId: selectedCat?.subcategories?.[0]?.id || ""
+                      subcategoryId: selectedCat?.Subcategory?.[0]?.id || ""
                     });
                   }}
                   className="w-full px-4 py-2.5 border border-lux-silver-soft rounded-lg bg-lux-pearl text-lux-black focus:outline-none focus:ring-2 focus:ring-lux-gold focus:border-transparent"
@@ -255,7 +255,7 @@ export default function NewProductPage() {
                 <option value="">Select Subcategory (Optional)</option>
                 {categories
                   .find((c) => c.id === form.categoryId)
-                  ?.subcategories.map((sub) => (
+                  ?.Subcategory.map((sub) => (
                     <option key={sub.id} value={sub.id}>
                       {sub.name}
                     </option>
