@@ -16,7 +16,10 @@ export async function GET() {
     'NEXTAUTH_SECRET',
     'STRIPE_SECRET_KEY',
     'IMAGEKIT_PRIVATE_KEY',
-    'RESEND_API_KEY'
+    'EMAIL_HOST',
+    'EMAIL_USER',
+    'EMAIL_FROM',
+    'ADMIN_EMAIL'
   ];
 
   const results = requiredVars.map(varName => ({

@@ -13,11 +13,9 @@ console.log('-------------------------------')
 
 const dbUrl = process.env.DATABASE_URL
 const directUrl = process.env.DIRECT_URL
-const resendKey = process.env.RESEND_API_KEY
 
 console.log(`DATABASE_URL: ${dbUrl ? '✓ Set' : '❌ Missing'}`)
 console.log(`DIRECT_URL: ${directUrl ? '✓ Set' : '❌ Missing'}`)
-console.log(`RESEND_API_KEY: ${resendKey ? '✓ Set' : '❌ Missing'}`)
 
 if (!dbUrl) {
   console.log('\n❌ CRITICAL: DATABASE_URL is not set!')

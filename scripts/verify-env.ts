@@ -112,10 +112,28 @@ const tests: EnvTest[] = [
     description: "OpenAI API key",
   },
   {
-    key: "RESEND_API_KEY",
-    required: false,
-    test: async (val) => val.startsWith("re_") && val.length > 20,
-    description: "Resend email service API key",
+    key: "EMAIL_HOST",
+    required: true,
+    test: async (val) => val.length > 0,
+    description: "SMTP host (Google Workspace)",
+  },
+  {
+    key: "EMAIL_PORT",
+    required: true,
+    test: async (val) => /^\d+$/.test(val),
+    description: "SMTP port",
+  },
+  {
+    key: "EMAIL_USER",
+    required: true,
+    test: async (val) => val.includes("@"),
+    description: "SMTP user email",
+  },
+  {
+    key: "EMAIL_PASSWORD",
+    required: true,
+    test: async (val) => val.length >= 10,
+    description: "SMTP app password",
   },
   {
     key: "EMAIL_FROM",

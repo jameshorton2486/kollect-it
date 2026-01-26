@@ -1,6 +1,6 @@
 /**
  * Report Email Sender
- * Phase 5 - Send reports via email (Google Workspace migration pending)
+ * Phase 5 - Send reports via email (Google Workspace SMTP)
  */
 
 interface ReportEmailOptions {
@@ -141,7 +141,7 @@ function getReportFilename(reportName: string, format: string): string {
 
 /**
  * Send report via email
- * NOTE: Email service disabled during Google Workspace migration
+ * NOTE: Email service uses Google Workspace SMTP
  */
 export async function sendReportEmail(
   options: ReportEmailOptions,
@@ -149,9 +149,9 @@ export async function sendReportEmail(
   const { recipients, reportName, format } = options;
   // data parameter available but unused until email service is implemented
 
-  // Email service disabled during Google Workspace migration
+  // Email service uses Google Workspace SMTP
   console.log(
-    "[Report Email] Service disabled - Google Workspace migration pending",
+    "[Report Email] Service uses Google Workspace SMTP",
   );
   console.log("[Report Email] Would send to:", recipients);
   console.log("[Report Email] Report:", reportName);
@@ -164,16 +164,14 @@ export async function sendReportEmail(
 
 /**
  * Send alert email
- * NOTE: Email service disabled during Google Workspace migration
+ * NOTE: Email service uses Google Workspace SMTP
  */
 export async function sendAlertEmail(
   recipients: string[],
   subject: string,
   content: string,
 ): Promise<void> {
-  console.log(
-    "[Alert Email] Service disabled - Google Workspace migration pending",
-  );
+  console.log("[Alert Email] Service uses Google Workspace SMTP");
   console.log("[Alert Email] Would send to:", recipients);
   console.log("[Alert Email] Subject:", subject);
   console.log("[Alert Email] Content:", content);

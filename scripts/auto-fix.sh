@@ -88,8 +88,11 @@ STRIPE_SECRET_KEY=sk_test_your_secret_key_here
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
 
-# --- Email Notifications (Resend) ---
-RESEND_API_KEY=re_your_api_key_here
+# --- Email Notifications (Google Workspace SMTP) ---
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=noreply@kollect-it.com
+EMAIL_PASSWORD=your-16-char-app-password
 EMAIL_FROM=Kollect-It <noreply@kollect-it.com>
 ADMIN_EMAIL=admin@kollect-it.com
 

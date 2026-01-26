@@ -24,13 +24,16 @@ const critical = [
   "IMAGEKIT_PRIVATE_KEY",
   "ANTHROPIC_API_KEY",
   "OPENAI_API_KEY",
+  "EMAIL_HOST",
+  "EMAIL_PORT",
+  "EMAIL_USER",
+  "EMAIL_PASSWORD",
   "EMAIL_FROM",
   "ADMIN_EMAIL",
 ];
 
 const optional = [
   "STRIPE_WEBHOOK_SECRET",
-  "RESEND_API_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
 ];
 

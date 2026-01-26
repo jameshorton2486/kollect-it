@@ -71,7 +71,12 @@ $recommendedVars = @(
     "IMAGEKIT_PRIVATE_KEY",
     "IMAGEKIT_URL_ENDPOINT",
     "ANTHROPIC_API_KEY",
-    "RESEND_API_KEY"
+    "EMAIL_HOST",
+    "EMAIL_PORT",
+    "EMAIL_USER",
+    "EMAIL_PASSWORD",
+    "EMAIL_FROM",
+    "ADMIN_EMAIL"
 )
 
 Write-Status "`n╔════════════════════════════════════════════════════════╗" "Header"

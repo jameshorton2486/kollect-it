@@ -273,7 +273,7 @@ function analyzeLogs(entries: LogEntry[]): ErrorSummary {
     recommendations.push(
       `🔴 ${count5xx} server errors (5xx). Common causes:`,
       `   1. Database connection issues (check DATABASE_URL)`,
-      `   2. External API timeouts (ImageKit, Stripe, Resend)`,
+      `   2. External API timeouts (ImageKit, Stripe, SMTP)`,
       `   3. Missing environment variables (check .env.local)`,
       `   4. Prisma schema mismatch (run 'bun x prisma db push')`
     );

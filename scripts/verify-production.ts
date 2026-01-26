@@ -9,7 +9,7 @@
 import { config } from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 
@@ -64,7 +64,11 @@ class ProductionVerifier {
       "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
       "IMAGEKIT_PRIVATE_KEY",
       "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
-      "RESEND_API_KEY",
+      "EMAIL_HOST",
+      "EMAIL_PORT",
+      "EMAIL_USER",
+      "EMAIL_PASSWORD",
+      "EMAIL_FROM",
       "ADMIN_EMAIL",
     ];
 
@@ -276,26 +280,36 @@ class ProductionVerifier {
     console.log("📧 Testing Email Service...");
 
     try {
-      const resendKey = process.env.RESEND_API_KEY;
+      const host = process.env.EMAIL_HOST || "smtp.gmail.com";
+      const port = Number(process.env.EMAIL_PORT || "587");
+      const user = process.env.EMAIL_USER;
+      const pass = process.env.EMAIL_PASSWORD;
 
-      if (!resendKey) {
+      if (!user || !pass) {
         this.results.push({
           name: "Email",
           status: "skip",
-          message: "RESEND_API_KEY not configured (optional)",
+          message: "EMAIL_USER/EMAIL_PASSWORD not configured",
         });
         return;
       }
 
-      const resend = new Resend(resendKey);
+      const transporter = nodemailer.createTransport({
+        host,
+        port,
+        secure: port === 465,
+        auth: {
+          user,
+          pass,
+        },
+      });
 
-      // Test API key validity
-      const _domains = await resend.domains.list();
+      await transporter.verify();
 
       this.results.push({
         name: "Email",
         status: "pass",
-        message: "Service configured",
+        message: "SMTP connection verified",
       });
 
     } catch (error: unknown) {

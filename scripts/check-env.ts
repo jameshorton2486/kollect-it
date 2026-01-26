@@ -20,8 +20,10 @@ const REQUIRED_VARS: string[] = [
 ];
 
 const RECOMMENDED_VARS: string[] = [
-  "RESEND_API_KEY",
-  "EMAIL_SERVER",
+  "EMAIL_HOST",
+  "EMAIL_PORT",
+  "EMAIL_USER",
+  "EMAIL_PASSWORD",
   "EMAIL_FROM",
   "ADMIN_EMAIL",
   "NEXT_PUBLIC_APP_URL",

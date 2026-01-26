@@ -45,7 +45,12 @@ export const serverEnvSchema = z.object({
     .startsWith('whsec_', 'STRIPE_WEBHOOK_SECRET must start with whsec_'),
 
   // Email
-  RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
+  EMAIL_HOST: z.string().optional().default('smtp.gmail.com'),
+  EMAIL_PORT: z.string().optional().default('587'),
+  EMAIL_USER: z.string().email().optional(),
+  EMAIL_PASSWORD: z.string().optional(),
+  EMAIL_FROM: z.string().optional(),
+  ADMIN_EMAIL: z.string().email().optional(),
 
   // Internal Services (Desktop App API Auth)
   PRODUCT_INGEST_API_KEY: z
@@ -99,6 +104,11 @@ export const SERVER_ONLY_VAR_NAMES = [
   'IMAGEKIT_PRIVATE_KEY',
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
-  'RESEND_API_KEY',
+  'EMAIL_HOST',
+  'EMAIL_PORT',
+  'EMAIL_USER',
+  'EMAIL_PASSWORD',
+  'EMAIL_FROM',
+  'ADMIN_EMAIL',
   'PRODUCT_INGEST_API_KEY',
 ] as const;

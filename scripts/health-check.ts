@@ -63,7 +63,12 @@ async function healthCheck() {
     'STRIPE_SECRET_KEY',
     'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY',
     'IMAGEKIT_PRIVATE_KEY',
-    'RESEND_API_KEY'
+    'EMAIL_HOST',
+    'EMAIL_PORT',
+    'EMAIL_USER',
+    'EMAIL_PASSWORD',
+    'EMAIL_FROM',
+    'ADMIN_EMAIL'
   ];
   
   const missing = required.filter(v => !process.env[v]);

@@ -9,6 +9,7 @@
 import { PrismaClient } from '@prisma/client'
 import Stripe from 'stripe'
 import ImageKit from 'imagekit'
+import nodemailer from 'nodemailer'
 import { config } from 'dotenv'
 
 config({ path: '.env.local' })
@@ -240,18 +241,21 @@ async function testImageKit() {
 // TEST 4: EMAIL CONFIGURATION
 // ============================================================================
 async function testEmail() {
-  section('📧 TEST 4: Email Configuration (Resend)')
-  
-  const resendKey = process.env.RESEND_API_KEY
+  section('📧 TEST 4: Email Configuration (Google Workspace SMTP)')
+
+  const host = process.env.EMAIL_HOST || 'smtp.gmail.com'
+  const port = Number(process.env.EMAIL_PORT || '587')
+  const user = process.env.EMAIL_USER
+  const pass = process.env.EMAIL_PASSWORD
   const emailFrom = process.env.EMAIL_FROM
-  
-  if (!resendKey) {
-    log('❌ RESEND_API_KEY not found', colors.red)
+
+  if (!user || !pass) {
+    log('❌ EMAIL_USER or EMAIL_PASSWORD not found', colors.red)
     results.email.passed = false
-    results.email.message = 'Missing RESEND_API_KEY'
+    results.email.message = 'Missing EMAIL_USER/EMAIL_PASSWORD'
     return
   }
-  
+
   if (!emailFrom) {
     log('❌ EMAIL_FROM not found', colors.red)
     log('   This is CRITICAL - emails will not send!', colors.red)
@@ -260,59 +264,32 @@ async function testEmail() {
     results.email.message = 'Missing EMAIL_FROM'
     return
   }
-  
+
   try {
-    // Test by making a simple API call to Resend
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendKey}`,
-        'Content-Type': 'application/json',
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465,
+      auth: {
+        user,
+        pass,
       },
-      body: JSON.stringify({
-        from: emailFrom,
-        to: 'test@example.com',
-        subject: 'Kollect-It Test (will not send)',
-        html: '<p>This is a test email that will not be sent.</p>',
-      }),
     })
-    
-    // We expect this to fail with "Invalid to address" since we're using test@example.com
-    // But if it fails with "Invalid API key" or similar, we have a problem
-    const data = await response.json()
-    
-    if (response.status === 422 && data.message.includes('Invalid `to`')) {
-      // This is expected - means API key is valid
-      log('✅ Resend API key is valid', colors.green)
-      log('✅ EMAIL_FROM is configured', colors.green)
-      log(`   Sender: ${emailFrom}`, colors.green)
-      
-      results.email.passed = true
-      results.email.message = 'Configured correctly'
-      
-    } else if (response.status === 401 || response.status === 403) {
-      log('❌ Resend authentication failed', colors.red)
-      log(`   Error: ${data.message}`, colors.red)
-      log('   Check your RESEND_API_KEY or domain verification', colors.yellow)
-      
-      results.email.passed = false
-      results.email.message = data.message
-      
-    } else {
-      log('⚠️  Unexpected response from Resend', colors.yellow)
-      log(`   Status: ${response.status}`, colors.yellow)
-      log(`   Message: ${data.message}`, colors.yellow)
-      
-      results.email.passed = false
-      results.email.message = data.message
-    }
-    
+
+    await transporter.verify()
+    log('✅ SMTP connection verified', colors.green)
+    log(`   Host: ${host}`, colors.green)
+    log(`   Port: ${port}`, colors.green)
+    log(`   Sender: ${emailFrom}`, colors.green)
+
+    results.email.passed = true
+    results.email.message = 'SMTP verified'
   } catch (error: unknown) {
     const message = getErrorMessage(error)
 
     log('❌ Email configuration test failed', colors.red)
     log(`   Error: ${message}`, colors.red)
-    
+
     results.email.passed = false
     results.email.message = message
   }
