@@ -68,13 +68,8 @@ ADMIN_EMAIL=james@kollect-it.com
 - [ ] `EMAIL_PASSWORD` - App password (NOT regular password)
 - [ ] `ADMIN_EMAIL` - Admin notification recipient
 
-### Option B: Resend (Alternative)
-```
-RESEND_API_KEY=re_...
-EMAIL_FROM="Kollect-It <noreply@kollect-it.com>"
-ADMIN_EMAIL=james@kollect-it.com
-```
-Note: Would require code changes to use Resend instead of Nodemailer
+### Email Service
+Kollect-It uses Google Workspace SMTP via Nodemailer. No alternative email services are configured.
 
 ---
 

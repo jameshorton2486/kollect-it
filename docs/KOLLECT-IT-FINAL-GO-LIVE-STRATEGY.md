@@ -383,7 +383,7 @@ Save as `docs/FIRST-PRODUCT-TEST.md`:
 | `recharts` | ^3.3.0 | ⚠️ Large | Enable tree-shaking |
 | `react-icons` | 5.5.0 | ⚠️ Duplicate | Consider removing (lucide covers most needs) |
 | `nodemailer` | ^7.0.10 | ✅ Keep | Used for SMTP |
-| `resend` | 6.5.2 | ⚠️ Unused | Currently not utilized - remove or migrate |
+| `resend` | - | ✅ Removed | Removed - using Nodemailer with Google Workspace SMTP |
 
 ### Bundle Optimization Opportunities
 
@@ -396,9 +396,9 @@ Save as `docs/FIRST-PRODUCT-TEST.md`:
    - Savings: ~20KB if fully removed
 
 3. **Resend vs Nodemailer Decision**
-   - Currently using Nodemailer for emails
-   - Resend is installed but not used
-   - Recommendation: Keep Nodemailer, remove Resend (or vice versa)
+   - ✅ Using Nodemailer with Google Workspace SMTP
+   - ✅ Resend package removed
+   - ✅ All email functionality uses Google Workspace SMTP
 
 ### No-Action Items (Already Optimized)
 - ✅ `@dnd-kit/*` - Proper modular imports
@@ -530,7 +530,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 - [ ] Google Search Console sitemap submitted
 
 ### Nice to Have (Day 7)
-- [ ] Remove unused `resend` or `react-icons`
+- [x] Remove unused `resend` (completed - using Nodemailer with Google Workspace SMTP)
 - [ ] Enable image optimization in next.config.js
 - [ ] Set up Sentry for error tracking
 

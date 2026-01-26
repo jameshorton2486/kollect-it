@@ -89,20 +89,28 @@ PRODUCT_INGEST_API_KEY=<secure-random-string-16+chars>
 
 ## 🟡 HIGHLY RECOMMENDED (Core Features Need These)
 
-### Email Service (Resend)
+### Email Service (Google Workspace SMTP)
 ```env
-RESEND_API_KEY=re_...
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=noreply@kollect-it.com
+EMAIL_PASSWORD=your-16-char-app-password
+EMAIL_FROM="Kollect-It <noreply@kollect-it.com>"
+ADMIN_EMAIL=james@kollect-it.com
 ```
-- [ ] `RESEND_API_KEY` - Resend API key for transactional emails
+- [ ] `EMAIL_HOST` - SMTP server (smtp.gmail.com)
+- [ ] `EMAIL_PORT` - SMTP port (587)
+- [ ] `EMAIL_USER` - SMTP username (your email)
+- [ ] `EMAIL_PASSWORD` - Google App Password (16 characters)
+- [ ] `EMAIL_FROM` - Sender display name and email
+- [ ] `ADMIN_EMAIL` - Admin notification recipient
 
-**Where to get:** Resend Dashboard → API Keys → Create API Key
+**Where to get:** Google Workspace → My Account → App Passwords → Generate App Password
 
 **Used for:**
 - Password reset emails
 - Order confirmations
 - Admin notifications
-
-**Alternative:** Can use SMTP (see Optional section below)
 
 ---
 
@@ -125,23 +133,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 
 ## 🟢 OPTIONAL (Nice to Have)
 
-### Email (Alternative to Resend — SMTP)
-```env
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=info@kollect-it.com
-EMAIL_PASSWORD=<16-char-app-password>
-EMAIL_FROM="Kollect-It <info@kollect-it.com>"
-ADMIN_EMAIL=james@kollect-it.com
-```
-- [ ] `EMAIL_HOST` - SMTP server hostname
-- [ ] `EMAIL_PORT` - SMTP port (usually 587)
-- [ ] `EMAIL_USER` - SMTP username
-- [ ] `EMAIL_PASSWORD` - SMTP password (Google App Password if using Gmail)
-- [ ] `EMAIL_FROM` - From email address
-- [ ] `ADMIN_EMAIL` - Admin notification recipient
-
-**Note:** If using Resend, you don't need SMTP variables.
+**Note:** Kollect-It uses Google Workspace SMTP via Nodemailer. All email functionality is configured through the SMTP variables above.
 
 ---
 
@@ -205,12 +197,15 @@ Run this to check all required variables in Vercel:
 - [ ] `PRODUCT_INGEST_API_KEY` - Desktop app auth key
 
 ### Highly Recommended
-- [ ] `RESEND_API_KEY` - Email service
+- [ ] `EMAIL_HOST` - SMTP server
+- [ ] `EMAIL_USER` - SMTP username
+- [ ] `EMAIL_PASSWORD` - Google App Password
+- [ ] `EMAIL_FROM` - Sender address
 - [ ] `ANTHROPIC_API_KEY` - AI product analysis
 
 ### Optional
 - [ ] `NEXT_PUBLIC_APP_URL` - App URL (auto-detected)
-- [ ] `EMAIL_*` variables (if using SMTP instead of Resend)
+- [ ] `EMAIL_*` variables (Google Workspace SMTP)
 - [ ] `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` (if using OAuth)
 
 ---
@@ -230,7 +225,7 @@ Run this to check all required variables in Vercel:
 | Priority | Count | Variables |
 |----------|-------|-----------|
 | **Required** | 11 | DATABASE_URL, DIRECT_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, STRIPE_SECRET_KEY, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, STRIPE_WEBHOOK_SECRET, NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY, NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT, PRODUCT_INGEST_API_KEY |
-| **Recommended** | 2 | RESEND_API_KEY, ANTHROPIC_API_KEY |
+| **Recommended** | 2 | EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD, ANTHROPIC_API_KEY |
 | **Optional** | 3-8 | NEXT_PUBLIC_APP_URL, EMAIL_* (if using SMTP), GOOGLE_* (if using OAuth) |
 
 **Total Minimum:** 11 required variables  
