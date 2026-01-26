@@ -67,6 +67,7 @@ async function getAllProducts(
 
   const where: Prisma.ProductWhereInput = {
     status: "active",
+    isDraft: false,  // CRITICAL: Exclude draft products from public browse page
   };
 
   if (filters?.priceMin != null || filters?.priceMax != null) {
