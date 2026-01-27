@@ -254,7 +254,7 @@ New-Item -Path "src/middleware.ts" -ItemType File -Force
    - Files: `src/lib/rate-limit.ts`, `src/lib/cache.ts`
 
 3. **Complete email report sender**
-   - Implement Google Workspace SMTP in `src/lib/email/reportSender.ts`
+   - Implement Zoho Mail SMTP in `src/lib/email/reportSender.ts`
    - Currently just logs to console
 
 4. **Add analytics tracking**

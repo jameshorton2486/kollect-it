@@ -241,9 +241,9 @@ async function testImageKit() {
 // TEST 4: EMAIL CONFIGURATION
 // ============================================================================
 async function testEmail() {
-  section('📧 TEST 4: Email Configuration (Google Workspace SMTP)')
+  section('📧 TEST 4: Email Configuration (Zoho Mail SMTP)')
 
-  const host = process.env.EMAIL_HOST || 'smtp.gmail.com'
+  const host = process.env.EMAIL_HOST || 'smtp.zoho.com'
   const port = Number(process.env.EMAIL_PORT || '587')
   const user = process.env.EMAIL_USER
   const pass = process.env.EMAIL_PASSWORD

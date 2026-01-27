@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     // Check cache
     const cacheKey = `analytics:sales:${startDate.toISOString()}:${endDate.toISOString()}`;
-    const cached = cache.get<any>(cacheKey);
+    const cached = await cache.get<any>(cacheKey);
     if (cached) {
       const response = NextResponse.json(cached);
       response.headers.set("X-Cache", "HIT");
@@ -263,7 +263,7 @@ export async function GET(request: NextRequest) {
     };
 
     // Cache for 1 hour
-    cache.set(cacheKey, analytics, cacheTTL.hour);
+    await cache.set(cacheKey, analytics, cacheTTL.hour);
 
     const response = NextResponse.json(analytics);
     response.headers.set("X-Cache", "MISS");

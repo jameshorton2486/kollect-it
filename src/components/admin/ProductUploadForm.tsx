@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Loader, AlertCircle, CheckCircle2, Sparkles, Copy } from "lucide-react";
 import MultiImageUpload from "./MultiImageUpload";
 import SingleDocumentUpload from "./SingleDocumentUpload";
-import { validateSKU } from "@/lib/utils/image-parser";
+import { validateSKU } from "@/lib/domain/sku";
 
 interface AnalysisResult {
   title: string;
@@ -39,7 +39,7 @@ export function ProductUploadForm() {
   const [category, setCategory] = useState("Collectibles");
   const [categoryId, setCategoryId] = useState("");
   const [subcategoryId, setSubcategoryId] = useState("");
-  const [categories, setCategories] = useState<Array<{id: string; name: string; Subcategory: Array<{id: string; name: string}>}>>([]);
+  const [categories, setCategories] = useState<Array<{id: string; name: string; slug?: string; Subcategory: Array<{id: string; name: string}>}>>([]);
   const [productNotes, setProductNotes] = useState("");
   const [appraisalUrls, setAppraisalUrls] = useState<string[]>([]);
   const [newAppraisalUrl, setNewAppraisalUrl] = useState("");
@@ -77,9 +77,12 @@ export function ProductUploadForm() {
 
   // Auto-suggest SKU on mount and fetch categories
   useEffect(() => {
-    fetchNextSKU();
     fetchCategories();
   }, []);
+  
+  useEffect(() => {
+    fetchNextSKU();
+  }, [categoryId]);
 
   // Reset unsaved changes when step changes
   useEffect(() => {
@@ -110,7 +113,11 @@ export function ProductUploadForm() {
   async function fetchNextSKU() {
     try {
       const year = new Date().getFullYear();
-      const res = await fetch(`/api/admin/products/next-sku?year=${year}`);
+      const selectedCategory = categories.find((c) => c.id === categoryId);
+      const categoryParam = selectedCategory?.slug || selectedCategory?.name || category;
+      const query = new URLSearchParams({ year: String(year) });
+      if (categoryParam) query.set("category", categoryParam);
+      const res = await fetch(`/api/admin/products/next-sku?${query.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch SKU");
       const data = await res.json();
       setSku(data.suggestedSKU);
@@ -419,7 +426,7 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
                 type="text"
                 value={sku}
                 onChange={(e) => handleSKUChange(e.target.value)}
-                placeholder="SKU-2025-001"
+                placeholder="KOL-2026-0001"
                 className={`flex-1 px-4 py-2 bg-lux-charcoal border ${
                   skuError ? "border-red-600" : "border-lux-charcoal/50"
                 } rounded focus:outline-none focus:border-lux-gold focus:ring-2 focus:ring-lux-gold text-lux-cream placeholder:text-lux-gray-dark`}
@@ -436,7 +443,7 @@ ${images.length > 0 ? `IMAGES: ${images.length} image(s) uploaded\n` : ""}`;
               <p className="text-sm text-red-400 mt-1">{skuError}</p>
             )}
             <p className="text-xs text-ink-700 mt-1">
-              Format: SKU-YYYY-XXX (e.g., SKU-2025-001)
+              Format: PREFIX-YYYY-NNNN (e.g., MILI-2026-0001)
             </p>
           </div>
 

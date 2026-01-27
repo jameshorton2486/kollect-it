@@ -9,7 +9,7 @@ datasource db {
 }
 
 model AIGeneratedProduct {
-  id                String    @id
+  id                String    @id @default(cuid())
   googleDriveId     String?
   imageUrl          String?
   aiTitle           String    @db.VarChar(500)
@@ -43,7 +43,7 @@ model AIGeneratedProduct {
 }
 
 model CartItem {
-  id        String   @id
+  id        String   @id @default(cuid())
   userId    String
   productId String
   quantity  Int      @default(1)
@@ -58,7 +58,7 @@ model CartItem {
 }
 
 model Category {
-  id          String        @id
+  id          String        @id @default(cuid())
   name        String        @unique
   slug        String        @unique
   description String?
@@ -70,7 +70,7 @@ model Category {
 }
 
 model ContactSubmission {
-  id        String    @id
+  id        String    @id @default(cuid())
   name      String
   email     String
   subject   String
@@ -81,7 +81,7 @@ model ContactSubmission {
 }
 
 model Image {
-  id        String   @id
+  id        String   @id @default(cuid())
   url       String
   alt       String?
   productId String
@@ -95,7 +95,7 @@ model Image {
 }
 
 model NewsletterSubscriber {
-  id             String    @id
+  id             String    @id @default(cuid())
   email          String    @unique
   firstName      String?
   source         String?   @default("website")
@@ -105,7 +105,7 @@ model NewsletterSubscriber {
 }
 
 model Order {
-  id               String      @id
+  id               String      @id @default(cuid())
   orderNumber      String      @unique
   userId           String?
   status           String      @default("pending")
@@ -139,7 +139,7 @@ model Order {
 }
 
 model OrderItem {
-  id        String   @id
+  id        String   @id @default(cuid())
   orderId   String
   productId String
   title     String
@@ -154,7 +154,7 @@ model OrderItem {
 }
 
 model Product {
-  id                  String               @id
+  id                  String               @id @default(cuid())
   title               String
   slug                String               @unique
   description         String
@@ -184,6 +184,8 @@ model Product {
   seoTitle            String?
   appraisalUrls       String[]             @default([])
   productNotes        String?
+  origin              String?
+  source              String?
   sku                 String               @unique
   skuNumber           Int?
   skuYear             Int?
@@ -211,7 +213,7 @@ model Product {
 }
 
 model ReportAuditLog {
-  id              String          @id
+  id              String          @id @default(cuid())
   reportId        String
   recipients      String
   status          String          @default("PENDING")
@@ -225,7 +227,7 @@ model ReportAuditLog {
 }
 
 model Review {
-  id        String   @id
+  id        String   @id @default(cuid())
   userId    String
   productId String
   rating    Int
@@ -246,7 +248,7 @@ model Review {
 }
 
 model ScheduledReport {
-  id             String           @id
+  id             String           @id @default(cuid())
   userId         String
   name           String
   frequency      String
@@ -267,7 +269,7 @@ model ScheduledReport {
 }
 
 model Subcategory {
-  id         String    @id
+  id         String    @id @default(cuid())
   name       String
   slug       String    @unique
   categoryId String
@@ -281,7 +283,7 @@ model Subcategory {
 }
 
 model User {
-  id               String            @id
+  id               String            @id @default(cuid())
   name             String?
   email            String            @unique
   emailVerified    DateTime?
@@ -306,7 +308,7 @@ model User {
 }
 
 model WishlistItem {
-  id        String   @id
+  id        String   @id @default(cuid())
   userId    String
   productId String
   createdAt DateTime @default(now())
@@ -316,4 +318,26 @@ model WishlistItem {
   @@unique([userId, productId])
   @@index([productId])
   @@index([userId])
+}
+
+model StripeWebhookEvent {
+  id            String   @id @default(cuid())
+  stripeEventId String   @unique
+  eventType     String
+  processed     Boolean  @default(false)
+  processedAt   DateTime?
+  payload       Json?
+  error         String?
+  createdAt     DateTime @default(now())
+
+  @@index([eventType])
+  @@index([processed, createdAt])
+}
+
+model AdminSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

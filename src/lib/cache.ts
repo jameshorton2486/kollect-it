@@ -1,8 +1,9 @@
 /**
  * Caching Layer
  * In-memory cache with TTL support
- * TODO: Replace with Redis for production distributed caching
  */
+
+import { redisEnabled, redisGet, redisSet } from "./redis-rest";
 
 interface CacheEntry<T> {
   value: T;
@@ -42,7 +43,21 @@ class Cache {
   /**
    * Get value from cache
    */
-  get<T>(key: string): T | null {
+  async get<T>(key: string): Promise<T | null> {
+    if (redisEnabled) {
+      const value = await redisGet(key);
+      if (!value) {
+        this.misses++;
+        return null;
+      }
+      this.hits++;
+      try {
+        return JSON.parse(value) as T;
+      } catch {
+        return value as unknown as T;
+      }
+    }
+
     const entry = this.store.get(key);
 
     if (!entry) {
@@ -67,7 +82,13 @@ class Cache {
   /**
    * Set value in cache
    */
-  set<T>(key: string, value: T, ttl?: number): void {
+  async set<T>(key: string, value: T, ttl?: number): Promise<void> {
+    if (redisEnabled) {
+      const ttlSeconds = ttl ? Math.ceil(ttl / 1000) : undefined;
+      await redisSet(key, JSON.stringify(value), ttlSeconds);
+      return;
+    }
+
     // Enforce max size (LRU eviction)
     if (this.store.size >= this.maxSize && !this.store.has(key)) {
       this.evictLRU();
@@ -123,13 +144,13 @@ class Cache {
     factory: () => Promise<T> | T,
     ttl?: number,
   ): Promise<T> {
-    const cached = this.get<T>(key);
+    const cached = await this.get<T>(key);
     if (cached !== null) {
       return cached;
     }
 
     const value = await factory();
-    this.set(key, value, ttl);
+    await this.set(key, value, ttl);
     return value;
   }
 

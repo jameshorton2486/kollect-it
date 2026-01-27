@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimiters } from "@/lib/rate-limit";
 import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
-import { validateSKU } from "@/lib/utils/image-parser";
+import { validateSKU } from "@/lib/domain/sku";
 
 export async function POST(req: NextRequest) {
   try {
@@ -77,10 +77,11 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
+    const normalizedSku = skuValidation.parsed!.formatted;
 
     // Check SKU uniqueness
     const existingSKU = await prisma.product.findUnique({
-      where: { sku },
+      where: { sku: normalizedSku },
     });
 
     if (existingSKU) {
@@ -141,9 +142,9 @@ export async function POST(req: NextRequest) {
     // Create product with images
     const product = await prisma.product.create({
       data: {
-        sku,
+        sku: normalizedSku,
         skuYear: skuValidation.parsed!.year,
-        skuNumber: skuValidation.parsed!.number,
+        skuNumber: skuValidation.parsed!.sequence,
         title,
         slug: finalSlug,
         description: description || shortDescription,
@@ -200,4 +201,3 @@ export async function POST(req: NextRequest) {
     return applySecurityHeaders(errorResponse);
   }
 }
-

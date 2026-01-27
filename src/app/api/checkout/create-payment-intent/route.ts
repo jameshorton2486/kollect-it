@@ -42,6 +42,21 @@ export async function POST(request: NextRequest) {
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No items in cart" }, { status: 400 });
     }
+    if (
+      !shippingInfo ||
+      !shippingInfo.fullName ||
+      !shippingInfo.email ||
+      !shippingInfo.address ||
+      !shippingInfo.city ||
+      !shippingInfo.state ||
+      !shippingInfo.zipCode ||
+      !shippingInfo.country
+    ) {
+      return NextResponse.json(
+        { error: "Missing required shipping information" },
+        { status: 400 },
+      );
+    }
 
     // STEP 1: Validate cart server-side (prevents price tampering)
     const validationResponse = await fetch(
@@ -130,4 +145,3 @@ export async function POST(request: NextRequest) {
     return applySecurityHeaders(errorResponse);
   }
 }
-

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkAdminAuth } from "@/lib/auth-helpers";
-import { validateSKU, formatSKU as formatSkuNew } from "@/lib/sku-validation";
+import { validateSKU, formatSKU as formatSkuNew } from "@/lib/domain/sku";
 import { Prisma } from "@prisma/client";
 import { logger } from "@/lib/logger";
 import { getRequestId } from "@/lib/request-context";
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Check cache first
-    const cached = cache.get<any>(cacheKey);
+    const cached = await cache.get<any>(cacheKey);
     if (cached) {
       logger.info("[Cache] Product list cache hit", {
         requestId: getRequestId(request),
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Cache the product list results
-    cache.set(cacheKey, products, cacheTTL.medium); // 5-minute cache
+    await cache.set(cacheKey, products, cacheTTL.medium); // 5-minute cache
 
     const res = NextResponse.json(products);
     res.headers.set("X-Request-ID", getRequestId(request));

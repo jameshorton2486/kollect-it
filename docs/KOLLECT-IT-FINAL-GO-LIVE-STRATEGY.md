@@ -383,7 +383,7 @@ Save as `docs/FIRST-PRODUCT-TEST.md`:
 | `recharts` | ^3.3.0 | ⚠️ Large | Enable tree-shaking |
 | `react-icons` | 5.5.0 | ⚠️ Duplicate | Consider removing (lucide covers most needs) |
 | `nodemailer` | ^7.0.10 | ✅ Keep | Used for SMTP |
-| `resend` | - | ✅ Removed | Removed - using Nodemailer with Google Workspace SMTP |
+| `resend` | - | ✅ Removed | Removed - using Nodemailer with Zoho Mail SMTP |
 
 ### Bundle Optimization Opportunities
 
@@ -396,9 +396,9 @@ Save as `docs/FIRST-PRODUCT-TEST.md`:
    - Savings: ~20KB if fully removed
 
 3. **Resend vs Nodemailer Decision**
-   - ✅ Using Nodemailer with Google Workspace SMTP
+   - ✅ Using Nodemailer with Zoho Mail SMTP
    - ✅ Resend package removed
-   - ✅ All email functionality uses Google Workspace SMTP
+   - ✅ All email functionality uses Zoho Mail SMTP
 
 ### No-Action Items (Already Optimized)
 - ✅ `@dnd-kit/*` - Proper modular imports
@@ -504,7 +504,7 @@ PRODUCT_INGEST_API_KEY=<secure-random-string>
 
 # Email (Choose one setup)
 EMAIL_FROM="Kollect-It <info@kollect-it.com>"
-EMAIL_HOST=smtp.gmail.com
+EMAIL_HOST=smtp.zoho.com
 EMAIL_PORT=587
 EMAIL_USER=info@kollect-it.com
 EMAIL_PASSWORD=<app-password>
@@ -530,7 +530,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 - [ ] Google Search Console sitemap submitted
 
 ### Nice to Have (Day 7)
-- [x] Remove unused `resend` (completed - using Nodemailer with Google Workspace SMTP)
+- [x] Remove unused `resend` (completed - using Nodemailer with Zoho Mail SMTP)
 - [ ] Enable image optimization in next.config.js
 - [ ] Set up Sentry for error tracking
 

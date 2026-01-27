@@ -45,7 +45,7 @@ export const serverEnvSchema = z.object({
     .startsWith('whsec_', 'STRIPE_WEBHOOK_SECRET must start with whsec_'),
 
   // Email
-  EMAIL_HOST: z.string().optional().default('smtp.gmail.com'),
+  EMAIL_HOST: z.string().optional().default('smtp.zoho.com'),
   EMAIL_PORT: z.string().optional().default('587'),
   EMAIL_USER: z.string().email().optional(),
   EMAIL_PASSWORD: z.string().optional(),
@@ -57,10 +57,21 @@ export const serverEnvSchema = z.object({
     .string()
     .min(16, 'PRODUCT_INGEST_API_KEY must be at least 16 characters'),
 
+  // Redis (Upstash REST)
+  UPSTASH_REDIS_REST_URL: z.string().url().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
+
   // Optional
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
+
+  // Security / Internal
+  WEBHOOK_SECRET: z.string().min(16, 'WEBHOOK_SECRET must be at least 16 characters'),
+  HEALTHCHECK_TOKEN: z.string().min(16, 'HEALTHCHECK_TOKEN must be at least 16 characters').optional(),
+
+  // Vercel
+  VERCEL_URL: z.string().optional(),
 });
 
 /**
@@ -69,6 +80,9 @@ export const serverEnvSchema = z.object({
  */
 export const clientEnvSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url('NEXT_PUBLIC_APP_URL must be a valid URL'),
+  NEXT_PUBLIC_SITE_URL: z.string().url('NEXT_PUBLIC_SITE_URL must be a valid URL').optional(),
+  NEXT_PUBLIC_API_URL: z.string().url('NEXT_PUBLIC_API_URL must be a valid URL').optional(),
+  NEXT_PUBLIC_WS_URL: z.string().url('NEXT_PUBLIC_WS_URL must be a valid URL').optional(),
   NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: z
     .string()
     .startsWith('public_', 'NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY must start with public_'),
@@ -86,6 +100,7 @@ export const clientEnvSchema = z.object({
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
     .string()
     .startsWith('pk_', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY must start with pk_'),
+  NEXT_PUBLIC_ENABLE_WEB_VITALS: z.string().optional(),
 });
 
 // Type exports
@@ -111,4 +126,9 @@ export const SERVER_ONLY_VAR_NAMES = [
   'EMAIL_FROM',
   'ADMIN_EMAIL',
   'PRODUCT_INGEST_API_KEY',
+  'WEBHOOK_SECRET',
+  'HEALTHCHECK_TOKEN',
+  'UPSTASH_REDIS_REST_URL',
+  'UPSTASH_REDIS_REST_TOKEN',
+  'VERCEL_URL',
 ] as const;

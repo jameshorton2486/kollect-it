@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { z } from "zod";
 
 /**
  * Admin Settings API
@@ -17,9 +19,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const tab = searchParams.get("tab");
 
-    // In production, fetch from database
-    // For now, return mock data
-    const settings = {
+    const defaultSettings = {
       store: {
         storeName: "Kollect-It Marketplace",
         storeEmail: "admin@kollect-it.com",
@@ -83,11 +83,40 @@ export async function GET(request: NextRequest) {
       ],
     };
 
-    if (tab && tab in settings) {
-      return NextResponse.json(settings[tab as keyof typeof settings]);
+    const allowedKeys = Object.keys(defaultSettings);
+
+    if (tab) {
+      if (!allowedKeys.includes(tab)) {
+        return NextResponse.json(
+          { error: "Invalid settings tab" },
+          { status: 400 },
+        );
+      }
+
+      const existing = await prisma.adminSetting.findUnique({
+        where: { key: tab },
+        select: { data: true },
+      });
+
+      return NextResponse.json(
+        existing?.data ?? defaultSettings[tab as keyof typeof defaultSettings],
+      );
     }
 
-    return NextResponse.json(settings);
+    const stored = await prisma.adminSetting.findMany({
+      where: { key: { in: allowedKeys } },
+      select: { key: true, data: true },
+    });
+
+    const storedMap = new Map(stored.map((s) => [s.key, s.data]));
+    const merged = Object.fromEntries(
+      allowedKeys.map((key) => [
+        key,
+        storedMap.get(key) ?? defaultSettings[key as keyof typeof defaultSettings],
+      ]),
+    );
+
+    return NextResponse.json(merged);
   } catch (error) {
     console.error("Error fetching settings:", error);
     return NextResponse.json(
@@ -107,9 +136,91 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { tab, data } = body;
 
-    // In production, save to database
-    // For now, just return success
-    console.log(`Saving ${tab} settings:`, data);
+    const allowedKeys = ["store", "payment", "shipping", "tax", "categories"];
+    if (!tab || !allowedKeys.includes(tab)) {
+      return NextResponse.json(
+        { error: "Invalid settings tab" },
+        { status: 400 },
+      );
+    }
+
+    const storeSchema = z.object({
+      storeName: z.string().min(1),
+      storeEmail: z.string().email(),
+      storePhone: z.string().min(3),
+      storeAddress: z.string().min(3),
+      currency: z.string().min(1),
+      timezone: z.string().min(1),
+      language: z.string().min(1),
+    });
+
+    const paymentSchema = z.object({
+      stripeEnabled: z.boolean(),
+      stripePublishableKey: z.string().optional(),
+      stripeSecretKey: z.string().optional(),
+      paypalEnabled: z.boolean(),
+      paypalClientId: z.string().optional(),
+      testMode: z.boolean().optional(),
+    });
+
+    const shippingSchema = z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        countries: z.array(z.string()).min(1),
+        flatRate: z.number().nonnegative(),
+        freeShippingThreshold: z.number().nonnegative(),
+      }),
+    );
+
+    const taxSchema = z.array(
+      z.object({
+        id: z.string(),
+        region: z.string(),
+        rate: z.number().nonnegative(),
+        applyToShipping: z.boolean(),
+      }),
+    );
+
+    const categoriesSchema = z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        slug: z.string(),
+        description: z.string().optional(),
+        active: z.boolean(),
+      }),
+    );
+
+    const tabSchemas: Record<string, z.ZodTypeAny> = {
+      store: storeSchema,
+      payment: paymentSchema,
+      shipping: shippingSchema,
+      tax: taxSchema,
+      categories: categoriesSchema,
+    };
+
+    const schema = tabSchemas[tab];
+    if (!schema) {
+      return NextResponse.json(
+        { error: "Invalid settings tab" },
+        { status: 400 },
+      );
+    }
+
+    const parsed = schema.safeParse(data);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Invalid settings data", details: parsed.error.format() },
+        { status: 400 },
+      );
+    }
+
+    await prisma.adminSetting.upsert({
+      where: { key: tab },
+      update: { data: parsed.data },
+      create: { key: tab, data: parsed.data },
+    });
 
     return NextResponse.json({
       success: true,

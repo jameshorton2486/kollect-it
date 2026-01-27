@@ -15,9 +15,15 @@ const config = {
     process.env.GOOGLE_APPLICATION_CREDENTIALS || "./google-credentials.json",
   driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || "",
   imagekit: {
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",
+    publicKey:
+      process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ||
+      process.env.IMAGEKIT_PUBLIC_KEY ||
+      "",
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "",
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "",
+    urlEndpoint:
+      process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ||
+      process.env.IMAGEKIT_URL_ENDPOINT ||
+      "",
   },
 };
 

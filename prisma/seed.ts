@@ -55,6 +55,8 @@ async function main() {
   console.log("✅ Admin user created:", admin.email);
   console.log("⚠️  WARNING: Change this password before production use!");
 
+  const currentYear = new Date().getFullYear();
+
   // Create categories
   const categories = [
     {
@@ -117,8 +119,8 @@ async function main() {
   if (fineArtCategory) {
     const product1 = await prisma.product.create({
       data: {
-        sku: "FA-1850-001",
-        skuYear: 1850,
+        sku: `ARTS-${currentYear}-0001`,
+        skuYear: currentYear,
         skuNumber: 1,
         title: "Classical Landscape Oil Painting, 19th Century",
         slug: "classical-landscape-oil-painting",
@@ -147,9 +149,9 @@ async function main() {
   if (rareBooksCategory) {
     const product2 = await prisma.product.create({
       data: {
-        sku: "BK-1856-001",
-        skuYear: 1856,
-        skuNumber: 1,
+        sku: `BOOK-${currentYear}-0002`,
+        skuYear: currentYear,
+        skuNumber: 2,
         title: "The Complete Works of Shakespeare, Leather Bound, 1856",
         slug: "shakespeare-complete-works-1856",
         description:
@@ -175,9 +177,9 @@ async function main() {
   if (collectiblesCategory) {
     const product3 = await prisma.product.create({
       data: {
-        sku: "CL-1920-001",
-        skuYear: 1920,
-        skuNumber: 1,
+        sku: `COLL-${currentYear}-0003`,
+        skuYear: currentYear,
+        skuNumber: 3,
         title: "Patek Philippe Pocket Watch, 18K Gold, Circa 1920",
         slug: "patek-philippe-pocket-watch-1920",
         description:
@@ -203,9 +205,9 @@ async function main() {
   if (militariaCategory) {
     const product4 = await prisma.product.create({
       data: {
-        sku: "ML-WWI-001",
-        skuYear: 1914,
-        skuNumber: 1,
+        sku: `MILI-${currentYear}-0004`,
+        skuYear: currentYear,
+        skuNumber: 4,
         title: "WWI British Medal Group, Named to Soldier, Complete",
         slug: "wwi-british-medal-group",
         description:

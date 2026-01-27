@@ -17,8 +17,10 @@ async function testImageKitConnection() {
     // Check environment variables
     const checks = [
       {
-        name: "IMAGEKIT_PUBLIC_KEY",
-        value: process.env.IMAGEKIT_PUBLIC_KEY,
+        name: "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
+        value:
+          process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ||
+          process.env.IMAGEKIT_PUBLIC_KEY,
         required: true,
       },
       {
@@ -27,8 +29,10 @@ async function testImageKitConnection() {
         required: true,
       },
       {
-        name: "IMAGEKIT_URL_ENDPOINT",
-        value: process.env.IMAGEKIT_URL_ENDPOINT,
+        name: "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
+        value:
+          process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ||
+          process.env.IMAGEKIT_URL_ENDPOINT,
         required: true,
       },
     ];
@@ -59,9 +63,13 @@ async function testImageKitConnection() {
     // Initialize ImageKit
     console.log("🚀 Initializing ImageKit SDK...");
     const imageKit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
+      publicKey:
+        process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ||
+        process.env.IMAGEKIT_PUBLIC_KEY!,
       privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-      urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
+      urlEndpoint:
+        process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ||
+        process.env.IMAGEKIT_URL_ENDPOINT!,
     });
     console.log("   ✅ SDK initialized\n");
 
@@ -99,7 +107,10 @@ async function testImageKitConnection() {
     // Test 3: URL endpoint health check
     console.log("🌐 Test 3: URL Endpoint Health");
     try {
-      const response = await fetch(process.env.IMAGEKIT_URL_ENDPOINT!);
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ||
+          process.env.IMAGEKIT_URL_ENDPOINT!,
+      );
       if (response.ok || response.status === 404) {
         // 404 is fine for direct endpoint access
         console.log("   ✅ URL endpoint accessible\n");

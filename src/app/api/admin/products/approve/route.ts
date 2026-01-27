@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { formatSKU } from "@/lib/utils/image-parser";
+import { formatSKU, getSuggestedPrefix } from "@/lib/domain/sku";
 
 export async function POST(request: NextRequest) {
   try {
@@ -77,29 +77,51 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    // Generate SKU using centralized format (SKU-YYYY-XXX)
+    // Generate SKU using unified format (PREFIX-YYYY-NNNN) with retry on conflicts
     const year = new Date().getFullYear();
-    const maxSku = await prisma.product.aggregate({
-      _max: { skuNumber: true },
-      where: { skuYear: year }
-    });
-    const skuNumber = (maxSku._max.skuNumber || 0) + 1;
-    const sku = formatSKU(year, skuNumber);
+    const prefix = getSuggestedPrefix(category.slug || category.name);
+    let product;
 
-    const product = await prisma.product.create({
-      data: {
-        sku: sku,
-        skuYear: year,
-        skuNumber: skuNumber,
-        title: aiProduct.aiTitle,
-        slug: slug + "-" + Math.random().toString(36).substring(7),
-        description: aiProduct.aiDescription,
-        price: finalPrice,
-        categoryId: category.id,
-        condition: aiProduct.aiCondition,
-        status: "active",
-      },
-    });
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const maxSku = await prisma.product.aggregate({
+        _max: { skuNumber: true },
+        where: {
+          skuYear: year,
+          sku: { startsWith: `${prefix}-${year}-` },
+        },
+      });
+      const skuNumber = (maxSku._max.skuNumber || 0) + 1;
+      const sku = formatSKU(prefix, year, skuNumber);
+
+      try {
+        product = await prisma.product.create({
+          data: {
+            sku,
+            skuYear: year,
+            skuNumber,
+            title: aiProduct.aiTitle,
+            slug: slug + "-" + Math.random().toString(36).substring(7),
+            description: aiProduct.aiDescription,
+            price: finalPrice,
+            categoryId: category.id,
+            condition: aiProduct.aiCondition,
+            status: "active",
+          },
+        });
+        break;
+      } catch (err: any) {
+        if (err?.code !== "P2002") {
+          throw err;
+        }
+      }
+    }
+
+    if (!product) {
+      return NextResponse.json(
+        { error: "Failed to generate unique SKU" },
+        { status: 500 },
+      );
+    }
 
     // Update AI product status
     await (prisma as any).aIGeneratedProduct.update({

@@ -89,23 +89,23 @@ PRODUCT_INGEST_API_KEY=<secure-random-string-16+chars>
 
 ## 🟡 HIGHLY RECOMMENDED (Core Features Need These)
 
-### Email Service (Google Workspace SMTP)
+### Email Service (Zoho Mail SMTP)
 ```env
-EMAIL_HOST=smtp.gmail.com
+EMAIL_HOST=smtp.zoho.com
 EMAIL_PORT=587
-EMAIL_USER=noreply@kollect-it.com
-EMAIL_PASSWORD=your-16-char-app-password
-EMAIL_FROM="Kollect-It <noreply@kollect-it.com>"
-ADMIN_EMAIL=james@kollect-it.com
+EMAIL_USER=info@kollect-it.com
+EMAIL_PASSWORD=your-zoho-app-password
+EMAIL_FROM="Kollect-It <info@kollect-it.com>"
+ADMIN_EMAIL=info@kollect-it.com
 ```
-- [ ] `EMAIL_HOST` - SMTP server (smtp.gmail.com)
+- [ ] `EMAIL_HOST` - SMTP server (smtp.zoho.com)
 - [ ] `EMAIL_PORT` - SMTP port (587)
-- [ ] `EMAIL_USER` - SMTP username (your email)
-- [ ] `EMAIL_PASSWORD` - Google App Password (16 characters)
+- [ ] `EMAIL_USER` - SMTP username (your Zoho Mail email)
+- [ ] `EMAIL_PASSWORD` - Zoho App Password
 - [ ] `EMAIL_FROM` - Sender display name and email
 - [ ] `ADMIN_EMAIL` - Admin notification recipient
 
-**Where to get:** Google Workspace → My Account → App Passwords → Generate App Password
+**Where to get:** Zoho Mail → Settings → Security → App Passwords → Generate New Password
 
 **Used for:**
 - Password reset emails
@@ -133,7 +133,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 
 ## 🟢 OPTIONAL (Nice to Have)
 
-**Note:** Kollect-It uses Google Workspace SMTP via Nodemailer. All email functionality is configured through the SMTP variables above.
+**Note:** Kollect-It uses Zoho Mail SMTP via Nodemailer. All email functionality is configured through the SMTP variables above.
 
 ---
 
@@ -205,7 +205,7 @@ Run this to check all required variables in Vercel:
 
 ### Optional
 - [ ] `NEXT_PUBLIC_APP_URL` - App URL (auto-detected)
-- [ ] `EMAIL_*` variables (Google Workspace SMTP)
+- [ ] `EMAIL_*` variables (Zoho Mail SMTP)
 - [ ] `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` (if using OAuth)
 
 ---

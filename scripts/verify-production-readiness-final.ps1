@@ -103,7 +103,7 @@ if (Test-Path ".env.local") {
     $optionalVars = @(
         "STRIPE_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
-        "IMAGEKIT_PUBLIC_KEY",
+        "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
         "IMAGEKIT_PRIVATE_KEY"
     )
     

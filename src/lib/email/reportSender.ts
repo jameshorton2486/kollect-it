@@ -1,6 +1,6 @@
 /**
  * Report Email Sender
- * Phase 5 - Send reports via email (Google Workspace SMTP)
+ * Phase 5 - Send reports via email (Zoho Mail SMTP)
  */
 
 interface ReportEmailOptions {
@@ -12,7 +12,7 @@ interface ReportEmailOptions {
 
 /**
  * Generate HTML email template for reports
- * Reserved for Google Workspace SMTP implementation
+ * Reserved for Zoho Mail SMTP implementation
  * @internal
  */
 // @ts-ignore - Reserved for future email implementation
@@ -117,7 +117,7 @@ function escapeHtml(text: string): string {
 
 /**
  * Get filename for report attachment
- * Reserved for Google Workspace SMTP implementation
+ * Reserved for Zoho Mail SMTP implementation
  * @internal
  */
 // @ts-ignore - Reserved for future email implementation
@@ -141,7 +141,7 @@ function getReportFilename(reportName: string, format: string): string {
 
 /**
  * Send report via email
- * NOTE: Email service uses Google Workspace SMTP
+ * NOTE: Email service uses Zoho Mail SMTP
  */
 export async function sendReportEmail(
   options: ReportEmailOptions,
@@ -149,34 +149,34 @@ export async function sendReportEmail(
   const { recipients, reportName, format } = options;
   // data parameter available but unused until email service is implemented
 
-  // Email service uses Google Workspace SMTP
+  // Email service uses Zoho Mail SMTP
   console.log(
-    "[Report Email] Service uses Google Workspace SMTP",
+    "[Report Email] Service uses Zoho Mail SMTP",
   );
   console.log("[Report Email] Would send to:", recipients);
   console.log("[Report Email] Report:", reportName);
   console.log("[Report Email] Format:", format);
 
-  // TODO: Implement Google Workspace SMTP when ready
+  // TODO: Implement Zoho Mail SMTP when ready
   // TODO: Use generateEmailTemplate() and getReportFilename() helper functions
   return;
 }
 
 /**
  * Send alert email
- * NOTE: Email service uses Google Workspace SMTP
+ * NOTE: Email service uses Zoho Mail SMTP
  */
 export async function sendAlertEmail(
   recipients: string[],
   subject: string,
   content: string,
 ): Promise<void> {
-  console.log("[Alert Email] Service uses Google Workspace SMTP");
+  console.log("[Alert Email] Service uses Zoho Mail SMTP");
   console.log("[Alert Email] Would send to:", recipients);
   console.log("[Alert Email] Subject:", subject);
   console.log("[Alert Email] Content:", content);
 
-  // TODO: Implement Google Workspace SMTP when ready
+  // TODO: Implement Zoho Mail SMTP when ready
   return;
 }
 

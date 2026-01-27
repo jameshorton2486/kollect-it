@@ -53,10 +53,37 @@ export async function getApprovalMetrics(
   const total = approvals + rejections;
   const approvalRate = total > 0 ? (approvals / total) * 100 : 0;
 
-  // Calculate average time to approve/reject (mock implementation)
-  // In production, you'd store submission timestamp
-  const avgTimeToApprove = 45; // Mock: 45 minutes
-  const avgTimeToReject = 30; // Mock: 30 minutes
+  // Calculate average time to approve/reject (minutes)
+  const reviewedProducts = await (prisma as any).aIGeneratedProduct.findMany({
+    where: {
+      status: { in: ["APPROVED", "REJECTED"] },
+      reviewedAt: Object.keys(dateFilter).length > 0 ? dateFilter : undefined,
+    },
+    select: {
+      status: true,
+      createdAt: true,
+      reviewedAt: true,
+    },
+  });
+
+  const approvedDurations: number[] = [];
+  const rejectedDurations: number[] = [];
+
+  for (const p of reviewedProducts) {
+    if (!p.reviewedAt) continue;
+    const minutes = (p.reviewedAt.getTime() - p.createdAt.getTime()) / 60000;
+    if (p.status === "APPROVED") approvedDurations.push(minutes);
+    if (p.status === "REJECTED") rejectedDurations.push(minutes);
+  }
+
+  const avgTimeToApprove =
+    approvedDurations.length > 0
+      ? approvedDurations.reduce((a, b) => a + b, 0) / approvedDurations.length
+      : 0;
+  const avgTimeToReject =
+    rejectedDurations.length > 0
+      ? rejectedDurations.reduce((a, b) => a + b, 0) / rejectedDurations.length
+      : 0;
 
   // Today's approvals
   const today = new Date();
@@ -118,6 +145,12 @@ export async function getPricingAnalysis(
   const approvedProducts = await (prisma as any).aIGeneratedProduct.findMany({
     where: { status: "APPROVED" },
     take: 1000, // Limit to last 1000
+    select: {
+      productId: true,
+      aiCategory: true,
+      suggestedPrice: true,
+      priceConfidence: true,
+    },
   });
 
   if (approvedProducts.length === 0) {
@@ -137,32 +170,55 @@ export async function getPricingAnalysis(
       0,
     ) / approvedProducts.length;
 
-  // Assume if productId is set, it was approved and created
-  const productsWithFinalPrice = approvedProducts.filter(
-    (p: any) => p.productId,
-  );
+  const productIds = approvedProducts
+    .map((p: any) => p.productId)
+    .filter(Boolean);
 
-  // Mock pricing accuracy (in production, compare to final price from Product model)
-  const pricingAccuracy = Math.min(100, 75 + Math.random() * 20); // 75-95%
+  const products = productIds.length
+    ? await prisma.product.findMany({
+        where: { id: { in: productIds } },
+        select: { id: true, price: true },
+      })
+    : [];
 
-  // Calculate average confidence
+  const productMap = new Map(products.map((p) => [p.id, p]));
+
   const categoryDeviations: Record<
     string,
     { deviations: number[]; count: number }
   > = {};
 
-  approvedProducts.forEach((product: any) => {
-    if (!categoryDeviations[product.aiCategory]) {
-      categoryDeviations[product.aiCategory] = { deviations: [], count: 0 };
+  let totalDeviation = 0;
+  let deviationCount = 0;
+  let overridesCount = 0;
+
+  for (const product of approvedProducts) {
+    if (!product.productId || !product.suggestedPrice) continue;
+    const finalProduct = productMap.get(product.productId);
+    if (!finalProduct) continue;
+
+    const deviation =
+      (Math.abs(finalProduct.price - product.suggestedPrice) /
+        product.suggestedPrice) *
+      100;
+
+    totalDeviation += deviation;
+    deviationCount += 1;
+
+    if (Math.abs(finalProduct.price - product.suggestedPrice) > 0.01) {
+      overridesCount += 1;
     }
-    // Mock deviation calculation
-    const deviation = Math.random() * 10; // 0-10%
-    const categoryData = categoryDeviations[product.aiCategory];
-    if (categoryData) {
-      categoryData.deviations.push(deviation);
-      categoryData.count++;
+
+    const category = product.aiCategory || "Unknown";
+    if (!categoryDeviations[category]) {
+      categoryDeviations[category] = { deviations: [], count: 0 };
     }
-  });
+    categoryDeviations[category].deviations.push(deviation);
+    categoryDeviations[category].count++;
+  }
+
+  const avgDeviation = deviationCount > 0 ? totalDeviation / deviationCount : 0;
+  const pricingAccuracy = Math.max(0, 100 - avgDeviation);
 
   const categoriesByDeviation = Object.entries(categoryDeviations).map(
     ([category, data]) => ({
@@ -177,17 +233,12 @@ export async function getPricingAnalysis(
     }),
   );
 
-  const overridesCount = productsWithFinalPrice.length;
-  const overridesPercentage = (overridesCount / approvedProducts.length) * 100;
+  const overridesPercentage =
+    deviationCount > 0 ? (overridesCount / deviationCount) * 100 : 0;
 
   return {
     averagePricingAccuracy: Math.round(pricingAccuracy * 100) / 100,
-    averageAIPriceDeviation:
-      Math.round(
-        (approvedProducts.reduce((sum: number) => sum + Math.random() * 5, 0) /
-          approvedProducts.length) *
-          100,
-      ) / 100,
+    averageAIPriceDeviation: Math.round(avgDeviation * 100) / 100,
     avgConfidenceScore: Math.round(avgConfidence * 100) / 100,
     categoriesByDeviation: categoriesByDeviation.sort(
       (a, b) => b.avgDeviation - a.avgDeviation,
@@ -274,16 +325,34 @@ export async function getProductPerformance(
     .slice(0, 5)
     .map((cat) => ({
       category: cat.name,
-      growthRate: Math.random() * 20 - 5, // Mock: -5% to +15%
+      growthRate: 0,
       productCount: categoryMetrics[cat.name]?.count ?? 0,
     }));
 
+  const soldDurations: number[] = [];
+  for (const product of soldProducts) {
+    const firstSale = product.OrderItem
+      .map((item) => item.createdAt)
+      .sort((a, b) => a.getTime() - b.getTime())[0];
+    if (firstSale) {
+      const days =
+        (firstSale.getTime() - product.createdAt.getTime()) /
+        (1000 * 60 * 60 * 24);
+      if (days >= 0) soldDurations.push(days);
+    }
+  }
+
+  const averageTimeToSell =
+    soldDurations.length > 0
+      ? soldDurations.reduce((a, b) => a + b, 0) / soldDurations.length
+      : 0;
+
   return {
     totalProducts: allProducts.length,
-    averageTimeToSell: 7, // Mock: 7 days
+    averageTimeToSell: Math.round(averageTimeToSell * 100) / 100,
     sellThroughRate: Math.round(sellThroughRate * 100) / 100,
     averageSellingPrice: Math.round(avgSellingPrice * 100) / 100,
-    priceAccuracy: 92, // Mock: 92%
+    priceAccuracy: 0,
     bestPerformingCategory: bestPerforming,
     lowestPerformingCategory: lowestPerforming,
     trendingCategories,
@@ -297,6 +366,7 @@ export async function getRevenueInsights(
   _params: AnalyticsQueryParams,
 ): Promise<RevenueInsights> {
   const orders = await prisma.order.findMany({
+    where: { paymentStatus: "paid" },
     include: {
       OrderItem: {
         include: {
@@ -352,9 +422,9 @@ export async function getRevenueInsights(
     conversionRate: Math.round(conversionRate * 100) / 100,
     revenueByCategory: categoryRevenue,
     revenueGrowth: {
-      daily: Math.random() * 15 - 5, // Mock: -5% to +15%
-      weekly: Math.random() * 20 - 5, // Mock: -5% to +20%
-      monthly: Math.random() * 25 - 5, // Mock: -5% to +25%
+      daily: 0,
+      weekly: 0,
+      monthly: 0,
     },
   };
 }
@@ -389,14 +459,40 @@ export async function getApprovalTrends(
       },
     });
 
+    const dayProducts = await (prisma as any).aIGeneratedProduct.findMany({
+      where: {
+        reviewedAt: { gte: date, lt: nextDate },
+      },
+      select: {
+        priceConfidence: true,
+        suggestedPrice: true,
+      },
+    });
+
+    const avgConfidence =
+      dayProducts.length > 0
+        ? dayProducts.reduce(
+            (sum: number, p: any) => sum + (p.priceConfidence || 0),
+            0,
+          ) / dayProducts.length
+        : 0;
+
+    const avgPrice =
+      dayProducts.length > 0
+        ? dayProducts.reduce(
+            (sum: number, p: any) => sum + (p.suggestedPrice || 0),
+            0,
+          ) / dayProducts.length
+        : 0;
+
     const dateStr = date.toISOString().split("T")[0];
     if (dateStr) {
       trends.push({
         date: dateStr,
         approvalsCount,
         rejectionsCount,
-        averageConfidence: 75 + Math.random() * 20, // Mock
-        averagePrice: 500 + Math.random() * 1000, // Mock
+        averageConfidence: Math.round(avgConfidence * 100) / 100,
+        averagePrice: Math.round(avgPrice * 100) / 100,
       });
     }
   }
@@ -433,16 +529,16 @@ export async function getCategoryMetrics(
     return {
       name: cat.name,
       productCount,
-      approvalRate: 85 + Math.random() * 10, // Mock
+      approvalRate: 0,
       averagePrice:
         cat.Product.length > 0
           ? cat.Product.reduce((sum, p) => sum + p.price, 0) /
             cat.Product.length
           : 0,
-      averageConfidence: 80 + Math.random() * 15, // Mock
+      averageConfidence: 0,
       revenue: totalRevenue,
       soldCount,
-      growthRate: Math.random() * 20 - 5, // Mock
+      growthRate: 0,
     };
   });
 
@@ -463,7 +559,7 @@ export async function getRevenueMetrics(
           gte: startDate,
           lte: endDate,
         },
-        paymentStatus: "COMPLETED",
+        paymentStatus: "paid",
       },
       include: {
         OrderItem: {
@@ -632,7 +728,9 @@ export async function getProductMetrics(): Promise<any> {
 
     return {
       totalProducts,
-      activeProducts: products.filter((p: any) => !p.archived).length,
+      activeProducts: products.filter(
+        (p: any) => p.status === "active" && !p.isDraft,
+      ).length,
       averagePrice: Math.round(avgPrice * 100) / 100,
       priceRange: {
         min: prices.length > 0 ? Math.min(...prices) : 0,
@@ -700,7 +798,7 @@ async function getApprovalMetricsNew(
       select: {
         status: true,
         createdAt: true,
-        approvedAt: true,
+        reviewedAt: true,
       },
     });
 
@@ -715,13 +813,13 @@ async function getApprovalMetricsNew(
 
     // Calculate average time to approve
     const approvedProducts = products.filter(
-      (p: any) => p.status === "APPROVED" && p.approvedAt,
+      (p: any) => p.status === "APPROVED" && p.reviewedAt,
     );
     const avgTimeToApprove =
       approvedProducts.length > 0
         ? approvedProducts.reduce((sum: number, p: any) => {
             const time =
-              (p.approvedAt!.getTime() - p.createdAt.getTime()) / 1000 / 60;
+              (p.reviewedAt!.getTime() - p.createdAt.getTime()) / 1000 / 60;
             return sum + time;
           }, 0) / approvedProducts.length
         : 0;

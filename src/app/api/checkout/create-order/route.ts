@@ -81,6 +81,26 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!Array.isArray(items) || items.length === 0) {
+      return NextResponse.json(
+        { error: "Missing order items" },
+        { status: 400 },
+      );
+    }
+
+    if (
+      !shippingAddress.address ||
+      !shippingAddress.city ||
+      !shippingAddress.state ||
+      !shippingAddress.zipCode ||
+      !shippingAddress.country
+    ) {
+      return NextResponse.json(
+        { error: "Missing required shipping address fields" },
+        { status: 400 },
+      );
+    }
+
     // Generate order number
     const orderNumber = `KI-${Date.now()}-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
 

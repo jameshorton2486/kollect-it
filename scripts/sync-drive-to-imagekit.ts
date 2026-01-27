@@ -9,9 +9,9 @@
  * Environment variables required:
  * - GOOGLE_APPLICATION_CREDENTIALS: path to service account JSON
  * - GOOGLE_DRIVE_FOLDER_ID: ID of folder to sync from
- * - IMAGEKIT_PUBLIC_KEY: ImageKit public key
+ * - NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: ImageKit public key
  * - IMAGEKIT_PRIVATE_KEY: ImageKit private key
- * - IMAGEKIT_URL_ENDPOINT: ImageKit URL endpoint
+ * - NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: ImageKit URL endpoint
  */
 
 import ImageKit from "imagekit";
@@ -43,13 +43,19 @@ const config = {
   googleCredentialsPath:
     process.env.GOOGLE_APPLICATION_CREDENTIALS || "./google-credentials.json",
   driveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID || "",
-  imagekit: {
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",
+ imagekit: {
+    publicKey:
+      process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY ||
+      process.env.IMAGEKIT_PUBLIC_KEY ||
+      "",
     privateKey: (process.env.IMAGEKIT_PRIVATE_KEY || "").replace(
       /^private_/,
       "",
     ),
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "",
+    urlEndpoint:
+      process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT ||
+      process.env.IMAGEKIT_URL_ENDPOINT ||
+      "",
   },
 };
 

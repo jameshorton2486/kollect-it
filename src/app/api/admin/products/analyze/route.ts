@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     // Check cache first (30 min TTL for AI analysis)
     const cacheKey = cacheKeys.aiAnalysis(imageUrl);
-    const cached = cache.get<any>(cacheKey);
+    const cached = await cache.get<any>(cacheKey);
 
     if (cached) {
       console.log(`✅ [API] Returning cached analysis`);
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     const analysis = await generateProductAnalysis(imageUrl, category, notes);
 
     // Cache the result
-    cache.set(cacheKey, analysis, cacheTTL.long);
+    await cache.set(cacheKey, analysis, cacheTTL.long);
 
     console.log(`✅ [API] Analysis complete, returning to client`);
     const response = NextResponse.json(analysis);
@@ -78,4 +78,3 @@ export async function POST(req: NextRequest) {
     return applySecurityHeaders(errorResponse);
   }
 }
-

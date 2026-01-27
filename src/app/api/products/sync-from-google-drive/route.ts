@@ -116,7 +116,7 @@ export async function POST(request: Request) {
 
     // Query for recently modified product JSONs
     const response = await drive.files.list({
-      q: `'${folderIdtoSync}' in parents and mimeType='application/json' and name contains '2025_' and trashed=false`,
+      q: `'${folderIdtoSync}' in parents and mimeType='application/json' and trashed=false`,
       spaces: "drive",
       pageSize: 10,
       fields: "files(id, name, createdTime, modifiedTime)",
@@ -159,9 +159,17 @@ export async function POST(request: Request) {
           try {
             const apiUrl =
               process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+            const ingestKey = process.env.PRODUCT_INGEST_API_KEY;
+            const headers: Record<string, string> = {
+              "Content-Type": "application/json",
+            };
+            if (ingestKey) {
+              headers["x-api-key"] = ingestKey;
+            }
+
             await fetch(`${apiUrl}/api/products/sync-imagekit`, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers,
               body: JSON.stringify({
                 product_id: product.product_id,
                 product_json: product,

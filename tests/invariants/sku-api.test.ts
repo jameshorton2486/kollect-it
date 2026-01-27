@@ -2,13 +2,13 @@
 import { describe, it, expect } from 'bun:test';
 
 // SKU validation logic (mirrors API implementation)
-const SKU_PATTERN = /^KOL-20[2-9][0-9]-[0-9]{4}$/;
+const SKU_PATTERN = /^[A-Z]{3,4}-20[2-9][0-9]-[0-9]{4}$/;
 
 function validateSkuFormat(sku: string): { valid: boolean; error?: string } {
   if (!SKU_PATTERN.test(sku)) {
     return {
       valid: false,
-      error: `Invalid SKU format: "${sku}". Expected format: KOL-YYYY-NNNN`
+      error: `Invalid SKU format: "${sku}". Expected format: PREFIX-YYYY-NNNN`
     };
   }
   
@@ -28,22 +28,22 @@ function validateSkuFormat(sku: string): { valid: boolean; error?: string } {
 
 describe('SKU Format Validation', () => {
   describe('Valid SKUs', () => {
-    it('accepts standard format KOL-2026-0001', () => {
-      expect(validateSkuFormat('KOL-2026-0001').valid).toBe(true);
+    it('accepts standard format MILI-2026-0001', () => {
+      expect(validateSkuFormat('MILI-2026-0001').valid).toBe(true);
     });
 
     it('accepts KOL-2025-9999', () => {
       expect(validateSkuFormat('KOL-2025-9999').valid).toBe(true);
     });
 
-    it('accepts KOL-2024-0042', () => {
-      expect(validateSkuFormat('KOL-2024-0042').valid).toBe(true);
+    it('accepts ARTS-2024-0042', () => {
+      expect(validateSkuFormat('ARTS-2024-0042').valid).toBe(true);
     });
   });
 
   describe('Invalid SKUs', () => {
-    it('rejects wrong prefix', () => {
-      const result = validateSkuFormat('SKU-2026-0001');
+    it('rejects wrong prefix format', () => {
+      const result = validateSkuFormat('SK-2026-0001');
       expect(result.valid).toBe(false);
       expect(result.error).toContain('Invalid SKU format');
     });

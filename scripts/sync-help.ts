@@ -69,8 +69,8 @@ function main(): void {
 
   log("Environment Variables (.env.local):", "bright");
   log("  IMAGEKIT_PRIVATE_KEY              Your ImageKit private key", "blue");
-  log("  IMAGEKIT_PUBLIC_KEY               Your ImageKit public key", "blue");
-  log("  IMAGEKIT_URL_ENDPOINT             Your ImageKit URL endpoint", "blue");
+  log("  NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY   Your ImageKit public key", "blue");
+  log("  NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT Your ImageKit URL endpoint", "blue");
   log(
     "  GOOGLE_DRIVE_FOLDER_ID            Google Drive folder with images",
     "blue",

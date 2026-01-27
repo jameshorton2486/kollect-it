@@ -114,10 +114,10 @@ export async function getCachedRevenueMetrics(ttlMs: number = 300000) {
   if (cached) return cached;
 
   const totalOrders = await (prisma as any).order.count({
-    where: { status: "COMPLETED" },
+    where: { paymentStatus: "paid" },
   });
   const revenue = await (prisma as any).order.aggregate({
-    where: { status: "COMPLETED" },
+    where: { paymentStatus: "paid" },
     _sum: {
       total: true,
     },
@@ -176,12 +176,11 @@ export async function createOptimizationIndexes(): Promise<void> {
     // Approval metrics indexes
     'CREATE INDEX IF NOT EXISTS idx_ai_product_status ON "AIGeneratedProduct"(status);',
     'CREATE INDEX IF NOT EXISTS idx_ai_product_reviewed_at ON "AIGeneratedProduct"("reviewedAt");',
-    'CREATE INDEX IF NOT EXISTS idx_ai_product_category ON "AIGeneratedProduct"(category);',
+    'CREATE INDEX IF NOT EXISTS idx_ai_product_category ON "AIGeneratedProduct"("aiCategory");',
 
     // Revenue indexes
     'CREATE INDEX IF NOT EXISTS idx_order_status ON "Order"(status);',
     'CREATE INDEX IF NOT EXISTS idx_order_created_at ON "Order"("createdAt");',
-    'CREATE INDEX IF NOT EXISTS idx_order_category_id ON "Order"("categoryId");',
 
     // Product indexes
     'CREATE INDEX IF NOT EXISTS idx_product_category_id ON "Product"("categoryId");',

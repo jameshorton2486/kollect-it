@@ -1,5 +1,5 @@
 /**
- * Email Service with Google Workspace SMTP
+ * Email Service with Zoho Mail SMTP
  *
  * Features:
  * - Nodemailer with connection pooling
@@ -8,15 +8,15 @@
  * - Error logging and monitoring
  *
  * Setup Instructions:
- * 1. Create Google Workspace account ($6/month)
+ * 1. Create Zoho Mail account (free): https://www.zoho.com/mail/
  * 2. Enable 2FA on your account
- * 3. Generate App Password: https://myaccount.google.com/apppasswords
+ * 3. Generate App Password: Zoho Mail → Settings → Security → App Passwords
  * 4. Add to .env.local:
- *    EMAIL_FROM="Kollect-It <noreply@yourdomain.com>"
- *    EMAIL_HOST="smtp.gmail.com"
+ *    EMAIL_FROM="Kollect-It <info@kollect-it.com>"
+ *    EMAIL_HOST="smtp.zoho.com"
  *    EMAIL_PORT="587"
- *    EMAIL_USER="noreply@yourdomain.com"
- *    EMAIL_PASSWORD="your-app-password"
+ *    EMAIL_USER="info@kollect-it.com"
+ *    EMAIL_PASSWORD="your-zoho-app-password"
  */
 
 import nodemailer from "nodemailer";
@@ -101,7 +101,7 @@ function getTransporter() {
 
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || "smtp.gmail.com",
+      host: process.env.EMAIL_HOST || "smtp.zoho.com",
       port: parseInt(process.env.EMAIL_PORT || "587"),
       secure: false, // true for 465, false for other ports
       auth: {
@@ -394,7 +394,7 @@ export function isEmailConfigured(): boolean {
 export function getEmailStatus() {
   return {
     enabled: EMAIL_ENABLED,
-    host: process.env.EMAIL_HOST || "smtp.gmail.com",
+      host: process.env.EMAIL_HOST || "smtp.zoho.com",
     user: process.env.EMAIL_USER
       ? `${process.env.EMAIL_USER.substring(0, 3)}***`
       : "Not configured",

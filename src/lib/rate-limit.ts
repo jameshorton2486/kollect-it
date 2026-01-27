@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { redisEnabled, redisExpire, redisIncr } from "./redis-rest";
 
 interface RateLimitConfig {
   interval: number; // Time window in milliseconds
@@ -53,23 +54,52 @@ export async function rateLimit(
   const now = Date.now();
   const key = `rate-limit:${ip}`;
 
-  // Get or create rate limit entry
+  if (redisEnabled) {
+    const windowKey = `rate-limit:${ip}:${Math.floor(now / config.interval)}`;
+    const count = (await redisIncr(windowKey)) ?? 1;
+    if (count === 1) {
+      await redisExpire(windowKey, Math.ceil(config.interval / 1000));
+    }
+
+    if (count > config.uniqueTokenPerInterval) {
+      const retryAfter = Math.ceil(config.interval / 1000);
+      return NextResponse.json(
+        {
+          error: "Too many requests",
+          message: `Rate limit exceeded. Try again in ${retryAfter} seconds.`,
+          retryAfter,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": retryAfter.toString(),
+            "X-RateLimit-Limit": config.uniqueTokenPerInterval.toString(),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": Math.ceil(
+              (now + config.interval) / 1000,
+            ).toString(),
+          },
+        },
+      );
+    }
+
+    return null;
+  }
+
+  // In-memory fallback
   let entry = rateLimitStore.get(key);
 
   if (!entry || entry.resetTime < now) {
-    // Create new entry
     entry = {
       count: 1,
       resetTime: now + config.interval,
     };
     rateLimitStore.set(key, entry);
-    return null; // Allow request
+    return null;
   }
 
-  // Increment count
   entry.count++;
 
-  // Check if limit exceeded
   if (entry.count > config.uniqueTokenPerInterval) {
     const retryAfter = Math.ceil((entry.resetTime - now) / 1000);
 
@@ -91,10 +121,8 @@ export async function rateLimit(
     );
   }
 
-  // Update rate limit headers
   rateLimitStore.set(key, entry);
-
-  return null; // Allow request
+  return null;
 }
 
 /**

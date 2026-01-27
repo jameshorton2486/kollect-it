@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { formatSKU } from "@/lib/utils/image-parser";
+import { formatSKU, getSuggestedPrefix } from "@/lib/domain/sku";
 
 interface BulkApproveRequest {
   productIds: string[];
@@ -75,16 +75,12 @@ export async function POST(request: NextRequest) {
     // Get categories once
     const categories = await prisma.category.findMany();
     const categoryMap = new Map(
-      categories.map((c) => [c.name.toLowerCase(), c.id]),
+      categories.map((c) => [c.name.toLowerCase(), c]),
     );
 
-    // Get starting SKU number for this year
+    // Get starting SKU number for this year per prefix
     const bulkYear = new Date().getFullYear();
-    const maxSku = await prisma.product.aggregate({
-      _max: { skuNumber: true },
-      where: { skuYear: bulkYear }
-    });
-    let nextSkuNumber = (maxSku._max.skuNumber || 0) + 1;
+    const nextSkuByPrefix = new Map<string, number>();
 
     // Process each product
     for (const aiProduct of aiProducts) {
@@ -97,17 +93,17 @@ export async function POST(request: NextRequest) {
 
         // Find category
         const categoryLower = aiProduct.aiCategory.toLowerCase();
-        let categoryId = categoryMap.get(categoryLower);
+        let category = categoryMap.get(categoryLower);
 
-        if (!categoryId) {
+        if (!category) {
           // Fallback: find first category that contains the category name
           const matchingCategory = categories.find((c) =>
             c.name.toLowerCase().includes(categoryLower),
           );
-          categoryId = matchingCategory?.id;
+          category = matchingCategory;
         }
 
-        if (!categoryId) {
+        if (!category) {
           throw new Error(
             `No matching category found for: ${aiProduct.aiCategory}`,
           );
@@ -122,25 +118,60 @@ export async function POST(request: NextRequest) {
           "-" +
           Math.random().toString(36).substring(7);
 
-        // Generate SKU using centralized format (SKU-YYYY-XXX)
-        const skuNumber = nextSkuNumber++;
-        const sku = formatSKU(bulkYear, skuNumber);
+        // Generate SKU using unified format (PREFIX-YYYY-NNNN) with retry on conflicts
+        const prefix = getSuggestedPrefix(category.slug || category.name);
+        if (!nextSkuByPrefix.has(prefix)) {
+          const maxSku = await prisma.product.aggregate({
+            _max: { skuNumber: true },
+            where: {
+              skuYear: bulkYear,
+              sku: { startsWith: `${prefix}-${bulkYear}-` },
+            },
+          });
+          nextSkuByPrefix.set(prefix, (maxSku._max.skuNumber || 0) + 1);
+        }
+        let product;
 
-        // Create product
-        const product = await prisma.product.create({
-          data: {
-            sku: sku,
-            skuYear: bulkYear,
-            skuNumber: skuNumber,
-            title: aiProduct.aiTitle,
-            slug,
-            description: aiProduct.aiDescription,
-            price: finalPrice,
-            categoryId,
-            condition: aiProduct.aiCondition || "Good",
-            status: "active",
-          },
-        });
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const skuNumber = nextSkuByPrefix.get(prefix)!;
+          nextSkuByPrefix.set(prefix, skuNumber + 1);
+          const sku = formatSKU(prefix, bulkYear, skuNumber);
+
+          try {
+            product = await prisma.product.create({
+              data: {
+                sku,
+                skuYear: bulkYear,
+                skuNumber,
+                title: aiProduct.aiTitle,
+                slug,
+                description: aiProduct.aiDescription,
+                price: finalPrice,
+                categoryId: category.id,
+                condition: aiProduct.aiCondition || "Good",
+                status: "active",
+              },
+            });
+            break;
+          } catch (err: any) {
+            if (err?.code === "P2002") {
+              const maxSku = await prisma.product.aggregate({
+                _max: { skuNumber: true },
+                where: {
+                  skuYear: bulkYear,
+                  sku: { startsWith: `${prefix}-${bulkYear}-` },
+                },
+              });
+              nextSkuByPrefix.set(prefix, (maxSku._max.skuNumber || 0) + 1);
+              continue;
+            }
+            throw err;
+          }
+        }
+
+        if (!product) {
+          throw new Error("Failed to generate unique SKU");
+        }
 
         // Update AI product
         await (prisma as any).aIGeneratedProduct.update({

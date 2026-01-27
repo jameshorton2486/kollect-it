@@ -15,6 +15,7 @@ interface Subcategory {
 interface Category {
   id: string;
   name: string;
+  slug?: string;
   Subcategory: Subcategory[];
 }
 
@@ -85,6 +86,27 @@ export default function NewProductPage() {
       fetchData();
     }
   }, [status]);
+
+  useEffect(() => {
+    const fetchSku = async () => {
+      try {
+        if (!form.categoryId) return;
+        const category = categories.find((c) => c.id === form.categoryId);
+        const categoryParam = category?.slug || category?.name || "";
+        const query = new URLSearchParams();
+        if (categoryParam) query.set("category", categoryParam);
+        const res = await fetch(`/api/admin/products/next-sku?${query.toString()}`);
+        if (!res.ok) return;
+        const skuData = await res.json();
+        setNextSku(skuData.suggestedSKU || "");
+      } catch (error) {
+        console.error("Error fetching SKU:", error);
+      }
+    };
+    if (status === "authenticated") {
+      fetchSku();
+    }
+  }, [status, form.categoryId, categories]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

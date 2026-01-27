@@ -10,6 +10,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from "@prisma/client";
+import { validateSKU } from "@/lib/domain/sku";
 
 // Service API key for desktop app authentication
 // Add to .env: PRODUCT_INGEST_API_KEY=your-secure-key-here
@@ -92,52 +93,6 @@ function validatePayload(data: unknown): { valid: boolean; errors: string[] } {
   return { valid: errors.length === 0, errors };
 }
 
-// =============================================================================
-// UNIFIED SKU VALIDATION - Accepts PREFIX-YYYY-NNNN format
-// Supports both desktop app format (MILI-2025-0001) and KOL format (KOL-2025-0001)
-// =============================================================================
-function validateSkuFormat(sku: string): { valid: boolean; error?: string; parsed?: { prefix: string; year: number; sequence: number } } {
-  // Pattern: 3-4 uppercase letters, hyphen, 4-digit year (2020-2099), hyphen, 4-digit sequence
-  const SKU_PATTERN = /^([A-Z]{3,4})-(\d{4})-(\d{4})$/;
-  
-  const match = sku.toUpperCase().match(SKU_PATTERN);
-  
-  if (!match) {
-    return {
-      valid: false,
-      error: `Invalid SKU format: "${sku}". Expected format: PREFIX-YYYY-NNNN (e.g., MILI-2026-0001, COLL-2025-0042, KOL-2026-0001)`
-    };
-  }
-  
-  const prefix = match[1] as string;
-  const yearStr = match[2] as string;
-  const sequenceStr = match[3] as string;
-  
-  const year = parseInt(yearStr, 10);
-  const sequence = parseInt(sequenceStr, 10);
-  const currentYear = new Date().getFullYear();
-  
-  // Validate year range
-  if (year < 2020 || year > currentYear + 1) {
-    return {
-      valid: false,
-      error: `SKU year ${year} is invalid. Must be between 2020 and ${currentYear + 1}`
-    };
-  }
-  
-  // Validate sequence (must be 1-9999)
-  if (sequence < 1 || sequence > 9999) {
-    return {
-      valid: false,
-      error: `SKU sequence ${sequence} is invalid. Must be between 0001 and 9999`
-    };
-  }
-  
-  return { 
-    valid: true,
-    parsed: { prefix, year, sequence }
-  };
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -199,7 +154,7 @@ export async function POST(request: NextRequest) {
     // =========================================
     // 2b. Validate SKU format (UNIFIED - accepts PREFIX-YYYY-NNNN)
     // =========================================
-    const skuValidation = validateSkuFormat(payload.sku);
+    const skuValidation = validateSKU(payload.sku);
     if (!skuValidation.valid) {
       return NextResponse.json(
         {
@@ -217,8 +172,9 @@ export async function POST(request: NextRequest) {
     // =========================================
     // 3. Check for duplicate SKU
     // =========================================
+    const normalizedSku = skuValidation.parsed?.formatted || payload.sku.toUpperCase();
     const existingProduct = await prisma.product.findUnique({
-      where: { sku: payload.sku.toUpperCase() }
+      where: { sku: normalizedSku }
     });
 
     if (existingProduct) {
@@ -324,7 +280,7 @@ export async function POST(request: NextRequest) {
     // =================================================================
     const product = await prisma.product.create({
       data: {
-        sku: payload.sku.toUpperCase(),
+        sku: normalizedSku,
         title: payload.title,
         slug: slug,
         description: payload.description,

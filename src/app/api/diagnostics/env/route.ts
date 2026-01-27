@@ -13,8 +13,11 @@ import { authOptions } from "@/lib/auth";
  * - Lists missing variable names only
  */
 
-export async function GET() {
-  if (process.env.NODE_ENV === "production") {
+export async function GET(request: Request) {
+  const token = request.headers.get("x-healthcheck-token");
+  if (process.env.HEALTHCHECK_TOKEN && token === process.env.HEALTHCHECK_TOKEN) {
+    // allow
+  } else {
     const session = await getServerSession(authOptions);
     if (!session?.user || session.user.role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

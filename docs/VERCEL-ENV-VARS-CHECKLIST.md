@@ -52,24 +52,24 @@ PRODUCT_INGEST_API_KEY=<secure-random-string>
 
 ## Email Configuration (Choose ONE)
 
-### Option A: Google Workspace SMTP
+### Email Service (Zoho Mail SMTP)
 ```
 EMAIL_FROM="Kollect-It <info@kollect-it.com>"
-EMAIL_HOST=smtp.gmail.com
+EMAIL_HOST=smtp.zoho.com
 EMAIL_PORT=587
 EMAIL_USER=info@kollect-it.com
-EMAIL_PASSWORD=<16-char-app-password>
-ADMIN_EMAIL=james@kollect-it.com
+EMAIL_PASSWORD=your-zoho-app-password
+ADMIN_EMAIL=info@kollect-it.com
 ```
 - [ ] `EMAIL_FROM` - Display name and address
-- [ ] `EMAIL_HOST` - SMTP server
-- [ ] `EMAIL_PORT` - SMTP port
-- [ ] `EMAIL_USER` - SMTP username
-- [ ] `EMAIL_PASSWORD` - App password (NOT regular password)
+- [ ] `EMAIL_HOST` - SMTP server (smtp.zoho.com)
+- [ ] `EMAIL_PORT` - SMTP port (587)
+- [ ] `EMAIL_USER` - SMTP username (your Zoho Mail email)
+- [ ] `EMAIL_PASSWORD` - Zoho App Password (NOT regular password)
 - [ ] `ADMIN_EMAIL` - Admin notification recipient
 
 ### Email Service
-Kollect-It uses Google Workspace SMTP via Nodemailer. No alternative email services are configured.
+Kollect-It uses Zoho Mail SMTP via Nodemailer. No alternative email services are configured.
 
 ---
 
@@ -144,7 +144,7 @@ curl -X GET https://kollect-it.com/api/admin/products/ingest \
 
 ⚠️ **Rotate `PRODUCT_INGEST_API_KEY` periodically**
 
-⚠️ **Use App Passwords for Gmail, not your actual password**
+⚠️ **Use App Passwords for Zoho Mail, not your actual password**
 
 ---
 
