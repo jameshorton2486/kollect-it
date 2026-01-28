@@ -11,29 +11,26 @@ Add these 6 variables (select **Production** environment for each):
 | Variable Name | Value |
 |---|---|
 | `EMAIL_FROM` | `Kollect-It <info@kollect-it.com>` |
-| `EMAIL_HOST` | `smtp.gmail.com` |
+| `EMAIL_HOST` | `smtp.zoho.com` |
 | `EMAIL_PORT` | `587` |
 | `EMAIL_USER` | `info@kollect-it.com` |
-| `EMAIL_PASSWORD` | `[Your 16-char Gmail App Password]` |
-| `ADMIN_EMAIL` | `james@kollect-it.com` |
+| `EMAIL_PASSWORD` | `[Your Zoho App Password]` |
+| `ADMIN_EMAIL` | `info@kollect-it.com` |
 
 ---
 
 ## Step-by-Step Setup
 
-### 1. Generate Gmail App Password
+### 1. Generate Zoho Mail App Password
 
 If you haven't already:
 
-1. Go to https://myaccount.google.com/
-2. Click **Security** (left sidebar)
-3. Ensure **2-Step Verification is ON**
-4. Scroll to **"App passwords"**
-5. Select:
-   - **App:** Mail
-   - **Device:** Other (custom name: `Kollect-It Email Service`)
-6. Click **Generate**
-7. Copy the 16-character password (without spaces)
+1. Go to [Zoho Mail Settings](https://mail.zoho.com/zm/#settings/general)
+2. Navigate to **Security** → **App Passwords**
+3. Click **Generate New Password**
+4. Enter name: `Kollect-It Production`
+5. Click **Generate**
+6. Copy the app password (you won't see it again!)
 
 ### 2. Add Variables to Vercel
 

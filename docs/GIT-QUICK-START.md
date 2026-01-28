@@ -1,6 +1,7 @@
 # Git Quick Start Guide
-**For:** Kollect-It Repository  
-**Repository:** https://github.com/jameshorton2486/kollect-it
+
+**For:** Kollect-It Repository
+**Repository:** <https://github.com/jameshorton2486/kollect-it>
 
 ---
 
@@ -27,6 +28,7 @@ git push origin main
 ### Using Cursor AI Shortcuts
 
 Just type in Cursor chat:
+
 - `@git-deploy` - Stage, commit, and push all changes
 - `@git-save` - Stage and commit (local only)
 - `@git-status` - Check current status
@@ -48,12 +50,14 @@ Just type in Cursor chat:
 ## 📋 Current Changes Summary
 
 **Modified Files (19):**
+
 - Email addresses updated across all pages
 - Email service simplified
 - BOM character fixed
 - Documentation added
 
 **New Files (17):**
+
 - Environment variable scripts
 - Documentation files
 - Test files (now in .gitignore)
@@ -74,6 +78,7 @@ Your repository has automatic checks that run before commits:
 ## 🔒 GitHub Protection
 
 **Active Workflows:**
+
 - ✅ Domain Guardrails (blocks raw images, enforces SKU rules)
 - ✅ Repo Guard (blocks forbidden folders)
 
@@ -94,6 +99,7 @@ refactor: code restructuring
 ```
 
 **Example:**
+
 ```bash
 git commit -m "fix: update email addresses and fix BOM character"
 ```

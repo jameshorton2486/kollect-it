@@ -116,7 +116,7 @@
 - **Format:** Hostname string
 - **Required:** ✅ Yes (if using email features)
 - **Examples:**
-  - `smtp.gmail.com` (Gmail)
+  - `smtp.zoho.com` (Zoho Mail)
   - `smtp.outlook.com` (Outlook)
   - `smtp.mail.yahoo.com` (Yahoo)
   - Or your email provider's SMTP server
@@ -143,7 +143,7 @@
 - **Description:** Email App Password (NOT your regular password)
 - **Format:** App-specific password from your email provider
 - **Where to get:**
-  - Gmail: Google Account → Security → App Passwords
+  - Zoho Mail: Zoho Mail → Settings → Security → App Passwords
   - Outlook: Microsoft Account → Security → App Passwords
   - Other providers: Check your email provider's documentation
 - **Required:** ✅ Yes (if using email features)
