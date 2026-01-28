@@ -75,8 +75,8 @@ export function NewsletterWelcomeEmail({
             .
             <br />
             Questions? Reply to this email or contact{" "}
-            <Link href="mailto:james@kollect-it.com" style={link}>
-              james@kollect-it.com
+            <Link href="mailto:jameshorton2486@gmail.com" style={link}>
+              jameshorton2486@gmail.com
             </Link>
           </Text>
         </Container>

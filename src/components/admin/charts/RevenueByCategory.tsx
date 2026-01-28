@@ -37,7 +37,7 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
   }
 
   const chartData = data.map((item) => ({
-    name: `${item.Category} (${item.percentage.toFixed(1)}%)`,
+    name: `${item.category} (${item.percentage.toFixed(1)}%)`,
     value: item.revenue,
   }));
 
@@ -80,10 +80,10 @@ export function RevenueByCategory({ data }: RevenueByCategoryProps) {
       <div className="mt-6 space-y-2">
         {data.map((item) => (
           <div
-            key={item.Category}
+            key={item.category}
             className="flex justify-between text-lux-cream"
           >
-            <span>{item.Category}</span>
+            <span>{item.category}</span>
             <span className="text-lux-gold font-semibold">
               ${item.revenue.toFixed(2)}
             </span>

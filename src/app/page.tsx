@@ -36,9 +36,9 @@ async function getLatestProducts() {
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import("@/lib/prisma");
-    
+
     const products = await prisma.product.findMany({
-      where: { 
+      where: {
         status: "active",
         isDraft: false,
       },
@@ -49,7 +49,7 @@ async function getLatestProducts() {
       orderBy: { createdAt: "desc" },
       take: 8,
     });
-    
+
     return products;
   } catch (error) {
     console.error("Failed to fetch products:", error);
@@ -67,7 +67,7 @@ export default async function HomePage() {
     title: product.title,
     price: product.price,
     slug: product.slug,
-    images: product.Image.length > 0 ? product.Image : [{ url: "/placeholder.svg" }],
+    Image: product.Image.length > 0 ? product.Image : [{ url: "/placeholder.svg" }],
     category: product.Category ? { name: product.Category.name, slug: product.Category.slug } : null,
   }));
 
@@ -89,7 +89,7 @@ export default async function HomePage() {
       "@type": "ContactPoint",
       telephone: "+1-469-386-6065",
       contactType: "customer service",
-      email: "info@kollect-it.com",
+      email: "jameshorton2486@gmail.com",
     },
   };
 
@@ -101,16 +101,16 @@ export default async function HomePage() {
       />
       {/* Section 1: Hero */}
       <Hero />
-      
+
       {/* Section 2: Recent Additions */}
       <RecentAdditions products={latestCardData} />
-      
+
       {/* Section 3: Category Grid (2x2) */}
       <CategoryGrid />
-      
+
       {/* Section 4: Value / Trust Bar */}
       <ValueBar />
-      
+
       {/* Section 5: Consignment Teaser */}
       <ConsignmentTeaser />
     </main>

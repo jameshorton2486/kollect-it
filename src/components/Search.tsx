@@ -12,8 +12,8 @@ interface SearchResultItem {
   title: string;
   slug: string;
   price: number;
-  images?: { url: string }[];
-  category?: { name: string } | null;
+  Image?: { url: string }[];
+  Category?: { name: string } | null;
 }
 
 interface ApiProduct {
@@ -21,8 +21,8 @@ interface ApiProduct {
   title: string;
   slug: string;
   price: number;
-  images?: { url: string }[];
-  category?: { name: string } | null;
+  Image?: { url: string }[];
+  Category?: { name: string } | null;
 }
 
 const DEBOUNCE_MS = 300;
@@ -79,8 +79,8 @@ export default function Search() {
             title: p.title,
             slug: p.slug,
             price: p.price,
-            images: p.Image,
-            category: p.Category ?? null,
+            Image: p.Image,
+            Category: p.Category ?? null,
           }));
         setResults(mapped);
       } catch (e) {

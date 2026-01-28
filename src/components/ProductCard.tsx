@@ -82,9 +82,9 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
         {/* Content */}
         <div className="flex flex-1 flex-col justify-between py-1">
           <div>
-            {product.Category && (
+            {product.category && (
               <p className="text-xs font-medium uppercase tracking-wider text-lux-gold">
-                {product.Category.name}
+                {product.category.name}
               </p>
             )}
             <h3 className="mt-1 font-medium text-ink-900 line-clamp-2 group-hover:text-lux-gold transition-colors">
@@ -152,9 +152,9 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-4">
-        {product.Category && (
+        {product.category && (
           <p className="text-xs font-medium uppercase tracking-wider text-lux-gold">
-            {product.Category.name}
+            {product.category.name}
           </p>
         )}
         <h3 className="mt-1 font-medium text-ink-900 line-clamp-2 group-hover:text-lux-gold transition-colors min-h-[2.5rem]">

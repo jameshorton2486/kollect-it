@@ -153,8 +153,8 @@ export async function POST(req: NextRequest) {
         subcategoryId: subcategoryId || null,
         productNotes,
         appraisalUrls,
-        appraisalDocUrl: appraisalDocUrl || null,
-        provenanceDocUrl: provenanceDocUrl || null,
+        appraisal_doc_url: appraisalDocUrl || null,
+        provenance_doc_url: provenanceDocUrl || null,
         
         // AI-generated fields
         estimatedEra,

@@ -61,6 +61,7 @@
     "archive",
     "docs",
     "backups",
-    "screen_shots"
+    "screen_shots",
+    "prisma/seed.ts"
   ]
 }

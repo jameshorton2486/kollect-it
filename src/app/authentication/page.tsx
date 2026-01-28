@@ -134,7 +134,7 @@ export default function AuthenticationPage() {
             Contact James
           </Link>
           <p className="mt-6 text-sm text-lux-cream/60">
-            Or email directly: james@kollect-it.com
+            Or email directly: jameshorton2486@gmail.com
           </p>
         </div>
       </section>

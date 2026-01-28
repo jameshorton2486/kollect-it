@@ -1,5 +1,5 @@
 /**
- * Email Service with Zoho Mail SMTP
+ * Email Service with SMTP
  *
  * Features:
  * - Nodemailer with connection pooling
@@ -8,15 +8,13 @@
  * - Error logging and monitoring
  *
  * Setup Instructions:
- * 1. Create Zoho Mail account (free): https://www.zoho.com/mail/
- * 2. Enable 2FA on your account
- * 3. Generate App Password: Zoho Mail → Settings → Security → App Passwords
- * 4. Add to .env.local:
- *    EMAIL_FROM="Kollect-It <info@kollect-it.com>"
- *    EMAIL_HOST="smtp.zoho.com"
- *    EMAIL_PORT="587"
- *    EMAIL_USER="info@kollect-it.com"
- *    EMAIL_PASSWORD="your-zoho-app-password"
+ * Configure your SMTP settings in environment variables:
+ *    EMAIL_FROM="Kollect-It <your-email@kollect-it.com>"
+ *    EMAIL_HOST="smtp.your-provider.com"  (e.g., smtp.gmail.com, smtp.outlook.com)
+ *    EMAIL_PORT="587"  (or 465 for SSL)
+ *    EMAIL_USER="your-email@kollect-it.com"
+ *    EMAIL_PASSWORD="your-app-password"
+ *    ADMIN_EMAIL="your-email@kollect-it.com"
  */
 
 import nodemailer from "nodemailer";
@@ -100,10 +98,17 @@ function getTransporter() {
   }
 
   if (!transporter) {
+    const emailHost = process.env.EMAIL_HOST;
+    const emailPort = parseInt(process.env.EMAIL_PORT || "587");
+
+    if (!emailHost) {
+      console.warn("[Email] EMAIL_HOST not configured - using default SMTP settings");
+    }
+
     transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || "smtp.zoho.com",
-      port: parseInt(process.env.EMAIL_PORT || "587"),
-      secure: false, // true for 465, false for other ports
+      host: emailHost || "smtp.gmail.com",
+      port: emailPort,
+      secure: emailPort === 465, // true for 465 (SSL), false for 587 (TLS)
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
@@ -143,7 +148,7 @@ async function sendEmail(
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const info = await transport.sendMail({
-        from: process.env.EMAIL_FROM || '"Kollect-It" <noreply@kollect-it.com>',
+        from: process.env.EMAIL_FROM || '"Kollect-It" <jameshorton2486@gmail.com>',
         to,
         subject,
         html,
@@ -394,11 +399,10 @@ export function isEmailConfigured(): boolean {
 export function getEmailStatus() {
   return {
     enabled: EMAIL_ENABLED,
-      host: process.env.EMAIL_HOST || "smtp.zoho.com",
+    host: process.env.EMAIL_HOST || "Not configured",
     user: process.env.EMAIL_USER
       ? `${process.env.EMAIL_USER.substring(0, 3)}***`
       : "Not configured",
     from: process.env.EMAIL_FROM || "Not configured",
   };
 }
-

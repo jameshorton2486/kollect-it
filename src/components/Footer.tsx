@@ -64,16 +64,16 @@ export function Footer() {
                 469-386-6065
               </a>
               <a
-                href="mailto:info@kollect-it.com"
+                href="mailto:jameshorton2486@gmail.com"
                 className="block text-lux-cream hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal"
               >
-                info@kollect-it.com
+                jameshorton2486@gmail.com
               </a>
             </div>
 
             {/* Social icons */}
             <div className="flex gap-3 pt-2">
-              <a href="mailto:info@kollect-it.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-cream hover:bg-white/20 hover:text-lux-gold-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal">
+              <a href="mailto:jameshorton2486@gmail.com" aria-label="Email" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-cream hover:bg-white/20 hover:text-lux-gold-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal">
                 <Mail className="h-5 w-5" />
               </a>
               <a href="#" aria-label="Instagram" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-lux-cream hover:bg-white/20 hover:text-lux-gold-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal">

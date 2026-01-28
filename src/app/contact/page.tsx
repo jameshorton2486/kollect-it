@@ -45,10 +45,10 @@ export default function ContactPage() {
                   <div>
                     <p className="text-label text-lux-gray-dark mb-1">Email</p>
                     <a
-                      href="mailto:james@kollect-it.com"
+                      href="mailto:jameshorton2486@gmail.com"
                       className="text-lg text-lux-gold hover:text-lux-gold-light transition-colors"
                     >
-                      james@kollect-it.com
+                      jameshorton2486@gmail.com
                     </a>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ export default function ContactPage() {
             {/* Contact Form Placeholder */}
             <div className="bg-lux-white rounded-xl border border-lux-silver-soft p-8 shadow-clean">
               <h2 className="heading-subsection mb-6">Send a Message</h2>
-              
+
               <form className="space-y-6">
                 <div>
                   <label htmlFor="name" className="text-label text-lux-gray-dark block mb-2">

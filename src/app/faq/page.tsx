@@ -60,7 +60,7 @@ const faqs = [
       },
       {
         question: "How do I initiate a return?",
-        answer: "Email me at james@kollect-it.com with your order number and photos of any issues. I'll respond within 24 hours with next steps.",
+        answer: "Email me at jameshorton2486@gmail.com with your order number and photos of any issues. I'll respond within 24 hours with next steps.",
       },
     ],
   },

@@ -106,7 +106,7 @@ export const performanceConfig = {
 export function getImageSizes(
   breakpoint: "mobile" | "tablet" | "desktop",
 ): string {
-  return performanceConfig.images.sizes[breakpoint];
+  return performanceConfig.Image.sizes[breakpoint];
 }
 
 /**
@@ -119,9 +119,9 @@ export function getImageQuality(
   type: "hero" | "product" | "thumbnail",
 ): number {
   const qualityMap = {
-    hero: performanceConfig.images.heroQuality,
-    product: performanceConfig.images.productQuality,
-    thumbnail: performanceConfig.images.thumbnailQuality,
+    hero: performanceConfig.Image.heroQuality,
+    product: performanceConfig.Image.productQuality,
+    thumbnail: performanceConfig.Image.thumbnailQuality,
   };
   return qualityMap[type];
 }
@@ -131,8 +131,8 @@ export function getImageQuality(
  */
 export function getCacheTTL(type: "static" | "dynamic" | "api"): number {
   const ttlMap = {
-    static: performanceConfig.images.staticImageCacheTTL,
-    dynamic: performanceConfig.images.dynamicImageCacheTTL,
+    static: performanceConfig.Image.staticImageCacheTTL,
+    dynamic: performanceConfig.Image.dynamicImageCacheTTL,
     api: performanceConfig.api.cache.defaultTTL,
   };
   return ttlMap[type];

@@ -48,7 +48,7 @@ export default function AddToCartButton({
         price: product.price,
         image: product.image,
         slug: product.slug,
-        categoryName: product.CategoryName,
+        categoryName: product.categoryName,
       });
       if (qty > 1) {
         // After initial add (quantity 1 by default), set to qty

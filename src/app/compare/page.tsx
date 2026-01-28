@@ -69,14 +69,14 @@ export default function ComparisonPage() {
     { label: "Rarity", key: "rarity" as const },
   ];
 
-  const formatValue = (product: CompareProduct, key: keyof CompareProduct): string => {
-    const value = product[key];
+  const formatValue = (product: CompareProduct, key: string): string => {
     if (key === "category") {
       return product.Category?.name || "Uncategorized";
     }
     if (key === "price") {
       return `$${product.price.toLocaleString()}`;
     }
+    const value = (product as any)[key];
     if (Array.isArray(value)) {
       return `${value.length} ${value.length === 1 ? 'item' : 'items'}`;
     }

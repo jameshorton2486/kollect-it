@@ -193,7 +193,7 @@ export default function CartPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between gap-4">
                         <div>
-                          <p className="text-label text-lux-gold">{item.CategoryName}</p>
+                          <p className="text-label text-lux-gold">{item.categoryName}</p>
                           <Link
                             href={`/product/${item.slug}`}
                             className="font-serif text-lg font-medium text-lux-black hover:text-lux-gold transition-colors line-clamp-2"
@@ -246,8 +246,8 @@ export default function CartPage() {
                   <p className="font-medium text-lux-black">Need help editing your cart?</p>
                   <p className="text-muted">
                     Questions? Reach out at{" "}
-                    <a href="mailto:james@kollect-it.com" className="text-lux-gold hover:underline">
-                      james@kollect-it.com
+                    <a href="mailto:jameshorton2486@gmail.com" className="text-lux-gold hover:underline">
+                      jameshorton2486@gmail.com
                     </a>
                   </p>
                 </div>

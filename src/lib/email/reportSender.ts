@@ -1,6 +1,6 @@
 /**
  * Report Email Sender
- * Phase 5 - Send reports via email (Zoho Mail SMTP)
+ * Phase 5 - Send reports via email (SMTP)
  */
 
 interface ReportEmailOptions {
@@ -12,7 +12,7 @@ interface ReportEmailOptions {
 
 /**
  * Generate HTML email template for reports
- * Reserved for Zoho Mail SMTP implementation
+ * Reserved for SMTP email implementation
  * @internal
  */
 // @ts-ignore - Reserved for future email implementation
@@ -53,11 +53,11 @@ function generateEmailTemplate(
       <h2 style="margin: 0;">📊 ${reportName}</h2>
       <p style="margin: 5px 0 0 0; opacity: 0.9;">Generated on ${timestamp}</p>
     </div>
-    
+
     <div class="content">
       <p>Hello,</p>
       <p>Your scheduled analytics report is ready. Here's a preview of the data:</p>
-      
+
       <div class="metrics">
         <h3>Report Summary</h3>
         <table>
@@ -92,7 +92,7 @@ function generateEmailTemplate(
 
     <div class="footer">
       <p>This is an automated report from Kollect-It Analytics.</p>
-      <p>Do not reply to this email. Contact support@kollect-it.com for assistance.</p>
+      <p>Do not reply to this email. Contact jameshorton2486@gmail.com for assistance.</p>
     </div>
   </div>
 </body>
@@ -117,7 +117,7 @@ function escapeHtml(text: string): string {
 
 /**
  * Get filename for report attachment
- * Reserved for Zoho Mail SMTP implementation
+ * Reserved for SMTP email implementation
  * @internal
  */
 // @ts-ignore - Reserved for future email implementation
@@ -141,7 +141,7 @@ function getReportFilename(reportName: string, format: string): string {
 
 /**
  * Send report via email
- * NOTE: Email service uses Zoho Mail SMTP
+ * NOTE: Email service uses SMTP
  */
 export async function sendReportEmail(
   options: ReportEmailOptions,
@@ -149,34 +149,33 @@ export async function sendReportEmail(
   const { recipients, reportName, format } = options;
   // data parameter available but unused until email service is implemented
 
-  // Email service uses Zoho Mail SMTP
+  // Email service uses SMTP
   console.log(
-    "[Report Email] Service uses Zoho Mail SMTP",
+    "[Report Email] Service uses SMTP",
   );
   console.log("[Report Email] Would send to:", recipients);
   console.log("[Report Email] Report:", reportName);
   console.log("[Report Email] Format:", format);
 
-  // TODO: Implement Zoho Mail SMTP when ready
+  // TODO: Implement SMTP email when ready
   // TODO: Use generateEmailTemplate() and getReportFilename() helper functions
   return;
 }
 
 /**
  * Send alert email
- * NOTE: Email service uses Zoho Mail SMTP
+ * NOTE: Email service uses SMTP
  */
 export async function sendAlertEmail(
   recipients: string[],
   subject: string,
   content: string,
 ): Promise<void> {
-  console.log("[Alert Email] Service uses Zoho Mail SMTP");
+  console.log("[Alert Email] Service uses SMTP");
   console.log("[Alert Email] Would send to:", recipients);
   console.log("[Alert Email] Subject:", subject);
   console.log("[Alert Email] Content:", content);
 
-  // TODO: Implement Zoho Mail SMTP when ready
+  // TODO: Implement SMTP email when ready
   return;
 }
-

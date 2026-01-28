@@ -33,7 +33,7 @@ export default function StickyCartBar({ product }: StickyCartBarProps) {
         price: product.price,
         slug: product.slug,
         image: product.image,
-        categoryName: product.CategoryName,
+        categoryName: product.categoryName,
       });
     }
 
@@ -46,7 +46,7 @@ export default function StickyCartBar({ product }: StickyCartBarProps) {
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.3em] text-ink-300">
-            {product.CategoryName}
+            {product.categoryName}
           </p>
           <p className="text-sm font-medium text-white line-clamp-1">
             {product.title}

@@ -1,4 +1,5 @@
 # Kollect-It: Cursor AI Prompts
+
 # Copy-paste these prompts into Cursor AI to apply fixes
 
 ---
@@ -224,6 +225,76 @@ Group by category:
 5. Email
 6. Desktop App Integration
 7. AI (optional)
+```
+
+---
+
+## PROMPT 9: Sync Vercel & Desktop Environment (CRITICAL)
+
+```
+I am experiencing a 401 Unauthorized error during product ingestion from the desktop app to the Vercel API.
+
+TASK: Synchronize environment variables between Vercel production and the desktop app to fix authentication failures.
+
+FILES TO CHECK:
+1. .env.local (root directory - pull from Vercel if missing)
+2. product-application/desktop-app/.env
+3. product-application/web-app/.env (if exists)
+
+STEPS:
+1. First, ensure .env.local exists by running: `vercel env pull .env.local` in the terminal
+   - If this fails, verify Vercel CLI is authenticated: `vercel login`
+   - If still failing, manually check Vercel dashboard for environment variables
+
+2. Read and compare PRODUCT_INGEST_API_KEY values:
+   - Extract PRODUCT_INGEST_API_KEY from .env.local (Vercel production value)
+   - Extract PRODUCT_INGEST_API_KEY from product-application/desktop-app/.env
+   - If they differ, update the desktop .env to match Vercel EXACTLY (case-sensitive, no extra spaces)
+
+3. Clean all .env files:
+   - Remove any hidden \r\n (CRLF) line endings (convert to LF)
+   - Strip trailing spaces from all keys and values
+   - Ensure no duplicate variable definitions
+   - Verify format: KEY=value (no spaces around =)
+
+4. Verify critical variables are present in both files:
+   - PRODUCT_INGEST_API_KEY (must match exactly)
+   - NEXTAUTH_SECRET (should exist in .env.local)
+   - STRIPE_SECRET_KEY (should exist in .env.local)
+   - DATABASE_URL (should exist in .env.local)
+   - DIRECT_URL (should exist in .env.local)
+
+5. Check Supabase Database URLs for Opaque Token issues:
+   - Verify DATABASE_URL format: should be `postgresql://postgres:[token]@[host]:6543/postgres?pgbouncer=true`
+   - Verify DIRECT_URL format: should be `postgresql://postgres:[token]@[host]:5432/postgres`
+   - If DATABASE_URL or DIRECT_URL contains a password that looks like a traditional password (short, simple) but connection fails:
+     * This may indicate Supabase has migrated to "Opaque Tokens"
+     * Check Supabase Dashboard → Settings → Database → Connection string
+     * If connection string format has changed, update both DATABASE_URL and DIRECT_URL
+     * Opaque tokens are longer and more complex than traditional passwords
+   - Verify port numbers: DATABASE_URL uses 6543 (pooled), DIRECT_URL uses 5432 (direct)
+
+6. If NEXTAUTH_SECRET or STRIPE_SECRET_KEY are missing from .env.local:
+   - Add placeholder comments: # TODO: Run `vercel env add NEXTAUTH_SECRET`
+   - Add placeholder comments: # TODO: Run `vercel env add STRIPE_SECRET_KEY`
+   - Remind user to run these commands in terminal
+
+7. Verify the desktop app .env has the correct API endpoint:
+   - Check for NEXT_PUBLIC_API_URL or API_BASE_URL
+   - Should point to: https://kollect-it.com (production) or your Vercel preview URL
+
+8. Output a comparison report:
+   - List all variables that differ between files
+   - List all variables missing from desktop .env
+   - Confirm PRODUCT_INGEST_API_KEY matches exactly (show first/last 4 chars only for security)
+   - Report DATABASE_URL and DIRECT_URL status (ports correct, format valid)
+   - If database URLs appear to use old password format, warn about potential Supabase Opaque Token migration
+
+CONTEXT:
+- The desktop app uses PRODUCT_INGEST_API_KEY to authenticate with the /api/admin/products/ingest endpoint. A mismatch causes 401 Unauthorized errors. The key must be identical in both Vercel production and the desktop app's .env file.
+- Supabase has migrated to "Opaque Tokens" for database authentication. If database connection fails, the connection strings may need to be regenerated from the Supabase Dashboard to get the new opaque token format.
+
+After syncing, test by attempting to publish a product from the desktop app.
 ```
 
 ---

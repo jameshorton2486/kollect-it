@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     const suggestions = products.map((product) => ({
       id: product.id,
       name: product.title,
-      category: product.CategoryId,
+      category: product.categoryId,
       slug: product.slug,
     }));
 

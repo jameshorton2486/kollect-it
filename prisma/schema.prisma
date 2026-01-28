@@ -32,7 +32,7 @@ model AIGeneratedProduct {
   rejectionReason   String?
   productId         String?
   createdAt         DateTime  @default(now())
-  updatedAt         DateTime
+  updatedAt         DateTime  @updatedAt
   Product           Product?  @relation(fields: [productId], references: [id])
 
   @@index([createdAt])
@@ -48,7 +48,7 @@ model CartItem {
   productId String
   quantity  Int      @default(1)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
   Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -64,7 +64,7 @@ model Category {
   description String?
   image       String?
   createdAt   DateTime      @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime      @updatedAt
   Product     Product[]
   Subcategory Subcategory[]
 }
@@ -128,7 +128,7 @@ model Order {
   paymentStatus    String      @default("pending")
   notes            String?
   createdAt        DateTime    @default(now())
-  updatedAt        DateTime
+  updatedAt        DateTime    @updatedAt
   User             User?       @relation(fields: [userId], references: [id])
   OrderItem        OrderItem[]
 
@@ -168,7 +168,7 @@ model Product {
   period              String?
   status              String               @default("active")
   createdAt           DateTime             @default(now())
-  updatedAt           DateTime
+  updatedAt           DateTime             @updatedAt
   aiAnalysis          Json?
   authenticity        String?
   calculatedPrice     Float?
@@ -237,7 +237,7 @@ model Review {
   helpful   Int      @default(0)
   verified  Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
   Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -258,7 +258,7 @@ model ScheduledReport {
   nextScheduled  DateTime
   enabled        Boolean          @default(true)
   createdAt      DateTime         @default(now())
-  updatedAt      DateTime
+  updatedAt      DateTime         @updatedAt
   ReportAuditLog ReportAuditLog[]
   User           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -274,7 +274,7 @@ model Subcategory {
   slug       String    @unique
   categoryId String
   createdAt  DateTime  @default(now())
-  updatedAt  DateTime
+  updatedAt  DateTime  @updatedAt
   Product    Product[]
   Category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
@@ -297,7 +297,7 @@ model User {
   zipCode          String?
   country          String?           @default("United States")
   createdAt        DateTime          @default(now())
-  updatedAt        DateTime
+  updatedAt        DateTime          @updatedAt
   resetToken       String?
   resetTokenExpiry DateTime?
   CartItem         CartItem[]

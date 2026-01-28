@@ -21,8 +21,8 @@ const sections = [
     title: "1. What Are Cookies?",
     content: (
       <p>
-        Cookies are small text files stored on your device when you visit a website. 
-        They help the site work properly and improve your experience. I use them 
+        Cookies are small text files stored on your device when you visit a website.
+        They help the site work properly and improve your experience. I use them
         thoughtfully and only when necessary.
       </p>
     ),
@@ -32,8 +32,8 @@ const sections = [
     title: "2. Essential Cookies",
     content: (
       <p>
-        These cookies are necessary for the website to function and cannot be switched 
-        off. They are usually only set in response to actions made by you, such as 
+        These cookies are necessary for the website to function and cannot be switched
+        off. They are usually only set in response to actions made by you, such as
         logging in, adding items to your cart, or filling in forms.
       </p>
     ),
@@ -43,8 +43,8 @@ const sections = [
     title: "3. Analytics Cookies",
     content: (
       <p>
-        These cookies allow us to count visits and traffic sources so we can measure 
-        and improve the performance of our site. They help us know which pages are 
+        These cookies allow us to count visits and traffic sources so we can measure
+        and improve the performance of our site. They help us know which pages are
         the most and least popular and see how visitors move around the site.
       </p>
     ),
@@ -54,8 +54,8 @@ const sections = [
     title: "4. Functionality Cookies",
     content: (
       <p>
-        These cookies enable the website to provide enhanced functionality and 
-        personalization, such as remembering your preferences. They may be set by 
+        These cookies enable the website to provide enhanced functionality and
+        personalization, such as remembering your preferences. They may be set by
         us or by third-party providers whose services we have added to our pages.
       </p>
     ),
@@ -65,9 +65,9 @@ const sections = [
     title: "5. Marketing Cookies",
     content: (
       <p>
-        These cookies may be set through our site by our advertising partners. 
-        They may be used by those companies to build a profile of your interests 
-        and show you relevant adverts on other sites. Currently, we do not use 
+        These cookies may be set through our site by our advertising partners.
+        They may be used by those companies to build a profile of your interests
+        and show you relevant adverts on other sites. Currently, we do not use
         marketing cookies on Kollect-It.
       </p>
     ),
@@ -78,18 +78,18 @@ const sections = [
     content: (
       <>
         <p className="mb-4">
-          You can set your browser to refuse all or some browser cookies, or to 
-          alert you when websites set or access cookies. If you disable or refuse 
-          cookies, please note that some parts of this website may become 
+          You can set your browser to refuse all or some browser cookies, or to
+          alert you when websites set or access cookies. If you disable or refuse
+          cookies, please note that some parts of this website may become
           inaccessible or not function properly.
         </p>
         <p>
-          Most web browsers allow some control of cookies through browser settings. 
-          To find out more about cookies, including how to see what cookies have 
+          Most web browsers allow some control of cookies through browser settings.
+          To find out more about cookies, including how to see what cookies have
           been set, visit{" "}
-          <a 
-            href="https://www.allaboutcookies.org" 
-            target="_blank" 
+          <a
+            href="https://www.allaboutcookies.org"
+            target="_blank"
             rel="noopener noreferrer"
             className="text-lux-gold hover:text-lux-gold-light underline-offset-4 hover:underline"
           >
@@ -105,11 +105,11 @@ const sections = [
     content: (
       <p>
         Questions about our cookie policy? Reach out to me at{" "}
-        <a 
-          href="mailto:james@kollect-it.com" 
+        <a
+          href="mailto:jameshorton2486@gmail.com"
           className="text-lux-gold hover:text-lux-gold-light underline-offset-4 hover:underline"
         >
-          james@kollect-it.com
+          jameshorton2486@gmail.com
         </a>.
       </p>
     ),

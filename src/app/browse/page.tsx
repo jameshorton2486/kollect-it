@@ -224,7 +224,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                         title: product.title,
                         price: product.price,
                         slug: product.slug,
-                        images: product.Image.length > 0 ? product.Image : [{ url: "/placeholder.svg" }],
+                        Image: product.Image.length > 0 ? product.Image : [{ url: "/placeholder.svg" }],
                         category: product.Category ? { name: product.Category.name, slug: product.Category.slug } : null,
                       }}
                     />

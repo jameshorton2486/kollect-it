@@ -27,7 +27,14 @@ async function getProduct(slug: string) {
     },
   });
 
-  return product;
+  if (!product) return null;
+
+  // Map snake_case to camelCase for ProductTabs component
+  return {
+    ...product,
+    provenanceDocUrl: product.provenance_doc_url ?? null,
+    appraisalDocUrl: product.appraisal_doc_url ?? null,
+  };
 }
 
 export async function generateMetadata(
@@ -201,7 +208,7 @@ export default async function ProductPage(props: ProductPageProps) {
               title: p.title,
               slug: p.slug,
               price: p.price,
-              images: p.Image || [],
+              Image: p.Image || [],
               Category: { name: "Featured" },
             }))}
             categoryName={product.Category.name}

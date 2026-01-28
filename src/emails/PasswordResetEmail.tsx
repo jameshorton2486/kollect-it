@@ -68,8 +68,8 @@ export function PasswordResetEmail({
               Kollect-It
             </Link>
             . If you have questions, contact us at{" "}
-            <Link href="mailto:james@kollect-it.com" style={link}>
-              james@kollect-it.com
+            <Link href="mailto:jameshorton2486@gmail.com" style={link}>
+              jameshorton2486@gmail.com
             </Link>
           </Text>
         </Container>

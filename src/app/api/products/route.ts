@@ -53,7 +53,17 @@ export async function GET(request: NextRequest) {
     };
 
     if (category) {
-      where.category = { slug: category };
+      // First find category by slug, then filter by categoryId
+      const categoryRecord = await prisma.category.findUnique({
+        where: { slug: category },
+        select: { id: true },
+      });
+      if (categoryRecord) {
+        where.categoryId = categoryRecord.id;
+      } else {
+        // If category not found, return empty results
+        where.categoryId = "non-existent-id";
+      }
     }
     if (featured === "true") {
       where.featured = true;
