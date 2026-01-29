@@ -47,6 +47,7 @@
     "test-imagekit": "bun run scripts/test-imagekit.ts",
     "test-google-drive": "bun run scripts/test-google-drive.ts",
     "test:env": "bun run scripts/check-env.ts",
+    "verify:auth": "bun run scripts/verify-auth-env.ts",
     "verify:stripe": "bun run scripts/verify-stripe-setup.ts",
     "check": "bun run scripts/check-env.js",
     "setup:admin": "bun run scripts/setup-james-admin.ts",
