@@ -26,16 +26,21 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     }
 
     try {
+      const wsUrl = process.env.NEXT_PUBLIC_WS_URL;
+      if (!wsUrl) {
+        // WebSocket disabled unless explicitly configured
+        setConnected(false);
+        setError(null);
+        return undefined;
+      }
+
       // Connect to WebSocket server
-      const newSocket = io(
-        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-        {
-          reconnection: true,
-          reconnectionDelay: 1000,
-          reconnectionDelayMax: 5000,
-          reconnectionAttempts: 10,
-        },
-      );
+      const newSocket = io(wsUrl, {
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: 10,
+      });
 
       newSocket.on("connect", () => {
         if (process.env.NODE_ENV === "development") {
@@ -113,4 +118,3 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     requestMetrics,
   };
 }
-

@@ -17,6 +17,8 @@ export async function GET(request: Request) {
           contains: query,
           mode: "insensitive",
         },
+        status: "active",
+        isDraft: false,
       },
       take: 5,
       select: {

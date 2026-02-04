@@ -11,9 +11,14 @@ import { startJobScheduler } from "@/lib/jobs/reportScheduler";
  */
 export function initializeBackgroundServices() {
   try {
-    // Start the report scheduler
-    startJobScheduler();
-    console.log("✅ Background services initialized");
+    // Start the report scheduler in non-production only.
+    // Production should trigger via Vercel cron hitting /api/cron/reports.
+    if (process.env.NODE_ENV !== "production") {
+      startJobScheduler();
+      console.log("✅ Background services initialized");
+    } else {
+      console.log("ℹ️ Background services skipped in production (cron-driven)");
+    }
   } catch (error) {
     console.error("❌ Error initializing background services:", error);
   }

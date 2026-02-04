@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { checkAdminAuth } from "@/lib/auth-helpers";
 
@@ -14,16 +16,32 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+    const session = await getServerSession(authOptions);
+    const isAdmin = !!session?.user && session.user.role === "admin";
 
-    const product = await prisma.product.findUnique({
-      where: { id },
-      include: {
-        Image: {
-          orderBy: { order: "asc" },
-        },
-        Category: true,
-      },
-    });
+    const product = isAdmin
+      ? await prisma.product.findUnique({
+          where: { id },
+          include: {
+            Image: {
+              orderBy: { order: "asc" },
+            },
+            Category: true,
+          },
+        })
+      : await prisma.product.findFirst({
+          where: {
+            id,
+            status: "active",
+            isDraft: false,
+          },
+          include: {
+            Image: {
+              orderBy: { order: "asc" },
+            },
+            Category: true,
+          },
+        });
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

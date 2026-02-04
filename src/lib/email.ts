@@ -176,6 +176,17 @@ async function sendEmail(
   return { success: false, error: "Max retries exceeded" };
 }
 
+/**
+ * Send a raw HTML email (for internal system emails)
+ */
+export async function sendRawEmail(
+  to: string,
+  subject: string,
+  html: string,
+): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  return sendEmail(to, subject, html);
+}
+
 // Get site URL based on environment
 function getSiteUrl(): string {
   if (process.env.NEXTAUTH_URL) {

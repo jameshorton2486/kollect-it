@@ -444,7 +444,6 @@ export function TrafficAnalyticsDashboard() {
                 </div>
                 <div className="w-full bg-surface-200 rounded-full h-4">
                   {/* Dynamic width percentage - inline style required for progress bar */}
-                  {/* eslint-disable-next-line @next/next/no-inline-styles */}
                   <div
                     className="bg-gradient-to-r from-lux-gold to-lux-gold-light h-4 rounded-full flex items-center justify-end pr-2 transition-all duration-300"
                     style={{ width: `${percentage}%` } as React.CSSProperties}

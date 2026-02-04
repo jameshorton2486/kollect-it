@@ -5,7 +5,7 @@ export default function Testimonials() {
       author: "Margaret",
       title: "Collector",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-1.jpg?tr=w-400",
+      image: "/testimonials/testimonial-1.jpg",
     },
     {
       quote:
@@ -13,14 +13,14 @@ export default function Testimonials() {
       author: "Luis",
       title: "Estate Buyer",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-2.jpg?tr=w-400",
+      image: "/testimonials/testimonial-2.jpg",
     },
     {
       quote: "Professional shipping, wonderful experience.",
       author: "Michiko",
       title: "Interior Designer",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-3.jpg?tr=w-400",
+      image: "/testimonials/testimonial-3.jpg",
     },
     {
       quote:
@@ -28,7 +28,7 @@ export default function Testimonials() {
       author: "James",
       title: "Private Collector",
       rating: 0,
-      image: "https://ik.imagekit.io/kollectit/testimonial-4.jpg?tr=w-400",
+      image: "/testimonials/testimonial-4.jpg",
     },
   ];
 
@@ -88,4 +88,3 @@ export default function Testimonials() {
     </section>
   );
 }
-

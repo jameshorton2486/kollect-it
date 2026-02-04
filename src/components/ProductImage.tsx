@@ -4,7 +4,7 @@
  * ProductImage Component
  *
  * Reusable ImageKit image component for displaying product images
- * with automatic transformations and optimization.
+ * with automatic optimization.
  *
  * Features:
  * - Responsive sizing
@@ -29,45 +29,7 @@
 import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import type { ProductImageProps } from "../../types/imagekit";
-
-/**
- * Get ImageKit transformation URL
- */
-function getImageKitUrl(
-  basePath: string,
-  width?: number,
-  height?: number,
-  quality: number = 80,
-): string {
-  const endpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
-
-  if (!endpoint) {
-    console.warn("NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT is not configured");
-    return basePath;
-  }
-
-  // Construct transformation parameters
-  const params = [
-    "w-auto",
-    "ar-auto",
-    "q-auto",
-    `quality-${quality}`,
-    "f-webp",
-    "crop-smart",
-  ];
-
-  if (width && height) {
-    params.unshift(`w-${width}`);
-    params.unshift(`h-${height}`);
-  } else if (width) {
-    params.unshift(`w-${width}`);
-  } else if (height) {
-    params.unshift(`h-${height}`);
-  }
-
-  const transformation = params.join("/");
-  return `${endpoint}/${transformation}${basePath}`;
-}
+import { getProductDetailImageUrl } from "@/lib/image-helpers";
 
 /**
  * ProductImage Component
@@ -86,7 +48,7 @@ export default function ProductImage({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  const imageUrl = getImageKitUrl(path, width, height, quality);
+  const imageUrl = getProductDetailImageUrl(path);
 
   const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);

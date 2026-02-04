@@ -38,6 +38,7 @@ export async function getRecommendations(
             notIn: userOrders.map((o: { productId: string }) => o.productId),
           },
           status: "active",
+          isDraft: false,
         },
         take: limit,
         include: {
@@ -72,6 +73,7 @@ export async function getRecommendations(
           categoryId: product.categoryId,
           id: { not: productId },
           status: "active",
+          isDraft: false,
           price: {
             gte: product.price * 0.7,
             lte: product.price * 1.3,
@@ -97,6 +99,7 @@ export async function getRecommendations(
       where: {
         status: "active",
         featured: true,
+        isDraft: false,
       },
       take: limit,
       include: {

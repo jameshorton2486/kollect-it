@@ -145,21 +145,30 @@ function getReportFilename(reportName: string, format: string): string {
  */
 export async function sendReportEmail(
   options: ReportEmailOptions,
-): Promise<void> {
-  const { recipients, reportName, format } = options;
-  // data parameter available but unused until email service is implemented
+): Promise<{ sent: boolean; error?: string }> {
+  const { recipients, reportName, data, format } = options;
 
-  // Email service uses SMTP
-  console.log(
-    "[Report Email] Service uses SMTP",
+  const { isEmailConfigured, sendRawEmail } = await import("@/lib/email");
+  if (!isEmailConfigured()) {
+    console.warn(
+      "[Report Email] Email not configured - report delivery skipped",
+    );
+    return { sent: false, error: "Email not configured" };
+  }
+
+  const html = generateEmailTemplate(reportName, data, format);
+  const subject = `Kollect-It Report: ${reportName}`;
+
+  const results = await Promise.all(
+    recipients.map((to) => sendRawEmail(to, subject, html)),
   );
-  console.log("[Report Email] Would send to:", recipients);
-  console.log("[Report Email] Report:", reportName);
-  console.log("[Report Email] Format:", format);
 
-  // TODO: Implement SMTP email when ready
-  // TODO: Use generateEmailTemplate() and getReportFilename() helper functions
-  return;
+  const failed = results.find((r) => !r.success);
+  if (failed) {
+    return { sent: false, error: failed.error || "Email delivery failed" };
+  }
+
+  return { sent: true };
 }
 
 /**
@@ -170,12 +179,22 @@ export async function sendAlertEmail(
   recipients: string[],
   subject: string,
   content: string,
-): Promise<void> {
-  console.log("[Alert Email] Service uses SMTP");
-  console.log("[Alert Email] Would send to:", recipients);
-  console.log("[Alert Email] Subject:", subject);
-  console.log("[Alert Email] Content:", content);
+): Promise<{ sent: boolean; error?: string }> {
+  const { isEmailConfigured, sendRawEmail } = await import("@/lib/email");
+  if (!isEmailConfigured()) {
+    console.warn("[Alert Email] Email not configured - alert skipped");
+    return { sent: false, error: "Email not configured" };
+  }
 
-  // TODO: Implement SMTP email when ready
-  return;
+  const html = generateEmailTemplate(subject, content, "HTML");
+  const results = await Promise.all(
+    recipients.map((to) => sendRawEmail(to, subject, html)),
+  );
+
+  const failed = results.find((r) => !r.success);
+  if (failed) {
+    return { sent: false, error: failed.error || "Alert delivery failed" };
+  }
+
+  return { sent: true };
 }

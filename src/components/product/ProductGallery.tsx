@@ -35,7 +35,7 @@ export default function ProductGallery({
     return null;
   }
 
-  // Apply ImageKit transformations
+  // Apply optimized image URL
   const mainImageUrl = getProductDetailImageUrl(actualImage.url || "/placeholder.svg");
   const mainImageAlt = actualImage.alt || getProductImageAltText(productName, selectedImageIndex, selectedImageIndex === 0);
 

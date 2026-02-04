@@ -123,7 +123,6 @@ export default function ProductReviews({ productId }: ReviewsProps) {
                   <span className="text-sm w-6">{item.rating}</span>
                   <Star className="h-4 w-4 fill-lux-gold text-lux-gold" />
                   <div className="flex-1 bg-lux-cream rounded-full h-2">
-                    {/* eslint-disable-next-line @next/next/no-inline-styles */}
                     <div
                       className="bg-lux-gold h-2 rounded-full"
                       style={{ width: `${(item.count / stats.total) * 100}%` }}

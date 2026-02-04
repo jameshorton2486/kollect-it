@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
       where: {
         id: { in: ids },
         status: "active",
+        isDraft: false,
       },
       select: {
         id: true,

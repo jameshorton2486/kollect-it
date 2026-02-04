@@ -117,9 +117,9 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/admin/products?limit=100");
       const data = await res.json();
-      setProducts(data);
+      setProducts(data.products || []);
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
@@ -908,4 +908,3 @@ function ProductForm({
     </div>
   );
 }
-

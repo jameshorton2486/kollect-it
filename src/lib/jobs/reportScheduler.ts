@@ -4,11 +4,12 @@
  */
 
 import { prisma } from "@/lib/prisma";
-// import { sendReportEmail } from '@/lib/email/reportSender';
+import { sendReportEmail } from "@/lib/email/reportSender";
 import {
   getReportsDue,
   markReportAsSent,
   logReportSent,
+  generateReportData,
 } from "@/lib/analytics/scheduler";
 
 interface ScheduledJob {
@@ -71,18 +72,31 @@ async function executeReport(reportId: string): Promise<void> {
     }
 
     // Generate report data
-    // const reportData = await generateReportData(report.format);
+    const reportData = await generateReportData(report.format);
 
-    // Send emails (commented out - requires email service setup)
+    // Send emails
     const recipients = report.recipients
       .split(",")
       .map((r: string) => r.trim());
-    // await sendReportEmail({
-    //   recipients,
-    //   reportName: report.name,
-    //   data: reportData,
-    //   format: report.format,
-    // });
+    const delivery = await sendReportEmail({
+      recipients,
+      reportName: report.name,
+      data: reportData.fileContent,
+      format: report.format,
+    });
+
+    if (!delivery.sent) {
+      await logReportSent(
+        reportId,
+        recipients,
+        "FAILED",
+        delivery.error || "Email delivery failed",
+      );
+      console.warn(
+        `Report delivery failed: ${report.name} (${reportId})`,
+      );
+      return;
+    }
 
     // Mark as sent and log
     await markReportAsSent(reportId);
@@ -114,6 +128,13 @@ async function pollDueReports(): Promise<void> {
   } catch (error) {
     console.error("Error polling due reports:", error);
   }
+}
+
+/**
+ * Run due reports once (for cron triggers)
+ */
+export async function runDueReportsOnce(): Promise<void> {
+  await pollDueReports();
 }
 
 /**

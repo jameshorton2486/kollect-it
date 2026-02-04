@@ -19,6 +19,7 @@ interface RateLimitEntry {
 
 // In-memory store (use Redis in production for distributed systems)
 const rateLimitStore = new Map<string, RateLimitEntry>();
+let redisWarningLogged = false;
 
 // Cleanup old entries every 5 minutes
 setInterval(
@@ -54,6 +55,15 @@ export async function rateLimit(
   const now = Date.now();
   const key = `rate-limit:${ip}`;
 
+  if (process.env.NODE_ENV === "production" && !redisEnabled) {
+    if (!redisWarningLogged) {
+      console.error(
+        "[Rate Limit] Redis is not configured in production. Falling back to in-memory rate limiting.",
+      );
+      redisWarningLogged = true;
+    }
+  }
+
   if (redisEnabled) {
     const windowKey = `rate-limit:${ip}:${Math.floor(now / config.interval)}`;
     const count = (await redisIncr(windowKey)) ?? 1;
@@ -78,6 +88,7 @@ export async function rateLimit(
             "X-RateLimit-Reset": Math.ceil(
               (now + config.interval) / 1000,
             ).toString(),
+            "X-RateLimit-Backend": "redis",
           },
         },
       );
@@ -116,6 +127,7 @@ export async function rateLimit(
           "X-RateLimit-Limit": config.uniqueTokenPerInterval.toString(),
           "X-RateLimit-Remaining": "0",
           "X-RateLimit-Reset": Math.ceil(entry.resetTime / 1000).toString(),
+          "X-RateLimit-Backend": "memory",
         },
       },
     );

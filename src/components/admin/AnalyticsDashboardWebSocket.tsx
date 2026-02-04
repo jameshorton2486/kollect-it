@@ -15,15 +15,16 @@ import { RevenueByCategory } from "./charts/RevenueByCategory";
 export function AnalyticsDashboardWebSocket() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [loading, setLoading] = useState(true);
+  const wsEnabled = Boolean(process.env.NEXT_PUBLIC_WS_URL);
   const [startDate, setStartDate] = useState(
     new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
   );
   const [endDate, setEndDate] = useState(new Date());
-  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(wsEnabled);
 
   // WebSocket connection
   const { connected, metricsCache } = useWebSocket({
-    enabled: autoRefresh,
+    enabled: autoRefresh && wsEnabled,
     subscribeToMetrics: true,
   });
 
@@ -149,10 +150,14 @@ export function AnalyticsDashboardWebSocket() {
           <h1 className="text-3xl font-bold text-lux-white">Analytics Dashboard</h1>
           <div className="flex gap-4 items-center mt-2">
             <span className="text-sm text-lux-gray">
-              {connected ? (
-                <span className="text-green-400">🟢 Real-time Connected</span>
+              {wsEnabled ? (
+                connected ? (
+                  <span className="text-green-400">Real-time Connected</span>
+                ) : (
+                  <span className="text-yellow-400">Reconnecting...</span>
+                )
               ) : (
-                <span className="text-yellow-400">🟡 Fetching Data</span>
+                <span className="text-lux-gray">Polling Enabled</span>
               )}
             </span>
             <label className="flex items-center gap-2 text-sm text-lux-gray">
@@ -161,6 +166,7 @@ export function AnalyticsDashboardWebSocket() {
                 checked={autoRefresh}
                 onChange={(e) => setAutoRefresh(e.target.checked)}
                 className="w-4 h-4"
+                disabled={!wsEnabled}
               />
               Auto-refresh
             </label>

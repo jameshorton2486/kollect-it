@@ -62,7 +62,7 @@ export async function generateMetadata(
         `Authenticated ${product.Category.name.toLowerCase()} from Kollect-It. Carefully curated and quality-reviewed.`
       );
 
-  // Get primary image (first image) for OpenGraph - use ImageKit transformation
+  // Get primary image (first image) for OpenGraph - use optimized image URL
   const { getProductDetailImageUrl } = await import("@/lib/image-helpers");
   const baseImageUrl = product.Image[0]?.url || "/og-default.jpg";
   const imageUrl = baseImageUrl !== "/og-default.jpg" 
@@ -111,7 +111,7 @@ export default async function ProductPage(props: ProductPageProps) {
   const { slug } = await params;
   const product = await getProduct(slug);
 
-  if (!product || product.status !== "active") {
+  if (!product || product.status !== "active" || product.isDraft) {
     notFound();
   }
 

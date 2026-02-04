@@ -271,7 +271,6 @@ function SortableImage({ image, index, onDelete }: SortableImageProps) {
 
   return (
     // biome-ignore lint/style/noInlineStyles: dnd-kit requires inline transforms for smooth dragging
-    // eslint-disable-next-line no-inline-styles
     // eslint-disable-next-line react/forbid-dom-props
     <div
       ref={setNodeRef}
