@@ -20,41 +20,57 @@ export async function GET(request: NextRequest) {
     environment: {} as Record<string, boolean>,
   };
 
-  // Check database connection
+  // Check database connection (actionable logs for SASL / connection failures)
   try {
     await prisma.$queryRaw`SELECT 1`;
     checks.database = "connected";
   } catch (error) {
     checks.status = "unhealthy";
     checks.database = "disconnected";
+    const err = error instanceof Error ? error : new Error(String(error));
+    console.error(
+      "[Health] Database check failed. Use direct Postgres URL (port 5432) for DATABASE_URL. See docs/PRODUCTION_ENV_SETUP.md.",
+      { message: err.message, name: err.name }
+    );
   }
 
-  // Check required environment variables (never expose values!)
-  const requiredEnvVars = [
-    "DATABASE_URL",
-    "NEXTAUTH_SECRET",
-    "NEXTAUTH_URL",
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+  // Core vars (app won't function without these)
+  const coreEnvVars = ["DATABASE_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL"];
+
+  // Service vars (features degrade gracefully without these)
+  const serviceEnvVars = [
     "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+    "IMAGEKIT_PRIVATE_KEY",
     "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
     "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
-    "IMAGEKIT_PRIVATE_KEY",
+    "EMAIL_PASSWORD",
   ];
 
-  for (const envVar of requiredEnvVars) {
+  // Check core vars
+  checks.environment = {};
+  for (const envVar of coreEnvVars) {
     checks.environment[envVar] = !!process.env[envVar];
   }
 
-  // Determine overall health
-  const allEnvVarsSet = Object.values(checks.environment).every(
-    (v) => v === true,
-  );
-  if (!allEnvVarsSet || checks.database === "disconnected") {
+  // Check service vars (reported but don't affect health status)
+  const services: Record<string, boolean> = {};
+  for (const envVar of serviceEnvVars) {
+    services[envVar] = !!process.env[envVar];
+  }
+
+  // Determine overall health - only core vars affect status
+  const allCoreSet = Object.values(checks.environment).every((v) => v === true);
+  if (!allCoreSet || checks.database === "disconnected") {
     checks.status = "degraded";
   }
 
-  const statusCode = checks.status === "healthy" ? 200 : 503;
-
-  return NextResponse.json(checks, { status: statusCode });
+  return NextResponse.json(
+    {
+      ...checks,
+      services,
+    },
+    { status: checks.status === "healthy" ? 200 : 503 },
+  );
 }
-

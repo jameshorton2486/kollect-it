@@ -9,13 +9,29 @@ import crypto from "crypto";
  * - IMAGEKIT_PRIVATE_KEY: Private key (server-only, no NEXT_PUBLIC_ prefix)
  */
 
+export const IMAGE_KIT_ENABLED = !!(
+  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT &&
+  process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY &&
+  process.env.IMAGEKIT_PRIVATE_KEY
+);
+
+export function isImageKitConfigured(): boolean {
+  return IMAGE_KIT_ENABLED;
+}
+
 // Lazy configuration access to avoid crashing dev/build when env is missing
 export function getImagekitConfig() {
   const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
   const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
   const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
   if (!urlEndpoint || !publicKey || !privateKey) {
-    throw new Error("ImageKit environment variables are not fully configured");
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("ImageKit environment variables are not fully configured");
+    }
+    console.warn(
+      "[ImageKit] Not fully configured - image features disabled in development",
+    );
+    return null;
   }
   return { urlEndpoint, publicKey, privateKey };
 }
@@ -25,7 +41,11 @@ export function getImagekitConfig() {
  * Used by the client to authenticate direct uploads
  */
 export async function getImageKitAuthParams() {
-  const { privateKey } = getImagekitConfig();
+  const config = getImagekitConfig();
+  if (!config) {
+    throw new Error("ImageKit is not configured - cannot generate auth params");
+  }
+  const { privateKey } = config;
   const token = crypto.randomUUID();
   const expire = Math.floor(Date.now() / 1000) + 600; // 10 minutes from now
 
@@ -46,14 +66,14 @@ export async function getImageKitAuthParams() {
  * Example: getImageKitUrl('/products/image.jpg', 'w-400,h-400,fo-auto')
  */
 export function getImageKitUrl(path: string, transformation?: string): string {
-  try {
-    const { urlEndpoint } = getImagekitConfig();
-    if (transformation) return `${urlEndpoint}/tr:${transformation}${path}`;
-    return `${urlEndpoint}${path}`;
-  } catch {
+  const config = getImagekitConfig();
+  if (!config) {
     // If not configured, return the raw path to avoid hard failures in dev
     return path;
   }
+  const { urlEndpoint } = config;
+  if (transformation) return `${urlEndpoint}/tr:${transformation}${path}`;
+  return `${urlEndpoint}${path}`;
 }
 
 /**
@@ -78,4 +98,3 @@ export const imageTransformations = {
   productCard: "w-600,h-600,fo-auto,q-85,f-webp",
   gallery: "w-1600,h-1600,fo-auto,q-95,f-webp",
 };
-

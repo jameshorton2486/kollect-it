@@ -25,7 +25,8 @@ export const serverEnvSchema = z.object({
   // AI Services
   ANTHROPIC_API_KEY: z
     .string()
-    .startsWith('sk-ant-', 'ANTHROPIC_API_KEY must start with sk-ant-'),
+    .startsWith('sk-ant-', 'ANTHROPIC_API_KEY must start with sk-ant-')
+    .optional(),
   OPENAI_API_KEY: z
     .string()
     .startsWith('sk-', 'OPENAI_API_KEY must start with sk-')
@@ -34,21 +35,24 @@ export const serverEnvSchema = z.object({
   // ImageKit
   IMAGEKIT_PRIVATE_KEY: z
     .string()
-    .startsWith('private_', 'IMAGEKIT_PRIVATE_KEY must start with private_'),
+    .startsWith('private_', 'IMAGEKIT_PRIVATE_KEY must start with private_')
+    .optional(),
 
   // Stripe
   STRIPE_SECRET_KEY: z
     .string()
-    .startsWith('sk_', 'STRIPE_SECRET_KEY must start with sk_'),
+    .startsWith('sk_', 'STRIPE_SECRET_KEY must start with sk_')
+    .optional(),
   STRIPE_WEBHOOK_SECRET: z
     .string()
-    .startsWith('whsec_', 'STRIPE_WEBHOOK_SECRET must start with whsec_'),
+    .startsWith('whsec_', 'STRIPE_WEBHOOK_SECRET must start with whsec_')
+    .optional(),
 
   // Email
   EMAIL_HOST: z.string().optional().default('smtp.zoho.com'),
   EMAIL_PORT: z.string().optional().default('587'),
   EMAIL_USER: z.string().email().optional(),
-  EMAIL_PASSWORD: z.string().optional(),
+  EMAIL_PASSWORD: z.string().min(1, 'EMAIL_PASSWORD cannot be empty').optional(),
   EMAIL_FROM: z.string().optional(),
   ADMIN_EMAIL: z.string().email().optional(),
 
@@ -85,10 +89,12 @@ export const clientEnvSchema = z.object({
   NEXT_PUBLIC_WS_URL: z.string().url('NEXT_PUBLIC_WS_URL must be a valid URL').optional(),
   NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: z
     .string()
-    .startsWith('public_', 'NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY must start with public_'),
+    .startsWith('public_', 'NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY must start with public_')
+    .optional(),
   NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: z
     .string()
-    .url('NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT must be a valid URL'),
+    .url('NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT must be a valid URL')
+    .optional(),
   NEXT_PUBLIC_SUPABASE_URL: z
     .string()
     .url('NEXT_PUBLIC_SUPABASE_URL must be a valid URL')
@@ -99,7 +105,8 @@ export const clientEnvSchema = z.object({
     .optional(),
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
     .string()
-    .startsWith('pk_', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY must start with pk_'),
+    .startsWith('pk_', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY must start with pk_')
+    .optional(),
   NEXT_PUBLIC_ENABLE_WEB_VITALS: z.string().optional(),
 });
 
