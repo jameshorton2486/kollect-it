@@ -4,6 +4,8 @@ This doc explains how to configure the database connection so Prisma works in pr
 
 **Full env list and categories:** [PRODUCTION_ENV_SETUP.md](PRODUCTION_ENV_SETUP.md).
 
+**Local build:** To run `npm run build` locally without a database, ensure `VERCEL` and `VERCEL_ENV` are not set (e.g. don’t put them in `.env`). The runtime DB guard only enforces strict checks on Vercel Production; locally it will only warn and the build can complete.
+
 ---
 
 ## Which env vars Prisma uses
@@ -23,40 +25,120 @@ Do **not** rely on `POSTGRES_URL`, `SUPABASE_DB_URL`, or any other name in appli
 
 Supabase exposes two kinds of Postgres URLs:
 
-1. **Direct connection** (recommended for Prisma with Vercel to avoid SASL issues)
+1. **Direct connection** (required for Prisma runtime on Vercel to avoid SASL issues)
    - Port **5432**
-   - Use this for **both** `DATABASE_URL` and `DIRECT_URL` in production if you hit SASL errors with the pooler.
+   - Use this for **both** `DATABASE_URL` and `DIRECT_URL` in production.
 
 2. **Connection pooler (PgBouncer / transaction mode)**
    - Often port **6543**
-   - Can cause `FATAL: SASL authentication failed` with Prisma in some setups.
-   - If you use it, ensure the pooler is in **session** mode (not transaction) and that the user/password are correct for the pooler.
+   - Can cause `FATAL: SASL authentication failed` with Prisma in production.
+   - Do **not** use the pooler URL for Prisma runtime.
 
-**Recommendation:** In Vercel, set:
+**Required:** In Vercel, set:
 
-- `DATABASE_URL` = Supabase **direct** connection string (Session mode in dashboard, or the “Direct connection” URI with port 5432).
-- `DIRECT_URL` = Same direct connection string (or the same URI).
+- `DATABASE_URL` = Supabase **direct** connection string (port 5432).
+- `DIRECT_URL` = Same direct connection string (port 5432).
 
 Example format (replace with your host, user, password, db name):
 
 ```txt
-postgresql://postgres.[ref]:[YOUR-PASSWORD]@aws-0-[region].pooler.supabase.com:5432/postgres
+postgresql://postgres.[ref]:[YOUR-PASSWORD]@db.[project-ref].supabase.co:5432/postgres
 ```
 
 Or the non-pooled direct host from Supabase Dashboard → Settings → Database → “Connection string” → “URI” (direct, port 5432).
 
 ---
 
-## Required Vercel env vars
+## Why pooled URLs cause SASL failures
+
+Prisma uses persistent connections and expects direct Postgres behavior. Supabase pooler URLs often use PgBouncer in **transaction pooling** mode, which can break SASL/SCRAM authentication flows and result in:
+
+- `FATAL: SASL authentication failed`
+- `PrismaClientInitializationError`
+
+To eliminate this class of failures, **do not** use pooled/PgBouncer URLs for Prisma runtime. Always use the **direct** Postgres connection (port 5432) for both `DATABASE_URL` and `DIRECT_URL`.
+
+---
+
+## Required Vercel env vars (Production)
 
 In Vercel → your project → Settings → Environment Variables (Production), set:
 
 | Variable       | Required | Notes |
 |----------------|----------|--------|
-| `DATABASE_URL` | Yes      | Postgres URI; must start with `postgresql://` or `postgres://`. Prefer **direct** connection (port 5432) to avoid SASL. |
+| `DATABASE_URL` | Yes      | Postgres URI; must start with `postgresql://` or `postgres://`. **Direct** connection only (port 5432). |
 | `DIRECT_URL`   | Yes      | Same direct Postgres URI (used for migrations). |
+| `NEXTAUTH_SECRET` | Yes   | 32+ chars. Required for auth sessions. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Client key (public). |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Server-only key (admin/service). |
 
 No other DB-related env vars are required for Prisma.
+
+---
+
+## Vercel CLI: add required env vars (Production)
+
+Run the following in PowerShell. It prompts for each value and adds it to Vercel Production:
+
+```powershell
+# Generate a strong NEXTAUTH_SECRET locally (32+ chars) using Node crypto
+$nextAuthSecret = node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"
+
+# DATABASE_URL and DIRECT_URL must be the DIRECT Postgres connection (port 5432)
+# Retrieve from Supabase Dashboard → Settings → Database → Connection string → Direct (port 5432)
+vercel env add DATABASE_URL production
+vercel env add DIRECT_URL production
+
+# Auth secret (paste generated value)
+vercel env add NEXTAUTH_SECRET production
+
+# Supabase keys (fetch via CLI or Dashboard → Settings → API Keys)
+vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production
+vercel env add SUPABASE_SERVICE_ROLE_KEY production
+```
+
+Notes:
+- Do **not** paste secrets into chat or commit them to git.
+- If a value is wrong, re-run the same command to overwrite.
+
+---
+
+## CLI source of truth (inspect production env safely)
+
+Use Vercel CLI to pull production env vars into a local file and inspect structure
+**without printing secrets**:
+
+```powershell
+vercel env pull .env.production --environment=production
+```
+
+Then parse `DATABASE_URL` and `DIRECT_URL` locally and confirm:
+
+- Scheme: `postgresql://` or `postgres://`
+- Host: `db.<project-ref>.supabase.co`
+- Port: `5432`
+- Not a pooler host or port `6543`
+
+If the URLs are pooled or malformed, replace them in Vercel with the **direct**
+Supabase connection string.
+
+---
+
+## Supabase keys (CLI + Dashboard)
+
+Use the Supabase CLI **only** to verify the linked project and fetch API keys (anon + service role):
+
+```bash
+supabase link --project-ref <your-project-ref>
+```
+
+Then fetch API keys:
+
+```bash
+supabase projects api-keys --project-ref <your-project-ref>
+```
+
+If the CLI output is not available, use Supabase Dashboard → Settings → API Keys.
 
 ---
 
@@ -64,7 +146,7 @@ No other DB-related env vars are required for Prisma.
 
 | Symptom | Cause | Fix |
 |--------|--------|-----|
-| `FATAL: SASL authentication failed` | Wrong URL (e.g. pooler in transaction mode), wrong password, or wrong user. | Use **direct** connection (port 5432). Regenerate DB password in Supabase if needed; update `DATABASE_URL` and `DIRECT_URL` in Vercel. |
+| `FATAL: SASL authentication failed` | Pooled/PgBouncer URL, wrong password, or wrong user. | Use **direct** connection (port 5432). Regenerate DB password in Supabase if needed; update `DATABASE_URL` and `DIRECT_URL` in Vercel. |
 | `DATABASE_URL is missing` | Env var not set in Vercel for the environment (e.g. Production). | Add `DATABASE_URL` (and `DIRECT_URL`) in Vercel, then redeploy. |
 | `DATABASE_URL must start with postgresql://` | Value is not a Postgres URL (typo, wrong var, or extra quotes). | Fix in Vercel so the value is exactly a URI starting with `postgresql://` or `postgres://`. |
 | Health check shows `database: "disconnected"` | Connection refused, SASL, or network. | Check Vercel logs for the logged error; fix URL and credentials as above. |
@@ -90,9 +172,18 @@ No other DB-related env vars are required for Prisma.
 
 ## Fail-fast validation (what the app does)
 
-- Before creating the Prisma client, the app checks that `DATABASE_URL` exists and starts with `postgresql://` or `postgres://`.
+- Before creating the Prisma client, the app checks that `DATABASE_URL` exists, starts with `postgresql://` or `postgres://`, and is **not** a pooled/PgBouncer URL.
 - In **production**, if that check fails, the app throws immediately so it does not boot with a bad or missing URL.
 - See `src/lib/db-validate.ts` and `src/lib/prisma.ts`.
+
+---
+
+## Build-time guard (Vercel)
+
+The build runs a production env guard before `next build`. It fails the build if required variables are missing or malformed:
+
+- `scripts/verify-production-env.ts`
+- Wired via `prebuild` in `package.json`
 
 ---
 
