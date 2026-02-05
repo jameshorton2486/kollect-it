@@ -2,6 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// Prisma runtime uses ONLY url = DATABASE_URL for queries. Do not use POSTGRES_URL, SUPABASE_DB_URL, etc.
+// directUrl = DIRECT_URL is used ONLY for migrations (e.g. prisma migrate), never for runtime queries.
+// Production (Supabase + Vercel): use a DIRECT Postgres connection (port 5432). Pooled/PgBouncer
+// URLs (e.g. port 6543) can cause "FATAL: SASL authentication failed". See docs/PRODUCTION_ENV_SETUP.md.
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
