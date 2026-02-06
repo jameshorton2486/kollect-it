@@ -1,0 +1,147 @@
+import "dotenv/config";
+import { config } from "dotenv";
+
+// Load .env then .env.local (same order as Next.js)
+config({ path: ".env" });
+config({ path: ".env.local", override: true });
+
+/**
+ * Database Connection Diagnostic Script
+ *
+ * Tests the DATABASE_URL connection and provides helpful debugging info
+ * without exposing the actual password.
+ */
+
+async function main() {
+  console.log("🔍 Database Connection Diagnostic\n");
+  console.log("=".repeat(50));
+
+  // 1. Check if DATABASE_URL exists
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl) {
+    console.error("❌ DATABASE_URL is not set!");
+    console.log("\n💡 Fix: Run 'vercel env pull .env.local --environment=production'");
+    process.exit(1);
+  }
+
+  // 2. Parse and display URL components (mask password)
+  try {
+    const url = new URL(dbUrl);
+    console.log("\n📊 DATABASE_URL Components:");
+    console.log(`   Protocol: ${url.protocol}`);
+    console.log(`   Host:     ${url.hostname}`);
+    console.log(`   Port:     ${url.port || "5432 (default)"}`);
+    console.log(`   Database: ${url.pathname.slice(1)}`);
+    console.log(`   Username: ${url.username}`);
+    console.log(
+      `   Password: ${
+        url.password
+          ? "***" +
+            url.password.slice(-4) +
+            ` (${url.password.length} chars)`
+          : "❌ EMPTY!"
+      }`,
+    );
+    console.log(`   Params:   ${url.search || "(none)"}`);
+
+    // Check for common issues
+    console.log("\n🔎 Connection Analysis:");
+
+    if (!url.password) {
+      console.log("   ❌ Password is EMPTY - this will cause auth failure");
+    } else if (url.password.length < 10) {
+      console.log("   ⚠️  Password seems short - verify it's correct");
+    } else {
+      console.log("   ✅ Password is present");
+    }
+
+    if (url.hostname.includes("pooler.supabase.com")) {
+      console.log("   ✅ Using Supabase connection pooler (recommended)");
+    } else if (url.hostname.includes("supabase.co")) {
+      console.log(
+        "   ⚠️  Using direct Supabase connection (pooler recommended for serverless)",
+      );
+    }
+
+    if (url.port === "6543") {
+      console.log("   ✅ Port 6543 (PgBouncer transaction mode)");
+    } else if (url.port === "5432") {
+      console.log("   ℹ️  Port 5432 (direct connection)");
+    }
+  } catch (e) {
+    console.error("❌ DATABASE_URL is not a valid URL format");
+    console.log(`   Raw value starts with: ${dbUrl.substring(0, 30)}...`);
+    process.exit(1);
+  }
+
+  // 3. Attempt connection
+  console.log("\n🔌 Testing Connection...");
+
+  try {
+    const { PrismaClient } = await import("@prisma/client");
+    const prisma = new PrismaClient({
+      log: ["error"],
+    });
+
+    await prisma.$queryRaw`SELECT 1 as test`;
+    console.log("   ✅ Connection successful!");
+
+    // Quick table check
+    const userCount = await prisma.user.count();
+    console.log(`   ✅ Users table accessible (${userCount} users found)`);
+
+    await prisma.$disconnect();
+    console.log("\n✅ Database is working correctly!\n");
+  } catch (error: any) {
+    console.log("   ❌ Connection FAILED\n");
+
+    if (error.message?.includes("SASL authentication failed")) {
+      console.log("🔴 DIAGNOSIS: Password mismatch");
+      console.log("\n" + "=".repeat(50));
+      console.log("FIX: The password in DATABASE_URL doesn't match Supabase.\n");
+      console.log("MANUAL STEPS REQUIRED:");
+      console.log("─".repeat(50));
+      console.log("1. Go to: https://supabase.com/dashboard");
+      console.log("2. Select your Kollect-It project");
+      console.log("3. Go to: Settings → Database");
+      console.log("4. Under 'Connection string' section, click 'Reset database password'");
+      console.log("5. Copy the NEW password");
+      console.log("6. Run in PowerShell:");
+      console.log("");
+      console.log("   vercel env rm DATABASE_URL production");
+      console.log("   vercel env rm DIRECT_URL production");
+      console.log("");
+      console.log("7. Then add them back with the NEW password:");
+      console.log("");
+      console.log("   vercel env add DATABASE_URL production");
+      console.log(
+        "   # Paste: postgresql://postgres.[PROJECT_REF]:[NEW_PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true",
+      );
+      console.log("");
+      console.log("   vercel env add DIRECT_URL production");
+      console.log(
+        "   # Paste: postgresql://postgres.[PROJECT_REF]:[NEW_PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres",
+      );
+      console.log("");
+      console.log("8. Pull fresh env vars:");
+      console.log("   vercel env pull .env.local --environment=production");
+      console.log("");
+      console.log("9. Run this diagnostic again to verify:");
+      console.log("   npx tsx scripts/diagnose-db-connection.ts");
+      console.log("─".repeat(50));
+    } else if (error.message?.includes("connection refused")) {
+      console.log("🔴 DIAGNOSIS: Cannot reach database server");
+      console.log("   Check if Supabase project is active/not paused");
+    } else if (error.message?.includes("does not exist")) {
+      console.log("🔴 DIAGNOSIS: Database or user doesn't exist");
+      console.log("   Check the database name and username in the URL");
+    } else {
+      console.log("🔴 DIAGNOSIS: Unknown error");
+      console.log(`   Error: ${error.message}`);
+    }
+
+    process.exit(1);
+  }
+}
+
+main();

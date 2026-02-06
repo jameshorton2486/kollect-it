@@ -7,7 +7,7 @@ import { logger } from "@/lib/logger";
 import { getRequestId } from "@/lib/request-context";
 import { respondError } from "@/lib/api-error";
 import { rateLimiters } from "@/lib/rate-limit";
-import { applySecurityHeaders } from "@/lib/security";
+import { securityMiddleware, applySecurityHeaders } from "@/lib/security";
 import { cache, cacheKeys, cacheTTL } from "@/lib/cache";
 
 // GET /api/products - Get all products
@@ -116,6 +116,15 @@ interface ImageInput {
 
 // POST /api/products - Create new product (admin only)
 export async function POST(request: NextRequest) {
+  const securityCheck = await securityMiddleware(request, {
+    maxBodySize: 5 * 1024 * 1024,
+    allowedContentTypes: ["application/json"],
+  });
+  if (securityCheck) return securityCheck;
+
+  const rateLimitCheck = await rateLimiters.standard(request);
+  if (rateLimitCheck) return rateLimitCheck;
+
   const authCheck = await checkAdminAuth();
   if (!authCheck.authorized) {
     return authCheck.response;
@@ -137,13 +146,49 @@ export async function POST(request: NextRequest) {
       images,
       sku: providedSku,  // Allow admin to provide SKU
       categoryPrefix,    // Allow admin to specify category prefix
+      origin,
+      source,
     } = body;
 
-    // Generate slug from title
-    const slug = title
+    // Required fields
+    const required = ["title", "categoryId"] as const;
+    for (const field of required) {
+      if (body[field] == null || body[field] === "") {
+        const res = NextResponse.json(
+          { error: `Missing required field: ${field}` },
+          { status: 400 }
+        );
+        return applySecurityHeaders(res);
+      }
+    }
+
+    // Price: must be present and numeric
+    if (price == null || price === "") {
+      const res = NextResponse.json(
+        { error: "Missing required field: price" },
+        { status: 400 }
+      );
+      return applySecurityHeaders(res);
+    }
+    const priceNum = parseFloat(price);
+    if (Number.isNaN(priceNum) || priceNum < 0) {
+      const res = NextResponse.json(
+        { error: "Invalid price: must be a non-negative number" },
+        { status: 400 }
+      );
+      return applySecurityHeaders(res);
+    }
+
+    // Generate slug from title and handle collision
+    const baseSlug = (title as string)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+    let slug = baseSlug;
+    let slugExists = await prisma.product.findUnique({ where: { slug } });
+    if (slugExists) {
+      slug = `${baseSlug}-${Date.now().toString().slice(-6)}`;
+    }
 
     // =================================================================
     // SKU GENERATION - Use unified format (PREFIX-YYYY-NNNN)
@@ -152,33 +197,48 @@ export async function POST(request: NextRequest) {
     let skuYear: number;
     let skuNumber: number;
 
-    if (providedSku) {
-      // Validate provided SKU
+    const hasProvidedSku = "sku" in body;
+
+    if (hasProvidedSku) {
       const validation = validateSKU(providedSku);
       if (!validation.valid) {
-        return NextResponse.json(
+        const res = NextResponse.json(
           { error: validation.error },
           { status: 400 }
         );
+        return applySecurityHeaders(res);
       }
       sku = validation.parsed!.formatted;
       skuYear = validation.parsed!.year;
       skuNumber = validation.parsed!.sequence;
     } else {
-      // Generate new SKU
       skuYear = new Date().getFullYear();
-      const prefix = categoryPrefix || 'KOL';
-      
-      // Find max SKU number for this prefix and year
+      const prefix = categoryPrefix || "KOL";
+      if (!/^[A-Za-z]{3,4}$/.test(prefix)) {
+        const res = NextResponse.json(
+          { error: "categoryPrefix must be 3-4 letters when provided" },
+          { status: 400 }
+        );
+        return applySecurityHeaders(res);
+      }
+
       const maxSku = await prisma.product.aggregate({
         _max: { skuNumber: true },
-        where: { 
-          skuYear: skuYear,
-          sku: { startsWith: `${prefix.toUpperCase()}-${skuYear}-` }
-        }
+        where: {
+          skuYear,
+          sku: { startsWith: `${String(prefix).toUpperCase()}-${skuYear}-` },
+        },
       });
-      skuNumber = (maxSku._max.skuNumber || 0) + 1;
+      skuNumber = (maxSku._max.skuNumber ?? 0) + 1;
       sku = formatSkuNew(prefix, skuYear, skuNumber);
+      const generatedValidation = validateSKU(sku);
+      if (!generatedValidation.valid) {
+        const res = NextResponse.json(
+          { error: generatedValidation.error },
+          { status: 400 }
+        );
+        return applySecurityHeaders(res);
+      }
     }
 
     const product = await prisma.product.create({
@@ -188,17 +248,18 @@ export async function POST(request: NextRequest) {
         skuNumber,
         title,
         slug,
-        description,
-        price: parseFloat(price),
+        description: description ?? "",
+        price: priceNum,
         categoryId,
         condition,
         year,
         artist,
         medium,
         period,
+        origin: origin ?? null,
+        source: source ?? null,
         featured: featured || false,
-        // Admin-created products are active by default (not drafts)
-        status: 'active',
+        status: "active",
         isDraft: false,
         Image: {
           create:
@@ -217,16 +278,17 @@ export async function POST(request: NextRequest) {
 
     const res = NextResponse.json(product, { status: 201 });
     res.headers.set("X-Request-ID", getRequestId(request));
-    return res;
+    return applySecurityHeaders(res);
   } catch (error) {
     logger.error(
       "Error creating product",
       { requestId: getRequestId(request) },
       error,
     );
-    return respondError(request, error, {
+    const errRes = respondError(request, error, {
       status: 500,
       code: "products_create_failed",
     });
+    return applySecurityHeaders(errRes);
   }
 }

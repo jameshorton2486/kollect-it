@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
-import { stripe } from "@/lib/stripe";
+import { stripe, isStripeEnabled } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import { logger } from "@/lib/logger";
 import { getRequestId } from "@/lib/request-context";
@@ -28,7 +28,7 @@ import { respondError } from "@/lib/api-error";
 
 export const dynamic = "force-dynamic";
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 /**
  * Check if event has already been processed (idempotency)
@@ -287,11 +287,20 @@ export async function POST(request: Request) {
   const requestId = getRequestId(request);
 
   // Check if Stripe is configured
-  if (!stripe) {
+  if (!isStripeEnabled || !stripe) {
     logger.error("Stripe not configured", { requestId });
     return NextResponse.json(
       { error: "Payment processing is not configured", requestId },
       { status: 503 },
+    );
+  }
+
+  if (!webhookSecret) {
+    logger.error("Stripe webhook secret missing", { requestId });
+    return respondError(
+      request,
+      new Error("STRIPE_WEBHOOK_SECRET is required for Stripe webhooks"),
+      { status: 503, code: "webhook_secret_missing" },
     );
   }
 
@@ -312,25 +321,7 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    if (!webhookSecret) {
-      if (process.env.NODE_ENV === "production") {
-        logger.error("Stripe webhook secret missing in production", {
-          requestId,
-        });
-        return respondError(
-          request,
-          new Error("Webhook secret not configured"),
-          { status: 503, code: "webhook_secret_missing" },
-        );
-      }
-      logger.warn(
-        "STRIPE_WEBHOOK_SECRET not set - verification disabled (dev only)",
-        { requestId },
-      );
-      event = JSON.parse(body) as Stripe.Event;
-    } else {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-    }
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     logger.error(
       "Stripe webhook signature verification failed",

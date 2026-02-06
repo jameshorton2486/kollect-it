@@ -48,6 +48,8 @@ export async function POST(req: NextRequest) {
       aiAnalysis,
       isDraft = true,
       productNotes,           // ✨ NEW: Raw notes
+      origin,
+      source,
       appraisalUrls = [],     // ✨ NEW: PDF links
       appraisalDocUrl,       // ✨ NEW: Uploaded appraisal document URL
       provenanceDocUrl,       // ✨ NEW: Uploaded provenance document URL
@@ -155,7 +157,9 @@ export async function POST(req: NextRequest) {
         appraisalUrls,
         appraisal_doc_url: appraisalDocUrl || null,
         provenance_doc_url: provenanceDocUrl || null,
-        
+        origin: origin || null,
+        source: source || null,
+
         // AI-generated fields
         estimatedEra,
         rarity,

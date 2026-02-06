@@ -6,10 +6,10 @@ import { enhancedLogger as logger } from "./enhanced-logger";
 
 /**
  * Enhanced NextAuth configuration with comprehensive logging
- * 
+ *
  * This version logs every step of the authentication process to help debug
  * login issues. All logs use the structured logger with appropriate levels.
- * 
+ *
  * Logs to check when login fails:
  * 1. Terminal running `bun run dev` (local)
  * 2. `logs/` directory (local files)
@@ -41,11 +41,14 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
+        // Normalize email for lookup (avoids case mismatch: Info@ vs info@)
+        const normalizedEmail = credentials.email.toLowerCase().trim();
+
         // Look up user in database
         let user;
         try {
           user = await prisma.user.findUnique({
-            where: { email: credentials.email },
+            where: { email: normalizedEmail },
           });
         } catch (err) {
           logger.error(
@@ -128,7 +131,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.id = user.id;
-        
+
         if (process.env.NODE_ENV === "development") {
           logger.debug("JWT token created", {
             userId: user.id,
@@ -142,7 +145,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.role = token.role as string;
         session.user.id = token.id as string;
-        
+
         if (process.env.NODE_ENV === "development") {
           logger.debug("Session created", {
             userId: token.id as string,
@@ -160,12 +163,12 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  
+
   // Hook into NextAuth's own logger
   logger: {
     error(code, metadata) {
-      logger.error("NextAuth error", { 
-        code, 
+      logger.error("NextAuth error", {
+        code,
         ...metadata,
         helpText: "This is a NextAuth internal error. Check NEXTAUTH_SECRET and NEXTAUTH_URL env vars.",
       });
@@ -179,7 +182,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
-  
+
   // Enable debug in development for extra detail
   debug: process.env.NODE_ENV === "development",
 };

@@ -148,9 +148,15 @@ export default function LoginPage() {
                 >
                   Password <span className="text-red-500">*</span>
                 </label>
+                <Link
+                  href="/forgot-password"
+                  className="text-xs text-lux-gold hover:text-lux-gold-light transition-colors"
+                >
+                  Forgot password?
+                </Link>
               </div>
               <p className="text-xs text-lux-gray-dark mb-1" aria-live="polite">
-                Password reset temporarily unavailable. Contact support.
+                Password reset is temporarily unavailable. Contact support if needed.
               </p>
               <div className="relative">
                 <input

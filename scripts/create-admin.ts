@@ -1,22 +1,19 @@
-import 'dotenv/config';
-
-import { prisma } from "../src/lib/prisma";
+import { config } from "dotenv";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import * as readline from "readline";
 
-/**
- * Secure Admin User Creation Script
- * 
- * SECURITY: Uses environment variables or prompts for password
- * Never hardcodes credentials in this file
- */
+// Load environment - .env first, then .env.local overrides
+config({ path: ".env" });
+config({ path: ".env.local", override: true });
+
+const prisma = new PrismaClient();
 
 async function promptInput(question: string): Promise<string> {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-
   return new Promise((resolve) => {
     rl.question(question, (answer) => {
       rl.close();
@@ -26,48 +23,48 @@ async function promptInput(question: string): Promise<string> {
 }
 
 async function main() {
-  console.log("🔐 Creating admin user...\n");
-  console.log("⚠️  SECURITY: This script requires secure credentials\n");
+  console.log("🔐 Creating/updating admin user...\n");
 
-  // Get email from environment or prompt
-  const email = process.env.ADMIN_EMAIL || await promptInput("Admin email (or set ADMIN_EMAIL env var): ");
-  
-  if (!email || !email.includes("@")) {
-    console.error("❌ Error: Valid email address required");
+  // Get email from env or prompt
+  const rawEmail = process.env.ADMIN_EMAIL || await promptInput("Admin email: ");
+
+  if (!rawEmail || !rawEmail.includes("@")) {
+    console.error(" Valid email address required");
     process.exit(1);
   }
 
-  // Get password from environment or prompt (recommended: use env var)
+  // IMPORTANT: Normalize email to lowercase
+  const email = rawEmail.toLowerCase().trim();
+  console.log(`📧 Email: ${email}`);
+
+  // Get password from env or prompt
   let password = process.env.ADMIN_PASSWORD;
-  
+
   if (!password) {
-    console.log("💡 Tip: Set ADMIN_PASSWORD environment variable to avoid prompts");
-    password = await promptInput("Admin password (input will be visible): ");
-    
-    // For security, prompt for confirmation
-    const confirmPassword = await promptInput("Confirm password: ");
-    
-    if (password !== confirmPassword) {
-      console.error("❌ Error: Passwords do not match");
+    password = await promptInput("Password (8+ chars, visible): ");
+    const confirm = await promptInput("Confirm password: ");
+
+    if (password !== confirm) {
+      console.error(" Passwords do not match");
       process.exit(1);
     }
   }
 
   if (!password || password.length < 8) {
-    console.error("❌ Error: Password must be at least 8 characters long");
+    console.error(" Password must be at least 8 characters long");
     process.exit(1);
   }
 
   const name = process.env.ADMIN_NAME || "Admin";
 
   try {
-    // Hash the password
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create or update the user
+    // Upsert user
     const user = await prisma.user.upsert({
       where: { email },
-      update: { 
+      update: {
         password: hashedPassword,
         role: "admin",
       },
@@ -79,24 +76,19 @@ async function main() {
       },
     });
 
-    console.log("✅ Admin user created/updated successfully!");
-    console.log("\n📋 Login Credentials:");
-    console.log("─".repeat(40));
+    console.log("\n Admin user created/updated successfully!");
+    console.log("".repeat(40));
     console.log(`📧 Email:    ${user.email}`);
-    if (!process.env.ADMIN_PASSWORD) {
-      // Only show password if entered via prompt (not env var)
-      console.log(`🔐 Password: ${password}`);
-    } else {
-      console.log(`🔐 Password: [Set via ADMIN_PASSWORD environment variable]`);
-    }
-    console.log("─".repeat(40));
+    console.log(`👤 Role:     ${user.role}`);
+    console.log(
+      `🔐 Password: ${process.env.ADMIN_PASSWORD ? "[from env]" : password}`,
+    );
+    console.log("".repeat(40));
     console.log("\n🌐 Login at:");
-    console.log("   Local:      http://localhost:3000/admin/login");
-    console.log("   Production: https://kollect-it.vercel.app/admin/login");
-    console.log("\n⚠️  IMPORTANT: Save your password somewhere secure!");
-    console.log("   (Consider using a password manager)\n");
+    console.log("   Local:      http://localhost:3000/login");
+    console.log("   Production: https://kollect-it.com/login\n");
   } catch (error) {
-    console.error("❌ Error creating admin user:", error);
+    console.error(" Error creating admin user:", error);
     process.exit(1);
   } finally {
     await prisma.$disconnect();

@@ -6,7 +6,7 @@
 import Stripe from "stripe";
 
 async function verifyStripeSetup() {
-  console.log("💳 Verifying Stripe Configuration...\n");
+  console.log("Verifying Stripe configuration...\n");
 
   // Check environment variables
   const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
@@ -16,94 +16,124 @@ async function verifyStripeSetup() {
   let allValid = true;
 
   // 1. Check publishable key
-  console.log("1️⃣ Checking Publishable Key...");
+  console.log("1) Checking publishable key...");
   if (!publishableKey) {
-    console.error("   ❌ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
+    console.error("   ERROR: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
     allValid = false;
   } else if (!publishableKey.startsWith("pk_test_") && !publishableKey.startsWith("pk_live_")) {
-    console.error(`   ❌ Invalid format: Should start with pk_test_ or pk_live_`);
-    console.error(`   ❌ Current value starts with: ${publishableKey.substring(0, 10)}...`);
+    console.error("   ERROR: Invalid format (must start with pk_test_ or pk_live_)");
     allValid = false;
   } else {
     const mode = publishableKey.startsWith("pk_test_") ? "TEST" : "LIVE";
-    console.log(`   ✅ Valid ${mode} publishable key`);
+    console.log(`   OK: Valid ${mode} publishable key`);
   }
 
   // 2. Check secret key
-  console.log("\n2️⃣ Checking Secret Key...");
+  console.log("\n2) Checking secret key...");
   if (!secretKey) {
-    console.error("   ❌ STRIPE_SECRET_KEY is not set");
+    console.error("   ERROR: STRIPE_SECRET_KEY is not set");
+    allValid = false;
+  } else if (secretKey.startsWith("rk_")) {
+    console.error("   ERROR: Restricted keys (rk_*) cannot be used for server-side Stripe operations");
     allValid = false;
   } else if (!secretKey.startsWith("sk_test_") && !secretKey.startsWith("sk_live_")) {
-    console.error(`   ❌ Invalid format: Should start with sk_test_ or sk_live_`);
-    console.error(`   ❌ Current value starts with: ${secretKey.substring(0, 10)}...`);
+    console.error("   ERROR: Invalid format (must start with sk_test_ or sk_live_)");
     allValid = false;
   } else {
     const mode = secretKey.startsWith("sk_test_") ? "TEST" : "LIVE";
-    console.log(`   ✅ Valid ${mode} secret key`);
+    console.log(`   OK: Valid ${mode} secret key`);
 
     // Try to connect to Stripe API
     try {
-      console.log("\n3️⃣ Testing Stripe API Connection...");
+      console.log("\n3) Testing Stripe API connection...");
       const stripe = new Stripe(secretKey, { typescript: true });
       const account = await stripe.accounts.retrieve();
-      console.log(`   ✅ Connected to Stripe successfully`);
-      console.log(`   ✅ Account: ${account.email || account.id}`);
-      console.log(`   ✅ Mode: ${mode}`);
+      console.log("   OK: Connected to Stripe successfully");
+      console.log(`   OK: Account: ${account.email || account.id}`);
+      console.log(`   OK: Mode: ${mode}`);
+
+      // Verify webhook endpoint exists and includes required events (live or test, based on key)
+      console.log("\n4) Checking webhook endpoint...");
+      const requiredEvents = new Set([
+        "checkout.session.completed",
+        "payment_intent.succeeded",
+        "payment_intent.payment_failed",
+      ]);
+      const endpoints = await stripe.webhookEndpoints.list({ limit: 100 });
+      const targetUrl = "https://kollect-it.com/api/stripe/webhook";
+      const endpoint = endpoints.data.find((item) => item.url === targetUrl);
+
+      if (!endpoint) {
+        console.error(`   ERROR: Webhook endpoint not found for ${targetUrl}`);
+        allValid = false;
+      } else {
+        const enabled = new Set(endpoint.enabled_events || []);
+        const missing = [...requiredEvents].filter((evt) => !enabled.has(evt));
+        if (missing.length > 0) {
+          console.error(`   ERROR: Webhook missing required events: ${missing.join(", ")}`);
+          allValid = false;
+        } else {
+          console.log("   OK: Webhook endpoint found with required events");
+        }
+      }
     } catch (error) {
-      console.error("   ❌ Failed to connect to Stripe API");
+      console.error("   ERROR: Failed to connect to Stripe API");
       if (error instanceof Error) {
-        console.error(`   ❌ Error: ${error.message}`);
+        console.error(`   ERROR: ${error.message}`);
       }
       allValid = false;
     }
   }
 
   // 3. Check webhook secret (optional)
-  console.log("\n4️⃣ Checking Webhook Secret...");
+  console.log("\n5) Checking webhook secret...");
   if (!webhookSecret) {
-    console.warn("   ⚠️  STRIPE_WEBHOOK_SECRET is not set (optional but recommended)");
+    if (secretKey?.startsWith("sk_live_")) {
+      console.error("   ERROR: STRIPE_WEBHOOK_SECRET is required for live webhooks");
+      allValid = false;
+    } else {
+      console.warn("   WARN: STRIPE_WEBHOOK_SECRET is not set (required for production webhooks)");
+    }
   } else if (!webhookSecret.startsWith("whsec_")) {
-    console.error(`   ❌ Invalid format: Should start with whsec_`);
-    console.error(`   ❌ Current value starts with: ${webhookSecret.substring(0, 10)}...`);
+    console.error("   ERROR: Invalid format (must start with whsec_)");
     allValid = false;
   } else {
-    console.log("   ✅ Valid webhook secret");
+    console.log("   OK: Valid webhook secret");
   }
 
   // 4. Check key consistency
-  console.log("\n5️⃣ Checking Key Consistency...");
+  console.log("\n6) Checking key consistency...");
   if (publishableKey && secretKey) {
     const pubMode = publishableKey.startsWith("pk_test_") ? "test" : "live";
     const secMode = secretKey.startsWith("sk_test_") ? "test" : "live";
 
     if (pubMode !== secMode) {
-      console.error(`   ❌ Mode mismatch!`);
-      console.error(`   ❌ Publishable key is ${pubMode.toUpperCase()} mode`);
-      console.error(`   ❌ Secret key is ${secMode.toUpperCase()} mode`);
-      console.error(`   ❌ Both keys must be from the same mode (test or live)`);
+      console.error("   ERROR: Mode mismatch");
+      console.error(`   ERROR: Publishable key is ${pubMode.toUpperCase()} mode`);
+      console.error(`   ERROR: Secret key is ${secMode.toUpperCase()} mode`);
+      console.error("   ERROR: Both keys must be from the same mode (test or live)");
       allValid = false;
     } else {
-      console.log(`   ✅ Both keys are ${pubMode.toUpperCase()} mode (consistent)`);
+      console.log(`   OK: Both keys are ${pubMode.toUpperCase()} mode (consistent)`);
     }
   }
 
   // Summary
   console.log("\n" + "=".repeat(60));
   if (allValid) {
-    console.log("✅ Stripe configuration is valid and ready to use!");
-    console.log("\n📋 Next Steps:");
+    console.log("OK: Stripe configuration is valid and ready to use.");
+    console.log("\nNext steps:");
     if (secretKey?.startsWith("sk_test_")) {
-      console.log("   • Test keys detected - good for development");
-      console.log("   • For production, switch to live keys in Vercel");
+      console.log("   - Test keys detected (good for development)");
+      console.log("   - For production, switch to live keys in Vercel");
     } else {
-      console.log("   • Live keys detected - ready for production");
-      console.log("   • Make sure these are set in Vercel environment variables");
+      console.log("   - Live keys detected (ready for production)");
+      console.log("   - Make sure these are set in Vercel environment variables");
     }
     process.exit(0);
   } else {
-    console.error("❌ Stripe configuration has errors. Please fix the issues above.");
-    console.error("\n💡 See STRIPE_SETUP_GUIDE.md for help getting correct keys.");
+    console.error("ERROR: Stripe configuration has issues. Please fix the errors above.");
+    console.error("\nSee docs/integrations/README.md for guidance.");
     process.exit(1);
   }
 }
