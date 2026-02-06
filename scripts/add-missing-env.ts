@@ -59,16 +59,6 @@ const MISSING_VARS = {
     placeholder: 'whsec_xxxxxxxxxxxx',
     required: true,
   },
-  GOOGLE_CLIENT_ID: {
-    comment: '# Google OAuth Client ID (get from: https://console.cloud.google.com/apis/credentials)',
-    placeholder: 'xxxxx.apps.googleusercontent.com',
-    required: true,
-  },
-  GOOGLE_CLIENT_SECRET: {
-    comment: '# Google OAuth Client Secret (get from: https://console.cloud.google.com/apis/credentials)',
-    placeholder: 'xxxxx',
-    required: true,
-  },
   NEXT_PUBLIC_APP_EMAIL: {
     comment: '# Application Email Address',
     placeholder: 'noreply@kollect-it.com',

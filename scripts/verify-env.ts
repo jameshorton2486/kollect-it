@@ -58,18 +58,6 @@ const tests: EnvTest[] = [
     description: "NextAuth encryption secret (min 32 chars)",
   },
   {
-    key: "GOOGLE_CLIENT_ID",
-    required: true,
-    test: async (val) => val.includes("-") && val.includes("googleusercontent.com"),
-    description: "Google OAuth Client ID",
-  },
-  {
-    key: "GOOGLE_CLIENT_SECRET",
-    required: true,
-    test: async (val) => val.startsWith("GOCSPX-") || val.length > 20,
-    description: "Google OAuth Client Secret",
-  },
-  {
     key: "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
     required: true,
     test: async (val) => val.startsWith("pk_live_") || val.startsWith("pk_test_"),

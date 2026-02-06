@@ -127,10 +127,12 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.role = user.role;
         token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
 
         if (process.env.NODE_ENV === "development") {
           logger.debug("JWT token created", {
@@ -139,12 +141,18 @@ export const authOptions: NextAuthOptions = {
           });
         }
       }
+      if (trigger === "update") {
+        const sessionName = (session as any)?.user?.name ?? (session as any)?.name;
+        if (sessionName) token.name = sessionName;
+      }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role as string;
         session.user.id = token.id as string;
+        if (token.name) session.user.name = token.name as string;
+        if (token.email) session.user.email = token.email as string;
 
         if (process.env.NODE_ENV === "development") {
           logger.debug("Session created", {

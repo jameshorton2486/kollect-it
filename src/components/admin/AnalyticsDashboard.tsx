@@ -14,16 +14,20 @@ import { RevenueByCategory } from "./charts/RevenueByCategory";
 export function AnalyticsDashboard() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [loading, setLoading] = useState(true);
-  const [startDate, setStartDate] = useState(
-    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-  );
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    fetchMetrics();
+    setStartDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+    setEndDate(new Date());
+  }, []);
+
+  useEffect(() => {
+    if (startDate && endDate) fetchMetrics();
   }, [startDate, endDate]);
 
   const fetchMetrics = async () => {
+    if (!startDate || !endDate) return;
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -44,7 +48,7 @@ export function AnalyticsDashboard() {
     }
   };
 
-  if (loading)
+  if (!startDate || !endDate || loading)
     return (
       <div className="text-center text-lux-gray">Loading analytics...</div>
     );

@@ -18,8 +18,6 @@ const REQUIRED_VARS = [
   'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY',
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
-  'GOOGLE_CLIENT_ID',
-  'GOOGLE_CLIENT_SECRET',
   'NEXT_PUBLIC_APP_EMAIL',
 ];
 
@@ -148,9 +146,6 @@ function generateMissingTemplate(missing: VarStatus[]): string {
       template += `${v.name}=\n\n`;
     } else if (v.name.startsWith('IMAGEKIT') || v.name.includes('IMAGEKIT')) {
       template += `# Get from: https://imagekit.io/dashboard/developer/api-keys\n`;
-      template += `${v.name}=\n\n`;
-    } else if (v.name.startsWith('GOOGLE_')) {
-      template += `# Get from: https://console.cloud.google.com/apis/credentials\n`;
       template += `${v.name}=\n\n`;
     } else {
       template += `${v.name}=\n\n`;

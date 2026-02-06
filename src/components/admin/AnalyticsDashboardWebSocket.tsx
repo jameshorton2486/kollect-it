@@ -16,11 +16,14 @@ export function AnalyticsDashboardWebSocket() {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const wsEnabled = Boolean(process.env.NEXT_PUBLIC_WS_URL);
-  const [startDate, setStartDate] = useState(
-    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-  );
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(wsEnabled);
+
+  useEffect(() => {
+    setStartDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+    setEndDate(new Date());
+  }, []);
 
   // WebSocket connection
   const { connected, metricsCache } = useWebSocket({
@@ -82,6 +85,7 @@ export function AnalyticsDashboardWebSocket() {
 
   // Fetch metrics when dates change or WebSocket is disabled
   const fetchMetrics = useCallback(async () => {
+    if (!startDate || !endDate) return;
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -102,14 +106,14 @@ export function AnalyticsDashboardWebSocket() {
     }
   }, [startDate, endDate]);
 
-  // Fetch on date change or when WebSocket is disabled
+  // Fetch on date change or when WebSocket is disabled (only once dates are set)
   useEffect(() => {
-    if (!autoRefresh) {
+    if (startDate && endDate && !autoRefresh) {
       fetchMetrics();
     }
   }, [startDate, endDate, autoRefresh, fetchMetrics]);
 
-  if (loading && !metrics) {
+  if (!startDate || !endDate || (loading && !metrics)) {
     return (
       <div className="min-h-screen bg-lux-pearl p-8">
         <h1 className="heading-section text-lux-black mb-6">Analytics Dashboard</h1>
@@ -124,7 +128,7 @@ export function AnalyticsDashboardWebSocket() {
       </div>
     );
   }
-  
+
   if (!metrics) {
     return (
       <div className="min-h-screen bg-lux-pearl p-8">

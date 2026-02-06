@@ -59,12 +59,27 @@ const tabs = [
 ];
 
 export default function AccountPage() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  const [userProfile, setUserProfile] = useState<{
+    name: string | null;
+    email: string;
+    phone: string | null;
+    address: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: string | null;
+    country?: string | null;
+  } | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("profile");
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(true);
 
@@ -106,11 +121,32 @@ export default function AccountPage() {
     }
   }, [status, router]);
 
+  const fetchUserProfile = async () => {
+    try {
+      const response = await fetch("/api/account/profile");
+      if (response.ok) {
+        const data = await response.json();
+        setUserProfile(data);
+        setProfileForm({
+          name: data.name || "",
+          phone: data.phone || "",
+          address: data.address || "",
+          city: data.city || "",
+          state: data.state || "",
+          zipCode: data.zipCode || "",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
+
   const fetchData = async () => {
     try {
-      const [wishlistRes, ordersRes] = await Promise.all([
+      const [wishlistRes, ordersRes, profileRes] = await Promise.all([
         fetch("/api/wishlist"),
         fetch("/api/orders"),
+        fetch("/api/account/profile"),
       ]);
 
       if (wishlistRes.ok) {
@@ -121,6 +157,19 @@ export default function AccountPage() {
       if (ordersRes.ok) {
         const ordersData = await ordersRes.json();
         setOrders(ordersData);
+      }
+
+      if (profileRes.ok) {
+        const profileData = await profileRes.json();
+        setUserProfile(profileData);
+        setProfileForm({
+          name: profileData.name || "",
+          phone: profileData.phone || "",
+          address: profileData.address || "",
+          city: profileData.city || "",
+          state: profileData.state || "",
+          zipCode: profileData.zipCode || "",
+        });
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -147,12 +196,12 @@ export default function AccountPage() {
 
   const handleEditProfile = () => {
     setProfileForm({
-      name: session?.user?.name || "",
-      phone: "",
-      address: "",
-      city: "",
-      state: "",
-      zipCode: "",
+      name: userProfile?.name || session?.user?.name || "",
+      phone: userProfile?.phone || "",
+      address: userProfile?.address || "",
+      city: userProfile?.city || "",
+      state: userProfile?.state || "",
+      zipCode: userProfile?.zipCode || "",
     });
     setProfileMessage(null);
     setShowEditProfile(true);
@@ -170,11 +219,13 @@ export default function AccountPage() {
       });
 
       if (response.ok) {
+        await fetchUserProfile();
+        const updatedName = profileForm.name || userProfile?.name || "";
+        await update({ user: { name: updatedName } });
         setProfileMessage({ type: "success", text: "Profile updated successfully!" });
         setTimeout(() => {
           setShowEditProfile(false);
-          window.location.reload();
-        }, 1500);
+        }, 1000);
       } else {
         const data = await response.json();
         setProfileMessage({ type: "error", text: data.error || "Failed to update profile" });
@@ -224,7 +275,7 @@ export default function AccountPage() {
     }
   };
 
-  if (status === "loading" || loading) {
+  if (!mounted || status === "loading" || loading) {
     return (
       <main className="min-h-screen bg-lux-pearl">
         <div className="container mx-auto py-20 text-center">
@@ -244,7 +295,7 @@ export default function AccountPage() {
         <div className="container mx-auto">
           <p className="text-label text-lux-gold mb-2">Account</p>
           <h1 className="heading-page text-lux-black">
-            Welcome back, {session.user?.name?.split(" ")[0] || "Collector"}
+            Welcome back, {userProfile?.name?.split(" ")[0] || session.user?.name?.split(" ")[0] || "Collector"}
           </h1>
           <p className="lead mt-4">Manage your profile, orders, and saved items.</p>
         </div>
@@ -318,7 +369,7 @@ export default function AccountPage() {
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <p className="text-label text-lux-gray-dark mb-1">Name</p>
-                        <p className="text-lux-black">{session.user?.name || "Not set"}</p>
+                        <p className="text-lux-black">{userProfile?.name || "Not set"}</p>
                       </div>
                       <div>
                         <p className="text-label text-lux-gray-dark mb-1">Email</p>
@@ -362,7 +413,7 @@ export default function AccountPage() {
                           <div className="flex justify-between items-start mb-2">
                             <div>
                               <p className="text-label text-lux-gold">Order #{order.orderNumber}</p>
-                              <p className="text-lux-gray-dark">
+                              <p className="text-lux-gray-dark" suppressHydrationWarning>
                                 {new Date(order.createdAt).toLocaleDateString()}
                               </p>
                             </div>

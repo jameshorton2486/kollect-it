@@ -48,6 +48,17 @@ interface Order {
   items: { id: string; quantity: number }[];
 }
 
+/** Renders current time only on client to avoid hydration mismatch. */
+function AdminDashboardTime() {
+  const [now, setNow] = useState<string | null>(null);
+  useEffect(() => {
+    setNow(new Date().toLocaleString());
+    const t = setInterval(() => setNow(new Date().toLocaleString()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  return <>{now ?? "—"}</>;
+}
+
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -216,8 +227,8 @@ export default function AdminDashboard() {
               <p className="text-sm text-lux-cream/80 mt-1">
                 Welcome back, {session.user.name || session.user.email}
               </p>
-              <p className="text-xs text-lux-gray-dark">
-                {new Date().toLocaleString()}
+              <p className="text-xs text-lux-gray-dark" suppressHydrationWarning>
+                <AdminDashboardTime />
               </p>
             </div>
             <div className="flex gap-4">

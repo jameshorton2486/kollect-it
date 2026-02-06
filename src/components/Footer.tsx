@@ -154,7 +154,9 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <p className="text-sm text-lux-cream">© {year} Kollect-It. All rights reserved.</p>
+          <p className="text-sm text-lux-cream" suppressHydrationWarning>
+            © {year} Kollect-It. All rights reserved.
+          </p>
           <div className="flex gap-4">
             <Link href="/privacy" className="text-sm text-lux-cream hover:text-lux-gold-light transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lux-gold focus-visible:ring-offset-2 focus-visible:ring-offset-lux-charcoal">
               Privacy
