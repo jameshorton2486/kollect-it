@@ -14,9 +14,9 @@
 git add .
 
 # 2. Commit with message
-git commit -m "fix: update email addresses to jameshorton2486@gmail.com and fix BOM character
+git commit -m "fix: update email addresses to info@kollect-it.com and fix BOM character
 
-- Updated all email references from james@kollect-it.com to jameshorton2486@gmail.com
+- Updated all email references from james@kollect-it.com to info@kollect-it.com
 - Fixed BOM character in email settings page causing build failures
 - Added environment variable management scripts
 - Added comprehensive documentation for email and env var setup"
@@ -112,7 +112,7 @@ Your changes are ready! Run:
 
 ```bash
 git add .
-git commit -m "fix: update email addresses to jameshorton2486@gmail.com and fix BOM character"
+git commit -m "fix: update email addresses to info@kollect-it.com and fix BOM character"
 git push origin main
 ```
 

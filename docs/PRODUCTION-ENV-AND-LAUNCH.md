@@ -63,7 +63,7 @@ From repo root in PowerShell:
 
 ```powershell
 $env:DATABASE_URL = "PASTE_PRODUCTION_DATABASE_URL"
-$env:ADMIN_EMAIL = "jameshorton2486@gmail.com"
+$env:ADMIN_EMAIL = "info@kollect-it.com"
 $env:ADMIN_PASSWORD = "YourStrongPasswordHere"
 npx tsx scripts/create-admin.ts
 Remove-Item Env:DATABASE_URL -ErrorAction SilentlyContinue

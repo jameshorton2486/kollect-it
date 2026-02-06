@@ -96,7 +96,7 @@
 ### All Email References Updated
 
 - Changed from `james@kollect-it.com` / `info@kollect-it.com` / `noreply@kollect-it.com`
-- To: `jameshorton2486@gmail.com`
+- To: `info@kollect-it.com`
 
 **Files Updated (16 total):**
 
@@ -168,7 +168,7 @@ All build errors are resolved. The application is ready for:
    - Remove BOM character from email settings page
    - Add @updatedAt to all Prisma models
    - Fix TypeScript type errors (field names, interfaces)
-   - Update all email references to jameshorton2486@gmail.com
+   - Update all email references to info@kollect-it.com
    - Fix Supabase server client async cookies
    - Exclude seed.ts from build"
 

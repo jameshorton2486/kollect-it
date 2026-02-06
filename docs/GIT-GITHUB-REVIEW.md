@@ -14,7 +14,7 @@
 - **Status:** Up to date with `origin/main`
 - **User Config:**
   - Name: James Horton
-  - Email: <jameshorton2486@gmail.com> ✅
+  - Email: <info@kollect-it.com> ✅
 
 ### Branches
 
@@ -252,7 +252,7 @@ git status
 git add .
 
 # Commit with descriptive message
-git commit -m "fix: update email addresses to jameshorton2486@gmail.com and fix BOM character"
+git commit -m "fix: update email addresses to info@kollect-it.com and fix BOM character"
 
 # Push to GitHub
 git push origin main
@@ -374,9 +374,9 @@ Just type in Cursor chat:
 
    ```bash
    git add .
-   git commit -m "fix: update email addresses to jameshorton2486@gmail.com and fix BOM character
+   git commit -m "fix: update email addresses to info@kollect-it.com and fix BOM character
 
-   - Updated all email references from james@kollect-it.com to jameshorton2486@gmail.com
+   - Updated all email references from james@kollect-it.com to info@kollect-it.com
    - Fixed BOM character in email settings page
    - Added environment variable management scripts
    - Added comprehensive documentation for email and env var setup"

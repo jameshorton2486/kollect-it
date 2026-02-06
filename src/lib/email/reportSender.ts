@@ -92,7 +92,7 @@ function generateEmailTemplate(
 
     <div class="footer">
       <p>This is an automated report from Kollect-It Analytics.</p>
-      <p>Do not reply to this email. Contact jameshorton2486@gmail.com for assistance.</p>
+      <p>Do not reply to this email. Contact info@kollect-it.com for assistance.</p>
     </div>
   </div>
 </body>

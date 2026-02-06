@@ -224,7 +224,7 @@ If script is valid, output this exact PowerShell block:
 
 # 1. Set required environment variables
 $env:DATABASE_URL="<PASTE_YOUR_PRODUCTION_DATABASE_URL_HERE>"
-$env:ADMIN_EMAIL="jameshorton2486@gmail.com"
+$env:ADMIN_EMAIL="info@kollect-it.com"
 $env:ADMIN_PASSWORD="<CHOOSE_A_STRONG_PASSWORD>"
 
 # 2. Run the admin creation script

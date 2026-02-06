@@ -115,7 +115,7 @@ The reset script updates **whichever database** `DATABASE_URL` points to when yo
 
 ### 2. Exact email
 
-The script updates only this user: **<jameshorton2486@gmail.com>**.
+The script updates only this user: **<info@kollect-it.com>**.
 Log in with that exact address (no extra spaces, correct spelling). If your account uses a different email, either change `EMAIL` in `reset-my-pw.js` or use a script that targets that email.
 
 ### 3. Where you sign in
@@ -129,7 +129,7 @@ Both use the same credentials; use the one you normally use.
 After running `node reset-my-pw.js` you should see:
 
 - `Password set to: Texas1234`
-- `Updated user: jameshorton2486@gmail.com`
+- `Updated user: info@kollect-it.com`
 - A note about local vs production
 
 If you see `ERROR: DATABASE_URL is not set`, add `DATABASE_URL` to `.env` or `.env.local` in the repo root.

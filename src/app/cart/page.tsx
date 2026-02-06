@@ -246,8 +246,8 @@ export default function CartPage() {
                   <p className="font-medium text-lux-black">Need help editing your cart?</p>
                   <p className="text-muted">
                     Questions? Reach out at{" "}
-                    <a href="mailto:jameshorton2486@gmail.com" className="text-lux-gold hover:underline">
-                      jameshorton2486@gmail.com
+                    <a href="mailto:info@kollect-it.com" className="text-lux-gold hover:underline">
+                      info@kollect-it.com
                     </a>
                   </p>
                 </div>

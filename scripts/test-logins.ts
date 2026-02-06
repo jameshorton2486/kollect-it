@@ -6,17 +6,17 @@ const prisma = new PrismaClient();
 
 /**
  * TEST SCRIPT: Tests login credentials against database
- * 
+ *
  * SECURITY NOTE: This script tests credentials from environment variables only
  * Passwords are NOT hardcoded - they must be provided via env vars
- * 
+ *
  * Required environment variables:
  * - ADMIN_PASSWORD
  * - JAMES_PASSWORD
  * - BILLING_PASSWORD
  * - INFO_PASSWORD
  * - SUPPORT_PASSWORD
- * - JAMES_PERSONAL_PASSWORD (for jameshorton2486@gmail.com)
+ * - JAMES_PERSONAL_PASSWORD (for info@kollect-it.com)
  */
 
 const getCredentialsToTest = () => {
@@ -50,7 +50,7 @@ const getCredentialsToTest = () => {
   if (passwords.BILLING) credentials.push({ email: "billing@kollect-it.com", password: passwords.BILLING });
   if (passwords.INFO) credentials.push({ email: "info@kollect-it.com", password: passwords.INFO });
   if (passwords.SUPPORT) credentials.push({ email: "support@kollect-it.com", password: passwords.SUPPORT });
-  if (passwords.JAMES_PERSONAL) credentials.push({ email: "jameshorton2486@gmail.com", password: passwords.JAMES_PERSONAL });
+  if (passwords.JAMES_PERSONAL) credentials.push({ email: "info@kollect-it.com", password: passwords.JAMES_PERSONAL });
 
   if (credentials.length === 0) {
     throw new Error("No credentials provided via environment variables. Set at least one *_PASSWORD env var.");
@@ -62,9 +62,9 @@ const getCredentialsToTest = () => {
 async function main() {
   console.log("🔍 Testing credentials against database...");
   console.log("💡 This script uses passwords from environment variables only\n");
-  
+
   const credentialsToTest = getCredentialsToTest();
-  
+
   for (const cred of credentialsToTest) {
     const normalizedEmail = cred.email.toLowerCase();
     const user = await prisma.user.findUnique({
@@ -82,7 +82,7 @@ async function main() {
     }
 
     const isValid = await bcrypt.compare(cred.password, user.password);
-    
+
     if (isValid) {
       console.log(`✅ ${cred.email}: Password CORRECT`);
     } else {

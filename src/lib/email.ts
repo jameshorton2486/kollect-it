@@ -148,7 +148,7 @@ async function sendEmail(
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const info = await transport.sendMail({
-        from: process.env.EMAIL_FROM || '"Kollect-It" <jameshorton2486@gmail.com>',
+        from: process.env.EMAIL_FROM || '"Kollect-It" <info@kollect-it.com>',
         to,
         subject,
         html,

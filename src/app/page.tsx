@@ -89,7 +89,7 @@ export default async function HomePage() {
       "@type": "ContactPoint",
       telephone: "+1-469-386-6065",
       contactType: "customer service",
-      email: "jameshorton2486@gmail.com",
+      email: "info@kollect-it.com",
     },
   };
 

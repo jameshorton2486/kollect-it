@@ -74,7 +74,7 @@ From repo root (same DB as the app):
 node reset-my-pw.js
 ```
 
-You should see: `Password set to: Texas1234` and `Updated user: jameshorton2486@gmail.com`.
+You should see: `Password set to: Texas1234` and `Updated user: info@kollect-it.com`.
 
 - **Local:** Script uses `.env` / `.env.local`; that’s the same DB as `bun run dev`.
 - **Production:** To fix production login, run the script once with `DATABASE_URL` set to the **production** URL (see `docs/LOGIN-TROUBLESHOOTING.md`).
@@ -86,7 +86,7 @@ You should see: `Password set to: Texas1234` and `Updated user: jameshorton2486@
 1. Start the app: `bun run dev`
 2. Open: http://localhost:3000/login
 3. Sign in with:
-   - **Email:** `jameshorton2486@gmail.com`
+   - **Email:** `info@kollect-it.com`
    - **Password:** `Texas1234`
 4. You should be redirected to `/account` and have a session.
 

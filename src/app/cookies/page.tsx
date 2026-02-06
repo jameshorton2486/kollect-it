@@ -106,10 +106,10 @@ const sections = [
       <p>
         Questions about our cookie policy? Reach out to me at{" "}
         <a
-          href="mailto:jameshorton2486@gmail.com"
+          href="mailto:info@kollect-it.com"
           className="text-lux-gold hover:text-lux-gold-light underline-offset-4 hover:underline"
         >
-          jameshorton2486@gmail.com
+          info@kollect-it.com
         </a>.
       </p>
     ),

@@ -45,10 +45,10 @@ export default function ContactPage() {
                   <div>
                     <p className="text-label text-lux-gray-dark mb-1">Email</p>
                     <a
-                      href="mailto:jameshorton2486@gmail.com"
+                      href="mailto:info@kollect-it.com"
                       className="text-lg text-lux-gold hover:text-lux-gold-light transition-colors"
                     >
-                      jameshorton2486@gmail.com
+                      info@kollect-it.com
                     </a>
                   </div>
                 </div>

@@ -121,7 +121,7 @@ Invoke-WebRequest -Uri "https://kollect-it.com/api/admin/email/test" -Method GET
 fetch('/api/admin/email/test', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({to: 'jameshorton2486@gmail.com'})
+  body: JSON.stringify({to: 'info@kollect-it.com'})
 }).then(r => r.json()).then(console.log)
 ```
 
@@ -130,7 +130,7 @@ fetch('/api/admin/email/test', {
 ```json
 {
   "success": true,
-  "message": "Test email sent to jameshorton2486@gmail.com",
+  "message": "Test email sent to info@kollect-it.com",
   "messageId": "..."
 }
 ```

@@ -7,7 +7,7 @@
 
 ## Changes Made
 
-### 1. Updated All Email References to `jameshorton2486@gmail.com`
+### 1. Updated All Email References to `info@kollect-it.com`
 
 **Files Updated:**
 
@@ -103,10 +103,10 @@ Update Vercel environment variables to use your Gmail:
 ```bash
 # Email configuration
 vercel env add EMAIL_FROM production
-# Enter: "Kollect-It <jameshorton2486@gmail.com>"
+# Enter: "Kollect-It <info@kollect-it.com>"
 
 vercel env add EMAIL_USER production
-# Enter: jameshorton2486@gmail.com
+# Enter: info@kollect-it.com
 
 vercel env add EMAIL_HOST production
 # Enter: smtp.gmail.com
@@ -118,7 +118,7 @@ vercel env add EMAIL_PASSWORD production
 # Enter: [Your Gmail App Password]
 
 vercel env add ADMIN_EMAIL production
-# Enter: jameshorton2486@gmail.com
+# Enter: info@kollect-it.com
 ```
 
 **Gmail App Password Setup:**
@@ -134,7 +134,7 @@ vercel env add ADMIN_EMAIL production
 
 ## Summary
 
-✅ **Email References:** All updated to `jameshorton2486@gmail.com`
+✅ **Email References:** All updated to `info@kollect-it.com`
 ✅ **BOM Character:** Removed from email settings page
 ✅ **API Route:** Already properly structured
 ✅ **Build Ready:** Should build successfully after Prisma generate

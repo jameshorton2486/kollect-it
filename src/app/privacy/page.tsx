@@ -77,10 +77,10 @@ const sections = [
       <p className="leading-relaxed">
         Questions about privacy? Reach out to me at{" "}
         <a
-          href="mailto:jameshorton2486@gmail.com"
+          href="mailto:info@kollect-it.com"
           className="text-lux-gold hover:underline"
         >
-          jameshorton2486@gmail.com
+          info@kollect-it.com
         </a>
         . I&apos;m happy to explain how I handle your information.
       </p>

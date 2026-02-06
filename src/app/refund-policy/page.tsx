@@ -53,10 +53,10 @@ const sections = [
         <ol className="list-decimal pl-6 space-y-2">
           <li>Contact me at{" "}
             <a
-              href="mailto:jameshorton2486@gmail.com"
+              href="mailto:info@kollect-it.com"
               className="text-lux-gold hover:underline"
             >
-              jameshorton2486@gmail.com
+              info@kollect-it.com
             </a>{" "}
             within 48 hours of delivery</li>
           <li>Include your order number and photos of any issues</li>
@@ -117,10 +117,10 @@ const sections = [
       <p className="leading-relaxed">
         Questions about refunds? Reach out to me at{" "}
         <a
-          href="mailto:jameshorton2486@gmail.com"
+          href="mailto:info@kollect-it.com"
           className="text-lux-gold hover:underline"
         >
-          jameshorton2486@gmail.com
+          info@kollect-it.com
         </a>{" "}
         or call{" "}
         <a

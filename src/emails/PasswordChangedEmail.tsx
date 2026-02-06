@@ -41,8 +41,8 @@ export function PasswordChangedEmail({
           <Text style={textWarning}>
             If you did not change your password, please contact us immediately
             at{" "}
-            <Link href="mailto:jameshorton2486@gmail.com" style={link}>
-              jameshorton2486@gmail.com
+            <Link href="mailto:info@kollect-it.com" style={link}>
+              info@kollect-it.com
             </Link>{" "}
             to secure your account.
           </Text>

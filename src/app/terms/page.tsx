@@ -86,10 +86,10 @@ const sections = [
       <p className="leading-relaxed">
         Questions about these terms? Contact me at{" "}
         <a
-          href="mailto:jameshorton2486@gmail.com"
+          href="mailto:info@kollect-it.com"
           className="text-lux-gold hover:underline"
         >
-          jameshorton2486@gmail.com
+          info@kollect-it.com
         </a>{" "}
         and I&apos;ll be happy to clarify anything.
       </p>
